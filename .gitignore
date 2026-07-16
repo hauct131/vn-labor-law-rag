@@ -14,11 +14,23 @@ frontend/dist/
 .idea/
 .DS_Store
 
+# Raw corpus: HTML, ZIP...
 data/raw/*
+!data/raw/.gitkeep
+
+# Generated corpus
 data/processed/*
+!data/processed/.gitkeep
+!data/processed/html_inspection.json
+!data/processed/parser_report.json
+
+# Generated graph data
 data/graph/*
+!data/graph/.gitkeep
+
+# Evaluation data
 data/evaluation/*
-!data/**/.gitkeep
+!data/evaluation/.gitkeep
 
 experiments/*
 !experiments/.gitkeep
