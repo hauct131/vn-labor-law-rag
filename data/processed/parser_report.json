@@ -1,0 +1,29 @@
+{
+  "is_valid": true,
+  "errors": [],
+  "warnings": [],
+  "article_count": 477,
+  "source_counts": {
+    "LQ": 220,
+    "NĐ": 174,
+    "TT": 83
+  },
+  "missing_article_id_count": 0,
+  "duplicate_article_id_count": 0,
+  "duplicate_article_ids": [],
+  "duplicate_unit_id_count": 0,
+  "duplicate_unit_ids": [],
+  "repeated_unit_occurrence_count": 55,
+  "empty_article_count": 0,
+  "empty_articles": [],
+  "articles_without_chapter_count": 0,
+  "articles_without_chapter": [],
+  "articles_without_source_note_count": 0,
+  "table_count": 63,
+  "attachment_count": 39,
+  "p_noi_dung_count": 477,
+  "empty_p_noi_dung_count": 477,
+  "article_relation_count": 928,
+  "structure_relation_count": 6,
+  "same_topic_unresolved_relation_count": 0
+}
