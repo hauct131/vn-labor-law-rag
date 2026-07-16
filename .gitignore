@@ -17,6 +17,7 @@ frontend/dist/
 # Raw corpus: HTML, ZIP...
 data/raw/*
 !data/raw/.gitkeep
+!data/raw/DeMuc_20.2_Lao_Dong.html
 
 # Generated corpus
 data/processed/*
