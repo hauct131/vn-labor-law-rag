@@ -7,7 +7,28 @@
     "source_sha256": "ee1d819f6c5650adbadbd7ac6306ad6c08630794987759ef118b87ee64376471",
     "parser_version": "1.2.0",
     "detected_encoding": "utf-8",
-    "parsed_at": "2026-07-16T11:03:49.706190+00:00"
+    "parsed_at": "2026-07-16T15:25:16.965261+00:00",
+    "class_counts": {
+      "viewDSVB": 1,
+      "_content": 1,
+      "pChuong": 82,
+      "pDieu": 477,
+      "pGhiChu": 477,
+      "pNoiDung": 477,
+      "pChiDan": 307,
+      "text-blue": 1
+    },
+    "citation_statistics": {
+      "paragraph_count": 307,
+      "article_paragraph_count": 301,
+      "structure_paragraph_count": 6,
+      "internal_link_count": 919,
+      "internal_same_topic": 864,
+      "internal_other_topic": 55,
+      "external_link_count": 15,
+      "article_relation_count_after_dedup": 928,
+      "structure_relation_count_after_dedup": 6
+    }
   },
   "class_counts": {
     "viewDSVB": 1,
