@@ -21,7 +21,7 @@ def canonical_corpus():
     return parse_legal_document(HTML_PATH)
 
 
-def test_import_no_side_effects():
+def test_parser_version():
     assert PARSER_VERSION == "1.2.0"
 
 
