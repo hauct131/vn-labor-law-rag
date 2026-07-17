@@ -1308,3 +1308,708 @@ def _verify_coverage(article_id: str, original_text_units: list[dict], generated
             raise ValueError(
                 f"Data loss detected in article {article_id}: unit_id {uid} is not covered by any chunk."
             )
+
+
+def validate_chunks(
+    canonical_corpus: dict,
+    chunks: list[dict],
+    *,
+    config: ChunkingConfig | None = None,
+    token_counter: TokenCounter | None = None,
+) -> dict:
+    """
+    Validate output chunks against canonical corpus structural rules and chunk schemas.
+    """
+    # 1. Validate inputs
+    if not isinstance(canonical_corpus, dict):
+        raise TypeError("canonical_corpus must be a dict")
+    if "articles" not in canonical_corpus:
+        raise ValueError("canonical_corpus must contain 'articles'")
+    if not isinstance(canonical_corpus["articles"], list):
+        raise TypeError("canonical_corpus['articles'] must be a list")
+    for idx, art in enumerate(canonical_corpus["articles"]):
+        if not isinstance(art, dict):
+            raise TypeError(f"Article at index {idx} must be a dict")
+        if "article_id" not in art:
+            raise ValueError(f"Article at index {idx} must contain 'article_id'")
+
+    if not isinstance(chunks, list):
+        raise TypeError("chunks must be a list")
+    for idx, chunk in enumerate(chunks):
+        if not isinstance(chunk, dict):
+            raise TypeError(f"Chunk at index {idx} must be a dict")
+
+    # Save signatures to detect mutation
+    import json
+    import copy
+    orig_corpus_json = json.dumps(canonical_corpus, sort_keys=True, ensure_ascii=False)
+    orig_chunks_json = json.dumps(chunks, sort_keys=True, ensure_ascii=False)
+    orig_chunks_len = len(chunks)
+
+    # Use defaults if None
+    cfg = config if config is not None else ChunkingConfig()
+    tc = token_counter if token_counter is not None else get_default_token_counter()
+
+    errors = []
+    warnings = []
+
+    # Check if empty chunks
+    if not chunks:
+        errors.append("chunks_is_empty: Chunks list is empty")
+
+    REQUIRED_KEYS = [
+        "chunk_id", "chunk_key", "parent_article_id", "document_id", "topic_code", "topic_name",
+        "article_code", "chunk_type", "unit_type", "content", "body_text", "token_count",
+        "tokenizer_name", "source_unit_ids", "table_id", "table_index", "segment_index",
+        "relation_target_ids", "relation_target_codes", "relation_types", "relation_same_topic",
+        "relation_target_in_corpus", "attachment_metadata", "parser_version", "chunker_version",
+        "requires_fallback", "oversized_reason", "warnings"
+    ]
+
+    VALID_CHUNK_TYPES = {"article", "clause", "points", "preamble", "fallback_segment", "table"}
+    VALID_UNIT_TYPES = {"article", "clause", "point_group", "preamble", "orphan", "table"}
+
+    # Track metrics
+    article_count = len(canonical_corpus["articles"])
+    chunk_count = len(chunks)
+
+    canonical_article_ids = {art["article_id"] for art in canonical_corpus["articles"]}
+    covered_article_ids = set()
+
+    duplicate_chunk_id_count = 0
+    duplicate_chunk_ids = set()
+    seen_chunk_ids = set()
+
+    duplicate_chunk_key_count = 0
+    duplicate_chunk_keys = set()
+    seen_chunk_keys = set()
+
+    empty_content_count = 0
+    empty_content_chunk_ids = []
+
+    empty_body_count = 0
+    empty_body_chunk_ids = []
+
+    invalid_parent_count = 0
+    invalid_parent_chunk_ids = []
+    invalid_parent_article_ids = set()
+
+    missing_required_field_count = 0
+    chunks_missing_required_fields = []
+
+    invalid_chunk_type_count = 0
+    invalid_chunk_type_chunks = []
+
+    invalid_unit_type_count = 0
+    invalid_unit_type_chunks = []
+
+    token_count_mismatch_count = 0
+    token_count_mismatch_chunks = []
+
+    tokenizer_name_mismatch_count = 0
+    tokenizer_name_mismatch_chunks = []
+
+    oversized_chunk_count = 0
+    oversized_chunks = []
+    max_token_count = 0
+
+    requires_fallback_count = 0
+    fallback_pending_chunks = []
+
+    stable_id_check = True
+    unstable_id_chunks = []
+
+    JSON_serialization_error_count = 0
+    JSON_serialization_error_chunks = []
+
+    relation_list_length_mismatch_count = 0
+    relation_list_length_mismatch_chunks = []
+
+    # Table segment identities
+    duplicate_table_segment_key_count = 0
+    duplicate_table_segment_keys = set()
+    seen_table_segments = set()
+
+    invalid_table_metadata_count = 0
+    invalid_table_metadata_chunks = []
+
+    table_segment_sequence_error_count = 0
+    table_segment_sequence_errors = []
+
+    table_ordering_error_count = 0
+    table_ordering_error_articles = set()
+
+    # Non-table unit IDs
+    canonical_non_table_units = set()
+    for art in canonical_corpus["articles"]:
+        for u in art.get("content_units", []):
+            if u.get("unit_type") != "table":
+                canonical_non_table_units.add(u["unit_id"])
+
+    covered_non_table_units = set()
+    unknown_source_unit_ids = set()
+
+    # Table IDs
+    canonical_table_ids = set()
+    for art in canonical_corpus["articles"]:
+        for t in art.get("tables", []):
+            if t.get("table_id"):
+                canonical_table_ids.add(t["table_id"])
+
+    covered_table_ids = set()
+
+    # Chunks of each article to validate sequence and ordering
+    article_chunks_map = {}
+
+    import uuid
+
+    # 2. Loop through all chunks
+    for chunk in chunks:
+        c_id = chunk.get("chunk_id")
+        c_key = chunk.get("chunk_key")
+        c_type = chunk.get("chunk_type")
+        u_type = chunk.get("unit_type")
+        parent_id = chunk.get("parent_article_id")
+        content = chunk.get("content")
+        body_text = chunk.get("body_text")
+
+        chunk_ident = c_id if c_id else (c_key if c_key else "missing_key_and_id")
+
+        # Required fields check
+        missing_fields = [k for k in REQUIRED_KEYS if k not in chunk]
+        if missing_fields:
+            missing_required_field_count += 1
+            chunks_missing_required_fields.append(chunk_ident)
+            errors.append(f"missing_required_fields: Chunk {chunk_ident} is missing keys: {missing_fields}")
+
+        # Parent ID validity
+        if parent_id is not None:
+            if parent_id not in canonical_article_ids:
+                invalid_parent_count += 1
+                invalid_parent_chunk_ids.append(chunk_ident)
+                invalid_parent_article_ids.add(parent_id)
+                errors.append(f"invalid_parent: Chunk {chunk_ident} points to invalid article {parent_id}")
+            else:
+                covered_article_ids.add(parent_id)
+                if parent_id not in article_chunks_map:
+                    article_chunks_map[parent_id] = []
+                article_chunks_map[parent_id].append(chunk)
+        else:
+            invalid_parent_count += 1
+            invalid_parent_chunk_ids.append(chunk_ident)
+            errors.append(f"invalid_parent: Chunk {chunk_ident} has parent_article_id is None")
+
+        # Duplicate ID check
+        if c_id is not None:
+            if c_id in seen_chunk_ids:
+                duplicate_chunk_id_count += 1
+                duplicate_chunk_ids.add(c_id)
+                errors.append(f"duplicate_chunk_id: {c_id}")
+            seen_chunk_ids.add(c_id)
+
+        # Duplicate Key check
+        if c_key is not None:
+            if c_key in seen_chunk_keys:
+                duplicate_chunk_key_count += 1
+                duplicate_chunk_keys.add(c_key)
+                errors.append(f"duplicate_chunk_key: {c_key}")
+            seen_chunk_keys.add(c_key)
+
+        # Empty content/body check
+        if not isinstance(content, str) or not content.strip() or content == "None":
+            empty_content_count += 1
+            empty_content_chunk_ids.append(chunk_ident)
+            errors.append(f"empty_content: Chunk {chunk_ident}")
+
+        if not isinstance(body_text, str) or not body_text.strip() or body_text == "None":
+            empty_body_count += 1
+            empty_body_chunk_ids.append(chunk_ident)
+            errors.append(f"empty_body: Chunk {chunk_ident}")
+
+        # Chunk type / Unit type validity
+        if c_type not in VALID_CHUNK_TYPES:
+            invalid_chunk_type_count += 1
+            invalid_chunk_type_chunks.append(chunk_ident)
+            errors.append(f"invalid_chunk_type: Chunk {chunk_ident} has type '{c_type}'")
+
+        if u_type not in VALID_UNIT_TYPES:
+            invalid_unit_type_count += 1
+            invalid_unit_type_chunks.append(chunk_ident)
+            errors.append(f"invalid_unit_type: Chunk {chunk_ident} has unit type '{u_type}'")
+
+        # Stable ID check
+        if c_key is not None and c_id is not None:
+            try:
+                expected_id = make_chunk_id(c_key)
+                if c_id != expected_id:
+                    stable_id_check = False
+                    unstable_id_chunks.append(chunk_ident)
+                    errors.append(f"unstable_id: Chunk {chunk_ident} expected {expected_id}")
+                else:
+                    parsed_uuid = uuid.UUID(c_id)
+                    if parsed_uuid.version != 5:
+                        stable_id_check = False
+                        unstable_id_chunks.append(chunk_ident)
+                        errors.append(f"invalid_uuid_version: Chunk {chunk_ident} is version {parsed_uuid.version} instead of 5")
+            except Exception as e:
+                stable_id_check = False
+                unstable_id_chunks.append(chunk_ident)
+                errors.append(f"invalid_uuid: Chunk {chunk_ident} UUID error: {str(e)}")
+
+        # Token Counter Check
+        tok_count = chunk.get("token_count")
+        tok_name = chunk.get("tokenizer_name")
+        if content is not None:
+            if not isinstance(tok_count, int) or isinstance(tok_count, bool):
+                token_count_mismatch_count += 1
+                token_count_mismatch_chunks.append(chunk_ident)
+                errors.append(f"token_count_mismatch: Chunk {chunk_ident} has invalid token_count type")
+            else:
+                actual_toks = tc.count(content)
+                if tok_count != actual_toks:
+                    token_count_mismatch_count += 1
+                    token_count_mismatch_chunks.append(chunk_ident)
+                    errors.append(f"token_count_mismatch: Chunk {chunk_ident} expected {actual_toks}, got {tok_count}")
+                if tok_count > max_token_count:
+                    max_token_count = tok_count
+                if tok_count > cfg.max_tokens:
+                    oversized_chunk_count += 1
+                    oversized_chunks.append(chunk_ident)
+                    errors.append(f"oversized_chunk: Chunk {chunk_ident} token count {tok_count} > max {cfg.max_tokens}")
+
+        if tok_name != tc.name:
+            tokenizer_name_mismatch_count += 1
+            tokenizer_name_mismatch_chunks.append(chunk_ident)
+            errors.append(f"tokenizer_name_mismatch: Chunk {chunk_ident} expected '{tc.name}', got '{tok_name}'")
+
+        # Fallback pending check
+        if chunk.get("requires_fallback"):
+            requires_fallback_count += 1
+            fallback_pending_chunks.append(chunk_ident)
+            errors.append(f"fallback_pending: Chunk {chunk_ident} requires fallback")
+
+        # Relation list length check
+        rel_ids = chunk.get("relation_target_ids")
+        rel_codes = chunk.get("relation_target_codes")
+        rel_types = chunk.get("relation_types")
+        rel_same = chunk.get("relation_same_topic")
+        rel_in_corpus = chunk.get("relation_target_in_corpus")
+
+        if all(isinstance(lst, list) for lst in [rel_ids, rel_codes, rel_types, rel_same, rel_in_corpus]):
+            n_lens = {len(rel_ids), len(rel_codes), len(rel_types), len(rel_same), len(rel_in_corpus)}
+            if len(n_lens) > 1:
+                relation_list_length_mismatch_count += 1
+                relation_list_length_mismatch_chunks.append(chunk_ident)
+                errors.append(f"relation_list_length_mismatch: Chunk {chunk_ident} lists have mismatching lengths")
+        elif any(lst is not None for lst in [rel_ids, rel_codes, rel_types, rel_same, rel_in_corpus]):
+            relation_list_length_mismatch_count += 1
+            relation_list_length_mismatch_chunks.append(chunk_ident)
+            errors.append(f"relation_list_length_mismatch: Some relation lists of Chunk {chunk_ident} are None while others are not")
+
+        # JSON Serialization check
+        try:
+            json.dumps(chunk, ensure_ascii=False)
+        except Exception as e:
+            JSON_serialization_error_count += 1
+            JSON_serialization_error_chunks.append(chunk_ident)
+            errors.append(f"JSON_serialization_error: Chunk {chunk_ident} failed to serialize: {str(e)}")
+
+        # Source unit IDs coverage
+        src_ids = chunk.get("source_unit_ids") or []
+        for sid in src_ids:
+            if sid in canonical_non_table_units:
+                covered_non_table_units.add(sid)
+            else:
+                unknown_source_unit_ids.add(sid)
+
+        # Table ID coverage and metadata check
+        tbl_id = chunk.get("table_id")
+        tbl_idx = chunk.get("table_index")
+        seg_idx = chunk.get("segment_index")
+
+        if c_type == "table":
+            if u_type != "table":
+                invalid_table_metadata_count += 1
+                invalid_table_metadata_chunks.append(chunk_ident)
+                errors.append(f"invalid_table_metadata: Table chunk {chunk_ident} has unit_type '{u_type}'")
+            if not tbl_id or tbl_id not in canonical_table_ids:
+                invalid_table_metadata_count += 1
+                invalid_table_metadata_chunks.append(chunk_ident)
+                errors.append(f"invalid_table_metadata: Table chunk {chunk_ident} has invalid table_id '{tbl_id}'")
+            else:
+                covered_table_ids.add(tbl_id)
+
+            if not isinstance(tbl_idx, int) or tbl_idx < 1:
+                invalid_table_metadata_count += 1
+                invalid_table_metadata_chunks.append(chunk_ident)
+                errors.append(f"invalid_table_metadata: Table chunk {chunk_ident} has invalid table_index '{tbl_idx}'")
+
+            if not isinstance(seg_idx, int) or seg_idx < 1:
+                invalid_table_metadata_count += 1
+                invalid_table_metadata_chunks.append(chunk_ident)
+                errors.append(f"invalid_table_metadata: Table chunk {chunk_ident} has invalid segment_index '{seg_idx}'")
+
+            if src_ids:
+                invalid_table_metadata_count += 1
+                invalid_table_metadata_chunks.append(chunk_ident)
+                errors.append(f"invalid_table_metadata: Table chunk {chunk_ident} has non-empty source_unit_ids: {src_ids}")
+
+            if chunk.get("requires_fallback"):
+                invalid_table_metadata_count += 1
+                invalid_table_metadata_chunks.append(chunk_ident)
+                errors.append(f"invalid_table_metadata: Table chunk {chunk_ident} has requires_fallback = True")
+
+            if chunk.get("oversized_reason") is not None:
+                invalid_table_metadata_count += 1
+                invalid_table_metadata_chunks.append(chunk_ident)
+                errors.append(f"invalid_table_metadata: Table chunk {chunk_ident} has oversized_reason '{chunk.get('oversized_reason')}'")
+
+            # Duplicate table segment key
+            if parent_id and tbl_id and tbl_idx is not None and seg_idx is not None:
+                seg_key = (parent_id, tbl_id, tbl_idx, seg_idx)
+                if seg_key in seen_table_segments:
+                    duplicate_table_segment_key_count += 1
+                    duplicate_table_segment_keys.add(f"{parent_id}|{tbl_id}|{tbl_idx}|{seg_idx}")
+                    errors.append(f"duplicate_table_segment: {seg_key}")
+                seen_table_segments.add(seg_key)
+        else:
+            if tbl_id is not None or tbl_idx is not None:
+                invalid_table_metadata_count += 1
+                invalid_table_metadata_chunks.append(chunk_ident)
+                errors.append(f"invalid_table_metadata: Non-table chunk {chunk_ident} has table_id '{tbl_id}' or table_index '{tbl_idx}'")
+
+    # Missing articles
+    missing_article_ids = canonical_article_ids - covered_article_ids
+    for maid in missing_article_ids:
+        errors.append(f"missing_article: {maid}")
+
+    # Missing non-table units
+    missing_non_table_units = canonical_non_table_units - covered_non_table_units
+    for muid in missing_non_table_units:
+        errors.append(f"missing_non_table_unit: {muid}")
+
+    # Unknown source units
+    for uuid_val in unknown_source_unit_ids:
+        errors.append(f"unknown_source_unit: {uuid_val}")
+
+    # Table coverage
+    missing_table_ids = canonical_table_ids - covered_table_ids
+    for mtid in missing_table_ids:
+        errors.append(f"missing_table: {mtid}")
+
+    # Unknown table IDs in table chunks
+    unknown_table_ids = covered_table_ids - canonical_table_ids
+    for utid in unknown_table_ids:
+        errors.append(f"unknown_table: {utid}")
+
+    # Table sequence check
+    table_groups = {}
+    for (pid, tid, t_idx, s_idx) in seen_table_segments:
+        gkey = (pid, tid, t_idx)
+        if gkey not in table_groups:
+            table_groups[gkey] = []
+        table_groups[gkey].append(s_idx)
+
+    table_segment_sequence_errors = []
+    for gkey, segs in table_groups.items():
+        sorted_segs = sorted(segs)
+        expected = list(range(1, len(sorted_segs) + 1))
+        if sorted_segs != expected:
+            table_segment_sequence_error_count += 1
+            err_desc = f"article={gkey[0]}|table_id={gkey[1]}|table_index={gkey[2]}|got={sorted_segs}"
+            table_segment_sequence_errors.append(err_desc)
+            errors.append(f"table_segment_sequence_error: {err_desc}")
+
+    # Table ordering & article continuous check
+    table_ordering_error_articles = set()
+    table_ordering_error_count = 0
+
+    seen_articles = set()
+    last_article_id = None
+    seen_table_for_article = set()
+
+    for chunk in chunks:
+        art_id = chunk.get("parent_article_id")
+        c_type = chunk.get("chunk_type")
+        if not art_id:
+            continue
+
+        # Check article continuous (no interleaving)
+        if art_id != last_article_id:
+            if art_id in seen_articles:
+                table_ordering_error_articles.add(art_id)
+                errors.append(f"article_interleaved: Article {art_id} is interleaved")
+            seen_articles.add(art_id)
+            last_article_id = art_id
+
+        # Check text chunks before table chunks
+        if c_type == "table":
+            seen_table_for_article.add(art_id)
+        elif c_type != "table":
+            if art_id in seen_table_for_article:
+                table_ordering_error_articles.add(art_id)
+                errors.append(f"table_ordering_error: Text chunk of article {art_id} appears after table chunk")
+
+    # Check table index non-decreasing for each article
+    for art_id, art_chunks in article_chunks_map.items():
+        last_tbl_idx = 0
+        for chunk in art_chunks:
+            if chunk.get("chunk_type") == "table":
+                t_idx = chunk.get("table_index")
+                if isinstance(t_idx, int):
+                    if t_idx < last_tbl_idx:
+                        table_ordering_error_articles.add(art_id)
+                        errors.append(f"table_ordering_error: Table index decrements in article {art_id}")
+                    last_tbl_idx = t_idx
+
+    table_ordering_error_count = len(table_ordering_error_articles)
+
+    # Detect mutation
+    new_corpus_json = json.dumps(canonical_corpus, sort_keys=True, ensure_ascii=False)
+    new_chunks_json = json.dumps(chunks, sort_keys=True, ensure_ascii=False)
+    input_mutated = (new_corpus_json != orig_corpus_json) or (new_chunks_json != orig_chunks_json)
+    input_chunk_count_preserved = (len(chunks) == orig_chunks_len)
+
+    # Determine is_valid
+
+    # PROMPT4B_UNKNOWN_TABLE_FIX_START
+    # Tách riêng table IDs lạ khỏi tập table IDs canonical đã được cover.
+    unknown_table_ids = sorted({
+        table_id
+        for chunk in chunks
+        if chunk.get("chunk_type") == "table"
+        for table_id in [chunk.get("table_id")]
+        if table_id
+        and table_id not in canonical_table_ids
+    })
+    unknown_table_count = len(unknown_table_ids)
+
+    for table_id in unknown_table_ids:
+        error_message = f"unknown_table: {table_id}"
+        if error_message not in errors:
+            errors.append(error_message)
+    # PROMPT4B_UNKNOWN_TABLE_FIX_END
+
+    is_valid = len(errors) == 0
+
+    return {
+        "is_valid": is_valid,
+        "errors": sorted(errors),
+        "warnings": sorted(warnings),
+
+        "article_count": article_count,
+        "chunk_count": chunk_count,
+
+        "covered_article_count": len(covered_article_ids),
+        "missing_article_ids": sorted(list(missing_article_ids)),
+
+        "duplicate_chunk_id_count": duplicate_chunk_id_count,
+        "duplicate_chunk_ids": sorted(list(duplicate_chunk_ids)),
+
+        "duplicate_chunk_key_count": duplicate_chunk_key_count,
+        "duplicate_chunk_keys": sorted(list(duplicate_chunk_keys)),
+
+        "empty_content_count": empty_content_count,
+        "empty_content_chunk_ids": sorted(empty_content_chunk_ids),
+
+        "empty_body_count": empty_body_count,
+        "empty_body_chunk_ids": sorted(empty_body_chunk_ids),
+
+        "invalid_parent_count": invalid_parent_count,
+        "invalid_parent_chunk_ids": sorted(invalid_parent_chunk_ids),
+        "invalid_parent_article_ids": sorted(list(invalid_parent_article_ids)),
+
+        "missing_required_field_count": missing_required_field_count,
+        "chunks_missing_required_fields": sorted(chunks_missing_required_fields),
+
+        "invalid_chunk_type_count": invalid_chunk_type_count,
+        "invalid_chunk_type_chunks": sorted(invalid_chunk_type_chunks),
+
+        "invalid_unit_type_count": invalid_unit_type_count,
+        "invalid_unit_type_chunks": sorted(invalid_unit_type_chunks),
+
+        "token_count_mismatch_count": token_count_mismatch_count,
+        "token_count_mismatch_chunks": sorted(token_count_mismatch_chunks),
+
+        "tokenizer_name_mismatch_count": tokenizer_name_mismatch_count,
+        "tokenizer_name_mismatch_chunks": sorted(tokenizer_name_mismatch_chunks),
+
+        "oversized_chunk_count": oversized_chunk_count,
+        "oversized_chunks": sorted(oversized_chunks),
+        "max_token_count": max_token_count,
+
+        "requires_fallback_count": requires_fallback_count,
+        "fallback_pending_chunks": sorted(fallback_pending_chunks),
+
+        "stable_id_check": stable_id_check,
+        "unstable_id_chunks": sorted(unstable_id_chunks),
+
+        "JSON_serialization_error_count": JSON_serialization_error_count,
+        "JSON_serialization_error_chunks": sorted(JSON_serialization_error_chunks),
+
+        "relation_list_length_mismatch_count": relation_list_length_mismatch_count,
+        "relation_list_length_mismatch_chunks": sorted(relation_list_length_mismatch_chunks),
+
+        "canonical_non_table_unit_count": len(canonical_non_table_units),
+        "covered_non_table_unit_count": len(covered_non_table_units),
+        "missing_non_table_unit_count": len(missing_non_table_units),
+        "missing_non_table_unit_ids": sorted(list(missing_non_table_units)),
+        "unknown_source_unit_count": len(unknown_source_unit_ids),
+        "unknown_source_unit_ids": sorted(list(unknown_source_unit_ids)),
+
+        "canonical_table_count": len(canonical_table_ids),
+        "covered_table_count": len(covered_table_ids),
+        "missing_table_count": len(missing_table_ids),
+        "missing_table_ids": sorted(list(missing_table_ids)),
+        "unknown_table_count": len(unknown_table_ids),
+        "unknown_table_ids": sorted(list(unknown_table_ids)),
+
+        "duplicate_table_segment_key_count": duplicate_table_segment_key_count,
+        "duplicate_table_segment_keys": sorted(list(duplicate_table_segment_keys)),
+
+        "invalid_table_metadata_count": invalid_table_metadata_count,
+        "invalid_table_metadata_chunks": sorted(invalid_table_metadata_chunks),
+
+        "table_segment_sequence_error_count": table_segment_sequence_error_count,
+        "table_segment_sequence_errors": sorted(table_segment_sequence_errors),
+
+        "table_ordering_error_count": table_ordering_error_count,
+        "table_ordering_error_articles": sorted(list(table_ordering_error_articles)),
+
+        "input_chunk_count_preserved": input_chunk_count_preserved,
+        "input_mutated": input_mutated,
+    }
+
+
+def _calculate_p95(values: list[int | float]) -> float:
+    """
+    Calculate the 95th percentile using the nearest-rank method.
+
+    Formula:
+        index = ceil(P / 100 * N) - 1
+    where P = 95, N is the length of sorted list.
+    """
+    if not values:
+        return 0.0
+    import math
+    sorted_vals = sorted(values)
+    n = len(sorted_vals)
+    idx = math.ceil(0.95 * n) - 1
+    idx = max(0, min(idx, n - 1))
+    return float(sorted_vals[idx])
+
+
+def build_chunking_summary(
+    canonical_corpus: dict,
+    chunks: list[dict],
+    validation: dict,
+    *,
+    config: ChunkingConfig,
+    token_counter: TokenCounter,
+) -> dict:
+    """
+    Build a deterministic and JSON-serializable chunking summary of statistics and metrics.
+    """
+    meta = canonical_corpus.get("metadata") or {}
+    first_art = canonical_corpus["articles"][0] if canonical_corpus.get("articles") else {}
+
+    doc_id = meta.get("document_id") or first_art.get("document_id")
+    topic_code = meta.get("topic_code") or first_art.get("topic_code")
+    topic_name = meta.get("topic_name") or first_art.get("topic_name")
+    parser_ver = meta.get("parser_version") or first_art.get("parser_version")
+    source_sha = meta.get("source_sha256") or first_art.get("source_sha256")
+
+    # Counts
+    chunk_type_counts = {}
+    unit_type_counts = {}
+    source_type_counts = {}
+
+    for c in chunks:
+        ct = c.get("chunk_type")
+        ut = c.get("unit_type")
+        st = c.get("source_type")
+
+        if ct is not None:
+            chunk_type_counts[ct] = chunk_type_counts.get(ct, 0) + 1
+        if ut is not None:
+            unit_type_counts[ut] = unit_type_counts.get(ut, 0) + 1
+        if st is not None:
+            source_type_counts[st] = source_type_counts.get(st, 0) + 1
+
+    chunk_type_counts = {k: chunk_type_counts[k] for k in sorted(chunk_type_counts.keys())}
+    unit_type_counts = {k: unit_type_counts[k] for k in sorted(unit_type_counts.keys())}
+    source_type_counts = {k: source_type_counts[k] for k in sorted(source_type_counts.keys())}
+
+    # Token stats
+    tokens = [c["token_count"] for c in chunks if isinstance(c.get("token_count"), (int, float)) and not isinstance(c.get("token_count"), bool)]
+    if tokens:
+        import statistics
+        stat_min = min(tokens)
+        stat_max = max(tokens)
+        stat_total = sum(tokens)
+        stat_mean = round(statistics.mean(tokens), 2)
+        stat_median = round(statistics.median(tokens), 2)
+        stat_p95 = round(_calculate_p95(tokens), 2)
+    else:
+        stat_min = 0
+        stat_max = 0
+        stat_total = 0
+        stat_mean = 0.0
+        stat_median = 0.0
+        stat_p95 = 0.0
+
+    return {
+        "document_id": doc_id,
+        "topic_code": topic_code,
+        "topic_name": topic_name,
+        "parser_version": parser_ver,
+        "chunker_version": CHUNKER_VERSION,
+        "source_sha256": source_sha,
+        "article_count": len(canonical_corpus.get("articles") or []),
+        "chunk_count": len(chunks),
+        "tokenizer_name": token_counter.name,
+        "config": {
+            "target_tokens": config.target_tokens,
+            "max_tokens": config.max_tokens,
+            "fallback_overlap": config.fallback_overlap,
+            "chunker_version": CHUNKER_VERSION
+        },
+        "chunk_type_counts": chunk_type_counts,
+        "unit_type_counts": unit_type_counts,
+        "source_type_counts": source_type_counts,
+        "token_statistics": {
+            "min": stat_min,
+            "max": stat_max,
+            "mean": stat_mean,
+            "median": stat_median,
+            "p95": stat_p95,
+            "total": stat_total
+        },
+        "article_coverage": {
+            "expected": validation["article_count"],
+            "covered": validation["covered_article_count"],
+            "missing_count": len(validation["missing_article_ids"]),
+            "missing_ids": validation["missing_article_ids"]
+        },
+        "non_table_unit_coverage": {
+            "expected": validation["canonical_non_table_unit_count"],
+            "covered": validation["covered_non_table_unit_count"],
+            "missing_count": validation["missing_non_table_unit_count"],
+            "unknown_count": validation["unknown_source_unit_count"]
+        },
+        "table_coverage": {
+            "expected": validation["canonical_table_count"],
+            "covered": validation["covered_table_count"],
+            "missing_count": validation["missing_table_count"],
+            "unknown_count": validation["unknown_table_count"]
+        },
+        "fallback_statistics": {
+            "fallback_segment_count": chunk_type_counts.get("fallback_segment", 0),
+            "requires_fallback_count": validation["requires_fallback_count"]
+        },
+        "validation": {
+            "is_valid": validation["is_valid"],
+            "error_count": len(validation["errors"]),
+            "warning_count": len(validation["warnings"])
+        }
+    }

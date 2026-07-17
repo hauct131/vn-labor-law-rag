@@ -2,6 +2,7 @@ import uuid
 import pytest
 import json
 from pathlib import Path
+import copy
 
 from backend.app.ingestion.legal_chunker import (
     ChunkingConfig,
@@ -11,7 +12,9 @@ from backend.app.ingestion.legal_chunker import (
     make_chunk_id,
     build_chunk_key,
     build_legal_chunks,
-    split_oversized_legal_text
+    split_oversized_legal_text,
+    validate_chunks,
+    build_chunking_summary
 )
 
 
@@ -1377,3 +1380,453 @@ def test_real_corpus_tables():
 
     # Chạy lại cùng input phải cho toàn bộ output giống nhau.
     assert chunks_first == chunks_second
+
+
+def test_validation_happy_path():
+    path = Path("data/processed/articles_raw.json")
+    if not path.is_file():
+        pytest.skip("data/processed/articles_raw.json not found")
+
+    with path.open("r", encoding="utf-8") as file:
+        corpus = json.load(file)
+
+    chunks = build_legal_chunks(corpus)
+    cfg = ChunkingConfig()
+    tc = get_default_token_counter()
+    validation = validate_chunks(corpus, chunks, config=cfg, token_counter=tc)
+
+    assert validation["is_valid"] is True
+    assert validation["article_count"] == 477
+    assert validation["chunk_count"] == 1126
+    assert validation["covered_article_count"] == 477
+    assert validation["canonical_non_table_unit_count"] == 2797
+    assert validation["covered_non_table_unit_count"] == 2797
+    assert validation["canonical_table_count"] == 63
+    assert validation["covered_table_count"] == 63
+    assert validation["duplicate_chunk_id_count"] == 0
+    assert validation["duplicate_chunk_key_count"] == 0
+    assert validation["requires_fallback_count"] == 0
+    assert validation["oversized_chunk_count"] == 0
+    assert validation["stable_id_check"] is True
+    assert validation["input_mutated"] is False
+    assert validation["input_chunk_count_preserved"] is True
+
+    # JSON serializable and deterministic
+    out1 = json.dumps(validation, sort_keys=True, ensure_ascii=False)
+    out2 = json.dumps(validation, sort_keys=True, ensure_ascii=False)
+    assert out1 == out2
+
+
+def test_validation_errors(base_article):
+    base_article["content_units"] = [
+        {"unit_id": "u1", "unit_type": "clause", "clause_number": "1", "text": "Nội dung ngắn."}
+    ]
+    corpus = {"metadata": {"document_id": "doc123", "topic_code": "LD"}, "articles": [base_article]}
+    chunks = build_legal_chunks(corpus)
+
+    # 1. Empty chunks
+    val_empty = validate_chunks(corpus, [])
+    assert val_empty["is_valid"] is False
+    assert any("chunks_is_empty" in err for err in val_empty["errors"])
+
+    # 2. Duplicate chunk_id
+    bad_chunks = copy.deepcopy(chunks)
+    if bad_chunks:
+        bad_chunks.append(copy.deepcopy(bad_chunks[0]))
+        val_dup_id = validate_chunks(corpus, bad_chunks)
+        assert val_dup_id["is_valid"] is False
+        assert val_dup_id["duplicate_chunk_id_count"] == 1
+
+    # 3. Duplicate chunk_key
+    bad_chunks = copy.deepcopy(chunks)
+    if bad_chunks:
+        bad_chunks.append(copy.deepcopy(bad_chunks[0]))
+        bad_chunks[-1]["chunk_id"] = "00000000-0000-0000-0000-000000000000"
+        val_dup_key = validate_chunks(corpus, bad_chunks)
+        assert val_dup_key["is_valid"] is False
+        assert val_dup_key["duplicate_chunk_key_count"] == 1
+
+    # 4. Missing required field
+    bad_chunks = copy.deepcopy(chunks)
+    if bad_chunks:
+        bad_chunks[0].pop("tokenizer_name")
+        val_missing_field = validate_chunks(corpus, bad_chunks)
+        assert val_missing_field["is_valid"] is False
+        assert val_missing_field["missing_required_field_count"] == 1
+
+    # 5. Empty content
+    bad_chunks = copy.deepcopy(chunks)
+    if bad_chunks:
+        bad_chunks[0]["content"] = " "
+        val_empty_content = validate_chunks(corpus, bad_chunks)
+        assert val_empty_content["is_valid"] is False
+        assert val_empty_content["empty_content_count"] == 1
+
+    # 6. Empty body
+    bad_chunks = copy.deepcopy(chunks)
+    if bad_chunks:
+        bad_chunks[0]["body_text"] = "None"
+        val_empty_body = validate_chunks(corpus, bad_chunks)
+        assert val_empty_body["is_valid"] is False
+        assert val_empty_body["empty_body_count"] == 1
+
+    # 7. Invalid parent article ID
+    bad_chunks = copy.deepcopy(chunks)
+    if bad_chunks:
+        bad_chunks[0]["parent_article_id"] = "non_existent"
+        val_invalid_parent = validate_chunks(corpus, bad_chunks)
+        assert val_invalid_parent["is_valid"] is False
+        assert val_invalid_parent["invalid_parent_count"] == 1
+        assert "non_existent" in val_invalid_parent["invalid_parent_article_ids"]
+
+    # 8. Missing article coverage
+    bad_corpus = copy.deepcopy(corpus)
+    bad_corpus["articles"].append({"article_id": "art_missing", "content_units": []})
+    val_missing_cov = validate_chunks(bad_corpus, chunks)
+    assert val_missing_cov["is_valid"] is False
+    assert "art_missing" in val_missing_cov["missing_article_ids"]
+
+    # 9. Invalid chunk type
+    bad_chunks = copy.deepcopy(chunks)
+    if bad_chunks:
+        bad_chunks[0]["chunk_type"] = "invalid_type"
+        val_chunk_type = validate_chunks(corpus, bad_chunks)
+        assert val_chunk_type["is_valid"] is False
+        assert val_chunk_type["invalid_chunk_type_count"] == 1
+
+    # 10. Invalid unit type
+    bad_chunks = copy.deepcopy(chunks)
+    if bad_chunks:
+        bad_chunks[0]["unit_type"] = "invalid_unit"
+        val_unit_type = validate_chunks(corpus, bad_chunks)
+        assert val_unit_type["is_valid"] is False
+        assert val_unit_type["invalid_unit_type_count"] == 1
+
+    # 11. Token count mismatch
+    bad_chunks = copy.deepcopy(chunks)
+    if bad_chunks:
+        bad_chunks[0]["token_count"] = 9999
+        val_tok_mismatch = validate_chunks(corpus, bad_chunks)
+        assert val_tok_mismatch["is_valid"] is False
+        assert val_tok_mismatch["token_count_mismatch_count"] == 1
+
+    # 12. Tokenizer name mismatch
+    bad_chunks = copy.deepcopy(chunks)
+    if bad_chunks:
+        bad_chunks[0]["tokenizer_name"] = "wrong_tokenizer"
+        val_tokenizer_mismatch = validate_chunks(corpus, bad_chunks)
+        assert val_tokenizer_mismatch["is_valid"] is False
+        assert val_tokenizer_mismatch["tokenizer_name_mismatch_count"] == 1
+
+    # 13. Oversized chunk
+    bad_chunks = copy.deepcopy(chunks)
+    if bad_chunks:
+        bad_chunks[0]["token_count"] = 5
+        config_small = ChunkingConfig(target_tokens=2, max_tokens=3, fallback_overlap=0)
+        val_oversized = validate_chunks(corpus, bad_chunks, config=config_small)
+        assert val_oversized["is_valid"] is False
+        assert val_oversized["oversized_chunk_count"] == 1
+
+    # 14. Requires fallback true
+    bad_chunks = copy.deepcopy(chunks)
+    if bad_chunks:
+        bad_chunks[0]["requires_fallback"] = True
+        val_req_fb = validate_chunks(corpus, bad_chunks)
+        assert val_req_fb["is_valid"] is False
+        assert val_req_fb["requires_fallback_count"] == 1
+
+    # 15. Unstable ID (UUIDv5 mismatch)
+    bad_chunks = copy.deepcopy(chunks)
+    if bad_chunks:
+        bad_chunks[0]["chunk_id"] = str(uuid.uuid5(uuid.NAMESPACE_DNS, "wrong_dns"))
+        val_unstable_id = validate_chunks(corpus, bad_chunks)
+        assert val_unstable_id["is_valid"] is False
+        assert val_unstable_id["stable_id_check"] is False
+
+    # 16. Invalid UUID string
+    bad_chunks = copy.deepcopy(chunks)
+    if bad_chunks:
+        bad_chunks[0]["chunk_id"] = "not-a-valid-uuid"
+        val_invalid_uuid = validate_chunks(corpus, bad_chunks)
+        assert val_invalid_uuid["is_valid"] is False
+        assert val_invalid_uuid["stable_id_check"] is False
+
+    # 17. Relation list length mismatch
+    bad_chunks = copy.deepcopy(chunks)
+    if bad_chunks:
+        bad_chunks[0]["relation_target_ids"] = ["id1"]
+        bad_chunks[0]["relation_target_codes"] = []
+        val_rel_mismatch = validate_chunks(corpus, bad_chunks)
+        assert val_rel_mismatch["is_valid"] is False
+        assert val_rel_mismatch["relation_list_length_mismatch_count"] == 1
+
+    # 18. Missing non-table source unit
+    bad_corpus = copy.deepcopy(corpus)
+    bad_corpus["articles"][0]["content_units"].append({"unit_id": "u2_missing", "unit_type": "clause", "clause_number": "2", "text": "Clause 2"})
+    val_missing_unit = validate_chunks(bad_corpus, chunks)
+    assert val_missing_unit["is_valid"] is False
+    assert "u2_missing" in val_missing_unit["missing_non_table_unit_ids"]
+
+    # 19. Unknown source unit in chunks
+    bad_chunks = copy.deepcopy(chunks)
+    if bad_chunks:
+        bad_chunks[0]["source_unit_ids"] = bad_chunks[0]["source_unit_ids"] + ["unknown_u"]
+        val_unknown_unit = validate_chunks(corpus, bad_chunks)
+        assert val_unknown_unit["is_valid"] is False
+        assert "unknown_u" in val_unknown_unit["unknown_source_unit_ids"]
+
+
+def test_validation_table_errors(base_article):
+    base_article["content_units"] = []
+    base_article["tables"] = [
+        {
+            "table_id": "tbl1",
+            "headers": ["C1"],
+            "rows": [["A"], ["B"]]
+        }
+    ]
+    corpus = {"metadata": {"document_id": "doc123"}, "articles": [base_article]}
+    config = ChunkingConfig(target_tokens=20, max_tokens=100, fallback_overlap=0)
+    counter = WordTokenCounter()
+    chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
+
+    # 1. Missing table coverage
+    bad_corpus = copy.deepcopy(corpus)
+    bad_corpus["articles"][0]["tables"].append({"table_id": "tbl_missing", "headers": ["C2"], "rows": [["C"]]})
+    val_missing_tbl = validate_chunks(bad_corpus, chunks)
+    assert val_missing_tbl["is_valid"] is False
+    assert "tbl_missing" in val_missing_tbl["missing_table_ids"]
+
+    # 2. Unknown table in chunks
+    bad_chunks = copy.deepcopy(chunks)
+    tbl_chunk = [c for c in bad_chunks if c["chunk_type"] == "table"]
+    if tbl_chunk:
+        tbl_chunk[0]["table_id"] = "tbl_unknown"
+        val_unknown_tbl = validate_chunks(corpus, bad_chunks)
+        assert val_unknown_tbl["is_valid"] is False
+        assert "tbl_unknown" in val_unknown_tbl["unknown_table_ids"]
+
+    # 3. Table metadata invalid
+    bad_chunks = copy.deepcopy(chunks)
+    tbl_chunk = [c for c in bad_chunks if c["chunk_type"] == "table"]
+    if tbl_chunk:
+        tbl_chunk[0]["unit_type"] = "clause" # Should be table
+        val_invalid_meta = validate_chunks(corpus, bad_chunks)
+        assert val_invalid_meta["is_valid"] is False
+        assert val_invalid_meta["invalid_table_metadata_count"] == 1
+
+    # 4. Table segment sequence starts at 0 or has gap
+    bad_chunks = copy.deepcopy(chunks)
+    tbl_chunks = [c for c in bad_chunks if c["chunk_type"] == "table"]
+    if len(tbl_chunks) > 0:
+        tbl_chunks[0]["segment_index"] = 2 # segment sequence gap (starts at 2 instead of 1)
+        val_seq_gap = validate_chunks(corpus, bad_chunks)
+        assert val_seq_gap["is_valid"] is False
+        assert val_seq_gap["table_segment_sequence_error_count"] == 1
+
+    # 5. Duplicate table segment
+    bad_chunks = copy.deepcopy(chunks)
+    tbl_chunks = [c for c in bad_chunks if c["chunk_type"] == "table"]
+    if len(tbl_chunks) > 0:
+        dup = copy.deepcopy(tbl_chunks[0])
+        dup["chunk_id"] = "00000000-0000-0000-0000-000000000001"
+        dup["chunk_key"] = "dup_key_segment"
+        bad_chunks.append(dup)
+        val_dup_seg = validate_chunks(corpus, bad_chunks)
+        assert val_dup_seg["is_valid"] is False
+        assert val_dup_seg["duplicate_table_segment_key_count"] == 1
+
+    # 6. Table ordering violation (table chunk before text chunk)
+    # Dựng lại corpus có cả text và table
+    base_article["content_units"] = [
+        {"unit_id": "u1", "unit_type": "preamble", "text": "Đoạn 1"}
+    ]
+    chunks_ordered = build_legal_chunks(corpus, config=config, token_counter=counter)
+    # Hoán đổi thứ tự text chunk và table chunk
+    bad_chunks_order = [c for c in chunks_ordered if c["chunk_type"] == "table"] + [c for c in chunks_ordered if c["chunk_type"] != "table"]
+    val_order = validate_chunks(corpus, bad_chunks_order)
+    assert val_order["is_valid"] is False
+    assert val_order["table_ordering_error_count"] == 1
+
+
+def test_validation_empty_and_no_table():
+    corpus = {
+        "metadata": {
+            "document_id": "doc_empty",
+            "topic_code": "LD",
+            "topic_name": "Lao dong",
+            "parser_version": "1.0.0",
+            "source_sha256": "sha256"
+        },
+        "articles": [
+            {
+                "article_id": "art_empty",
+                "article_code": "LQ.1",
+                "article_title": "Empty Article",
+                "content_units": []
+            }
+        ]
+    }
+
+    # 1. Chunks list is empty
+    val_empty = validate_chunks(corpus, [])
+    assert val_empty["is_valid"] is False
+    assert val_empty["chunk_count"] == 0
+    assert val_empty["covered_article_count"] == 0
+    assert "art_empty" in val_empty["missing_article_ids"]
+    assert val_empty["table_segment_sequence_error_count"] == 0
+    assert val_empty["table_ordering_error_count"] == 0
+    assert val_empty["JSON_serialization_error_count"] == 0
+
+    # json.dumps does not crash
+    assert json.dumps(val_empty, ensure_ascii=False)
+
+    # 2. One valid table segment (no sequence error)
+    base_art = {
+        "article_id": "art_tbl",
+        "article_code": "LQ.2",
+        "article_title": "Table Article",
+        "content_units": [],
+        "tables": [
+            {
+                "table_id": "tbl1",
+                "headers": ["Col"],
+                "rows": [["Val"]]
+            }
+        ]
+    }
+    corpus_tbl = {
+        "metadata": {"document_id": "doc_tbl"},
+        "articles": [base_art]
+    }
+
+    # Build a single valid table chunk manually to verify no sequence/ordering errors
+    tc = WordTokenCounter()
+    cfg = ChunkingConfig(target_tokens=20, max_tokens=100, fallback_overlap=0)
+    chunks = build_legal_chunks(corpus_tbl, config=cfg, token_counter=tc)
+
+    val_tbl = validate_chunks(corpus_tbl, chunks, config=cfg, token_counter=tc)
+    assert val_tbl["table_segment_sequence_error_count"] == 0
+    assert val_tbl["table_ordering_error_count"] == 0
+    assert val_tbl["is_valid"] is True
+
+
+def test_build_chunking_summary():
+    path = Path("data/processed/articles_raw.json")
+    if not path.is_file():
+        pytest.skip("data/processed/articles_raw.json not found")
+
+    with path.open("r", encoding="utf-8") as file:
+        corpus = json.load(file)
+
+    cfg = ChunkingConfig()
+    tc = get_default_token_counter()
+
+    chunks = build_legal_chunks(
+        corpus,
+        config=cfg,
+        token_counter=tc,
+    )
+
+    validation = validate_chunks(
+        corpus,
+        chunks,
+        config=cfg,
+        token_counter=tc,
+    )
+
+    summary = build_chunking_summary(
+        corpus,
+        chunks,
+        validation,
+        config=cfg,
+        token_counter=tc,
+    )
+
+    # JSON serializable
+    serialized = json.dumps(summary, ensure_ascii=False)
+    assert isinstance(serialized, str)
+    assert serialized
+
+    # Metadata
+    assert summary["document_id"] is not None
+    assert summary["topic_code"] == corpus["metadata"]["topic_code"]
+    assert summary["topic_name"] == corpus["metadata"]["topic_name"]
+    assert summary["article_count"] == len(corpus["articles"])
+    assert summary["chunk_count"] == len(chunks)
+    assert summary["tokenizer_name"] == tc.name
+
+    # Config
+    assert summary["config"]["target_tokens"] == cfg.target_tokens
+    assert summary["config"]["max_tokens"] == cfg.max_tokens
+    assert summary["config"]["fallback_overlap"] == cfg.fallback_overlap
+    assert summary["config"]["chunker_version"] == cfg.chunker_version
+
+    # Count statistics
+    assert sum(summary["chunk_type_counts"].values()) == len(chunks)
+    assert sum(summary["unit_type_counts"].values()) == len(chunks)
+
+    # Token statistics
+    stats = summary["token_statistics"]
+    token_counts = [chunk["token_count"] for chunk in chunks]
+
+    assert stats["min"] == min(token_counts)
+    assert stats["max"] == max(token_counts)
+    assert stats["total"] == sum(token_counts)
+    assert stats["mean"] > 0
+    assert stats["median"] > 0
+    assert stats["p95"] >= stats["median"]
+    assert stats["max"] <= cfg.max_tokens
+
+    # Coverage statistics
+    assert summary["article_coverage"]["expected"] == 477
+    assert summary["article_coverage"]["covered"] == 477
+    assert summary["article_coverage"]["missing_count"] == 0
+    assert summary["article_coverage"]["missing_ids"] == []
+
+    assert summary["non_table_unit_coverage"]["expected"] == 2797
+    assert summary["non_table_unit_coverage"]["covered"] == 2797
+    assert summary["non_table_unit_coverage"]["missing_count"] == 0
+    assert summary["non_table_unit_coverage"]["unknown_count"] == 0
+
+    assert summary["table_coverage"]["expected"] == 63
+    assert summary["table_coverage"]["covered"] == 63
+    assert summary["table_coverage"]["missing_count"] == 0
+    assert summary["table_coverage"]["unknown_count"] == 0
+
+    # Fallback statistics
+    expected_fallback_segments = sum(
+        chunk["chunk_type"] == "fallback_segment"
+        for chunk in chunks
+    )
+
+    assert (
+        summary["fallback_statistics"]["fallback_segment_count"]
+        == expected_fallback_segments
+    )
+    assert (
+        summary["fallback_statistics"]["requires_fallback_count"]
+        == 0
+    )
+
+    # Validation summary
+    assert summary["validation"]["is_valid"] is True
+    assert summary["validation"]["error_count"] == 0
+    assert summary["validation"]["warning_count"] == len(
+        validation["warnings"]
+    )
+
+    # Determinism
+    summary_second = build_chunking_summary(
+        corpus,
+        chunks,
+        validation,
+        config=cfg,
+        token_counter=tc,
+    )
+    assert summary == summary_second
+
+    # Không có timestamp biến đổi
+    assert "timestamp" not in summary
+    assert "generated_at" not in summary
+    assert "parsed_at" not in summary
