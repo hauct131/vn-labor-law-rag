@@ -456,6 +456,8 @@ def _create_chunk(
     point_labels: list[str] | None = None,
     point_occurrences: list[int] | None = None,
     segment_index: int | None = None,
+    table_id: str | None = None,
+    table_index: int | None = None,
     body_text: str,
     source_unit_ids: list[str],
     token_counter: TokenCounter,
@@ -472,6 +474,7 @@ def _create_chunk(
         clause_occurrence=clause_occurrence,
         point_labels=point_labels,
         point_occurrences=point_occurrences,
+        table_index=table_index,
         segment_index=segment_index
     )
     chunk_id = make_chunk_id(chunk_key)
@@ -514,8 +517,8 @@ def _create_chunk(
         "point_labels": point_labels or [],
         "point_occurrences": point_occurrences or [],
         "source_unit_ids": source_unit_ids,
-        "table_id": None,
-        "table_index": None,
+        "table_id": table_id,
+        "table_index": table_index,
         "segment_index": segment_index,
         "content": content,
         "body_text": body_text,
@@ -585,6 +588,231 @@ def split_oversized_legal_text(
     return segments
 
 
+def _serialize_table(
+    table: dict,
+    *,
+    rows: list | None = None,
+    include_header: bool = True,
+) -> str:
+    """Serialize table dictionary to deterministic, clean markdown-like format."""
+    table_id = table.get("table_id", "")
+    lines = [f"Bảng: {table_id}"]
+
+    headers = table.get("headers") or []
+    table_rows = rows if rows is not None else table.get("rows")
+
+    if table_rows:
+        if include_header and headers:
+            header_str = " | ".join(str(h).strip() for h in headers)
+            lines.append(f"Cột: {header_str}")
+
+        for r_idx, row in enumerate(table_rows, 1):
+            if isinstance(row, list):
+                row_str = " | ".join(str(val) if val is not None else "" for val in row)
+            elif isinstance(row, dict):
+                if headers:
+                    row_str = " | ".join(str(row.get(h)) if row.get(h) is not None else "" for h in headers)
+                else:
+                    row_str = " | ".join(str(value) if value is not None else "" for value in row.values())
+            else:
+                row_str = str(row)
+            lines.append(f"Dòng {r_idx}: {row_str}")
+        return "\n".join(lines)
+    else:
+        text_content = table.get("text", "").strip()
+        if text_content:
+            lines.append(text_content)
+            return "\n".join(lines)
+        return f"Bảng: {table_id}"
+
+
+def _build_table_chunks(
+    article: dict,
+    cfg: ChunkingConfig,
+    tc: TokenCounter,
+) -> list[dict]:
+    """Tạo table chunks cho các tables trong article['tables']."""
+    tables = article.get("tables") or []
+    table_chunks = []
+
+    for tbl_idx, table in enumerate(tables, 1):
+        table_id = table.get("table_id")
+        rows = table.get("rows") or []
+
+        # 1. Thử xem toàn bộ bảng có vừa khít max_tokens không
+        full_body = _serialize_table(table, include_header=True)
+        # Tính toán content đầy đủ bao gồm breadcrumbs
+        full_content = _build_chunk_content(
+            article,
+            body_text=full_body
+        )
+        if tc.count(full_content) <= cfg.max_tokens:
+            # Vừa khít, tạo 1 chunk duy nhất
+            chunk = _create_chunk(
+                article,
+                chunk_type="table",
+                unit_type="table",
+                segment_index=1,
+                table_id=table_id,
+                table_index=tbl_idx,
+                body_text=full_body,
+                source_unit_ids=[],
+                token_counter=tc,
+                requires_fallback=False
+            )
+            table_chunks.append(chunk)
+            continue
+
+        # 2. Bảng vượt quá max_tokens -> cần chia nhỏ
+        if rows:
+            # Danh sách chứa các tuple: (group_rows, include_header, warnings)
+            segments_rows = []
+            current_group = []
+
+            for r_idx, row in enumerate(rows, 1):
+                # Thử thêm row vào current_group
+                test_group = current_group + [row]
+                test_body = _serialize_table(table, rows=test_group, include_header=True)
+                test_content = _build_chunk_content(article, body_text=test_body)
+
+                if tc.count(test_content) <= cfg.max_tokens:
+                    current_group.append(row)
+                else:
+                    # Nếu nhóm hiện tại đã có hàng, chốt nhóm hiện tại
+                    if current_group:
+                        segments_rows.append((current_group, True, []))
+                        current_group = [row]
+                    else:
+                        current_group = [row]
+
+                    # Kiểm tra xem hàng đơn lẻ này (cộng header) có vượt max_tokens không
+                    single_body = _serialize_table(table, rows=current_group, include_header=True)
+                    single_content = _build_chunk_content(article, body_text=single_body)
+
+                    if tc.count(single_content) > cfg.max_tokens:
+                        # Row riêng quá dài! Cần split row này
+                        row_text_only = _serialize_table(table, rows=current_group, include_header=False)
+                        # Dùng split_oversized_legal_text để chia nhỏ row text
+                        sub_texts = split_oversized_legal_text(row_text_only, config=cfg, token_counter=tc)
+                        if not sub_texts:
+                            raise ValueError(
+                                f"Cannot split row {r_idx} for table {table_id} in article {article['article_id']}"
+                            )
+
+                        for sub_t in sub_texts:
+                            # Thử lặp header
+                            sub_body_with_hdr = f"Bảng: {table_id}\n"
+                            if table.get("headers"):
+                                sub_body_with_hdr += "Cột: " + " | ".join(str(h).strip() for h in table["headers"]) + "\n"
+                            sub_body_with_hdr += f"Dòng: {sub_t}"
+
+                            sub_content = _build_chunk_content(article, body_text=sub_body_with_hdr)
+                            if tc.count(sub_content) <= cfg.max_tokens:
+                                segments_rows.append(([sub_t], True, ["oversized_table_row_split"]))
+                            else:
+                                # Header quá dài, thử không lặp header
+                                sub_body_no_hdr = f"Bảng: {table_id}\n{sub_t}"
+                                sub_content_no_hdr = _build_chunk_content(article, body_text=sub_body_no_hdr)
+                                if tc.count(sub_content_no_hdr) <= cfg.max_tokens:
+                                    segments_rows.append(([sub_t], False, ["oversized_table_row_split"]))
+                                else:
+                                    raise ValueError(
+                                        f"Cannot fit table row chunk under max_tokens for article {article['article_id']}, "
+                                        f"table {table_id}, row {r_idx}."
+                                    )
+                        current_group = []
+
+            # Xử lý phần còn lại trong current_group
+            if current_group:
+                single_body = _serialize_table(table, rows=current_group, include_header=True)
+                single_content = _build_chunk_content(article, body_text=single_body)
+                if tc.count(single_content) > cfg.max_tokens:
+                    row_text_only = _serialize_table(table, rows=current_group, include_header=False)
+                    sub_texts = split_oversized_legal_text(row_text_only, config=cfg, token_counter=tc)
+                    for sub_t in sub_texts:
+                        sub_body_with_hdr = f"Bảng: {table_id}\n"
+                        if table.get("headers"):
+                            sub_body_with_hdr += "Cột: " + " | ".join(str(h).strip() for h in table["headers"]) + "\n"
+                        sub_body_with_hdr += f"Dòng: {sub_t}"
+                        sub_content = _build_chunk_content(article, body_text=sub_body_with_hdr)
+                        if tc.count(sub_content) <= cfg.max_tokens:
+                            segments_rows.append(([sub_t], True, ["oversized_table_row_split"]))
+                        else:
+                            sub_body_no_hdr = f"Bảng: {table_id}\n{sub_t}"
+                            sub_content_no_hdr = _build_chunk_content(article, body_text=sub_body_no_hdr)
+                            if tc.count(sub_content_no_hdr) <= cfg.max_tokens:
+                                segments_rows.append(([sub_t], False, ["oversized_table_row_split"]))
+                            else:
+                                raise ValueError(
+                                    f"Cannot fit table row chunk under max_tokens for article {article['article_id']}, "
+                                    f"table {table_id}."
+                                )
+                else:
+                    segments_rows.append((current_group, True, []))
+
+            # Dựng các chunks từ segments_rows
+            for s_idx, (group, incl_hdr, warnings) in enumerate(segments_rows, 1):
+                if incl_hdr:
+                    if len(group) == 1 and isinstance(group[0], str) and not group[0].startswith("Dòng"):
+                        # Đây là sub_text từ row quá dài
+                        seg_body = f"Bảng: {table_id}\n"
+                        if table.get("headers"):
+                            seg_body += "Cột: " + " | ".join(str(h).strip() for h in table["headers"]) + "\n"
+                        seg_body += f"Dòng: {group[0]}"
+                    else:
+                        seg_body = _serialize_table(table, rows=group, include_header=True)
+                else:
+                    if len(group) == 1 and isinstance(group[0], str) and not group[0].startswith("Dòng"):
+                        seg_body = f"Bảng: {table_id}\n{group[0]}"
+                    else:
+                        seg_body = _serialize_table(table, rows=group, include_header=False)
+
+                chunk = _create_chunk(
+                    article,
+                    chunk_type="table",
+                    unit_type="table",
+                    segment_index=s_idx,
+                    table_id=table_id,
+                    table_index=tbl_idx,
+                    body_text=seg_body,
+                    source_unit_ids=[],
+                    token_counter=tc,
+                    requires_fallback=False,
+                    warnings=warnings
+                )
+                table_chunks.append(chunk)
+
+        else:
+            # Table không có rows mà chỉ có text
+            text_content = table.get("text", "")
+            sub_texts = split_oversized_legal_text(text_content, config=cfg, token_counter=tc)
+            if not sub_texts:
+                sub_texts = [text_content]
+
+            for s_idx, sub_t in enumerate(sub_texts, 1):
+                seg_body = f"Bảng: {table_id}\n{sub_t}"
+                sub_content = _build_chunk_content(article, body_text=seg_body)
+                if tc.count(sub_content) > cfg.max_tokens:
+                    raise ValueError(
+                        f"Cannot fit text-only table chunk under max_tokens for article {article['article_id']}, table {table_id}."
+                    )
+                chunk = _create_chunk(
+                    article,
+                    chunk_type="table",
+                    unit_type="table",
+                    segment_index=s_idx,
+                    table_id=table_id,
+                    table_index=tbl_idx,
+                    body_text=seg_body,
+                    source_unit_ids=[],
+                    token_counter=tc,
+                    requires_fallback=False
+                )
+                table_chunks.append(chunk)
+
+    return table_chunks
+
+
 def build_legal_chunks(
     canonical_corpus: dict,
     *,
@@ -624,7 +852,9 @@ def build_legal_chunks(
         # 1. Trích xuất text units (bỏ table)
         text_units = [u for u in article.get("content_units", []) if u.get("unit_type") != "table"]
         if not text_units:
-            # không tạo chunk cho article không có text unit
+            # Article không có text units nhưng có thể có tables
+            table_chunks = _build_table_chunks(article, cfg, tc)
+            initial_chunks.extend(table_chunks)
             logger.warning(f"Article {art_id} has no text units")
             continue
 
@@ -648,10 +878,13 @@ def build_legal_chunks(
                 source_unit_ids=art_source_ids,
                 token_counter=tc
             )
-            initial_chunks.append(chunk)
 
             # Verification: coverage check
             _verify_coverage(art_id, text_units, [chunk])
+
+            table_chunks = _build_table_chunks(article, cfg, tc)
+            initial_chunks.append(chunk)
+            initial_chunks.extend(table_chunks)
             continue
 
         # 4. Article Long Chunk > max_tokens
@@ -925,7 +1158,9 @@ def build_legal_chunks(
 
         # Verification: coverage check
         _verify_coverage(art_id, text_units, article_chunks)
+        table_chunks = _build_table_chunks(article, cfg, tc)
         initial_chunks.extend(article_chunks)
+        initial_chunks.extend(table_chunks)
 
     # Phase 2: Fallback splitting for chunks that require fallback
     final_chunks = []

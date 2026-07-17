@@ -580,7 +580,7 @@ def test_orphan_point_preserved(base_article):
     counter = WordTokenCounter()
 
     chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
-    
+
     orphan_chunks = [
         chunk
         for chunk in chunks
@@ -588,7 +588,7 @@ def test_orphan_point_preserved(base_article):
         and chunk["unit_type"] == "orphan"
         and "u1" in chunk["source_unit_ids"]
     ]
-    
+
     assert len(orphan_chunks) > 0
     for idx, c in enumerate(sorted(orphan_chunks, key=lambda x: x.get("segment_index") or 0), 1):
         assert "u1" in c["source_unit_ids"]
@@ -615,7 +615,7 @@ def test_unsupported_unit_preserved(base_article):
     counter = WordTokenCounter()
 
     chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
-    
+
     unsupported_chunks = [
         chunk
         for chunk in chunks
@@ -623,7 +623,7 @@ def test_unsupported_unit_preserved(base_article):
         and chunk["unit_type"] == "orphan"
         and "u1" in chunk["source_unit_ids"]
     ]
-    
+
     assert len(unsupported_chunks) > 0
     for idx, c in enumerate(sorted(unsupported_chunks, key=lambda x: x.get("segment_index") or 0), 1):
         assert "u1" in c["source_unit_ids"]
@@ -891,7 +891,7 @@ def test_split_oversized_legal_text_deterministic():
 def test_split_oversized_legal_text_uses_supplied_token_counter():
     text = "A B C D E F G H I"
     config = ChunkingConfig(target_tokens=3, max_tokens=5, fallback_overlap=0)
-    
+
     class CustomCounter:
         name = "custom"
         def count(self, t):
@@ -959,14 +959,14 @@ def test_only_requires_fallback_chunks_replaced(base_article):
     config = ChunkingConfig(target_tokens=5, max_tokens=30, fallback_overlap=0)
     counter = WordTokenCounter()
     chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
-    
+
     # Clause 1 remains as a clause chunk.
     # Clause 2 is replaced by fallback segments.
     has_clause_1 = any(c["chunk_type"] == "clause" and c["clause_number"] == "1" for c in chunks)
     assert has_clause_1
     has_clause_2 = any(c["chunk_type"] == "clause" and c["clause_number"] == "2" for c in chunks)
     assert not has_clause_2
-    
+
     clause_2_segs = [c for c in chunks if c["chunk_type"] == "fallback_segment" and c["clause_number"] == "2"]
     assert len(clause_2_segs) > 0
 
@@ -979,7 +979,7 @@ def test_segment_indices_start_at_1(base_article):
     config = ChunkingConfig(target_tokens=3, max_tokens=30, fallback_overlap=0)
     counter = WordTokenCounter()
     chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
-    
+
     fallback_segs = [c for c in chunks if c["chunk_type"] == "fallback_segment"]
     assert len(fallback_segs) > 1
     assert fallback_segs[0]["segment_index"] == 1
@@ -993,10 +993,10 @@ def test_fallback_keys_stable(base_article):
     corpus = {"metadata": {}, "articles": [base_article]}
     config = ChunkingConfig(target_tokens=3, max_tokens=30, fallback_overlap=0)
     counter = WordTokenCounter()
-    
+
     chunks1 = build_legal_chunks(corpus, config=config, token_counter=counter)
     chunks2 = build_legal_chunks(corpus, config=config, token_counter=counter)
-    
+
     for c1, c2 in zip(chunks1, chunks2):
         assert c1["chunk_key"] == c2["chunk_key"]
         assert c1["chunk_id"] == c2["chunk_id"]
@@ -1010,7 +1010,7 @@ def test_original_body_covered(base_article):
     corpus = {"metadata": {}, "articles": [base_article]}
     config = ChunkingConfig(target_tokens=3, max_tokens=30, fallback_overlap=0)
     counter = WordTokenCounter()
-    
+
     chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
     combined_body = " ".join([c["body_text"] for c in chunks if c["chunk_type"] == "fallback_segment"])
     # Clean spaces
@@ -1027,7 +1027,7 @@ def test_relation_metadata_preserved_in_fallback(base_article):
     corpus = {"metadata": {}, "articles": [base_article]}
     config = ChunkingConfig(target_tokens=3, max_tokens=30, fallback_overlap=0)
     counter = WordTokenCounter()
-    
+
     chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
     for c in chunks:
         assert len(c["relation_target_ids"]) == 1
@@ -1044,7 +1044,7 @@ def test_attachment_metadata_preserved_in_fallback(base_article):
     corpus = {"metadata": {}, "articles": [base_article]}
     config = ChunkingConfig(target_tokens=3, max_tokens=30, fallback_overlap=0)
     counter = WordTokenCounter()
-    
+
     chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
     for c in chunks:
         assert len(c["attachment_metadata"]) == 1
@@ -1058,7 +1058,7 @@ def test_no_uuid4_used_in_ids(base_article):
     corpus = {"metadata": {}, "articles": [base_article]}
     config = ChunkingConfig(target_tokens=3, max_tokens=30, fallback_overlap=0)
     counter = WordTokenCounter()
-    
+
     chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
     for c in chunks:
         cid = c["chunk_id"]
@@ -1066,3 +1066,314 @@ def test_no_uuid4_used_in_ids(base_article):
         # Check UUID version is 5 (parsed UUID has version attribute)
         parsed = uuid.UUID(cid)
         assert parsed.version == 5
+
+
+def test_table_chunk_source_authoritative(base_article):
+    # table source chỉ lấy article["tables"], không gom content_units có unit_type == "table"
+    base_article["content_units"] = [
+        {"unit_id": "u1", "unit_type": "table", "text": "Bảng trong content unit"}
+    ]
+    base_article["tables"] = [
+        {
+            "table_id": "tbl_real",
+            "headers": ["C1"],
+            "rows": [["A"]]
+        }
+    ]
+    corpus = {"metadata": {}, "articles": [base_article]}
+    chunks = build_legal_chunks(corpus)
+    # Bảng tbl_real phải được tạo, bảng u1 bị loại bỏ khỏi text chunks
+    table_chunks = [c for c in chunks if c["chunk_type"] == "table"]
+    assert len(table_chunks) == 1
+    assert table_chunks[0]["table_id"] == "tbl_real"
+    assert "Bảng trong content unit" not in table_chunks[0]["content"]
+
+
+def test_table_small_single_chunk(base_article):
+    # small table một chunk
+    base_article["content_units"] = [
+        {"unit_id": "u1", "unit_type": "preamble", "text": "Lời mở đầu ngắn."}
+    ]
+    base_article["tables"] = [
+        {
+            "table_id": "tbl_small",
+            "headers": ["ColA", "ColB"],
+            "rows": [
+                ["Val1", "Val2"]
+            ]
+        }
+    ]
+    corpus = {"metadata": {}, "articles": [base_article]}
+    config = ChunkingConfig(target_tokens=10, max_tokens=100, fallback_overlap=0)
+    counter = WordTokenCounter()
+    chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
+
+    table_chunks = [c for c in chunks if c["chunk_type"] == "table"]
+    assert len(table_chunks) == 1
+    c = table_chunks[0]
+    assert c["table_id"] == "tbl_small"
+    assert c["table_index"] == 1
+    assert c["segment_index"] == 1
+    assert c["unit_type"] == "table"
+    assert c["requires_fallback"] is False
+    assert c["oversized_reason"] is None
+
+
+def test_stable_table_key_and_uuid(base_article):
+    base_article["content_units"] = []
+    base_article["tables"] = [
+        {
+            "table_id": "tbl_stable",
+            "headers": ["C1"],
+            "rows": [["A"]]
+        }
+    ]
+    corpus = {"metadata": {}, "articles": [base_article]}
+    chunks1 = build_legal_chunks(corpus)
+    chunks2 = build_legal_chunks(corpus)
+
+    assert chunks1[0]["chunk_key"] == chunks2[0]["chunk_key"]
+    assert chunks1[0]["chunk_id"] == chunks2[0]["chunk_id"]
+    # check v5 uuid
+    parsed = uuid.UUID(chunks1[0]["chunk_id"])
+    assert parsed.version == 5
+
+
+def test_long_table_split_greedy(base_article):
+    base_article["content_units"] = []
+    base_article["tables"] = [
+        {
+            "table_id": "tbl_long",
+            "headers": ["C1"],
+            "rows": [
+                ["Row1"],
+                ["Row2"],
+                ["Row3"],
+                ["Row4"],
+            ],
+        }
+    ]
+
+    corpus = {"metadata": {}, "articles": [base_article]}
+    config = ChunkingConfig(
+        target_tokens=5,
+        max_tokens=33,
+        fallback_overlap=0,
+    )
+    counter = WordTokenCounter()
+
+    chunks = build_legal_chunks(
+        corpus,
+        config=config,
+        token_counter=counter,
+    )
+
+    table_chunks = [
+        chunk
+        for chunk in chunks
+        if chunk["chunk_type"] == "table"
+    ]
+
+    # Bảng dài phải được chia thành nhiều segment.
+    assert len(table_chunks) > 1
+
+    # Segment index phải liên tục và bắt đầu từ 1.
+    assert [
+        chunk["segment_index"]
+        for chunk in table_chunks
+    ] == list(range(1, len(table_chunks) + 1))
+
+    # Mỗi segment phải hợp lệ.
+    for chunk in table_chunks:
+        assert chunk["table_id"] == "tbl_long"
+        assert chunk["table_index"] == 1
+        assert chunk["token_count"] <= config.max_tokens
+        assert chunk["requires_fallback"] is False
+        assert chunk["oversized_reason"] is None
+        assert "Cột: C1" in chunk["body_text"]
+
+    combined_body = "\n".join(
+        chunk["body_text"]
+        for chunk in table_chunks
+    )
+
+    # Không mất và không lặp row.
+    expected_rows = ["Row1", "Row2", "Row3", "Row4"]
+
+    for row in expected_rows:
+        assert combined_body.count(row) == 1
+
+    # Thứ tự row được giữ nguyên.
+    row_positions = [
+        combined_body.index(row)
+        for row in expected_rows
+    ]
+    assert row_positions == sorted(row_positions)
+
+    # Key và ID không trùng.
+    chunk_keys = [
+        chunk["chunk_key"]
+        for chunk in table_chunks
+    ]
+    chunk_ids = [
+        chunk["chunk_id"]
+        for chunk in table_chunks
+    ]
+
+    assert len(chunk_keys) == len(set(chunk_keys))
+    assert len(chunk_ids) == len(set(chunk_ids))
+
+def test_oversized_row_and_text_only_split(base_article):
+    # oversized row được split, mọi chunk <= max_tokens, requires_fallback=False
+    base_article["content_units"] = []
+    base_article["tables"] = [
+        {
+            "table_id": "tbl_oversized_row",
+            "headers": ["C1"],
+            "rows": [
+                ["Nội dung dòng cực kỳ dài vượt qua giới hạn của một chunk đơn lẻ."]
+            ]
+        }
+    ]
+    corpus = {"metadata": {}, "articles": [base_article]}
+    config = ChunkingConfig(target_tokens=5, max_tokens=33, fallback_overlap=0)
+    counter = WordTokenCounter()
+    chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
+
+    table_chunks = [c for c in chunks if c["chunk_type"] == "table"]
+    assert len(table_chunks) > 1
+    for c in table_chunks:
+        assert c["token_count"] <= 33
+        assert c["requires_fallback"] is False
+
+
+def test_text_only_table_split(base_article):
+    # text-only table được split
+    base_article["content_units"] = []
+    base_article["tables"] = [
+        {
+            "table_id": "tbl_text_only",
+            "text": "Đoạn văn bản bảng cực kỳ dài dòng văn bản bảng cực kỳ dài dòng."
+        }
+    ]
+    corpus = {"metadata": {}, "articles": [base_article]}
+    config = ChunkingConfig(target_tokens=5, max_tokens=33, fallback_overlap=0)
+    counter = WordTokenCounter()
+    chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
+
+    table_chunks = [c for c in chunks if c["chunk_type"] == "table"]
+    assert len(table_chunks) > 1
+    for c in table_chunks:
+        assert c["token_count"] <= 33
+        assert c["requires_fallback"] is False
+
+
+def test_table_chunks_after_text_chunks(base_article):
+    # table chunks nằm sau text chunks cùng article
+    base_article["content_units"] = [
+        {"unit_id": "u1", "unit_type": "preamble", "text": "Lời mở đầu."}
+    ]
+    base_article["tables"] = [
+        {
+            "table_id": "tbl_1",
+            "headers": ["C1"],
+            "rows": [["A"]]
+        }
+    ]
+    corpus = {"metadata": {}, "articles": [base_article]}
+    chunks = build_legal_chunks(corpus)
+
+    assert len(chunks) == 2
+    assert chunks[0]["chunk_type"] == "article"
+    assert chunks[1]["chunk_type"] == "table"
+
+
+def test_canonical_input_not_mutated(base_article):
+    base_article["content_units"] = [
+        {"unit_id": "u1", "unit_type": "preamble", "text": "Nội dung."}
+    ]
+    base_article["tables"] = [
+        {
+            "table_id": "tbl_1",
+            "headers": ["C1"],
+            "rows": [["A"]]
+        }
+    ]
+    corpus = {"metadata": {}, "articles": [base_article]}
+    orig = json.dumps(corpus)
+    build_legal_chunks(corpus)
+    assert json.dumps(corpus) == orig
+
+
+def test_real_corpus_tables():
+    path = Path("data/processed/articles_raw.json")
+    if not path.is_file():
+        pytest.skip("data/processed/articles_raw.json not found")
+
+    with path.open("r", encoding="utf-8") as file:
+        corpus = json.load(file)
+
+    canonical_table_ids = {
+        table["table_id"]
+        for article in corpus["articles"]
+        for table in article.get("tables", [])
+        if table.get("table_id")
+    }
+
+    chunks_first = build_legal_chunks(corpus)
+    chunks_second = build_legal_chunks(corpus)
+
+    table_chunks = [
+        chunk
+        for chunk in chunks_first
+        if chunk["chunk_type"] == "table"
+    ]
+
+    covered_table_ids = {
+        chunk["table_id"]
+        for chunk in table_chunks
+        if chunk.get("table_id")
+    }
+
+    chunk_ids = [
+        chunk["chunk_id"]
+        for chunk in table_chunks
+    ]
+
+    chunk_keys = [
+        chunk["chunk_key"]
+        for chunk in table_chunks
+    ]
+
+    # Corpus hiện tại phải có đúng 63 bảng canonical.
+    assert len(canonical_table_ids) == 63
+
+    # Không thiếu và không xuất hiện bảng ngoài canonical corpus.
+    assert covered_table_ids == canonical_table_ids
+
+    # Stable IDs và keys không được trùng.
+    assert len(chunk_ids) == len(set(chunk_ids))
+    assert len(chunk_keys) == len(set(chunk_keys))
+
+    for chunk in table_chunks:
+        assert chunk["table_id"] in canonical_table_ids
+        assert chunk["unit_type"] == "table"
+
+        assert isinstance(chunk["table_index"], int)
+        assert chunk["table_index"] >= 1
+
+        assert isinstance(chunk["segment_index"], int)
+        assert chunk["segment_index"] >= 1
+
+        assert chunk["requires_fallback"] is False
+        assert chunk["oversized_reason"] is None
+        assert chunk["token_count"] <= 750
+
+        assert chunk["content"].strip()
+        assert chunk["body_text"].strip()
+
+        # Mọi table chunk phải JSON serializable.
+        json.dumps(chunk, ensure_ascii=False)
+
+    # Chạy lại cùng input phải cho toàn bộ output giống nhau.
+    assert chunks_first == chunks_second
