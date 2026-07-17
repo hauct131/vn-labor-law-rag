@@ -53,11 +53,13 @@ TARGET_CODE_RE = re.compile(
     r"\.",
     re.IGNORECASE,
 )
-CLAUSE_RE = re.compile(r"^\s*(?P<number>\d+)\.\s+(?P<body>.+)$", re.DOTALL)
+CLAUSE_RE = re.compile(r"^\s*(?P<number>\d+[a-zA-ZđĐ]?)\.\s+(?P<body>.+)$", re.DOTALL)
 POINT_RE = re.compile(
     r"^\s*(?P<label>[a-zđ])\)\s+(?P<body>.+)$",
     re.IGNORECASE | re.DOTALL,
 )
+QUOTE_OPEN_RE = re.compile(r'^["“]Điều\s+\d+', re.IGNORECASE)
+QUOTE_CLOSE_RE = re.compile(r'["”]\s*[;.]?\s*$', re.IGNORECASE)
 ATTACHMENT_RE = re.compile(
     r"\.(?:docx?|pdf|xlsx?|xls|zip|rar)(?:$|[?#])",
     re.IGNORECASE,
@@ -506,6 +508,31 @@ def parse_content_block(
         None,
     )
 
+def is_appendix_boundary_tag(tag: Tag) -> bool:
+    if tag.name not in ("p", "div", "h1", "h2", "h3", "h4"):
+        return False
+    text = tag_text(tag)
+    if not text:
+        return False
+    import re
+    match = re.match(r"^PHỤ\s+LỤC(?:\s+(?:[IVXLCDM]+|\d+))?[\.\s:]*$", text, re.IGNORECASE)
+    return bool(match)
+
+
+def article_appendix_siblings(article_tag: Tag) -> list[Tag]:
+    result: list[Tag] = []
+    in_appendix = False
+    for sibling in article_tag.find_next_siblings():
+        if not isinstance(sibling, Tag):
+            continue
+        if tag_classes(sibling) & ARTICLE_BOUNDARY_CLASSES:
+            break
+        if is_appendix_boundary_tag(sibling):
+            in_appendix = True
+        if in_appendix:
+            result.append(sibling)
+    return result
+
 
 def article_siblings(article_tag: Tag) -> list[Tag]:
     result: list[Tag] = []
@@ -513,6 +540,8 @@ def article_siblings(article_tag: Tag) -> list[Tag]:
         if not isinstance(sibling, Tag):
             continue
         if tag_classes(sibling) & ARTICLE_BOUNDARY_CLASSES:
+            break
+        if is_appendix_boundary_tag(sibling):
             break
         result.append(sibling)
     return result
@@ -536,6 +565,7 @@ def build_content_units(
     preamble_index = 0
     continuation_index = 0
     id_occurrences: Counter[str] = Counter()
+    state_stack = []
 
     def unique_unit_id(base_id: str) -> tuple[str, int]:
         id_occurrences[base_id] += 1
@@ -595,9 +625,7 @@ def build_content_units(
                     "text": text,
                 }
             )
-            continue
-
-        if point_match:
+        elif point_match:
             label = point_match.group("label").casefold()
             if current_clause is None:
                 warnings.append(
@@ -625,37 +653,45 @@ def build_content_units(
                     "text": text,
                 }
             )
-            continue
-
-        if current_clause is None:
-            preamble_index += 1
-            base_id = (
-                f"{article_id}|preamble={preamble_index}"
-                if article_id
-                else f"preamble={preamble_index}"
-            )
-            unit_type = "preamble"
         else:
-            continuation_index += 1
-            base_id = (
-                f"{article_id}|clause={current_clause}|continuation={continuation_index}"
-                if article_id
-                else f"clause={current_clause}|continuation={continuation_index}"
-            )
-            unit_type = "clause_continuation"
+            if current_clause is None:
+                preamble_index += 1
+                base_id = (
+                    f"{article_id}|preamble={preamble_index}"
+                    if article_id
+                    else f"preamble={preamble_index}"
+                )
+                unit_type = "preamble"
+            else:
+                continuation_index += 1
+                base_id = (
+                    f"{article_id}|clause={current_clause}|continuation={continuation_index}"
+                    if article_id
+                    else f"clause={current_clause}|continuation={continuation_index}"
+                )
+                unit_type = "clause_continuation"
 
-        unit_id, occurrence = unique_unit_id(base_id)
-        units.append(
-            {
-                "unit_id": unit_id,
-                "unit_occurrence": occurrence,
-                "unit_type": unit_type,
-                "clause_number": current_clause,
-                "point_label": None,
-                "raw_text": block["raw_text"],
-                "text": text,
-            }
-        )
+            unit_id, occurrence = unique_unit_id(base_id)
+            units.append(
+                {
+                    "unit_id": unit_id,
+                    "unit_occurrence": occurrence,
+                    "unit_type": unit_type,
+                    "clause_number": current_clause,
+                    "point_label": None,
+                    "raw_text": block["raw_text"],
+                    "text": text,
+                }
+            )
+
+        # Quote detection and state stack push/pop
+        stripped = text.strip()
+        if QUOTE_OPEN_RE.match(stripped):
+            state_stack.append((current_clause, continuation_index))
+            current_clause = None
+            continuation_index = 0
+        if QUOTE_CLOSE_RE.search(stripped) and state_stack:
+            current_clause, continuation_index = state_stack.pop()
 
     return units, list(dict.fromkeys(warnings))
 
@@ -722,6 +758,83 @@ def parse_article(
             tables.append(table)
         if attachment is not None:
             attachments.append(attachment)
+
+    # Parse appendixes if any exist
+    appendix_siblings = article_appendix_siblings(article_tag)
+    if appendix_siblings:
+        groups = []
+        current_group = []
+        for tag in appendix_siblings:
+            if is_appendix_boundary_tag(tag):
+                if current_group:
+                    groups.append(current_group)
+                current_group = [tag]
+            else:
+                if current_group:
+                    current_group.append(tag)
+        if current_group:
+            groups.append(current_group)
+
+        for group in groups:
+            if not group:
+                continue
+            title = tag_text(group[0])
+            subtitle = None
+            if len(group) > 1 and group[1].name != "table":
+                subtitle = tag_text(group[1])
+
+            group_blocks = []
+            group_tables = []
+            group_form_markers = []
+            group_raw_texts = []
+            group_texts = []
+
+            for tag in group:
+                table_index = len(tables) + 1
+                attachment_index = len(attachments) + 1
+                block, table, attachment_item = parse_content_block(
+                    tag,
+                    article_id,
+                    table_index,
+                    attachment_index,
+                )
+                if block is None:
+                    continue
+
+                group_blocks.append(block)
+                group_raw_texts.append(block["raw_text"])
+                group_texts.append(block["text"])
+
+                if table is not None:
+                    group_tables.append(table)
+                    tables.append(table)
+                if attachment_item is not None:
+                    attachments.append(attachment_item)
+
+                if block["kind"] == "text":
+                    text_val = block["text"]
+                    if "Mẫu số" in text_val:
+                        group_form_markers.append(text_val)
+
+            # Build the appendix attachment
+            attachment_id = f"{article_id}|attachment={title}"
+            appendix_attachment = {
+                "attachment_id": attachment_id,
+                "title": title,
+                "subtitle": subtitle,
+                "text": "\n".join(group_texts),
+                "raw_text": "\n".join(group_raw_texts),
+                "content_blocks": group_blocks,
+                "tables": group_tables,
+                "form_markers": group_form_markers,
+                "href": None,
+                "filename": None,
+                "extension": "html",
+                "file_extension": "html",
+                "downloaded": True,
+                "parent_article_id": article_id,
+            }
+            attachments.append(appendix_attachment)
 
     content_texts = [
         block["text"]
