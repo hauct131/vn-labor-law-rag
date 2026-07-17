@@ -5,6 +5,7 @@ import re
 from dataclasses import dataclass
 from typing import Any, Protocol
 from uuid import UUID, uuid5
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 CHUNKER_VERSION = "1.0.0"
 
@@ -461,6 +462,7 @@ def _create_chunk(
     requires_fallback: bool = False,
     oversized_reason: str | None = None,
     warnings: list[str] | None = None,
+    fallback_source_reason: str | None = None,
 ) -> dict:
     """Helper chung dựng chunk metadata và content."""
     chunk_key = build_chunk_key(
@@ -535,7 +537,52 @@ def _create_chunk(
         "warnings": warnings or [],
         "requires_fallback": requires_fallback,
         "oversized_reason": oversized_reason,
+        "fallback_source_reason": fallback_source_reason,
     }
+
+
+def split_oversized_legal_text(
+    text: str,
+    *,
+    config: ChunkingConfig,
+    token_counter: TokenCounter,
+) -> list[str]:
+    """Split oversized legal text using RecursiveCharacterTextSplitter.
+    
+    Ensures correct order preservation, Vietnamese-friendly separators, 
+    and returns non-empty stripped segments.
+    """
+    if not isinstance(text, str):
+        raise TypeError("text must be a string")
+    if not text.strip():
+        return []
+
+    separators = [
+        "\n\n",
+        "\n",
+        ". ",
+        "? ",
+        "! ",
+        "; ",
+        ": ",
+        ", ",
+        " ",
+        ""
+    ]
+    splitter = RecursiveCharacterTextSplitter(
+        chunk_size=config.target_tokens,
+        chunk_overlap=config.fallback_overlap,
+        length_function=token_counter.count,
+        separators=separators,
+        keep_separator=True
+    )
+    raw_segments = splitter.split_text(text)
+    segments = []
+    for seg in raw_segments:
+        s = seg.strip()
+        if s:
+            segments.append(s)
+    return segments
 
 
 def build_legal_chunks(
@@ -561,8 +608,9 @@ def build_legal_chunks(
     cfg = config if config is not None else ChunkingConfig()
     tc = token_counter if token_counter is not None else get_default_token_counter()
 
-    all_chunks = []
+    initial_chunks = []
 
+    # Phase 1: Structural boundaries chunking
     for article in canonical_corpus["articles"]:
         if not isinstance(article, dict):
             raise TypeError("article must be a dict")
@@ -600,7 +648,7 @@ def build_legal_chunks(
                 source_unit_ids=art_source_ids,
                 token_counter=tc
             )
-            all_chunks.append(chunk)
+            initial_chunks.append(chunk)
 
             # Verification: coverage check
             _verify_coverage(art_id, text_units, [chunk])
@@ -616,6 +664,7 @@ def build_legal_chunks(
         if preamble_units and clause_groups:
             preamble_body = _build_body_text(preamble_units)
             # Thử gộp preamble với clause group đầu tiên
+            # deep copy để không mutate clause_groups
             cg0 = clause_groups[0]
             cg0_units = cg0["ordered_units"]
             combined_body = preamble_body + "\n" + _build_body_text(cg0_units)
@@ -876,9 +925,140 @@ def build_legal_chunks(
 
         # Verification: coverage check
         _verify_coverage(art_id, text_units, article_chunks)
-        all_chunks.extend(article_chunks)
+        initial_chunks.extend(article_chunks)
 
-    return all_chunks
+    # Phase 2: Fallback splitting for chunks that require fallback
+    final_chunks = []
+    for chunk in initial_chunks:
+        if not chunk.get("requires_fallback"):
+            chunk["fallback_source_reason"] = None
+            final_chunks.append(chunk)
+            continue
+
+        # Extract information from oversized chunk
+        orig_reason = chunk.get("oversized_reason")
+        body = chunk.get("body_text", "")
+        article_id = chunk.get("parent_article_id")
+        orig_key = chunk.get("chunk_key")
+
+        parent_art = next((art for art in canonical_corpus["articles"] if art["article_id"] == article_id), None)
+        if not parent_art:
+            raise ValueError(f"Parent article {article_id} not found in corpus")
+
+        # Split using RecursiveCharacterTextSplitter helper
+        body_segments = split_oversized_legal_text(body, config=cfg, token_counter=tc)
+        if not body_segments:
+            continue
+
+        repaired_segments = []
+        for seg in body_segments:
+            # Rebuild content for test
+            test_content = _build_chunk_content(
+                parent_art,
+                body_text=seg,
+                clause_number=chunk.get("clause_number"),
+                point_labels=chunk.get("point_labels")
+            )
+            if tc.count(test_content) <= cfg.max_tokens:
+                repaired_segments.append((seg, False, None, []))
+            else:
+                # Need repair because segment content exceeds max_tokens
+                empty_body_content = _build_chunk_content(
+                    parent_art,
+                    body_text="",
+                    clause_number=chunk.get("clause_number"),
+                    point_labels=chunk.get("point_labels")
+                )
+                breadcrumb_tokens = tc.count(empty_body_content)
+                available_body_tokens = cfg.max_tokens - breadcrumb_tokens
+
+                if available_body_tokens <= cfg.fallback_overlap:
+                    raise ValueError(
+                        f"Cannot split text for article {article_id} (key {orig_key}): "
+                        f"breadcrumb tokens ({breadcrumb_tokens}) leave too few tokens "
+                        f"for body under max_tokens ({cfg.max_tokens}) and overlap ({cfg.fallback_overlap})."
+                    )
+
+                repair_size = available_body_tokens
+                repair_overlap = min(cfg.fallback_overlap, max(0, available_body_tokens - 1))
+
+                repair_splitter = RecursiveCharacterTextSplitter(
+                    chunk_size=repair_size,
+                    chunk_overlap=repair_overlap,
+                    length_function=tc.count,
+                    separators=[
+                        "\n\n",
+                        "\n",
+                        ". ",
+                        "? ",
+                        "! ",
+                        "; ",
+                        ": ",
+                        ", ",
+                        " ",
+                        ""
+                    ],
+                    keep_separator=True
+                )
+                raw_repair_segs = repair_splitter.split_text(seg)
+                repair_segs = [s.strip() for s in raw_repair_segs if s.strip()]
+
+                for r_seg in repair_segs:
+                    r_content = _build_chunk_content(
+                        parent_art,
+                        body_text=r_seg,
+                        clause_number=chunk.get("clause_number"),
+                        point_labels=chunk.get("point_labels")
+                    )
+                    if tc.count(r_content) <= cfg.max_tokens:
+                        repaired_segments.append((r_seg, False, None, []))
+                    else:
+                        repaired_segments.append((
+                            r_seg,
+                            True,
+                            "repair_failed",
+                            ["fallback_segment_still_oversized"]
+                        ))
+
+        # Re-create fallback segments chunks
+        for s_idx, (seg_body, req_fb, r_reason, r_warnings) in enumerate(repaired_segments, 1):
+            seg_chunk = _create_chunk(
+                parent_art,
+                chunk_type="fallback_segment",
+                unit_type=chunk.get("unit_type"),
+                clause_number=chunk.get("clause_number"),
+                clause_occurrence=chunk.get("clause_occurrence"),
+                point_labels=chunk.get("point_labels"),
+                point_occurrences=chunk.get("point_occurrences"),
+                segment_index=s_idx,
+                body_text=seg_body,
+                source_unit_ids=chunk.get("source_unit_ids"),
+                token_counter=tc,
+                requires_fallback=req_fb,
+                oversized_reason=r_reason,
+                warnings=list(set(chunk.get("warnings", []) + r_warnings)),
+                fallback_source_reason=orig_reason
+            )
+            final_chunks.append(seg_chunk)
+
+    # Double check total corpus coverage
+    all_input_unit_ids = set()
+    for art in canonical_corpus["articles"]:
+        for u in art.get("content_units", []):
+            if u.get("unit_type") != "table":
+                all_input_unit_ids.add(u["unit_id"])
+
+    all_output_unit_ids = set()
+    for chunk in final_chunks:
+        all_output_unit_ids.update(chunk["source_unit_ids"])
+
+    missing_ids = all_input_unit_ids - all_output_unit_ids
+    if missing_ids:
+        raise ValueError(
+            f"Data loss detected in final output: non-table unit_ids {missing_ids} are not covered by any chunk."
+        )
+
+    return final_chunks
 
 
 def _verify_coverage(article_id: str, original_text_units: list[dict], generated_chunks: list[dict]) -> None:

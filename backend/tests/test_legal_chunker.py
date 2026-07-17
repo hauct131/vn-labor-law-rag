@@ -11,6 +11,7 @@ from backend.app.ingestion.legal_chunker import (
     make_chunk_id,
     build_chunk_key,
     build_legal_chunks,
+    split_oversized_legal_text
 )
 
 
@@ -362,8 +363,6 @@ def test_long_article_splits_into_clause_chunks(base_article):
         {"unit_id": "u2", "unit_type": "clause", "clause_number": "2", "text": "Khoản hai cũng rất dài và chiếm nhiều từ."}
     ]
     corpus = {"metadata": {}, "articles": [base_article]}
-    # With breadcrumbs around 23 words + 9 words clause text, total 32 words.
-    # Set max_tokens = 35 so each clause chunk fits comfortably, but total article (64 words) does not.
     config = ChunkingConfig(target_tokens=5, max_tokens=35, fallback_overlap=0)
     counter = WordTokenCounter()
 
@@ -400,10 +399,6 @@ def test_points_remain_in_correct_clause(base_article):
         {"unit_id": "u4", "unit_type": "point", "clause_number": "2", "point_label": "a", "text": "Điểm a của hai chi tiết cụ thể."}
     ]
     corpus = {"metadata": {}, "articles": [base_article]}
-    # Clause 1: breadcrumbs (25) + text (17) = 42 words.
-    # Clause 2: breadcrumbs (25) + text (17) = 42 words.
-    # Total article: breadcrumbs (21) + text (34) = 55 words.
-    # Set max_tokens = 50 so each clause fits (42 <= 50) but total article does not (55 > 50).
     config = ChunkingConfig(target_tokens=5, max_tokens=50, fallback_overlap=0)
     counter = WordTokenCounter()
 
@@ -417,13 +412,14 @@ def test_points_remain_in_correct_clause(base_article):
 
 def test_repeated_clause_occurrence_has_distinct_key(base_article):
     # Requirement 9: repeated clause occurrence has distinct chunk key
+    # Make text longer so that the combined article exceeds max_tokens (45)
+    # but individual clauses fit comfortably (breadcrumbs 24 + body 16 = 40 <= 45).
     base_article["content_units"] = [
-        {"unit_id": "u1", "unit_type": "clause", "clause_number": "1", "unit_occurrence": 1, "text": "Khoản một lần thứ nhất."},
-        {"unit_id": "u2", "unit_type": "clause", "clause_number": "1", "unit_occurrence": 2, "text": "Khoản một lần thứ hai."}
+        {"unit_id": "u1", "unit_type": "clause", "clause_number": "1", "unit_occurrence": 1, "text": "Khoản một lần thứ nhất có nội dung khá dài để chia clause."},
+        {"unit_id": "u2", "unit_type": "clause", "clause_number": "1", "unit_occurrence": 2, "text": "Khoản một lần thứ hai có nội dung khá dài để chia clause."}
     ]
     corpus = {"metadata": {}, "articles": [base_article]}
-    # Set max_tokens = 30 to force splitting article (33 words total) but fit each clause chunk (28 words)
-    config = ChunkingConfig(target_tokens=5, max_tokens=30, fallback_overlap=0)
+    config = ChunkingConfig(target_tokens=5, max_tokens=45, fallback_overlap=0)
     counter = WordTokenCounter()
 
     chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
@@ -459,13 +455,10 @@ def test_preamble_attaches_to_first_clause(base_article):
         {"unit_id": "u3", "unit_type": "clause", "clause_number": "2", "text": "Khoản hai rất dài và chiếm nhiều từ để làm đầy candidate."}
     ]
     corpus = {"metadata": {}, "articles": [base_article]}
-    # Max tokens = 35. Preamble (3) + Clause 1 (3) + breadcrumbs (23) = 29. Combined fits!
-    # Whole article (29 + 11 = 40) does not fit. So it splits.
     config = ChunkingConfig(target_tokens=5, max_tokens=35, fallback_overlap=0)
     counter = WordTokenCounter()
 
     chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
-    # The first chunk should be a clause chunk containing both preamble and clause 1
     assert chunks[0]["chunk_type"] == "clause"
     assert "Lời mở đầu" in chunks[0]["body_text"]
     assert "Khoản một" in chunks[0]["body_text"]
@@ -478,11 +471,9 @@ def test_preamble_becomes_separate_chunk_when_candidate_exceeds_max(base_article
         {"unit_id": "u2", "unit_type": "clause", "clause_number": "1", "text": "Khoản một cũng rất dài và chứa nhiều từ."}
     ]
     corpus = {"metadata": {}, "articles": [base_article]}
-    # Breadcrumbs (23) + Preamble (11) = 34.
-    # Breadcrumbs (23) + Clause 1 (9) = 32.
-    # Combined: 23 + 11 + 9 = 43.
-    # Let's set max_tokens=35.
-    config = ChunkingConfig(target_tokens=5, max_tokens=35, fallback_overlap=0)
+    # Breadcrumbs (23) + Preamble (11) = 34. Breadcrumbs (23) + Clause (9) = 32.
+    # We increase max_tokens to 40 so they fit comfortably when split, but combined (43) exceeds 40.
+    config = ChunkingConfig(target_tokens=10, max_tokens=40, fallback_overlap=0)
     counter = WordTokenCounter()
 
     chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
@@ -492,98 +483,155 @@ def test_preamble_becomes_separate_chunk_when_candidate_exceeds_max(base_article
 
 
 def test_oversized_preamble_marked_requires_fallback(base_article):
-    # Requirement 13: oversized preamble marked requires_fallback
+    # Requirement 13: oversized preamble undergoes fallback splitting
     base_article["content_units"] = [
         {"unit_id": "u1", "unit_type": "preamble", "text": "Lời mở đầu cực kỳ dài vượt quá toàn bộ giới hạn của max token."},
         {"unit_id": "u2", "unit_type": "clause", "clause_number": "1", "text": "Khoản một."}
     ]
     corpus = {"metadata": {}, "articles": [base_article]}
-    config = ChunkingConfig(target_tokens=5, max_tokens=15, fallback_overlap=0)
+    # max_tokens=30 avoids ValueError from too small budget, but still triggers fallback splitting for preamble (breadcrumbs 23 + preamble 13 = 36 > 30).
+    config = ChunkingConfig(target_tokens=5, max_tokens=30, fallback_overlap=0)
     counter = WordTokenCounter()
 
     chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
-    preamble_chunk = [c for c in chunks if c["chunk_type"] == "preamble"][0]
-    assert preamble_chunk["requires_fallback"] is True
-    assert preamble_chunk["oversized_reason"] == "oversized_preamble"
+    preamble_segs = [c for c in chunks if c["chunk_type"] == "fallback_segment" and c["unit_type"] == "preamble"]
+    assert len(preamble_segs) > 0
+    assert preamble_segs[0]["fallback_source_reason"] == "oversized_preamble"
 
 
 def test_oversized_clause_without_points_marked_requires_fallback(base_article):
-    # Requirement 14: oversized clause without points marked requires_fallback
+    # Requirement 14: oversized clause without points undergoes fallback splitting
     base_article["content_units"] = [
         {"unit_id": "u1", "unit_type": "clause", "clause_number": "1", "text": "Khoản một cực kỳ dài không có điểm nào và vượt quá giới hạn max token."}
     ]
     corpus = {"metadata": {}, "articles": [base_article]}
-    config = ChunkingConfig(target_tokens=5, max_tokens=10, fallback_overlap=0)
+    # max_tokens=30 triggers fallback splitting (breadcrumbs 24 + body 15 = 39 > 30)
+    config = ChunkingConfig(target_tokens=5, max_tokens=30, fallback_overlap=0)
     counter = WordTokenCounter()
 
     chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
-    assert len(chunks) == 1
-    assert chunks[0]["chunk_type"] == "fallback_segment"
-    assert chunks[0]["requires_fallback"] is True
-    assert chunks[0]["oversized_reason"] == "oversized_clause_without_points"
+    clause_segs = [c for c in chunks if c["chunk_type"] == "fallback_segment" and c["unit_type"] == "clause"]
+    assert len(clause_segs) > 0
+    assert clause_segs[0]["fallback_source_reason"] == "oversized_clause_without_points"
 
 
 def test_oversized_point_marked_requires_fallback(base_article):
-    # Requirement 15: oversized point marked requires_fallback
+    # Requirement 15: oversized point group undergoes fallback splitting
     base_article["content_units"] = [
         {"unit_id": "u1", "unit_type": "clause", "clause_number": "1", "text": "Khoản một."},
         {"unit_id": "u2", "unit_type": "point", "clause_number": "1", "point_label": "a", "text": "Điểm a cực kỳ dài vượt quá giới hạn tối đa."}
     ]
     corpus = {"metadata": {}, "articles": [base_article]}
-    config = ChunkingConfig(target_tokens=5, max_tokens=10, fallback_overlap=0)
+    # max_tokens=30 triggers fallback (breadcrumbs 24 + body 11 = 35 > 30)
+    config = ChunkingConfig(target_tokens=5, max_tokens=30, fallback_overlap=0)
     counter = WordTokenCounter()
 
     chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
-    pts_chunks = [c for c in chunks if c["chunk_type"] == "points"]
-    assert len(pts_chunks) == 1
-    assert pts_chunks[0]["requires_fallback"] is True
-    assert pts_chunks[0]["oversized_reason"] == "oversized_point"
+    pts_segs = [c for c in chunks if c["chunk_type"] == "fallback_segment" and c["unit_type"] == "point_group"]
+    assert len(pts_segs) > 0
+    assert pts_segs[0]["fallback_source_reason"] == "oversized_point"
 
 
 def test_long_article_without_clause_marked_requires_fallback(base_article):
-    # Requirement 16: long article without clause marked requires_fallback
+    # Requirement 16: long article without clause undergoes fallback splitting
     base_article["content_units"] = [
         {"unit_id": "u1", "unit_type": "preamble", "text": "Lời mở đầu cực kỳ dài không hề chứa khoản nào trong toàn bộ điều luật này."}
     ]
     corpus = {"metadata": {}, "articles": [base_article]}
-    config = ChunkingConfig(target_tokens=5, max_tokens=10, fallback_overlap=0)
+    # max_tokens=30 triggers fallback
+    config = ChunkingConfig(target_tokens=5, max_tokens=30, fallback_overlap=0)
     counter = WordTokenCounter()
 
     chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
-    assert len(chunks) == 1
-    assert chunks[0]["chunk_type"] == "fallback_segment"
-    assert chunks[0]["requires_fallback"] is True
-    assert chunks[0]["oversized_reason"] == "oversized_article_without_clause"
+    art_segs = [c for c in chunks if c["chunk_type"] == "fallback_segment" and c["unit_type"] == "article"]
+    assert len(art_segs) > 0
+    assert art_segs[0]["fallback_source_reason"] == "oversized_article_without_clause"
+
+
+def _join_segment_bodies(chunks: list[dict]) -> str:
+    ordered = sorted(
+        chunks,
+        key=lambda chunk: chunk.get("segment_index") or 0,
+    )
+    return " ".join(
+        chunk["body_text"].strip()
+        for chunk in ordered
+        if chunk["body_text"].strip()
+    )
+
+
+def _normalize_whitespace(text: str) -> str:
+    return " ".join(text.split())
 
 
 def test_orphan_point_preserved(base_article):
     # Requirement 17: orphan point preserved
+    base_article["topic_code"] = None
+    base_article["topic_name"] = None
+    base_article["chapter"] = None
+    base_article["section"] = None
+    base_article["article_code"] = "1"
+    base_article["article_title"] = "A"
     base_article["content_units"] = [
         {"unit_id": "u1", "unit_type": "point", "clause_number": "99", "point_label": "a", "text": "Điểm a mồ côi."}
     ]
     corpus = {"metadata": {}, "articles": [base_article]}
-    config = ChunkingConfig(target_tokens=2, max_tokens=5, fallback_overlap=0)
+    config = ChunkingConfig(target_tokens=2, max_tokens=8, fallback_overlap=0)
     counter = WordTokenCounter()
 
     chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
-    orphan_chunk = [c for c in chunks if c["chunk_type"] == "fallback_segment" and c["unit_type"] == "orphan"][0]
-    assert orphan_chunk is not None
-    assert "Điểm a mồ côi" in orphan_chunk["body_text"]
+    
+    orphan_chunks = [
+        chunk
+        for chunk in chunks
+        if chunk["chunk_type"] == "fallback_segment"
+        and chunk["unit_type"] == "orphan"
+        and "u1" in chunk["source_unit_ids"]
+    ]
+    
+    assert len(orphan_chunks) > 0
+    for idx, c in enumerate(sorted(orphan_chunks, key=lambda x: x.get("segment_index") or 0), 1):
+        assert "u1" in c["source_unit_ids"]
+        assert c["segment_index"] == idx
+        assert any("orphan_point" in w for w in c["warnings"])
+
+    combined = _normalize_whitespace(_join_segment_bodies(orphan_chunks))
+    assert "Điểm a mồ côi." in combined
 
 
 def test_unsupported_unit_preserved(base_article):
     # Requirement 18: unsupported unit preserved
+    base_article["topic_code"] = None
+    base_article["topic_name"] = None
+    base_article["chapter"] = None
+    base_article["section"] = None
+    base_article["article_code"] = "1"
+    base_article["article_title"] = "A"
     base_article["content_units"] = [
         {"unit_id": "u1", "unit_type": "strange_type", "text": "Nội dung lạ."}
     ]
     corpus = {"metadata": {}, "articles": [base_article]}
-    config = ChunkingConfig(target_tokens=2, max_tokens=5, fallback_overlap=0)
+    config = ChunkingConfig(target_tokens=2, max_tokens=8, fallback_overlap=0)
     counter = WordTokenCounter()
 
     chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
-    orphan_chunk = [c for c in chunks if c["chunk_type"] == "fallback_segment" and c["unit_type"] == "orphan"][0]
-    assert "Nội dung lạ" in orphan_chunk["body_text"]
-    assert any("unsupported_unit_type" in w for w in orphan_chunk["warnings"])
+    
+    unsupported_chunks = [
+        chunk
+        for chunk in chunks
+        if chunk["chunk_type"] == "fallback_segment"
+        and chunk["unit_type"] == "orphan"
+        and "u1" in chunk["source_unit_ids"]
+    ]
+    
+    assert len(unsupported_chunks) > 0
+    for idx, c in enumerate(sorted(unsupported_chunks, key=lambda x: x.get("segment_index") or 0), 1):
+        assert "u1" in c["source_unit_ids"]
+        assert c["segment_index"] == idx
+        assert any("unsupported_unit_type" in w for w in c["warnings"])
+
+    combined = _normalize_whitespace(_join_segment_bodies(unsupported_chunks))
+    assert "Nội dung lạ." in combined
 
 
 def test_no_canonical_input_mutation(base_article):
@@ -592,10 +640,10 @@ def test_no_canonical_input_mutation(base_article):
         {"unit_id": "u1", "unit_type": "preamble", "text": "Văn bản."}
     ]
     corpus = {"metadata": {}, "articles": [base_article]}
-    
+
     snapshot = json.dumps(corpus)
     build_legal_chunks(corpus)
-    
+
     assert json.dumps(corpus) == snapshot
 
 
@@ -616,7 +664,7 @@ def test_relation_metadata_deduplicated_and_same_length(base_article):
     assert len(chunk["relation_target_ids"]) == 2
     assert chunk["relation_target_ids"][0] == "t1"
     assert chunk["relation_target_ids"][1] is None
-    
+
     l = len(chunk["relation_target_ids"])
     assert len(chunk["relation_target_codes"]) == l
     assert len(chunk["relation_types"]) == l
@@ -634,7 +682,7 @@ def test_attachments_copied(base_article):
     ]
     corpus = {"metadata": {}, "articles": [base_article]}
     chunks = build_legal_chunks(corpus)
-    
+
     assert len(chunks[0]["attachment_metadata"]) == 1
     assert chunks[0]["attachment_metadata"][0]["attachment_id"] == "att1"
     assert chunks[0]["attachment_metadata"][0] is not base_article["attachments"][0]
@@ -647,7 +695,7 @@ def test_source_urls_not_in_content(base_article):
     ]
     corpus = {"metadata": {}, "articles": [base_article]}
     chunks = build_legal_chunks(corpus)
-    
+
     assert "http://example.com/law" not in chunks[0]["content"]
 
 
@@ -659,7 +707,7 @@ def test_token_count_equals_counter_count(base_article):
     corpus = {"metadata": {}, "articles": [base_article]}
     counter = get_default_token_counter()
     chunks = build_legal_chunks(corpus, token_counter=counter)
-    
+
     assert chunks[0]["token_count"] == counter.count(chunks[0]["content"])
 
 
@@ -711,7 +759,7 @@ def test_empty_article_does_not_create_chunk(base_article):
     # Requirement 29: empty article does not create empty text chunk
     base_article["content_units"] = []
     corpus = {"metadata": {}, "articles": [base_article]}
-    
+
     chunks = build_legal_chunks(corpus)
     assert len(chunks) == 0
 
@@ -735,47 +783,286 @@ def real_corpus_chunks():
     path = Path("data/processed/articles_raw.json")
     if not path.is_file():
         pytest.skip("Real corpus file data/processed/articles_raw.json not found")
-        
+
     with open(path, "r", encoding="utf-8") as f:
         corpus = json.load(f)
-        
+
     chunks = build_legal_chunks(corpus)
     return corpus, chunks
 
 
 def test_real_corpus_ingestion(real_corpus_chunks):
     corpus, chunks = real_corpus_chunks
-    
+
     assert len(corpus["articles"]) == 477
     assert len(chunks) > 0
-    
+
     chunk_ids = []
     chunk_keys = []
-    
+
     for c in chunks:
         assert isinstance(c["chunk_id"], str)
         assert isinstance(c["chunk_key"], str)
         assert c["content"].strip() != ""
         assert any(art["article_id"] == c["parent_article_id"] for art in corpus["articles"])
-        
+
         try:
             json.dumps(c)
         except TypeError as e:
             pytest.fail(f"Chunk is not JSON serializable: {e}")
-            
+
         chunk_ids.append(c["chunk_id"])
         chunk_keys.append(c["chunk_key"])
-        
+
         assert "source_type" in c
         assert "source_document_id" in c
         assert "source_note_text" in c
         assert "source_urls" in c
         assert "parser_version" in c
         assert "source_sha256" in c
-        
+
         assert "relation_target_ids" in c
         assert "attachment_metadata" in c
         assert isinstance(c["attachment_metadata"], list)
 
     assert len(chunk_ids) == len(set(chunk_ids)), "Duplicate chunk IDs found in real corpus"
     assert len(chunk_keys) == len(set(chunk_keys)), "Duplicate chunk keys found in real corpus"
+
+
+# =====================================================================
+# PROMPT 3 FALLBACK TESTS
+# =====================================================================
+
+def test_split_oversized_legal_text_multiple_segments():
+    text = "Câu một. Câu hai. Câu ba. Câu bốn."
+    config = ChunkingConfig(target_tokens=3, max_tokens=10, fallback_overlap=0)
+    counter = WordTokenCounter()
+    segments = split_oversized_legal_text(text, config=config, token_counter=counter)
+    # Target is 3 words, so it should split into multiple segments
+    assert len(segments) > 1
+    assert "".join(segments).replace(" ", "") == text.replace(" ", "")
+
+
+def test_split_oversized_legal_text_empty():
+    config = ChunkingConfig(target_tokens=3, max_tokens=10, fallback_overlap=0)
+    counter = WordTokenCounter()
+    assert split_oversized_legal_text("", config=config, token_counter=counter) == []
+    assert split_oversized_legal_text("   ", config=config, token_counter=counter) == []
+    with pytest.raises(TypeError):
+        split_oversized_legal_text(123, config=config, token_counter=counter)  # type: ignore
+
+
+def test_split_oversized_legal_text_vietnamese_unicode():
+    text = "Quyền và nghĩa vụ của người lao động Việt Nam được quy định rõ trong luật."
+    config = ChunkingConfig(target_tokens=5, max_tokens=10, fallback_overlap=2)
+    counter = WordTokenCounter()
+    segments = split_oversized_legal_text(text, config=config, token_counter=counter)
+    assert len(segments) > 1
+    assert "người lao động" in text
+
+
+def test_split_oversized_legal_text_order_preserved():
+    text = "Một. Hai. Ba. Bốn. Năm. Sáu. Bảy."
+    config = ChunkingConfig(target_tokens=2, max_tokens=5, fallback_overlap=0)
+    counter = WordTokenCounter()
+    segments = split_oversized_legal_text(text, config=config, token_counter=counter)
+    assert segments[0].startswith("Một")
+    assert segments[-1].endswith("Bảy.")
+
+
+def test_split_oversized_legal_text_no_empty_segments():
+    text = "Một.  .  Hai.   . Ba."
+    config = ChunkingConfig(target_tokens=2, max_tokens=5, fallback_overlap=0)
+    counter = WordTokenCounter()
+    segments = split_oversized_legal_text(text, config=config, token_counter=counter)
+    for s in segments:
+        assert s.strip() != ""
+
+
+def test_split_oversized_legal_text_deterministic():
+    text = "Nội dung rất dài cần được chia nhỏ thành nhiều phần khác nhau."
+    config = ChunkingConfig(target_tokens=3, max_tokens=5, fallback_overlap=1)
+    counter = WordTokenCounter()
+    segs1 = split_oversized_legal_text(text, config=config, token_counter=counter)
+    segs2 = split_oversized_legal_text(text, config=config, token_counter=counter)
+    assert segs1 == segs2
+
+
+def test_split_oversized_legal_text_uses_supplied_token_counter():
+    text = "A B C D E F G H I"
+    config = ChunkingConfig(target_tokens=3, max_tokens=5, fallback_overlap=0)
+    
+    class CustomCounter:
+        name = "custom"
+        def count(self, t):
+            # count letter count instead of words
+            return len(t.replace(" ", ""))
+
+    segs = split_oversized_legal_text(text, config=config, token_counter=CustomCounter())
+    assert len(segs) > 1
+
+
+def test_valid_article_chunk_unchanged(base_article):
+    base_article["content_units"] = [
+        {"unit_id": "u1", "unit_type": "preamble", "text": "Lời mở đầu ngắn."}
+    ]
+    corpus = {"metadata": {}, "articles": [base_article]}
+    config = ChunkingConfig(target_tokens=20, max_tokens=50, fallback_overlap=0)
+    counter = WordTokenCounter()
+    chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
+    assert len(chunks) == 1
+    assert chunks[0]["chunk_type"] == "article"
+    assert chunks[0]["requires_fallback"] is False
+
+
+def test_valid_clause_chunk_unchanged(base_article):
+    base_article["content_units"] = [
+        {"unit_id": "u1", "unit_type": "clause", "clause_number": "1", "text": "Khoản một ngắn."},
+        {"unit_id": "u2", "unit_type": "clause", "clause_number": "2", "text": "Khoản hai ngắn."}
+    ]
+    corpus = {"metadata": {}, "articles": [base_article]}
+    # Max tokens = 40. Preamble/Breadcrumbs = 24.
+    # Clause 1: 24 + 3 = 27 <= 40.
+    # Clause 2: 24 + 3 = 27 <= 40.
+    # Total article = 19 + 6 = 25 <= 40 -> Article Short Chunk (len=1)!
+    # To force splitting but prevent fallback, set max_tokens=24.
+    # Wait, if max_tokens=24, each clause is 27 > 24, which triggers fallback!
+    # Let's make body text longer so total article > max_tokens, but clause <= max_tokens.
+    # Clause 1 body = 16 words. Clause 2 body = 16 words.
+    # Clause tokens = 24 + 16 = 40. Total art = 19 + 32 = 51. Set max_tokens = 45.
+    base_article["content_units"] = [
+        {"unit_id": "u1", "unit_type": "clause", "clause_number": "1", "text": "Khoản một có nội dung rất dài để kiểm nghiệm logic chia khoản."},
+        {"unit_id": "u2", "unit_type": "clause", "clause_number": "2", "text": "Khoản hai có nội dung rất dài để kiểm nghiệm logic chia khoản."}
+    ]
+    config = ChunkingConfig(target_tokens=10, max_tokens=45, fallback_overlap=0)
+    counter = WordTokenCounter()
+    chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
+    assert len(chunks) == 2
+    assert chunks[0]["chunk_type"] == "clause"
+    assert chunks[1]["chunk_type"] == "clause"
+    assert chunks[0]["requires_fallback"] is False
+
+
+def test_only_requires_fallback_chunks_replaced(base_article):
+    # Clause 1 is short, Clause 2 is oversized
+    base_article["content_units"] = [
+        {"unit_id": "u1", "unit_type": "clause", "clause_number": "1", "text": "Khoản một ngắn."},
+        {"unit_id": "u2", "unit_type": "clause", "clause_number": "2", "text": "Khoản hai rất dài và chiếm nhiều từ vượt quá giới hạn tối đa."}
+    ]
+    corpus = {"metadata": {}, "articles": [base_article]}
+    # Breadcrumbs (clause) = 24.
+    # Clause 1: 24 + 3 = 27.
+    # Clause 2: 24 + 14 = 38.
+    # Set max_tokens=30.
+    # Clause 1 (27 <= 30) stays valid.
+    # Clause 2 (38 > 30) falls back and is replaced.
+    config = ChunkingConfig(target_tokens=5, max_tokens=30, fallback_overlap=0)
+    counter = WordTokenCounter()
+    chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
+    
+    # Clause 1 remains as a clause chunk.
+    # Clause 2 is replaced by fallback segments.
+    has_clause_1 = any(c["chunk_type"] == "clause" and c["clause_number"] == "1" for c in chunks)
+    assert has_clause_1
+    has_clause_2 = any(c["chunk_type"] == "clause" and c["clause_number"] == "2" for c in chunks)
+    assert not has_clause_2
+    
+    clause_2_segs = [c for c in chunks if c["chunk_type"] == "fallback_segment" and c["clause_number"] == "2"]
+    assert len(clause_2_segs) > 0
+
+
+def test_segment_indices_start_at_1(base_article):
+    base_article["content_units"] = [
+        {"unit_id": "u1", "unit_type": "clause", "clause_number": "1", "text": "Khoản một rất dài vượt quá giới hạn tối đa."}
+    ]
+    corpus = {"metadata": {}, "articles": [base_article]}
+    config = ChunkingConfig(target_tokens=3, max_tokens=30, fallback_overlap=0)
+    counter = WordTokenCounter()
+    chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
+    
+    fallback_segs = [c for c in chunks if c["chunk_type"] == "fallback_segment"]
+    assert len(fallback_segs) > 1
+    assert fallback_segs[0]["segment_index"] == 1
+    assert fallback_segs[1]["segment_index"] == 2
+
+
+def test_fallback_keys_stable(base_article):
+    base_article["content_units"] = [
+        {"unit_id": "u1", "unit_type": "clause", "clause_number": "1", "text": "Khoản một rất dài vượt quá giới hạn tối đa."}
+    ]
+    corpus = {"metadata": {}, "articles": [base_article]}
+    config = ChunkingConfig(target_tokens=3, max_tokens=30, fallback_overlap=0)
+    counter = WordTokenCounter()
+    
+    chunks1 = build_legal_chunks(corpus, config=config, token_counter=counter)
+    chunks2 = build_legal_chunks(corpus, config=config, token_counter=counter)
+    
+    for c1, c2 in zip(chunks1, chunks2):
+        assert c1["chunk_key"] == c2["chunk_key"]
+        assert c1["chunk_id"] == c2["chunk_id"]
+
+
+def test_original_body_covered(base_article):
+    text = "Nội dung điều khoản này cực kỳ dài và phức tạp cần được bao phủ."
+    base_article["content_units"] = [
+        {"unit_id": "u1", "unit_type": "clause", "clause_number": "1", "text": text}
+    ]
+    corpus = {"metadata": {}, "articles": [base_article]}
+    config = ChunkingConfig(target_tokens=3, max_tokens=30, fallback_overlap=0)
+    counter = WordTokenCounter()
+    
+    chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
+    combined_body = " ".join([c["body_text"] for c in chunks if c["chunk_type"] == "fallback_segment"])
+    # Clean spaces
+    assert combined_body.replace(" ", "") == text.replace(" ", "")
+
+
+def test_relation_metadata_preserved_in_fallback(base_article):
+    base_article["content_units"] = [
+        {"unit_id": "u1", "unit_type": "clause", "clause_number": "1", "text": "Khoản một rất dài vượt quá giới hạn tối đa."}
+    ]
+    base_article["relations"] = [
+        {"target_id": "t1", "target_code": "c1", "relation_type": "REF", "href": "h1", "same_topic": True, "target_in_corpus": True}
+    ]
+    corpus = {"metadata": {}, "articles": [base_article]}
+    config = ChunkingConfig(target_tokens=3, max_tokens=30, fallback_overlap=0)
+    counter = WordTokenCounter()
+    
+    chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
+    for c in chunks:
+        assert len(c["relation_target_ids"]) == 1
+        assert c["relation_target_ids"][0] == "t1"
+
+
+def test_attachment_metadata_preserved_in_fallback(base_article):
+    base_article["content_units"] = [
+        {"unit_id": "u1", "unit_type": "clause", "clause_number": "1", "text": "Khoản một rất dài vượt quá giới hạn tối đa."}
+    ]
+    base_article["attachments"] = [
+        {"attachment_id": "att1", "filename": "file.pdf", "href": "link", "file_extension": "pdf", "downloaded": True}
+    ]
+    corpus = {"metadata": {}, "articles": [base_article]}
+    config = ChunkingConfig(target_tokens=3, max_tokens=30, fallback_overlap=0)
+    counter = WordTokenCounter()
+    
+    chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
+    for c in chunks:
+        assert len(c["attachment_metadata"]) == 1
+        assert c["attachment_metadata"][0]["attachment_id"] == "att1"
+
+
+def test_no_uuid4_used_in_ids(base_article):
+    base_article["content_units"] = [
+        {"unit_id": "u1", "unit_type": "clause", "clause_number": "1", "text": "Khoản một rất dài vượt quá giới hạn tối đa."}
+    ]
+    corpus = {"metadata": {}, "articles": [base_article]}
+    config = ChunkingConfig(target_tokens=3, max_tokens=30, fallback_overlap=0)
+    counter = WordTokenCounter()
+    
+    chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
+    for c in chunks:
+        cid = c["chunk_id"]
+        # UUIDv5 is derived deterministically. If we run again, we get same IDs.
+        # Check UUID version is 5 (parsed UUID has version attribute)
+        parsed = uuid.UUID(cid)
+        assert parsed.version == 5
