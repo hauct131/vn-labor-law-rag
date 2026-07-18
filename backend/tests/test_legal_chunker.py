@@ -13,6 +13,7 @@ from backend.app.ingestion.legal_chunker import (
     build_chunk_key,
     build_legal_chunks,
     split_oversized_legal_text,
+    split_main_text_to_fit,
     validate_chunks,
     build_chunking_summary
 )
@@ -43,7 +44,7 @@ def test_default_config():
     assert cfg.target_tokens == 500
     assert cfg.max_tokens == 750
     assert cfg.fallback_overlap == 80
-    assert cfg.chunker_version == "1.0.0"
+    assert cfg.chunker_version == "1.1.0"
 
 
 def test_config_target_gt_max():
@@ -802,12 +803,23 @@ def test_real_corpus_ingestion(real_corpus_chunks):
 
     chunk_ids = []
     chunk_keys = []
+    article_ids = {art["article_id"] for art in corpus["articles"]}
+    attachment_ids = {
+        attachment["attachment_id"]
+        for attachment in corpus.get("attachments", [])
+    }
 
     for c in chunks:
         assert isinstance(c["chunk_id"], str)
         assert isinstance(c["chunk_key"], str)
         assert c["content"].strip() != ""
-        assert any(art["article_id"] == c["parent_article_id"] for art in corpus["articles"])
+        if c["container_type"] == "article":
+            assert c["parent_article_id"] in article_ids
+            assert c["parent_attachment_id"] is None
+        else:
+            assert c["container_type"] == "attachment"
+            assert c["parent_article_id"] is None
+            assert c["parent_attachment_id"] in attachment_ids
 
         try:
             json.dumps(c)
@@ -1092,6 +1104,71 @@ def test_table_chunk_source_authoritative(base_article):
     assert "Bảng trong content unit" not in table_chunks[0]["content"]
 
 
+def test_attachment_table_chunk_has_document_provenance(base_article):
+    base_article["content_units"] = [
+        {"unit_id": "u1", "unit_type": "preamble", "text": "Nội dung điều."}
+    ]
+    attachment_id = "doc_123|attachment=2"
+    corpus = {
+        "metadata": {},
+        "articles": [base_article],
+        "attachments": [
+            {
+                "container_type": "attachment",
+                "attachment_id": attachment_id,
+                "attachment_title": "PHỤ LỤC II",
+                "title": "PHỤ LỤC II",
+                "subtitle": "HỆ THỐNG BIỂU MẪU",
+                "parent_document_id": "doc_123",
+                "parent_article_id": None,
+                "document_id": "phap-dien:20.2",
+                "topic_code": "20.2",
+                "topic_name": "Lao động",
+                "source_type": "NĐ",
+                "source_document_id": "doc_123",
+                "source_note_text": "Nghị định thử nghiệm",
+                "source_urls": [],
+                "parser_version": "1.3.0",
+                "source_sha256": "abcdef123456",
+                "tables": [
+                    {
+                        "table_id": f"{attachment_id}|table=1",
+                        "attachment_id": attachment_id,
+                        "attachment_title": "PHỤ LỤC II",
+                        "parent_document_id": "doc_123",
+                        "parent_article_id": None,
+                        "form_number": "Mẫu số 07",
+                        "headers": ["Cột A"],
+                        "rows": [["Giá trị"]],
+                    }
+                ],
+            }
+        ],
+    }
+
+    chunks = build_legal_chunks(corpus)
+    table_chunk = next(c for c in chunks if c["chunk_type"] == "table")
+
+    assert table_chunk["container_type"] == "attachment"
+    assert table_chunk["parent_article_id"] is None
+    assert table_chunk["parent_attachment_id"] == attachment_id
+    assert table_chunk["parent_document_id"] == "doc_123"
+    assert table_chunk["attachment_id"] == attachment_id
+    assert table_chunk["attachment_title"] == "PHỤ LỤC II"
+    assert table_chunk["form_number"] == "Mẫu số 07"
+    assert table_chunk["article_code"] is None
+    assert table_chunk["article_title"] is None
+    assert table_chunk["chunk_key"].startswith(f"{attachment_id}|table=1|")
+    assert "Phụ lục: PHỤ LỤC II" in table_chunk["content"]
+    assert "Biểu mẫu: Mẫu số 07" in table_chunk["content"]
+
+    validation = validate_chunks(corpus, chunks)
+    assert validation["is_valid"] is True
+    assert validation["canonical_table_count"] == 1
+    assert validation["covered_table_count"] == 1
+    assert validation["invalid_parent_count"] == 0
+
+
 def test_table_small_single_chunk(base_article):
     # small table một chunk
     base_article["content_units"] = [
@@ -1322,6 +1399,12 @@ def test_real_corpus_tables():
         for table in article.get("tables", [])
         if table.get("table_id")
     }
+    canonical_table_ids.update(
+        table["table_id"]
+        for attachment in corpus.get("attachments", [])
+        for table in attachment.get("tables", [])
+        if table.get("table_id")
+    )
 
     chunks_first = build_legal_chunks(corpus)
     chunks_second = build_legal_chunks(corpus)
@@ -1378,6 +1461,16 @@ def test_real_corpus_tables():
         # Mọi table chunk phải JSON serializable.
         json.dumps(chunk, ensure_ascii=False)
 
+    attachment_table_chunks = [
+        chunk
+        for chunk in table_chunks
+        if chunk["container_type"] == "attachment"
+    ]
+    assert len({chunk["table_id"] for chunk in attachment_table_chunks}) == 54
+    assert all(chunk["parent_article_id"] is None for chunk in attachment_table_chunks)
+    assert all(chunk["parent_attachment_id"] for chunk in attachment_table_chunks)
+    assert all(chunk["article_code"] is None for chunk in attachment_table_chunks)
+
     # Chạy lại cùng input phải cho toàn bộ output giống nhau.
     assert chunks_first == chunks_second
 
@@ -1399,8 +1492,17 @@ def test_validation_happy_path():
     assert validation["article_count"] == 477
     assert validation["chunk_count"] == len(chunks)
     assert validation["covered_article_count"] == 477
-    assert validation["canonical_non_table_unit_count"] == 2797
-    assert validation["covered_non_table_unit_count"] == 2797
+    expected_non_table_unit_count = sum(
+        1
+        for article in corpus["articles"]
+        for unit in article.get("content_units", [])
+        if unit.get("unit_type") != "table"
+    )
+    assert (
+        validation["canonical_non_table_unit_count"]
+        == expected_non_table_unit_count
+    )
+    assert validation["covered_non_table_unit_count"] == expected_non_table_unit_count
     assert validation["canonical_table_count"] == 63
     assert validation["covered_table_count"] == 63
     assert validation["duplicate_chunk_id_count"] == 0
@@ -1784,8 +1886,17 @@ def test_build_chunking_summary():
     assert summary["article_coverage"]["missing_count"] == 0
     assert summary["article_coverage"]["missing_ids"] == []
 
-    assert summary["non_table_unit_coverage"]["expected"] == 2797
-    assert summary["non_table_unit_coverage"]["covered"] == 2797
+    expected_non_table_unit_count = sum(
+        1
+        for article in corpus["articles"]
+        for unit in article.get("content_units", [])
+        if unit.get("unit_type") != "table"
+    )
+    assert (
+        summary["non_table_unit_coverage"]["expected"]
+        == expected_non_table_unit_count
+    )
+    assert summary["non_table_unit_coverage"]["covered"] == expected_non_table_unit_count
     assert summary["non_table_unit_coverage"]["missing_count"] == 0
     assert summary["non_table_unit_coverage"]["unknown_count"] == 0
 
@@ -1971,6 +2082,165 @@ def test_mid_sentence_start_characterization(fallback_test_article):
         assert not content_part.startswith(",")
 
 
+def test_fallback_split_prefers_sentence_boundary(base_article):
+    text = (
+        "1. Câu thứ nhất gồm sáu từ. "
+        "Câu thứ hai cũng gồm sáu từ. "
+        "Câu thứ ba tiếp tục gồm sáu từ."
+    )
+    cfg = ChunkingConfig(target_tokens=10, max_tokens=44, fallback_overlap=0)
+
+    parts = split_main_text_to_fit(
+        text,
+        [],
+        base_article,
+        "1",
+        [],
+        cfg,
+        WordTokenCounter(),
+    )
+
+    assert parts == [
+        "1. Câu thứ nhất gồm sáu từ. Câu thứ hai cũng gồm sáu từ.",
+        "Câu thứ ba tiếp tục gồm sáu từ.",
+    ]
+    assert _normalize_whitespace(" ".join(parts)) == _normalize_whitespace(text)
+
+
+def test_fallback_split_prefers_semicolon_over_later_comma(base_article):
+    text = (
+        "a) Một hai ba bốn; "
+        "năm sáu bảy tám chín, "
+        "mười mười một mười hai mười ba mười bốn"
+    )
+    cfg = ChunkingConfig(target_tokens=10, max_tokens=38, fallback_overlap=0)
+
+    parts = split_main_text_to_fit(
+        text,
+        [],
+        base_article,
+        "1",
+        ["a"],
+        cfg,
+        WordTokenCounter(),
+    )
+
+    assert parts[0] == "a) Một hai ba bốn;"
+    assert parts[1].startswith("năm sáu")
+    assert _normalize_whitespace(" ".join(parts)) == _normalize_whitespace(text)
+
+
+def test_fallback_split_ignores_leading_legal_marker_as_sentence(base_article):
+    text = (
+        "1. Một hai ba bốn năm sáu; "
+        "bảy tám chín mười mười một mười hai mười ba mười bốn"
+    )
+    cfg = ChunkingConfig(target_tokens=10, max_tokens=38, fallback_overlap=0)
+
+    parts = split_main_text_to_fit(
+        text,
+        [],
+        base_article,
+        "1",
+        [],
+        cfg,
+        WordTokenCounter(),
+    )
+
+    assert parts[0] == "1. Một hai ba bốn năm sáu;"
+    assert parts[0] != "1."
+    assert _normalize_whitespace(" ".join(parts)) == _normalize_whitespace(text)
+
+
+def test_fallback_split_prefers_comma_over_whitespace(base_article):
+    text = (
+        "a) Một hai ba bốn, "
+        "năm sáu bảy tám chín mười mười một mười hai mười ba"
+    )
+    cfg = ChunkingConfig(target_tokens=10, max_tokens=38, fallback_overlap=0)
+
+    parts = split_main_text_to_fit(
+        text,
+        [],
+        base_article,
+        "1",
+        ["a"],
+        cfg,
+        WordTokenCounter(),
+    )
+
+    assert parts[0] == "a) Một hai ba bốn,"
+    assert parts[1].startswith("năm sáu")
+    assert _normalize_whitespace(" ".join(parts)) == _normalize_whitespace(text)
+
+
+def test_separate_subpoint_continuation_gets_parent_point_context(base_article):
+    clause_id = "art_subpoint|clause=1"
+    parent_point_id = f"{clause_id}|point=c"
+    child_id = f"{clause_id}|continuation=1"
+    child_text = (
+        "c1) Trường hợp thứ nhất có nội dung dài và cần được giải thích đầy đủ; "
+        "người lao động được bảo đảm quyền lợi theo quy định; "
+        "người sử dụng lao động phải thực hiện đúng trách nhiệm."
+    )
+    base_article["article_id"] = "art_subpoint"
+    base_article["content_units"] = [
+        {
+            "unit_id": clause_id,
+            "unit_type": "clause",
+            "clause_number": "1",
+            "text": "1. Các trường hợp cụ thể được quy định tại khoản này:",
+        },
+        {
+            "unit_id": parent_point_id,
+            "unit_type": "point",
+            "clause_number": "1",
+            "point_label": "c",
+            "text": "c) Việc áp dụng được thực hiện theo các trường hợp sau:",
+        },
+        {
+            "unit_id": child_id,
+            "unit_type": "clause_continuation",
+            "clause_number": "1",
+            "text": child_text,
+        },
+    ]
+    corpus = {"metadata": {"topic_code": "20.2"}, "articles": [base_article]}
+    cfg = ChunkingConfig(target_tokens=30, max_tokens=75, fallback_overlap=10)
+
+    chunks = build_legal_chunks(corpus, config=cfg, token_counter=WordTokenCounter())
+    child_chunks = [
+        chunk for chunk in chunks if child_id in chunk.get("source_unit_ids", [])
+    ]
+
+    assert child_chunks
+    for chunk in child_chunks:
+        assert chunk["point_labels"] == ["c"]
+        assert chunk["subpoint_label"] == "c1"
+        assert chunk["parent_point_unit_id"] == parent_point_id
+        assert chunk["source_unit_ids"] == [child_id]
+        assert parent_point_id in chunk["context_unit_ids"]
+        assert child_id not in chunk["context_unit_ids"]
+        assert "[Ngữ cảnh khoản]\n1. Các trường hợp cụ thể" in chunk["body_text"]
+        assert "[Ngữ cảnh điểm]\nc) Việc áp dụng" in chunk["body_text"]
+        assert chunk["token_count"] <= cfg.max_tokens
+
+    rebuilt = " ".join(
+        chunk["body_text"].split("[Nội dung]\n", 1)[-1]
+        for chunk in sorted(child_chunks, key=lambda item: item["segment_index"])
+    )
+    assert _normalize_whitespace(rebuilt) == _normalize_whitespace(child_text)
+
+    validation = validate_chunks(
+        corpus,
+        chunks,
+        config=cfg,
+        token_counter=WordTokenCounter(),
+    )
+    assert validation["is_valid"] is True
+    assert validation["invalid_subpoint_metadata_count"] == 0
+
+
 def test_desired_point_labels_precision(fallback_test_article):
     from backend.app.ingestion.legal_chunker import build_legal_chunks, ChunkingConfig
     corpus = {"metadata": {"topic_code": "20.2"}, "articles": [fallback_test_article]}
@@ -2137,3 +2407,309 @@ def test_real_article_20_2_nd_3_19_has_unique_clause_chunks(
 
     for indices in segments_by_key_base.values():
         assert sorted(indices) == list(range(1, len(indices) + 1))
+
+
+def test_real_corpus_fallback_does_not_split_known_legal_phrases(
+    real_corpus_chunks,
+):
+    corpus, chunks = real_corpus_chunks
+    prohibited_splits = [
+        ("thời gian thực hiện", "nhiệm vụ của"),
+        ("doanh nghiệp cho", "thuê lại"),
+        ("bảo hiểm xã", "hội,"),
+        ("tuyển dụng, quản", "lý người"),
+        ("sử dụng người", "lao động nước ngoài"),
+        ("làm việc tại", "việt nam."),
+        ("mang thai phải", "nghỉ việc"),
+    ]
+
+    source_text = _normalize_whitespace(
+        " ".join(
+            unit.get("text", "")
+            for article in corpus["articles"]
+            for unit in article.get("content_units", [])
+        )
+    ).lower()
+    for left, right in prohibited_splits:
+        assert f"{left} {right}" in source_text
+
+    groups = {}
+    for chunk in chunks:
+        if chunk.get("chunk_type") != "fallback_segment":
+            continue
+        key_base = chunk["chunk_key"].rsplit("|segment=", 1)[0]
+        groups.setdefault(key_base, []).append(chunk)
+
+    violations = []
+    for group in groups.values():
+        ordered = sorted(group, key=lambda chunk: chunk["segment_index"])
+        for previous, following in zip(ordered, ordered[1:]):
+            previous_body = previous["body_text"].split("[Nội dung]\n", 1)[-1]
+            following_body = following["body_text"].split("[Nội dung]\n", 1)[-1]
+            previous_body = _normalize_whitespace(previous_body).lower()
+            following_body = _normalize_whitespace(following_body).lower()
+
+            for left, right in prohibited_splits:
+                if previous_body.endswith(left) and following_body.startswith(right):
+                    violations.append(
+                        (previous["chunk_key"], following["chunk_key"], left, right)
+                    )
+
+    assert violations == []
+
+
+def test_real_corpus_fallback_subpoints_have_parent_context(
+    real_corpus_chunks,
+):
+    import re
+
+    corpus, chunks = real_corpus_chunks
+    chunks_by_source = {}
+    for chunk in chunks:
+        for unit_id in chunk.get("source_unit_ids", []):
+            chunks_by_source.setdefault(unit_id, []).append(chunk)
+
+    subpoint_start = re.compile(r"^\s*([a-zđ])(\d+)\)", re.IGNORECASE)
+    checked_unit_count = 0
+
+    for article in corpus["articles"]:
+        active_points = {}
+        for unit in article.get("content_units", []):
+            if unit.get("unit_type") == "clause":
+                active_points = {}
+            if unit.get("unit_type") == "point":
+                active_points[unit["point_label"].casefold()] = unit
+                continue
+
+            match = subpoint_start.match(unit.get("text", ""))
+            if not match:
+                continue
+
+            child_chunks = [
+                chunk
+                for chunk in chunks_by_source.get(unit["unit_id"], [])
+                if chunk.get("chunk_type") == "fallback_segment"
+            ]
+            if not child_chunks:
+                continue
+
+            checked_unit_count += 1
+            parent_label = match.group(1).casefold()
+            subpoint_label = parent_label + match.group(2)
+            parent = active_points[parent_label]
+
+            for chunk in child_chunks:
+                assert chunk["point_labels"] == [parent_label]
+                assert chunk["subpoint_label"] == subpoint_label
+                assert chunk["parent_point_unit_id"] == parent["unit_id"]
+                assert parent["unit_id"] in chunk["context_unit_ids"]
+                assert parent["text"] in chunk["body_text"]
+                assert "[Ngữ cảnh điểm]" in chunk["body_text"]
+
+            rebuilt = " ".join(
+                chunk["body_text"].split("[Nội dung]\n", 1)[-1]
+                for chunk in sorted(
+                    child_chunks,
+                    key=lambda item: item["segment_index"],
+                )
+            )
+            assert _normalize_whitespace(rebuilt) == _normalize_whitespace(
+                unit["text"]
+            )
+
+    assert checked_unit_count == 5
+
+
+def test_real_split_point_fallback_segments_repeat_point_context(
+    real_corpus_chunks,
+):
+    _, chunks = real_corpus_chunks
+    checked_count = 0
+
+    for chunk in chunks:
+        if (
+            chunk.get("chunk_type") != "fallback_segment"
+            or not chunk.get("point_labels")
+        ):
+            continue
+
+        primary_text = chunk["body_text"].split("[Nội dung]\n", 1)[-1]
+        has_primary_marker = any(
+            primary_text.lstrip().startswith(f"{label})")
+            or primary_text.lstrip().startswith(f"{label}1)")
+            for label in chunk["point_labels"]
+        )
+        if has_primary_marker:
+            continue
+
+        checked_count += 1
+        assert "[Ngữ cảnh điểm]" in chunk["body_text"]
+        context_text = chunk["body_text"].split("[Nội dung]\n", 1)[0]
+        assert any(
+            f"\n{label})" in context_text
+            for label in chunk["point_labels"]
+        )
+
+    assert checked_count >= 4
+
+
+def test_inferred_multilevel_table_headers_repeat_on_every_segment(base_article):
+    table_id = "table_multilevel"
+    base_article["content_units"] = []
+    base_article["tables"] = [
+        {
+            "table_id": table_id,
+            "headers": [],
+            "rows": [
+                ["Số TT", "Họ và tên", "Thời gian làm việc"],
+                ["Năm", "Tháng"],
+                ["(A)", "(B)", "(1)", "(2)"],
+                ["1", "Nguyễn Văn A", "10", "2"],
+                ["2", "Trần Văn B", "11", "3"],
+                ["3", "Lê Văn C", "12", "4"],
+            ],
+        }
+    ]
+    corpus = {"metadata": {}, "articles": [base_article]}
+    cfg = ChunkingConfig(target_tokens=30, max_tokens=64, fallback_overlap=0)
+
+    chunks = build_legal_chunks(
+        corpus,
+        config=cfg,
+        token_counter=WordTokenCounter(),
+    )
+    table_chunks = [chunk for chunk in chunks if chunk["table_id"] == table_id]
+
+    assert len(table_chunks) > 1
+    for chunk in table_chunks:
+        assert "Tiêu đề cấp 1: Số TT | Họ và tên" in chunk["body_text"]
+        assert "Tiêu đề cấp 2: Năm | Tháng" in chunk["body_text"]
+        assert "Mã cột: (A) | (B) | (1) | (2)" in chunk["body_text"]
+        assert chunk["shared_header_rows"] == base_article["tables"][0]["rows"][:3]
+        assert chunk["token_count"] <= cfg.max_tokens
+
+
+def test_real_multisegment_tables_repeat_shared_headers(real_corpus_chunks):
+    _, chunks = real_corpus_chunks
+    expected_headers = {
+        "vbpl:item:169619|attachment=2|table=1": ["TT | Nội dung"],
+        "vbpl:item:169619|attachment=2|table=27": [
+            "Số TT | Họ và tên",
+            "Nam | Nữ | Số năm | Số tháng",
+            "(A) | (B) | (1) | (2)",
+        ],
+        "vbpl:item:169619|attachment=2|table=33": [
+            "Số TT | Họ và tên",
+            "Năm | Tháng | Năm | Tháng",
+            "(A) | (B) | (1) | (2)",
+        ],
+        "vbpl:item:169619|attachment=2|table=36": [
+            "Số TT | Họ và tên",
+            "Năm | Tháng | Năm | Tháng",
+            "(A) | (B) | (1) | (2)",
+        ],
+    }
+
+    for table_id, header_fragments in expected_headers.items():
+        table_chunks = [
+            chunk for chunk in chunks if chunk.get("table_id") == table_id
+        ]
+        assert len(table_chunks) > 1
+        for chunk in table_chunks:
+            for fragment in header_fragments:
+                assert fragment in chunk["body_text"]
+            assert chunk["attachment_title"] == "PHỤ LỤC II"
+            assert chunk["token_count"] <= 750
+
+
+def test_real_formula_tables_link_to_preceding_text_chunks(real_corpus_chunks):
+    corpus, chunks = real_corpus_chunks
+    article = next(
+        item for item in corpus["articles"] if item["article_code"] == "20.2.TT.7.5"
+    )
+    table_id = f"{article['article_id']}|table=1"
+    preceding_unit = next(
+        unit
+        for unit in article["content_units"]
+        if unit["unit_id"].endswith("|clause=1|continuation=1")
+    )
+    following_unit = next(
+        unit
+        for unit in article["content_units"]
+        if unit["unit_id"].endswith("|clause=1|continuation=2")
+    )
+    formula_id = f"{table_id}|formula=1"
+
+    source_chunks = [
+        chunk
+        for chunk in chunks
+        if preceding_unit["unit_id"] in chunk.get("source_unit_ids", [])
+    ]
+    assert source_chunks
+    assert all(table_id in chunk["related_table_ids"] for chunk in source_chunks)
+    assert all(formula_id in chunk["formula_ids"] for chunk in source_chunks)
+
+    table_chunks = [chunk for chunk in chunks if chunk.get("table_id") == table_id]
+    assert table_chunks
+    for chunk in table_chunks:
+        assert chunk["formula_ids"] == [formula_id]
+        assert chunk["preceding_unit_id"] == preceding_unit["unit_id"]
+        assert chunk["following_unit_id"] == following_unit["unit_id"]
+        assert chunk["linearized_formula"] == (
+            "SGLVN = ((SNN - SNHN) × 12 giờ) / 2"
+        )
+        assert "Công thức chuẩn hóa: SGLVN = ((SNN - SNHN) × 12 giờ) / 2" in chunk["body_text"]
+
+
+def test_validation_rejects_missing_table_header_and_formula_links(
+    real_corpus_chunks,
+):
+    corpus, chunks = real_corpus_chunks
+
+    bad_header_chunks = copy.deepcopy(chunks)
+    header_chunk = next(
+        chunk
+        for chunk in bad_header_chunks
+        if chunk.get("table_id")
+        == "vbpl:item:169619|attachment=2|table=27"
+    )
+    header_chunk["shared_header_rows"] = []
+    header_validation = validate_chunks(corpus, bad_header_chunks)
+    assert header_validation["is_valid"] is False
+    assert header_validation["invalid_table_header_context_count"] == 1
+
+    bad_formula_chunks = copy.deepcopy(chunks)
+    formula_source_chunk = next(
+        chunk
+        for chunk in bad_formula_chunks
+        if chunk.get("chunk_type") != "table"
+        and chunk.get("related_table_ids")
+    )
+    formula_source_chunk["related_table_ids"] = []
+    formula_source_chunk["formula_ids"] = []
+    formula_validation = validate_chunks(corpus, bad_formula_chunks)
+    assert formula_validation["is_valid"] is False
+    assert formula_validation["invalid_formula_metadata_count"] == 1
+
+    bad_point_context_chunks = copy.deepcopy(chunks)
+    point_continuation = next(
+        chunk
+        for chunk in bad_point_context_chunks
+        if chunk.get("chunk_type") == "fallback_segment"
+        and chunk.get("point_labels")
+        and "[Ngữ cảnh điểm]" in chunk.get("body_text", "")
+        and not chunk["body_text"].split("[Nội dung]\n", 1)[-1]
+        .lstrip()
+        .startswith(tuple(
+            f"{label})" for label in chunk["point_labels"]
+        ))
+    )
+    point_continuation["body_text"] = point_continuation[
+        "body_text"
+    ].replace("[Ngữ cảnh điểm]", "[Bối cảnh bị thiếu]", 1)
+    point_context_validation = validate_chunks(
+        corpus,
+        bad_point_context_chunks,
+    )
+    assert point_context_validation["is_valid"] is False
+    assert point_context_validation["invalid_point_context_count"] == 1

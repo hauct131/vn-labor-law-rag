@@ -9,7 +9,7 @@ Chiến lược chunking của dự án phải đạt đồng thời bốn mục
 3. Giữ đủ ngữ cảnh để LLM không hiểu sai một khoản hoặc điểm đứng riêng lẻ.
 4. Dùng chung một tập chunk cho Sparse RAG, Hybrid RAG và Graph-enhanced RAG để việc so sánh công bằng.
 
-Corpus đầu vào là dữ liệu canonical sinh từ parser, gồm 477 điều thuộc Đề mục 20.2 — Lao động. Parser đã giữ được `content_units`, `tables`, `attachments`, `relations`, `source_note` và metadata chương/mục/điều.
+Corpus đầu vào là dữ liệu canonical sinh từ parser, gồm 477 điều thuộc Đề mục 20.2 — Lao động. Parser giữ riêng `articles` và các phụ lục HTML cấp tài liệu trong `attachments`; bảng biểu mẫu của phụ lục không còn được gắn vào điều đứng ngay trước nó trong HTML.
 
 ---
 
@@ -93,7 +93,8 @@ FALLBACK_OVERLAP = 80
 
 - `TARGET_TOKENS`: kích thước mong muốn khi phải nhóm hoặc chia.
 - `MAX_TOKENS`: giới hạn mềm tối đa của một chunk.
-- `FALLBACK_OVERLAP`: số token lặp lại khi phải chia theo câu.
+- `FALLBACK_OVERLAP`: số token lặp lại của recursive splitter cho text bảng
+  quá cỡ; fallback của legal unit không overlap để tránh lặp primary source.
 
 Đây là thông số khởi đầu. Kết quả cuối phải được xác nhận bằng đánh giá retrieval.
 
@@ -233,17 +234,28 @@ Fallback chỉ dùng khi:
 Quy tắc:
 
 ```text
-Target: 500–600 token
+Target: 500 token
 Max: 750 token
-Overlap: 80 token
+Legal-unit overlap: 0 token
+
+kết thúc unit
+→ kết thúc câu
+→ dấu chấm phẩy
+→ dấu phẩy
+→ khoảng trắng
+→ ký tự (chỉ cho token đơn lẻ bất khả phân)
 ```
 
 Phải:
 
-- Tách theo câu trước.
+- Ưu tiên ranh giới mạnh nhất còn vừa `MAX_TOKENS`, không cố lấp đủ 750 token.
 - Giữ nguyên thứ tự câu.
-- Chỉ dùng overlap trong fallback.
-- Không dùng overlap giữa hai Khoản hoặc hai nhóm Điểm.
+- Không lặp hoặc làm mất primary source khi nối các segment theo thứ tự.
+- Không coi marker mở đầu như `1.` hoặc `a.` là một câu riêng.
+- Không dùng overlap giữa các legal unit, Khoản hoặc nhóm Điểm.
+- Nếu một Điểm riêng lẻ bị chia thành nhiều segment, các segment tiếp nối phải
+  có `[Ngữ cảnh điểm]` chứa marker và phần mở đầu rút gọn của Điểm đó; không
+  chỉ giữ metadata `point_labels` mà thiếu marker nhìn thấy trong nội dung.
 
 Chunk key:
 
@@ -251,6 +263,36 @@ Chunk key:
 {article_id}|clause=1|segment=1
 {article_id}|clause=1|segment=2
 ```
+
+Subpoint như `c1)`, `c2)`, `d1)` được nhận diện cả khi parser lưu dưới
+dạng `clause_continuation`. Mỗi fallback segment của subpoint phải có:
+
+```text
+[Ngữ cảnh khoản]
+1. ...
+
+[Ngữ cảnh điểm]
+c) ...
+
+[Nội dung]
+c2) ...
+```
+
+Metadata tương ứng:
+
+```json
+{
+  "point_labels": ["c"],
+  "subpoint_label": "c2",
+  "parent_point_unit_id": "...|point=c",
+  "source_unit_ids": ["...|continuation=3"],
+  "context_unit_ids": ["...|clause=1", "...|point=c"]
+}
+```
+
+Điểm cha là repeated context, không được thay thế primary provenance của
+subpoint. Nếu một subpoint phải chia nhiều segment, mọi segment đều lặp lại
+ngữ cảnh khoản, ngữ cảnh điểm và cùng metadata subpoint.
 
 ### 5.8. Bảng
 
@@ -260,21 +302,43 @@ Chunk key:
 
 ```text
 {article_id}|table=1|segment=1
+{attachment_id}|table=1|segment=1
 ```
 
 Nếu bảng dài:
 
 - Chia theo nhóm dòng.
 - Không cắt giữa một hàng.
-- Lặp lại header trong mỗi segment.
+- Lặp lại toàn bộ header trong mỗi segment, gồm tiêu đề nhiều cấp và dòng mã
+  cột như `(A)`, `(B)`, `(1)`, `(2)`.
+- Khi HTML dùng `td` thay cho `th`, suy luận các dòng header đầu bảng từ dòng
+  mã cột hoặc các nhãn `TT`, `STT`, `Số TT`, `Họ và tên`, `Nội dung`.
+- Lưu cùng `table_title` và `shared_header_rows` trên mọi segment để validator
+  có thể kiểm tra header không bị rơi khi chia bảng.
 - Giữ metadata của bảng.
-- Giữ liên kết với Điều cha.
+- Bảng nằm trong điều giữ `parent_article_id`.
+- Bảng nằm trong phụ lục giữ `parent_attachment_id`, `parent_document_id` và `form_number`; `parent_article_id = null`.
 
 Không trộn bảng vào chunk văn bản thông thường nếu bảng làm chunk vượt giới hạn hoặc gây khó truy xuất.
 
+Nếu bảng biểu diễn công thức, table chunk phải có biểu diễn tuyến tính ổn định
+trong `linearized_formula` và nội dung `Công thức chuẩn hóa: ...`. Chunk văn bản
+ngay trước bảng giữ `related_table_ids` và `formula_ids`; table chunk giữ cùng
+`formula_ids`, cùng `preceding_unit_id` và `following_unit_id`. Nhờ vậy retrieval
+không tách câu dẫn “được tính theo công thức sau” khỏi chính công thức.
+
 ### 5.9. Attachment
 
-Trong Ngày 3:
+Phụ lục HTML của văn bản là container cấp tài liệu:
+
+```text
+Document
+└── Attachment
+    └── Form
+        └── Table
+```
+
+Đối với file đính kèm bên ngoài:
 
 - Chỉ giữ metadata attachment.
 - Không OCR.
@@ -286,7 +350,7 @@ Metadata có thể gồm:
 ```text
 filename
 href
-article_id
+attachment_id
 source_document_id
 ```
 
@@ -386,6 +450,7 @@ Ví dụ:
 {article_id}|clause=1|points=a-d
 {article_id}|clause=1|segment=2
 {article_id}|table=1|segment=1
+{attachment_id}|table=1|segment=1
 ```
 
 ### 7.2. Chunk ID
@@ -411,12 +476,11 @@ Thì phải sinh cùng `chunk_id`.
 
 ## 8. Khóa liên kết Qdrant–Neo4j
 
-Khóa chính dùng chung:
+Khóa liên kết phụ thuộc container:
 
 ```text
-Qdrant.parent_article_id
-=
-Neo4j.Article.article_id
+article chunk:    Qdrant.parent_article_id    = Neo4j.Article.article_id
+attachment table: Qdrant.parent_attachment_id = Neo4j.Attachment.attachment_id
 ```
 
 ### Trong Qdrant
@@ -424,7 +488,9 @@ Neo4j.Article.article_id
 ```json
 {
   "chunk_id": "...",
+  "container_type": "article",
   "parent_article_id": "200020...",
+  "parent_attachment_id": null,
   "article_code": "20.2.LQ.169"
 }
 ```
@@ -442,8 +508,8 @@ Luồng Graph-enhanced RAG:
 
 ```text
 Qdrant tìm child chunk
-→ lấy parent_article_id
-→ Neo4j tìm Article
+→ định tuyến theo container_type
+→ lấy Article hoặc Attachment cha
 → mở rộng RELATED_TO/CITES/GUIDED_BY
 → nhận các article_id liên quan
 → Qdrant lấy thêm child chunk
@@ -458,7 +524,13 @@ Qdrant tìm child chunk
 {
   "chunk_id": "uuid-v5-string",
   "chunk_key": "article-id|clause=1",
+  "container_type": "article",
   "parent_article_id": "article-id",
+  "parent_attachment_id": null,
+  "parent_document_id": null,
+  "attachment_id": null,
+  "attachment_title": null,
+  "form_number": null,
 
   "document_id": "phap-dien:20.2",
   "topic_code": "20.2",
@@ -481,8 +553,18 @@ Qdrant tìm child chunk
   "unit_type": "clause",
   "clause_number": "1",
   "point_labels": [],
+  "subpoint_label": null,
+  "parent_point_unit_id": null,
   "source_unit_ids": [],
+  "context_unit_ids": [],
   "table_id": null,
+  "table_title": null,
+  "shared_header_rows": [],
+  "related_table_ids": [],
+  "formula_ids": [],
+  "preceding_unit_id": null,
+  "following_unit_id": null,
+  "linearized_formula": null,
   "segment_index": 1,
 
   "content": "Nội dung dùng để embed và retrieve.",
@@ -501,8 +583,8 @@ Qdrant tìm child chunk
 
   "attachment_metadata": [],
 
-  "parser_version": "1.2.0",
-  "chunker_version": "1.0.0",
+  "parser_version": "1.3.0",
+  "chunker_version": "1.1.0",
   "source_sha256": "..."
 }
 ```
@@ -631,7 +713,8 @@ Chunking chỉ đạt khi:
 [ ] Không trùng chunk_id.
 [ ] Không trùng chunk_key.
 [ ] Chạy lại sinh cùng ID.
-[ ] Mọi parent_article_id tồn tại.
+[ ] Chunk cấp điều có `parent_article_id` hợp lệ và không có `parent_attachment_id`.
+[ ] Chunk bảng phụ lục có `parent_attachment_id`/`parent_document_id` hợp lệ và `parent_article_id = null`.
 [ ] Coverage đủ 477 Điều.
 [ ] Không chunk nào trộn hai Điều.
 [ ] Không chunk rỗng.
@@ -639,6 +722,8 @@ Chunking chỉ đạt khi:
 [ ] Không mất clause continuation.
 [ ] Point thuộc đúng Khoản.
 [ ] Coverage đủ 63 bảng.
+[ ] Mọi segment của bảng dài lặp lại cùng header nhiều cấp và dòng mã cột.
+[ ] Mọi công thức bảng có liên kết hai chiều với chunk câu dẫn liền trước.
 [ ] Metadata nguồn được giữ.
 [ ] Metadata relation được giữ.
 [ ] Attachment metadata được giữ.

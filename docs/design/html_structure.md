@@ -5,7 +5,7 @@
 - File: `data/raw/DeMuc_20.2_Lao_Dong.html`
 - Encoding phát hiện: `utf-8`
 - SHA-256: `ee1d819f6c5650adbadbd7ac6306ad6c08630794987759ef118b87ee64376471`
-- Phiên bản parser: `1.2.0`
+- Phiên bản parser: `1.3.0`
 - Nguồn là HTML có cấu trúc, vì vậy **không sử dụng OCR**.
 
 ## 2. Thống kê tổng quan
@@ -13,8 +13,12 @@
 - Tổng số điều: **477**
 - Chương: **17**
 - Mục: **24**
-- Bảng nằm trong nội dung điều: **63**
-- Tệp/phụ lục đính kèm: **39**
+- Tổng số bảng: **63**
+- Bảng thuộc điều: **9**
+- Bảng thuộc phụ lục: **54**
+- Tổng attachment: **41**
+- File gắn với điều: **39**
+- Phụ lục cấp tài liệu: **2**
 - Anchor điều bị thiếu: **0**
 - Anchor điều bị trùng: **0**
 - Điều rỗng: **0**
@@ -82,8 +86,14 @@ Quan hệ được làm phẳng thành `RELATED_TO`, `EXTERNAL_REFERENCE` hoặc
 ## 8. Bảng và attachment
 
 - Bảng được lưu thành `headers`, `rows` và `text`.
-- Attachment lưu tên, URL, phần mở rộng và `downloaded = false`.
-- Không tải, OCR hoặc nhúng nội dung attachment trong giai đoạn này.
+- Phụ lục HTML là container cấp tài liệu, không phải con của điều đứng ngay trước nó.
+- Bảng phụ lục có `attachment_id`, `parent_document_id`, `form_number` và `parent_article_id = null`.
+- File đính kèm ngoài lưu tên, URL, phần mở rộng và `downloaded = false`; không tải hoặc OCR trong giai đoạn này.
+- HTML nguồn có 4 ảnh công thức tại Điều `20.2.NĐ.3.56` và
+  `20.2.NĐ.3.57`, nhưng `src` đều là đường dẫn `file:///C:/...` cục bộ không
+  tồn tại trong corpus. Các công thức ảnh này không thể OCR hoặc tạo liên kết
+  bảng; audit giữ cờ `formula_cue_requires_source_check` để không xem phần văn
+  bản còn lại là công thức đầy đủ.
 
 ## 9. Kết quả parse thử
 

@@ -22,7 +22,7 @@ def canonical_corpus():
 
 
 def test_parser_version():
-    assert PARSER_VERSION == "1.2.0"
+    assert PARSER_VERSION == "1.3.0"
 
 
 def test_topic_metadata(canonical_corpus):
@@ -78,7 +78,11 @@ def test_articles_have_chapter(canonical_corpus):
 def test_validation_report_metrics(canonical_corpus):
     validation = validate_corpus(canonical_corpus)
     assert validation["table_count"] == 63
+    assert validation["article_table_count"] == 9
+    assert validation["attachment_table_count"] == 54
     assert validation["attachment_count"] == 41
+    assert validation["article_attachment_count"] == 39
+    assert validation["document_attachment_count"] == 2
     assert validation["article_relation_count"] == 928
     assert validation["structure_relation_count"] == 6
     assert validation["same_topic_unresolved_relation_count"] == 0
@@ -181,11 +185,15 @@ def test_appendix_boundary_bug_minimal_correct(tmp_path, minimal_appendix_html):
         assert "HỆ THỐNG BIỂU MẪU" not in text
         assert "Mẫu số 01" not in text
 
-    # The appendix elements are parsed as attachments of the article
-    assert len(article["attachments"]) == 2
-    att1, att2 = article["attachments"]
+    # Appendices are document-level containers, not children of Article 14.
+    assert article["attachments"] == []
+    assert article["tables"] == []
+    assert len(corpus["attachments"]) == 2
+    att1, att2 = corpus["attachments"]
     assert att1["title"] == "PHỤ LỤC I"
     assert att2["title"] == "PHỤ LỤC II"
+    assert att1["parent_article_id"] is None
+    assert att2["parent_article_id"] is None
 
 
 def test_appendix_boundary_bug_real_corpus_correct(canonical_corpus):
@@ -204,11 +212,15 @@ def test_appendix_boundary_bug_real_corpus_correct(canonical_corpus):
         assert "HỆ THỐNG BIỂU MẪU" not in text
         assert "Mẫu số 01" not in text
 
-    # We should have PHỤ LỤC I and PHỤ LỤC II as attachments
-    assert len(article["attachments"]) == 2
-    att1, att2 = article["attachments"]
+    # PHỤ LỤC I/II belong to the source document, not Article 14.
+    assert article["attachments"] == []
+    assert article["tables"] == []
+    assert len(canonical_corpus["attachments"]) == 2
+    att1, att2 = canonical_corpus["attachments"]
     assert att1["title"] == "PHỤ LỤC I"
     assert att2["title"] == "PHỤ LỤC II"
+    assert att1["parent_document_id"] == article["source_document_id"]
+    assert att2["parent_document_id"] == article["source_document_id"]
 
 
 def test_appendix_boundary_bug_minimal_desired(tmp_path, minimal_appendix_html):
@@ -248,16 +260,30 @@ def test_appendix_boundary_bug_real_corpus_desired(canonical_corpus):
         assert "HỆ THỐNG BIỂU MẪU" not in u["text"]
         assert "Mẫu số 01" not in u["text"]
 
-    # Check that PHỤ LỤC I and PHỤ LỤC II are present in the attachments of the article
-    assert len(article["attachments"]) == 2
-    att1, att2 = article["attachments"]
+    # Appendices are siblings of articles under the source document.
+    assert article["attachments"] == []
+    assert article["tables"] == []
+    assert len(canonical_corpus["attachments"]) == 2
+    att1, att2 = canonical_corpus["attachments"]
     assert att1["title"] == "PHỤ LỤC I"
     assert att2["title"] == "PHỤ LỤC II"
+    assert att1["container_type"] == "attachment"
+    assert att2["container_type"] == "attachment"
+    assert att1["parent_article_id"] is None
+    assert att2["parent_article_id"] is None
 
     # Check that form markers and tables are preserved
     assert any("Mẫu số 01" in form for form in att2["form_markers"])
     assert any("Mẫu số 11" in form for form in att2["form_markers"])
-    assert len(att2["tables"]) > 0
+    assert len(att2["tables"]) == 54
+    assert all(
+        table["attachment_id"] == att2["attachment_id"]
+        for table in att2["tables"]
+    )
+    assert any(
+        table["form_number"] == "Mẫu số 01"
+        for table in att2["tables"]
+    )
 
 
 def test_appendix_content_conservation(tmp_path, minimal_appendix_html):
@@ -275,9 +301,11 @@ def test_appendix_content_conservation(tmp_path, minimal_appendix_html):
     assert article["content_units"][0]["clause_number"] == "1"
     assert article["content_units"][1]["clause_number"] == "6"
 
-    # 2 attachments representing PHỤ LỤC I and PHỤ LỤC II
-    assert len(article["attachments"]) == 2
-    att1, att2 = article["attachments"]
+    # 2 document-level attachments representing PHỤ LỤC I and PHỤ LỤC II
+    assert article["attachments"] == []
+    assert article["tables"] == []
+    assert len(corpus["attachments"]) == 2
+    att1, att2 = corpus["attachments"]
 
     assert att1["title"] == "PHỤ LỤC I"
     assert "QUY TRÌNH XÂY DỰNG PHƯƠNG ÁN SỬ DỤNG LAO ĐỘNG" in att1["text"]
@@ -299,15 +327,11 @@ def test_appendix_content_conservation(tmp_path, minimal_appendix_html):
     assert "1" in table_cells
     assert "Mẫu số 01" in table_cells
 
-    article_table_ids = {
-        current_table["table_id"]
-        for current_table in article["tables"]
-    }
-
-    assert table["table_id"] in article_table_ids
-
-    # The table is also preserved in the article's table list (for canonical global counting)
-    assert len(article["tables"]) == 1
+    assert table["table_id"].startswith(f'{att2["attachment_id"]}|table=')
+    assert table["attachment_id"] == att2["attachment_id"]
+    assert table["parent_article_id"] is None
+    assert table["parent_document_id"] == att2["parent_document_id"]
+    assert table["form_number"] == "Mẫu số 01"
 
 
 def test_appendix_boundary_false_positive_protection(tmp_path):

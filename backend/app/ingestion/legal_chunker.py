@@ -1,5 +1,6 @@
 """Structural chunking theo Điều → Khoản → Điểm."""
 
+import copy
 import logging
 import re
 from dataclasses import dataclass
@@ -7,7 +8,7 @@ from typing import Any, Protocol
 from uuid import UUID, uuid5
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-CHUNKER_VERSION = "1.0.0"
+CHUNKER_VERSION = "1.1.0"
 
 logger = logging.getLogger(__name__)
 
@@ -358,20 +359,24 @@ def _build_body_text(units: list[dict]) -> str:
 
 
 def _build_chunk_content(
-    article: dict,
+    container: dict,
     *,
     body_text: str,
     clause_number: str | None = None,
     point_labels: list[str] | None = None,
 ) -> str:
     """Dựng content với template breadcrumbs, không None, không URLs."""
-    topic_code = article.get("topic_code")
-    topic_name = article.get("topic_name")
-    chapter = article.get("chapter")
-    section = article.get("section")
-    article_code = article.get("article_code")
-    article_title = article.get("article_title")
-    source_type = article.get("source_type")
+    topic_code = container.get("topic_code")
+    topic_name = container.get("topic_name")
+    chapter = container.get("chapter")
+    section = container.get("section")
+    article_code = container.get("article_code")
+    article_title = container.get("article_title")
+    attachment_title = (
+        container.get("attachment_title") or container.get("title")
+    )
+    form_number = container.get("form_number")
+    source_type = container.get("source_type")
 
     lines = []
     if topic_code and topic_name:
@@ -385,6 +390,12 @@ def _build_chunk_content(
 
     if article_code and article_title:
         lines.append(f"Điều {article_code} — {article_title}")
+
+    if container.get("container_type") == "attachment" and attachment_title:
+        lines.append(f"Phụ lục: {attachment_title}")
+
+    if container.get("container_type") == "attachment" and form_number:
+        lines.append(f"Biểu mẫu: {form_number}")
 
     if clause_number is not None:
         lines.append(f"Khoản: {clause_number}")
@@ -447,7 +458,7 @@ def _build_attachment_metadata(attachments: list[dict]) -> list[dict]:
 
 
 def _create_chunk(
-    article: dict,
+    container: dict,
     *,
     chunk_type: str,
     unit_type: str,
@@ -461,6 +472,15 @@ def _create_chunk(
     body_text: str,
     source_unit_ids: list[str],
     context_unit_ids: list[str] | None = None,
+    subpoint_label: str | None = None,
+    parent_point_unit_id: str | None = None,
+    table_title: str | None = None,
+    shared_header_rows: list[list[str]] | None = None,
+    related_table_ids: list[str] | None = None,
+    formula_ids: list[str] | None = None,
+    preceding_unit_id: str | None = None,
+    following_unit_id: str | None = None,
+    linearized_formula: str | None = None,
     token_counter: TokenCounter,
     requires_fallback: bool = False,
     oversized_reason: str | None = None,
@@ -468,8 +488,19 @@ def _create_chunk(
     fallback_source_reason: str | None = None,
 ) -> dict:
     """Helper chung dựng chunk metadata và content."""
+    container_type = container.get("container_type") or "article"
+    container_id = (
+        container.get("article_id")
+        if container_type == "article"
+        else container.get("attachment_id")
+    )
+    if not isinstance(container_id, str) or not container_id:
+        raise ValueError(
+            f"{container_type} container must have a non-empty stable ID"
+        )
+
     chunk_key = build_chunk_key(
-        article_id=article["article_id"],
+        article_id=container_id,
         chunk_type=chunk_type,
         clause_number=clause_number,
         clause_occurrence=clause_occurrence,
@@ -481,30 +512,52 @@ def _create_chunk(
     chunk_id = make_chunk_id(chunk_key)
 
     content = _build_chunk_content(
-        article,
+        container,
         body_text=body_text,
         clause_number=clause_number,
         point_labels=point_labels
     )
     token_count = token_counter.count(content)
 
-    chapter = article.get("chapter") or {}
-    section = article.get("section") or {}
+    chapter = container.get("chapter") or {}
+    section = container.get("section") or {}
 
-    rel_ids, rel_codes, rel_types, rel_same, rel_in_corpus = _build_relation_lists(article.get("relations", []))
-    attachment_meta = _build_attachment_metadata(article.get("attachments", []))
+    rel_ids, rel_codes, rel_types, rel_same, rel_in_corpus = _build_relation_lists(container.get("relations", []))
+    if container_type == "attachment":
+        attachment_meta = _build_attachment_metadata([container])
+    else:
+        attachment_meta = _build_attachment_metadata(container.get("attachments", []))
+
+    parent_article_id = (
+        container.get("article_id")
+        if container_type == "article"
+        else None
+    )
+    parent_attachment_id = (
+        container.get("attachment_id")
+        if container_type == "attachment"
+        else None
+    )
 
     return {
         "chunk_id": chunk_id,
         "chunk_key": chunk_key,
-        "parent_article_id": article["article_id"],
-        "document_id": article.get("document_id"),
-        "topic_code": article.get("topic_code"),
-        "topic_name": article.get("topic_name"),
-        "article_code": article.get("article_code"),
-        "codification_code": article.get("codification_code"),
-        "article_title": article.get("article_title"),
-        "heading": article.get("heading"),
+        "container_type": container_type,
+        "parent_article_id": parent_article_id,
+        "parent_attachment_id": parent_attachment_id,
+        "parent_document_id": container.get("parent_document_id"),
+        "attachment_id": container.get("attachment_id"),
+        "attachment_title": (
+            container.get("attachment_title") or container.get("title")
+        ) if container_type == "attachment" else None,
+        "form_number": container.get("form_number"),
+        "document_id": container.get("document_id"),
+        "topic_code": container.get("topic_code"),
+        "topic_name": container.get("topic_name"),
+        "article_code": container.get("article_code"),
+        "codification_code": container.get("codification_code"),
+        "article_title": container.get("article_title"),
+        "heading": container.get("heading"),
         "chapter_id": chapter.get("anchor_id"),
         "chapter_number": chapter.get("number"),
         "chapter_title": chapter.get("title"),
@@ -517,28 +570,37 @@ def _create_chunk(
         "clause_occurrence": clause_occurrence,
         "point_labels": point_labels or [],
         "point_occurrences": point_occurrences or [],
+        "subpoint_label": subpoint_label,
+        "parent_point_unit_id": parent_point_unit_id,
+        "related_table_ids": related_table_ids or [],
+        "formula_ids": formula_ids or [],
+        "preceding_unit_id": preceding_unit_id,
+        "following_unit_id": following_unit_id,
         "source_unit_ids": source_unit_ids,
         "context_unit_ids": context_unit_ids or [],
         "table_id": table_id,
         "table_index": table_index,
+        "table_title": table_title,
+        "shared_header_rows": shared_header_rows or [],
+        "linearized_formula": linearized_formula,
         "segment_index": segment_index,
         "content": content,
         "body_text": body_text,
         "token_count": token_count,
         "tokenizer_name": token_counter.name,
-        "source_type": article.get("source_type"),
-        "source_document_id": article.get("source_document_id"),
-        "source_note_text": article.get("source_note_text"),
-        "source_urls": list(article.get("source_urls", [])),
+        "source_type": container.get("source_type"),
+        "source_document_id": container.get("source_document_id"),
+        "source_note_text": container.get("source_note_text"),
+        "source_urls": list(container.get("source_urls", [])),
         "relation_target_ids": rel_ids,
         "relation_target_codes": rel_codes,
         "relation_types": rel_types,
         "relation_same_topic": rel_same,
         "relation_target_in_corpus": rel_in_corpus,
         "attachment_metadata": attachment_meta,
-        "parser_version": article.get("parser_version"),
+        "parser_version": container.get("parser_version"),
         "chunker_version": CHUNKER_VERSION,
-        "source_sha256": article.get("source_sha256"),
+        "source_sha256": container.get("source_sha256"),
         "warnings": warnings or [],
         "requires_fallback": requires_fallback,
         "oversized_reason": oversized_reason,
@@ -590,11 +652,196 @@ def split_oversized_legal_text(
     return segments
 
 
+def _row_to_text(row: Any, headers: list[str] | None = None) -> str:
+    if isinstance(row, list):
+        return " | ".join(
+            str(value) if value is not None else "" for value in row
+        )
+    if isinstance(row, dict):
+        if headers:
+            return " | ".join(
+                str(row.get(header)) if row.get(header) is not None else ""
+                for header in headers
+            )
+        return " | ".join(
+            str(value) if value is not None else ""
+            for value in row.values()
+        )
+    return str(row)
+
+
+def _is_column_code_row(row: Any) -> bool:
+    if not isinstance(row, list):
+        return False
+    nonempty = [str(value).strip() for value in row if str(value).strip()]
+    if len(nonempty) < 2:
+        return False
+    code_count = sum(
+        re.fullmatch(r"\([A-Za-zĐđ0-9]+\)", value) is not None
+        for value in nonempty
+    )
+    return code_count >= 2 and code_count / len(nonempty) >= 0.5
+
+
+def _infer_shared_header_rows(table: dict) -> list[list[str]]:
+    """Infer HTML table headers when the source uses ``td`` instead of ``th``."""
+    if table.get("headers"):
+        return []
+
+    rows = table.get("rows") or []
+    for index, row in enumerate(rows[:4]):
+        if _is_column_code_row(row):
+            return copy.deepcopy(rows[: index + 1])
+
+    if not rows or not isinstance(rows[0], list):
+        return []
+
+    first_cells = [str(value).strip().casefold() for value in rows[0]]
+    first_cell = first_cells[0] if first_cells else ""
+    header_terms = {
+        "tt",
+        "stt",
+        "số tt",
+        "số thứ tự",
+        "họ và tên",
+        "nội dung",
+    }
+    if len(first_cells) >= 2 and (
+        first_cell in header_terms
+        or any(cell in header_terms for cell in first_cells)
+    ):
+        return [copy.deepcopy(rows[0])]
+
+    return []
+
+
+def _table_title_map(container: dict) -> dict[str, str | None]:
+    titles: dict[str, str | None] = {}
+    first_title_by_form: dict[str, str] = {}
+
+    for table in container.get("tables") or []:
+        table_id = table.get("table_id")
+        if not table_id:
+            continue
+        form_number = table.get("form_number")
+        if form_number and form_number not in first_title_by_form:
+            candidate = (table.get("text") or "").strip()
+            if candidate:
+                first_title_by_form[form_number] = candidate
+
+        if form_number:
+            titles[table_id] = first_title_by_form.get(form_number)
+        else:
+            titles[table_id] = (
+                container.get("subtitle")
+                or container.get("article_title")
+                or container.get("attachment_title")
+            )
+
+    return titles
+
+
+def _normalize_formula_fragment(text: str) -> str:
+    normalized = text.replace("–", "-").replace("—", "-")
+    normalized = re.sub(r"\b[xX]\b", "×", normalized)
+    normalized = re.sub(r"(?<=\d)h\b", " giờ", normalized)
+    return re.sub(r"\s+", " ", normalized).strip()
+
+
+def _linearize_formula(table: dict) -> str | None:
+    rows = table.get("rows") or []
+    if not rows or len(rows) > 2 or not all(isinstance(row, list) for row in rows):
+        return None
+
+    normalized_rows = [
+        [_normalize_formula_fragment(str(cell)) for cell in row if str(cell).strip()]
+        for row in rows
+    ]
+    first_row = normalized_rows[0]
+    if not first_row or not any(
+        "=" in cell or cell == "×" for cell in first_row
+    ):
+        return None
+
+    if len(normalized_rows) == 1 or not normalized_rows[1]:
+        return " ".join(first_row)
+
+    denominator = " ".join(normalized_rows[1])
+    if len(first_row) < 2:
+        return None
+
+    left = first_row[0]
+    expression_cells = first_row[1:]
+    if "×" in expression_cells:
+        multiply_index = expression_cells.index("×")
+        numerator = " ".join(expression_cells[:multiply_index])
+        tail = " ".join(expression_cells[multiply_index:])
+        expression = f"({numerator} / {denominator}) {tail}".strip()
+    else:
+        numerator = expression_cells[0]
+        tail = " ".join(expression_cells[1:])
+        expression = f"({numerator}) / {denominator}"
+        if tail:
+            expression += f" {tail}"
+
+    return f"{left} {expression}".strip()
+
+
+def _formula_table_links(container: dict) -> dict[str, dict[str, Any]]:
+    tables_by_id = {
+        table.get("table_id"): table
+        for table in container.get("tables") or []
+        if table.get("table_id")
+    }
+    units = container.get("content_units") or []
+    links: dict[str, dict[str, Any]] = {}
+
+    for index, unit in enumerate(units):
+        if unit.get("unit_type") != "table":
+            continue
+        table_id = unit.get("unit_id")
+        table = tables_by_id.get(table_id)
+        formula = _linearize_formula(table or {})
+        if not formula:
+            continue
+
+        preceding = next(
+            (
+                candidate
+                for candidate in reversed(units[:index])
+                if candidate.get("unit_type") != "table"
+            ),
+            None,
+        )
+        following = next(
+            (
+                candidate
+                for candidate in units[index + 1 :]
+                if candidate.get("unit_type") != "table"
+            ),
+            None,
+        )
+        links[table_id] = {
+            "formula_id": f"{table_id}|formula=1",
+            "linearized_formula": formula,
+            "preceding_unit_id": (
+                preceding.get("unit_id") if preceding else None
+            ),
+            "following_unit_id": (
+                following.get("unit_id") if following else None
+            ),
+        }
+
+    return links
+
+
 def _serialize_table(
     table: dict,
     *,
     rows: list | None = None,
     include_header: bool = True,
+    shared_header_rows: list[list[str]] | None = None,
+    linearized_formula: str | None = None,
 ) -> str:
     """Serialize table dictionary to deterministic, clean markdown-like format."""
     table_id = table.get("table_id", "")
@@ -603,219 +850,254 @@ def _serialize_table(
     headers = table.get("headers") or []
     table_rows = rows if rows is not None else table.get("rows")
 
-    if table_rows:
-        if include_header and headers:
-            header_str = " | ".join(str(h).strip() for h in headers)
-            lines.append(f"Cột: {header_str}")
+    if include_header and headers:
+        lines.append(f"Cột: {_row_to_text(headers)}")
 
-        for r_idx, row in enumerate(table_rows, 1):
-            if isinstance(row, list):
-                row_str = " | ".join(str(val) if val is not None else "" for val in row)
-            elif isinstance(row, dict):
-                if headers:
-                    row_str = " | ".join(str(row.get(h)) if row.get(h) is not None else "" for h in headers)
-                else:
-                    row_str = " | ".join(str(value) if value is not None else "" for value in row.values())
+    inferred_headers = shared_header_rows or []
+    if include_header and inferred_headers:
+        level = 0
+        for header_row in inferred_headers:
+            if _is_column_code_row(header_row):
+                label = "Mã cột"
             else:
-                row_str = str(row)
-            lines.append(f"Dòng {r_idx}: {row_str}")
+                level += 1
+                label = f"Tiêu đề cấp {level}"
+            lines.append(f"{label}: {_row_to_text(header_row)}")
+
+    if include_header and linearized_formula:
+        lines.append(f"Công thức chuẩn hóa: {linearized_formula}")
+
+    if table_rows:
+        for r_idx, row in enumerate(table_rows, 1):
+            row_label = "Dòng dữ liệu" if (headers or inferred_headers) else "Dòng"
+            lines.append(f"{row_label} {r_idx}: {_row_to_text(row, headers)}")
         return "\n".join(lines)
-    else:
+
+    if len(lines) > 1:
+        return "\n".join(lines)
+
+    if rows is None:
         text_content = table.get("text", "").strip()
         if text_content:
             lines.append(text_content)
             return "\n".join(lines)
-        return f"Bảng: {table_id}"
+
+    return f"Bảng: {table_id}"
 
 
 def _build_table_chunks(
-    article: dict,
+    container: dict,
     cfg: ChunkingConfig,
     tc: TokenCounter,
 ) -> list[dict]:
-    """Tạo table chunks cho các tables trong article['tables']."""
-    tables = article.get("tables") or []
-    table_chunks = []
+    """Tạo table chunks cho bảng thuộc một article hoặc attachment."""
+    tables = container.get("tables") or []
+    table_chunks: list[dict] = []
+    container_id = (
+        container.get("article_id")
+        or container.get("attachment_id")
+        or "<unknown-container>"
+    )
+    table_titles = _table_title_map(container)
+    formula_links = _formula_table_links(container)
 
     for tbl_idx, table in enumerate(tables, 1):
         table_id = table.get("table_id")
         rows = table.get("rows") or []
+        shared_header_rows = _infer_shared_header_rows(table)
+        data_rows = rows[len(shared_header_rows) :]
+        formula_link = formula_links.get(table_id, {})
+        linearized_formula = formula_link.get("linearized_formula")
+        table_container = dict(container)
+        if container.get("container_type") == "attachment":
+            table_container["form_number"] = table.get("form_number")
 
-        # 1. Thử xem toàn bộ bảng có vừa khít max_tokens không
-        full_body = _serialize_table(table, include_header=True)
-        # Tính toán content đầy đủ bao gồm breadcrumbs
-        full_content = _build_chunk_content(
-            article,
-            body_text=full_body
-        )
-        if tc.count(full_content) <= cfg.max_tokens:
-            # Vừa khít, tạo 1 chunk duy nhất
-            chunk = _create_chunk(
-                article,
-                chunk_type="table",
-                unit_type="table",
-                segment_index=1,
-                table_id=table_id,
-                table_index=tbl_idx,
-                body_text=full_body,
-                source_unit_ids=[],
-                token_counter=tc,
-                requires_fallback=False
+        def render(group_rows: list[Any]) -> str:
+            return _serialize_table(
+                table,
+                rows=group_rows,
+                include_header=True,
+                shared_header_rows=shared_header_rows,
+                linearized_formula=linearized_formula,
             )
-            table_chunks.append(chunk)
-            continue
 
-        # 2. Bảng vượt quá max_tokens -> cần chia nhỏ
-        if rows:
-            # Danh sách chứa các tuple: (group_rows, include_header, warnings)
-            segments_rows = []
-            current_group = []
+        def fits(group_rows: list[Any]) -> bool:
+            return tc.count(
+                _build_chunk_content(
+                    table_container,
+                    body_text=render(group_rows),
+                )
+            ) <= cfg.max_tokens
 
-            for r_idx, row in enumerate(rows, 1):
-                # Thử thêm row vào current_group
-                test_group = current_group + [row]
-                test_body = _serialize_table(table, rows=test_group, include_header=True)
-                test_content = _build_chunk_content(article, body_text=test_body)
+        def split_row_text(row_text: str) -> list[str]:
+            pieces = re.findall(r"\S+(?:\s+|$)", row_text)
+            fragments: list[str] = []
+            current = ""
 
-                if tc.count(test_content) <= cfg.max_tokens:
-                    current_group.append(row)
-                else:
-                    # Nếu nhóm hiện tại đã có hàng, chốt nhóm hiện tại
+            for piece in pieces:
+                candidate = (current + piece).strip()
+                if candidate and fits([candidate]):
+                    current += piece
+                    continue
+
+                if current.strip():
+                    fragments.append(current.strip())
+                    current = ""
+
+                token = piece.strip()
+                if not token:
+                    continue
+                if fits([token]):
+                    current = piece
+                    continue
+
+                remaining = token
+                while remaining:
+                    low, high, best = 1, len(remaining), 0
+                    while low <= high:
+                        middle = (low + high) // 2
+                        if fits([remaining[:middle]]):
+                            best = middle
+                            low = middle + 1
+                        else:
+                            high = middle - 1
+                    if best == 0:
+                        raise ValueError(
+                            "Cannot fit repeated table header and one token "
+                            f"for container {container_id}, table {table_id}."
+                        )
+                    fragments.append(remaining[:best])
+                    remaining = remaining[best:]
+
+            if current.strip():
+                fragments.append(current.strip())
+            return fragments
+
+        segment_groups: list[tuple[list[Any], list[str]]] = []
+
+        if rows or table.get("headers"):
+            if not fits([]):
+                raise ValueError(
+                    f"Repeated header exceeds max_tokens for container "
+                    f"{container_id}, table {table_id}."
+                )
+
+            if fits(data_rows):
+                segment_groups.append((data_rows, []))
+            else:
+                current_group: list[Any] = []
+                for row in data_rows:
+                    candidate_group = current_group + [row]
+                    if fits(candidate_group):
+                        current_group = candidate_group
+                        continue
+
                     if current_group:
-                        segments_rows.append((current_group, True, []))
-                        current_group = [row]
-                    else:
-                        current_group = [row]
-
-                    # Kiểm tra xem hàng đơn lẻ này (cộng header) có vượt max_tokens không
-                    single_body = _serialize_table(table, rows=current_group, include_header=True)
-                    single_content = _build_chunk_content(article, body_text=single_body)
-
-                    if tc.count(single_content) > cfg.max_tokens:
-                        # Row riêng quá dài! Cần split row này
-                        row_text_only = _serialize_table(table, rows=current_group, include_header=False)
-                        # Dùng split_oversized_legal_text để chia nhỏ row text
-                        sub_texts = split_oversized_legal_text(row_text_only, config=cfg, token_counter=tc)
-                        if not sub_texts:
-                            raise ValueError(
-                                f"Cannot split row {r_idx} for table {table_id} in article {article['article_id']}"
-                            )
-
-                        for sub_t in sub_texts:
-                            # Thử lặp header
-                            sub_body_with_hdr = f"Bảng: {table_id}\n"
-                            if table.get("headers"):
-                                sub_body_with_hdr += "Cột: " + " | ".join(str(h).strip() for h in table["headers"]) + "\n"
-                            sub_body_with_hdr += f"Dòng: {sub_t}"
-
-                            sub_content = _build_chunk_content(article, body_text=sub_body_with_hdr)
-                            if tc.count(sub_content) <= cfg.max_tokens:
-                                segments_rows.append(([sub_t], True, ["oversized_table_row_split"]))
-                            else:
-                                # Header quá dài, thử không lặp header
-                                sub_body_no_hdr = f"Bảng: {table_id}\n{sub_t}"
-                                sub_content_no_hdr = _build_chunk_content(article, body_text=sub_body_no_hdr)
-                                if tc.count(sub_content_no_hdr) <= cfg.max_tokens:
-                                    segments_rows.append(([sub_t], False, ["oversized_table_row_split"]))
-                                else:
-                                    raise ValueError(
-                                        f"Cannot fit table row chunk under max_tokens for article {article['article_id']}, "
-                                        f"table {table_id}, row {r_idx}."
-                                    )
+                        segment_groups.append((current_group, []))
                         current_group = []
 
-            # Xử lý phần còn lại trong current_group
-            if current_group:
-                single_body = _serialize_table(table, rows=current_group, include_header=True)
-                single_content = _build_chunk_content(article, body_text=single_body)
-                if tc.count(single_content) > cfg.max_tokens:
-                    row_text_only = _serialize_table(table, rows=current_group, include_header=False)
-                    sub_texts = split_oversized_legal_text(row_text_only, config=cfg, token_counter=tc)
-                    for sub_t in sub_texts:
-                        sub_body_with_hdr = f"Bảng: {table_id}\n"
-                        if table.get("headers"):
-                            sub_body_with_hdr += "Cột: " + " | ".join(str(h).strip() for h in table["headers"]) + "\n"
-                        sub_body_with_hdr += f"Dòng: {sub_t}"
-                        sub_content = _build_chunk_content(article, body_text=sub_body_with_hdr)
-                        if tc.count(sub_content) <= cfg.max_tokens:
-                            segments_rows.append(([sub_t], True, ["oversized_table_row_split"]))
-                        else:
-                            sub_body_no_hdr = f"Bảng: {table_id}\n{sub_t}"
-                            sub_content_no_hdr = _build_chunk_content(article, body_text=sub_body_no_hdr)
-                            if tc.count(sub_content_no_hdr) <= cfg.max_tokens:
-                                segments_rows.append(([sub_t], False, ["oversized_table_row_split"]))
-                            else:
-                                raise ValueError(
-                                    f"Cannot fit table row chunk under max_tokens for article {article['article_id']}, "
-                                    f"table {table_id}."
-                                )
-                else:
-                    segments_rows.append((current_group, True, []))
+                    if fits([row]):
+                        current_group = [row]
+                        continue
 
-            # Dựng các chunks từ segments_rows
-            for s_idx, (group, incl_hdr, warnings) in enumerate(segments_rows, 1):
-                if incl_hdr:
-                    if len(group) == 1 and isinstance(group[0], str) and not group[0].startswith("Dòng"):
-                        # Đây là sub_text từ row quá dài
-                        seg_body = f"Bảng: {table_id}\n"
-                        if table.get("headers"):
-                            seg_body += "Cột: " + " | ".join(str(h).strip() for h in table["headers"]) + "\n"
-                        seg_body += f"Dòng: {group[0]}"
-                    else:
-                        seg_body = _serialize_table(table, rows=group, include_header=True)
-                else:
-                    if len(group) == 1 and isinstance(group[0], str) and not group[0].startswith("Dòng"):
-                        seg_body = f"Bảng: {table_id}\n{group[0]}"
-                    else:
-                        seg_body = _serialize_table(table, rows=group, include_header=False)
+                    for fragment in split_row_text(_row_to_text(row)):
+                        segment_groups.append(
+                            ([fragment], ["oversized_table_row_split"])
+                        )
 
-                chunk = _create_chunk(
-                    article,
+                if current_group:
+                    segment_groups.append((current_group, []))
+
+            if not segment_groups:
+                segment_groups.append(([], []))
+        else:
+            text_content = table.get("text", "")
+            sub_texts = split_oversized_legal_text(
+                text_content,
+                config=cfg,
+                token_counter=tc,
+            ) or [text_content]
+            for sub_text in sub_texts:
+                if not fits([sub_text]):
+                    sub_texts_for_budget = split_row_text(sub_text)
+                    segment_groups.extend(
+                        ([fragment], ["oversized_table_text_split"])
+                        for fragment in sub_texts_for_budget
+                    )
+                else:
+                    segment_groups.append(([sub_text], []))
+
+        for segment_index, (group_rows, warnings) in enumerate(
+            segment_groups,
+            1,
+        ):
+            segment_body = render(group_rows)
+            segment_content = _build_chunk_content(
+                table_container,
+                body_text=segment_body,
+            )
+            if tc.count(segment_content) > cfg.max_tokens:
+                raise ValueError(
+                    f"Cannot fit table chunk under max_tokens for container "
+                    f"{container_id}, table {table_id}."
+                )
+
+            formula_id = formula_link.get("formula_id")
+            table_chunks.append(
+                _create_chunk(
+                    table_container,
                     chunk_type="table",
                     unit_type="table",
-                    segment_index=s_idx,
+                    segment_index=segment_index,
                     table_id=table_id,
                     table_index=tbl_idx,
-                    body_text=seg_body,
+                    table_title=table_titles.get(table_id),
+                    shared_header_rows=shared_header_rows,
+                    formula_ids=[formula_id] if formula_id else [],
+                    preceding_unit_id=formula_link.get("preceding_unit_id"),
+                    following_unit_id=formula_link.get("following_unit_id"),
+                    linearized_formula=linearized_formula,
+                    body_text=segment_body,
                     source_unit_ids=[],
                     token_counter=tc,
                     requires_fallback=False,
-                    warnings=warnings
+                    warnings=warnings,
                 )
-                table_chunks.append(chunk)
-
-        else:
-            # Table không có rows mà chỉ có text
-            text_content = table.get("text", "")
-            sub_texts = split_oversized_legal_text(text_content, config=cfg, token_counter=tc)
-            if not sub_texts:
-                sub_texts = [text_content]
-
-            for s_idx, sub_t in enumerate(sub_texts, 1):
-                seg_body = f"Bảng: {table_id}\n{sub_t}"
-                sub_content = _build_chunk_content(article, body_text=seg_body)
-                if tc.count(sub_content) > cfg.max_tokens:
-                    raise ValueError(
-                        f"Cannot fit text-only table chunk under max_tokens for article {article['article_id']}, table {table_id}."
-                    )
-                chunk = _create_chunk(
-                    article,
-                    chunk_type="table",
-                    unit_type="table",
-                    segment_index=s_idx,
-                    table_id=table_id,
-                    table_index=tbl_idx,
-                    body_text=seg_body,
-                    source_unit_ids=[],
-                    token_counter=tc,
-                    requires_fallback=False
-                )
-                table_chunks.append(chunk)
+            )
 
     return table_chunks
 
 
 SUBPOINT_MARKER_RE = re.compile(r"(?:^|[\n;:])\s*([a-zđĐ])(\d+)\)")
+SUBPOINT_START_RE = re.compile(r"^\s*([a-zđĐ])(\d+)\)")
+
+
+def _index_subpoint_parents(content_units: list[dict]) -> dict[str, dict]:
+    """Map standalone ``c1)``/``d2)`` continuations to their parent point."""
+    parents_by_child_id: dict[str, dict] = {}
+    active_points: dict[tuple[str | None, str], dict] = {}
+
+    for unit in content_units:
+        if unit.get("unit_type") == "clause":
+            active_points = {}
+
+        if unit.get("unit_type") == "point":
+            label = unit.get("point_label")
+            if isinstance(label, str) and label:
+                active_points[(unit.get("clause_number"), label.casefold())] = unit
+            continue
+
+        match = SUBPOINT_START_RE.match(unit.get("text", ""))
+        if not match:
+            continue
+
+        parent_label = match.group(1).casefold()
+        parent = active_points.get((unit.get("clause_number"), parent_label))
+        unit_id = unit.get("unit_id")
+        if parent and isinstance(unit_id, str) and unit_id:
+            parents_by_child_id[unit_id] = parent
+
+    return parents_by_child_id
 
 
 def split_point_into_subpoints(text: str) -> list[dict]:
@@ -853,112 +1135,150 @@ def split_point_into_subpoints(text: str) -> list[dict]:
             "text": subpoint_text,
             "is_subpoint": True,
             "parent_prefix": parent_prefix,
-            "subpoint_label": match.group(1).lower()
+            "subpoint_label": (
+                match.group(1).casefold() + match.group(2)
+            )
         })
 
     return segments
 
 
+def _render_fallback_body(
+    primary_text: str,
+    context_sections: list[tuple[str, str]],
+) -> str:
+    if not context_sections:
+        return primary_text
+
+    sections = [
+        f"[{heading}]\n{text}"
+        for heading, text in context_sections
+        if text.strip()
+    ]
+    sections.append("[Nội dung]\n" + primary_text)
+    return "\n\n".join(sections)
+
+
+def _point_context_prefix(text: str, limit: int = 320) -> str:
+    """Return a compact, readable prefix for a split legal point."""
+    normalized = text.strip()
+    if not normalized:
+        return ""
+
+    boundary_match = re.search(r"[:;]|[.!?](?=\s|$)", normalized)
+    if boundary_match and boundary_match.end() <= limit:
+        return normalized[: boundary_match.end()].strip()
+    if len(normalized) <= limit:
+        return normalized
+
+    prefix = normalized[:limit].rstrip()
+    if " " in prefix:
+        prefix = prefix.rsplit(" ", 1)[0]
+    return prefix.rstrip(" ,;:") + " …"
+
+
 def split_main_text_to_fit(
     main_text: str,
-    context_lines: list[str],
+    context_sections: list[tuple[str, str]],
     parent_art: dict,
     clause_number: str | None,
     point_labels: list[str],
     cfg: ChunkingConfig,
     tc: TokenCounter
 ) -> list[str]:
-    """Split primary text without overlap while preserving word boundaries.
+    """Split primary text without overlap at the strongest legal boundary.
 
-    The previous RecursiveCharacterTextSplitter configuration could fall back
-    to character-level splitting when only a very small token budget remained
-    after breadcrumbs. That produced fragments such as ``Đ i ể m`` when the
-    segments were reconstructed. This implementation evaluates the complete
-    rendered chunk and greedily packs whole non-whitespace tokens instead.
+    The complete rendered chunk (breadcrumbs, context, and primary text) is
+    measured for every candidate. Within the available budget, boundaries are
+    preferred in this order: sentence end, semicolon, comma, then whitespace.
+    Character splitting remains a last resort for an indivisible oversized
+    token only.
     """
     if not isinstance(main_text, str):
         raise TypeError("main_text must be a string")
     if not main_text.strip():
         return []
 
-    def render_body(primary_text: str) -> str:
-        if not context_lines:
-            return primary_text
-        context_part = "[Ngữ cảnh]\n" + "\n".join(context_lines)
-        body_part = "[Nội dung]\n" + primary_text
-        return f"{context_part}\n\n{body_part}"
-
     def fits(primary_text: str) -> bool:
         content = _build_chunk_content(
             parent_art,
-            body_text=render_body(primary_text),
+            body_text=_render_fallback_body(primary_text, context_sections),
             clause_number=clause_number,
             point_labels=point_labels,
         )
         return tc.count(content) <= cfg.max_tokens
 
-    # Keep each word together with its following whitespace. Stripping only at
-    # chunk boundaries makes reconstruction lossless after whitespace
-    # normalization, without duplicating source text.
-    pieces = re.findall(r"\S+(?:\s+|$)", main_text)
-    if not pieces:
-        return []
-
     parts: list[str] = []
-    current = ""
+    remaining = main_text.strip()
 
-    for piece in pieces:
-        candidate = current + piece
-        candidate_text = candidate.strip()
+    sentence_end_re = re.compile(r"[.!?]+[\"'”’)]*(?=\s|$)")
+    leading_marker_re = re.compile(
+        r"^\s*(?:\d+[a-zA-ZđĐ]?|[a-zA-ZđĐ]\d*)[.)]\s+"
+    )
+    boundary_patterns = (
+        sentence_end_re,
+        re.compile(r";(?=\s|$)"),
+        re.compile(r",(?=\s|$)"),
+        re.compile(r"\s+"),
+    )
 
-        if candidate_text and fits(candidate_text):
-            current = candidate
-            continue
+    while remaining:
+        if fits(remaining):
+            parts.append(remaining)
+            break
 
-        if current.strip():
-            parts.append(current.strip())
-            current = ""
+        leading_marker = leading_marker_re.match(remaining)
+        chosen_position = 0
 
-        piece_text = piece.strip()
-        if not piece_text:
-            continue
+        for priority, pattern in enumerate(boundary_patterns):
+            fitting_positions: list[int] = []
+            for match in pattern.finditer(remaining):
+                if priority == 0 and leading_marker and match.end() <= leading_marker.end():
+                    # ``1.`` and ``a.`` introduce legal units; treating them as
+                    # complete sentences would create marker-only fragments.
+                    continue
 
-        if fits(piece_text):
-            current = piece
-            continue
+                position = match.start() if priority == 3 else match.end()
+                prefix = remaining[:position].rstrip()
+                if prefix and fits(prefix):
+                    fitting_positions.append(position)
 
-        # Extremely long no-whitespace token. Split only as a last resort,
-        # choosing the largest fitting prefix deterministically.
-        remaining = piece_text
-        while remaining:
-            low = 1
-            high = len(remaining)
-            best = 0
-
-            while low <= high:
-                mid = (low + high) // 2
-                prefix = remaining[:mid]
-                if fits(prefix):
-                    best = mid
-                    low = mid + 1
-                else:
-                    high = mid - 1
-
-            if best == 0:
-                # The breadcrumbs/context alone already consume the entire
-                # synthetic budget. Splitting by character would corrupt
-                # Vietnamese words (for example: "Đ i ể m"). Preserve the
-                # indivisible token and let validation report the unavoidable
-                # oversize condition instead of damaging source text.
-                parts.append(remaining)
-                remaining = ""
+            if fitting_positions:
+                chosen_position = max(fitting_positions)
                 break
 
-            parts.append(remaining[:best])
-            remaining = remaining[best:]
+        if chosen_position:
+            parts.append(remaining[:chosen_position].rstrip())
+            remaining = remaining[chosen_position:].lstrip()
+            continue
 
-    if current.strip():
-        parts.append(current.strip())
+        # No whole-token boundary fits. Split only the first indivisible token
+        # by character, choosing its largest fitting prefix deterministically.
+        token_match = re.match(r"\S+", remaining)
+        indivisible = token_match.group(0) if token_match else remaining
+        low = 1
+        high = len(indivisible)
+        best = 0
+
+        while low <= high:
+            mid = (low + high) // 2
+            prefix = indivisible[:mid]
+            if fits(prefix):
+                best = mid
+                low = mid + 1
+            else:
+                high = mid - 1
+
+        if best == 0:
+            # Breadcrumbs/context alone consume the synthetic budget. Preserve
+            # the word and let validation report the unavoidable oversize
+            # condition instead of corrupting Vietnamese with spaced letters.
+            parts.append(indivisible)
+            remaining = remaining[len(indivisible):].lstrip()
+            continue
+
+        parts.append(indivisible[:best])
+        remaining = (indivisible[best:] + remaining[len(indivisible):]).lstrip()
 
     return parts
 
@@ -998,6 +1318,8 @@ def build_legal_chunks(
         raise TypeError("metadata must be a dict")
     if not isinstance(canonical_corpus["articles"], list):
         raise TypeError("articles must be a list")
+    if not isinstance(canonical_corpus.get("attachments", []), list):
+        raise TypeError("attachments must be a list")
 
     cfg = config if config is not None else ChunkingConfig()
     tc = token_counter if token_counter is not None else get_default_token_counter()
@@ -1331,6 +1653,18 @@ def build_legal_chunks(
         initial_chunks.extend(article_chunks)
         initial_chunks.extend(table_chunks)
 
+    # Document-level appendices/forms are independent containers. Their table
+    # chunks intentionally have parent_article_id=None and point to the
+    # attachment plus its source document instead.
+    for attachment in canonical_corpus.get("attachments", []):
+        if not isinstance(attachment, dict):
+            raise TypeError("attachment must be a dict")
+        if not attachment.get("attachment_id"):
+            raise ValueError("attachment must contain 'attachment_id'")
+        if attachment.get("container_type") != "attachment":
+            raise ValueError("document attachment must use container_type='attachment'")
+        initial_chunks.extend(_build_table_chunks(attachment, cfg, tc))
+
     # Phase 2: Fallback splitting for chunks that require fallback
     final_chunks = []
     for chunk in initial_chunks:
@@ -1351,6 +1685,9 @@ def build_legal_chunks(
 
         # Map unit_id to canonical unit dict
         unit_map = {u["unit_id"]: u for u in parent_art.get("content_units", [])}
+        subpoint_parent_map = _index_subpoint_parents(
+            parent_art.get("content_units", [])
+        )
 
         # Retrieve the ordered list of canonical units for this chunk
         chunk_units = [unit_map[uid] for uid in chunk.get("source_unit_ids", []) if uid in unit_map]
@@ -1386,32 +1723,51 @@ def build_legal_chunks(
                         "text": part["text"],
                         "source_unit_id": u["unit_id"],
                         "unit_type": u["unit_type"],
-                        "point_label": part["subpoint_label"] if part["is_subpoint"] else u.get("point_label"),
+                        "point_label": u.get("point_label"),
                         "parent_prefix": part["parent_prefix"],
-                        "is_subpoint": part["is_subpoint"]
+                        "parent_point_unit_id": (
+                            u["unit_id"] if part["is_subpoint"] else None
+                        ),
+                        "subpoint_label": part["subpoint_label"],
+                        "is_subpoint": part["is_subpoint"],
                     })
             else:
+                subpoint_match = SUBPOINT_START_RE.match(u.get("text", ""))
+                parent_point = subpoint_parent_map.get(u["unit_id"])
                 primary_subpoints.append({
                     "text": u.get("text", ""),
                     "source_unit_id": u["unit_id"],
                     "unit_type": u["unit_type"],
-                    "point_label": u.get("point_label"),
-                    "parent_prefix": "",
-                    "is_subpoint": False
+                    "point_label": (
+                        parent_point.get("point_label")
+                        if parent_point
+                        else u.get("point_label")
+                    ),
+                    "parent_prefix": (
+                        parent_point.get("text", "") if parent_point else ""
+                    ),
+                    "parent_point_unit_id": (
+                        parent_point.get("unit_id") if parent_point else None
+                    ),
+                    "subpoint_label": (
+                        subpoint_match.group(1).casefold()
+                        + subpoint_match.group(2)
+                        if subpoint_match
+                        else None
+                    ),
+                    "is_subpoint": subpoint_match is not None,
                 })
 
         # Flat split any oversized subpoint segment
         flat_subpoints = []
         for sp in primary_subpoints:
-            context_lines = []
+            context_sections = []
             if clause_intro_text and sp["unit_type"] != "clause":
-                context_lines.append(clause_intro_text)
+                context_sections.append(("Ngữ cảnh khoản", clause_intro_text))
             if sp["parent_prefix"]:
-                context_lines.append(sp["parent_prefix"])
+                context_sections.append(("Ngữ cảnh điểm", sp["parent_prefix"]))
 
-            test_body = sp["text"]
-            if context_lines:
-                test_body = "[Ngữ cảnh]\n" + "\n".join(context_lines) + "\n\n[Nội dung]\n" + sp["text"]
+            test_body = _render_fallback_body(sp["text"], context_sections)
 
             test_content = _build_chunk_content(
                 parent_art,
@@ -1420,12 +1776,20 @@ def build_legal_chunks(
                 point_labels=[sp["point_label"]] if sp["point_label"] else []
             )
 
+            split_point_context = ""
             if tc.count(test_content) <= cfg.max_tokens:
                 flat_parts = [sp["text"]]
             else:
+                split_context_sections = list(context_sections)
+                if sp["unit_type"] == "point" and not sp["is_subpoint"]:
+                    split_point_context = _point_context_prefix(sp["text"])
+                    if split_point_context:
+                        split_context_sections.append(
+                            ("Ngữ cảnh điểm", split_point_context)
+                        )
                 flat_parts = split_main_text_to_fit(
                     sp["text"],
-                    context_lines,
+                    split_context_sections,
                     parent_art,
                     chunk.get("clause_number"),
                     [sp["point_label"]] if sp["point_label"] else [],
@@ -1434,22 +1798,38 @@ def build_legal_chunks(
                 )
                 flat_parts = clean_split_punctuation(flat_parts)
 
-            for part in flat_parts:
+            for part_index, part in enumerate(flat_parts):
                 flat_subpoints.append({
                     "text": part,
                     "source_unit_id": sp["source_unit_id"],
                     "unit_type": sp["unit_type"],
                     "point_label": sp["point_label"],
-                    "parent_prefix": sp["parent_prefix"],
-                    "is_subpoint": sp["is_subpoint"]
+                    "parent_prefix": (
+                        sp["parent_prefix"]
+                        or (split_point_context if part_index > 0 else "")
+                    ),
+                    "parent_point_unit_id": sp["parent_point_unit_id"],
+                    "subpoint_label": sp["subpoint_label"],
+                    "is_subpoint": sp["is_subpoint"],
                 })
 
         # Greedy packing of flat_subpoints into segments
         repaired_segments_groups = []
         current_group = []
         for f_sp in flat_subpoints:
-            # Force split on transition between clause and other unit types
-            if current_group and (f_sp["unit_type"] == "clause" or current_group[-1]["unit_type"] == "clause"):
+            previous = current_group[-1] if current_group else None
+            # Clause, parent point, and each distinct subpoint are separate
+            # semantic units. Keeping them apart makes the singular subpoint
+            # metadata unambiguous and prevents parent text from appearing as
+            # both primary content and repeated context in the same chunk.
+            force_semantic_split = previous and (
+                f_sp["unit_type"] == "clause"
+                or previous["unit_type"] == "clause"
+                or f_sp["subpoint_label"] != previous["subpoint_label"]
+                or f_sp["parent_point_unit_id"]
+                != previous["parent_point_unit_id"]
+            )
+            if force_semantic_split:
                 repaired_segments_groups.append(current_group)
                 current_group = [f_sp]
                 continue
@@ -1459,21 +1839,23 @@ def build_legal_chunks(
             candidate_body_texts = [item["text"] for item in candidate_group]
             candidate_main_text = "\n".join(candidate_body_texts)
 
-            candidate_context_lines = []
+            candidate_context_sections = []
             if clause_intro_text and any(item["unit_type"] != "clause" for item in candidate_group):
-                candidate_context_lines.append(clause_intro_text)
+                candidate_context_sections.append(
+                    ("Ngữ cảnh khoản", clause_intro_text)
+                )
             seen_prefixes = set()
             for item in candidate_group:
                 if item["parent_prefix"] and item["parent_prefix"] not in seen_prefixes:
                     seen_prefixes.add(item["parent_prefix"])
-                    candidate_context_lines.append(item["parent_prefix"])
+                    candidate_context_sections.append(
+                        ("Ngữ cảnh điểm", item["parent_prefix"])
+                    )
 
-            if candidate_context_lines:
-                context_part = "[Ngữ cảnh]\n" + "\n".join(candidate_context_lines)
-                body_part = "[Nội dung]\n" + candidate_main_text
-                candidate_segment_text = f"{context_part}\n\n{body_part}"
-            else:
-                candidate_segment_text = candidate_main_text
+            candidate_segment_text = _render_fallback_body(
+                candidate_main_text,
+                candidate_context_sections,
+            )
 
             candidate_labels = []
             seen_lbls = set()
@@ -1504,21 +1886,18 @@ def build_legal_chunks(
             body_texts = [item["text"] for item in group]
             main_text = "\n".join(body_texts)
 
-            context_lines = []
+            context_sections = []
             if clause_intro_text and any(item["unit_type"] != "clause" for item in group):
-                context_lines.append(clause_intro_text)
+                context_sections.append(("Ngữ cảnh khoản", clause_intro_text))
             seen_prefixes = set()
             for item in group:
                 if item["parent_prefix"] and item["parent_prefix"] not in seen_prefixes:
                     seen_prefixes.add(item["parent_prefix"])
-                    context_lines.append(item["parent_prefix"])
+                    context_sections.append(
+                        ("Ngữ cảnh điểm", item["parent_prefix"])
+                    )
 
-            if context_lines:
-                context_part = "[Ngữ cảnh]\n" + "\n".join(context_lines)
-                body_part = "[Nội dung]\n" + main_text
-                segment_body = f"{context_part}\n\n{body_part}"
-            else:
-                segment_body = main_text
+            segment_body = _render_fallback_body(main_text, context_sections)
 
             point_labels = []
             seen_lbls = set()
@@ -1541,9 +1920,27 @@ def build_legal_chunks(
                 context_unit_ids.append(clause_intro_id)
             for item in group:
                 if item["parent_prefix"]:
-                    uid = item["source_unit_id"]
+                    uid = (
+                        item["parent_point_unit_id"]
+                        or item["source_unit_id"]
+                    )
                     if uid and uid not in context_unit_ids:
                         context_unit_ids.append(uid)
+
+            subpoint_labels = list(dict.fromkeys(
+                item["subpoint_label"]
+                for item in group
+                if item["subpoint_label"]
+            ))
+            parent_point_unit_ids = list(dict.fromkeys(
+                item["parent_point_unit_id"]
+                for item in group
+                if item["parent_point_unit_id"]
+            ))
+            if len(subpoint_labels) > 1 or len(parent_point_unit_ids) > 1:
+                raise ValueError(
+                    "fallback segment contains ambiguous subpoint metadata"
+                )
 
             orig_labels = chunk.get("point_labels") or []
             orig_occs = chunk.get("point_occurrences") or []
@@ -1562,12 +1959,44 @@ def build_legal_chunks(
                 body_text=segment_body,
                 source_unit_ids=source_unit_ids,
                 context_unit_ids=context_unit_ids,
+                subpoint_label=(
+                    subpoint_labels[0] if subpoint_labels else None
+                ),
+                parent_point_unit_id=(
+                    parent_point_unit_ids[0]
+                    if parent_point_unit_ids
+                    else None
+                ),
                 token_counter=tc,
                 requires_fallback=False,
                 warnings=chunk.get("warnings", []),
                 fallback_source_reason=orig_reason
             )
             final_chunks.append(seg_chunk)
+
+    # Link formula-cue text chunks to their immediately following canonical
+    # table. The table chunks already carry the reciprocal formula metadata.
+    for article in canonical_corpus["articles"]:
+        for table_id, link in _formula_table_links(article).items():
+            preceding_unit_id = link.get("preceding_unit_id")
+            formula_id = link.get("formula_id")
+            if not preceding_unit_id or not formula_id:
+                continue
+
+            for candidate in final_chunks:
+                if (
+                    candidate.get("parent_article_id") == article.get("article_id")
+                    and preceding_unit_id
+                    in (candidate.get("source_unit_ids") or [])
+                ):
+                    candidate["related_table_ids"] = list(dict.fromkeys([
+                        *(candidate.get("related_table_ids") or []),
+                        table_id,
+                    ]))
+                    candidate["formula_ids"] = list(dict.fromkeys([
+                        *(candidate.get("formula_ids") or []),
+                        formula_id,
+                    ]))
 
     # Double check total corpus coverage
     all_input_unit_ids = set()
@@ -1643,6 +2072,16 @@ def validate_chunks(
             raise TypeError(f"Article at index {idx} must be a dict")
         if "article_id" not in art:
             raise ValueError(f"Article at index {idx} must contain 'article_id'")
+    document_attachments = canonical_corpus.get("attachments", [])
+    if not isinstance(document_attachments, list):
+        raise TypeError("canonical_corpus['attachments'] must be a list")
+    for idx, attachment in enumerate(document_attachments):
+        if not isinstance(attachment, dict):
+            raise TypeError(f"Attachment at index {idx} must be a dict")
+        if not attachment.get("attachment_id"):
+            raise ValueError(
+                f"Attachment at index {idx} must contain 'attachment_id'"
+            )
 
     if not isinstance(chunks, list):
         raise TypeError("chunks must be a list")
@@ -1669,9 +2108,14 @@ def validate_chunks(
         errors.append("chunks_is_empty: Chunks list is empty")
 
     REQUIRED_KEYS = [
-        "chunk_id", "chunk_key", "parent_article_id", "document_id", "topic_code", "topic_name",
+        "chunk_id", "chunk_key", "container_type", "parent_article_id", "parent_attachment_id",
+        "parent_document_id", "attachment_id", "attachment_title", "form_number",
+        "document_id", "topic_code", "topic_name",
         "article_code", "chunk_type", "unit_type", "content", "body_text", "token_count",
         "tokenizer_name", "source_unit_ids", "context_unit_ids", "table_id", "table_index", "segment_index",
+        "subpoint_label", "parent_point_unit_id",
+        "table_title", "shared_header_rows", "related_table_ids", "formula_ids",
+        "preceding_unit_id", "following_unit_id", "linearized_formula",
         "relation_target_ids", "relation_target_codes", "relation_types", "relation_same_topic",
         "relation_target_in_corpus", "attachment_metadata", "parser_version", "chunker_version",
         "requires_fallback", "oversized_reason", "warnings"
@@ -1685,7 +2129,13 @@ def validate_chunks(
     chunk_count = len(chunks)
 
     canonical_article_ids = {art["article_id"] for art in canonical_corpus["articles"]}
+    canonical_attachments = {
+        attachment["attachment_id"]: attachment
+        for attachment in document_attachments
+    }
+    canonical_attachment_ids = set(canonical_attachments)
     covered_article_ids = set()
+    covered_attachment_ids = set()
 
     duplicate_chunk_id_count = 0
     duplicate_chunk_ids = set()
@@ -1704,6 +2154,7 @@ def validate_chunks(
     invalid_parent_count = 0
     invalid_parent_chunk_ids = []
     invalid_parent_article_ids = set()
+    invalid_parent_attachment_ids = set()
 
     missing_required_field_count = 0
     chunks_missing_required_fields = []
@@ -1736,6 +2187,12 @@ def validate_chunks(
     relation_list_length_mismatch_count = 0
     relation_list_length_mismatch_chunks = []
 
+    invalid_subpoint_metadata_count = 0
+    invalid_subpoint_metadata_chunks = []
+
+    invalid_point_context_count = 0
+    invalid_point_context_chunks = []
+
     # Table segment identities
     duplicate_table_segment_key_count = 0
     duplicate_table_segment_keys = set()
@@ -1743,6 +2200,12 @@ def validate_chunks(
 
     invalid_table_metadata_count = 0
     invalid_table_metadata_chunks = []
+
+    invalid_table_header_context_count = 0
+    invalid_table_header_context_chunks = []
+
+    invalid_formula_metadata_count = 0
+    invalid_formula_metadata_chunks = []
 
     table_segment_sequence_error_count = 0
     table_segment_sequence_errors = []
@@ -1752,25 +2215,43 @@ def validate_chunks(
 
     # Non-table unit IDs
     canonical_non_table_units = set()
+    canonical_non_table_unit_map = {}
     for art in canonical_corpus["articles"]:
         for u in art.get("content_units", []):
             if u.get("unit_type") != "table":
                 canonical_non_table_units.add(u["unit_id"])
+                canonical_non_table_unit_map[u["unit_id"]] = u
 
     covered_non_table_units = set()
     unknown_source_unit_ids = set()
 
     # Table IDs
     canonical_table_ids = set()
+    canonical_tables = {}
+    canonical_formula_links = {}
+    formula_links_by_preceding_unit = {}
     for art in canonical_corpus["articles"]:
         for t in art.get("tables", []):
             if t.get("table_id"):
                 canonical_table_ids.add(t["table_id"])
+                canonical_tables[t["table_id"]] = t
+        for table_id, link in _formula_table_links(art).items():
+            canonical_formula_links[table_id] = link
+            preceding_unit_id = link.get("preceding_unit_id")
+            if preceding_unit_id:
+                formula_links_by_preceding_unit.setdefault(
+                    (art.get("article_id"), preceding_unit_id), []
+                ).append((table_id, link))
+    for attachment in document_attachments:
+        for table in attachment.get("tables", []):
+            if table.get("table_id"):
+                canonical_table_ids.add(table["table_id"])
+                canonical_tables[table["table_id"]] = table
 
     covered_table_ids = set()
 
-    # Chunks of each article to validate sequence and ordering
-    article_chunks_map = {}
+    # Chunks of each article/attachment to validate sequence and ordering.
+    container_chunks_map = {}
 
     import uuid
 
@@ -1780,7 +2261,10 @@ def validate_chunks(
         c_key = chunk.get("chunk_key")
         c_type = chunk.get("chunk_type")
         u_type = chunk.get("unit_type")
-        parent_id = chunk.get("parent_article_id")
+        container_type = chunk.get("container_type")
+        parent_article_id = chunk.get("parent_article_id")
+        parent_attachment_id = chunk.get("parent_attachment_id")
+        parent_container_id = parent_article_id or parent_attachment_id
         content = chunk.get("content")
         body_text = chunk.get("body_text")
 
@@ -1793,22 +2277,51 @@ def validate_chunks(
             chunks_missing_required_fields.append(chunk_ident)
             errors.append(f"missing_required_fields: Chunk {chunk_ident} is missing keys: {missing_fields}")
 
-        # Parent ID validity
-        if parent_id is not None:
-            if parent_id not in canonical_article_ids:
+        # Parent/container validity. Article and document-attachment chunks use
+        # mutually exclusive parent IDs.
+        if container_type == "article":
+            if (
+                parent_article_id not in canonical_article_ids
+                or parent_attachment_id is not None
+            ):
                 invalid_parent_count += 1
                 invalid_parent_chunk_ids.append(chunk_ident)
-                invalid_parent_article_ids.add(parent_id)
-                errors.append(f"invalid_parent: Chunk {chunk_ident} points to invalid article {parent_id}")
+                if parent_article_id is not None:
+                    invalid_parent_article_ids.add(parent_article_id)
+                errors.append(
+                    f"invalid_parent: Article chunk {chunk_ident} points to "
+                    f"article={parent_article_id}, attachment={parent_attachment_id}"
+                )
             else:
-                covered_article_ids.add(parent_id)
-                if parent_id not in article_chunks_map:
-                    article_chunks_map[parent_id] = []
-                article_chunks_map[parent_id].append(chunk)
+                covered_article_ids.add(parent_article_id)
+                container_chunks_map.setdefault(parent_article_id, []).append(chunk)
+        elif container_type == "attachment":
+            attachment = canonical_attachments.get(parent_attachment_id)
+            if (
+                attachment is None
+                or parent_article_id is not None
+                or chunk.get("attachment_id") != parent_attachment_id
+                or chunk.get("parent_document_id")
+                != (attachment or {}).get("parent_document_id")
+            ):
+                invalid_parent_count += 1
+                invalid_parent_chunk_ids.append(chunk_ident)
+                if parent_attachment_id is not None:
+                    invalid_parent_attachment_ids.add(parent_attachment_id)
+                errors.append(
+                    f"invalid_parent: Attachment chunk {chunk_ident} points to "
+                    f"article={parent_article_id}, attachment={parent_attachment_id}"
+                )
+            else:
+                covered_attachment_ids.add(parent_attachment_id)
+                container_chunks_map.setdefault(parent_attachment_id, []).append(chunk)
         else:
             invalid_parent_count += 1
             invalid_parent_chunk_ids.append(chunk_ident)
-            errors.append(f"invalid_parent: Chunk {chunk_ident} has parent_article_id is None")
+            errors.append(
+                f"invalid_parent: Chunk {chunk_ident} has invalid "
+                f"container_type '{container_type}'"
+            )
 
         # Duplicate ID check
         if c_id is not None:
@@ -1936,6 +2449,74 @@ def validate_chunks(
             else:
                 unknown_source_unit_ids.add(sid)
 
+        # Standalone/embedded subpoint chunks must retain their parent point as
+        # explicit repeated context while keeping the child as primary source.
+        subpoint_label = chunk.get("subpoint_label")
+        parent_point_unit_id = chunk.get("parent_point_unit_id")
+        subpoint_issues = []
+        if (subpoint_label is None) != (parent_point_unit_id is None):
+            subpoint_issues.append("label_parent_pair_mismatch")
+        elif subpoint_label is not None:
+            if (
+                not isinstance(subpoint_label, str)
+                or re.fullmatch(r"[a-zđ]\d+", subpoint_label, re.IGNORECASE)
+                is None
+            ):
+                subpoint_issues.append("invalid_subpoint_label")
+
+            parent_point = canonical_non_table_unit_map.get(
+                parent_point_unit_id
+            )
+            if not parent_point or parent_point.get("unit_type") != "point":
+                subpoint_issues.append("invalid_parent_point_unit")
+            else:
+                parent_label = parent_point.get("point_label")
+                if parent_label not in (chunk.get("point_labels") or []):
+                    subpoint_issues.append("parent_point_label_missing")
+                if parent_point_unit_id not in context_ids:
+                    subpoint_issues.append("parent_point_context_id_missing")
+                if (
+                    isinstance(body_text, str)
+                    and parent_point.get("text") not in body_text
+                ):
+                    subpoint_issues.append("parent_point_text_missing")
+
+        if subpoint_issues:
+            invalid_subpoint_metadata_count += 1
+            invalid_subpoint_metadata_chunks.append(chunk_ident)
+            errors.append(
+                f"invalid_subpoint_metadata: Chunk {chunk_ident}: "
+                + ", ".join(subpoint_issues)
+            )
+
+        if c_type == "fallback_segment" and chunk.get("point_labels"):
+            primary_text = (
+                body_text.split("[Nội dung]\n", 1)[-1]
+                if isinstance(body_text, str)
+                else ""
+            )
+            primary_has_point_marker = any(
+                re.match(
+                    rf"^\s*{re.escape(str(label))}(?:\d+)?\)",
+                    primary_text,
+                    re.IGNORECASE,
+                )
+                for label in chunk.get("point_labels") or []
+            )
+            if (
+                not primary_has_point_marker
+                and (
+                    not isinstance(body_text, str)
+                    or "[Ngữ cảnh điểm]" not in body_text
+                )
+            ):
+                invalid_point_context_count += 1
+                invalid_point_context_chunks.append(chunk_ident)
+                errors.append(
+                    f"invalid_point_context: Fallback chunk {chunk_ident} "
+                    "has point metadata but no visible point context"
+                )
+
         # Table ID coverage and metadata check
         tbl_id = chunk.get("table_id")
         tbl_idx = chunk.get("table_index")
@@ -1978,12 +2559,92 @@ def validate_chunks(
                 invalid_table_metadata_chunks.append(chunk_ident)
                 errors.append(f"invalid_table_metadata: Table chunk {chunk_ident} has oversized_reason '{chunk.get('oversized_reason')}'")
 
+            if container_type == "attachment" and (
+                chunk.get("article_code") is not None
+                or chunk.get("article_title") is not None
+                or chunk.get("attachment_id") != parent_attachment_id
+            ):
+                invalid_table_metadata_count += 1
+                invalid_table_metadata_chunks.append(chunk_ident)
+                errors.append(
+                    f"invalid_table_metadata: Attachment table chunk "
+                    f"{chunk_ident} leaks article provenance"
+                )
+
+            expected_shared_headers = _infer_shared_header_rows(
+                canonical_tables.get(tbl_id, {})
+            )
+            actual_shared_headers = chunk.get("shared_header_rows")
+            header_issues = []
+            if actual_shared_headers != expected_shared_headers:
+                header_issues.append("shared_header_rows_mismatch")
+            if expected_shared_headers and isinstance(body_text, str):
+                for header_row in expected_shared_headers:
+                    if _row_to_text(header_row) not in body_text:
+                        header_issues.append("shared_header_text_missing")
+                        break
+            if header_issues:
+                invalid_table_header_context_count += 1
+                invalid_table_header_context_chunks.append(chunk_ident)
+                errors.append(
+                    f"invalid_table_header_context: Table chunk "
+                    f"{chunk_ident}: {', '.join(header_issues)}"
+                )
+
+            formula_issues = []
+            expected_formula = canonical_formula_links.get(tbl_id)
+            actual_formula_ids = chunk.get("formula_ids")
+            if not isinstance(actual_formula_ids, list):
+                formula_issues.append("formula_ids_not_list")
+            elif expected_formula:
+                expected_formula_id = expected_formula["formula_id"]
+                if actual_formula_ids != [expected_formula_id]:
+                    formula_issues.append("formula_ids_mismatch")
+                if (
+                    chunk.get("preceding_unit_id")
+                    != expected_formula.get("preceding_unit_id")
+                ):
+                    formula_issues.append("preceding_unit_id_mismatch")
+                if (
+                    chunk.get("following_unit_id")
+                    != expected_formula.get("following_unit_id")
+                ):
+                    formula_issues.append("following_unit_id_mismatch")
+                if (
+                    chunk.get("linearized_formula")
+                    != expected_formula.get("linearized_formula")
+                ):
+                    formula_issues.append("linearized_formula_mismatch")
+                formula_line = (
+                    "Công thức chuẩn hóa: "
+                    + expected_formula["linearized_formula"]
+                )
+                if not isinstance(body_text, str) or formula_line not in body_text:
+                    formula_issues.append("linearized_formula_text_missing")
+            elif (
+                actual_formula_ids
+                or chunk.get("preceding_unit_id") is not None
+                or chunk.get("following_unit_id") is not None
+                or chunk.get("linearized_formula") is not None
+            ):
+                formula_issues.append("unexpected_formula_metadata")
+
+            if formula_issues:
+                invalid_formula_metadata_count += 1
+                invalid_formula_metadata_chunks.append(chunk_ident)
+                errors.append(
+                    f"invalid_formula_metadata: Table chunk {chunk_ident}: "
+                    + ", ".join(formula_issues)
+                )
+
             # Duplicate table segment key
-            if parent_id and tbl_id and tbl_idx is not None and seg_idx is not None:
-                seg_key = (parent_id, tbl_id, tbl_idx, seg_idx)
+            if parent_container_id and tbl_id and tbl_idx is not None and seg_idx is not None:
+                seg_key = (parent_container_id, tbl_id, tbl_idx, seg_idx)
                 if seg_key in seen_table_segments:
                     duplicate_table_segment_key_count += 1
-                    duplicate_table_segment_keys.add(f"{parent_id}|{tbl_id}|{tbl_idx}|{seg_idx}")
+                    duplicate_table_segment_keys.add(
+                        f"{parent_container_id}|{tbl_id}|{tbl_idx}|{seg_idx}"
+                    )
                     errors.append(f"duplicate_table_segment: {seg_key}")
                 seen_table_segments.add(seg_key)
         else:
@@ -1991,6 +2652,38 @@ def validate_chunks(
                 invalid_table_metadata_count += 1
                 invalid_table_metadata_chunks.append(chunk_ident)
                 errors.append(f"invalid_table_metadata: Non-table chunk {chunk_ident} has table_id '{tbl_id}' or table_index '{tbl_idx}'")
+
+            expected_links = []
+            for source_unit_id in src_ids:
+                expected_links.extend(
+                    formula_links_by_preceding_unit.get(
+                        (parent_article_id, source_unit_id), []
+                    )
+                )
+            expected_related_table_ids = list(dict.fromkeys(
+                table_id for table_id, _ in expected_links
+            ))
+            expected_formula_ids = list(dict.fromkeys(
+                link["formula_id"] for _, link in expected_links
+            ))
+            formula_issues = []
+            if chunk.get("related_table_ids") != expected_related_table_ids:
+                formula_issues.append("related_table_ids_mismatch")
+            if chunk.get("formula_ids") != expected_formula_ids:
+                formula_issues.append("formula_ids_mismatch")
+            if (
+                chunk.get("preceding_unit_id") is not None
+                or chunk.get("following_unit_id") is not None
+                or chunk.get("linearized_formula") is not None
+            ):
+                formula_issues.append("unexpected_inline_formula_metadata")
+            if formula_issues:
+                invalid_formula_metadata_count += 1
+                invalid_formula_metadata_chunks.append(chunk_ident)
+                errors.append(
+                    f"invalid_formula_metadata: Text chunk {chunk_ident}: "
+                    + ", ".join(formula_issues)
+                )
 
     # Missing articles
     missing_article_ids = canonical_article_ids - covered_article_ids
@@ -2030,50 +2723,61 @@ def validate_chunks(
         expected = list(range(1, len(sorted_segs) + 1))
         if sorted_segs != expected:
             table_segment_sequence_error_count += 1
-            err_desc = f"article={gkey[0]}|table_id={gkey[1]}|table_index={gkey[2]}|got={sorted_segs}"
+            err_desc = f"container={gkey[0]}|table_id={gkey[1]}|table_index={gkey[2]}|got={sorted_segs}"
             table_segment_sequence_errors.append(err_desc)
             errors.append(f"table_segment_sequence_error: {err_desc}")
 
-    # Table ordering & article continuous check
+    # Table ordering & container continuity check
     table_ordering_error_articles = set()
     table_ordering_error_count = 0
 
-    seen_articles = set()
-    last_article_id = None
-    seen_table_for_article = set()
+    seen_containers = set()
+    last_container_id = None
+    seen_table_for_container = set()
 
     for chunk in chunks:
-        art_id = chunk.get("parent_article_id")
+        container_id = (
+            chunk.get("parent_article_id")
+            or chunk.get("parent_attachment_id")
+        )
         c_type = chunk.get("chunk_type")
-        if not art_id:
+        if not container_id:
             continue
 
-        # Check article continuous (no interleaving)
-        if art_id != last_article_id:
-            if art_id in seen_articles:
-                table_ordering_error_articles.add(art_id)
-                errors.append(f"article_interleaved: Article {art_id} is interleaved")
-            seen_articles.add(art_id)
-            last_article_id = art_id
+        # Check container continuity (no interleaving).
+        if container_id != last_container_id:
+            if container_id in seen_containers:
+                table_ordering_error_articles.add(container_id)
+                errors.append(
+                    f"container_interleaved: Container {container_id} is interleaved"
+                )
+            seen_containers.add(container_id)
+            last_container_id = container_id
 
         # Check text chunks before table chunks
         if c_type == "table":
-            seen_table_for_article.add(art_id)
+            seen_table_for_container.add(container_id)
         elif c_type != "table":
-            if art_id in seen_table_for_article:
-                table_ordering_error_articles.add(art_id)
-                errors.append(f"table_ordering_error: Text chunk of article {art_id} appears after table chunk")
+            if container_id in seen_table_for_container:
+                table_ordering_error_articles.add(container_id)
+                errors.append(
+                    f"table_ordering_error: Text chunk of container "
+                    f"{container_id} appears after table chunk"
+                )
 
-    # Check table index non-decreasing for each article
-    for art_id, art_chunks in article_chunks_map.items():
+    # Check table index non-decreasing for each container.
+    for container_id, container_chunks in container_chunks_map.items():
         last_tbl_idx = 0
-        for chunk in art_chunks:
+        for chunk in container_chunks:
             if chunk.get("chunk_type") == "table":
                 t_idx = chunk.get("table_index")
                 if isinstance(t_idx, int):
                     if t_idx < last_tbl_idx:
-                        table_ordering_error_articles.add(art_id)
-                        errors.append(f"table_ordering_error: Table index decrements in article {art_id}")
+                        table_ordering_error_articles.add(container_id)
+                        errors.append(
+                            f"table_ordering_error: Table index decrements in "
+                            f"container {container_id}"
+                        )
                     last_tbl_idx = t_idx
 
     table_ordering_error_count = len(table_ordering_error_articles)
@@ -2116,6 +2820,8 @@ def validate_chunks(
 
         "covered_article_count": len(covered_article_ids),
         "missing_article_ids": sorted(list(missing_article_ids)),
+        "attachment_count": len(canonical_attachment_ids),
+        "covered_attachment_count": len(covered_attachment_ids),
 
         "duplicate_chunk_id_count": duplicate_chunk_id_count,
         "duplicate_chunk_ids": sorted(list(duplicate_chunk_ids)),
@@ -2132,6 +2838,9 @@ def validate_chunks(
         "invalid_parent_count": invalid_parent_count,
         "invalid_parent_chunk_ids": sorted(invalid_parent_chunk_ids),
         "invalid_parent_article_ids": sorted(list(invalid_parent_article_ids)),
+        "invalid_parent_attachment_ids": sorted(
+            list(invalid_parent_attachment_ids)
+        ),
 
         "missing_required_field_count": missing_required_field_count,
         "chunks_missing_required_fields": sorted(chunks_missing_required_fields),
@@ -2164,6 +2873,16 @@ def validate_chunks(
         "relation_list_length_mismatch_count": relation_list_length_mismatch_count,
         "relation_list_length_mismatch_chunks": sorted(relation_list_length_mismatch_chunks),
 
+        "invalid_subpoint_metadata_count": invalid_subpoint_metadata_count,
+        "invalid_subpoint_metadata_chunks": sorted(
+            invalid_subpoint_metadata_chunks
+        ),
+
+        "invalid_point_context_count": invalid_point_context_count,
+        "invalid_point_context_chunks": sorted(
+            invalid_point_context_chunks
+        ),
+
         "canonical_non_table_unit_count": len(canonical_non_table_units),
         "covered_non_table_unit_count": len(covered_non_table_units),
         "missing_non_table_unit_count": len(missing_non_table_units),
@@ -2184,11 +2903,24 @@ def validate_chunks(
         "invalid_table_metadata_count": invalid_table_metadata_count,
         "invalid_table_metadata_chunks": sorted(invalid_table_metadata_chunks),
 
+        "invalid_table_header_context_count": invalid_table_header_context_count,
+        "invalid_table_header_context_chunks": sorted(
+            invalid_table_header_context_chunks
+        ),
+
+        "invalid_formula_metadata_count": invalid_formula_metadata_count,
+        "invalid_formula_metadata_chunks": sorted(
+            invalid_formula_metadata_chunks
+        ),
+
         "table_segment_sequence_error_count": table_segment_sequence_error_count,
         "table_segment_sequence_errors": sorted(table_segment_sequence_errors),
 
         "table_ordering_error_count": table_ordering_error_count,
         "table_ordering_error_articles": sorted(list(table_ordering_error_articles)),
+        "table_ordering_error_containers": sorted(
+            list(table_ordering_error_articles)
+        ),
 
         "input_chunk_count_preserved": input_chunk_count_preserved,
         "input_mutated": input_mutated,
