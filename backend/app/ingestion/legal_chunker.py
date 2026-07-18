@@ -460,6 +460,7 @@ def _create_chunk(
     table_index: int | None = None,
     body_text: str,
     source_unit_ids: list[str],
+    context_unit_ids: list[str] | None = None,
     token_counter: TokenCounter,
     requires_fallback: bool = False,
     oversized_reason: str | None = None,
@@ -517,6 +518,7 @@ def _create_chunk(
         "point_labels": point_labels or [],
         "point_occurrences": point_occurrences or [],
         "source_unit_ids": source_unit_ids,
+        "context_unit_ids": context_unit_ids or [],
         "table_id": table_id,
         "table_index": table_index,
         "segment_index": segment_index,
@@ -551,8 +553,8 @@ def split_oversized_legal_text(
     token_counter: TokenCounter,
 ) -> list[str]:
     """Split oversized legal text using RecursiveCharacterTextSplitter.
-    
-    Ensures correct order preservation, Vietnamese-friendly separators, 
+
+    Ensures correct order preservation, Vietnamese-friendly separators,
     and returns non-empty stripped segments.
     """
     if not isinstance(text, str):
@@ -811,6 +813,170 @@ def _build_table_chunks(
                 table_chunks.append(chunk)
 
     return table_chunks
+
+
+SUBPOINT_MARKER_RE = re.compile(r"(?:^|[\n;:])\s*([a-zđĐ])(\d+)\)")
+
+
+def split_point_into_subpoints(text: str) -> list[dict]:
+    matches = list(SUBPOINT_MARKER_RE.finditer(text))
+    if not matches:
+        return [{"text": text, "is_subpoint": False, "parent_prefix": "", "subpoint_label": None}]
+
+    segments = []
+    first_match = matches[0]
+    marker_sub = re.search(r"([a-zđĐ]\d+\))", first_match.group(0))
+    first_marker_start = first_match.start() + marker_sub.start()
+
+    parent_prefix = text[:first_marker_start]
+    if parent_prefix.strip():
+        segments.append({
+            "text": parent_prefix,
+            "is_subpoint": False,
+            "parent_prefix": "",
+            "subpoint_label": None
+        })
+
+    for i, match in enumerate(matches):
+        marker_sub = re.search(r"([a-zđĐ]\d+\))", match.group(0))
+        marker_start = match.start() + marker_sub.start()
+
+        if i + 1 < len(matches):
+            next_match = matches[i + 1]
+            next_marker_sub = re.search(r"([a-zđĐ]\d+\))", next_match.group(0))
+            next_marker_start = next_match.start() + next_marker_sub.start()
+            subpoint_text = text[marker_start:next_marker_start]
+        else:
+            subpoint_text = text[marker_start:]
+
+        segments.append({
+            "text": subpoint_text,
+            "is_subpoint": True,
+            "parent_prefix": parent_prefix,
+            "subpoint_label": match.group(1).lower()
+        })
+
+    return segments
+
+
+def split_main_text_to_fit(
+    main_text: str,
+    context_lines: list[str],
+    parent_art: dict,
+    clause_number: str | None,
+    point_labels: list[str],
+    cfg: ChunkingConfig,
+    tc: TokenCounter
+) -> list[str]:
+    """Split primary text without overlap while preserving word boundaries.
+
+    The previous RecursiveCharacterTextSplitter configuration could fall back
+    to character-level splitting when only a very small token budget remained
+    after breadcrumbs. That produced fragments such as ``Đ i ể m`` when the
+    segments were reconstructed. This implementation evaluates the complete
+    rendered chunk and greedily packs whole non-whitespace tokens instead.
+    """
+    if not isinstance(main_text, str):
+        raise TypeError("main_text must be a string")
+    if not main_text.strip():
+        return []
+
+    def render_body(primary_text: str) -> str:
+        if not context_lines:
+            return primary_text
+        context_part = "[Ngữ cảnh]\n" + "\n".join(context_lines)
+        body_part = "[Nội dung]\n" + primary_text
+        return f"{context_part}\n\n{body_part}"
+
+    def fits(primary_text: str) -> bool:
+        content = _build_chunk_content(
+            parent_art,
+            body_text=render_body(primary_text),
+            clause_number=clause_number,
+            point_labels=point_labels,
+        )
+        return tc.count(content) <= cfg.max_tokens
+
+    # Keep each word together with its following whitespace. Stripping only at
+    # chunk boundaries makes reconstruction lossless after whitespace
+    # normalization, without duplicating source text.
+    pieces = re.findall(r"\S+(?:\s+|$)", main_text)
+    if not pieces:
+        return []
+
+    parts: list[str] = []
+    current = ""
+
+    for piece in pieces:
+        candidate = current + piece
+        candidate_text = candidate.strip()
+
+        if candidate_text and fits(candidate_text):
+            current = candidate
+            continue
+
+        if current.strip():
+            parts.append(current.strip())
+            current = ""
+
+        piece_text = piece.strip()
+        if not piece_text:
+            continue
+
+        if fits(piece_text):
+            current = piece
+            continue
+
+        # Extremely long no-whitespace token. Split only as a last resort,
+        # choosing the largest fitting prefix deterministically.
+        remaining = piece_text
+        while remaining:
+            low = 1
+            high = len(remaining)
+            best = 0
+
+            while low <= high:
+                mid = (low + high) // 2
+                prefix = remaining[:mid]
+                if fits(prefix):
+                    best = mid
+                    low = mid + 1
+                else:
+                    high = mid - 1
+
+            if best == 0:
+                # The breadcrumbs/context alone already consume the entire
+                # synthetic budget. Splitting by character would corrupt
+                # Vietnamese words (for example: "Đ i ể m"). Preserve the
+                # indivisible token and let validation report the unavoidable
+                # oversize condition instead of damaging source text.
+                parts.append(remaining)
+                remaining = ""
+                break
+
+            parts.append(remaining[:best])
+            remaining = remaining[best:]
+
+    if current.strip():
+        parts.append(current.strip())
+
+    return parts
+
+def clean_split_punctuation(parts: list[str]) -> list[str]:
+    cleaned = []
+    for part in parts:
+        p = part.strip()
+        if p:
+            cleaned.append(p)
+
+    for i in range(1, len(cleaned)):
+        lead_match = re.match(r"^([\s:;.,]+)", cleaned[i])
+        if lead_match:
+            punct = lead_match.group(1)
+            cleaned[i] = cleaned[i][len(punct):].strip()
+            cleaned[i-1] = cleaned[i-1] + punct.rstrip()
+
+    return [p.strip() for p in cleaned if p.strip()]
 
 
 def build_legal_chunks(
@@ -1120,20 +1286,23 @@ def build_legal_chunks(
                         article_chunks.append(c_chunk)
 
         else:
-            # article_long không có clause
-            art_chunk = _create_chunk(
-                article,
-                chunk_type="fallback_segment",
-                unit_type="article",
-                segment_index=1,
-                body_text=art_body,
-                source_unit_ids=art_source_ids,
-                token_counter=tc,
-                requires_fallback=True,
-                oversized_reason="oversized_article_without_clause",
-                warnings=group_warnings
-            )
-            article_chunks.append(art_chunk)
+            # Article không có clause: preamble vẫn là nội dung cấp Điều,
+            # còn orphan/unsupported units được xử lý riêng ở nhánh bên dưới.
+            if preamble_units:
+                no_clause_body = _build_body_text(preamble_units)
+                art_chunk = _create_chunk(
+                    article,
+                    chunk_type="fallback_segment",
+                    unit_type="article",
+                    segment_index=1,
+                    body_text=no_clause_body,
+                    source_unit_ids=[u["unit_id"] for u in preamble_units],
+                    token_counter=tc,
+                    requires_fallback=True,
+                    oversized_reason="oversized_article_without_clause",
+                    warnings=group_warnings
+                )
+                article_chunks.append(art_chunk)
 
         # Xử lý Orphan Units
         if orphan_units:
@@ -1167,111 +1336,235 @@ def build_legal_chunks(
     for chunk in initial_chunks:
         if not chunk.get("requires_fallback"):
             chunk["fallback_source_reason"] = None
+            if "context_unit_ids" not in chunk:
+                chunk["context_unit_ids"] = []
             final_chunks.append(chunk)
             continue
 
         # Extract information from oversized chunk
         orig_reason = chunk.get("oversized_reason")
-        body = chunk.get("body_text", "")
         article_id = chunk.get("parent_article_id")
-        orig_key = chunk.get("chunk_key")
 
         parent_art = next((art for art in canonical_corpus["articles"] if art["article_id"] == article_id), None)
         if not parent_art:
             raise ValueError(f"Parent article {article_id} not found in corpus")
 
-        # Split using RecursiveCharacterTextSplitter helper
-        body_segments = split_oversized_legal_text(body, config=cfg, token_counter=tc)
-        if not body_segments:
-            continue
+        # Map unit_id to canonical unit dict
+        unit_map = {u["unit_id"]: u for u in parent_art.get("content_units", [])}
 
-        repaired_segments = []
-        for seg in body_segments:
-            # Rebuild content for test
+        # Retrieve the ordered list of canonical units for this chunk
+        chunk_units = [unit_map[uid] for uid in chunk.get("source_unit_ids", []) if uid in unit_map]
+
+        # Identify clause intro context if present
+        clause_intro_text = ""
+        clause_intro_id = None
+        if chunk.get("clause_number"):
+            for u in parent_art.get("content_units", []):
+                if u.get("unit_type") == "clause" and u.get("clause_number") == chunk.get("clause_number"):
+                    clause_intro_text = u.get("text", "").strip()
+                    clause_intro_id = u["unit_id"]
+                    break
+
+        # A clause unit inside point_group is repeated context, not primary
+        # content. Emitting it again creates a duplicate clause segment.
+        if chunk.get("unit_type") == "point_group":
+            primary_units = [
+                unit
+                for unit in chunk_units
+                if unit.get("unit_type") != "clause"
+            ]
+        else:
+            primary_units = chunk_units
+
+        # Build subpoint segments from primary units
+        primary_subpoints = []
+        for u in primary_units:
+            if u.get("unit_type") == "point":
+                parts = split_point_into_subpoints(u.get("text", ""))
+                for part in parts:
+                    primary_subpoints.append({
+                        "text": part["text"],
+                        "source_unit_id": u["unit_id"],
+                        "unit_type": u["unit_type"],
+                        "point_label": part["subpoint_label"] if part["is_subpoint"] else u.get("point_label"),
+                        "parent_prefix": part["parent_prefix"],
+                        "is_subpoint": part["is_subpoint"]
+                    })
+            else:
+                primary_subpoints.append({
+                    "text": u.get("text", ""),
+                    "source_unit_id": u["unit_id"],
+                    "unit_type": u["unit_type"],
+                    "point_label": u.get("point_label"),
+                    "parent_prefix": "",
+                    "is_subpoint": False
+                })
+
+        # Flat split any oversized subpoint segment
+        flat_subpoints = []
+        for sp in primary_subpoints:
+            context_lines = []
+            if clause_intro_text and sp["unit_type"] != "clause":
+                context_lines.append(clause_intro_text)
+            if sp["parent_prefix"]:
+                context_lines.append(sp["parent_prefix"])
+
+            test_body = sp["text"]
+            if context_lines:
+                test_body = "[Ngữ cảnh]\n" + "\n".join(context_lines) + "\n\n[Nội dung]\n" + sp["text"]
+
             test_content = _build_chunk_content(
                 parent_art,
-                body_text=seg,
+                body_text=test_body,
                 clause_number=chunk.get("clause_number"),
-                point_labels=chunk.get("point_labels")
+                point_labels=[sp["point_label"]] if sp["point_label"] else []
             )
+
             if tc.count(test_content) <= cfg.max_tokens:
-                repaired_segments.append((seg, False, None, []))
+                flat_parts = [sp["text"]]
             else:
-                # Need repair because segment content exceeds max_tokens
-                empty_body_content = _build_chunk_content(
+                flat_parts = split_main_text_to_fit(
+                    sp["text"],
+                    context_lines,
                     parent_art,
-                    body_text="",
-                    clause_number=chunk.get("clause_number"),
-                    point_labels=chunk.get("point_labels")
+                    chunk.get("clause_number"),
+                    [sp["point_label"]] if sp["point_label"] else [],
+                    cfg,
+                    tc
                 )
-                breadcrumb_tokens = tc.count(empty_body_content)
-                available_body_tokens = cfg.max_tokens - breadcrumb_tokens
+                flat_parts = clean_split_punctuation(flat_parts)
 
-                if available_body_tokens <= cfg.fallback_overlap:
-                    raise ValueError(
-                        f"Cannot split text for article {article_id} (key {orig_key}): "
-                        f"breadcrumb tokens ({breadcrumb_tokens}) leave too few tokens "
-                        f"for body under max_tokens ({cfg.max_tokens}) and overlap ({cfg.fallback_overlap})."
-                    )
+            for part in flat_parts:
+                flat_subpoints.append({
+                    "text": part,
+                    "source_unit_id": sp["source_unit_id"],
+                    "unit_type": sp["unit_type"],
+                    "point_label": sp["point_label"],
+                    "parent_prefix": sp["parent_prefix"],
+                    "is_subpoint": sp["is_subpoint"]
+                })
 
-                repair_size = available_body_tokens
-                repair_overlap = min(cfg.fallback_overlap, max(0, available_body_tokens - 1))
+        # Greedy packing of flat_subpoints into segments
+        repaired_segments_groups = []
+        current_group = []
+        for f_sp in flat_subpoints:
+            # Force split on transition between clause and other unit types
+            if current_group and (f_sp["unit_type"] == "clause" or current_group[-1]["unit_type"] == "clause"):
+                repaired_segments_groups.append(current_group)
+                current_group = [f_sp]
+                continue
 
-                repair_splitter = RecursiveCharacterTextSplitter(
-                    chunk_size=repair_size,
-                    chunk_overlap=repair_overlap,
-                    length_function=tc.count,
-                    separators=[
-                        "\n\n",
-                        "\n",
-                        ". ",
-                        "? ",
-                        "! ",
-                        "; ",
-                        ": ",
-                        ", ",
-                        " ",
-                        ""
-                    ],
-                    keep_separator=True
-                )
-                raw_repair_segs = repair_splitter.split_text(seg)
-                repair_segs = [s.strip() for s in raw_repair_segs if s.strip()]
+            candidate_group = current_group + [f_sp]
 
-                for r_seg in repair_segs:
-                    r_content = _build_chunk_content(
-                        parent_art,
-                        body_text=r_seg,
-                        clause_number=chunk.get("clause_number"),
-                        point_labels=chunk.get("point_labels")
-                    )
-                    if tc.count(r_content) <= cfg.max_tokens:
-                        repaired_segments.append((r_seg, False, None, []))
-                    else:
-                        repaired_segments.append((
-                            r_seg,
-                            True,
-                            "repair_failed",
-                            ["fallback_segment_still_oversized"]
-                        ))
+            candidate_body_texts = [item["text"] for item in candidate_group]
+            candidate_main_text = "\n".join(candidate_body_texts)
+
+            candidate_context_lines = []
+            if clause_intro_text and any(item["unit_type"] != "clause" for item in candidate_group):
+                candidate_context_lines.append(clause_intro_text)
+            seen_prefixes = set()
+            for item in candidate_group:
+                if item["parent_prefix"] and item["parent_prefix"] not in seen_prefixes:
+                    seen_prefixes.add(item["parent_prefix"])
+                    candidate_context_lines.append(item["parent_prefix"])
+
+            if candidate_context_lines:
+                context_part = "[Ngữ cảnh]\n" + "\n".join(candidate_context_lines)
+                body_part = "[Nội dung]\n" + candidate_main_text
+                candidate_segment_text = f"{context_part}\n\n{body_part}"
+            else:
+                candidate_segment_text = candidate_main_text
+
+            candidate_labels = []
+            seen_lbls = set()
+            for item in candidate_group:
+                lbl = item["point_label"]
+                if lbl and lbl not in seen_lbls:
+                    seen_lbls.add(lbl)
+                    candidate_labels.append(lbl)
+
+            candidate_content = _build_chunk_content(
+                parent_art,
+                body_text=candidate_segment_text,
+                clause_number=chunk.get("clause_number"),
+                point_labels=candidate_labels
+            )
+
+            if tc.count(candidate_content) <= cfg.max_tokens or not current_group:
+                current_group = candidate_group
+            else:
+                repaired_segments_groups.append(current_group)
+                current_group = [f_sp]
+
+        if current_group:
+            repaired_segments_groups.append(current_group)
 
         # Re-create fallback segments chunks
-        for s_idx, (seg_body, req_fb, r_reason, r_warnings) in enumerate(repaired_segments, 1):
+        for s_idx, group in enumerate(repaired_segments_groups, 1):
+            body_texts = [item["text"] for item in group]
+            main_text = "\n".join(body_texts)
+
+            context_lines = []
+            if clause_intro_text and any(item["unit_type"] != "clause" for item in group):
+                context_lines.append(clause_intro_text)
+            seen_prefixes = set()
+            for item in group:
+                if item["parent_prefix"] and item["parent_prefix"] not in seen_prefixes:
+                    seen_prefixes.add(item["parent_prefix"])
+                    context_lines.append(item["parent_prefix"])
+
+            if context_lines:
+                context_part = "[Ngữ cảnh]\n" + "\n".join(context_lines)
+                body_part = "[Nội dung]\n" + main_text
+                segment_body = f"{context_part}\n\n{body_part}"
+            else:
+                segment_body = main_text
+
+            point_labels = []
+            seen_lbls = set()
+            for item in group:
+                lbl = item["point_label"]
+                if lbl and lbl not in seen_lbls:
+                    seen_lbls.add(lbl)
+                    point_labels.append(lbl)
+
+            source_unit_ids = []
+            seen_sids = set()
+            for item in group:
+                uid = item["source_unit_id"]
+                if uid and uid not in seen_sids:
+                    seen_sids.add(uid)
+                    source_unit_ids.append(uid)
+
+            context_unit_ids = []
+            if clause_intro_id and any(item["unit_type"] != "clause" for item in group):
+                context_unit_ids.append(clause_intro_id)
+            for item in group:
+                if item["parent_prefix"]:
+                    uid = item["source_unit_id"]
+                    if uid and uid not in context_unit_ids:
+                        context_unit_ids.append(uid)
+
+            orig_labels = chunk.get("point_labels") or []
+            orig_occs = chunk.get("point_occurrences") or []
+            label_to_occ = dict(zip(orig_labels, orig_occs))
+            point_occurrences = [label_to_occ.get(lbl, 1) for lbl in point_labels]
+
             seg_chunk = _create_chunk(
                 parent_art,
                 chunk_type="fallback_segment",
                 unit_type=chunk.get("unit_type"),
                 clause_number=chunk.get("clause_number"),
                 clause_occurrence=chunk.get("clause_occurrence"),
-                point_labels=chunk.get("point_labels"),
-                point_occurrences=chunk.get("point_occurrences"),
+                point_labels=point_labels,
+                point_occurrences=point_occurrences,
                 segment_index=s_idx,
-                body_text=seg_body,
-                source_unit_ids=chunk.get("source_unit_ids"),
+                body_text=segment_body,
+                source_unit_ids=source_unit_ids,
+                context_unit_ids=context_unit_ids,
                 token_counter=tc,
-                requires_fallback=req_fb,
-                oversized_reason=r_reason,
-                warnings=list(set(chunk.get("warnings", []) + r_warnings)),
+                requires_fallback=False,
+                warnings=chunk.get("warnings", []),
                 fallback_source_reason=orig_reason
             )
             final_chunks.append(seg_chunk)
@@ -1285,13 +1578,31 @@ def build_legal_chunks(
 
     all_output_unit_ids = set()
     for chunk in final_chunks:
-        all_output_unit_ids.update(chunk["source_unit_ids"])
+        all_output_unit_ids.update(chunk.get("source_unit_ids") or [])
+        # Context units are exact canonical text repeated for legal coherence.
+        # They count as preserved coverage but remain separate from primary
+        # provenance in source_unit_ids.
+        all_output_unit_ids.update(chunk.get("context_unit_ids") or [])
 
     missing_ids = all_input_unit_ids - all_output_unit_ids
     if missing_ids:
         raise ValueError(
             f"Data loss detected in final output: non-table unit_ids {missing_ids} are not covered by any chunk."
         )
+
+    # Final invariant: duplicate keys/IDs are generation bugs. Do not hide
+    # them by silently dropping one of the chunks.
+    seen_chunk_keys: set[str] = set()
+    seen_chunk_ids: set[str] = set()
+    for candidate in final_chunks:
+        candidate_key = candidate["chunk_key"]
+        candidate_id = candidate["chunk_id"]
+        if candidate_key in seen_chunk_keys:
+            raise ValueError(f"duplicate final chunk_key: {candidate_key}")
+        if candidate_id in seen_chunk_ids:
+            raise ValueError(f"duplicate final chunk_id: {candidate_id}")
+        seen_chunk_keys.add(candidate_key)
+        seen_chunk_ids.add(candidate_id)
 
     return final_chunks
 
@@ -1360,7 +1671,7 @@ def validate_chunks(
     REQUIRED_KEYS = [
         "chunk_id", "chunk_key", "parent_article_id", "document_id", "topic_code", "topic_name",
         "article_code", "chunk_type", "unit_type", "content", "body_text", "token_count",
-        "tokenizer_name", "source_unit_ids", "table_id", "table_index", "segment_index",
+        "tokenizer_name", "source_unit_ids", "context_unit_ids", "table_id", "table_index", "segment_index",
         "relation_target_ids", "relation_target_codes", "relation_types", "relation_same_topic",
         "relation_target_in_corpus", "attachment_metadata", "parser_version", "chunker_version",
         "requires_fallback", "oversized_reason", "warnings"
@@ -1614,9 +1925,12 @@ def validate_chunks(
             JSON_serialization_error_chunks.append(chunk_ident)
             errors.append(f"JSON_serialization_error: Chunk {chunk_ident} failed to serialize: {str(e)}")
 
-        # Source unit IDs coverage
+        # Primary source and repeated-context coverage. Context remains
+        # separately identifiable in chunk metadata, but its exact canonical
+        # unit must still count as preserved corpus coverage.
         src_ids = chunk.get("source_unit_ids") or []
-        for sid in src_ids:
+        context_ids = chunk.get("context_unit_ids") or []
+        for sid in [*src_ids, *context_ids]:
             if sid in canonical_non_table_units:
                 covered_non_table_units.add(sid)
             else:
