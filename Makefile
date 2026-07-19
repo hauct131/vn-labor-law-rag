@@ -7,4 +7,4 @@ backend:
 	cd backend && uvicorn app.main:app --reload
 
 test:
-	cd backend && pytest
+	PYTHONPATH=.:backend:$${PYTHONPATH} python -m pytest backend/tests

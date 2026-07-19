@@ -122,6 +122,22 @@ def test_default_counter_uses_tiktoken():
     assert isinstance(counter, TiktokenTokenCounter)
 
 
+def test_default_counter_fails_closed_when_tiktoken_is_unavailable(
+    monkeypatch,
+):
+    class BrokenTiktokenCounter:
+        def __init__(self):
+            raise OSError("encoding unavailable")
+
+    monkeypatch.setattr(
+        "backend.app.ingestion.legal_chunker.TiktokenTokenCounter",
+        BrokenTiktokenCounter,
+    )
+
+    with pytest.raises(RuntimeError, match="deterministic tokenizer"):
+        get_default_token_counter()
+
+
 def test_chunk_id_stable():
     key = "art_1|clause=1"
     id1 = make_chunk_id(key)
@@ -842,6 +858,64 @@ def test_real_corpus_ingestion(real_corpus_chunks):
 
     assert len(chunk_ids) == len(set(chunk_ids)), "Duplicate chunk IDs found in real corpus"
     assert len(chunk_keys) == len(set(chunk_keys)), "Duplicate chunk keys found in real corpus"
+
+
+def test_real_fallback_groups_reconstruct_primary_sources_exactly(
+    real_corpus_chunks,
+):
+    corpus, chunks = real_corpus_chunks
+    canonical_units = {
+        unit["unit_id"]: unit
+        for article in corpus["articles"]
+        for unit in article.get("content_units", [])
+        if unit.get("unit_type") != "table"
+    }
+    groups = {}
+    for chunk in chunks:
+        if chunk.get("chunk_type") != "fallback_segment":
+            continue
+        group_key = chunk["chunk_key"].rsplit("|segment=", 1)[0]
+        groups.setdefault(group_key, []).append(chunk)
+
+    assert groups
+    for group_key, group_chunks in groups.items():
+        ordered_chunks = sorted(
+            group_chunks,
+            key=lambda item: item["segment_index"],
+        )
+        source_ids = list(dict.fromkeys(
+            source_id
+            for chunk in ordered_chunks
+            for source_id in chunk["source_unit_ids"]
+        ))
+        expected = " ".join(
+            canonical_units[source_id]["text"] for source_id in source_ids
+        )
+        rebuilt = " ".join(
+            chunk["body_text"].split("[Nội dung]\n", 1)[-1]
+            for chunk in ordered_chunks
+        )
+        assert _normalize_whitespace(rebuilt) == _normalize_whitespace(
+            expected
+        ), group_key
+
+
+def test_validation_rejects_corrupted_fallback_reconstruction(
+    real_corpus_chunks,
+):
+    corpus, chunks = real_corpus_chunks
+    corrupted_chunks = copy.deepcopy(chunks)
+    fallback_chunk = next(
+        chunk
+        for chunk in corrupted_chunks
+        if chunk.get("chunk_type") == "fallback_segment"
+    )
+    fallback_chunk["body_text"] += " NỘI DUNG BỊ LẶP"
+
+    validation = validate_chunks(corpus, corrupted_chunks)
+
+    assert validation["is_valid"] is False
+    assert validation["invalid_fallback_reconstruction_count"] == 1
 
 
 # =====================================================================

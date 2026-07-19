@@ -65,14 +65,25 @@ class RegexEstimatedTokenCounter:
 
 
 def get_default_token_counter() -> TokenCounter:
-    """Factory to get the default token counter, falling back to regex estimate if tiktoken fails."""
+    """Return the deterministic default tokenizer or fail closed.
+
+    ``RegexEstimatedTokenCounter`` remains available as an explicit opt-in,
+    but silently switching tokenizers would change chunk boundaries between
+    environments for the same source and configuration.
+    """
     try:
         return TiktokenTokenCounter()
-    except Exception as e:
-        logger.warning(
-            f"Failed to initialize TiktokenTokenCounter, falling back to RegexEstimatedTokenCounter: {e}"
+    except Exception as exc:
+        logger.error(
+            "Failed to initialize the deterministic default tokenizer "
+            "tiktoken:cl100k_base: %s",
+            exc,
         )
-        return RegexEstimatedTokenCounter()
+        raise RuntimeError(
+            "Failed to initialize deterministic tokenizer "
+            "tiktoken:cl100k_base. Install/cache tiktoken or explicitly pass "
+            "RegexEstimatedTokenCounter when estimated boundaries are intended."
+        ) from exc
 
 
 @dataclass(frozen=True)
@@ -2193,6 +2204,10 @@ def validate_chunks(
     invalid_point_context_count = 0
     invalid_point_context_chunks = []
 
+    invalid_fallback_reconstruction_count = 0
+    invalid_fallback_reconstruction_groups = []
+    fallback_groups = {}
+
     # Table segment identities
     duplicate_table_segment_key_count = 0
     duplicate_table_segment_keys = set()
@@ -2411,6 +2426,12 @@ def validate_chunks(
             requires_fallback_count += 1
             fallback_pending_chunks.append(chunk_ident)
             errors.append(f"fallback_pending: Chunk {chunk_ident} requires fallback")
+
+        if c_type == "fallback_segment" and isinstance(c_key, str):
+            fallback_group_key = c_key.rsplit("|segment=", 1)[0]
+            fallback_groups.setdefault(
+                (parent_article_id, fallback_group_key), []
+            ).append(chunk)
 
         # Relation list length check
         rel_ids = chunk.get("relation_target_ids")
@@ -2699,6 +2720,55 @@ def validate_chunks(
     for uuid_val in unknown_source_unit_ids:
         errors.append(f"unknown_source_unit: {uuid_val}")
 
+    # Every legal-unit fallback group must reconstruct its primary canonical
+    # source exactly, in segment order. Repeated legal context is deliberately
+    # excluded by taking only the text after the [Nội dung] marker.
+    def normalize_reconstruction_text(value: str) -> str:
+        return re.sub(r"\s+", " ", value).strip()
+
+    for (_, fallback_group_key), group_chunks in fallback_groups.items():
+        ordered_chunks = sorted(
+            group_chunks,
+            key=lambda item: item.get("segment_index")
+            if isinstance(item.get("segment_index"), int)
+            else 0,
+        )
+        ordered_source_ids = []
+        seen_source_ids = set()
+        for group_chunk in ordered_chunks:
+            for source_id in group_chunk.get("source_unit_ids") or []:
+                if source_id not in seen_source_ids:
+                    seen_source_ids.add(source_id)
+                    ordered_source_ids.append(source_id)
+
+        if not ordered_source_ids or any(
+            source_id not in canonical_non_table_unit_map
+            for source_id in ordered_source_ids
+        ):
+            # Empty/unknown provenance is already reported by the schema and
+            # coverage checks; avoid emitting a misleading second diagnosis.
+            continue
+
+        expected_primary = normalize_reconstruction_text(" ".join(
+            str(canonical_non_table_unit_map[source_id].get("text") or "")
+            for source_id in ordered_source_ids
+        ))
+        rebuilt_primary = normalize_reconstruction_text(" ".join(
+            str(group_chunk.get("body_text") or "").split(
+                "[Nội dung]\n", 1
+            )[-1]
+            for group_chunk in ordered_chunks
+        ))
+
+        if rebuilt_primary != expected_primary:
+            invalid_fallback_reconstruction_count += 1
+            invalid_fallback_reconstruction_groups.append(fallback_group_key)
+            errors.append(
+                "invalid_fallback_reconstruction: Fallback group "
+                f"{fallback_group_key} does not reconstruct canonical primary "
+                "source in segment order"
+            )
+
     # Table coverage
     missing_table_ids = canonical_table_ids - covered_table_ids
     for mtid in missing_table_ids:
@@ -2881,6 +2951,13 @@ def validate_chunks(
         "invalid_point_context_count": invalid_point_context_count,
         "invalid_point_context_chunks": sorted(
             invalid_point_context_chunks
+        ),
+
+        "invalid_fallback_reconstruction_count": (
+            invalid_fallback_reconstruction_count
+        ),
+        "invalid_fallback_reconstruction_groups": sorted(
+            invalid_fallback_reconstruction_groups
         ),
 
         "canonical_non_table_unit_count": len(canonical_non_table_units),

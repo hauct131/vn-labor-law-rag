@@ -251,6 +251,9 @@ Phải:
 - Ưu tiên ranh giới mạnh nhất còn vừa `MAX_TOKENS`, không cố lấp đủ 750 token.
 - Giữ nguyên thứ tự câu.
 - Không lặp hoặc làm mất primary source khi nối các segment theo thứ tự.
+- Strict validator phải tái dựng primary source của từng fallback group theo
+  `segment_index` và so khớp chính xác với canonical source sau khi chuẩn hóa
+  khoảng trắng.
 - Không coi marker mở đầu như `1.` hoặc `a.` là một câu riêng.
 - Không dùng overlap giữa các legal unit, Khoản hoặc nhóm Điểm.
 - Nếu một Điểm riêng lẻ bị chia thành nhiều segment, các segment tiếp nối phải
