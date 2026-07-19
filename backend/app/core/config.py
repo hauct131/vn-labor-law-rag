@@ -15,6 +15,12 @@ class Settings(BaseSettings):
     # Qdrant
     qdrant_url: str = "http://localhost:6333"
     qdrant_collection: str = "labor_law"
+    dense_embedding_model: str = "intfloat/multilingual-e5-large"
+    dense_vector_name: str = "dense"
+    dense_vector_size: int = 1024
+    sparse_embedding_model: str = "Qdrant/bm25"
+    sparse_vector_name: str = "sparse"
+    embedding_batch_size: int = 16
 
     # Neo4j
     neo4j_uri: str = "bolt://localhost:7687"

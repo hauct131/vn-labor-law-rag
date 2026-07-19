@@ -32,6 +32,7 @@ data/graph/*
 # Evaluation data
 data/evaluation/*
 !data/evaluation/.gitkeep
+!data/evaluation/retrieval_smoke_questions.json
 
 experiments/*
 !experiments/.gitkeep
