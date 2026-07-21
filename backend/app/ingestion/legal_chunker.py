@@ -923,6 +923,8 @@ def _build_table_chunks(
         if container.get("container_type") == "attachment":
             table_container["form_number"] = table.get("form_number")
 
+        table_token_budget = min(cfg.target_tokens, cfg.max_tokens)
+
         def render(group_rows: list[Any]) -> str:
             return _serialize_table(
                 table,
@@ -932,7 +934,15 @@ def _build_table_chunks(
                 linearized_formula=linearized_formula,
             )
 
-        def fits(group_rows: list[Any]) -> bool:
+        def fits_target(group_rows: list[Any]) -> bool:
+            return tc.count(
+                _build_chunk_content(
+                    table_container,
+                    body_text=render(group_rows),
+                )
+            ) <= table_token_budget
+
+        def fits_max(group_rows: list[Any]) -> bool:
             return tc.count(
                 _build_chunk_content(
                     table_container,
@@ -947,7 +957,7 @@ def _build_table_chunks(
 
             for piece in pieces:
                 candidate = (current + piece).strip()
-                if candidate and fits([candidate]):
+                if candidate and fits_target([candidate]):
                     current += piece
                     continue
 
@@ -958,7 +968,7 @@ def _build_table_chunks(
                 token = piece.strip()
                 if not token:
                     continue
-                if fits([token]):
+                if fits_target([token]) or fits_max([token]):
                     current = piece
                     continue
 
@@ -967,7 +977,7 @@ def _build_table_chunks(
                     low, high, best = 1, len(remaining), 0
                     while low <= high:
                         middle = (low + high) // 2
-                        if fits([remaining[:middle]]):
+                        if fits_target([remaining[:middle]]) or fits_max([remaining[:middle]]):
                             best = middle
                             low = middle + 1
                         else:
@@ -987,34 +997,46 @@ def _build_table_chunks(
         segment_groups: list[tuple[list[Any], list[str]]] = []
 
         if rows or table.get("headers"):
-            if not fits([]):
+            if not fits_max([]):
                 raise ValueError(
                     f"Repeated header exceeds max_tokens for container "
                     f"{container_id}, table {table_id}."
                 )
 
-            if fits(data_rows):
+            header_exceeds_target = not fits_target([])
+
+            if fits_target(data_rows):
                 segment_groups.append((data_rows, []))
+            elif header_exceeds_target and fits_max(data_rows):
+                if data_rows:
+                    segment_groups.extend(
+                        ([row], ["oversized_table_header_context"])
+                        for row in data_rows
+                    )
+                else:
+                    segment_groups.append(
+                        ([], ["oversized_table_header_context"])
+                    )
             else:
                 current_group: list[Any] = []
                 for row in data_rows:
                     candidate_group = current_group + [row]
-                    if fits(candidate_group):
+                    if fits_target(candidate_group):
                         current_group = candidate_group
-                        continue
+                    else:
+                        if current_group:
+                            segment_groups.append((current_group, []))
+                            current_group = []
 
-                    if current_group:
-                        segment_groups.append((current_group, []))
-                        current_group = []
-
-                    if fits([row]):
-                        current_group = [row]
-                        continue
-
-                    for fragment in split_row_text(_row_to_text(row)):
-                        segment_groups.append(
-                            ([fragment], ["oversized_table_row_split"])
-                        )
+                        if fits_target([row]):
+                            current_group = [row]
+                        else:
+                            frags = split_row_text(_row_to_text(row))
+                            for fragment in frags:
+                                warns = ["oversized_table_row_split"]
+                                if header_exceeds_target or not fits_target([fragment]):
+                                    warns.append("oversized_table_header_context")
+                                segment_groups.append(([fragment], warns))
 
                 if current_group:
                     segment_groups.append((current_group, []))
@@ -1029,7 +1051,7 @@ def _build_table_chunks(
                 token_counter=tc,
             ) or [text_content]
             for sub_text in sub_texts:
-                if not fits([sub_text]):
+                if not fits_target([sub_text]):
                     sub_texts_for_budget = split_row_text(sub_text)
                     segment_groups.extend(
                         ([fragment], ["oversized_table_text_split"])

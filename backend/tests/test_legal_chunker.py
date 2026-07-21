@@ -2787,3 +2787,344 @@ def test_validation_rejects_missing_table_header_and_formula_links(
     )
     assert point_context_validation["is_valid"] is False
     assert point_context_validation["invalid_point_context_count"] == 1
+
+
+# =====================================================================
+# TABLE SEGMENTATION REGRESSION TESTS
+# =====================================================================
+
+def test_table_segments_respect_target_token_budget(base_article):
+    """Test that table segments are bounded by target_tokens (500 cl100k tokens), not max_tokens (750)."""
+    headers = ["Số TT", "Họ và tên", "Ngày tháng năm sinh", "Trình độ chuyên môn", "Ghi chú bổ sung"]
+    # Build 40 rows so total table size is ~1500 tokens
+    rows = [
+        [str(i), f"Nguyễn Văn {i}", "01/01/1990", "Đại học Chuyên ngành Luật Lao động Việt Nam", f"Ghi chú phân đoạn số {i} đầy đủ nội dung."]
+        for i in range(1, 41)
+    ]
+    base_article["tables"] = [
+        {
+            "table_id": "art_1|table=1",
+            "headers": headers,
+            "rows": rows,
+        }
+    ]
+    corpus = {"metadata": {}, "articles": [base_article]}
+    config = ChunkingConfig(target_tokens=500, max_tokens=750)
+    counter = get_default_token_counter()
+
+    chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
+    table_chunks = [c for c in chunks if c["chunk_type"] == "table"]
+    assert len(table_chunks) > 1
+
+    # Every normal table segment must have token_count <= config.target_tokens (500)
+    for chunk in table_chunks:
+        assert chunk["token_count"] <= config.target_tokens, (
+            f"Table segment {chunk['chunk_key']} token count {chunk['token_count']} "
+            f"exceeds target_tokens budget {config.target_tokens}"
+        )
+
+
+def test_table_segmentation_preserves_row_order_and_content(base_article):
+    """Test that row order and all data row contents are preserved without loss or duplication."""
+    headers = ["STT", "Mã hiệu", "Nội dung"]
+    rows = [
+        [str(i), f"CODE_{i:03d}", f"Nội dung dòng SENTINEL_ROW_{i:03d}"]
+        for i in range(1, 31)
+    ]
+    base_article["tables"] = [
+        {
+            "table_id": "art_1|table=1",
+            "headers": headers,
+            "rows": rows,
+        }
+    ]
+    corpus = {"metadata": {}, "articles": [base_article]}
+    config = ChunkingConfig(target_tokens=300, max_tokens=500)
+    counter = get_default_token_counter()
+
+    chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
+    table_chunks = [c for c in chunks if c["chunk_type"] == "table"]
+    assert len(table_chunks) > 1
+
+    # Collect sentinels in order from body_text across all table segments
+    found_sentinels = []
+    for chunk in table_chunks:
+        for line in chunk["body_text"].split("\n"):
+            if "SENTINEL_ROW_" in line:
+                for word in line.split():
+                    if word.startswith("SENTINEL_ROW_"):
+                        found_sentinels.append(word)
+
+    expected_sentinels = [f"SENTINEL_ROW_{i:03d}" for i in range(1, 31)]
+    assert found_sentinels == expected_sentinels
+
+
+def test_oversized_table_row_split_preserves_content(base_article):
+    """Test that a single row exceeding budget triggers split_row_text fallback with warning and content preservation."""
+    headers = ["STT", "Nội dung siêu dài"]
+    long_text = "Nội dung chi tiết điều khoản bảng biểu pháp luật lao động " * 120
+    rows = [["1", long_text]]
+
+    base_article["tables"] = [
+        {
+            "table_id": "art_1|table=1",
+            "headers": headers,
+            "rows": rows,
+        }
+    ]
+    corpus = {"metadata": {}, "articles": [base_article]}
+    config = ChunkingConfig(target_tokens=200, max_tokens=400)
+    counter = get_default_token_counter()
+
+    chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
+    table_chunks = [c for c in chunks if c["chunk_type"] == "table"]
+
+    assert len(table_chunks) > 1
+    assert any("oversized_table_row_split" in c.get("warnings", []) for c in table_chunks)
+
+    # Reconstruct text from all split fragments
+    reconstructed_body_parts = []
+    for chunk in table_chunks:
+        body = chunk["body_text"]
+        # Extract row text part
+        lines = body.split("\n")
+        row_lines = [l for l in lines if l.startswith("Dòng dữ liệu") or l.startswith("Dòng")]
+        for rl in row_lines:
+            part = rl.split(":", 1)[-1].strip()
+            reconstructed_body_parts.append(part)
+
+    joined = " ".join(reconstructed_body_parts)
+    # Ensure long_text is preserved in joined fragments
+    for word in long_text.split()[:20]:
+        assert word in joined
+
+
+def test_table_segment_indices_and_ids_are_deterministic(base_article):
+    """Test that table segment_index is sequential and IDs/keys are deterministic."""
+    headers = ["STT", "Nội dung"]
+    rows = [[str(i), f"Nội dung bảng dòng thứ {i} dài để tạo nhiều segment."] for i in range(1, 25)]
+
+    base_article["tables"] = [
+        {
+            "table_id": "art_1|table=1",
+            "headers": headers,
+            "rows": rows,
+        }
+    ]
+    corpus = {"metadata": {}, "articles": [base_article]}
+    config = ChunkingConfig(target_tokens=250, max_tokens=400)
+    counter = get_default_token_counter()
+
+    chunks1 = build_legal_chunks(corpus, config=config, token_counter=counter)
+    chunks2 = build_legal_chunks(corpus, config=config, token_counter=counter)
+
+    table_chunks1 = [c for c in chunks1 if c["chunk_type"] == "table"]
+    table_chunks2 = [c for c in chunks2 if c["chunk_type"] == "table"]
+
+    assert len(table_chunks1) > 1
+    assert len(table_chunks1) == len(table_chunks2)
+
+    segment_indices = [c["segment_index"] for c in table_chunks1]
+    assert segment_indices == list(range(1, len(table_chunks1) + 1))
+
+    for c1, c2 in zip(table_chunks1, table_chunks2):
+        assert c1["chunk_id"] == c2["chunk_id"]
+        assert c1["chunk_key"] == c2["chunk_key"]
+        assert c1["table_id"] == "art_1|table=1"
+        assert c1["table_index"] == 1
+
+
+def test_oversized_table_header_context_splits_by_logical_row(
+    base_article,
+):
+    """An oversized repeated header must not cause all rows to share one chunk."""
+    from backend.app.ingestion.legal_chunker import (
+        _build_chunk_content,
+        _serialize_table,
+    )
+
+    config = ChunkingConfig(target_tokens=120, max_tokens=500)
+    counter = get_default_token_counter()
+
+    sentinels = [
+        "SENTINEL_ROW_001",
+        "SENTINEL_ROW_002",
+        "SENTINEL_ROW_003",
+        "SENTINEL_ROW_004",
+    ]
+    rows = [
+        [str(index), sentinel]
+        for index, sentinel in enumerate(sentinels, 1)
+    ]
+    table = {
+        "table_id": "art_1|table=oversized-header",
+        "headers": [],
+        "rows": rows,
+    }
+
+    selected_counts = None
+    for repeat_count in range(1, 120):
+        table["headers"] = [
+            (
+                "Tiêu đề cột rất dài dùng làm ngữ cảnh bảng "
+                * repeat_count
+            ).strip(),
+            "Mã",
+        ]
+        shared_header_rows = []
+
+        header_content = _build_chunk_content(
+            base_article,
+            body_text=_serialize_table(
+                table,
+                rows=[],
+                include_header=True,
+                shared_header_rows=shared_header_rows,
+            ),
+        )
+        all_rows_content = _build_chunk_content(
+            base_article,
+            body_text=_serialize_table(
+                table,
+                rows=rows,
+                include_header=True,
+                shared_header_rows=shared_header_rows,
+            ),
+        )
+
+        header_tokens = counter.count(header_content)
+        all_rows_tokens = counter.count(all_rows_content)
+
+        if (
+            config.target_tokens < header_tokens
+            < all_rows_tokens <= config.max_tokens
+        ):
+            selected_counts = (header_tokens, all_rows_tokens)
+            break
+
+    assert selected_counts is not None, (
+        "Could not construct the oversized-header test precondition"
+    )
+
+    base_article["tables"] = [table]
+    corpus = {"metadata": {}, "articles": [base_article]}
+
+    chunks = build_legal_chunks(
+        corpus,
+        config=config,
+        token_counter=counter,
+    )
+    table_chunks = [
+        chunk for chunk in chunks
+        if chunk["chunk_type"] == "table"
+    ]
+
+    assert len(table_chunks) == len(rows)
+    assert [
+        chunk["segment_index"] for chunk in table_chunks
+    ] == list(range(1, len(rows) + 1))
+
+    for index, chunk in enumerate(table_chunks):
+        assert (
+            "oversized_table_header_context"
+            in chunk.get("warnings", [])
+        )
+        assert chunk["token_count"] <= config.max_tokens
+
+        present = [
+            sentinel
+            for sentinel in sentinels
+            if sentinel in chunk["body_text"]
+        ]
+        assert present == [sentinels[index]]
+
+
+def test_non_table_chunks_unchanged_by_table_budget_change(base_article):
+    """Test that non-table chunks remain 100% byte/object equivalent."""
+    base_article["content_units"] = [
+        {"unit_id": "u1", "unit_type": "preamble", "text": "Lời mở đầu quy định chung."},
+        {"unit_id": "u2", "unit_type": "clause", "clause_number": "1", "text": "Khoản 1 quy định chi tiết về hợp đồng lao động."},
+        {"unit_id": "u3", "unit_type": "clause", "clause_number": "2", "text": "Khoản 2 quy định chi tiết về thời giờ làm việc."}
+    ]
+    corpus = {"metadata": {}, "articles": [base_article]}
+    config = ChunkingConfig(target_tokens=500, max_tokens=750)
+    counter = get_default_token_counter()
+
+    chunks = build_legal_chunks(corpus, config=config, token_counter=counter)
+    non_table_chunks = [c for c in chunks if c["chunk_type"] != "table"]
+
+    assert len(non_table_chunks) == 1  # Fits in 1 article chunk
+    assert non_table_chunks[0]["chunk_type"] == "article"
+    assert non_table_chunks[0]["token_count"] <= 500
+
+
+def test_single_table_row_between_target_and_max_is_split(base_article):
+    """Test that a single table row with token count between target_tokens (500) and max_tokens (750) is split into target_tokens fragments."""
+    from backend.app.ingestion.legal_chunker import _serialize_table, _build_chunk_content
+
+    headers = ["Số TT", "Nội dung chi tiết quy định điều khoản hợp đồng lao động"]
+    # Build a single row whose serialized token count is ~600 cl100k tokens
+    long_row_text = "Điều khoản bổ sung quy định chi tiết trách nhiệm và quyền hạn của người lao động trong doanh nghiệp " * 12
+    rows = [["1", long_row_text]]
+
+    table = {
+        "table_id": "art_1|table=1",
+        "headers": headers,
+        "rows": rows,
+    }
+    base_article["tables"] = [table]
+    corpus = {"metadata": {}, "articles": [base_article]}
+    config = ChunkingConfig(target_tokens=500, max_tokens=750)
+    counter = get_default_token_counter()
+
+    # Precondition assertion: calculate token count of single unsplit segment
+    raw_body = _serialize_table(table, rows=rows, include_header=True, shared_header_rows=[headers])
+    raw_content = _build_chunk_content(base_article, body_text=raw_body)
+    raw_token_count = counter.count(raw_content)
+
+    assert config.target_tokens < raw_token_count <= config.max_tokens, (
+        f"Precondition failed: raw_token_count {raw_token_count} is not strictly between "
+        f"{config.target_tokens} and {config.max_tokens}"
+    )
+
+    chunks1 = build_legal_chunks(corpus, config=config, token_counter=counter)
+    chunks2 = build_legal_chunks(corpus, config=config, token_counter=counter)
+
+    table_chunks = [c for c in chunks1 if c["chunk_type"] == "table"]
+    table_chunks2 = [c for c in chunks2 if c["chunk_type"] == "table"]
+
+    # Assert fallback splitting activated
+    assert len(table_chunks) > 1, f"Expected multiple split segments, got {len(table_chunks)}"
+
+    # Assert warning present
+    assert any("oversized_table_row_split" in c.get("warnings", []) for c in table_chunks)
+
+    # Assert every segment after full serialization <= target_tokens (500)
+    for c in table_chunks:
+        assert c["token_count"] <= config.target_tokens, (
+            f"Segment {c['chunk_key']} token_count {c['token_count']} exceeds target_tokens budget {config.target_tokens}"
+        )
+        assert c["body_text"].strip() != "", f"Segment {c['chunk_key']} body_text is empty"
+
+    # Assert content joined matches source row
+    reconstructed_text_parts = []
+    for c in table_chunks:
+        lines = c["body_text"].split("\n")
+        row_lines = [l for l in lines if l.startswith("Dòng dữ liệu") or l.startswith("Dòng")]
+        for rl in row_lines:
+            part = rl.split(":", 1)[-1].strip()
+            reconstructed_text_parts.append(part)
+    joined_text = " ".join(reconstructed_text_parts)
+
+    for word in long_row_text.split()[:20]:
+        assert word in joined_text
+
+    # Assert segment_index is sequential
+    indices = [c["segment_index"] for c in table_chunks]
+    assert indices == list(range(1, len(table_chunks) + 1))
+
+    # Assert deterministic IDs & keys across runs
+    assert len(table_chunks) == len(table_chunks2)
+    for c1, c2 in zip(table_chunks, table_chunks2):
+        assert c1["chunk_id"] == c2["chunk_id"]
+        assert c1["chunk_key"] == c2["chunk_key"]
