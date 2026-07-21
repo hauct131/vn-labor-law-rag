@@ -11,8 +11,10 @@ langchain-neo4j==0.10.0
 langchain-qdrant
 langgraph
 langsmith
-qdrant-client
-fastembed
+qdrant-client==1.18.0
+fastembed==0.8.0
+py_vncorenlp==0.1.4
+pyjnius==1.7.0
 neo4j
 beautifulsoup4
 lxml

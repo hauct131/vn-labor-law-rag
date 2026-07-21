@@ -21,6 +21,24 @@ class Settings(BaseSettings):
     sparse_embedding_model: str = "Qdrant/bm25"
     sparse_vector_name: str = "sparse"
     embedding_batch_size: int = 16
+    embedding_threads: int = 6
+    fastembed_cache_dir: str = ""
+
+    # Retrieval core
+    legal_chunks_path: str = "data/processed/legal_chunks.jsonl"
+    vncorenlp_model_dir: str = "models/vncorenlp"
+    retrieval_expected_chunks: int = 1395
+    retrieval_corpus_sha256: str = (
+        "27b80463dd6e0f34f767aa6ec1a5b5cd"
+        "066b6b7a477c320bb49ef909abcb5e65"
+    )
+    retrieval_top_k: int = 5
+    retrieval_candidate_k: int = 20
+    hybrid_rrf_k: int = 60
+    hybrid_sparse_weight: float = 1.0
+    hybrid_dense_weight: float = 1.0
+    bm25_k: float = 1.2
+    bm25_b: float = 0.75
 
     # Neo4j
     neo4j_uri: str = "bolt://localhost:7687"

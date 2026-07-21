@@ -1,8 +1,5 @@
 -r requirements.txt
 
-# Optional Day-4 Vietnamese sparse-retrieval experiment. Keep this separate
-# because production images need a Java runtime only if this analyzer is used.
-qdrant-client==1.18.0
-fastembed==0.8.0
-py_vncorenlp==0.1.4
-pyjnius==1.7.0
+# Backward-compatible install target. VnCoreNLP is now the selected production
+# sparse retriever, so its Python dependencies are pinned in requirements.txt.
+# The runtime/container must also provide a Java runtime.
