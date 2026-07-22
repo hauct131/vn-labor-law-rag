@@ -10,6 +10,9 @@ venv/
 frontend/node_modules/
 frontend/dist/
 
+# Local NLP/embedding model files
+models/
+
 .vscode/
 .idea/
 .DS_Store
@@ -36,3 +39,6 @@ data/evaluation/*
 
 experiments/*
 !experiments/.gitkeep
+
+.env.bak.*
+docker-compose.yml.bak.*

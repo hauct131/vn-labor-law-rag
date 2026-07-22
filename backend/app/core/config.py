@@ -26,6 +26,9 @@ class Settings(BaseSettings):
 
     # Retrieval core
     legal_chunks_path: str = "data/processed/legal_chunks.jsonl"
+    official_sources_path: str = (
+        "data/reference/official_legal_sources.json"
+    )
     vncorenlp_model_dir: str = "models/vncorenlp"
     retrieval_expected_chunks: int = 1395
     retrieval_corpus_sha256: str = (
@@ -45,9 +48,26 @@ class Settings(BaseSettings):
     neo4j_user: str = "neo4j"
     neo4j_password: str = "change_me"
 
-    # LLM
-    llm_provider: str = "not_configured"
-    llm_api_key: str = ""
+    # LLM generation (OpenRouter is OpenAI-compatible, but is called through
+    # httpx so the backend does not need another SDK dependency.)
+    llm_provider: str = "openrouter"
+    llm_api_key: str = ""  # Backward-compatible fallback only.
+    openrouter_api_key: str = ""
+    openrouter_base_url: str = "https://openrouter.ai/api/v1"
+    openrouter_model: str = "openrouter/free"
+    openrouter_require_free_model: bool = True
+    openrouter_timeout_seconds: float = 90.0
+    # Completion budget includes any reasoning tokens used by reasoning models.
+    # Keep enough room for a complete, cited Vietnamese answer.
+    openrouter_max_tokens: int = 1200
+    # A value of 0 disables the explicit reasoning override. For models such as
+    # Nemotron 3 Ultra, a small budget prevents hidden reasoning from consuming
+    # nearly the entire completion budget.
+    openrouter_reasoning_max_tokens: int = 128
+    openrouter_exclude_reasoning: bool = True
+    openrouter_temperature: float = 0.0
+    openrouter_app_url: str = ""
+    openrouter_app_title: str = "Vietnamese Labor Law RAG"
 
     # LangSmith
     langsmith_tracing: bool = False

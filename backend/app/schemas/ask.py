@@ -16,14 +16,21 @@ class AskRequest(BaseModel):
 
 class LegalSource(BaseModel):
     chunk_id: str
-    document_number: str | None = None
+    article_code: str | None = None
     article_number: str | None = None
+    article_title: str | None = None
+    document_title: str | None = None
+    document_number: str | None = None
+    citation_label: str
     clause_number: str | None = None
-    point: str | None = None
+    point_labels: list[str] = Field(default_factory=list)
     content: str
     score: float | None = None
+    rank: int
     retrieval_origin: str | None = None
-    relation_type: str | None = None
+    source_type: str | None = None
+    source_url: str | None = None
+    component_ranks: dict[str, int] = Field(default_factory=dict)
 
 
 class AskResponse(BaseModel):
@@ -33,4 +40,5 @@ class AskResponse(BaseModel):
     retrieval_ms: float
     generation_ms: float
     total_ms: float
+    model: str | None = None
     insufficient_evidence: bool = False
