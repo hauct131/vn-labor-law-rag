@@ -38,7 +38,7 @@ import time
 import unicodedata
 import uuid
 from contextlib import contextmanager
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 from pathlib import Path
@@ -68,6 +68,7 @@ RETRY_HTTP_CODES = {408, 425, 429, 500, 502, 503, 504}
 ATTACHMENT_POLICIES = {"ignore", "best_effort", "required_if_listed", "required"}
 SNAPSHOT_SCHEMA = "vbpl-source-snapshot-v3"
 RUN_SCHEMA = "vbpl-ingestion-run-v1"
+INGESTION_CONTRACT_SCHEMA = "vbpl-ingestion-contract-v1"
 
 
 class VbplPortalError(RuntimeError):
@@ -871,6 +872,107 @@ def extract_attachment_inventory(node: Mapping[str, Any], base_url: str) -> tupl
     return tuple(unique.values())
 
 
+def merge_configured_attachments(
+    document: PortalDocument,
+    configured: Sequence[Mapping[str, Any]],
+    *,
+    detail_url: str,
+) -> PortalDocument:
+    """Merge explicitly approved official attachment sources into a document.
+
+    This is intentionally config-driven rather than an automatic source fallback.
+    Every configured URL is persisted in the snapshot inventory together with its
+    provider and source page so release review can audit the provenance.
+    """
+
+    # Once an explicit official source is configured, filename-only gateway hints
+    # are superseded by that auditable source. Resolved gateway URLs are retained.
+    records = [
+        dict(item)
+        for item in document.attachment_inventory
+        if item.get("url") or not configured
+    ]
+    for item in configured:
+        if not isinstance(item, Mapping):
+            raise VbplPortalError("official_attachments entries must be objects")
+        record = _attachment_record(
+            name=_to_text(item.get("name")),
+            url=_to_text(item.get("url")) or None,
+            base_url=detail_url,
+            source_field="configured_official_attachment",
+        )
+        if record is None or not record.get("url"):
+            raise VbplPortalError(
+                f"Configured official attachment has no resolvable URL: {item!r}"
+            )
+        for key in ("provider", "source_page_url", "role", "label"):
+            value = item.get(key)
+            if value not in (None, ""):
+                record[key] = str(value)
+        records.append(record)
+
+    unique: dict[str, dict[str, Any]] = {}
+    for record in records:
+        key = str(record.get("url") or f"name:{str(record.get('name')).casefold()}")
+        # Explicit configured sources override unresolved gateway filename-only rows
+        # with the same name, while still preserving unrelated attachments.
+        if record.get("url"):
+            name_key = f"name:{str(record.get('name')).casefold()}"
+            unique.pop(name_key, None)
+        unique[key] = record
+    return replace(document, attachment_inventory=tuple(unique.values()))
+
+
+def build_ingestion_contract(
+    *,
+    document_number: str,
+    item_id: str | int | None,
+    expected_articles: int | None,
+    attachment_policy: str,
+    configured_attachments: Sequence[Mapping[str, Any]],
+) -> dict[str, Any]:
+    attachments = []
+    for item in configured_attachments:
+        attachments.append(
+            {
+                "name": str(item.get("name") or ""),
+                "url": str(item.get("url") or ""),
+                "provider": str(item.get("provider") or ""),
+                "source_page_url": str(item.get("source_page_url") or ""),
+                "role": str(item.get("role") or ""),
+            }
+        )
+    contract = {
+        "schema_version": INGESTION_CONTRACT_SCHEMA,
+        "document_number": document_number,
+        "item_id": str(item_id) if item_id not in (None, "") else None,
+        "expected_articles": expected_articles,
+        "attachment_policy": attachment_policy,
+        "configured_attachments": sorted(
+            attachments, key=lambda item: (item["url"], item["name"])
+        ),
+        "snapshot_schema": SNAPSHOT_SCHEMA,
+    }
+    encoded = json.dumps(
+        contract, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+    ).encode("utf-8")
+    return {
+        "contract": contract,
+        "sha256": sha256_bytes(encoded),
+    }
+
+
+def snapshot_contract_matches(
+    snapshot: Path, expected_contract: Mapping[str, Any]
+) -> bool:
+    try:
+        manifest = json.loads((snapshot / "manifest.json").read_text(encoding="utf-8"))
+    except Exception:
+        return False
+    expected_hash = str(expected_contract.get("sha256") or "")
+    return bool(expected_hash) and manifest.get("ingestion_contract_sha256") == expected_hash
+
+
 def extract_document_from_payloads(
     payloads: Sequence[Any], document_number: str, *, detail_url: str
 ) -> PortalDocument:
@@ -971,7 +1073,7 @@ def article_sequence_report(value: str, expected_articles: int | None) -> dict[s
 def validate_attachment_signature(filename: str, value: bytes) -> str:
     if not value:
         return "invalid_empty"
-    prefix = value[:512].lstrip().casefold()
+    prefix = value[:512].lstrip().lower()
     if prefix.startswith((b"<!doctype html", b"<html")):
         return "invalid_html_error_page"
     lowered = filename.casefold()
@@ -1097,6 +1199,16 @@ def verify_snapshot(
             mismatches.append(relative)
     if mismatches:
         raise VbplPortalError(f"Snapshot checksum mismatch: {mismatches}")
+    contract = manifest.get("ingestion_contract")
+    contract_hash = manifest.get("ingestion_contract_sha256")
+    if contract is not None or contract_hash is not None:
+        if not isinstance(contract, Mapping) or not contract_hash:
+            raise VbplPortalError("Snapshot ingestion contract is incomplete")
+        encoded_contract = json.dumps(
+            contract, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+        ).encode("utf-8")
+        if sha256_bytes(encoded_contract) != contract_hash:
+            raise VbplPortalError("Snapshot ingestion contract hash mismatch")
     content_hash = sha256_file(snapshot / "full_text.html")
     manifest_hash = ((manifest.get("content_hashes") or {}).get("full_text_html_sha256"))
     if content_hash != manifest_hash:
@@ -1110,7 +1222,12 @@ def verify_snapshot(
     }
 
 
-def latest_valid_snapshot(output_root: Path, document_number: str) -> Path | None:
+def latest_valid_snapshot(
+    output_root: Path,
+    document_number: str,
+    *,
+    expected_contract: Mapping[str, Any] | None = None,
+) -> Path | None:
     root = output_root / safe_slug(document_number)
     if not root.exists():
         return None
@@ -1127,6 +1244,14 @@ def latest_valid_snapshot(output_root: Path, document_number: str) -> Path | Non
     for candidate in candidates:
         try:
             verify_snapshot(candidate, expected_document_number=document_number)
+            if expected_contract is not None and not snapshot_contract_matches(
+                candidate, expected_contract
+            ):
+                LOGGER.info(
+                    "Ignoring snapshot with incompatible ingestion contract: %s",
+                    candidate,
+                )
+                continue
             return candidate
         except Exception:
             LOGGER.warning("Ignoring invalid snapshot during resume: %s", candidate)
@@ -1218,6 +1343,7 @@ def write_snapshot(
     expected_articles: int | None,
     attachment_responses: Mapping[str, HttpResponse] | None = None,
     attachment_policy: str = "best_effort",
+    ingestion_contract: Mapping[str, Any] | None = None,
     operations: Sequence[str] = (),
     retrieved_at: str | None = None,
     force_snapshot: bool = False,
@@ -1228,7 +1354,11 @@ def write_snapshot(
     document_root.mkdir(parents=True, exist_ok=True)
     full_text_hash = sha256_bytes(document.full_text_html.encode("utf-8"))
     if not force_snapshot:
-        previous = latest_valid_snapshot(output_root, document.document_number)
+        previous = latest_valid_snapshot(
+            output_root,
+            document.document_number,
+            expected_contract=ingestion_contract,
+        )
         if previous:
             previous_manifest = json.loads((previous / "manifest.json").read_text(encoding="utf-8"))
             previous_hash = (previous_manifest.get("content_hashes") or {}).get("full_text_html_sha256")
@@ -1332,6 +1462,14 @@ def write_snapshot(
         manifest = {
             "schema_version": SNAPSHOT_SCHEMA,
             "review_status": "staged_unapproved",
+            "ingestion_contract": (
+                dict(ingestion_contract.get("contract") or {})
+                if ingestion_contract
+                else None
+            ),
+            "ingestion_contract_sha256": (
+                ingestion_contract.get("sha256") if ingestion_contract else None
+            ),
             "retrieved_at": retrieved_at,
             "source": {
                 "provider": "Cơ sở dữ liệu quốc gia về văn bản pháp luật",
@@ -1509,6 +1647,7 @@ def fetch_one(
     timeout: float,
     settle_seconds: float,
     attachment_policy: str,
+    configured_attachments: Sequence[Mapping[str, Any]] = (),
     sitemap_urls: Sequence[str] | None = None,
     retries: int = DEFAULT_RETRIES,
     backoff_seconds: float = DEFAULT_BACKOFF_SECONDS,
@@ -1521,8 +1660,19 @@ def fetch_one(
     )
     if attachment_policy not in ATTACHMENT_POLICIES:
         raise VbplPortalError(f"Invalid attachment policy: {attachment_policy}")
+    ingestion_contract = build_ingestion_contract(
+        document_number=document_number,
+        item_id=item_id,
+        expected_articles=expected_articles,
+        attachment_policy=attachment_policy,
+        configured_attachments=configured_attachments,
+    )
     if resume and not force_snapshot:
-        existing = latest_valid_snapshot(output_root, document_number)
+        existing = latest_valid_snapshot(
+            output_root,
+            document_number,
+            expected_contract=ingestion_contract,
+        )
         if existing is not None:
             return {
                 "status": "skipped_valid",
@@ -1617,6 +1767,12 @@ def fetch_one(
                     payloads, document_number, detail_url=detail_url
                 )
 
+            if configured_attachments:
+                document = merge_configured_attachments(
+                    document, configured_attachments, detail_url=detail_url
+                )
+                operations.append("MergeConfiguredOfficialAttachments")
+
             attachment_responses, attachment_errors = _download_attachments(
                 document,
                 client=client,
@@ -1641,6 +1797,7 @@ def fetch_one(
                 expected_articles=expected_articles,
                 attachment_responses=attachment_responses,
                 attachment_policy=attachment_policy,
+                ingestion_contract=ingestion_contract,
                 operations=operations,
                 force_snapshot=force_snapshot,
             )
@@ -1992,6 +2149,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             timeout=args.timeout,
             settle_seconds=args.settle_seconds,
             attachment_policy=_resolve_policy(args),
+            configured_attachments=(),
             retries=args.retries,
             backoff_seconds=args.backoff_seconds,
             resume=args.resume,
@@ -2096,6 +2254,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                     timeout=args.timeout,
                     settle_seconds=args.settle_seconds,
                     attachment_policy=_resolve_policy(args, item),
+                    configured_attachments=tuple(item.get("official_attachments") or ()),
                     sitemap_urls=sitemap_urls,
                     retries=args.retries,
                     backoff_seconds=args.backoff_seconds,

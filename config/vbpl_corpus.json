@@ -97,7 +97,17 @@
       ],
       "attachment_policy": "required",
       "source_adapter": "vbpl",
-      "item_id": "169619"
+      "item_id": "169619",
+      "official_attachments": [
+        {
+          "name": "97.signed.pdf",
+          "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2022/12/97.signed.pdf",
+          "provider": "Cổng Thông tin điện tử Chính phủ",
+          "source_page_url": "https://vanban.chinhphu.vn/?classid=1&docid=206935&pageid=27160&typegroupid=4",
+          "role": "signed_original_with_appendices"
+        }
+      ],
+      "attachment_source_policy": "explicit_official_government_portal"
     },
     {
       "document_number": "293/2025/NĐ-CP",
@@ -122,7 +132,17 @@
       "portal_url": "https://vbpl.vn/van-ban/chi-tiet/nghi-dinh-so-219-2025-nd-cp-quy-dinh-ve-nguoi-lao-dong-nuoc-ngoai-lam-viec-tai-viet-nam--180273",
       "attachment_policy": "required_if_listed",
       "source_adapter": "vbpl",
-      "item_id": "180273"
+      "item_id": "180273",
+      "official_attachments": [
+        {
+          "name": "219-cp.signed.pdf",
+          "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2025/8/219-cp.signed.pdf",
+          "provider": "Cổng Thông tin điện tử Chính phủ",
+          "source_page_url": "https://vanban.chinhphu.vn/?classid=1&docid=214840&pageid=27160&typegroupid=4",
+          "role": "signed_original_with_appendices"
+        }
+      ],
+      "attachment_source_policy": "explicit_official_government_portal"
     },
     {
       "document_number": "128/2025/NĐ-CP",

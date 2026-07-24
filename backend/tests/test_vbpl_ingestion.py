@@ -403,6 +403,125 @@ class VbplProductionIngestionTests(unittest.TestCase):
         self.assertFalse(errors)
         self.assertIn("https://vbpl.vn/files/official.pdf", responses)
 
+    def test_configured_official_attachment_satisfies_required_policy(self) -> None:
+        payload = json.loads(json.dumps(ACTUAL_JSON_SHAPE, ensure_ascii=False))
+        payload["data"]["documentContent"].pop("documentContentFileName")
+        document = vp.extract_document_from_payloads(
+            [payload], "219/2025/NĐ-CP", detail_url=DETAIL_URL
+        )
+        configured = (
+            {
+                "name": "97.signed.pdf",
+                "url": "https://datafiles.chinhphu.vn/example/97.signed.pdf",
+                "provider": "Cổng Thông tin điện tử Chính phủ",
+                "source_page_url": "https://vanban.chinhphu.vn/example",
+                "role": "signed_original_with_appendices",
+            },
+        )
+        document = vp.merge_configured_attachments(
+            document, configured, detail_url=DETAIL_URL
+        )
+        url = configured[0]["url"]
+        response = vp.HttpResponse(
+            requested_url=url,
+            final_url=url,
+            status=200,
+            headers={"Content-Type": "application/pdf"},
+            body=b"%PDF-1.7 configured official attachment",
+            attempts=1,
+            elapsed_ms=4.0,
+        )
+        contract = vp.build_ingestion_contract(
+            document_number="219/2025/NĐ-CP",
+            item_id="180273",
+            expected_articles=2,
+            attachment_policy="required",
+            configured_attachments=configured,
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            result = vp.write_snapshot(
+                output_root=Path(tmp),
+                document=document,
+                detail_url=DETAIL_URL,
+                sitemap_url=vp.DEFAULT_SITEMAP,
+                captures=[capture(payload)],
+                rendered_html="",
+                expected_articles=2,
+                attachment_responses={url: response},
+                attachment_policy="required",
+                ingestion_contract=contract,
+                operations=["MergeConfiguredOfficialAttachments"],
+                retrieved_at="2026-07-24T08:00:00+00:00",
+            )
+            snapshot = Path(result["snapshot_dir"])
+            manifest = json.loads((snapshot / "manifest.json").read_text())
+            self.assertTrue(manifest["gates"]["attachment_policy_satisfied"])
+            self.assertEqual(manifest["attachments"][0]["provider"], configured[0]["provider"])
+            self.assertTrue(manifest["attachments"][0]["has_bytes"])
+            vp.verify_snapshot(snapshot, expected_document_number="219/2025/NĐ-CP")
+
+    def test_resume_rejects_snapshot_with_different_ingestion_contract(self) -> None:
+        payload = json.loads(json.dumps(ACTUAL_JSON_SHAPE, ensure_ascii=False))
+        payload["data"]["documentContent"].pop("documentContentFileName")
+        document = vp.extract_document_from_payloads(
+            [payload], "219/2025/NĐ-CP", detail_url=DETAIL_URL
+        )
+        best_effort = vp.build_ingestion_contract(
+            document_number="219/2025/NĐ-CP",
+            item_id="180273",
+            expected_articles=2,
+            attachment_policy="best_effort",
+            configured_attachments=(),
+        )
+        strict = vp.build_ingestion_contract(
+            document_number="219/2025/NĐ-CP",
+            item_id="180273",
+            expected_articles=2,
+            attachment_policy="required_if_listed",
+            configured_attachments=(),
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            result = vp.write_snapshot(
+                output_root=root,
+                document=document,
+                detail_url=DETAIL_URL,
+                sitemap_url=vp.DEFAULT_SITEMAP,
+                captures=[capture(payload)],
+                rendered_html="",
+                expected_articles=2,
+                attachment_policy="best_effort",
+                ingestion_contract=best_effort,
+                retrieved_at="2026-07-24T08:00:00+00:00",
+            )
+            snapshot = Path(result["snapshot_dir"])
+            self.assertEqual(
+                vp.latest_valid_snapshot(
+                    root, "219/2025/NĐ-CP", expected_contract=best_effort
+                ),
+                snapshot,
+            )
+            self.assertIsNone(
+                vp.latest_valid_snapshot(
+                    root, "219/2025/NĐ-CP", expected_contract=strict
+                )
+            )
+
+    def test_config_has_explicit_official_attachments_for_strict_documents(self) -> None:
+        config = json.loads((ROOT / "config/vbpl_corpus.json").read_text(encoding="utf-8"))
+        by_number = {item["document_number"]: item for item in config["documents"]}
+        for number, policy in (
+            ("97/2022/NĐ-CP", "required"),
+            ("219/2025/NĐ-CP", "required_if_listed"),
+        ):
+            document = by_number[number]
+            attachments = document.get("official_attachments") or []
+            self.assertEqual(len(attachments), 1)
+            self.assertTrue(
+                attachments[0]["url"].startswith("https://datafiles.chinhphu.vn/")
+            )
+            self.assertEqual(document["attachment_policy"], policy)
+
     def test_malformed_stale_lock_is_reclaimed_by_mtime(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
