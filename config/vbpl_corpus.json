@@ -1,0 +1,226 @@
+{
+  "schema_version": "vbpl-corpus-config-v3",
+  "snapshot_date": "2026-07-24",
+  "source": {
+    "provider": "Cơ sở dữ liệu quốc gia về văn bản pháp luật",
+    "website": "https://vbpl.vn/",
+    "allowed_active_sources": [
+      "vbpl_portal"
+    ],
+    "forbidden_active_sources": [
+      "phap_dien",
+      "official_gazette",
+      "third_party",
+      "ocr"
+    ],
+    "portal": {
+      "sitemap_url": "https://vbpl.vn/sitemap.xml",
+      "api_url_substring": "/api/qtdc/public/doc/",
+      "warmup_url": "https://vbpl.vn/"
+    }
+  },
+  "release_policy": {
+    "fail_closed": true,
+    "require_exact_document_number": true,
+    "require_full_text": true,
+    "require_contiguous_article_sequence": true,
+    "require_explicit_snapshot_approval": true,
+    "require_legal_effect_review": true,
+    "rebuild_all_indexes": true,
+    "allow_automatic_source_fallback": false
+  },
+  "indexing": {
+    "dense_model": "intfloat/multilingual-e5-large",
+    "dense_vector_size": 1024,
+    "sparse_model": "Qdrant/bm25",
+    "model_revision_binding": "tokenizer_sha256_and_fastembed_version_from_exact_e5_audit"
+  },
+  "documents": [
+    {
+      "document_number": "18/VBHN-VPQH",
+      "canonical_document_id": "vn:bll-2019",
+      "title": "Bộ luật Lao động (văn bản hợp nhất số 18/VBHN-VPQH)",
+      "expected_articles": 220,
+      "include_articles": "1-220",
+      "required_for_release": true,
+      "scope_note": "Canonical ID bám Bộ luật 45/2019/QH14; số VBHN chỉ xác định phiên bản nguồn."
+    },
+    {
+      "document_number": "135/2020/NĐ-CP",
+      "canonical_document_id": "vn:135-2020-nd-cp",
+      "title": "Tuổi nghỉ hưu",
+      "expected_articles": 9,
+      "include_articles": "1-9",
+      "required_for_release": true
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "canonical_document_id": "vn:145-2020-nd-cp",
+      "title": "Điều kiện lao động và quan hệ lao động",
+      "expected_articles": 115,
+      "include_articles": "1-115",
+      "required_for_release": true
+    },
+    {
+      "document_number": "152/2020/NĐ-CP",
+      "canonical_document_id": "vn:152-2020-nd-cp",
+      "title": "Người lao động Việt Nam làm việc cho tổ chức, cá nhân nước ngoài",
+      "expected_articles": 31,
+      "include_articles": "22-28",
+      "required_for_release": true,
+      "scope_note": "Chỉ Điều 22-28; phần người lao động nước ngoài tại Việt Nam phải được loại theo effect review."
+    },
+    {
+      "document_number": "97/2022/NĐ-CP",
+      "canonical_document_id": "vn:97-2022-nd-cp",
+      "title": "Chính sách đối với người lao động dôi dư",
+      "expected_articles": 14,
+      "include_articles": "1-14",
+      "required_for_release": true,
+      "detach_appendices": true,
+      "include_attachments": [
+        "appendix-i",
+        "appendix-ii"
+      ],
+      "attachment_policy": "required"
+    },
+    {
+      "document_number": "293/2025/NĐ-CP",
+      "canonical_document_id": "vn:293-2025-nd-cp",
+      "title": "Mức lương tối thiểu",
+      "expected_articles": 5,
+      "include_articles": "1-5",
+      "required_for_release": true
+    },
+    {
+      "document_number": "219/2025/NĐ-CP",
+      "canonical_document_id": "vn:219-2025-nd-cp",
+      "title": "Người lao động nước ngoài làm việc tại Việt Nam",
+      "expected_articles": 36,
+      "include_articles": "1-36",
+      "required_for_release": true,
+      "detach_appendices": true,
+      "include_all_detected_attachments": true,
+      "scope_note": "Mọi phụ lục VBPL phát hiện được phải thành entity riêng; không được dính vào Điều 36 hoặc bị bỏ âm thầm.",
+      "portal_url": "https://vbpl.vn/van-ban/chi-tiet/nghi-dinh-so-219-2025-nd-cp-quy-dinh-ve-nguoi-lao-dong-nuoc-ngoai-lam-viec-tai-viet-nam--180273",
+      "attachment_policy": "required_if_listed"
+    },
+    {
+      "document_number": "128/2025/NĐ-CP",
+      "canonical_document_id": "vn:128-2025-nd-cp",
+      "title": "Phân quyền, phân cấp trong quản lý nhà nước lĩnh vực nội vụ",
+      "expected_articles": 16,
+      "include_articles": "7",
+      "required_for_release": true,
+      "scope_note": "Chỉ Điều 7 thuộc phạm vi corpus lao động."
+    },
+    {
+      "document_number": "129/2025/NĐ-CP",
+      "canonical_document_id": "vn:129-2025-nd-cp",
+      "title": "Phân định thẩm quyền chính quyền địa phương hai cấp",
+      "expected_articles": 81,
+      "include_articles": "67-81",
+      "required_for_release": true
+    },
+    {
+      "document_number": "09/2020/TT-BLĐTBXH",
+      "canonical_document_id": "vn:09-2020-tt-bldtbxh",
+      "title": "Lao động chưa thành niên",
+      "expected_articles": 13,
+      "include_articles": "1-13",
+      "required_for_release": true
+    },
+    {
+      "document_number": "10/2020/TT-BLĐTBXH",
+      "canonical_document_id": "vn:10-2020-tt-bldtbxh",
+      "title": "Hợp đồng lao động",
+      "expected_articles": 12,
+      "include_articles": "1-12",
+      "required_for_release": true
+    },
+    {
+      "document_number": "04/2021/TT-BCT",
+      "canonical_document_id": "vn:04-2021-tt-bct",
+      "title": "Công việc trong hầm lò",
+      "expected_articles": 9,
+      "include_articles": "1-9",
+      "required_for_release": true
+    },
+    {
+      "document_number": "18/2021/TT-BLĐTBXH",
+      "canonical_document_id": "vn:18-2021-tt-bldtbxh",
+      "title": "Công việc thời vụ",
+      "expected_articles": 10,
+      "include_articles": "1-10",
+      "required_for_release": true
+    },
+    {
+      "document_number": "19/2021/TT-BLĐTBXH",
+      "canonical_document_id": "vn:19-2021-tt-bldtbxh",
+      "title": "Vùng nghỉ hưu sớm",
+      "expected_articles": 5,
+      "include_articles": "1-5",
+      "required_for_release": true
+    },
+    {
+      "document_number": "12/2022/TT-BCT",
+      "canonical_document_id": "vn:12-2022-tt-bct",
+      "title": "Công trình khí",
+      "expected_articles": 10,
+      "include_articles": "1-10",
+      "required_for_release": true
+    },
+    {
+      "document_number": "20/2023/TT-BCT",
+      "canonical_document_id": "vn:20-2023-tt-bct",
+      "title": "Dầu khí trên biển",
+      "expected_articles": 12,
+      "include_articles": "1-12",
+      "required_for_release": true
+    },
+    {
+      "document_number": "17/2023/TT-BLĐTBXH",
+      "canonical_document_id": "vn:17-2023-tt-bldtbxh",
+      "title": "Khu công nghiệp, khu kinh tế",
+      "expected_articles": 12,
+      "include_articles": "1-12",
+      "required_for_release": true
+    },
+    {
+      "document_number": "66.18/2026/NQ-CP",
+      "canonical_document_id": "vn:66.18-2026-nq-cp",
+      "title": "Phân quyền, cắt giảm, đơn giản hóa thủ tục hành chính, điều kiện kinh doanh",
+      "expected_articles": 6,
+      "include_articles": "4,6",
+      "include_attachments": [
+        "appendix-i"
+      ],
+      "attachment_aliases": {
+        "appendix-i": [
+          "NQ66.18.PL-I.4.C.I",
+          "NQ66.18.PL-I.4.C.III",
+          "NQ66.18.PL-I.4.C.V",
+          "NQ66.18.PL-I.4.C.VII",
+          "NQ66.18.PL-I.4.C.VIII",
+          "NQ66.18.PL-I.4.C.IX"
+        ]
+      },
+      "required_for_release": true,
+      "detach_appendices": true,
+      "scope_note": "Chỉ Điều 4, Điều 6 và Phụ lục I. Các mục I.4.C.* cũ là alias đánh giá của cùng phụ lục, không phải bằng chứng độc lập; không cắt tiểu mục bằng regex thiếu kiểm chứng.",
+      "attachment_policy": "required"
+    }
+  ],
+  "ingestion_policy": {
+    "default_attachment_policy": "best_effort",
+    "snapshot_schema": "vbpl-source-snapshot-v3",
+    "resume_requires_checksum_verification": true,
+    "publish_atomically": true,
+    "live_soak": {
+      "document_number": "219/2025/NĐ-CP",
+      "iterations": 10,
+      "max_failure_rate": 0.0,
+      "require_stable_content_hash": true
+    }
+  }
+}

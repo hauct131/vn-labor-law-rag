@@ -90,3 +90,27 @@ docker compose up --build
 ```
 
 Backend container dùng Java cho VnCoreNLP và volume riêng để cache FastEmbed.
+
+## Ingestion VBPL an toàn cho production
+
+Lớp crawl chạy độc lập với request path của chatbot. Snapshot chỉ được publish
+sau khi đúng số hiệu, đúng item ID, đủ chuỗi Điều, lưu raw response và vượt qua
+kiểm tra SHA-256.
+
+```bash
+python -m pip install -r requirements-corpus.txt
+python -m playwright install --with-deps chromium
+make test-ingestion
+make vbpl-doctor
+make vbpl-canary
+make vbpl-soak
+```
+
+Chạy batch có resume, retry, checkpoint và báo cáo từng văn bản:
+
+```bash
+make vbpl-fetch
+```
+
+Không crawl live trong lúc demo chatbot. Quy trình vận hành và promotion gate
+được mô tả tại `docs/ingestion/VBPL_PRODUCTION_RUNBOOK.md`.
