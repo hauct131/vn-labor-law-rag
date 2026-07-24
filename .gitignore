@@ -42,3 +42,5 @@ experiments/*
 
 .env.bak.*
 docker-compose.yml.bak.*
+data/derived/
+data/quality/
