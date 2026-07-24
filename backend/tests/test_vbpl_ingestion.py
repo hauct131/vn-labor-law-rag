@@ -88,6 +88,26 @@ class VbplProductionIngestionTests(unittest.TestCase):
             vp.resolve_document_url([DETAIL_URL], "219/2025/NĐ-CP"), DETAIL_URL
         )
 
+    def test_extracts_item_id_from_legacy_query_url(self) -> None:
+        url = "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=152668"
+        self.assertEqual(vp.extract_item_id_from_detail_url(url), "152668")
+        self.assertEqual(
+            vp.gateway_url_from_detail_url(url),
+            "https://vbpl-bientap-gateway.moj.gov.vn/api/qtdc/public/doc/152668",
+        )
+
+    def test_config_has_locator_for_every_vbpl_document(self) -> None:
+        config = json.loads((ROOT / "config/vbpl_corpus.json").read_text(encoding="utf-8"))
+        vbpl_docs = [
+            item for item in config["documents"]
+            if item.get("source_adapter", "vbpl") == "vbpl"
+        ]
+        missing = [
+            item["document_number"] for item in vbpl_docs
+            if not item.get("item_id") and not item.get("portal_url")
+        ]
+        self.assertEqual(missing, [])
+
     def test_parses_actual_gateway_json_shape(self) -> None:
         raw = json.dumps(ACTUAL_JSON_SHAPE, ensure_ascii=False).encode("utf-8")
         payload = vp.parse_portal_response_bytes(raw, "application/json")
@@ -294,6 +314,36 @@ class VbplProductionIngestionTests(unittest.TestCase):
             server.shutdown()
             server.server_close()
             thread.join(timeout=2)
+
+
+    def test_article_sequence_allows_repeated_headings_after_main_sequence(self) -> None:
+        html = """
+        <div>
+          <p>Điều 1. Một</p>
+          <p>Điều 2. Hai</p>
+          <p>Điều 3. Ba</p>
+          <p>Điều 1. Điều được trích lại trong phụ lục</p>
+          <p>Điều 2. Điều được trích lại trong phụ lục</p>
+        </div>
+        """
+        report = vp.article_sequence_report(html, 3)
+        self.assertTrue(report["valid"])
+        self.assertEqual(report["duplicates"], [1, 2])
+        self.assertEqual(report["missing"], [])
+        self.assertEqual(report["unexpected"], [])
+
+    def test_article_sequence_still_rejects_missing_article(self) -> None:
+        html = """
+        <div>
+          <p>Điều 1. Một</p>
+          <p>Điều 2. Hai</p>
+          <p>Điều 4. Bốn</p>
+        </div>
+        """
+        report = vp.article_sequence_report(html, 4)
+        self.assertFalse(report["valid"])
+        self.assertEqual(report["missing"], [3])
+        self.assertEqual(report["unexpected"], [])
 
     def test_attachment_inventory_supports_file_path_field(self) -> None:
         payload = json.loads(json.dumps(ACTUAL_JSON_SHAPE, ensure_ascii=False))

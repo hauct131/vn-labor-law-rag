@@ -44,7 +44,7 @@ from email.utils import parsedate_to_datetime
 from pathlib import Path
 from typing import Any, Iterable, Iterator, Mapping, Sequence
 from urllib.error import HTTPError, URLError
-from urllib.parse import urljoin, urlparse
+from urllib.parse import parse_qs, urljoin, urlparse
 from urllib.request import Request, urlopen
 from xml.etree import ElementTree as ET
 
@@ -636,8 +636,21 @@ def parse_portal_response_bytes(value: bytes, content_type: str = "") -> Any:
 
 
 def extract_item_id_from_detail_url(detail_url: str) -> str | None:
+    parsed = urlparse(detail_url)
+    query = parse_qs(parsed.query)
+    for key in ("ItemID", "itemId", "itemid", "id"):
+        values = query.get(key)
+        if values and str(values[0]).isdigit():
+            return str(values[0])
     match = re.search(r"--([A-Za-z0-9_]+)(?:[/?#]|$)", detail_url)
     return match.group(1) if match else None
+
+
+def detail_url_from_item_id(item_id: str | int) -> str:
+    value = str(item_id).strip()
+    if not value.isdigit():
+        raise VbplPortalError(f"Invalid VBPL item_id: {item_id!r}")
+    return f"https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID={value}"
 
 
 def gateway_url_from_detail_url(detail_url: str) -> str | None:
@@ -934,9 +947,14 @@ def detect_article_numbers(value: str) -> list[int]:
 
 def article_sequence_report(value: str, expected_articles: int | None) -> dict[str, Any]:
     numbers = detect_article_numbers(value)
+    # Legal documents may repeat article headings after the main body, for example
+    # inside appendices or quoted/amended provisions.  The fail-closed contract is
+    # therefore based on the first occurrence of every article number: the main
+    # sequence must still be exactly 1..N, with no missing or unexpected article.
     unique = list(dict.fromkeys(numbers))
     duplicates = sorted({number for number in numbers if numbers.count(number) > 1})
     expected = list(range(1, expected_articles + 1)) if expected_articles else list(range(1, max(unique, default=0) + 1))
+    sequence_valid = bool(unique) and unique == expected
     return {
         "detected_count": len(numbers),
         "unique_count": len(unique),
@@ -945,8 +963,8 @@ def article_sequence_report(value: str, expected_articles: int | None) -> dict[s
         "duplicates": duplicates,
         "missing": sorted(set(expected) - set(unique)),
         "unexpected": sorted(set(unique) - set(expected)) if expected else [],
-        "ordered": numbers == sorted(numbers),
-        "valid": bool(numbers) and numbers == expected,
+        "ordered": unique == sorted(unique),
+        "valid": sequence_valid,
     }
 
 
@@ -1485,6 +1503,7 @@ def fetch_one(
     expected_articles: int | None,
     sitemap_url: str,
     portal_url: str | None,
+    item_id: str | int | None,
     api_substring: str,
     headed: bool,
     timeout: float,
@@ -1514,9 +1533,19 @@ def fetch_one(
             }
     with document_lock(output_root, document_number):
         operations: list[str] = []
-        urls = [] if portal_url else list(sitemap_urls or collect_sitemap_urls(sitemap_url, client=client))
-        detail_url = resolve_document_url(urls, document_number, explicit_url=portal_url)
-        operations.append("ResolveExplicitUrl" if portal_url else "ResolveSitemapExact")
+        urls = [] if (portal_url or item_id is not None) else list(
+            sitemap_urls or collect_sitemap_urls(sitemap_url, client=client)
+        )
+        if item_id is not None:
+            detail_url = detail_url_from_item_id(item_id)
+            operations.append("ResolveRegistryItemId")
+        else:
+            detail_url = resolve_document_url(
+                urls, document_number, explicit_url=portal_url
+            )
+            operations.append(
+                "ResolveExplicitUrl" if portal_url else "ResolveSitemapExact"
+            )
         captures: list[CaptureRecord] = []
         rendered_html = ""
         owned_browser: BrowserSession | None = None
@@ -1871,6 +1900,7 @@ def build_parser() -> argparse.ArgumentParser:
     fetch.add_argument("--expected-articles", type=int)
     fetch.add_argument("--sitemap-url", default=DEFAULT_SITEMAP)
     fetch.add_argument("--portal-url")
+    fetch.add_argument("--item-id")
     fetch.add_argument("--api-substring", default=DEFAULT_API_SUBSTRING)
     fetch.add_argument("--headed", action="store_true")
     fetch.add_argument("--timeout", type=float, default=DEFAULT_TIMEOUT)
@@ -1956,6 +1986,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             expected_articles=args.expected_articles,
             sitemap_url=args.sitemap_url,
             portal_url=args.portal_url,
+            item_id=args.item_id,
             api_substring=args.api_substring,
             headed=args.headed,
             timeout=args.timeout,
@@ -1974,13 +2005,34 @@ def main(argv: Sequence[str] | None = None) -> int:
     portal = source.get("portal") or {}
     sitemap_url = str(portal.get("sitemap_url") or DEFAULT_SITEMAP)
     api_substring = str(portal.get("api_url_substring") or DEFAULT_API_SUBSTRING)
-    documents = list(config.get("documents") or [])
+    all_documents = list(config.get("documents") or [])
+    external_documents = [
+        item for item in all_documents
+        if str(item.get("source_adapter") or "vbpl") != "vbpl"
+    ]
+    documents = [
+        item for item in all_documents
+        if str(item.get("source_adapter") or "vbpl") == "vbpl"
+    ]
     client = RetryingHttpClient(
         timeout=args.timeout,
         retries=args.retries,
         backoff_seconds=args.backoff_seconds,
     )
-    needs_sitemap = any(not item.get("portal_url") for item in documents)
+    missing_locators = [
+        str(item.get("document_number"))
+        for item in documents
+        if not item.get("portal_url") and item.get("item_id") in (None, "")
+    ]
+    if missing_locators:
+        raise VbplPortalError(
+            "VBPL registry is incomplete; missing item_id/portal_url for: "
+            + ", ".join(missing_locators)
+        )
+    needs_sitemap = any(
+        not item.get("portal_url") and item.get("item_id") in (None, "")
+        for item in documents
+    )
     sitemap_urls = (
         load_or_collect_sitemap_urls(
             output_root=args.output,
@@ -2003,6 +2055,14 @@ def main(argv: Sequence[str] | None = None) -> int:
         "finished_at": None,
         "status": "running",
         "total": len(documents),
+        "external_source_documents": [
+            {
+                "document_number": str(item.get("document_number") or ""),
+                "source_adapter": str(item.get("source_adapter") or ""),
+                "official_page_url": item.get("official_page_url"),
+            }
+            for item in external_documents
+        ],
         "success": 0,
         "unchanged": 0,
         "skipped": 0,
@@ -2030,6 +2090,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                     expected_articles=(int(item["expected_articles"]) if item.get("expected_articles") is not None else None),
                     sitemap_url=sitemap_url,
                     portal_url=(str(item["portal_url"]) if item.get("portal_url") else None),
+                    item_id=(str(item["item_id"]) if item.get("item_id") not in (None, "") else None),
                     api_substring=api_substring,
                     headed=args.headed,
                     timeout=args.timeout,

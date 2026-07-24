@@ -17,7 +17,11 @@
       "sitemap_url": "https://vbpl.vn/sitemap.xml",
       "api_url_substring": "/api/qtdc/public/doc/",
       "warmup_url": "https://vbpl.vn/"
-    }
+    },
+    "allowed_staging_sources": [
+      "vbpl_portal",
+      "official_government_portal"
+    ]
   },
   "release_policy": {
     "fail_closed": true,
@@ -43,7 +47,10 @@
       "expected_articles": 220,
       "include_articles": "1-220",
       "required_for_release": true,
-      "scope_note": "Canonical ID bám Bộ luật 45/2019/QH14; số VBHN chỉ xác định phiên bản nguồn."
+      "scope_note": "Canonical ID bám Bộ luật 45/2019/QH14; số VBHN chỉ xác định phiên bản nguồn.",
+      "source_adapter": "chinhphu",
+      "official_page_url": "https://vanban.chinhphu.vn/?docid=217002&pageid=27160",
+      "source_note": "Văn bản hợp nhất Bộ luật Lao động ngày 12/02/2026; không được resolve theo số hiệu đơn lẻ trên VBPL vì số 18/VBHN-VPQH được tái sử dụng cho nhiều văn bản."
     },
     {
       "document_number": "135/2020/NĐ-CP",
@@ -51,7 +58,9 @@
       "title": "Tuổi nghỉ hưu",
       "expected_articles": 9,
       "include_articles": "1-9",
-      "required_for_release": true
+      "required_for_release": true,
+      "source_adapter": "vbpl",
+      "item_id": "152734"
     },
     {
       "document_number": "145/2020/NĐ-CP",
@@ -59,16 +68,20 @@
       "title": "Điều kiện lao động và quan hệ lao động",
       "expected_articles": 115,
       "include_articles": "1-115",
-      "required_for_release": true
+      "required_for_release": true,
+      "source_adapter": "vbpl",
+      "item_id": "152668"
     },
     {
       "document_number": "152/2020/NĐ-CP",
       "canonical_document_id": "vn:152-2020-nd-cp",
       "title": "Người lao động Việt Nam làm việc cho tổ chức, cá nhân nước ngoài",
-      "expected_articles": 31,
+      "expected_articles": 30,
       "include_articles": "22-28",
       "required_for_release": true,
-      "scope_note": "Chỉ Điều 22-28; phần người lao động nước ngoài tại Việt Nam phải được loại theo effect review."
+      "scope_note": "Chỉ Điều 22-28; phần người lao động nước ngoài tại Việt Nam phải được loại theo effect review.",
+      "source_adapter": "vbpl",
+      "item_id": "152669"
     },
     {
       "document_number": "97/2022/NĐ-CP",
@@ -82,7 +95,9 @@
         "appendix-i",
         "appendix-ii"
       ],
-      "attachment_policy": "required"
+      "attachment_policy": "required",
+      "source_adapter": "vbpl",
+      "item_id": "169619"
     },
     {
       "document_number": "293/2025/NĐ-CP",
@@ -90,7 +105,9 @@
       "title": "Mức lương tối thiểu",
       "expected_articles": 5,
       "include_articles": "1-5",
-      "required_for_release": true
+      "required_for_release": true,
+      "source_adapter": "vbpl",
+      "item_id": "183939"
     },
     {
       "document_number": "219/2025/NĐ-CP",
@@ -103,7 +120,9 @@
       "include_all_detected_attachments": true,
       "scope_note": "Mọi phụ lục VBPL phát hiện được phải thành entity riêng; không được dính vào Điều 36 hoặc bị bỏ âm thầm.",
       "portal_url": "https://vbpl.vn/van-ban/chi-tiet/nghi-dinh-so-219-2025-nd-cp-quy-dinh-ve-nguoi-lao-dong-nuoc-ngoai-lam-viec-tai-viet-nam--180273",
-      "attachment_policy": "required_if_listed"
+      "attachment_policy": "required_if_listed",
+      "source_adapter": "vbpl",
+      "item_id": "180273"
     },
     {
       "document_number": "128/2025/NĐ-CP",
@@ -112,7 +131,9 @@
       "expected_articles": 16,
       "include_articles": "7",
       "required_for_release": true,
-      "scope_note": "Chỉ Điều 7 thuộc phạm vi corpus lao động."
+      "scope_note": "Chỉ Điều 7 thuộc phạm vi corpus lao động.",
+      "source_adapter": "vbpl",
+      "item_id": "178260"
     },
     {
       "document_number": "129/2025/NĐ-CP",
@@ -120,7 +141,9 @@
       "title": "Phân định thẩm quyền chính quyền địa phương hai cấp",
       "expected_articles": 81,
       "include_articles": "67-81",
-      "required_for_release": true
+      "required_for_release": true,
+      "source_adapter": "vbpl",
+      "item_id": "178294"
     },
     {
       "document_number": "09/2020/TT-BLĐTBXH",
@@ -128,7 +151,9 @@
       "title": "Lao động chưa thành niên",
       "expected_articles": 13,
       "include_articles": "1-13",
-      "required_for_release": true
+      "required_for_release": true,
+      "source_adapter": "vbpl",
+      "item_id": "152670"
     },
     {
       "document_number": "10/2020/TT-BLĐTBXH",
@@ -136,7 +161,9 @@
       "title": "Hợp đồng lao động",
       "expected_articles": 12,
       "include_articles": "1-12",
-      "required_for_release": true
+      "required_for_release": true,
+      "source_adapter": "vbpl",
+      "item_id": "146696"
     },
     {
       "document_number": "04/2021/TT-BCT",
@@ -144,7 +171,9 @@
       "title": "Công việc trong hầm lò",
       "expected_articles": 9,
       "include_articles": "1-9",
-      "required_for_release": true
+      "required_for_release": true,
+      "source_adapter": "vbpl",
+      "item_id": "148825"
     },
     {
       "document_number": "18/2021/TT-BLĐTBXH",
@@ -152,7 +181,9 @@
       "title": "Công việc thời vụ",
       "expected_articles": 10,
       "include_articles": "1-10",
-      "required_for_release": true
+      "required_for_release": true,
+      "source_adapter": "vbpl",
+      "item_id": "153297"
     },
     {
       "document_number": "19/2021/TT-BLĐTBXH",
@@ -160,7 +191,9 @@
       "title": "Vùng nghỉ hưu sớm",
       "expected_articles": 5,
       "include_articles": "1-5",
-      "required_for_release": true
+      "required_for_release": true,
+      "source_adapter": "vbpl",
+      "item_id": "152735"
     },
     {
       "document_number": "12/2022/TT-BCT",
@@ -168,7 +201,9 @@
       "title": "Công trình khí",
       "expected_articles": 10,
       "include_articles": "1-10",
-      "required_for_release": true
+      "required_for_release": true,
+      "source_adapter": "vbpl",
+      "item_id": "155202"
     },
     {
       "document_number": "20/2023/TT-BCT",
@@ -176,7 +211,9 @@
       "title": "Dầu khí trên biển",
       "expected_articles": 12,
       "include_articles": "1-12",
-      "required_for_release": true
+      "required_for_release": true,
+      "source_adapter": "vbpl",
+      "item_id": "163444"
     },
     {
       "document_number": "17/2023/TT-BLĐTBXH",
@@ -184,7 +221,9 @@
       "title": "Khu công nghiệp, khu kinh tế",
       "expected_articles": 12,
       "include_articles": "1-12",
-      "required_for_release": true
+      "required_for_release": true,
+      "source_adapter": "vbpl",
+      "item_id": "167029"
     },
     {
       "document_number": "66.18/2026/NQ-CP",
@@ -208,7 +247,10 @@
       "required_for_release": true,
       "detach_appendices": true,
       "scope_note": "Chỉ Điều 4, Điều 6 và Phụ lục I. Các mục I.4.C.* cũ là alias đánh giá của cùng phụ lục, không phải bằng chứng độc lập; không cắt tiểu mục bằng regex thiếu kiểm chứng.",
-      "attachment_policy": "required"
+      "attachment_policy": "required",
+      "source_adapter": "chinhphu",
+      "official_page_url": "https://vanban.chinhphu.vn/?docid=218181&pageid=27160",
+      "source_note": "Nguồn chính thức hiện dùng Cổng TTĐT Chính phủ và Công báo; chưa có VBPL item_id được xác minh."
     }
   ],
   "ingestion_policy": {
