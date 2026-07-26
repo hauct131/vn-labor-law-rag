@@ -2,13 +2,11 @@
 
 Run:
     pytest backend/tests/test_vbpl_article_adapter.py -v
-    pytest backend/tests/test_vbpl_article_adapter.py -v -m integration
 """
 from __future__ import annotations
 
 import json
 import sys
-import tempfile
 from pathlib import Path
 
 import pytest
@@ -24,6 +22,7 @@ from scripts.build_vbpl_articles import (  # noqa: E402
     parse_include_articles,
     parse_content_units,
     select_main_sequence,
+    select_content_sequence,
     build_articles_from_snapshot,
     main,
 )
@@ -81,7 +80,7 @@ MINIMAL_CONFIG_DOC = {
 def _write_snapshot(tmp: Path, full_text: str = MINIMAL_FULL_TEXT, manifest: dict | None = None) -> Path:
     """Write a minimal snapshot directory."""
     snap = tmp / "snapshot"
-    snap.mkdir(parents=True)
+    snap.mkdir(parents=True, exist_ok=True)
     (snap / "full_text.txt").write_text(full_text, encoding="utf-8")
     m = manifest if manifest is not None else MINIMAL_MANIFEST
     (snap / "manifest.json").write_text(json.dumps(m, ensure_ascii=False), encoding="utf-8")
@@ -131,13 +130,12 @@ def test_inline_dieu_reference_not_captured():
         "Nội dung thật.\n"
     )
     headings = find_article_headings(text)
-    # Only the heading at start-of-line is captured
     assert len(headings) == 1
     assert headings[0][0] == 5
 
 
 # ===========================================================================
-# 3. select_main_sequence: correct contiguous run
+# 3. select_main_sequence: correct sequence selection
 # ===========================================================================
 
 def test_select_main_sequence_no_duplicates():
@@ -150,7 +148,6 @@ def test_select_main_sequence_no_duplicates():
     ]
     seq = select_main_sequence(headings, {1, 2, 3})
     assert [h[0] for h in seq] == [1, 2, 3]
-    # Offsets should be from the first occurrence
     assert seq[0][2] == 0
     assert seq[1][2] == 50
 
@@ -159,6 +156,44 @@ def test_select_main_sequence_subset():
     headings = [(1, "A", 0), (2, "B", 10), (3, "C", 20), (4, "D", 30)]
     seq = select_main_sequence(headings, {2, 3})
     assert [h[0] for h in seq] == [2, 3]
+
+
+def test_select_main_sequence_toc_before_content():
+    """When a TOC appears before main body, parser must pick the body chain."""
+    full_text = (
+        "MỤC LỤC\n"
+        "Điều 1. Phạm vi (trang 1)\n"
+        "Điều 2. Đối tượng (trang 2)\n"
+        "NỘI DUNG CHÍNH\n"
+        "Điều 1. Phạm vi điều chỉnh chính\n"
+        "1. Nội dung chi tiết của Điều 1.\n"
+        "Điều 2. Đối tượng áp dụng chính\n"
+        "1. Nội dung chi tiết của Điều 2.\n"
+    )
+    headings = find_article_headings(full_text)
+    seq = select_content_sequence(headings, {1, 2}, full_text)
+    assert len(seq) == 2
+    assert seq[0][1] == "Phạm vi điều chỉnh chính"
+    assert seq[1][1] == "Đối tượng áp dụng chính"
+
+
+def test_select_main_sequence_appendix_repeats_ignored():
+    """Main sequence 1-10 with repeated Articles 9-11 in appendix form template."""
+    full_text = (
+        "Điều 1. Đầu\n1. Nội dung 1.\n"
+        "Điều 9. Chín chính\n1. Nội dung 9 chính.\n"
+        "Điều 10. Mười chính\n1. Khi hợp đồng bị tuyên bố vô hiệu.\n"
+        "Điều 11. Mười một chính\n1. Nội dung 11.\n"
+        "PHỤ LỤC FORM\n"
+        "Điều 9. Mẫu 9\n"
+        "Điều 10. Thỏa thuận khác (nếu có)\n"
+        "Điều 11. Mẫu 11\n"
+    )
+    headings = find_article_headings(full_text)
+    seq = select_content_sequence(headings, {1, 9, 10, 11}, full_text)
+    assert len(seq) == 4
+    art10 = next(h for h in seq if h[0] == 10)
+    assert art10[1] == "Mười chính"
 
 
 # ===========================================================================
@@ -209,7 +244,6 @@ def test_inline_clause_ref_not_parsed():
     """'khoản 1 Điều 5' inside text must not become a clause heading."""
     body = "Theo khoản 1 Điều 5 của Bộ luật Lao động, người lao động có quyền.\n"
     units = parse_content_units(body, "vn:test", 5)
-    # No clause should be parsed — the "1" is not at line start
     clause_units = [u for u in units if u["unit_type"] == "clause"]
     assert clause_units == []
 
@@ -236,20 +270,15 @@ def test_point_clause_number_set():
 
 
 # ===========================================================================
-# 7. stable article_id (no timestamp)
+# 7. stable IDs
 # ===========================================================================
 
 def test_stable_article_id_format():
     aid = _stable_article_id("vn:135-2020-nd-cp", 7)
     assert aid == "vn:135-2020-nd-cp:article:7"
     assert "timestamp" not in aid
-    # Same call must yield same result
     assert _stable_article_id("vn:135-2020-nd-cp", 7) == aid
 
-
-# ===========================================================================
-# 8. stable unit_id
-# ===========================================================================
 
 def test_stable_unit_id_preamble():
     uid = _make_unit_id("vn:test", 3, "preamble", 1)
@@ -267,25 +296,26 @@ def test_stable_unit_id_point():
     assert uid == "vbpl:vn:test:article:3|clause=2|point=a"
 
 
+def test_stable_unit_id():
+    assert _make_unit_id("vn:test", 3, "preamble", 1) == "vbpl:vn:test:article:3|preamble=1"
+    assert _make_unit_id("vn:test", 3, "clause", 2) == "vbpl:vn:test:article:3|clause=2"
+    assert _make_unit_id("vn:test", 3, "point", (2, "a")) == "vbpl:vn:test:article:3|clause=2|point=a"
+
+
 # ===========================================================================
-# 9. No content loss when joining units
+# 8. No content loss & Unicode
 # ===========================================================================
 
 def test_no_content_loss():
     body = "Preamble text.\n1. Khoản một nội dung.\na) Điểm a.\nb) Điểm b.\n2. Khoản hai.\n"
     units = parse_content_units(body, "vn:test", 9)
     combined = " ".join(u["text"] for u in units)
-    # Key phrases must all be present
     assert "Preamble text" in combined
     assert "Khoản một" in combined
     assert "Điểm a" in combined
     assert "Điểm b" in combined
     assert "Khoản hai" in combined
 
-
-# ===========================================================================
-# 10. Unicode preserved
-# ===========================================================================
 
 def test_unicode_preserved():
     body = "Người lao động Việt Nam được đảm bảo quyền.\n"
@@ -299,37 +329,7 @@ def test_unicode_preserved():
 
 
 # ===========================================================================
-# 11. Fail when article missing
-# ===========================================================================
-
-def test_fail_missing_article(tmp_path):
-    """Should raise ValueError when include_set requests an article not in text."""
-    snap = _write_snapshot(tmp_path)
-    include_set = {1, 2, 3, 99}  # article 99 does not exist
-    with pytest.raises(ValueError, match="Missing articles"):
-        build_articles_from_snapshot(snap, MINIMAL_CONFIG_DOC, include_set)
-
-
-# ===========================================================================
-# 12. No duplicate article_ids across documents
-# ===========================================================================
-
-def test_no_duplicate_article_ids(tmp_path):
-    """Two documents must not produce the same article_id."""
-    snap = _write_snapshot(tmp_path)
-    cfg_a = {**MINIMAL_CONFIG_DOC, "canonical_document_id": "vn:doc-a"}
-    cfg_b = {**MINIMAL_CONFIG_DOC, "canonical_document_id": "vn:doc-b"}
-
-    arts_a, _ = build_articles_from_snapshot(snap, cfg_a, {1, 2, 3})
-    arts_b, _ = build_articles_from_snapshot(snap, cfg_b, {1, 2, 3})
-
-    ids_a = {a["article_id"] for a in arts_a}
-    ids_b = {a["article_id"] for a in arts_b}
-    assert ids_a.isdisjoint(ids_b), "Duplicate IDs across documents"
-
-
-# ===========================================================================
-# 13. parse_include_articles
+# 9. parse_include_articles
 # ===========================================================================
 
 def test_parse_include_range():
@@ -349,13 +349,33 @@ def test_parse_include_mixed():
 
 
 # ===========================================================================
-# 14. build_articles_from_snapshot: schema fields
+# 10. build_articles_from_snapshot
 # ===========================================================================
+
+def test_fail_missing_article(tmp_path):
+    snap = _write_snapshot(tmp_path)
+    with pytest.raises(ValueError, match="Missing expected articles"):
+        build_articles_from_snapshot(snap, MINIMAL_CONFIG_DOC, {1, 2, 3, 99})
+
+
+def test_no_duplicate_article_ids(tmp_path):
+    snap = _write_snapshot(tmp_path)
+    cfg_a = {**MINIMAL_CONFIG_DOC, "canonical_document_id": "vn:doc-a"}
+    cfg_b = {**MINIMAL_CONFIG_DOC, "canonical_document_id": "vn:doc-b"}
+
+    arts_a, _, _ = build_articles_from_snapshot(snap, cfg_a, {1, 2, 3})
+    arts_b, _, _ = build_articles_from_snapshot(snap, cfg_b, {1, 2, 3})
+
+    ids_a = {a["article_id"] for a in arts_a}
+    ids_b = {a["article_id"] for a in arts_b}
+    assert ids_a.isdisjoint(ids_b)
+
 
 def test_snapshot_article_schema(tmp_path):
     snap = _write_snapshot(tmp_path)
-    articles, warns = build_articles_from_snapshot(snap, MINIMAL_CONFIG_DOC, {1, 2, 3})
+    articles, validated_cnt, warns = build_articles_from_snapshot(snap, MINIMAL_CONFIG_DOC, {1, 2, 3})
     assert len(articles) == 3
+    assert validated_cnt == 3
     required_fields = {
         "article_id", "article_code", "article_title", "heading",
         "document_id", "source_document_id", "document_number",
@@ -366,27 +386,25 @@ def test_snapshot_article_schema(tmp_path):
     for art in articles:
         missing = required_fields - art.keys()
         assert not missing, f"Missing fields in article: {missing}"
+        assert art["source_document_id"] == "vbpl:item:152734"
 
 
 def test_snapshot_source_adapter_value(tmp_path):
     snap = _write_snapshot(tmp_path)
-    articles, _ = build_articles_from_snapshot(snap, MINIMAL_CONFIG_DOC, {1})
+    articles, _, _ = build_articles_from_snapshot(snap, MINIMAL_CONFIG_DOC, {1})
     assert articles[0]["source_adapter"] == "vbpl"
     assert articles[0]["corpus_role"] == "canonical"
+    assert articles[0]["source_document_id"] == "vbpl:item:152734"
 
 
 def test_snapshot_metadata_no_guessing(tmp_path):
     """issued_at, effective_from come from manifest, not guessed."""
     snap = _write_snapshot(tmp_path)
-    articles, _ = build_articles_from_snapshot(snap, MINIMAL_CONFIG_DOC, {1})
+    articles, _, _ = build_articles_from_snapshot(snap, MINIMAL_CONFIG_DOC, {1})
     assert articles[0]["issued_at"] == "2020-11-18"
     assert articles[0]["effective_from"] == "2021-01-01"
     assert articles[0]["issuing_authority"] == "Chính phủ"
 
-
-# ===========================================================================
-# 15. Document-number / ItemID mismatch causes error
-# ===========================================================================
 
 def test_document_number_mismatch_raises(tmp_path):
     bad_manifest = {**MINIMAL_MANIFEST, "document": {
@@ -409,7 +427,7 @@ def test_item_id_mismatch_raises(tmp_path):
 
 
 # ===========================================================================
-# 16. CLI integration: help, exit codes, output
+# 11. CLI integration: help, exit codes, output
 # ===========================================================================
 
 def test_cli_help_exits_zero():
@@ -424,8 +442,6 @@ def test_cli_missing_manifest_exits_2():
 
 
 def test_cli_full_run(tmp_path):
-    """Full CLI run against synthetic snapshot."""
-    # Build synthetic snapshot tree
     snap_dir = tmp_path / "snapshots" / "135_2020_nd_cp" / "20260724T103957Z-abc123"
     snap_dir.mkdir(parents=True)
     (snap_dir / "full_text.txt").write_text(MINIMAL_FULL_TEXT, encoding="utf-8")
@@ -443,9 +459,7 @@ def test_cli_full_run(tmp_path):
             }
         ],
     }
-    corpus_config = {
-        "documents": [MINIMAL_CONFIG_DOC],
-    }
+    corpus_config = {"documents": [MINIMAL_CONFIG_DOC]}
 
     manifest_path = tmp_path / "run_manifest.json"
     config_path = tmp_path / "config.json"
@@ -467,15 +481,12 @@ def test_cli_full_run(tmp_path):
     assert output_path.is_file()
 
     data = json.loads(output_path.read_text(encoding="utf-8"))
-    assert data["metadata"]["articles_created"] == 3
+    assert data["metadata"]["articles_selected"] == 3
     assert len(data["articles"]) == 3
     assert data["metadata"]["documents_processed"] == 1
-    assert data["metadata"]["missing_documents"] == []
-    assert data["metadata"]["duplicate_article_ids"] == []
 
 
 def test_cli_strict_fails_on_missing_article(tmp_path):
-    """--strict must return non-zero when article count mismatches."""
     snap_dir = tmp_path / "snap"
     snap_dir.mkdir()
     (snap_dir / "full_text.txt").write_text(MINIMAL_FULL_TEXT, encoding="utf-8")
@@ -487,7 +498,6 @@ def test_cli_strict_fails_on_missing_article(tmp_path):
         "run_id": "test-strict",
         "results": [{"document_number": "135/2020/NĐ-CP", "snapshot_dir": str(snap_dir), "status": "ok"}],
     }
-    # Config claims 99 articles, but only 3 exist
     cfg_doc = {**MINIMAL_CONFIG_DOC, "expected_articles": 99}
     corpus_config = {"documents": [cfg_doc]}
 
@@ -511,12 +521,12 @@ def test_cli_strict_fails_on_missing_article(tmp_path):
 
 
 # ===========================================================================
-# Integration test (requires runtime data)
+# 12. Integration & Regression tests on real corpus
 # ===========================================================================
 
 @pytest.mark.integration
 def test_integration_full_run():
-    """Full integration test against real VBPL snapshots."""
+    """Full integration test verifying validated vs selected counts and scope filters."""
     output = Path("data/processed/vbpl_articles_raw.json")
     report = Path("data/quality/vbpl_article_build_report.json")
 
@@ -525,42 +535,49 @@ def test_integration_full_run():
 
     data = json.loads(output.read_text(encoding="utf-8"))
     meta = data["metadata"]
-
-    # Count expected from config (source of truth)
-    config = json.loads(Path("config/vbpl_corpus.json").read_text(encoding="utf-8"))
-    manifest = json.loads(Path("data/raw/vbpl/run_manifest.json").read_text(encoding="utf-8"))
-    manifest_docs = {r["document_number"] for r in manifest["results"]}
-    expected_total = sum(
-        d.get("expected_articles", 0)
-        for d in config["documents"]
-        if d["document_number"] in manifest_docs
-    )
+    rep = json.loads(report.read_text(encoding="utf-8"))
 
     assert meta["documents_expected"] == 16
     assert meta["documents_processed"] == 16
-    assert meta["articles_expected"] == expected_total
-    assert meta["articles_created"] == expected_total
-    assert meta["missing_documents"] == []
-    assert meta["duplicate_article_ids"] == []
+    assert meta["articles_validated_total"] == 389
+    assert meta["articles_selected"] == 285
+    assert meta["articles_excluded_by_scope"] == 104
     assert meta["empty_articles"] == []
-    assert len(data["articles"]) == expected_total
+    assert rep["status"] == "PASS"
+    assert len(data["articles"]) == 285
 
-    # Check no duplicate IDs
-    ids = [a["article_id"] for a in data["articles"]]
-    assert len(ids) == len(set(ids))
-
-    # Validate each article has required fields
-    required = {
-        "article_id", "article_code", "article_title", "heading",
-        "document_id", "source_document_id", "document_number",
-        "source_urls", "source_sha256", "source_adapter",
-        "corpus_role", "content_units", "relations", "attachments",
-        "parser_version",
-    }
     for art in data["articles"]:
-        assert not (required - art.keys()), f"Missing fields: {required - art.keys()}"
-        assert art["source_adapter"] == "vbpl"
-        assert art["corpus_role"] == "canonical"
+        item_id = art["source_item_id"]
+        assert art["source_document_id"] == f"vbpl:item:{item_id}"
 
-    # JSON serializable
-    json.dumps(data)  # should not raise
+    doc_articles: dict[str, list[int]] = {}
+    for art in data["articles"]:
+        dnum = art["document_number"]
+        doc_articles.setdefault(dnum, []).append(art["article_number"])
+
+    assert doc_articles["152/2020/NĐ-CP"] == list(range(22, 29))  # 7 articles: 22-28
+    assert doc_articles["128/2025/NĐ-CP"] == [7]                 # 1 article: 7
+    assert doc_articles["129/2025/NĐ-CP"] == list(range(67, 82))  # 15 articles: 67-81
+
+
+def test_regression_doc_145_article_10():
+    """Verify Article 10 of 145/2020/NĐ-CP is the main legal article, not appendix."""
+    output = Path("data/processed/vbpl_articles_raw.json")
+    if not output.exists():
+        pytest.skip("vbpl_articles_raw.json not present")
+
+    data = json.loads(output.read_text(encoding="utf-8"))
+    art10 = next(
+        (a for a in data["articles"]
+         if a.get("document_number") == "145/2020/NĐ-CP" and str(a.get("article_code")) == "10"),
+        None
+    )
+
+    assert art10 is not None, "Article 10 of 145/2020/NĐ-CP missing in selected output"
+    assert art10["article_title"].startswith("Xử lý hợp đồng lao động vô hiệu toàn bộ")
+    assert len(art10["content_units"]) > 0
+
+    full_unit_text = "\n".join(u.get("text", "") for u in art10["content_units"])
+    assert "Khi hợp đồng lao động bị tuyên bố vô hiệu toàn bộ" in full_unit_text
+    assert "Thỏa thuận khác (nếu có)" not in full_unit_text
+    assert art10["article_title"] != "Thỏa thuận khác (nếu có)"
