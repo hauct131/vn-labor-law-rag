@@ -301,9 +301,14 @@ def _group_text_units(article: dict) -> tuple[list[dict], list[dict], list[dict]
             preamble_units.append(unit)
 
         elif utype == "clause":
+            c_num = unit.get("clause_number")
+            c_occ = unit.get("unit_occurrence")
+            if c_occ is None:
+                c_cnt = sum(1 for g in clause_groups if g["clause_number"] == c_num)
+                c_occ = c_cnt + 1
             active_clause_group = {
-                "clause_number": unit.get("clause_number"),
-                "clause_occurrence": unit.get("unit_occurrence", 1),
+                "clause_number": c_num,
+                "clause_occurrence": c_occ,
                 "clause_unit": unit,
                 "ordered_units": [unit],
                 "point_labels": [],
@@ -324,7 +329,7 @@ def _group_text_units(article: dict) -> tuple[list[dict], list[dict], list[dict]
         elif utype == "point":
             p_clause_num = unit.get("clause_number")
             p_label = unit.get("point_label")
-            p_occ = unit.get("unit_occurrence", 1)
+            p_occ = unit.get("unit_occurrence")
 
             target_group = None
             if active_clause_group and active_clause_group["clause_number"] == p_clause_num:
@@ -337,6 +342,9 @@ def _group_text_units(article: dict) -> tuple[list[dict], list[dict], list[dict]
                     )
 
             if target_group:
+                if p_occ is None:
+                    p_cnt = sum(1 for l in target_group["point_labels"] if l == p_label)
+                    p_occ = p_cnt + 1
                 target_group["ordered_units"].append(unit)
                 target_group["source_unit_ids"].append(uid)
                 target_group["point_labels"].append(p_label)
@@ -555,6 +563,7 @@ def _create_chunk(
         "chunk_key": chunk_key,
         "container_type": container_type,
         "parent_article_id": parent_article_id,
+        "article_id": parent_article_id,
         "parent_attachment_id": parent_attachment_id,
         "parent_document_id": container.get("parent_document_id"),
         "attachment_id": container.get("attachment_id"),
@@ -563,6 +572,7 @@ def _create_chunk(
         ) if container_type == "attachment" else None,
         "form_number": container.get("form_number"),
         "document_id": container.get("document_id"),
+        "document_number": container.get("document_number"),
         "topic_code": container.get("topic_code"),
         "topic_name": container.get("topic_name"),
         "article_code": container.get("article_code"),
@@ -601,6 +611,9 @@ def _create_chunk(
         "tokenizer_name": token_counter.name,
         "source_type": container.get("source_type"),
         "source_document_id": container.get("source_document_id"),
+        "source_item_id": container.get("source_item_id"),
+        "source_adapter": container.get("source_adapter"),
+        "corpus_role": container.get("corpus_role"),
         "source_note_text": container.get("source_note_text"),
         "source_urls": list(container.get("source_urls", [])),
         "relation_target_ids": rel_ids,
@@ -1198,9 +1211,14 @@ def _point_context_prefix(text: str, limit: int = 320) -> str:
     if not normalized:
         return ""
 
-    boundary_match = re.search(r"[:;]|[.!?](?=\s|$)", normalized)
-    if boundary_match and boundary_match.end() <= limit:
-        return normalized[: boundary_match.end()].strip()
+    start_search = 0
+    leading = re.match(r"^\s*(?:\d+[a-zA-ZđĐ]?|[a-zA-ZđĐ]\d*)[.)]\s+", normalized)
+    if leading:
+        start_search = leading.end()
+
+    boundary_match = re.search(r"[:;]|[.!?](?=\s|$)", normalized[start_search:])
+    if boundary_match and (start_search + boundary_match.end()) <= limit:
+        return normalized[: start_search + boundary_match.end()].strip()
     if len(normalized) <= limit:
         return normalized
 
@@ -1729,11 +1747,24 @@ def build_legal_chunks(
         clause_intro_text = ""
         clause_intro_id = None
         if chunk.get("clause_number"):
+            target_occ = chunk.get("clause_occurrence", 1)
             for u in parent_art.get("content_units", []):
-                if u.get("unit_type") == "clause" and u.get("clause_number") == chunk.get("clause_number"):
+                if (
+                    u.get("unit_type") == "clause"
+                    and u.get("clause_number") == chunk.get("clause_number")
+                    and u.get("unit_occurrence", 1) == target_occ
+                ):
                     clause_intro_text = u.get("text", "").strip()
                     clause_intro_id = u["unit_id"]
                     break
+            if not clause_intro_text:
+                for u in parent_art.get("content_units", []):
+                    if u.get("unit_type") == "clause" and u.get("clause_number") == chunk.get("clause_number"):
+                        clause_intro_text = u.get("text", "").strip()
+                        clause_intro_id = u["unit_id"]
+                        break
+            if clause_intro_text:
+                clause_intro_text = _point_context_prefix(clause_intro_text)
 
         # A clause unit inside point_group is repeated context, not primary
         # content. Emitting it again creates a duplicate clause segment.
@@ -2518,9 +2549,15 @@ def validate_chunks(
                     subpoint_issues.append("parent_point_label_missing")
                 if parent_point_unit_id not in context_ids:
                     subpoint_issues.append("parent_point_context_id_missing")
+                parent_text = parent_point.get("text", "")
                 if (
                     isinstance(body_text, str)
-                    and parent_point.get("text") not in body_text
+                    and parent_text not in body_text
+                    and not any(
+                        line.strip() in body_text
+                        for line in parent_text.splitlines()
+                        if line.strip()
+                    )
                 ):
                     subpoint_issues.append("parent_point_text_missing")
 

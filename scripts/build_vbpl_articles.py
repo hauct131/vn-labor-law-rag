@@ -47,6 +47,46 @@ _CLAUSE_HEADING = re.compile(r"^(\d{1,3})\.\s", re.MULTILINE)
 # Point: lowercase letter or đ + ")" + space at start of line
 _POINT_HEADING = re.compile(r"^([a-zđ])\)\s", re.MULTILINE)
 
+# Standalone appendix or form heading at start of line
+_APPENDIX_HEADING = re.compile(
+    r"^\s*(?:PHỤ\s+LỤC|MẪU\s+SỐ)(?:\s+[IVXLCDM\d]+[a-z0-9/|-]*)?\s*(?:[:.\-–—]\s*.*)?$",
+    re.MULTILINE | re.IGNORECASE,
+)
+
+# Standalone administrative tail heading at start of line (e.g. Nơi nhận:)
+_ADMINISTRATIVE_TAIL_HEADING = re.compile(
+    r"^\s*Nơi\s+nhận\s*:\s*$",
+    re.MULTILINE | re.IGNORECASE,
+)
+
+
+def find_appendix_boundary(full_text: str, search_start: int) -> int | None:
+    """Find start offset of first standalone appendix/form heading after search_start."""
+    m = _APPENDIX_HEADING.search(full_text, search_start)
+    return m.start() if m is not None else None
+
+
+def find_appendix_info(full_text: str, search_start: int) -> tuple[int, str] | None:
+    """Find (start_offset, heading_text) of first standalone appendix/form heading after search_start."""
+    m = _APPENDIX_HEADING.search(full_text, search_start)
+    if m is not None:
+        return m.start(), m.group(0).strip()
+    return None
+
+
+def find_administrative_tail_boundary(full_text: str, search_start: int) -> int | None:
+    """Find start offset of administrative tail heading (Nơi nhận:) after search_start."""
+    m = _ADMINISTRATIVE_TAIL_HEADING.search(full_text, search_start)
+    return m.start() if m is not None else None
+
+
+def find_administrative_tail_info(full_text: str, search_start: int) -> tuple[int, str] | None:
+    """Find (start_offset, heading_text) of administrative tail heading after search_start."""
+    m = _ADMINISTRATIVE_TAIL_HEADING.search(full_text, search_start)
+    if m is not None:
+        return m.start(), m.group(0).strip()
+    return None
+
 
 # ── include_articles parser ─────────────────────────────────────────────────────
 
@@ -288,8 +328,8 @@ def build_articles_from_snapshot(
     config_doc: dict,
     validation_set: set[int],
     selection_set: set[int] | None = None,
-) -> tuple[list[dict], int, list[str]]:
-    """Parse one VBPL snapshot → (selected_articles, validated_count, warnings)."""
+) -> tuple[list[dict], int, list[str], dict | None, dict | None]:
+    """Parse one VBPL snapshot → (selected_articles, validated_count, warnings, appendix_section, administrative_tail_section)."""
     if selection_set is None:
         selection_set = validation_set
 
@@ -359,15 +399,46 @@ def build_articles_from_snapshot(
         return all_offs_sorted[idx] if idx < len(all_offs_sorted) else len(full_text)
 
     all_articles_by_num: dict[int, dict] = {}
+    detected_appendix_section: dict | None = None
+    detected_administrative_tail_section: dict | None = None
 
     for idx, (num, title, start_offset) in enumerate(main_seq):
-        if idx + 1 < len(main_seq):
-            end_offset = main_seq[idx + 1][2]
-        else:
-            end_offset = _next_heading_offset_in_doc(start_offset)
-
         heading_line_end = full_text.find("\n", start_offset)
         heading_line_end = (heading_line_end + 1) if heading_line_end != -1 else start_offset
+
+        is_last_in_seq = (idx == len(main_seq) - 1)
+
+        if is_last_in_seq:
+            next_off = _next_heading_offset_in_doc(start_offset)
+            app_info = find_appendix_info(full_text, heading_line_end)
+            admin_info = find_administrative_tail_info(full_text, heading_line_end)
+
+            candidate_offsets: list[int] = [next_off]
+            if app_info is not None:
+                app_offset, app_heading = app_info
+                if app_offset > heading_line_end:
+                    candidate_offsets.append(app_offset)
+                    detected_appendix_section = {
+                        "document_number": config_doc_num,
+                        "start_offset": app_offset,
+                        "heading": app_heading,
+                        "character_count": len(full_text) - app_offset,
+                    }
+
+            if admin_info is not None:
+                admin_offset, admin_heading = admin_info
+                if admin_offset > heading_line_end:
+                    candidate_offsets.append(admin_offset)
+                    detected_administrative_tail_section = {
+                        "document_number": config_doc_num,
+                        "start_offset": admin_offset,
+                        "heading": admin_heading,
+                        "character_count": len(full_text) - admin_offset,
+                    }
+
+            end_offset = min(candidate_offsets)
+        else:
+            end_offset = main_seq[idx + 1][2]
 
         article_body = full_text[heading_line_end:end_offset]
         article_id = _stable_article_id(canonical_doc_id, num)
@@ -420,7 +491,13 @@ def build_articles_from_snapshot(
         if num in all_articles_by_num
     ]
 
-    return selected_articles, validated_count, warnings
+    return (
+        selected_articles,
+        validated_count,
+        warnings,
+        detected_appendix_section,
+        detected_administrative_tail_section,
+    )
 
 
 # ── Atomic write ────────────────────────────────────────────────────────────────
@@ -489,18 +566,20 @@ def main(argv: list[str] | None = None) -> int:
     config_by_number: dict[str, dict] = {d["document_number"]: d for d in config["documents"]}
     manifest_results = run_manifest.get("results", [])
 
-    documents_expected       = len(manifest_results)
-    documents_processed      = 0
-    articles_validated_total = 0
-    articles_selected_total  = 0
-    articles_created         = 0
-    missing_documents:        list[str] = []
-    missing_articles:         list[str] = []
-    duplicate_article_ids:    list[str] = []
-    empty_articles:           list[str] = []
-    all_warnings:             list[str] = []
-    all_articles:             list[dict] = []
-    seen_ids:                 set[str] = set()
+    documents_expected                     = len(manifest_results)
+    documents_processed                    = 0
+    articles_validated_total               = 0
+    articles_selected_total                = 0
+    articles_created                       = 0
+    missing_documents:                      list[str] = []
+    missing_articles:                       list[str] = []
+    duplicate_article_ids:                  list[str] = []
+    empty_articles:                         list[str] = []
+    appendix_sections_detected:            list[dict] = []
+    administrative_tail_sections_detected: list[dict] = []
+    all_warnings:                           list[str] = []
+    all_articles:                           list[dict] = []
+    seen_ids:                               set[str] = set()
 
     for result in manifest_results:
         doc_num      = result["document_number"]
@@ -531,10 +610,14 @@ def main(argv: list[str] | None = None) -> int:
             continue
 
         try:
-            articles, validated_count, warns = build_articles_from_snapshot(
+            articles, validated_count, warns, app_sec, admin_sec = build_articles_from_snapshot(
                 snapshot_dir, config_doc, validation_set, selection_set
             )
             all_warnings.extend(warns)
+            if app_sec:
+                appendix_sections_detected.append(app_sec)
+            if admin_sec:
+                administrative_tail_sections_detected.append(admin_sec)
         except Exception as exc:
             logger.error("Failed to process %s: %s", doc_num, exc)
             missing_documents.append(doc_num)
@@ -561,6 +644,15 @@ def main(argv: list[str] | None = None) -> int:
 
     articles_excluded = articles_validated_total - articles_selected_total
 
+    appendix_leakage_articles: list[str] = []
+    administrative_tail_leakage_articles: list[str] = []
+    for art in all_articles:
+        full_text_units = "\n".join(u.get("text", "") for u in art.get("content_units", []))
+        if find_appendix_boundary(full_text_units, 0) is not None:
+            appendix_leakage_articles.append(art["article_id"])
+        if find_administrative_tail_boundary(full_text_units, 0) is not None:
+            administrative_tail_leakage_articles.append(art["article_id"])
+
     if articles_created != articles_selected_total:
         msg = (
             f"Selected count mismatch: "
@@ -571,18 +663,24 @@ def main(argv: list[str] | None = None) -> int:
 
     corpus = {
         "metadata": {
-            "adapter_version":           ADAPTER_VERSION,
-            "run_id":                    run_manifest.get("run_id"),
-            "schema_version":            "vbpl-corpus-v1",
-            "documents_expected":        documents_expected,
-            "documents_processed":       documents_processed,
-            "articles_validated_total":  articles_validated_total,
-            "articles_selected":         articles_created,
-            "articles_excluded_by_scope": articles_excluded,
-            "missing_documents":         missing_documents,
-            "missing_selected_articles": missing_articles,
-            "duplicate_article_ids":     duplicate_article_ids,
-            "empty_articles":            empty_articles,
+            "adapter_version":                             ADAPTER_VERSION,
+            "run_id":                                      run_manifest.get("run_id"),
+            "schema_version":                              "vbpl-corpus-v1",
+            "documents_expected":                          documents_expected,
+            "documents_processed":                         documents_processed,
+            "articles_validated_total":                    articles_validated_total,
+            "articles_selected":                           articles_created,
+            "articles_excluded_by_scope":                  articles_excluded,
+            "appendix_sections_detected_count":            len(appendix_sections_detected),
+            "appendix_sections_detected":                  appendix_sections_detected,
+            "appendix_leakage_articles":                   appendix_leakage_articles,
+            "administrative_tail_sections_detected_count": len(administrative_tail_sections_detected),
+            "administrative_tail_sections_detected":       administrative_tail_sections_detected,
+            "administrative_tail_leakage_articles":        administrative_tail_leakage_articles,
+            "missing_documents":                           missing_documents,
+            "missing_selected_articles":                   missing_articles,
+            "duplicate_article_ids":                       duplicate_article_ids,
+            "empty_articles":                              empty_articles,
         },
         "articles": all_articles,
     }
@@ -599,6 +697,10 @@ def main(argv: list[str] | None = None) -> int:
         )
     if empty_articles:
         strict_failures.append(f"empty_articles={empty_articles}")
+    if appendix_leakage_articles:
+        strict_failures.append(f"appendix_leakage_articles={appendix_leakage_articles}")
+    if administrative_tail_leakage_articles:
+        strict_failures.append(f"administrative_tail_leakage_articles={administrative_tail_leakage_articles}")
 
     status_str = "PASS" if not strict_failures else "FAIL"
 
@@ -610,19 +712,25 @@ def main(argv: list[str] | None = None) -> int:
         return 1
 
     report = {
-        "documents_expected":        documents_expected,
-        "documents_processed":       documents_processed,
-        "articles_validated_total":  articles_validated_total,
-        "articles_selected":         articles_created,
-        "articles_excluded_by_scope": articles_excluded,
-        "missing_expected_articles": missing_articles,
-        "missing_selected_articles": missing_articles,
-        "duplicate_article_ids":     duplicate_article_ids,
-        "empty_articles":            empty_articles,
-        "status":                    status_str,
-        "adapter_version":           ADAPTER_VERSION,
-        "warnings":                  all_warnings,
-        "strict_failures":           strict_failures,
+        "documents_expected":                             documents_expected,
+        "documents_processed":                            documents_processed,
+        "articles_validated_total":                       articles_validated_total,
+        "articles_selected":                              articles_created,
+        "articles_excluded_by_scope":                     articles_excluded,
+        "appendix_sections_detected_count":              len(appendix_sections_detected),
+        "appendix_sections_detected":                     appendix_sections_detected,
+        "appendix_leakage_articles":                      appendix_leakage_articles,
+        "administrative_tail_sections_detected_count":   len(administrative_tail_sections_detected),
+        "administrative_tail_sections_detected":         administrative_tail_sections_detected,
+        "administrative_tail_leakage_articles":          administrative_tail_leakage_articles,
+        "missing_expected_articles":                      missing_articles,
+        "missing_selected_articles":                      missing_articles,
+        "duplicate_article_ids":                          duplicate_article_ids,
+        "empty_articles":                                 empty_articles,
+        "status":                                         status_str,
+        "adapter_version":                                ADAPTER_VERSION,
+        "warnings":                                       all_warnings,
+        "strict_failures":                                strict_failures,
     }
 
     try:

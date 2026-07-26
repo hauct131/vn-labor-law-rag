@@ -24,6 +24,10 @@ from scripts.build_vbpl_articles import (  # noqa: E402
     select_main_sequence,
     select_content_sequence,
     build_articles_from_snapshot,
+    find_appendix_boundary,
+    find_appendix_info,
+    find_administrative_tail_boundary,
+    find_administrative_tail_info,
     main,
 )
 
@@ -363,8 +367,8 @@ def test_no_duplicate_article_ids(tmp_path):
     cfg_a = {**MINIMAL_CONFIG_DOC, "canonical_document_id": "vn:doc-a"}
     cfg_b = {**MINIMAL_CONFIG_DOC, "canonical_document_id": "vn:doc-b"}
 
-    arts_a, _, _ = build_articles_from_snapshot(snap, cfg_a, {1, 2, 3})
-    arts_b, _, _ = build_articles_from_snapshot(snap, cfg_b, {1, 2, 3})
+    arts_a, _, _, _, _ = build_articles_from_snapshot(snap, cfg_a, {1, 2, 3})
+    arts_b, _, _, _, _ = build_articles_from_snapshot(snap, cfg_b, {1, 2, 3})
 
     ids_a = {a["article_id"] for a in arts_a}
     ids_b = {a["article_id"] for a in arts_b}
@@ -373,7 +377,7 @@ def test_no_duplicate_article_ids(tmp_path):
 
 def test_snapshot_article_schema(tmp_path):
     snap = _write_snapshot(tmp_path)
-    articles, validated_cnt, warns = build_articles_from_snapshot(snap, MINIMAL_CONFIG_DOC, {1, 2, 3})
+    articles, validated_cnt, warns, _, _ = build_articles_from_snapshot(snap, MINIMAL_CONFIG_DOC, {1, 2, 3})
     assert len(articles) == 3
     assert validated_cnt == 3
     required_fields = {
@@ -391,7 +395,7 @@ def test_snapshot_article_schema(tmp_path):
 
 def test_snapshot_source_adapter_value(tmp_path):
     snap = _write_snapshot(tmp_path)
-    articles, _, _ = build_articles_from_snapshot(snap, MINIMAL_CONFIG_DOC, {1})
+    articles, _, _, _, _ = build_articles_from_snapshot(snap, MINIMAL_CONFIG_DOC, {1})
     assert articles[0]["source_adapter"] == "vbpl"
     assert articles[0]["corpus_role"] == "canonical"
     assert articles[0]["source_document_id"] == "vbpl:item:152734"
@@ -400,7 +404,7 @@ def test_snapshot_source_adapter_value(tmp_path):
 def test_snapshot_metadata_no_guessing(tmp_path):
     """issued_at, effective_from come from manifest, not guessed."""
     snap = _write_snapshot(tmp_path)
-    articles, _, _ = build_articles_from_snapshot(snap, MINIMAL_CONFIG_DOC, {1})
+    articles, _, _, _, _ = build_articles_from_snapshot(snap, MINIMAL_CONFIG_DOC, {1})
     assert articles[0]["issued_at"] == "2020-11-18"
     assert articles[0]["effective_from"] == "2021-01-01"
     assert articles[0]["issuing_authority"] == "Chính phủ"
@@ -581,3 +585,146 @@ def test_regression_doc_145_article_10():
     assert "Khi hợp đồng lao động bị tuyên bố vô hiệu toàn bộ" in full_unit_text
     assert "Thỏa thuận khác (nếu có)" not in full_unit_text
     assert art10["article_title"] != "Thỏa thuận khác (nếu có)"
+
+
+def test_regression_doc_145_article_115_appendix_isolation():
+    """Verify Article 115 of 145/2020/NĐ-CP does not contain appendix or administrative tail leakage."""
+    output = Path("data/processed/vbpl_articles_raw.json")
+    if not output.exists():
+        pytest.skip("vbpl_articles_raw.json not present")
+
+    data = json.loads(output.read_text(encoding="utf-8"))
+    art115 = next(
+        (a for a in data["articles"]
+         if a.get("document_number") == "145/2020/NĐ-CP" and str(a.get("article_code")) == "115"),
+        None
+    )
+
+    assert art115 is not None, "Article 115 of 145/2020/NĐ-CP missing"
+    assert art115["article_title"] == "Trách nhiệm thi hành"
+    assert len(art115["content_units"]) > 0
+
+    full_unit_text = "\n".join(u.get("text", "") for u in art115["content_units"])
+    assert "chịu trách nhiệm thi hành Nghị định này" in full_unit_text
+    assert "Nơi nhận:" not in full_unit_text
+    assert "TM. CHÍNH PHỦ" not in full_unit_text
+    assert "Nguyễn Xuân Phúc" not in full_unit_text
+    assert "Phụ lục I" not in full_unit_text
+    assert "Mẫu số" not in full_unit_text
+
+
+def test_regression_doc_129_article_81_appendix_isolation():
+    """Verify Article 81 of 129/2025/NĐ-CP does not contain appendix or administrative tail leakage."""
+    output = Path("data/processed/vbpl_articles_raw.json")
+    if not output.exists():
+        pytest.skip("vbpl_articles_raw.json not present")
+
+    data = json.loads(output.read_text(encoding="utf-8"))
+    art81 = next(
+        (a for a in data["articles"]
+         if a.get("document_number") == "129/2025/NĐ-CP" and str(a.get("article_code")) == "81"),
+        None
+    )
+
+    assert art81 is not None, "Article 81 of 129/2025/NĐ-CP missing"
+    assert len(art81["content_units"]) > 0
+
+    full_unit_text = "\n".join(u.get("text", "") for u in art81["content_units"])
+    assert "chịu trách nhiệm thi hành Nghị định này" in full_unit_text or "1." in full_unit_text
+    assert "Nơi nhận:" not in full_unit_text
+    assert "TM. CHÍNH PHỦ" not in full_unit_text
+    assert "KT. THỦ TƯỚNG" not in full_unit_text
+    assert "Nguyễn Hòa Bình" not in full_unit_text
+    assert "PHỤ LỤC I" not in full_unit_text
+    assert "Mẫu số" not in full_unit_text
+
+
+def test_fixture_appendix_in_normal_sentence_not_truncated():
+    """Text with 'phụ lục' in normal sentence is not truncated."""
+    text = (
+        "Điều 1. Phạm vi điều chỉnh\n"
+        "Hồ sơ, thủ tục công nhận được quy định tại Phụ lục I ban hành kèm theo Nghị định này.\n"
+        "1. Khoản 1 nội dung bình thường.\n"
+    )
+    headings = find_article_headings(text)
+    seq = select_main_sequence(headings, {1})
+    start_off = seq[0][2]
+    heading_line_end = text.find("\n", start_off) + 1
+
+    app_info = find_appendix_info(text, heading_line_end)
+    assert app_info is None
+    body = text[heading_line_end:]
+    assert "Phụ lục I ban hành" in body
+
+
+def test_fixture_standalone_appendix_heading_truncated():
+    """Text with standalone 'Phụ lục I' heading at start of line is truncated."""
+    text = (
+        "Điều 1. Điều cuối\n"
+        "1. Trách nhiệm thi hành.\n"
+        "Phụ lục I\n"
+        "Biểu mẫu đính kèm.\n"
+    )
+    headings = find_article_headings(text)
+    seq = select_main_sequence(headings, {1})
+    start_off = seq[0][2]
+    heading_line_end = text.find("\n", start_off) + 1
+
+    app_info = find_appendix_info(text, heading_line_end)
+    assert app_info is not None
+    app_off, app_title = app_info
+    assert app_title == "Phụ lục I"
+    body = text[heading_line_end:app_off]
+    assert "Trách nhiệm thi hành" in body
+    assert "Phụ lục I" not in body
+
+
+def test_fixture_administrative_tail_in_normal_sentence_not_truncated():
+    """Sentence containing 'nơi nhận hồ sơ' is not truncated."""
+    text = (
+        "Điều 1. Phạm vi điều chỉnh\n"
+        "Địa chỉ này là nơi nhận hồ sơ đề nghị công nhận của doanh nghiệp.\n"
+        "1. Khoản 1 nội dung bình thường.\n"
+    )
+    headings = find_article_headings(text)
+    seq = select_main_sequence(headings, {1})
+    start_off = seq[0][2]
+    heading_line_end = text.find("\n", start_off) + 1
+
+    admin_info = find_administrative_tail_info(text, heading_line_end)
+    assert admin_info is None
+    body = text[heading_line_end:]
+    assert "nơi nhận hồ sơ" in body
+
+
+def test_fixture_standalone_administrative_tail_heading_truncated():
+    """Text with standalone 'Nơi nhận:' heading at start of line is truncated."""
+    text = (
+        "Điều 1. Điều cuối\n"
+        "1. Trách nhiệm thi hành.\n"
+        "Nơi nhận:\n"
+        "- Như trên;\n"
+    )
+    headings = find_article_headings(text)
+    seq = select_main_sequence(headings, {1})
+    start_off = seq[0][2]
+    heading_line_end = text.find("\n", start_off) + 1
+
+    admin_info = find_administrative_tail_info(text, heading_line_end)
+    assert admin_info is not None
+    admin_off, admin_title = admin_info
+    assert admin_title == "Nơi nhận:"
+    body = text[heading_line_end:admin_off]
+    assert "Trách nhiệm thi hành" in body
+    assert "Nơi nhận:" not in body
+
+
+def test_report_leakage_articles_empty():
+    """Verify appendix_leakage_articles and administrative_tail_leakage_articles are empty."""
+    report_path = Path("data/quality/vbpl_article_build_report.json")
+    if not report_path.exists():
+        pytest.skip("vbpl_article_build_report.json not present")
+
+    rep = json.loads(report_path.read_text(encoding="utf-8"))
+    assert rep.get("appendix_leakage_articles") == []
+    assert rep.get("administrative_tail_leakage_articles") == []
