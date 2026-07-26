@@ -1,0 +1,33 @@
+{
+  "status": "FAIL",
+  "golden_path": "data/evaluation/golden_questions_v1_legacy.json",
+  "chunks_path": "data/processed/legal_chunks.jsonl",
+  "schema_version": "golden-questions-v1-final",
+  "locked": false,
+  "question_count": 45,
+  "unique_question_ids": 45,
+  "duplicate_question_ids": [],
+  "benchmark_enabled_count": 45,
+  "answerable_count": 45,
+  "current_chunk_count": 1382,
+  "current_chunk_sha256": "beed2fd67804dc7679fc4573a07a0101101a4dbceebf70ed916b72c49810442c",
+  "declared_chunk_count": 1395,
+  "declared_chunk_sha256": "27b80463dd6e0f34f767aa6ec1a5b5cd066b6b7a477c320bb49ef909abcb5e65",
+  "declared_corpus_matches_current": false,
+  "evidence_reference_count": 102,
+  "evidence_found_count": 100,
+  "evidence_missing_count": 2,
+  "affected_question_count": 2,
+  "missing_evidence_by_question": {
+    "r2ai_gold_022": [
+      "b925759f-9b2f-524b-9d17-a25492678675"
+    ],
+    "r2ai_gold_037": [
+      "b925759f-9b2f-524b-9d17-a25492678675"
+    ]
+  },
+  "missing_expected_articles_by_question": {},
+  "failures": [
+    "missing_evidence"
+  ]
+}

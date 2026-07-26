@@ -1,0 +1,30 @@
+# Canonical data artifacts to version for this personal project
+!data/raw/
+!data/raw/**
+!data/evaluation/
+!data/evaluation/**
+!data/manifests/
+!data/manifests/**
+
+!data/processed/articles_raw.json
+!data/processed/legal_chunks.jsonl
+!data/processed/chunking_summary.json
+!data/processed/parser_report.json
+!data/processed/html_inspection.json
+
+!data/processed/vbpl_articles_raw.json
+!data/processed/vbpl_legal_chunks.jsonl
+!data/processed/vbpl_chunking_summary.json
+
+!data/quality/vbpl_article_build_report.json
+!data/quality/vbpl_chunk_quality_report.json
+
+# Never version runtime state or secrets
+qdrant_storage/
+.cache/
+*.log
+.env
+.env.*
+cookies.json
+session.json
+credentials*.json

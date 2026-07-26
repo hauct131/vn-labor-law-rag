@@ -1,0 +1,118 @@
+{
+  "appendix_present": false,
+  "article_validation": {
+    "detected_count": 36,
+    "duplicates": [],
+    "first": 1,
+    "last": 36,
+    "missing": [],
+    "ordered": true,
+    "unexpected": [],
+    "unique_count": 36,
+    "valid": true
+  },
+  "attachment_inventory": {
+    "count": 1,
+    "downloaded_count": 1,
+    "resolved_count": 1,
+    "unresolved_count": 0
+  },
+  "attachment_policy": "required_if_listed",
+  "attachments": [
+    {
+      "attempts": 1,
+      "elapsed_ms": 576.74,
+      "has_bytes": true,
+      "http_status": 200,
+      "name": "219-cp.signed.pdf",
+      "provider": "Cổng Thông tin điện tử Chính phủ",
+      "resolution_status": "resolved",
+      "role": "signed_original_with_appendices",
+      "saved_path": "attachments/219-cp.signed.pdf",
+      "sha256": "4757806c7e00ecdee50184e7c563732ca83bb559ea74f2d5578458efb42a184f",
+      "signature_status": "valid",
+      "size_bytes": 1409245,
+      "source_field": "configured_official_attachment",
+      "source_page_url": "https://vanban.chinhphu.vn/?classid=1&docid=214840&pageid=27160&typegroupid=4",
+      "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2025/8/219-cp.signed.pdf"
+    }
+  ],
+  "content_hashes": {
+    "appendix_html_sha256": null,
+    "full_text_html_sha256": "7f26444fa093c84460a6f7b0808b5e1a6ec3ba8d19e0d3c715dce5ff838ffd8a",
+    "full_text_text_sha256": "e9fe5185ad185a8a8466315eb1ac905694fd608187c176d492725f0cbb5fa209",
+    "primary_response_sha256": "e2587587f10a5967a16e330f8ab7bf58f75f60ad127f9aa805cb2cf2fc66976c"
+  },
+  "document": {
+    "document_number": "219/2025/NĐ-CP",
+    "effective_from": "2025-08-07",
+    "effective_to": null,
+    "issued_at": "2025-08-07",
+    "issuing_authority": "Chính phủ",
+    "item_id": "180273",
+    "legal_status": "Còn hiệu lực",
+    "relations": {},
+    "title": "Nghị định số 219/2025/NĐ-CP Quy định về người lao động nước ngoài làm việc tại Việt Nam",
+    "type_vb": {
+      "code": "NĐ",
+      "id": "0d08b84c-7de7-4800-8760-2a68265e7890",
+      "name": "Nghị định",
+      "parentCode": "VBQPPL",
+      "parentName": null
+    }
+  },
+  "gates": {
+    "article_sequence_valid": true,
+    "attachment_policy_satisfied": true,
+    "detail_item_id_consistent": true,
+    "exact_document_number": true,
+    "full_text_nonempty": true,
+    "identity_metadata_complete": true,
+    "legal_effect_metadata_present": true,
+    "official_response_persisted": true
+  },
+  "ingestion_contract": {
+    "attachment_policy": "required_if_listed",
+    "configured_attachments": [
+      {
+        "name": "219-cp.signed.pdf",
+        "provider": "Cổng Thông tin điện tử Chính phủ",
+        "role": "signed_original_with_appendices",
+        "source_page_url": "https://vanban.chinhphu.vn/?classid=1&docid=214840&pageid=27160&typegroupid=4",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2025/8/219-cp.signed.pdf"
+      }
+    ],
+    "document_number": "219/2025/NĐ-CP",
+    "expected_articles": 36,
+    "item_id": "180273",
+    "schema_version": "vbpl-ingestion-contract-v1",
+    "snapshot_schema": "vbpl-source-snapshot-v3"
+  },
+  "ingestion_contract_sha256": "8921291fb9086ac3e487cf76984307fe2bd8fd80f87f920068d08382c2408b2c",
+  "retrieved_at": "2026-07-24T10:39:17+00:00",
+  "review_status": "staged_unapproved",
+  "schema_version": "vbpl-source-snapshot-v3",
+  "source": {
+    "acquisition_method": "vbpl_portal",
+    "acquisition_modes": [
+      "direct_gateway"
+    ],
+    "detail_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=180273",
+    "gateway_url": "https://vbpl-bientap-gateway.moj.gov.vn/api/qtdc/public/doc/180273",
+    "operations": [
+      "ResolveRegistryItemId",
+      "FetchDirectGateway",
+      "OpenBrowserForAttachmentDiscovery",
+      "CaptureBrowserApi",
+      "MergeConfiguredOfficialAttachments",
+      "InspectAttachmentInventory",
+      "DownloadAttachments"
+    ],
+    "primary_response_path": "portal/responses/001.response.json",
+    "provider": "Cơ sở dữ liệu quốc gia về văn bản pháp luật",
+    "response_count": 1,
+    "sitemap_url": "https://vbpl.vn/sitemap.xml",
+    "website": "https://vbpl.vn/"
+  },
+  "warnings": []
+}

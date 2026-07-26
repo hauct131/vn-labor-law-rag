@@ -1,0 +1,66 @@
+{
+  "schema_version": "legal-data-inventory-v1",
+  "generated_at": "2026-07-26T06:47:39.383686+00:00",
+  "git_commit": "cd36308824647df5e3f4580b564bbed114525b93",
+  "corpora": {
+    "phapdien": {
+      "schema_version": "corpus-manifest-v1",
+      "corpus_id": "phapdien-20.2",
+      "source_type": "phapdien",
+      "generated_at": "2026-07-26T06:47:39.383686+00:00",
+      "git_commit": "cd36308824647df5e3f4580b564bbed114525b93",
+      "source": {
+        "path": "data/raw/DeMuc_20.2_Lao_Dong.html",
+        "sha256": "ee1d819f6c5650adbadbd7ac6306ad6c08630794987759ef118b87ee64376471"
+      },
+      "articles": {
+        "path": "data/processed/articles_raw.json",
+        "sha256": "df9dda046149ff2a847f94241bcaa99643b33c2122b6fbc0a7fe74a56a0c82a2",
+        "count": 477
+      },
+      "chunks": {
+        "path": "data/processed/legal_chunks.jsonl",
+        "sha256": "beed2fd67804dc7679fc4573a07a0101101a4dbceebf70ed916b72c49810442c",
+        "count": 1382
+      },
+      "quality": {
+        "parser_valid": true,
+        "table_count": 63,
+        "attachment_count": 41
+      }
+    },
+    "vbpl": {
+      "schema_version": "corpus-manifest-v1",
+      "corpus_id": "vbpl-labor",
+      "source_type": "vbpl",
+      "generated_at": "2026-07-26T06:47:39.383686+00:00",
+      "git_commit": "cd36308824647df5e3f4580b564bbed114525b93",
+      "articles": {
+        "path": "data/processed/vbpl_articles_raw.json",
+        "sha256": "4543989ac2c2f08e28f4ad16a840192a92c0fddd5368215319551c19cb8609bf",
+        "count": 285
+      },
+      "chunks": {
+        "path": "data/processed/vbpl_legal_chunks.jsonl",
+        "sha256": "3f6452f103d3e5fdddd6927df8113d20ed4c496e79715937a6b3ea0ba632f3bd",
+        "count": 744
+      },
+      "quality": {
+        "article_build_status": "PASS",
+        "chunk_quality_status": "PASS",
+        "documents_processed": 16,
+        "articles_validated_total": 389,
+        "articles_selected": 285,
+        "article_coverage": 285,
+        "appendix_leakage_articles": [],
+        "administrative_tail_leakage_articles": [],
+        "hard_token_overflow": 0,
+        "validation": {
+          "error_count": 0,
+          "is_valid": true,
+          "warning_count": 0
+        }
+      }
+    }
+  }
+}

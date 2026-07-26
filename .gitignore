@@ -17,30 +17,88 @@ models/
 .idea/
 .DS_Store
 
-# Raw corpus: HTML, ZIP...
+# Raw reproducible corpora
 data/raw/*
 !data/raw/.gitkeep
 !data/raw/DeMuc_20.2_Lao_Dong.html
 
-# Generated corpus
+# Keep production VBPL snapshots, exclude diagnostics/smoke data
+!data/raw/vbpl/
+!data/raw/vbpl/**
+data/raw/vbpl/_diagnostics/
+data/raw/vbpl-smoke/
+
+# Generated canonical corpora: ignore by default
 data/processed/*
 !data/processed/.gitkeep
+
+# Pháp điển canonical corpus
 !data/processed/html_inspection.json
 !data/processed/parser_report.json
+!data/processed/articles_raw.json
+!data/processed/legal_chunks.jsonl
+!data/processed/chunking_summary.json
 
-# Generated graph data
+# VBPL canonical corpus
+!data/processed/vbpl_articles_raw.json
+!data/processed/vbpl_legal_chunks.jsonl
+!data/processed/vbpl_chunking_summary.json
+
+# Future unified corpus
+!data/processed/unified_legal_articles.json
+!data/processed/unified_legal_chunks.jsonl
+!data/processed/unified_chunking_summary.json
+
+# Evaluation datasets
+data/evaluation/*
+!data/evaluation/.gitkeep
+!data/evaluation/*.json
+!data/evaluation/*.jsonl
+!data/evaluation/*.csv
+!data/evaluation/*.md
+
+# Reproducibility manifests
+data/manifests/*
+!data/manifests/.gitkeep
+!data/manifests/*.json
+
+# Stable quality reports only
+data/quality/*
+!data/quality/vbpl_article_build_report.json
+!data/quality/vbpl_chunk_quality_report.json
+!data/quality/unified_merge_report.json
+
+# Generated graph/runtime data
 data/graph/*
 !data/graph/.gitkeep
 
-# Evaluation data
-data/evaluation/*
-!data/evaluation/.gitkeep
-!data/evaluation/retrieval_smoke_questions.json
+# Large generated review artifacts and OCR derivatives
+data/derived/
+data/processed/phapdien_chunk_quality_audit/
+data/processed/vbpl_chunk_quality_audit/
 
 experiments/*
 !experiments/.gitkeep
 
+# Backups and runtime state
 .env.bak.*
 docker-compose.yml.bak.*
-data/derived/
-data/quality/
+qdrant_storage/
+.cache/
+*.log
+cookies.json
+session.json
+credentials*.json
+
+# Raw HTTP transport responses may contain transient Set-Cookie headers
+data/raw/vbpl/**/portal/api_responses.json
+data/raw/vbpl/**/portal/responses/*.response.json
+
+# Snapshot checksum inventories include local-only transport response files
+data/raw/vbpl/**/SHA256SUMS.txt
+
+# Regenerable VBPL crawler cache
+data/raw/vbpl/_cache/
+
+# Regenerable VBPL crawler cache
+data/raw/vbpl/_cache/

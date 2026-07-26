@@ -1,0 +1,103 @@
+{
+  "content_hash_stable": true,
+  "document_number": "219/2025/NĐ-CP",
+  "failure_rate": 0.0,
+  "failures": 0,
+  "iterations": 10,
+  "latency_ms": {
+    "max": 2112.475,
+    "p50": 691.022,
+    "p95": 2112.475
+  },
+  "max_failure_rate": 0.0,
+  "passed": true,
+  "portal_url": "https://vbpl.vn/van-ban/chi-tiet/nghi-dinh-so-219-2025-nd-cp-quy-dinh-ve-nguoi-lao-dong-nuoc-ngoai-lam-viec-tai-viet-nam--180273",
+  "results": [
+    {
+      "acquisition": "direct_gateway",
+      "article_count": 36,
+      "content_sha256": "7f26444fa093c84460a6f7b0808b5e1a6ec3ba8d19e0d3c715dce5ff838ffd8a",
+      "elapsed_ms": 885.577,
+      "iteration": 1,
+      "status": "success"
+    },
+    {
+      "acquisition": "direct_gateway",
+      "article_count": 36,
+      "content_sha256": "7f26444fa093c84460a6f7b0808b5e1a6ec3ba8d19e0d3c715dce5ff838ffd8a",
+      "elapsed_ms": 528.234,
+      "iteration": 2,
+      "status": "success"
+    },
+    {
+      "acquisition": "direct_gateway",
+      "article_count": 36,
+      "content_sha256": "7f26444fa093c84460a6f7b0808b5e1a6ec3ba8d19e0d3c715dce5ff838ffd8a",
+      "elapsed_ms": 624.767,
+      "iteration": 3,
+      "status": "success"
+    },
+    {
+      "acquisition": "direct_gateway",
+      "article_count": 36,
+      "content_sha256": "7f26444fa093c84460a6f7b0808b5e1a6ec3ba8d19e0d3c715dce5ff838ffd8a",
+      "elapsed_ms": 435.64,
+      "iteration": 4,
+      "status": "success"
+    },
+    {
+      "acquisition": "direct_gateway",
+      "article_count": 36,
+      "content_sha256": "7f26444fa093c84460a6f7b0808b5e1a6ec3ba8d19e0d3c715dce5ff838ffd8a",
+      "elapsed_ms": 694.927,
+      "iteration": 5,
+      "status": "success"
+    },
+    {
+      "acquisition": "direct_gateway",
+      "article_count": 36,
+      "content_sha256": "7f26444fa093c84460a6f7b0808b5e1a6ec3ba8d19e0d3c715dce5ff838ffd8a",
+      "elapsed_ms": 2060.808,
+      "iteration": 6,
+      "status": "success"
+    },
+    {
+      "acquisition": "direct_gateway",
+      "article_count": 36,
+      "content_sha256": "7f26444fa093c84460a6f7b0808b5e1a6ec3ba8d19e0d3c715dce5ff838ffd8a",
+      "elapsed_ms": 691.022,
+      "iteration": 7,
+      "status": "success"
+    },
+    {
+      "acquisition": "direct_gateway",
+      "article_count": 36,
+      "content_sha256": "7f26444fa093c84460a6f7b0808b5e1a6ec3ba8d19e0d3c715dce5ff838ffd8a",
+      "elapsed_ms": 643.153,
+      "iteration": 8,
+      "status": "success"
+    },
+    {
+      "acquisition": "direct_gateway",
+      "article_count": 36,
+      "content_sha256": "7f26444fa093c84460a6f7b0808b5e1a6ec3ba8d19e0d3c715dce5ff838ffd8a",
+      "elapsed_ms": 906.511,
+      "iteration": 9,
+      "status": "success"
+    },
+    {
+      "acquisition": "direct_gateway",
+      "article_count": 36,
+      "content_sha256": "7f26444fa093c84460a6f7b0808b5e1a6ec3ba8d19e0d3c715dce5ff838ffd8a",
+      "elapsed_ms": 2112.475,
+      "iteration": 10,
+      "status": "success"
+    }
+  ],
+  "run_at": "2026-07-24T09:20:54+00:00",
+  "schema_version": "vbpl-live-soak-v1",
+  "successes": 10,
+  "unique_content_hashes": [
+    "7f26444fa093c84460a6f7b0808b5e1a6ec3ba8d19e0d3c715dce5ff838ffd8a"
+  ]
+}

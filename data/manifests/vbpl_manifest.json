@@ -1,0 +1,33 @@
+{
+  "schema_version": "corpus-manifest-v1",
+  "corpus_id": "vbpl-labor",
+  "source_type": "vbpl",
+  "generated_at": "2026-07-26T06:47:39.383686+00:00",
+  "git_commit": "cd36308824647df5e3f4580b564bbed114525b93",
+  "articles": {
+    "path": "data/processed/vbpl_articles_raw.json",
+    "sha256": "4543989ac2c2f08e28f4ad16a840192a92c0fddd5368215319551c19cb8609bf",
+    "count": 285
+  },
+  "chunks": {
+    "path": "data/processed/vbpl_legal_chunks.jsonl",
+    "sha256": "3f6452f103d3e5fdddd6927df8113d20ed4c496e79715937a6b3ea0ba632f3bd",
+    "count": 744
+  },
+  "quality": {
+    "article_build_status": "PASS",
+    "chunk_quality_status": "PASS",
+    "documents_processed": 16,
+    "articles_validated_total": 389,
+    "articles_selected": 285,
+    "article_coverage": 285,
+    "appendix_leakage_articles": [],
+    "administrative_tail_leakage_articles": [],
+    "hard_token_overflow": 0,
+    "validation": {
+      "error_count": 0,
+      "is_valid": true,
+      "warning_count": 0
+    }
+  }
+}

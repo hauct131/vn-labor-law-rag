@@ -1,0 +1,14 @@
+{
+  "documents": 16,
+  "selected_articles": 285,
+  "article_coverage": 285,
+  "missing_article_coverage": 0,
+  "duplicate_chunk_ids": 0,
+  "empty_chunks": 0,
+  "missing_provenance_metadata": 0,
+  "hard_token_overflow": 0,
+  "appendix_leakage_articles": [],
+  "administrative_tail_leakage_articles": [],
+  "total_chunks": 744,
+  "status": "PASS"
+}

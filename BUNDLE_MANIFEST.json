@@ -1,0 +1,22 @@
+{
+  "bundle": "vn_labor_law_data_bootstrap_2026-07-26",
+  "contents": [
+    "Makefile.data-golden.inc",
+    "data/evaluation/golden_questions_v1_legacy.json",
+    "data/evaluation/golden_questions_v2_current_law.json",
+    "data/evaluation/legacy_evidence_catalog.json",
+    "docs/data/README_DATA_BOOTSTRAP.md",
+    "docs/data/gitignore_data_snippet.txt",
+    "scripts/audit_golden_dataset.py",
+    "scripts/build_data_manifests.py",
+    "scripts/rebase_golden_evidence.py"
+  ],
+  "legacy_golden_questions": 45,
+  "legacy_evidence_references": 102,
+  "legacy_unique_evidence_references": 77,
+  "legacy_catalog_entries": 77,
+  "recovered_v2_questions": 45,
+  "recovered_v2_disabled_questions": [
+    "r2ai_gold_025"
+  ]
+}
