@@ -90,3 +90,5 @@ vbpl-corpus-pipeline:
 	$(MAKE) vbpl-build-articles
 	$(MAKE) vbpl-build-chunks
 	$(MAKE) vbpl-audit-chunks
+
+include Makefile.eval.inc
