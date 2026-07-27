@@ -71,6 +71,17 @@ def audit_summary_file(tmp_path: Path, corpus_file: Path, sample_chunks: list[di
     file_path.write_text(json.dumps(summary, ensure_ascii=False), encoding="utf-8")
     return file_path
 
+@pytest.fixture(autouse=True)
+def isolate_qdrant_summary_output(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Prevent tests from writing index summaries into production data paths."""
+    monkeypatch.setattr(
+        "backend.app.ingestion.index_qdrant.DEFAULT_SUMMARY_OUTPUT",
+        tmp_path / "qdrant_index" / "summary.json",
+    )
+
 
 # ---------------------------------------------------------------------------
 # Test 1: Valid corpus loaded correctly
