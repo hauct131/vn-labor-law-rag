@@ -14,11 +14,11 @@
     "article_path": "data/releases/labor-law-2026-07-27-candidate/articles.json",
     "manifest_path": "data/releases/labor-law-2026-07-27-candidate/manifest.json",
     "article_count": 513,
-    "chunk_count": 778,
-    "sha256": "6522f8f12ea87c3da7da9468935fa2fba2db801b1716362cc3c401c713790f57",
-    "articles_sha256": "c855a60622f50718ad4f5030675f125a4b3a4b33a954b6580bae8d020fc9343e",
-    "manifest_sha256": "2423eed0e4bf3588303a0a9e380091c0c854371d4467463c82762a503f5a6ce6",
-    "tokenizer": "regex-estimate-v1",
+    "chunk_count": 833,
+    "sha256": "fd35bb1a94a3036f7977781de17bb1b49b12c58be61fc74efac68dcf8a7a8c54",
+    "articles_sha256": "987836169f07161fa70cbca7137dd2bdeaecf833111b2c5a767ef540f8021c72",
+    "manifest_sha256": "26bac8637df1dc76479fc2c96f3ed4a35d93a46b0b99e08df751fbb9ad58ab7d",
+    "tokenizer": "fastembed-tokenizers:intfloat/multilingual-e5-large:document",
     "scope_note": "Unified candidate: 16 VBPL documents plus official DOCX 18/VBHN-VPQH and 66.18/2026/NQ-CP. Authority review remains pending, so this benchmark is not locked."
   },
   "labeling": {
@@ -37,7 +37,7 @@
     ],
     "release_binding": {
       "release_id": "labor-law-2026-07-27-candidate",
-      "manifest_sha256": "2423eed0e4bf3588303a0a9e380091c0c854371d4467463c82762a503f5a6ce6"
+      "manifest_sha256": "26bac8637df1dc76479fc2c96f3ed4a35d93a46b0b99e08df751fbb9ad58ab7d"
     }
   },
   "changelog": [
@@ -445,7 +445,8 @@
         "20.2.LQ.125"
       ],
       "evidence_chunk_ids": [
-        "8233d784-4092-5d4c-84fd-815362754a75",
+        "25dd9a57-f47f-52d8-9bb0-e2456c6c250e",
+        "ac79208c-121a-559c-8666-94cb5b9f489d",
         "093a31e3-748f-5187-9a8f-e7f5e0eb5fe9",
         "f98cf3fe-3d8a-5d9d-b684-c77e43ff2f25",
         "c17372aa-1a9e-507a-8978-beb4b96c7a1a",
@@ -555,7 +556,8 @@
         "2a6b3bc4-8727-57b5-a10f-e70e01483d11",
         "d060dbb0-9257-54a5-b1ed-6f7673b96e35",
         "2e4a5b9c-79ff-57e5-a070-8704d6b9618b",
-        "fa567af7-5bed-5c2c-a660-7d1db0bd7dd0"
+        "8653dbd2-6260-5dbf-965b-888f9b0a324e",
+        "cb945abd-72e6-5e6e-989a-ccff4d385da0"
       ],
       "required_points": [
         "Tranh chấp phải qua hòa giải viên lao động trước.",
@@ -581,8 +583,9 @@
       "evidence_chunk_ids": [
         "f295f903-7006-5d4f-afdc-fa52ccaad17b",
         "33505a62-857e-54eb-b285-3a9fe68b53e2",
-        "1099e4af-05cb-5654-b3bb-ccc73ad5cd03",
-        "652acbd6-23d6-5368-9bcc-abd08ee2c705",
+        "3f014f7d-ce6b-5c4b-8169-30072649587f",
+        "039ef8b7-bf8e-5684-a624-6c353bd253da",
+        "5875dbc2-2f6b-5105-a699-8ccd625e19c9",
         "e3621b4d-191d-5da1-a9e7-76f7f7c20fe2"
       ],
       "required_points": [
@@ -675,7 +678,10 @@
       ],
       "evidence_chunk_ids": [
         "3dfe1ab7-1961-5438-8eb9-b41e14107ca3",
-        "02e18f55-ef83-58bc-8940-3470bb3b5571"
+        "4ee99277-52ca-50a0-9c35-8f97cf54ba7c",
+        "6107c3e2-273e-59c7-9d76-f6e6dcd94565",
+        "3e84361c-43c9-5994-a0ff-af48ebab43a1",
+        "88159201-86f0-5198-844d-2ce3bbc3f980"
       ],
       "required_points": [
         "Phải kịp thời ngăn chặn và xử lý khi xuất hiện khiếu nại/tố cáo về quấy rối tình dục.",
@@ -718,7 +724,10 @@
         "20.2.NĐ.3.9"
       ],
       "evidence_chunk_ids": [
-        "84f8b684-ffa7-5197-9837-0b66d24f7031"
+        "bae534df-500b-5fbd-bf7b-c010712e0bbd",
+        "7b405487-be52-5587-b08c-71ee48efa7db",
+        "c07d6cf7-6c3e-5fef-8531-f1570e42329d",
+        "395a595a-9db1-5d70-9d96-5bd60524cdb1"
       ],
       "required_points": [
         "Hai bên sửa đổi, bổ sung phần bị vô hiệu để phù hợp thỏa ước lao động tập thể và pháp luật.",
@@ -928,17 +937,26 @@
       ],
       "evidence_chunk_ids": [
         "775e1bfc-762e-52ea-86d6-213ce1ec1783",
-        "4a554536-2710-58d8-b47d-2da000e2a287",
-        "99fbb0af-0c7b-569d-8f85-4cfbbac77413",
+        "94b16cc3-d79e-5fa6-bf3c-6a1d7da2b883",
+        "6ce39945-08b5-5190-b2a0-053ba6c8fc12",
+        "1b592ba9-af3e-5f4e-be1a-8d8d7eacf374",
+        "a92ddc35-e5bb-56b1-95a6-2b957e5f393a",
+        "bfe82505-8d74-5290-b6ff-c3a25a45fe79",
+        "7d3fe5e0-0401-5a43-a363-15fb47301469",
+        "72a6527f-f95c-59e1-9b1e-ec2d81b61496",
+        "21eb9024-96a0-5336-8632-77055c3744b2",
         "f295f903-7006-5d4f-afdc-fa52ccaad17b",
-        "c0a8b4b9-1b36-51c8-a6d6-d7ee85ad87b7",
+        "3c10863f-3df5-531d-96a8-3cfb565083d1",
+        "a3371ba4-6253-52e4-a40c-d5f9a25773e5",
         "2667daf3-2edf-5a70-94d2-87b6b5e058b4",
         "9892325a-a1d4-5b65-84b8-2a5ed60938ef",
-        "1461911b-ef9b-5d96-9372-b049b548413a",
+        "b14bf70f-d0ef-520e-a890-2dfe911166f5",
+        "66350587-68b8-5693-8a2f-40b841c7f500",
         "19239861-4f5f-539f-9def-a2a443f194f8",
         "33505a62-857e-54eb-b285-3a9fe68b53e2",
-        "1099e4af-05cb-5654-b3bb-ccc73ad5cd03",
-        "652acbd6-23d6-5368-9bcc-abd08ee2c705",
+        "3f014f7d-ce6b-5c4b-8169-30072649587f",
+        "039ef8b7-bf8e-5684-a624-6c353bd253da",
+        "5875dbc2-2f6b-5105-a699-8ccd625e19c9",
         "e3621b4d-191d-5da1-a9e7-76f7f7c20fe2"
       ],
       "required_points": [
@@ -1009,9 +1027,10 @@
         "b154365a-f790-5988-aa1a-15e76271323f",
         "d60da896-1570-5a23-8b49-5709e8f87b0d",
         "f043c66b-038d-5787-92d8-04c1636c615d",
-        "035ba58e-4303-550a-b55a-55bb1f9eabe1",
-        "116aa7c3-a670-55a9-afbd-54ff5f64afca",
-        "3841debd-b228-59f0-b465-cc8ee752f295",
+        "6ac2b2a2-f606-534d-89e8-0739ad652c3a",
+        "16dfaf78-1d68-5939-aee4-9d93dd92e438",
+        "93828a92-6a48-53d6-9939-9552ccfb4665",
+        "7be30046-ca25-5375-b5be-959f7316abf2",
         "a2d13c4c-9e3f-5ff8-a2c8-6d6a4aa68058",
         "015469c5-0a7a-541e-9967-12ee672e6600",
         "f8362914-e0be-56cc-9bb7-5ea63cbc123d",
@@ -1080,9 +1099,10 @@
         "b154365a-f790-5988-aa1a-15e76271323f",
         "d60da896-1570-5a23-8b49-5709e8f87b0d",
         "f043c66b-038d-5787-92d8-04c1636c615d",
-        "035ba58e-4303-550a-b55a-55bb1f9eabe1",
-        "116aa7c3-a670-55a9-afbd-54ff5f64afca",
-        "3841debd-b228-59f0-b465-cc8ee752f295",
+        "6ac2b2a2-f606-534d-89e8-0739ad652c3a",
+        "16dfaf78-1d68-5939-aee4-9d93dd92e438",
+        "93828a92-6a48-53d6-9939-9552ccfb4665",
+        "7be30046-ca25-5375-b5be-959f7316abf2",
         "a2d13c4c-9e3f-5ff8-a2c8-6d6a4aa68058",
         "015469c5-0a7a-541e-9967-12ee672e6600",
         "f8362914-e0be-56cc-9bb7-5ea63cbc123d",
@@ -1155,8 +1175,14 @@
         "20.2.NĐ.3.80"
       ],
       "evidence_chunk_ids": [
-        "4a554536-2710-58d8-b47d-2da000e2a287",
-        "99fbb0af-0c7b-569d-8f85-4cfbbac77413",
+        "94b16cc3-d79e-5fa6-bf3c-6a1d7da2b883",
+        "6ce39945-08b5-5190-b2a0-053ba6c8fc12",
+        "1b592ba9-af3e-5f4e-be1a-8d8d7eacf374",
+        "a92ddc35-e5bb-56b1-95a6-2b957e5f393a",
+        "bfe82505-8d74-5290-b6ff-c3a25a45fe79",
+        "7d3fe5e0-0401-5a43-a363-15fb47301469",
+        "72a6527f-f95c-59e1-9b1e-ec2d81b61496",
+        "21eb9024-96a0-5336-8632-77055c3744b2",
         "a862043e-40bf-5684-8323-2439363bc0fa",
         "06444bdd-be81-5f77-99f2-188891020052",
         "a5122f59-ecc7-5c77-a36b-70dd53ac28ac",
@@ -1233,7 +1259,10 @@
         "20.2.TT.6.8"
       ],
       "evidence_chunk_ids": [
-        "4a554536-2710-58d8-b47d-2da000e2a287",
+        "94b16cc3-d79e-5fa6-bf3c-6a1d7da2b883",
+        "6ce39945-08b5-5190-b2a0-053ba6c8fc12",
+        "1b592ba9-af3e-5f4e-be1a-8d8d7eacf374",
+        "a92ddc35-e5bb-56b1-95a6-2b957e5f393a",
         "a862043e-40bf-5684-8323-2439363bc0fa",
         "06444bdd-be81-5f77-99f2-188891020052",
         "795c5663-ca36-55f3-958b-d684a04c20d9",

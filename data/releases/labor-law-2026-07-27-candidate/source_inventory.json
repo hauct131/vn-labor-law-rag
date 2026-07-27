@@ -1,7 +1,7 @@
 {
   "schema_version": "source-inventory-v1",
   "release_id": "labor-law-2026-07-27-candidate",
-  "generated_at": "2026-07-27T05:25:39.395431+00:00",
+  "generated_at": "2026-07-27T19:12:39.389594+00:00",
   "law_as_of": "2026-07-27",
   "base_corpus": {
     "path": "data/processed/vbpl_articles_raw.json",
@@ -217,8 +217,8 @@
         ],
         "cryptographic_signature_validation": "not_performed"
       },
-      "raw_snapshot": "data/raw/official_docx/18_vbhn_vpqh/20260727T052538Z-1386441b",
-      "raw_snapshot_manifest_sha256": "7d75aa6e6155d8cadbf0d7c98fb76b0c9a909cdf34e3d38ef3fffbfd8c804bcf"
+      "raw_snapshot": "data/raw/official_docx/18_vbhn_vpqh/20260727T191236Z-1386441b",
+      "raw_snapshot_manifest_sha256": "507ffc0864c76bd55adb5a284003c97cf863588f5cdb4185ae90b4c98f8c1223"
     },
     {
       "document_number": "66.18/2026/NQ-CP",
@@ -242,20 +242,20 @@
         ],
         "cryptographic_signature_validation": "not_performed"
       },
-      "raw_snapshot": "data/raw/official_docx/66_18_2026_nq_cp/20260727T052539Z-c65df9bd",
-      "raw_snapshot_manifest_sha256": "bafd214292eabb43ff5c155774ec6a5d4d14fbdc223755a5710d5dec98022811"
+      "raw_snapshot": "data/raw/official_docx/66_18_2026_nq_cp/20260727T191237Z-c65df9bd",
+      "raw_snapshot_manifest_sha256": "c4e750b73ed9627468a2047a025266142a435058c55b81edbe1ae7e54354d81a"
     }
   ],
   "raw_snapshots": [
     {
       "document_number": "18/VBHN-VPQH",
-      "snapshot_dir": "data/raw/official_docx/18_vbhn_vpqh/20260727T052538Z-1386441b",
-      "manifest_sha256": "7d75aa6e6155d8cadbf0d7c98fb76b0c9a909cdf34e3d38ef3fffbfd8c804bcf"
+      "snapshot_dir": "data/raw/official_docx/18_vbhn_vpqh/20260727T191236Z-1386441b",
+      "manifest_sha256": "507ffc0864c76bd55adb5a284003c97cf863588f5cdb4185ae90b4c98f8c1223"
     },
     {
       "document_number": "66.18/2026/NQ-CP",
-      "snapshot_dir": "data/raw/official_docx/66_18_2026_nq_cp/20260727T052539Z-c65df9bd",
-      "manifest_sha256": "bafd214292eabb43ff5c155774ec6a5d4d14fbdc223755a5710d5dec98022811"
+      "snapshot_dir": "data/raw/official_docx/66_18_2026_nq_cp/20260727T191237Z-c65df9bd",
+      "manifest_sha256": "c4e750b73ed9627468a2047a025266142a435058c55b81edbe1ae7e54354d81a"
     }
   ],
   "provenance_statement": "The original DOCX bytes are preserved unchanged and hash-bound. OOXML member-name normalization is applied only in memory for parsing the nonconformant NQ package."

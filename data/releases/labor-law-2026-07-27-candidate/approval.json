@@ -6,5 +6,5 @@
   "instructions": "An authorized reviewer must verify legal_effect_review.json and bind approval to manifest_sha256 before production publication.",
   "approved_by": null,
   "approved_at": null,
-  "manifest_sha256": "2423eed0e4bf3588303a0a9e380091c0c854371d4467463c82762a503f5a6ce6"
+  "manifest_sha256": "886e1cf3e01caf7fc7525f39cf7067d42219b07323f70bc7f3195f0543d3c690"
 }

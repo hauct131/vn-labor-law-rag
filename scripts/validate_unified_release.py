@@ -20,6 +20,10 @@ EXPECTED_APPENDIX_CODES = {
     "NQ66.18.PL-I.4.C.VIII",
     "NQ66.18.PL-I.4.C.IX",
 }
+INTER_ARTICLE_HEADING_RE = re.compile(
+    r"^(?:Chương|Mục)\s+(?:[IVXLCDM]+|\d+[A-Za-zĐđ]?)\s*[.．]?$",
+    re.IGNORECASE,
+)
 
 
 def sha256_file(path: Path) -> str:
@@ -163,6 +167,33 @@ def main() -> int:
             "Lê Quang Mạnh",
         )
     )
+    heading_leaks = [
+        {
+            "article_code": article.get("article_code"),
+            "unit_id": unit.get("unit_id"),
+            "heading": line.strip(),
+        }
+        for article in articles
+        if article.get("source_adapter") == "official_government_docx"
+        for unit in article.get("content_units", [])
+        for line in str(unit.get("text", "")).splitlines()
+        if INTER_ARTICLE_HEADING_RE.fullmatch(line.strip())
+    ]
+    checks["no_inter_article_heading_leaks"] = not heading_leaks
+    chunking = manifest.get("chunking", {})
+    checks["e5_exact_chunking_bound"] = (
+        chunking.get("embedding_model")
+        == "intfloat/multilingual-e5-large"
+        and chunking.get("model_max_tokens") == 512
+        and chunking.get("indexer_near_limit_tokens") == 480
+        and chunking.get("operational_max_tokens") == 479
+        and chunking.get("max_tokens") == 479
+        and isinstance(chunking.get("target_tokens"), int)
+        and 0 < chunking["target_tokens"] <= 479
+        and chunking.get("exact_pre_truncation_count") is True
+        and manifest.get("gates", {}).get("e5_token_limit_verified")
+        is True
+    )
 
     source_hashes = {
         record["document_number"]: record["sha256"]
@@ -299,6 +330,7 @@ def main() -> int:
         "warnings": warnings,
         "golden_missing_ids": golden_missing_ids,
         "golden_wrong_code_ids": golden_wrong_code_ids,
+        "inter_article_heading_leaks": heading_leaks,
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(

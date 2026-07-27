@@ -37,10 +37,10 @@ class Settings(BaseSettings):
         "data/reference/official_legal_sources.json"
     )
     vncorenlp_model_dir: str = "models/vncorenlp"
-    retrieval_expected_chunks: int = 778
+    retrieval_expected_chunks: int = 833
     retrieval_corpus_sha256: str = (
-        "6522f8f12ea87c3da7da9468935fa2f"
-        "ba2db801b1716362cc3c401c713790f57"
+        "fd35bb1a94a3036f7977781de17bb1b49"
+        "b12c58be61fc74efac68dcf8a7a8c54"
     )
     retrieval_top_k: int = 5
     retrieval_candidate_k: int = 20

@@ -30,18 +30,24 @@ from lxml import etree
 
 from backend.app.ingestion.legal_chunker import (
     ChunkingConfig,
-    RegexEstimatedTokenCounter,
     build_legal_chunks,
     validate_chunks,
 )
+from scripts.audit_e5_token_lengths import load_audit_tokenizer
 from scripts.build_vbpl_articles import parse_content_units
 
 
 NS = {"w": "http://schemas.openxmlformats.org/wordprocessingml/2006/main"}
 DS_NS = {"ds": "http://www.w3.org/2000/09/xmldsig#"}
 RELEASE_SCHEMA = "labor-law-release-v1"
-BUILDER_VERSION = "official-docx-release-v1"
+BUILDER_VERSION = "official-docx-release-v2"
 LAW_AS_OF = "2026-07-27"
+DEFAULT_EMBEDDING_MODEL = "intfloat/multilingual-e5-large"
+DEFAULT_MODEL_MAX_TOKENS = 512
+DEFAULT_INDEXER_NEAR_LIMIT_TOKENS = 480
+DEFAULT_OPERATIONAL_MAX_TOKENS = 479
+DEFAULT_TARGET_TOKENS = 420
+DEFAULT_TOKENIZER_THREADS = 6
 
 
 DOCUMENTS: dict[str, dict[str, Any]] = {
@@ -237,6 +243,62 @@ def certificate_subject(encoded: str) -> str | None:
 
 
 ARTICLE_RE = re.compile(r"^Điều\s+(\d+)\s*[.．]\s*(.*)$", re.IGNORECASE)
+INTER_ARTICLE_HEADING_RE = re.compile(
+    r"^(?:Chương|Mục)\s+(?:[IVXLCDM]+|\d+[A-Za-zĐđ]?)\s*[.．]?$",
+    re.IGNORECASE,
+)
+
+
+class E5PassageTokenCounter:
+    """Exact pre-truncation counter for E5 document embeddings."""
+
+    def __init__(self, tokenizer: Any, model_name: str) -> None:
+        if tokenizer is None:
+            raise TypeError("tokenizer cannot be None")
+        if not isinstance(model_name, str) or not model_name.strip():
+            raise ValueError("model_name must be a non-empty string")
+        self._tokenizer = tokenizer
+        self._prefix = "passage: " if "e5" in model_name.casefold() else ""
+        self.name = f"fastembed-tokenizers:{model_name}:document"
+
+    def count(self, text: str) -> int:
+        if not isinstance(text, str):
+            raise TypeError("Input text must be a string")
+        encoding = self._tokenizer.encode(
+            f"{self._prefix}{text}",
+            add_special_tokens=True,
+        )
+        return len(encoding.ids)
+
+
+def strip_inter_article_headings(body_lines: list[str]) -> list[str]:
+    """Remove chapter/section headings that introduce the next article."""
+
+    for index, line in enumerate(body_lines):
+        if INTER_ARTICLE_HEADING_RE.fullmatch(normalize_text(line)):
+            return body_lines[:index]
+    return body_lines
+
+
+def find_inter_article_heading_leaks(
+    articles: list[dict[str, Any]],
+) -> list[dict[str, str]]:
+    """Locate standalone chapter/section headings inside article units."""
+
+    leaks: list[dict[str, str]] = []
+    for article in articles:
+        for unit in article.get("content_units", []):
+            for line in str(unit.get("text", "")).splitlines():
+                normalized = normalize_text(line)
+                if INTER_ARTICLE_HEADING_RE.fullmatch(normalized):
+                    leaks.append(
+                        {
+                            "article_code": str(article.get("article_code")),
+                            "unit_id": str(unit.get("unit_id")),
+                            "heading": normalized,
+                        }
+                    )
+    return leaks
 
 
 def locate_main_article_sequence(
@@ -308,7 +370,9 @@ def build_main_articles(
             end = administrative_tail_index(
                 paragraphs, index + 1, len(paragraphs)
             )
-        body_lines = paragraphs[index + 1 : end]
+        body_lines = strip_inter_article_headings(
+            paragraphs[index + 1 : end]
+        )
         body_text = "\n".join(body_lines).strip()
         if not body_text:
             raise ValueError(
@@ -878,6 +942,12 @@ def build_release(args: argparse.Namespace) -> dict[str, Any]:
         )
     if len({a["article_id"] for a in all_new_articles}) != 228:
         raise ValueError("Duplicate DOCX-derived article IDs")
+    heading_leaks = find_inter_article_heading_leaks(all_new_articles)
+    if heading_leaks:
+        raise ValueError(
+            "Inter-article chapter/section headings leaked into article "
+            f"content: {heading_leaks[:10]}"
+        )
 
     base = load_base_corpus(base_path)
     base_snapshot_audit = audit_base_vbpl_snapshots(
@@ -921,8 +991,32 @@ def build_release(args: argparse.Namespace) -> dict[str, Any]:
     }
     write_json(release_dir / "articles.json", unified_corpus)
 
-    token_counter = RegexEstimatedTokenCounter()
-    chunk_config = ChunkingConfig(target_tokens=400, max_tokens=600)
+    tokenizer_adapter = load_audit_tokenizer(
+        model_name=args.embedding_model,
+        threads=args.tokenizer_threads,
+        local_files_only=args.local_files_only,
+        cache_dir=args.cache_dir,
+        expected_max_tokens=args.expected_model_max_tokens,
+    )
+    token_counter = E5PassageTokenCounter(
+        tokenizer_adapter.audit_tokenizer,
+        args.embedding_model,
+    )
+    if not (
+        0
+        < args.target_tokens
+        <= args.operational_max_tokens
+        < DEFAULT_INDEXER_NEAR_LIMIT_TOKENS
+        <= tokenizer_adapter.model_max_length
+    ):
+        raise ValueError(
+            "Invalid token limits: require 0 < target_tokens <= "
+            "operational_max_tokens < 480 <= model_max_tokens"
+        )
+    chunk_config = ChunkingConfig(
+        target_tokens=args.target_tokens,
+        max_tokens=args.operational_max_tokens,
+    )
     chunks = build_legal_chunks(
         unified_corpus,
         config=chunk_config,
@@ -1050,9 +1144,16 @@ def build_release(args: argparse.Namespace) -> dict[str, Any]:
             ),
         },
         "chunking": {
-            "target_tokens": 400,
-            "max_tokens": 600,
+            "target_tokens": chunk_config.target_tokens,
+            "max_tokens": chunk_config.max_tokens,
+            "operational_max_tokens": chunk_config.max_tokens,
+            "indexer_near_limit_tokens": (
+                DEFAULT_INDEXER_NEAR_LIMIT_TOKENS
+            ),
+            "model_max_tokens": tokenizer_adapter.model_max_length,
             "tokenizer": token_counter.name,
+            "embedding_model": args.embedding_model,
+            "exact_pre_truncation_count": True,
             "validation": validation,
         },
         "gates": {
@@ -1068,8 +1169,10 @@ def build_release(args: argparse.Namespace) -> dict[str, Any]:
             "main_article_sequences_verified": True,
             "appendix_boundaries_verified": True,
             "chunk_validation_passed": True,
-            "e5_token_limit_verified": False,
-            "e5_token_limit_status": "not_run_in_offline_build_runtime",
+            "e5_token_limit_verified": True,
+            "e5_token_limit_status": (
+                "verified_during_build_below_operational_cap"
+            ),
             "authority_review_passed": False,
             "production_publishable": False,
         },
@@ -1091,7 +1194,7 @@ def build_release(args: argparse.Namespace) -> dict[str, Any]:
 
     report = {
         "status": "PASS_TECHNICAL_CANDIDATE",
-        "release_dir": portable_path(requested_release_dir),
+        "release_dir": portable_path(Path("data/releases") / release_id),
         "release_id": release_id,
         "article_containers": 513,
         "chunks": len(chunks),
@@ -1147,6 +1250,44 @@ def parse_args() -> argparse.Namespace:
         default=Path(
             "data/releases/labor-law-2026-07-27-candidate"
         ),
+    )
+    parser.add_argument(
+        "--embedding-model",
+        default=DEFAULT_EMBEDDING_MODEL,
+    )
+    parser.add_argument(
+        "--cache-dir",
+        type=Path,
+        default=None,
+    )
+    parser.add_argument(
+        "--local-files-only",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+    )
+    parser.add_argument(
+        "--expected-model-max-tokens",
+        type=int,
+        default=DEFAULT_MODEL_MAX_TOKENS,
+    )
+    parser.add_argument(
+        "--target-tokens",
+        type=int,
+        default=DEFAULT_TARGET_TOKENS,
+    )
+    parser.add_argument(
+        "--operational-max-tokens",
+        type=int,
+        default=DEFAULT_OPERATIONAL_MAX_TOKENS,
+        help=(
+            "Maximum exact E5 passage tokens per chunk. Must remain below "
+            "the production indexer's near-limit threshold of 480."
+        ),
+    )
+    parser.add_argument(
+        "--tokenizer-threads",
+        type=int,
+        default=DEFAULT_TOKENIZER_THREADS,
     )
     return parser.parse_args()
 

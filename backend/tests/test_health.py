@@ -17,5 +17,5 @@ def test_readiness_blocks_unapproved_candidate_release() -> None:
     payload = response.json()
     assert payload["status"] == "not_ready"
     assert payload["release_id"] == "labor-law-2026-07-27-candidate"
-    assert payload["chunk_count"] == 778
+    assert payload["chunk_count"] == 833
     assert payload["errors"] == ["authority_review_pending"]
