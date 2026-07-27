@@ -6,7 +6,12 @@ import re
 from dataclasses import dataclass
 from typing import Any, Protocol
 from uuid import UUID, uuid5
-from langchain_text_splitters import RecursiveCharacterTextSplitter
+try:
+    from langchain_text_splitters import RecursiveCharacterTextSplitter
+except ImportError:  # Offline/minimal corpus-build environments.
+    from backend.app.ingestion.recursive_text_splitter_fallback import (
+        RecursiveCharacterTextSplitter,
+    )
 
 CHUNKER_VERSION = "1.1.0"
 

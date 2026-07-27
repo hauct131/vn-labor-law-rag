@@ -1,0 +1,262 @@
+{
+  "schema_version": "source-inventory-v1",
+  "release_id": "labor-law-2026-07-27-candidate",
+  "generated_at": "2026-07-27T05:25:39.395431+00:00",
+  "law_as_of": "2026-07-27",
+  "base_corpus": {
+    "path": "data/processed/vbpl_articles_raw.json",
+    "sha256": "4543989ac2c2f08e28f4ad16a840192a92c0fddd5368215319551c19cb8609bf",
+    "article_count": 285,
+    "source_scope": "16 VBPL portal documents",
+    "snapshot_audit": {
+      "run_manifest": "data/raw/vbpl/run_manifest.json",
+      "document_count": 16,
+      "full_text_hash_match_count": 16,
+      "fully_verifiable_count": 0,
+      "status": "incomplete_supplied_archive",
+      "records": [
+        {
+          "document_number": "135/2020/NĐ-CP",
+          "snapshot_dir": "data/raw/vbpl/135_2020_nd_cp/20260724T103957Z-d0b3bfc6",
+          "full_text_hash_matches_manifest": true,
+          "missing_required_artifacts": [
+            "SHA256SUMS.txt",
+            "portal/api_responses.json"
+          ],
+          "review_status": "staged_unapproved",
+          "fully_verifiable": false
+        },
+        {
+          "document_number": "145/2020/NĐ-CP",
+          "snapshot_dir": "data/raw/vbpl/145_2020_nd_cp/20260724T104000Z-1e5786e6",
+          "full_text_hash_matches_manifest": true,
+          "missing_required_artifacts": [
+            "SHA256SUMS.txt",
+            "portal/api_responses.json"
+          ],
+          "review_status": "staged_unapproved",
+          "fully_verifiable": false
+        },
+        {
+          "document_number": "152/2020/NĐ-CP",
+          "snapshot_dir": "data/raw/vbpl/152_2020_nd_cp/20260724T104003Z-6c265a8d",
+          "full_text_hash_matches_manifest": true,
+          "missing_required_artifacts": [
+            "SHA256SUMS.txt",
+            "portal/api_responses.json"
+          ],
+          "review_status": "staged_unapproved",
+          "fully_verifiable": false
+        },
+        {
+          "document_number": "97/2022/NĐ-CP",
+          "snapshot_dir": "data/raw/vbpl/97_2022_nd_cp/20260724T103908Z-f97924cd",
+          "full_text_hash_matches_manifest": true,
+          "missing_required_artifacts": [
+            "SHA256SUMS.txt",
+            "portal/api_responses.json"
+          ],
+          "review_status": "staged_unapproved",
+          "fully_verifiable": false
+        },
+        {
+          "document_number": "293/2025/NĐ-CP",
+          "snapshot_dir": "data/raw/vbpl/293_2025_nd_cp/20260724T104007Z-68361d30",
+          "full_text_hash_matches_manifest": true,
+          "missing_required_artifacts": [
+            "SHA256SUMS.txt",
+            "portal/api_responses.json"
+          ],
+          "review_status": "staged_unapproved",
+          "fully_verifiable": false
+        },
+        {
+          "document_number": "219/2025/NĐ-CP",
+          "snapshot_dir": "data/raw/vbpl/219_2025_nd_cp/20260724T103917Z-7f26444f",
+          "full_text_hash_matches_manifest": true,
+          "missing_required_artifacts": [
+            "SHA256SUMS.txt",
+            "portal/api_responses.json"
+          ],
+          "review_status": "staged_unapproved",
+          "fully_verifiable": false
+        },
+        {
+          "document_number": "128/2025/NĐ-CP",
+          "snapshot_dir": "data/raw/vbpl/128_2025_nd_cp/20260724T104012Z-8d578ed9",
+          "full_text_hash_matches_manifest": true,
+          "missing_required_artifacts": [
+            "SHA256SUMS.txt",
+            "portal/api_responses.json"
+          ],
+          "review_status": "staged_unapproved",
+          "fully_verifiable": false
+        },
+        {
+          "document_number": "129/2025/NĐ-CP",
+          "snapshot_dir": "data/raw/vbpl/129_2025_nd_cp/20260724T104015Z-87cc9ff5",
+          "full_text_hash_matches_manifest": true,
+          "missing_required_artifacts": [
+            "SHA256SUMS.txt",
+            "portal/api_responses.json"
+          ],
+          "review_status": "staged_unapproved",
+          "fully_verifiable": false
+        },
+        {
+          "document_number": "09/2020/TT-BLĐTBXH",
+          "snapshot_dir": "data/raw/vbpl/09_2020_tt_bldtbxh/20260724T104017Z-3e22a194",
+          "full_text_hash_matches_manifest": true,
+          "missing_required_artifacts": [
+            "SHA256SUMS.txt",
+            "portal/api_responses.json"
+          ],
+          "review_status": "staged_unapproved",
+          "fully_verifiable": false
+        },
+        {
+          "document_number": "10/2020/TT-BLĐTBXH",
+          "snapshot_dir": "data/raw/vbpl/10_2020_tt_bldtbxh/20260724T104020Z-67146c33",
+          "full_text_hash_matches_manifest": true,
+          "missing_required_artifacts": [
+            "SHA256SUMS.txt",
+            "portal/api_responses.json"
+          ],
+          "review_status": "staged_unapproved",
+          "fully_verifiable": false
+        },
+        {
+          "document_number": "04/2021/TT-BCT",
+          "snapshot_dir": "data/raw/vbpl/04_2021_tt_bct/20260724T104022Z-2e299df9",
+          "full_text_hash_matches_manifest": true,
+          "missing_required_artifacts": [
+            "SHA256SUMS.txt",
+            "portal/api_responses.json"
+          ],
+          "review_status": "staged_unapproved",
+          "fully_verifiable": false
+        },
+        {
+          "document_number": "18/2021/TT-BLĐTBXH",
+          "snapshot_dir": "data/raw/vbpl/18_2021_tt_bldtbxh/20260724T104025Z-840a5f05",
+          "full_text_hash_matches_manifest": true,
+          "missing_required_artifacts": [
+            "SHA256SUMS.txt",
+            "portal/api_responses.json"
+          ],
+          "review_status": "staged_unapproved",
+          "fully_verifiable": false
+        },
+        {
+          "document_number": "19/2021/TT-BLĐTBXH",
+          "snapshot_dir": "data/raw/vbpl/19_2021_tt_bldtbxh/20260724T104027Z-1072ef19",
+          "full_text_hash_matches_manifest": true,
+          "missing_required_artifacts": [
+            "SHA256SUMS.txt",
+            "portal/api_responses.json"
+          ],
+          "review_status": "staged_unapproved",
+          "fully_verifiable": false
+        },
+        {
+          "document_number": "12/2022/TT-BCT",
+          "snapshot_dir": "data/raw/vbpl/12_2022_tt_bct/20260724T104030Z-6f5bcd04",
+          "full_text_hash_matches_manifest": true,
+          "missing_required_artifacts": [
+            "SHA256SUMS.txt",
+            "portal/api_responses.json"
+          ],
+          "review_status": "staged_unapproved",
+          "fully_verifiable": false
+        },
+        {
+          "document_number": "20/2023/TT-BCT",
+          "snapshot_dir": "data/raw/vbpl/20_2023_tt_bct/20260724T104032Z-3d7adf3e",
+          "full_text_hash_matches_manifest": true,
+          "missing_required_artifacts": [
+            "SHA256SUMS.txt",
+            "portal/api_responses.json"
+          ],
+          "review_status": "staged_unapproved",
+          "fully_verifiable": false
+        },
+        {
+          "document_number": "17/2023/TT-BLĐTBXH",
+          "snapshot_dir": "data/raw/vbpl/17_2023_tt_bldtbxh/20260724T104035Z-2a9b204a",
+          "full_text_hash_matches_manifest": true,
+          "missing_required_artifacts": [
+            "SHA256SUMS.txt",
+            "portal/api_responses.json"
+          ],
+          "review_status": "staged_unapproved",
+          "fully_verifiable": false
+        }
+      ]
+    }
+  },
+  "official_docx_sources": [
+    {
+      "document_number": "18/VBHN-VPQH",
+      "canonical_document_id": "vn:bll-2019",
+      "provider": "Cổng Thông tin điện tử Chính phủ",
+      "official_page_url": "https://vanban.chinhphu.vn/?docid=217002&pageid=27160",
+      "source_item_id": "chinhphu:docid:217002",
+      "release_path": "sources/official_docx/2026_131_18_VBHN-VPQH.docx",
+      "sha256": "1386441b1f513defdd55186d7e65b8432dcac87c2e0d78676de25facb9c5e6ff",
+      "size_bytes": 169018,
+      "package": {
+        "zip_member_count": 39,
+        "nonconformant_backslash_member_names": false,
+        "in_memory_member_path_normalization": false,
+        "digital_signature_parts_present": true,
+        "digital_signature_part_names": [
+          "_xmlsignatures/sig2.xml"
+        ],
+        "signer_certificate_subjects": [
+          "CN=CÔNG BÁO NƯỚC CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM,O=VĂN PHÒNG CHÍNH PHỦ,L=Hà Nội,C=VN"
+        ],
+        "cryptographic_signature_validation": "not_performed"
+      },
+      "raw_snapshot": "data/raw/official_docx/18_vbhn_vpqh/20260727T052538Z-1386441b",
+      "raw_snapshot_manifest_sha256": "7d75aa6e6155d8cadbf0d7c98fb76b0c9a909cdf34e3d38ef3fffbfd8c804bcf"
+    },
+    {
+      "document_number": "66.18/2026/NQ-CP",
+      "canonical_document_id": "vn:66.18-2026-nq-cp",
+      "provider": "Cổng Thông tin điện tử Chính phủ",
+      "official_page_url": "https://vanban.chinhphu.vn/?docid=218181&pageid=27160",
+      "source_item_id": "chinhphu:docid:218181",
+      "release_path": "sources/official_docx/2026_301_66.18_2026_NQ-CP.docx",
+      "sha256": "c65df9bd52c10589ea51cc50ea7a36b8ba64d14470343e5d2e309c806b3f130f",
+      "size_bytes": 887706,
+      "package": {
+        "zip_member_count": 121,
+        "nonconformant_backslash_member_names": true,
+        "in_memory_member_path_normalization": true,
+        "digital_signature_parts_present": true,
+        "digital_signature_part_names": [
+          "_xmlsignatures/sig2.xml"
+        ],
+        "signer_certificate_subjects": [
+          "CN=CÔNG BÁO NƯỚC CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM,O=VĂN PHÒNG CHÍNH PHỦ,L=Hà Nội,C=VN"
+        ],
+        "cryptographic_signature_validation": "not_performed"
+      },
+      "raw_snapshot": "data/raw/official_docx/66_18_2026_nq_cp/20260727T052539Z-c65df9bd",
+      "raw_snapshot_manifest_sha256": "bafd214292eabb43ff5c155774ec6a5d4d14fbdc223755a5710d5dec98022811"
+    }
+  ],
+  "raw_snapshots": [
+    {
+      "document_number": "18/VBHN-VPQH",
+      "snapshot_dir": "data/raw/official_docx/18_vbhn_vpqh/20260727T052538Z-1386441b",
+      "manifest_sha256": "7d75aa6e6155d8cadbf0d7c98fb76b0c9a909cdf34e3d38ef3fffbfd8c804bcf"
+    },
+    {
+      "document_number": "66.18/2026/NQ-CP",
+      "snapshot_dir": "data/raw/official_docx/66_18_2026_nq_cp/20260727T052539Z-c65df9bd",
+      "manifest_sha256": "bafd214292eabb43ff5c155774ec6a5d4d14fbdc223755a5710d5dec98022811"
+    }
+  ],
+  "provenance_statement": "The original DOCX bytes are preserved unchanged and hash-bound. OOXML member-name normalization is applied only in memory for parsing the nonconformant NQ package."
+}

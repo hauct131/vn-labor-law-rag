@@ -1,0 +1,12 @@
+{
+  "schema_version": "golden-rebase-report-v1",
+  "generated_at": "2026-07-27T05:25:39.525316+00:00",
+  "source_golden": "data/evaluation/golden_questions_v2_current_law.json",
+  "release_id": "labor-law-2026-07-27-candidate",
+  "release_status": "technical_candidate_pending_authority_review",
+  "questions_total": 45,
+  "questions_rebound": 45,
+  "questions_with_changed_evidence_ids": 45,
+  "missing_by_question": {},
+  "all_expected_codes_resolved": true
+}

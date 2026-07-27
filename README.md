@@ -1,116 +1,102 @@
 # Vietnamese Labor Law RAG
 
-MVP hỏi đáp pháp luật lao động Việt Nam theo luồng:
+## Corpus thống nhất 2026-07-27
+
+Project hiện đọc một release duy nhất:
 
 ```text
-React → FastAPI → Sparse BM25–VnCoreNLP hoặc Hybrid RRF
-      → Top-5 căn cứ → OpenRouter free → câu trả lời + nguồn
+data/releases/labor-law-2026-07-27-candidate/
+├── articles.json
+├── chunks.jsonl
+├── source_inventory.json
+├── legal_effect_review.json
+├── approval.json
+├── manifest.json
+├── SHA256SUMS.txt
+└── sources/official_docx/
 ```
 
-Graph-enhanced được giữ trong thiết kế nhưng trả `501 Not Implemented` cho tới
-giai đoạn Neo4j tiếp theo. Hệ thống không âm thầm thay Graph bằng Hybrid.
+Kết quả kiểm tra kỹ thuật:
 
-## Chuẩn bị
+- 18 văn bản;
+- 513 đơn vị truy hồi;
+- 778 chunk;
+- đủ 220/220 Điều của `18/VBHN-VPQH`;
+- `66.18/2026/NQ-CP`: Điều 4, Điều 6 và sáu đơn vị Phụ lục I.4 dùng
+  trong golden current-law;
+- 45/45 câu golden v3 đã được bind lại vào chunk ID của release;
+- hash nguồn, hash release, coverage và mã Điều đều đạt validator.
 
-1. Collection Qdrant `labor_law` đã index đủ 1.395 chunks.
-2. Corpus tại `data/processed/legal_chunks.jsonl`.
-3. VnCoreNLP tại:
+Release này chưa được phép gọi là production: 16 snapshot VBPL thiếu checksum
+inventory/raw API response, kiểm tra E5 hard limit chưa chạy và duyệt hiệu lực
+bởi người có thẩm quyền vẫn đang chờ. Vì vậy `/api/health` chỉ kiểm liveness,
+còn `/api/ready` chủ động trả `503 authority_review_pending`.
+
+Xem giải thích nguồn dữ liệu tại:
 
 ```text
-models/vncorenlp/VnCoreNLP-1.2.jar
-models/vncorenlp/models/
+docs/data/DATA_PROVENANCE_2026-07-27.md
 ```
 
-4. Tạo API key tại OpenRouter rồi cấu hình:
+Kiểm tra release hiện có:
 
 ```bash
-cp .env.example .env
+make unified-release-validate PYTHON=python3
 ```
 
-Chỉ điền key vào `.env`:
-
-```env
-OPENROUTER_API_KEY=sk-or-v1-...
-OPENROUTER_MODEL=openrouter/free
-OPENROUTER_REQUIRE_FREE_MODEL=true
-```
-
-Chế độ bảo vệ mặc định sẽ chặn model trả phí. Web search không được bật.
-
-## Chạy nhanh khi Qdrant đã hoạt động
-
-Terminal 1 — backend:
+Muốn tạo candidate mới, chọn thư mục release mới để không ghi đè:
 
 ```bash
-cd /media/hao/Data/vn-labor-law-rag
-source backend/.venv/bin/activate
-PYTHONPATH=backend uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+make unified-release \
+  PYTHON=python3 \
+  UNIFIED_RELEASE_DIR=data/releases/labor-law-2026-07-27-candidate-v2
 ```
 
-Terminal 2 — frontend:
+## Retrieval tuning
+
+Cài từ thư mục gốc repository:
 
 ```bash
-cd /media/hao/Data/vn-labor-law-rag/frontend
-npm install
-npm run dev -- --host 0.0.0.0
+unzip -o retrieval_tuning_bootstrap.zip -d .
+chmod +x scripts/tune_retrieval_parameters.py
+
+grep -q '^legal-eval-tune:' Makefile.eval.inc || \
+  cat Makefile.eval.tuning.inc >> Makefile.eval.inc
 ```
 
-Mở `http://localhost:5173`. API docs ở `http://localhost:8000/docs`.
-
-## Kiểm tra không tốn quota
+Chạy grid nhỏ trước:
 
 ```bash
-cd /media/hao/Data/vn-labor-law-rag
-PYTHONPATH=. backend/.venv/bin/pytest -q backend/tests
-cd frontend && npm run build && npm run lint
+make legal-eval-tune-fast
 ```
 
-Các test OpenRouter dùng HTTP client giả và không gửi request ra internet.
-
-## Gọi API thật
+Chạy grid mặc định đầy đủ:
 
 ```bash
-curl -sS http://localhost:8000/api/ask \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "question": "Người lao động được nghỉ hằng năm bao nhiêu ngày?",
-    "method": "sparse"
-  }'
+make legal-eval-tune
 ```
 
-Đổi `method` thành `hybrid` để dùng BM25–VnCoreNLP + Dense E5 + RRF.
-Mỗi lần gọi thành công có nguồn sẽ sử dụng một lượt OpenRouter miễn phí.
-
-## Docker Compose
-
-Sau khi có `.env`, corpus và thư mục model:
+Dùng GPU:
 
 ```bash
-docker compose up --build
+make legal-eval-tune E5_DEVICE=cuda E5_BATCH_SIZE=8
 ```
 
-Backend container dùng Java cho VnCoreNLP và volume riêng để cache FastEmbed.
+Kết quả nằm trong:
 
-## Ingestion VBPL an toàn cho production
-
-Lớp crawl chạy độc lập với request path của chatbot. Snapshot chỉ được publish
-sau khi đúng số hiệu, đúng item ID, đủ chuỗi Điều, lưu raw response và vượt qua
-kiểm tra SHA-256.
-
-```bash
-python -m pip install -r requirements-corpus.txt
-python -m playwright install --with-deps chromium
-make test-ingestion
-make vbpl-doctor
-make vbpl-canary
-make vbpl-soak
+```text
+data/evaluation/tuning/
+├── retrieval_grid_results.csv
+├── retrieval_grid_results.json
+├── best_retrieval_configs.json
+├── retrieval_tuning_summary.md
+└── <best-config>.json
 ```
 
-Chạy batch có resume, retry, checkpoint và báo cáo từng văn bản:
+Script chọn ba cấu hình:
 
-```bash
-make vbpl-fetch
-```
+- `best.article`: ưu tiên tìm đủ điều luật;
+- `best.evidence`: ưu tiên exact evidence chunks;
+- `best.balanced`: cân bằng hai mục tiêu.
 
-Không crawl live trong lúc demo chatbot. Quy trình vận hành và promotion gate
-được mô tả tại `docs/ingestion/VBPL_PRODUCTION_RUNBOOK.md`.
+`best.balanced` là ứng viên mặc định. Đây vẫn là kết quả trên development set 45 câu; cần một holdout riêng trước khi kết luận cuối cùng.

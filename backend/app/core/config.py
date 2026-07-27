@@ -25,15 +25,22 @@ class Settings(BaseSettings):
     fastembed_cache_dir: str = ""
 
     # Retrieval core
-    legal_chunks_path: str = "data/processed/legal_chunks.jsonl"
+    legal_chunks_path: str = (
+        "data/releases/labor-law-2026-07-27-candidate/chunks.jsonl"
+    )
+    corpus_release_manifest_path: str = (
+        "data/releases/labor-law-2026-07-27-candidate/manifest.json"
+    )
+    corpus_release_id: str = "labor-law-2026-07-27-candidate"
+    corpus_require_authority_approval: bool = True
     official_sources_path: str = (
         "data/reference/official_legal_sources.json"
     )
     vncorenlp_model_dir: str = "models/vncorenlp"
-    retrieval_expected_chunks: int = 1395
+    retrieval_expected_chunks: int = 778
     retrieval_corpus_sha256: str = (
-        "27b80463dd6e0f34f767aa6ec1a5b5cd"
-        "066b6b7a477c320bb49ef909abcb5e65"
+        "6522f8f12ea87c3da7da9468935fa2f"
+        "ba2db801b1716362cc3c401c713790f57"
     )
     retrieval_top_k: int = 5
     retrieval_candidate_k: int = 20

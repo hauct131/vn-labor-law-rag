@@ -5,7 +5,8 @@
     "provider": "Cơ sở dữ liệu quốc gia về văn bản pháp luật",
     "website": "https://vbpl.vn/",
     "allowed_active_sources": [
-      "vbpl_portal"
+      "vbpl_portal",
+      "official_government_docx"
     ],
     "forbidden_active_sources": [
       "phap_dien",
@@ -48,7 +49,8 @@
       "include_articles": "1-220",
       "required_for_release": true,
       "scope_note": "Canonical ID bám Bộ luật 45/2019/QH14; số VBHN chỉ xác định phiên bản nguồn.",
-      "source_adapter": "chinhphu",
+      "source_adapter": "official_government_docx",
+      "source_file": "2026_131_18_VBHN-VPQH.docx",
       "official_page_url": "https://vanban.chinhphu.vn/?docid=217002&pageid=27160",
       "source_note": "Văn bản hợp nhất Bộ luật Lao động ngày 12/02/2026; không được resolve theo số hiệu đơn lẻ trên VBPL vì số 18/VBHN-VPQH được tái sử dụng cho nhiều văn bản."
     },
@@ -249,7 +251,7 @@
       "document_number": "66.18/2026/NQ-CP",
       "canonical_document_id": "vn:66.18-2026-nq-cp",
       "title": "Phân quyền, cắt giảm, đơn giản hóa thủ tục hành chính, điều kiện kinh doanh",
-      "expected_articles": 6,
+      "expected_articles": 7,
       "include_articles": "4,6",
       "include_attachments": [
         "appendix-i"
@@ -268,7 +270,8 @@
       "detach_appendices": true,
       "scope_note": "Chỉ Điều 4, Điều 6 và Phụ lục I. Các mục I.4.C.* cũ là alias đánh giá của cùng phụ lục, không phải bằng chứng độc lập; không cắt tiểu mục bằng regex thiếu kiểm chứng.",
       "attachment_policy": "required",
-      "source_adapter": "chinhphu",
+      "source_adapter": "official_government_docx",
+      "source_file": "2026_301_66.18_2026_NQ-CP.docx",
       "official_page_url": "https://vanban.chinhphu.vn/?docid=218181&pageid=27160",
       "source_note": "Nguồn chính thức hiện dùng Cổng TTĐT Chính phủ và Công báo; chưa có VBPL item_id được xác minh."
     }
