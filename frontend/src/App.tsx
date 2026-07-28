@@ -2,7 +2,7 @@ import { type FormEvent, useEffect, useMemo, useState } from 'react'
 import Markdown from 'react-markdown'
 import './App.css'
 
-type RetrievalMethod = 'sparse' | 'hybrid'
+type RetrievalMethod = 'sparse' | 'dense' | 'hybrid'
 
 type LegalSource = {
   chunk_id: string
@@ -83,6 +83,11 @@ const methods: Array<{
     value: 'sparse',
     name: 'Sparse',
     description: 'BM25 + VnCoreNLP',
+  },
+  {
+    value: 'dense',
+    name: 'Dense',
+    description: 'E5 · tốt nhất trên golden hiện tại',
   },
   {
     value: 'hybrid',
@@ -296,7 +301,7 @@ function LegalArticlePage({ articleCode }: { articleCode: string }) {
 
 function QuestionAnswerPage() {
   const [question, setQuestion] = useState(examples[0])
-  const [method, setMethod] = useState<RetrievalMethod>('sparse')
+  const [method, setMethod] = useState<RetrievalMethod>('dense')
   const [result, setResult] = useState<AskResponse | null>(null)
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -347,7 +352,7 @@ function QuestionAnswerPage() {
             <small>RAG Legal Assistant</small>
           </span>
         </a>
-        <span className="mvp-badge">MVP · Sparse & Hybrid</span>
+        <span className="mvp-badge">MVP · Sparse, Dense & Hybrid</span>
       </header>
 
       <main id="top">
@@ -439,7 +444,7 @@ function QuestionAnswerPage() {
               <div className="empty-state loading-state">
                 <span className="large-spinner" aria-hidden="true" />
                 <h2>Đang tìm căn cứ pháp lý</h2>
-                <p>Lần chạy Hybrid đầu tiên có thể lâu hơn vì cần nạp mô hình E5.</p>
+                <p>Lần chạy Dense/Hybrid đầu tiên có thể lâu hơn vì cần nạp mô hình E5.</p>
               </div>
             )}
 

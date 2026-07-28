@@ -408,9 +408,12 @@ def test_payload_structure(sample_chunks: list[dict]):
 
 
 def test_defaults_target_unified_833_release():
-    assert str(DEFAULT_CHUNKS) == (
-        "data/releases/labor-law-2026-07-27-candidate/chunks.jsonl"
+    expected_chunks = (
+        Path(__file__).resolve().parents[2]
+        / "data/releases/labor-law-2026-07-27-candidate/chunks.jsonl"
     )
+
+    assert DEFAULT_CHUNKS.resolve() == expected_chunks.resolve()
     assert str(DEFAULT_AUDIT_SUMMARY) == (
         "data/quality/unified_e5_token_audit/summary.json"
     )
@@ -419,8 +422,6 @@ def test_defaults_target_unified_833_release():
         "fd35bb1a94a3036f7977781de17bb1b49"
         "b12c58be61fc74efac68dcf8a7a8c54"
     )
-
-
 # ---------------------------------------------------------------------------
 # Test 16: --resume on collection with matching fingerprint succeeds
 # ---------------------------------------------------------------------------
