@@ -1,0 +1,118 @@
+{
+  "appendix_present": false,
+  "article_validation": {
+    "detected_count": 14,
+    "duplicates": [],
+    "first": 1,
+    "last": 14,
+    "missing": [],
+    "ordered": true,
+    "unexpected": [],
+    "unique_count": 14,
+    "valid": true
+  },
+  "attachment_inventory": {
+    "count": 1,
+    "downloaded_count": 1,
+    "resolved_count": 1,
+    "unresolved_count": 0
+  },
+  "attachment_policy": "required",
+  "attachments": [
+    {
+      "attempts": 1,
+      "elapsed_ms": 246.148,
+      "has_bytes": true,
+      "http_status": 200,
+      "name": "97.signed.pdf",
+      "provider": "Cổng Thông tin điện tử Chính phủ",
+      "resolution_status": "resolved",
+      "role": "signed_original_with_appendices",
+      "saved_path": "attachments/97.signed.pdf",
+      "sha256": "0e134593d1fcce158a43f0e5e91392cc88524f15ad162edbbf5abf2f3c399212",
+      "signature_status": "valid",
+      "size_bytes": 1156921,
+      "source_field": "configured_official_attachment",
+      "source_page_url": "https://vanban.chinhphu.vn/?classid=1&docid=206935&pageid=27160&typegroupid=4",
+      "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2022/12/97.signed.pdf"
+    }
+  ],
+  "content_hashes": {
+    "appendix_html_sha256": null,
+    "full_text_html_sha256": "f97924cda859398df33156e9f64a5e3a3b43a12a24aef5831d39388c2eb0012d",
+    "full_text_text_sha256": "dd09998c9626716ebd7b14769cda6419e3f8f1db955bc95e1f745cfced007af1",
+    "primary_response_sha256": "c580f6efdc9b291a6a2cc8a6e7f3cc30af1ba8a813e606fe015802f200956617"
+  },
+  "document": {
+    "document_number": "97/2022/NĐ-CP",
+    "effective_from": "2023-01-15",
+    "effective_to": null,
+    "issued_at": "2022-11-29",
+    "issuing_authority": "Chính phủ",
+    "item_id": "169619",
+    "legal_status": "Còn hiệu lực",
+    "relations": {},
+    "title": "Nghị định số 97/2022/NĐ-CP Quy định chính sách đối với người lao động dôi dư khi chuyển đổi sở hữu, sắp xếp lại công ty trách nhiệm hữu hạn một thành viên do Nhà nước nắm giữ 100% vốn điều lệ",
+    "type_vb": {
+      "code": "NĐ",
+      "id": "0d08b84c-7de7-4800-8760-2a68265e7890",
+      "name": "Nghị định",
+      "parentCode": "VBQPPL",
+      "parentName": null
+    }
+  },
+  "gates": {
+    "article_sequence_valid": true,
+    "attachment_policy_satisfied": true,
+    "detail_item_id_consistent": true,
+    "exact_document_number": true,
+    "full_text_nonempty": true,
+    "identity_metadata_complete": true,
+    "legal_effect_metadata_present": true,
+    "official_response_persisted": true
+  },
+  "ingestion_contract": {
+    "attachment_policy": "required",
+    "configured_attachments": [
+      {
+        "name": "97.signed.pdf",
+        "provider": "Cổng Thông tin điện tử Chính phủ",
+        "role": "signed_original_with_appendices",
+        "source_page_url": "https://vanban.chinhphu.vn/?classid=1&docid=206935&pageid=27160&typegroupid=4",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2022/12/97.signed.pdf"
+      }
+    ],
+    "document_number": "97/2022/NĐ-CP",
+    "expected_articles": 14,
+    "item_id": "169619",
+    "schema_version": "vbpl-ingestion-contract-v1",
+    "snapshot_schema": "vbpl-source-snapshot-v3"
+  },
+  "ingestion_contract_sha256": "ac6b4ffd50586191cb095df6c044cc2703e99fea6da23248b885fb07bb7264e1",
+  "retrieved_at": "2026-07-28T09:38:53+00:00",
+  "review_status": "staged_unapproved",
+  "schema_version": "vbpl-source-snapshot-v3",
+  "source": {
+    "acquisition_method": "vbpl_portal",
+    "acquisition_modes": [
+      "direct_gateway"
+    ],
+    "detail_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=169619",
+    "gateway_url": "https://vbpl-bientap-gateway.moj.gov.vn/api/qtdc/public/doc/169619",
+    "operations": [
+      "ResolveRegistryItemId",
+      "FetchDirectGateway",
+      "OpenBrowserForAttachmentDiscovery",
+      "CaptureBrowserApi",
+      "MergeConfiguredOfficialAttachments",
+      "InspectAttachmentInventory",
+      "DownloadAttachments"
+    ],
+    "primary_response_path": "portal/responses/001.response.json",
+    "provider": "Cơ sở dữ liệu quốc gia về văn bản pháp luật",
+    "response_count": 1,
+    "sitemap_url": "https://vbpl.vn/sitemap.xml",
+    "website": "https://vbpl.vn/"
+  },
+  "warnings": []
+}

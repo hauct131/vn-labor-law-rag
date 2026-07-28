@@ -1,7 +1,7 @@
 {
   "status": "PASS",
   "golden_path": "data/evaluation/golden_questions_v3_unified_candidate.json",
-  "chunks_path": "data/releases/labor-law-2026-07-27-candidate/chunks.jsonl",
+  "chunks_path": "data/releases/labor-law-2026-07-28-candidate/chunks.jsonl",
   "schema_version": "golden-questions-v3-unified-candidate",
   "locked": false,
   "question_count": 45,

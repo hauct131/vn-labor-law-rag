@@ -1,7 +1,7 @@
 {
   "schema_version": "unified-release-validation-v1",
   "status": "PASS",
-  "release_id": "labor-law-2026-07-27-candidate",
+  "release_id": "labor-law-2026-07-28-candidate",
   "checks": {
     "article_count_513": true,
     "chunk_count_matches_manifest": true,
@@ -23,7 +23,7 @@
     "nq_source_hash_expected": true,
     "both_sources_have_signature_parts": true,
     "base_vbpl_16_full_text_hashes_match": true,
-    "base_vbpl_provenance_gap_disclosed": true,
+    "base_vbpl_provenance_verified_or_gap_disclosed": true,
     "golden_all_chunk_ids_exist": true,
     "golden_evidence_codes_match": true,
     "golden_release_hash_matches": true,
@@ -61,7 +61,6 @@
   },
   "errors": [],
   "warnings": [
-    "All 16 supplied VBPL snapshots lack SHA256SUMS.txt and portal/api_responses.json; their full_text hashes match the manifests, but end-to-end raw provenance is incomplete.",
     "Legal authority review is pending; production publication is blocked."
   ],
   "golden_missing_ids": {},

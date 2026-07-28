@@ -8,16 +8,16 @@
   "domain": "Vietnamese labor law",
   "benchmark_type": "current_law",
   "corpus": {
-    "release_id": "labor-law-2026-07-27-candidate",
+    "release_id": "labor-law-2026-07-28-candidate",
     "release_status": "technical_candidate_pending_authority_review",
-    "path": "data/releases/labor-law-2026-07-27-candidate/chunks.jsonl",
-    "article_path": "data/releases/labor-law-2026-07-27-candidate/articles.json",
-    "manifest_path": "data/releases/labor-law-2026-07-27-candidate/manifest.json",
+    "path": "data/releases/labor-law-2026-07-28-candidate/chunks.jsonl",
+    "article_path": "data/releases/labor-law-2026-07-28-candidate/articles.json",
+    "manifest_path": "data/releases/labor-law-2026-07-28-candidate/manifest.json",
     "article_count": 513,
     "chunk_count": 833,
     "sha256": "fd35bb1a94a3036f7977781de17bb1b49b12c58be61fc74efac68dcf8a7a8c54",
-    "articles_sha256": "987836169f07161fa70cbca7137dd2bdeaecf833111b2c5a767ef540f8021c72",
-    "manifest_sha256": "26bac8637df1dc76479fc2c96f3ed4a35d93a46b0b99e08df751fbb9ad58ab7d",
+    "articles_sha256": "8193dc44f891a9ea7103f4cb71a01f3d58e833d02e2ac9cff6fab5ef1626b47b",
+    "manifest_sha256": "1f353b7d99dd2c8e29f1660d76509959ae90c5ecfc564c61db90c1b22b154ff7",
     "tokenizer": "fastembed-tokenizers:intfloat/multilingual-e5-large:document",
     "scope_note": "Unified candidate: 16 VBPL documents plus official DOCX 18/VBHN-VPQH and 66.18/2026/NQ-CP. Authority review remains pending, so this benchmark is not locked."
   },
@@ -36,8 +36,8 @@
       "r2ai_gold_025"
     ],
     "release_binding": {
-      "release_id": "labor-law-2026-07-27-candidate",
-      "manifest_sha256": "26bac8637df1dc76479fc2c96f3ed4a35d93a46b0b99e08df751fbb9ad58ab7d"
+      "release_id": "labor-law-2026-07-28-candidate",
+      "manifest_sha256": "1f353b7d99dd2c8e29f1660d76509959ae90c5ecfc564c61db90c1b22b154ff7"
     }
   },
   "changelog": [

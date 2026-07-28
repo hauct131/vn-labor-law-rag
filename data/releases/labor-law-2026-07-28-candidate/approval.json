@@ -1,0 +1,10 @@
+{
+  "schema_version": "release-approval-v1",
+  "release_id": "labor-law-2026-07-28-candidate",
+  "required": true,
+  "status": "pending_authority_review",
+  "instructions": "An authorized reviewer must verify legal_effect_review.json and bind approval to manifest_sha256 before production publication.",
+  "approved_by": null,
+  "approved_at": null,
+  "manifest_sha256": "1f353b7d99dd2c8e29f1660d76509959ae90c5ecfc564c61db90c1b22b154ff7"
+}
