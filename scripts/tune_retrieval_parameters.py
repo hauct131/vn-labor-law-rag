@@ -272,11 +272,27 @@ def sort_key(row, profile):
 
 def parse_args():
     p = argparse.ArgumentParser()
-    p.add_argument("--golden", type=Path, default=Path("data/evaluation/golden_questions_v1_rebased_current_phapdien.json"))
-    p.add_argument("--chunks", type=Path, default=Path("data/processed/legal_chunks.jsonl"))
-    p.add_argument("--output-dir", type=Path, default=Path("data/evaluation/tuning"))
+    p.add_argument(
+        "--golden",
+        type=Path,
+        default=Path(
+            "data/evaluation/golden_questions_v3_unified_candidate.json"
+        ),
+    )
+    p.add_argument(
+        "--chunks",
+        type=Path,
+        default=Path(
+            "data/releases/labor-law-2026-07-27-candidate/chunks.jsonl"
+        ),
+    )
+    p.add_argument(
+        "--output-dir",
+        type=Path,
+        default=Path("data/evaluation/tuning-unified"),
+    )
     p.add_argument("--embedding-cache-dir", type=Path, default=Path("data/evaluation/cache/embeddings"))
-    p.add_argument("--model", default="intfloat/multilingual-e5-small")
+    p.add_argument("--model", default="intfloat/multilingual-e5-large")
     p.add_argument("--device", default="cpu")
     p.add_argument("--batch-size", type=int, default=32)
     p.add_argument("--candidate-k", type=int, nargs="+", default=[20, 50])

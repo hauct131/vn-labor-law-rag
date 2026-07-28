@@ -7,7 +7,7 @@
   "counts": {
     "documents": 18,
     "article_containers": 513,
-    "chunks": 778,
+    "chunks": 833,
     "golden_questions": 45
   },
   "official_docx_sources": [
@@ -29,8 +29,13 @@
     "data/releases/labor-law-2026-07-27-candidate/approval.json",
     "data/releases/labor-law-2026-07-27-candidate/SHA256SUMS.txt",
     "data/evaluation/golden_questions_v3_unified_candidate.json",
+    "data/evaluation/golden_v3_audit.json",
+    "data/evaluation/results/unified_bm25_baseline.json",
     "data/quality/unified_release_validation.json",
     "docs/data/DATA_PROVENANCE_2026-07-27.md",
+    "docs/report/UNIFIED_RUNTIME_HANDOFF_2026-07-28.md",
+    "requirements-evaluation.txt",
+    "scripts/index_and_evaluate_unified.sh",
     "FINAL_BUILD_REPORT_2026-07-27.md"
   ],
   "gates": {
@@ -38,7 +43,8 @@
     "golden_evidence_rebase": "45/45 resolved",
     "official_docx_hashes": "passed",
     "base_vbpl_raw_provenance": "incomplete_supplied_archive",
-    "e5_hard_limit_audit": "pending",
+    "e5_hard_limit_audit": "passed: 833/833 below 480-token operational cap",
+    "bm25_golden_v3_baseline": "passed: 44 enabled questions",
     "authority_review": "pending",
     "qdrant_reindex": "pending",
     "production_publishable": false

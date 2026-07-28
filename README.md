@@ -20,7 +20,7 @@ Kết quả kiểm tra kỹ thuật:
 
 - 18 văn bản;
 - 513 đơn vị truy hồi;
-- 778 chunk;
+- 833 chunk;
 - đủ 220/220 Điều của `18/VBHN-VPQH`;
 - `66.18/2026/NQ-CP`: Điều 4, Điều 6 và sáu đơn vị Phụ lục I.4 dùng
   trong golden current-law;
@@ -28,8 +28,9 @@ Kết quả kiểm tra kỹ thuật:
 - hash nguồn, hash release, coverage và mã Điều đều đạt validator.
 
 Release này chưa được phép gọi là production: 16 snapshot VBPL thiếu checksum
-inventory/raw API response, kiểm tra E5 hard limit chưa chạy và duyệt hiệu lực
-bởi người có thẩm quyền vẫn đang chờ. Vì vậy `/api/health` chỉ kiểm liveness,
+inventory/raw API response và duyệt hiệu lực bởi người có thẩm quyền vẫn đang
+chờ. E5 audit đã đo chính xác 833/833 chunk, lớn nhất 478 token và không có
+chunk chạm ngưỡng vận hành 480 token. Vì vậy `/api/health` chỉ kiểm liveness,
 còn `/api/ready` chủ động trả `503 authority_review_pending`.
 
 Xem giải thích nguồn dữ liệu tại:
@@ -44,6 +45,26 @@ Kiểm tra release hiện có:
 make unified-release-validate PYTHON=python3
 ```
 
+Chạy toàn bộ release check, Qdrant index/verify và retrieval evaluation:
+
+```bash
+bash scripts/index_and_evaluate_unified.sh
+```
+
+Script dùng trực tiếp `.venv/bin/python3`, ghi log vào `logs/` và triển khai
+Qdrant theo blue/green:
+
+- giữ nguyên collection cũ `labor_law` để rollback;
+- index/resume release 833 trong
+  `labor_law_20260727_fd35bb1a`;
+- verify fingerprint, count và dense smoke trước khi kích hoạt;
+- tạo/chuyển alias `labor_law_active` theo một cập nhật alias atomic;
+- backend luôn truy vấn qua `labor_law_active`.
+
+Workflow không có lệnh xóa collection. Nếu collection phiên bản mới đang dở
+nhưng có cùng fingerprint thì workflow resume; nếu khác fingerprint thì dừng
+an toàn.
+
 Muốn tạo candidate mới, chọn thư mục release mới để không ghi đè:
 
 ```bash
@@ -54,14 +75,13 @@ make unified-release \
 
 ## Retrieval tuning
 
-Cài từ thư mục gốc repository:
+Các target hiện bind mặc định vào golden v3 và release 833 chunks.
+
+Nếu môi trường chưa có `sentence-transformers`, cài dependency evaluation
+riêng (không cần thêm vào image backend):
 
 ```bash
-unzip -o retrieval_tuning_bootstrap.zip -d .
-chmod +x scripts/tune_retrieval_parameters.py
-
-grep -q '^legal-eval-tune:' Makefile.eval.inc || \
-  cat Makefile.eval.tuning.inc >> Makefile.eval.inc
+.venv/bin/python3 -m pip install -r requirements-evaluation.txt
 ```
 
 Chạy grid nhỏ trước:
@@ -85,7 +105,7 @@ make legal-eval-tune E5_DEVICE=cuda E5_BATCH_SIZE=8
 Kết quả nằm trong:
 
 ```text
-data/evaluation/tuning/
+data/evaluation/tuning-unified/
 ├── retrieval_grid_results.csv
 ├── retrieval_grid_results.json
 ├── best_retrieval_configs.json
@@ -99,4 +119,5 @@ Script chọn ba cấu hình:
 - `best.evidence`: ưu tiên exact evidence chunks;
 - `best.balanced`: cân bằng hai mục tiêu.
 
-`best.balanced` là ứng viên mặc định. Đây vẫn là kết quả trên development set 45 câu; cần một holdout riêng trước khi kết luận cuối cùng.
+`best.balanced` là ứng viên mặc định. Đây vẫn là kết quả trên development set
+44 câu đang bật; cần một holdout riêng trước khi kết luận cuối cùng.

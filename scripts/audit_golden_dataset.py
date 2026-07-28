@@ -35,17 +35,21 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--golden",
         type=Path,
-        default=Path("data/evaluation/golden_questions_v1_legacy.json"),
+        default=Path(
+            "data/evaluation/golden_questions_v3_unified_candidate.json"
+        ),
     )
     parser.add_argument(
         "--chunks",
         type=Path,
-        default=Path("data/processed/legal_chunks.jsonl"),
+        default=Path(
+            "data/releases/labor-law-2026-07-27-candidate/chunks.jsonl"
+        ),
     )
     parser.add_argument(
         "--report",
         type=Path,
-        default=Path("data/evaluation/golden_audit_report.json"),
+        default=Path("data/evaluation/golden_v3_audit.json"),
     )
     parser.add_argument("--strict", action="store_true")
     return parser.parse_args()

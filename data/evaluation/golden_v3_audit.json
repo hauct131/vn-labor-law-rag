@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "golden_path": "data/evaluation/golden_questions_v3_unified_candidate.json",
+  "chunks_path": "data/releases/labor-law-2026-07-27-candidate/chunks.jsonl",
+  "schema_version": "golden-questions-v3-unified-candidate",
+  "locked": false,
+  "question_count": 45,
+  "unique_question_ids": 45,
+  "duplicate_question_ids": [],
+  "benchmark_enabled_count": 44,
+  "answerable_count": 45,
+  "current_chunk_count": 833,
+  "current_chunk_sha256": "fd35bb1a94a3036f7977781de17bb1b49b12c58be61fc74efac68dcf8a7a8c54",
+  "declared_chunk_count": 833,
+  "declared_chunk_sha256": "fd35bb1a94a3036f7977781de17bb1b49b12c58be61fc74efac68dcf8a7a8c54",
+  "declared_corpus_matches_current": true,
+  "evidence_reference_count": 175,
+  "evidence_found_count": 175,
+  "evidence_missing_count": 0,
+  "affected_question_count": 0,
+  "missing_evidence_by_question": {},
+  "missing_expected_articles_by_question": {}
+}

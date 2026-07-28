@@ -14,7 +14,9 @@ class Settings(BaseSettings):
 
     # Qdrant
     qdrant_url: str = "http://localhost:6333"
-    qdrant_collection: str = "labor_law"
+    # Retrieval always uses an alias. Physical collections are versioned so a
+    # new corpus can be indexed and verified without mutating the old index.
+    qdrant_collection: str = "labor_law_active"
     dense_embedding_model: str = "intfloat/multilingual-e5-large"
     dense_vector_name: str = "dense"
     dense_vector_size: int = 1024
@@ -30,6 +32,9 @@ class Settings(BaseSettings):
     )
     corpus_release_manifest_path: str = (
         "data/releases/labor-law-2026-07-27-candidate/manifest.json"
+    )
+    e5_audit_summary_path: str = (
+        "data/quality/unified_e5_token_audit/summary.json"
     )
     corpus_release_id: str = "labor-law-2026-07-27-candidate"
     corpus_require_authority_approval: bool = True

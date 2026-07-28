@@ -12,6 +12,10 @@ from unittest.mock import MagicMock, patch
 import pytest
 
 from backend.app.ingestion.index_qdrant import (
+    DEFAULT_AUDIT_SUMMARY,
+    DEFAULT_CHUNKS,
+    DEFAULT_EXPECTED_CHUNKS,
+    DEFAULT_EXPECTED_SHA256,
     IndexerError,
     build_chunk_payload,
     build_parser,
@@ -400,7 +404,21 @@ def test_payload_structure(sample_chunks: list[dict]):
     assert payload["_index_corpus_chunk_count"] == 1
     assert payload["_index_dense_model"] == "dense-model"
     assert payload["_index_sparse_model"] == "sparse-model"
-    assert payload["_indexer_version"] == "1.0.0"
+    assert payload["_indexer_version"] == "1.1.0"
+
+
+def test_defaults_target_unified_833_release():
+    assert str(DEFAULT_CHUNKS) == (
+        "data/releases/labor-law-2026-07-27-candidate/chunks.jsonl"
+    )
+    assert str(DEFAULT_AUDIT_SUMMARY) == (
+        "data/quality/unified_e5_token_audit/summary.json"
+    )
+    assert DEFAULT_EXPECTED_CHUNKS == 833
+    assert DEFAULT_EXPECTED_SHA256 == (
+        "fd35bb1a94a3036f7977781de17bb1b49"
+        "b12c58be61fc74efac68dcf8a7a8c54"
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -562,7 +580,8 @@ def test_verify_only_does_not_write_vectors(corpus_file: Path, audit_summary_fil
          patch("fastembed.TextEmbedding") as mock_dense_cls, \
          patch("fastembed.SparseTextEmbedding") as mock_sparse_cls:
         res = run_indexer(args)
-        assert res["status"] == "verify_only_success"
+        assert res["status"] == "verified"
+        assert args.summary_output.is_file()
         mock_dense_cls.assert_not_called()
         mock_sparse_cls.assert_not_called()
         mock_client.upsert.assert_not_called()

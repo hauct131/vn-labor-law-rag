@@ -8,7 +8,7 @@ Release kỹ thuật hiện tại:
 data/releases/labor-law-2026-07-27-candidate/
 ```
 
-Release gồm 18 văn bản, 513 đơn vị truy hồi và 778 chunk:
+Release gồm 18 văn bản, 513 đơn vị truy hồi và 833 chunk:
 
 - 16 văn bản đã thu thập từ cổng VBPL;
 - 220 Điều Bộ luật Lao động từ `18/VBHN-VPQH`;

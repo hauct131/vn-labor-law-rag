@@ -379,13 +379,15 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         default=Path(
             "data/evaluation/"
-            "golden_questions_v1_rebased_current_phapdien.json"
+            "golden_questions_v3_unified_candidate.json"
         ),
     )
     parser.add_argument(
         "--chunks",
         type=Path,
-        default=Path("data/processed/legal_chunks.jsonl"),
+        default=Path(
+            "data/releases/labor-law-2026-07-27-candidate/chunks.jsonl"
+        ),
     )
     parser.add_argument(
         "--output-dir",
@@ -399,7 +401,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--model",
-        default="intfloat/multilingual-e5-small",
+        default="intfloat/multilingual-e5-large",
     )
     parser.add_argument(
         "--device",
@@ -429,6 +431,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--bm25-k1", type=float, default=1.5)
     parser.add_argument("--bm25-b", type=float, default=0.75)
     parser.add_argument("--include-disabled", action="store_true")
+    parser.add_argument(
+        "--output-prefix",
+        default="unified",
+        help="Filename prefix for benchmark reports.",
+    )
     return parser.parse_args()
 
 
@@ -604,7 +611,7 @@ def main() -> None:
         args.output_dir.mkdir(parents=True, exist_ok=True)
         output_path = (
             args.output_dir
-            / f"phapdien_{configuration_name}.json"
+            / f"{args.output_prefix}_{configuration_name}.json"
         )
         output_path.write_text(
             json.dumps(report, ensure_ascii=False, indent=2) + "\n",

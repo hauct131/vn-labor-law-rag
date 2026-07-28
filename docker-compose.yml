@@ -27,11 +27,15 @@ services:
       - .env
     environment:
       QDRANT_URL: http://qdrant:6333
+      QDRANT_COLLECTION: labor_law_active
       NEO4J_URI: bolt://neo4j:7687
       LEGAL_CHUNKS_PATH: /app/data/releases/labor-law-2026-07-27-candidate/chunks.jsonl
       CORPUS_RELEASE_MANIFEST_PATH: /app/data/releases/labor-law-2026-07-27-candidate/manifest.json
+      E5_AUDIT_SUMMARY_PATH: /app/data/quality/unified_e5_token_audit/summary.json
       CORPUS_RELEASE_ID: labor-law-2026-07-27-candidate
       CORPUS_REQUIRE_AUTHORITY_APPROVAL: "true"
+      RETRIEVAL_EXPECTED_CHUNKS: "833"
+      RETRIEVAL_CORPUS_SHA256: fd35bb1a94a3036f7977781de17bb1b49b12c58be61fc74efac68dcf8a7a8c54
       VNCORENLP_MODEL_DIR: /app/models/vncorenlp
       FASTEMBED_CACHE_DIR: /root/.cache/fastembed
     depends_on:

@@ -67,6 +67,14 @@ data/quality/*
 !data/quality/vbpl_article_build_report.json
 !data/quality/vbpl_chunk_quality_report.json
 !data/quality/unified_merge_report.json
+!data/quality/unified_release_validation.json
+!data/quality/unified_e5_token_audit/
+!data/quality/unified_e5_token_audit/**
+
+# Stable unified-candidate evaluation reports
+!data/evaluation/results/
+data/evaluation/results/*
+!data/evaluation/results/unified_*.json
 
 # Generated graph/runtime data
 data/graph/*

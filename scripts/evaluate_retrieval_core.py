@@ -1,8 +1,8 @@
 """Evaluate production retrieval core without modifying Qdrant.
 
-This command reads the ``labor_law`` dense vectors, builds the selected local
-BM25–VnCoreNLP index, fuses rankings with RRF, and reports article-level Hit@k,
-MRR@k, and latency for the smoke questions.
+This command reads dense vectors through the ``labor_law_active`` alias, builds
+the selected local BM25–VnCoreNLP index, fuses rankings with RRF, and reports
+article-level Hit@k, MRR@k, and latency for the smoke questions.
 
 Run from the repository root, for example::
 
@@ -35,16 +35,18 @@ from backend.app.retrieval.vncorenlp_bm25 import load_segmenter
 
 LOGGER = logging.getLogger("retrieval_core_evaluation")
 
-DEFAULT_CHUNKS = Path("data/processed/legal_chunks.jsonl")
+DEFAULT_CHUNKS = Path(
+    "data/releases/labor-law-2026-07-27-candidate/chunks.jsonl"
+)
 DEFAULT_QUESTIONS = Path(
     "data/evaluation/retrieval_smoke_questions.json"
 )
 DEFAULT_OUTPUT = Path("experiments/retrieval_core_smoke.json")
 DEFAULT_VNCORENLP_MODEL_DIR = Path("models/vncorenlp")
-DEFAULT_EXPECTED_CHUNKS = 1395
+DEFAULT_EXPECTED_CHUNKS = 833
 DEFAULT_EXPECTED_SHA256 = (
-    "27b80463dd6e0f34f767aa6ec1a5b5cd"
-    "066b6b7a477c320bb49ef909abcb5e65"
+    "fd35bb1a94a3036f7977781de17bb1b49"
+    "b12c58be61fc74efac68dcf8a7a8c54"
 )
 
 
@@ -77,7 +79,7 @@ def build_parser() -> argparse.ArgumentParser:
         default=("sparse", "dense", "hybrid"),
     )
     parser.add_argument("--qdrant-url", default="http://localhost:6333")
-    parser.add_argument("--collection", default="labor_law")
+    parser.add_argument("--collection", default="labor_law_active")
     parser.add_argument(
         "--dense-model",
         default="intfloat/multilingual-e5-large",

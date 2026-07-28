@@ -1,34 +1,92 @@
-# Retrieval benchmark targets.
-# Add `include Makefile.eval.inc` at the end of the root Makefile.
+# Retrieval and indexing targets for the unified 2026-07-27 candidate.
 
-.PHONY: golden-audit-rebased legal-eval-bm25
+UNIFIED_RELEASE_DIR ?= data/releases/labor-law-2026-07-27-candidate
+UNIFIED_CHUNKS ?= $(UNIFIED_RELEASE_DIR)/chunks.jsonl
+UNIFIED_GOLDEN ?= data/evaluation/golden_questions_v3_unified_candidate.json
+UNIFIED_E5_AUDIT ?= data/quality/unified_e5_token_audit/summary.json
+UNIFIED_EXPECTED_CHUNKS ?= 833
+UNIFIED_EXPECTED_SHA256 ?= fd35bb1a94a3036f7977781de17bb1b49b12c58be61fc74efac68dcf8a7a8c54
+UNIFIED_RESULTS_DIR ?= data/evaluation/results
+QDRANT_UNIFIED_COLLECTION ?= labor_law_20260727_fd35bb1a
+QDRANT_ACTIVE_ALIAS ?= labor_law_active
+E5_MODEL ?= intfloat/multilingual-e5-large
+E5_DEVICE ?= cpu
+E5_BATCH_SIZE ?= 16
 
-golden-audit-rebased:
+.PHONY: golden-audit-unified legal-eval-bm25 \
+	qdrant-index-unified qdrant-verify-unified \
+	qdrant-activate-unified qdrant-verify-alias-unified \
+	legal-eval-dense-hybrid legal-eval-dense-hybrid-diverse \
+	legal-eval-compare legal-eval-tune legal-eval-tune-fast \
+	unified-runtime
+
+golden-audit-unified:
 	PYTHONPATH=.:backend:$${PYTHONPATH} $(PYTHON) scripts/audit_golden_dataset.py \
-	  --golden data/evaluation/golden_questions_v1_rebased_current_phapdien.json \
-	  --chunks data/processed/legal_chunks.jsonl \
-	  --report data/evaluation/golden_v1_rebased_audit.json \
+	  --golden $(UNIFIED_GOLDEN) \
+	  --chunks $(UNIFIED_CHUNKS) \
+	  --report data/evaluation/golden_v3_audit.json \
 	  --strict
 
-legal-eval-bm25: golden-audit-rebased
+legal-eval-bm25: golden-audit-unified
 	PYTHONPATH=.:backend:$${PYTHONPATH} $(PYTHON) scripts/evaluate_lexical_baseline.py \
-	  --golden data/evaluation/golden_questions_v1_rebased_current_phapdien.json \
-	  --chunks data/processed/legal_chunks.jsonl \
-	  --output data/evaluation/results/phapdien_bm25_baseline.json \
+	  --golden $(UNIFIED_GOLDEN) \
+	  --chunks $(UNIFIED_CHUNKS) \
+	  --output $(UNIFIED_RESULTS_DIR)/unified_bm25_baseline.json \
 	  --k 5 10 20
-# Add this content to Makefile.eval.inc.
 
-E5_MODEL ?= intfloat/multilingual-e5-small
-E5_DEVICE ?= cpu
-E5_BATCH_SIZE ?= 32
+qdrant-index-unified:
+	PYTHONPATH=.:backend:$${PYTHONPATH} $(PYTHON) -m backend.app.ingestion.index_qdrant \
+	  --chunks $(UNIFIED_CHUNKS) \
+	  --audit-summary $(UNIFIED_E5_AUDIT) \
+	  --collection $(QDRANT_UNIFIED_COLLECTION) \
+	  --expected-chunks $(UNIFIED_EXPECTED_CHUNKS) \
+	  --expected-sha256 $(UNIFIED_EXPECTED_SHA256) \
+	  --dense-model intfloat/multilingual-e5-large \
+	  --dense-vector-name dense \
+	  --dense-size 1024 \
+	  --sparse-model Qdrant/bm25 \
+	  --sparse-vector-name sparse \
+	  --resume \
+	  --summary-output data/processed/qdrant_index/unified_summary.json
 
-.PHONY: legal-eval-dense-hybrid legal-eval-dense-hybrid-diverse legal-eval-compare
+qdrant-verify-unified:
+	PYTHONPATH=.:backend:$${PYTHONPATH} $(PYTHON) -m backend.app.ingestion.index_qdrant \
+	  --chunks $(UNIFIED_CHUNKS) \
+	  --audit-summary $(UNIFIED_E5_AUDIT) \
+	  --collection $(QDRANT_UNIFIED_COLLECTION) \
+	  --expected-chunks $(UNIFIED_EXPECTED_CHUNKS) \
+	  --expected-sha256 $(UNIFIED_EXPECTED_SHA256) \
+	  --dense-model intfloat/multilingual-e5-large \
+	  --dense-vector-name dense \
+	  --dense-size 1024 \
+	  --sparse-model Qdrant/bm25 \
+	  --sparse-vector-name sparse \
+	  --verify-only \
+	  --summary-output data/processed/qdrant_index/unified_verify.json
 
-legal-eval-dense-hybrid: golden-audit-rebased
+qdrant-activate-unified:
+	PYTHONPATH=.:backend:$${PYTHONPATH} $(PYTHON) -m backend.app.ingestion.qdrant_alias \
+	  --collection $(QDRANT_UNIFIED_COLLECTION) \
+	  --alias $(QDRANT_ACTIVE_ALIAS) \
+	  --expected-chunks $(UNIFIED_EXPECTED_CHUNKS) \
+	  --expected-sha256 $(UNIFIED_EXPECTED_SHA256) \
+	  --summary-output data/processed/qdrant_index/unified_alias.json
+
+qdrant-verify-alias-unified:
+	PYTHONPATH=.:backend:$${PYTHONPATH} $(PYTHON) -m backend.app.ingestion.qdrant_alias \
+	  --collection $(QDRANT_UNIFIED_COLLECTION) \
+	  --alias $(QDRANT_ACTIVE_ALIAS) \
+	  --expected-chunks $(UNIFIED_EXPECTED_CHUNKS) \
+	  --expected-sha256 $(UNIFIED_EXPECTED_SHA256) \
+	  --verify-only \
+	  --summary-output data/processed/qdrant_index/unified_alias_verify.json
+
+legal-eval-dense-hybrid: golden-audit-unified
 	PYTHONPATH=.:backend:scripts:$${PYTHONPATH} $(PYTHON) scripts/evaluate_dense_hybrid.py \
-	  --golden data/evaluation/golden_questions_v1_rebased_current_phapdien.json \
-	  --chunks data/processed/legal_chunks.jsonl \
-	  --output-dir data/evaluation/results \
+	  --golden $(UNIFIED_GOLDEN) \
+	  --chunks $(UNIFIED_CHUNKS) \
+	  --output-dir $(UNIFIED_RESULTS_DIR) \
+	  --output-prefix unified \
 	  --model $(E5_MODEL) \
 	  --device $(E5_DEVICE) \
 	  --batch-size $(E5_BATCH_SIZE) \
@@ -36,11 +94,12 @@ legal-eval-dense-hybrid: golden-audit-rebased
 	  --candidate-k 50 \
 	  --k 5 10 20
 
-legal-eval-dense-hybrid-diverse: golden-audit-rebased
+legal-eval-dense-hybrid-diverse: golden-audit-unified
 	PYTHONPATH=.:backend:scripts:$${PYTHONPATH} $(PYTHON) scripts/evaluate_dense_hybrid.py \
-	  --golden data/evaluation/golden_questions_v1_rebased_current_phapdien.json \
-	  --chunks data/processed/legal_chunks.jsonl \
-	  --output-dir data/evaluation/results \
+	  --golden $(UNIFIED_GOLDEN) \
+	  --chunks $(UNIFIED_CHUNKS) \
+	  --output-dir $(UNIFIED_RESULTS_DIR) \
+	  --output-prefix unified \
 	  --model $(E5_MODEL) \
 	  --device $(E5_DEVICE) \
 	  --batch-size $(E5_BATCH_SIZE) \
@@ -53,16 +112,15 @@ legal-eval-dense-hybrid-diverse: golden-audit-rebased
 legal-eval-compare:
 	PYTHONPATH=.:backend:scripts:$${PYTHONPATH} $(PYTHON) scripts/compare_retrieval_reports.py \
 	  --k 10 \
-	  data/evaluation/results/phapdien_bm25_baseline.json \
-	  data/evaluation/results/phapdien_dense.json \
-	  data/evaluation/results/phapdien_hybrid.json
-.PHONY: legal-eval-tune legal-eval-tune-fast
+	  $(UNIFIED_RESULTS_DIR)/unified_bm25_baseline.json \
+	  $(UNIFIED_RESULTS_DIR)/unified_dense.json \
+	  $(UNIFIED_RESULTS_DIR)/unified_hybrid.json
 
-legal-eval-tune: golden-audit-rebased
+legal-eval-tune: golden-audit-unified
 	PYTHONPATH=.:backend:scripts:$${PYTHONPATH} $(PYTHON) scripts/tune_retrieval_parameters.py \
-	  --golden data/evaluation/golden_questions_v1_rebased_current_phapdien.json \
-	  --chunks data/processed/legal_chunks.jsonl \
-	  --output-dir data/evaluation/tuning \
+	  --golden $(UNIFIED_GOLDEN) \
+	  --chunks $(UNIFIED_CHUNKS) \
+	  --output-dir data/evaluation/tuning-unified \
 	  --embedding-cache-dir data/evaluation/cache/embeddings \
 	  --model $(E5_MODEL) \
 	  --device $(E5_DEVICE) \
@@ -75,11 +133,11 @@ legal-eval-tune: golden-audit-rebased
 	  --chunks-per-article 1 2 3 \
 	  --k 5 10 20
 
-legal-eval-tune-fast: golden-audit-rebased
+legal-eval-tune-fast: golden-audit-unified
 	PYTHONPATH=.:backend:scripts:$${PYTHONPATH} $(PYTHON) scripts/tune_retrieval_parameters.py \
-	  --golden data/evaluation/golden_questions_v1_rebased_current_phapdien.json \
-	  --chunks data/processed/legal_chunks.jsonl \
-	  --output-dir data/evaluation/tuning-fast \
+	  --golden $(UNIFIED_GOLDEN) \
+	  --chunks $(UNIFIED_CHUNKS) \
+	  --output-dir data/evaluation/tuning-unified-fast \
 	  --embedding-cache-dir data/evaluation/cache/embeddings \
 	  --model $(E5_MODEL) \
 	  --device $(E5_DEVICE) \
@@ -91,3 +149,6 @@ legal-eval-tune-fast: golden-audit-rebased
 	  --selected-articles 8 10 \
 	  --chunks-per-article 1 2 3 \
 	  --k 5 10 20
+
+unified-runtime:
+	bash scripts/index_and_evaluate_unified.sh

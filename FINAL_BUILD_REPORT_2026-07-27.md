@@ -7,7 +7,7 @@ chạy offline:
 
 - 18 văn bản;
 - 513 đơn vị truy hồi, không trùng `article_id` hoặc `article_code`;
-- 778 chunk, không trùng `chunk_id` hoặc `chunk_key`;
+- 833 chunk, không trùng `chunk_id` hoặc `chunk_key`;
 - 513/513 đơn vị có ít nhất một chunk;
 - 220/220 Điều của `18/VBHN-VPQH`;
 - 2 Điều chính + 6 đơn vị Phụ lục I.4 của `66.18/2026/NQ-CP`;
@@ -37,12 +37,20 @@ data/quality/unified_release_validation.json
 
 ## Gate còn chặn production
 
-- `e5_token_limit_verified = false`: runtime build offline không có cache
-  tokenizer `intfloat/multilingual-e5-large`.
+- E5 audit đã hoàn tất bằng tokenizer
+  `intfloat/multilingual-e5-large`: 833/833 chunk được đo chính xác, lớn nhất
+  478 token, không có chunk từ 480 token trở lên.
 - `source_hashes_verified = false`: 16 snapshot VBPL đều khớp hash toàn văn
   trong manifest nhưng thiếu `SHA256SUMS.txt` và raw API response.
 - `authority_review_passed = false`: cần người có thẩm quyền duyệt
   `legal_effect_review.json` và bind approval vào hash manifest.
-- Qdrant chưa được index lại từ release 778 chunk.
+- Qdrant chưa được index lại từ release 833 chunk trong bản bundle; chạy
+  `bash scripts/index_and_evaluate_unified.sh` để index và verify an toàn.
+
+BM25 baseline trên 44 câu golden đang bật đã chạy thành công:
+
+- Article Any-Hit@10: `0.931818`;
+- Article Recall@10: `0.776326`;
+- Evidence Recall@10: `0.687663`.
 
 Do đó kết quả đúng là `PASS_TECHNICAL_CANDIDATE`, không phải production-ready.
