@@ -17,6 +17,13 @@ class Settings(BaseSettings):
     # Retrieval always uses an alias. Physical collections are versioned so a
     # new corpus can be indexed and verified without mutating the old index.
     qdrant_collection: str = "labor_law_active"
+    qdrant_expected_collection: str = "labor_law_20260727_fd35bb1a"
+    qdrant_api_key: str = ""
+    qdrant_readiness_timeout_seconds: float = 3.0
+    runtime_readiness_ttl_seconds: float = 30.0
+    runtime_readiness_failure_ttl_seconds: float = 5.0
+    runtime_java_timeout_seconds: float = 3.0
+    runtime_smoke_query: str = "quyền của người lao động"
     dense_embedding_model: str = "intfloat/multilingual-e5-large"
     dense_vector_name: str = "dense"
     dense_vector_size: int = 1024
@@ -28,15 +35,15 @@ class Settings(BaseSettings):
 
     # Retrieval core
     legal_chunks_path: str = (
-        "data/releases/labor-law-2026-07-27-candidate/chunks.jsonl"
+        "data/releases/labor-law-2026-07-28-candidate/chunks.jsonl"
     )
     corpus_release_manifest_path: str = (
-        "data/releases/labor-law-2026-07-27-candidate/manifest.json"
+        "data/releases/labor-law-2026-07-28-candidate/manifest.json"
     )
     e5_audit_summary_path: str = (
         "data/quality/unified_e5_token_audit/summary.json"
     )
-    corpus_release_id: str = "labor-law-2026-07-27-candidate"
+    corpus_release_id: str = "labor-law-2026-07-28-candidate"
     corpus_require_authority_approval: bool = True
     official_sources_path: str = (
         "data/reference/official_legal_sources.json"

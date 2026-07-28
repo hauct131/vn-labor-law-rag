@@ -27,5 +27,6 @@ async def root() -> dict[str, str]:
     return {
         "message": settings.app_name,
         "docs": "/docs",
-        "health": "/api/health",
+        "live": "/api/live",
+        "ready": "/api/ready",
     }

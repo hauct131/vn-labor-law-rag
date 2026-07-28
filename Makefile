@@ -1,19 +1,29 @@
-.PHONY: infra backend test test-ingestion test-corpus vbpl-doctor vbpl-canary vbpl-soak vbpl-fetch vbpl-build-articles vbpl-build-chunks vbpl-audit-chunks vbpl-corpus-pipeline official-docx-release golden-v3-rebase unified-release-validate unified-release
+.PHONY: infra backend runtime-assets runtime-assets-docker test test-ingestion test-corpus vbpl-doctor vbpl-canary vbpl-soak vbpl-fetch vbpl-build-articles vbpl-build-chunks vbpl-audit-chunks vbpl-corpus-pipeline official-docx-release golden-v3-rebase unified-release-validate unified-release
 
 PYTHON ?= .venv/bin/python3
 FASTEMBED_CACHE_DIR ?= $(HOME)/.cache/fastembed
+VNCORENLP_MODEL_DIR ?= models/vncorenlp
 VBPL_TARGET_TOKENS ?= 400
 VBPL_MAX_TOKENS ?= 600
 VBPL_EXPECTED_CHUNKS = $(shell wc -l < data/processed/vbpl_legal_chunks.jsonl)
 VBPL_CANARY_URL := https://vbpl.vn/van-ban/chi-tiet/nghi-dinh-so-219-2025-nd-cp-quy-dinh-ve-nguoi-lao-dong-nuoc-ngoai-lam-viec-tai-viet-nam--180273
 OFFICIAL_DOCX_SOURCE_DIR ?= data/sources/official_docx
-UNIFIED_RELEASE_DIR ?= data/releases/labor-law-2026-07-27-candidate
+UNIFIED_RELEASE_DIR ?= data/releases/labor-law-2026-07-28-candidate
 
 infra:
 	docker compose up -d qdrant neo4j
 
 backend:
-	cd backend && uvicorn app.main:app --reload
+	PYTHONPATH=.:backend:$${PYTHONPATH} $(PYTHON) -m uvicorn app.main:app --reload
+
+runtime-assets:
+	PYTHONPATH=backend:$${PYTHONPATH} $(PYTHON) \
+	  -m app.cli.prepare_runtime_assets \
+	  --vncorenlp-dir $(VNCORENLP_MODEL_DIR) \
+	  --fastembed-cache-dir $(FASTEMBED_CACHE_DIR)
+
+runtime-assets-docker:
+	docker compose run --rm runtime-assets
 
 test:
 	PYTHONPATH=.:backend:$${PYTHONPATH} $(PYTHON) -m pytest backend/tests

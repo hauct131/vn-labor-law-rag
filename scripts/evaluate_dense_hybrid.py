@@ -386,7 +386,7 @@ def parse_args() -> argparse.Namespace:
         "--chunks",
         type=Path,
         default=Path(
-            "data/releases/labor-law-2026-07-27-candidate/chunks.jsonl"
+            "data/releases/labor-law-2026-07-28-candidate/chunks.jsonl"
         ),
     )
     parser.add_argument(

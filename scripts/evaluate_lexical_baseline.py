@@ -6,7 +6,7 @@ No external search engine or Python dependency is required.
 Example:
     python scripts/evaluate_lexical_baseline.py \
       --golden data/evaluation/golden_questions_v3_unified_candidate.json \
-      --chunks data/releases/labor-law-2026-07-27-candidate/chunks.jsonl \
+      --chunks data/releases/labor-law-2026-07-28-candidate/chunks.jsonl \
       --output data/evaluation/results/unified_bm25_baseline.json \
       --k 5 10 20
 """
@@ -220,7 +220,7 @@ def parse_args() -> argparse.Namespace:
         "--chunks",
         type=Path,
         default=Path(
-            "data/releases/labor-law-2026-07-27-candidate/chunks.jsonl"
+            "data/releases/labor-law-2026-07-28-candidate/chunks.jsonl"
         ),
     )
     parser.add_argument(

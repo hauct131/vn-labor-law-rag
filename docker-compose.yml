@@ -28,11 +28,14 @@ services:
     environment:
       QDRANT_URL: http://qdrant:6333
       QDRANT_COLLECTION: labor_law_active
+      QDRANT_EXPECTED_COLLECTION: labor_law_20260727_fd35bb1a
+      RUNTIME_READINESS_TTL_SECONDS: "30"
+      RUNTIME_READINESS_FAILURE_TTL_SECONDS: "5"
       NEO4J_URI: bolt://neo4j:7687
-      LEGAL_CHUNKS_PATH: /app/data/releases/labor-law-2026-07-27-candidate/chunks.jsonl
-      CORPUS_RELEASE_MANIFEST_PATH: /app/data/releases/labor-law-2026-07-27-candidate/manifest.json
+      LEGAL_CHUNKS_PATH: /app/data/releases/labor-law-2026-07-28-candidate/chunks.jsonl
+      CORPUS_RELEASE_MANIFEST_PATH: /app/data/releases/labor-law-2026-07-28-candidate/manifest.json
       E5_AUDIT_SUMMARY_PATH: /app/data/quality/unified_e5_token_audit/summary.json
-      CORPUS_RELEASE_ID: labor-law-2026-07-27-candidate
+      CORPUS_RELEASE_ID: labor-law-2026-07-28-candidate
       CORPUS_REQUIRE_AUTHORITY_APPROVAL: "true"
       RETRIEVAL_EXPECTED_CHUNKS: "833"
       RETRIEVAL_CORPUS_SHA256: fd35bb1a94a3036f7977781de17bb1b49b12c58be61fc74efac68dcf8a7a8c54
@@ -43,7 +46,27 @@ services:
       - neo4j
     volumes:
       - ./data:/app/data:ro
-      - "${VNCORENLP_HOST_DIR:-../models/vncorenlp}:/app/models/vncorenlp:ro"
+      - "${VNCORENLP_HOST_DIR:-./models/vncorenlp}:/app/models/vncorenlp:ro"
+      - fastembed_cache:/root/.cache/fastembed
+
+  runtime-assets:
+    profiles:
+      - tools
+    build:
+      context: ./backend
+    environment:
+      VNCORENLP_MODEL_DIR: /app/models/vncorenlp
+      FASTEMBED_CACHE_DIR: /root/.cache/fastembed
+    command:
+      - python
+      - -m
+      - app.cli.prepare_runtime_assets
+      - --vncorenlp-dir
+      - /app/models/vncorenlp
+      - --fastembed-cache-dir
+      - /root/.cache/fastembed
+    volumes:
+      - "${VNCORENLP_HOST_DIR:-./models/vncorenlp}:/app/models/vncorenlp"
       - fastembed_cache:/root/.cache/fastembed
 
   frontend:

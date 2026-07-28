@@ -73,7 +73,7 @@ def main() -> int:
         "--release-dir",
         type=Path,
         default=Path(
-            "data/releases/labor-law-2026-07-27-candidate"
+            "data/releases/labor-law-2026-07-28-candidate"
         ),
     )
     parser.add_argument(
@@ -216,13 +216,28 @@ def main() -> int:
         base_snapshot_audit["document_count"] == 16
         and base_snapshot_audit["full_text_hash_match_count"] == 16
     )
-    checks["base_vbpl_provenance_gap_disclosed"] = (
+    base_vbpl_provenance_verified = (
+        base_snapshot_audit["document_count"] == 16
+        and base_snapshot_audit["full_text_hash_match_count"] == 16
+        and base_snapshot_audit["fully_verifiable_count"] == 16
+        and base_snapshot_audit["status"] == "complete"
+        and manifest["gates"]["source_hashes_verified"] is True
+        and manifest["gates"][
+            "base_vbpl_snapshot_verification_passed"
+        ] is True
+        and manifest["gates"]["base_vbpl_snapshot_status"] == "complete"
+    )
+    legacy_provenance_gap_disclosed = (
         base_snapshot_audit["fully_verifiable_count"] == 0
         and base_snapshot_audit["status"] == "incomplete_supplied_archive"
         and manifest["gates"]["source_hashes_verified"] is False
         and manifest["gates"][
             "base_vbpl_snapshot_verification_passed"
         ] is False
+    )
+    checks["base_vbpl_provenance_verified_or_gap_disclosed"] = (
+        base_vbpl_provenance_verified
+        or legacy_provenance_gap_disclosed
     )
 
     chunks_by_id = {chunk["chunk_id"]: chunk for chunk in chunks}
@@ -283,7 +298,7 @@ def main() -> int:
         == manifest["hashes"]["chunks_sha256"]
     )
     checks["docker_reads_release_chunks"] = (
-        "/app/data/releases/labor-law-2026-07-27-candidate/chunks.jsonl"
+        "/app/data/releases/labor-law-2026-07-28-candidate/chunks.jsonl"
         in docker_text
         and "/app/data/processed/legal_chunks.jsonl" not in docker_text
     )
@@ -305,9 +320,8 @@ def main() -> int:
         "base_vbpl_snapshot_verification_passed"
     ):
         warnings.append(
-            "All 16 supplied VBPL snapshots lack SHA256SUMS.txt and "
-            "portal/api_responses.json; their full_text hashes match the "
-            "manifests, but end-to-end raw provenance is incomplete."
+            "Base VBPL snapshot provenance is incomplete or technical "
+            "checksum verification did not pass."
         )
     if not manifest["gates"].get("authority_review_passed"):
         warnings.append(

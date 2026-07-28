@@ -2,13 +2,13 @@
 Integration test suite for the VBPL Chunking Pipeline.
 """
 
+import hashlib
 import json
 import subprocess
 import sys
 from pathlib import Path
 
 import pytest
-from fastembed import TextEmbedding
 
 from backend.app.ingestion.legal_chunker import (
     ChunkingConfig,
@@ -105,28 +105,47 @@ def test_vbpl_cli_strict_build(tmp_path):
     assert summary_data["validation"]["error_count"] == 0
 
 
-@pytest.mark.integration
-def test_vbpl_e5_token_overflow(vbpl_chunks):
-    cache_dir = Path.home() / ".cache" / "fastembed"
-    if not cache_dir.exists():
-        embedding_model = TextEmbedding(model_name="intfloat/multilingual-e5-large")
-    else:
-        embedding_model = TextEmbedding(
-            model_name="intfloat/multilingual-e5-large",
-            cache_dir=str(cache_dir),
-            local_files_only=True,
-        )
+def test_vbpl_e5_token_overflow():
+    """Verify that the exact pre-truncation E5 audit is fresh and valid."""
+    audit_path = (
+        REPO_ROOT
+        / "data"
+        / "quality"
+        / "vbpl_e5_token_audit"
+        / "summary.json"
+    )
 
-    tokenizer = embedding_model.model.tokenizer
+    assert CHUNKS_PATH.is_file(), f"Missing chunk artifact: {CHUNKS_PATH}"
+    assert audit_path.is_file(), f"Missing E5 audit artifact: {audit_path}"
 
-    over_limit = []
-    for chunk in vbpl_chunks:
-        text = "passage: " + chunk["content"]
-        tokens = tokenizer.encode(text)
-        if len(tokens.ids) > 512:
-            over_limit.append((chunk["chunk_id"], len(tokens.ids)))
+    audit = json.loads(audit_path.read_text(encoding="utf-8"))
+    chunks_sha256 = hashlib.sha256(CHUNKS_PATH.read_bytes()).hexdigest()
+    chunk_count = sum(
+        1
+        for line in CHUNKS_PATH.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    )
 
-    assert len(over_limit) == 0, f"Found {len(over_limit)} chunks exceeding 512 E5 tokens: {over_limit[:5]}"
+    assert audit["status"] == "completed"
+    assert audit["input_sha256"] == chunks_sha256, (
+        "E5 audit is stale: its input hash differs from the current chunks"
+    )
+    assert audit["chunk_count"] == chunk_count
+    assert audit["model_name"] == "intfloat/multilingual-e5-large"
+    assert audit["fastembed_version"] == "0.8.0"
+    assert audit["exact_measurement"] is True
+    assert audit["actual_model_max_tokens"] == 512
+    assert audit["validation"]["is_valid"] is True
+
+    max_tokens = audit["token_statistics"]["max"]
+    overflow_count = audit["risk_counts"][
+        "strictly_over_model_limit_count"
+    ]
+
+    assert max_tokens <= audit["actual_model_max_tokens"]
+    assert overflow_count == 0, (
+        f"Found {overflow_count} chunks exceeding the E5 limit"
+    )
 
 
 def test_existing_legal_chunker_regression(vbpl_corpus):

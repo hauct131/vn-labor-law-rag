@@ -291,7 +291,7 @@ def create_sparse_retriever(
         "corpus_path": getattr(
             settings_obj,
             "legal_chunks_path",
-            "data/releases/labor-law-2026-07-27-candidate/chunks.jsonl",
+            "data/releases/labor-law-2026-07-28-candidate/chunks.jsonl",
         ),
         "model_dir": getattr(
             settings_obj,

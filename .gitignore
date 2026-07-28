@@ -110,3 +110,14 @@ data/raw/vbpl/_cache/
 
 # Regenerable VBPL crawler cache
 data/raw/vbpl/_cache/
+
+# Local secrets and audit artifacts
+.env.pre-qdrant-alias-*
+.patch_backups/
+logs/
+
+# Interrupted local releases
+data/releases/.labor-law-*.staging.*/
+data/releases/*.failed-*/
+data/releases/*.pre-resume-*/
+data/releases/*.rollback-*/

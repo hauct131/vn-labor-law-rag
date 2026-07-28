@@ -15,12 +15,12 @@ set +e
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 REPO="$(cd -- "${SCRIPT_DIR}/.." && pwd)"
-RELEASE_REL="data/releases/labor-law-2026-07-27-candidate"
+RELEASE_REL="data/releases/labor-law-2026-07-28-candidate"
 CHUNKS_REL="${RELEASE_REL}/chunks.jsonl"
 AUDIT_REL="data/quality/unified_e5_token_audit/summary.json"
 GOLDEN_REL="data/evaluation/golden_questions_v3_unified_candidate.json"
 LEGACY_COLLECTION="${QDRANT_LEGACY_COLLECTION:-labor_law}"
-INDEX_COLLECTION="${QDRANT_INDEX_COLLECTION:-labor_law_20260727_fd35bb1a}"
+INDEX_COLLECTION="${QDRANT_INDEX_COLLECTION:-labor_law_20260728_fd35bb1a}"
 ACTIVE_ALIAS="${QDRANT_ACTIVE_ALIAS:-labor_law_active}"
 QDRANT_URL="${QDRANT_URL:-http://localhost:6333}"
 EXPECTED_CHUNKS="833"
@@ -35,6 +35,7 @@ ALIAS_SUMMARY="${LOG_DIR}/qdrant_alias_activate_${STAMP}.json"
 ALIAS_VERIFY_SUMMARY="${LOG_DIR}/qdrant_alias_verify_${STAMP}.json"
 PHYSICAL_SMOKE_REPORT="${LOG_DIR}/qdrant_physical_dense_smoke_${STAMP}.json"
 ALIAS_SMOKE_REPORT="${LOG_DIR}/qdrant_alias_dense_smoke_${STAMP}.json"
+ACTIVATE_ALIAS="${ACTIVATE_ALIAS:-0}"
 
 if [[ -n "${PYTHON_BIN:-}" ]]; then
   PYTHON_EXE="${PYTHON_BIN}"
@@ -367,7 +368,7 @@ PY
     echo "Lý do: sentence-transformers chưa có hoặc RUN_DENSE_HYBRID=0."
     echo "Cài requirements-evaluation.txt rồi chạy: make legal-eval-dense-hybrid"
   fi
-
+if [[ "$ACTIVATE_ALIAS" == "1" ]]; then
   echo
   echo "===== ACTIVATE BLUE/GREEN ALIAS ====="
   echo "Chỉ đổi alias; không xóa hoặc sửa collection '$LEGACY_COLLECTION'."
@@ -477,7 +478,12 @@ env_path.chmod(original_mode)
 print(f"Updated .env QDRANT_COLLECTION={alias}")
 print(f"Backup: {backup}")
 PY
-
+  else
+    echo
+    echo "===== STAGING ONLY ====="
+    echo "ACTIVATE_ALIAS=0: không đổi alias '$ACTIVE_ALIAS'."
+    echo "Không cập nhật QDRANT_COLLECTION trong .env."
+  fi
   echo
   echo "UNIFIED_CORE_WORKFLOW_COMPLETED"
   echo "Index summary: $INDEX_SUMMARY"
@@ -486,7 +492,11 @@ PY
   echo "Alias verify summary: $ALIAS_VERIFY_SUMMARY"
   echo "Legacy rollback collection: $LEGACY_COLLECTION"
   echo "Active alias: $ACTIVE_ALIAS"
-  echo "QDRANT_BLUE_GREEN_833_ACTIVE"
+  if [[ "$ACTIVATE_ALIAS" == "1" ]]; then
+    echo "QDRANT_BLUE_GREEN_833_ACTIVE"
+  else
+    echo "QDRANT_STAGING_833_READY_NOT_ACTIVATED"
+  fi
 )
 
 run_all 2>&1 | tee "$LOG_FILE"
@@ -506,8 +516,5 @@ if [[ -t 0 ]]; then
   read -r -p "Nhấn Enter để kết thúc script..." _
 fi
 
-# Preserve the IDE terminal. The log and marker above retain the real result.
-if [[ "${UNIFIED_RUNTIME_PROPAGATE_EXIT:-0}" == "1" ]]; then
-  exit "$script_rc"
-fi
-exit 0
+# Preserve the optional interactive pause, but always propagate the real result.
+exit "$script_rc"

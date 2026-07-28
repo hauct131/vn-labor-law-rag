@@ -63,7 +63,7 @@ def main() -> int:
         "--release-dir",
         type=Path,
         default=Path(
-            "data/releases/labor-law-2026-07-27-candidate"
+            "data/releases/labor-law-2026-07-28-candidate"
         ),
     )
     parser.add_argument(

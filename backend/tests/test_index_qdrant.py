@@ -410,7 +410,7 @@ def test_payload_structure(sample_chunks: list[dict]):
 def test_defaults_target_unified_833_release():
     expected_chunks = (
         Path(__file__).resolve().parents[2]
-        / "data/releases/labor-law-2026-07-27-candidate/chunks.jsonl"
+        / "data/releases/labor-law-2026-07-28-candidate/chunks.jsonl"
     )
 
     assert DEFAULT_CHUNKS.resolve() == expected_chunks.resolve()

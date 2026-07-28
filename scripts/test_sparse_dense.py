@@ -32,7 +32,7 @@ from backend.app.retrieval.vncorenlp_bm25 import (
 LOGGER = logging.getLogger("retrieval_model_probe")
 
 DEFAULT_CHUNKS = Path(
-    "data/releases/labor-law-2026-07-27-candidate/chunks.jsonl"
+    "data/releases/labor-law-2026-07-28-candidate/chunks.jsonl"
 )
 DEFAULT_QUESTIONS = Path(
     "data/evaluation/retrieval_smoke_questions.json"

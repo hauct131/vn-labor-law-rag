@@ -283,7 +283,7 @@ def parse_args():
         "--chunks",
         type=Path,
         default=Path(
-            "data/releases/labor-law-2026-07-27-candidate/chunks.jsonl"
+            "data/releases/labor-law-2026-07-28-candidate/chunks.jsonl"
         ),
     )
     p.add_argument(

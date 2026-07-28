@@ -35,6 +35,9 @@ from backend.app.ingestion.legal_chunker import (
 )
 from scripts.audit_e5_token_lengths import load_audit_tokenizer
 from scripts.build_vbpl_articles import parse_content_units
+from scripts.vbpl_portal import (
+    verify_snapshot as verify_vbpl_snapshot,
+)
 
 
 NS = {"w": "http://schemas.openxmlformats.org/wordprocessingml/2006/main"}
@@ -814,6 +817,21 @@ def audit_base_vbpl_snapshots(run_manifest_path: Path) -> dict[str, Any]:
             review_status = manifest.get("review_status")
         if full_text_path.is_file():
             actual_hash = sha256_file(full_text_path)
+
+        snapshot_verification = None
+        verification_error = None
+        try:
+            snapshot_verification = verify_vbpl_snapshot(
+                snapshot,
+                expected_document_number=result["document_number"],
+            )
+        except Exception as exc:
+            verification_error = f"{type(exc).__name__}: {exc}"
+
+        technical_verification_passed = bool(
+            isinstance(snapshot_verification, dict)
+            and snapshot_verification.get("valid") is True
+        )
         records.append(
             {
                 "document_number": result["document_number"],
@@ -824,14 +842,15 @@ def audit_base_vbpl_snapshots(run_manifest_path: Path) -> dict[str, Any]:
                 ),
                 "missing_required_artifacts": missing,
                 "review_status": review_status,
+                "technical_verification_passed": (
+                    technical_verification_passed
+                ),
+                "verification_error": verification_error,
                 "fully_verifiable": (
-                    not missing
+                    technical_verification_passed
+                    and not missing
                     and bool(expected_hash)
                     and actual_hash == expected_hash
-                    and review_status not in {
-                        None,
-                        "staged_unapproved",
-                    }
                 ),
             }
         )
@@ -1157,7 +1176,15 @@ def build_release(args: argparse.Namespace) -> dict[str, Any]:
             "validation": validation,
         },
         "gates": {
-            "source_hashes_verified": False,
+            "source_hashes_verified": (
+                base_snapshot_audit["document_count"] == 16
+                and base_snapshot_audit[
+                    "full_text_hash_match_count"
+                ] == 16
+                and base_snapshot_audit[
+                    "fully_verifiable_count"
+                ] == 16
+            ),
             "official_docx_source_hashes_verified": True,
             "base_vbpl_full_text_hashes_match": (
                 base_snapshot_audit["full_text_hash_match_count"] == 16
@@ -1248,7 +1275,7 @@ def parse_args() -> argparse.Namespace:
         "--release-dir",
         type=Path,
         default=Path(
-            "data/releases/labor-law-2026-07-27-candidate"
+            "data/releases/labor-law-2026-07-28-candidate"
         ),
     )
     parser.add_argument(

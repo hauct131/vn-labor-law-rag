@@ -2,6 +2,7 @@
 
 from fastapi.testclient import TestClient
 
+from app.api.routes.health import require_authorized_release
 from app.chains.generation_chain import GenerationResult
 from app.main import app
 from app.retrieval.models import RetrievalHit
@@ -51,6 +52,7 @@ def test_http_request_runs_real_orchestration_end_to_end() -> None:
         generator=GroundedGenerator(),
         top_k=5,
     )
+    app.dependency_overrides[require_authorized_release] = lambda: None
     app.dependency_overrides[get_rag_service] = lambda: service
     try:
         response = TestClient(app).post("/api/ask", json={
