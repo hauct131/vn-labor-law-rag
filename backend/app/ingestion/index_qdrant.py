@@ -390,6 +390,15 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--chunks", type=Path, default=DEFAULT_CHUNKS)
     parser.add_argument("--audit-summary", type=Path, default=DEFAULT_AUDIT_SUMMARY)
     parser.add_argument("--qdrant-url", default=settings.qdrant_url)
+    parser.add_argument(
+        "--qdrant-api-key",
+        default=settings.qdrant_api_key,
+        help=(
+            "Qdrant API key. Defaults to QDRANT_API_KEY from settings; "
+            "prefer the environment variable so the secret is not exposed "
+            "in shell history."
+        ),
+    )
     parser.add_argument("--collection", default=settings.qdrant_collection)
     parser.add_argument("--dense-model", default=settings.dense_embedding_model)
     parser.add_argument("--dense-vector-name", default=settings.dense_vector_name)
@@ -439,6 +448,7 @@ def run_indexer(args: argparse.Namespace) -> dict[str, Any]:
         "corpus_sha256": actual_sha256,
         "audit_summary": str(args.audit_summary),
         "qdrant_url": args.qdrant_url,
+        "qdrant_api_key_configured": bool(args.qdrant_api_key),
         "collection": args.collection,
         "dense_model": args.dense_model,
         "dense_vector_name": args.dense_vector_name,
@@ -465,7 +475,10 @@ def run_indexer(args: argparse.Namespace) -> dict[str, Any]:
             "Missing retrieval dependency. Activate backend/.venv and install backend/requirements.txt."
         ) from exc
 
-    client = QdrantClient(url=args.qdrant_url)
+    client_kwargs: dict[str, Any] = {"url": args.qdrant_url}
+    if args.qdrant_api_key:
+        client_kwargs["api_key"] = args.qdrant_api_key
+    client = QdrantClient(**client_kwargs)
 
     if args.verify_only:
         LOGGER.info("Running verify-only checks on collection '%s'", args.collection)

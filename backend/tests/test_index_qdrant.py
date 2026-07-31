@@ -596,3 +596,46 @@ def test_cli_help_exits_zero():
     with pytest.raises(SystemExit) as exc:
         parser.parse_args(["--help"])
     assert exc.value.code == 0
+
+
+def test_indexer_passes_qdrant_api_key_without_reporting_secret(
+    corpus_file: Path,
+    audit_summary_file: Path,
+    sample_chunks: list[dict],
+):
+    sha = compute_sha256(corpus_file)
+    args = build_parser().parse_args([
+        "--chunks", str(corpus_file),
+        "--audit-summary", str(audit_summary_file),
+        "--expected-chunks", "1",
+        "--expected-sha256", sha,
+        "--collection", "labor_law_test",
+        "--qdrant-api-key", "test-secret",
+        "--verify-only",
+    ])
+
+    mock_client = MagicMock()
+    mock_dense_param = MagicMock(size=1024)
+    mock_collection = MagicMock()
+    mock_collection.config.params.vectors = {"dense": mock_dense_param}
+    mock_collection.config.params.sparse_vectors = {"sparse": MagicMock()}
+    mock_client.get_collection.return_value = mock_collection
+    mock_client.count.return_value.count = 1
+    mock_point = MagicMock()
+    mock_point.payload = build_chunk_payload(
+        sample_chunks[0], sha, 1, "dense", "sparse"
+    )
+    mock_client.retrieve.return_value = [mock_point]
+
+    with patch(
+        "qdrant_client.QdrantClient",
+        return_value=mock_client,
+    ) as client_class:
+        report = run_indexer(args)
+
+    client_class.assert_called_once_with(
+        url=args.qdrant_url,
+        api_key="test-secret",
+    )
+    assert report["status"] == "verified"
+    assert "test-secret" not in json.dumps(report)

@@ -79,6 +79,10 @@ def build_parser() -> argparse.ArgumentParser:
         default=("sparse", "dense", "hybrid"),
     )
     parser.add_argument("--qdrant-url", default="http://localhost:6333")
+    parser.add_argument(
+        "--qdrant-api-key",
+        default=os.environ.get("QDRANT_API_KEY", ""),
+    )
     parser.add_argument("--collection", default="labor_law_active")
     parser.add_argument(
         "--dense-model",
@@ -307,6 +311,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "candidate_k": args.candidate_k,
         "rrf_k": args.rrf_k,
         "qdrant_url": args.qdrant_url,
+        "qdrant_api_key_configured": bool(args.qdrant_api_key),
         "collection": args.collection,
         "dense_model": args.dense_model,
         "dense_vector_name": args.dense_vector_name,
@@ -342,6 +347,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         dense = DenseRetriever(
             qdrant_url=args.qdrant_url,
             collection_name=args.collection,
+            api_key=args.qdrant_api_key,
             model_name=args.dense_model,
             vector_name=args.dense_vector_name,
             vector_size=args.dense_size,

@@ -56,6 +56,12 @@ data/evaluation/*
 !data/evaluation/*.jsonl
 !data/evaluation/*.csv
 !data/evaluation/*.md
+!data/evaluation/splits/
+!data/evaluation/splits/*.json
+!data/evaluation/runtime-benchmark/
+data/evaluation/runtime-benchmark/*
+!data/evaluation/runtime-benchmark/*.json
+!data/evaluation/runtime-benchmark/*.md
 
 # Reproducibility manifests
 data/manifests/*

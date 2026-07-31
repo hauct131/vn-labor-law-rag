@@ -16,6 +16,7 @@ import argparse
 import csv
 import json
 import logging
+import os
 import statistics
 import sys
 import time
@@ -69,6 +70,10 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--questions", type=Path, default=DEFAULT_QUESTIONS)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--qdrant-url", default="http://localhost:6333")
+    parser.add_argument(
+        "--qdrant-api-key",
+        default=os.environ.get("QDRANT_API_KEY", ""),
+    )
     parser.add_argument("--collection", default=DEFAULT_COLLECTION)
     parser.add_argument(
         "--dense-model",
@@ -685,6 +690,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "questions": str(args.questions),
         "question_count": len(questions),
         "qdrant_url": args.qdrant_url,
+        "qdrant_api_key_configured": bool(args.qdrant_api_key),
         "collection": args.collection,
         "dense_model": args.dense_model,
         "dense_size": args.dense_size,
@@ -745,7 +751,10 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             **sparse_kwargs,
         )
 
-    client = QdrantClient(url=args.qdrant_url)
+    client_kwargs: dict[str, Any] = {"url": args.qdrant_url}
+    if args.qdrant_api_key:
+        client_kwargs["api_key"] = args.qdrant_api_key
+    client = QdrantClient(**client_kwargs)
     create_or_validate_collection(client, models, args)
     indexing_seconds = 0.0
     if args.sparse_only_reindex:

@@ -121,3 +121,38 @@ Script chọn ba cấu hình:
 
 `best.balanced` là ứng viên mặc định. Đây vẫn là kết quả trên development set
 44 câu đang bật; cần một holdout riêng trước khi kết luận cuối cùng.
+
+## Production-equivalent retrieval benchmark
+
+Benchmark mới tách biệt với evaluator SentenceTransformers offline ở trên và
+chạy đúng các thành phần production:
+
+- FastEmbed E5 + Qdrant qua alias `labor_law_active` cho Dense;
+- VnCoreNLP + BM25 in-memory cho Sparse;
+- weighted RRF trong backend cho Hybrid.
+
+Tạo và kiểm tra split khóa 31 câu dev / 13 câu test / 1 câu disabled:
+
+```bash
+make runtime-golden-splits
+make runtime-golden-splits-check
+make runtime-benchmark-dry-run
+```
+
+Chỉ tune trên dev. Lệnh này sinh Dense/Sparse baseline, toàn bộ Hybrid trial,
+Hybrid được chọn và bảng tóm tắt trong `data/evaluation/runtime-benchmark/`:
+
+```bash
+make runtime-benchmark-tune-dev
+```
+
+Kiểm tra `dev_hybrid_trials.json` và commit cấu hình đã chọn trước khi mở test.
+Sau đó chỉ chạy test một lần:
+
+```bash
+ALLOW_TEST=1 make runtime-benchmark-test
+```
+
+Split chỉ khóa nhãn và thành viên phục vụ retrieval benchmark; nó không thay
+đổi trạng thái authority review đang pending. `QDRANT_API_KEY` được đọc từ
+settings và không bao giờ được ghi vào báo cáo benchmark.

@@ -18,7 +18,9 @@ E5_BATCH_SIZE ?= 16
 	qdrant-activate-unified qdrant-verify-alias-unified \
 	legal-eval-dense-hybrid legal-eval-dense-hybrid-diverse \
 	legal-eval-compare legal-eval-tune legal-eval-tune-fast \
-	unified-runtime
+	runtime-golden-splits runtime-golden-splits-check \
+	runtime-benchmark-dry-run runtime-benchmark-tune-dev \
+	runtime-benchmark-test unified-runtime
 
 golden-audit-unified:
 	PYTHONPATH=.:backend:$${PYTHONPATH} $(PYTHON) scripts/audit_golden_dataset.py \
@@ -26,6 +28,39 @@ golden-audit-unified:
 	  --chunks $(UNIFIED_CHUNKS) \
 	  --report data/evaluation/golden_v3_audit.json \
 	  --strict
+
+runtime-golden-splits:
+	PYTHONPATH=.:backend:$${PYTHONPATH} $(PYTHON) scripts/build_runtime_golden_splits.py
+
+runtime-golden-splits-check:
+	PYTHONPATH=.:backend:$${PYTHONPATH} $(PYTHON) scripts/build_runtime_golden_splits.py --check
+
+runtime-benchmark-dry-run: runtime-golden-splits-check
+	PYTHONPATH=.:backend:$${PYTHONPATH} $(PYTHON) scripts/benchmark_runtime_retrieval.py \
+	  --phase tune \
+	  --split-role dev \
+	  --golden data/evaluation/splits/golden_v3_dev.json \
+	  --dry-run
+
+runtime-benchmark-tune-dev: runtime-golden-splits-check
+	PYTHONPATH=.:backend:$${PYTHONPATH} $(PYTHON) scripts/benchmark_runtime_retrieval.py \
+	  --phase tune \
+	  --split-role dev \
+	  --golden data/evaluation/splits/golden_v3_dev.json \
+	  --output-dir data/evaluation/runtime-benchmark
+
+runtime-benchmark-test: runtime-golden-splits-check
+	@test "$(ALLOW_TEST)" = "1" || ( \
+	  echo "Refusing locked test. Run dev tuning first, then rerun with ALLOW_TEST=1."; \
+	  exit 2; \
+	)
+	PYTHONPATH=.:backend:$${PYTHONPATH} $(PYTHON) scripts/benchmark_runtime_retrieval.py \
+	  --phase evaluate \
+	  --split-role test \
+	  --golden data/evaluation/splits/golden_v3_test.json \
+	  --hybrid-config data/evaluation/runtime-benchmark/dev_hybrid_trials.json \
+	  --allow-test-evaluation \
+	  --output-dir data/evaluation/runtime-benchmark
 
 legal-eval-bm25: golden-audit-unified
 	PYTHONPATH=.:backend:$${PYTHONPATH} $(PYTHON) scripts/evaluate_lexical_baseline.py \
