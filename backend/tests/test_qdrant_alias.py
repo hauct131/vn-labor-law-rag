@@ -13,7 +13,7 @@ from backend.app.ingestion.qdrant_alias import (
 
 
 SHA = "a" * 64
-TARGET = "labor_law_20260727_fd35bb1a"
+TARGET = "labor_law_20260728_fd35bb1a"
 ALIAS = "labor_law_active"
 
 

@@ -9,7 +9,7 @@ E5_BATCH_SIZE ?= 32
 legal-eval-dense-hybrid: golden-audit-unified
 	PYTHONPATH=.:backend:scripts:$${PYTHONPATH} $(PYTHON) scripts/evaluate_dense_hybrid.py \
 	  --golden data/evaluation/golden_questions_v3_unified_candidate.json \
-	  --chunks data/releases/labor-law-2026-07-27-candidate/chunks.jsonl \
+	  --chunks data/releases/labor-law-2026-07-28-candidate/chunks.jsonl \
 	  --output-dir data/evaluation/results \
 	  --output-prefix unified \
 	  --model $(E5_MODEL) \
@@ -22,7 +22,7 @@ legal-eval-dense-hybrid: golden-audit-unified
 legal-eval-dense-hybrid-diverse: golden-audit-unified
 	PYTHONPATH=.:backend:scripts:$${PYTHONPATH} $(PYTHON) scripts/evaluate_dense_hybrid.py \
 	  --golden data/evaluation/golden_questions_v3_unified_candidate.json \
-	  --chunks data/releases/labor-law-2026-07-27-candidate/chunks.jsonl \
+	  --chunks data/releases/labor-law-2026-07-28-candidate/chunks.jsonl \
 	  --output-dir data/evaluation/results \
 	  --output-prefix unified \
 	  --model $(E5_MODEL) \

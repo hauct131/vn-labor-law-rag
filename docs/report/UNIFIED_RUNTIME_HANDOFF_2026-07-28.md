@@ -2,7 +2,7 @@
 
 ## Trạng thái đã xác minh trong bundle
 
-- Release: `labor-law-2026-07-27-candidate`.
+- Release: `labor-law-2026-07-28-candidate`.
 - 18 văn bản, 513 article containers, 833 chunks.
 - SHA-256 chunks:
   `fd35bb1a94a3036f7977781de17bb1b49b12c58be61fc74efac68dcf8a7a8c54`.
@@ -45,7 +45,7 @@ Workflow thực hiện theo thứ tự:
 6. dry-run indexer;
 7. giữ nguyên collection cũ `labor_law`;
 8. index/resume collection phiên bản
-   `labor_law_20260727_fd35bb1a`;
+   `labor_law_20260728_fd35bb1a`;
 9. verify đủ 833 points và đúng fingerprint;
 10. chạy dense smoke trực tiếp trên collection phiên bản;
 11. chạy full dense/hybrid golden benchmark khi `sentence-transformers` có

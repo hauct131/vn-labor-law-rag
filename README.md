@@ -5,7 +5,7 @@
 Project hiện đọc một release duy nhất:
 
 ```text
-data/releases/labor-law-2026-07-27-candidate/
+data/releases/labor-law-2026-07-28-candidate/
 ├── articles.json
 ├── chunks.jsonl
 ├── source_inventory.json
@@ -56,7 +56,7 @@ Qdrant theo blue/green:
 
 - giữ nguyên collection cũ `labor_law` để rollback;
 - index/resume release 833 trong
-  `labor_law_20260727_fd35bb1a`;
+  `labor_law_20260728_fd35bb1a`;
 - verify fingerprint, count và dense smoke trước khi kích hoạt;
 - tạo/chuyển alias `labor_law_active` theo một cập nhật alias atomic;
 - backend luôn truy vấn qua `labor_law_active`.
@@ -70,7 +70,7 @@ Muốn tạo candidate mới, chọn thư mục release mới để không ghi �
 ```bash
 make unified-release \
   PYTHON=python3 \
-  UNIFIED_RELEASE_DIR=data/releases/labor-law-2026-07-27-candidate-v2
+  UNIFIED_RELEASE_DIR=data/releases/labor-law-2026-07-28-candidate-v2
 ```
 
 ## Retrieval tuning

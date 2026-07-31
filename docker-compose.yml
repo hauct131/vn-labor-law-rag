@@ -28,7 +28,7 @@ services:
     environment:
       QDRANT_URL: http://qdrant:6333
       QDRANT_COLLECTION: labor_law_active
-      QDRANT_EXPECTED_COLLECTION: labor_law_20260727_fd35bb1a
+      QDRANT_EXPECTED_COLLECTION: labor_law_20260728_fd35bb1a
       RUNTIME_READINESS_TTL_SECONDS: "30"
       RUNTIME_READINESS_FAILURE_TTL_SECONDS: "5"
       NEO4J_URI: bolt://neo4j:7687

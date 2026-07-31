@@ -3,7 +3,7 @@
 legal-eval-tune: golden-audit-unified
 	PYTHONPATH=.:backend:scripts:$${PYTHONPATH} $(PYTHON) scripts/tune_retrieval_parameters.py \
 	  --golden data/evaluation/golden_questions_v3_unified_candidate.json \
-	  --chunks data/releases/labor-law-2026-07-27-candidate/chunks.jsonl \
+	  --chunks data/releases/labor-law-2026-07-28-candidate/chunks.jsonl \
 	  --output-dir data/evaluation/tuning-unified \
 	  --embedding-cache-dir data/evaluation/cache/embeddings \
 	  --model $(E5_MODEL) \
@@ -20,7 +20,7 @@ legal-eval-tune: golden-audit-unified
 legal-eval-tune-fast: golden-audit-unified
 	PYTHONPATH=.:backend:scripts:$${PYTHONPATH} $(PYTHON) scripts/tune_retrieval_parameters.py \
 	  --golden data/evaluation/golden_questions_v3_unified_candidate.json \
-	  --chunks data/releases/labor-law-2026-07-27-candidate/chunks.jsonl \
+	  --chunks data/releases/labor-law-2026-07-28-candidate/chunks.jsonl \
 	  --output-dir data/evaluation/tuning-unified-fast \
 	  --embedding-cache-dir data/evaluation/cache/embeddings \
 	  --model $(E5_MODEL) \

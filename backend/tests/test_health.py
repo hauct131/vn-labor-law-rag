@@ -12,8 +12,8 @@ client = TestClient(app)
 QDRANT_READY = {
     "status": "ready",
     "alias": "labor_law_active",
-    "expected_collection": "labor_law_20260727_fd35bb1a",
-    "active_collection": "labor_law_20260727_fd35bb1a",
+    "expected_collection": "labor_law_20260728_fd35bb1a",
+    "active_collection": "labor_law_20260728_fd35bb1a",
     "collection_status": "green",
     "exact_point_count": 833,
     "fingerprint_point_count": 833,

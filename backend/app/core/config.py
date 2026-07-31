@@ -17,7 +17,7 @@ class Settings(BaseSettings):
     # Retrieval always uses an alias. Physical collections are versioned so a
     # new corpus can be indexed and verified without mutating the old index.
     qdrant_collection: str = "labor_law_active"
-    qdrant_expected_collection: str = "labor_law_20260727_fd35bb1a"
+    qdrant_expected_collection: str = "labor_law_20260728_fd35bb1a"
     qdrant_api_key: str = ""
     qdrant_readiness_timeout_seconds: float = 3.0
     runtime_readiness_ttl_seconds: float = 30.0

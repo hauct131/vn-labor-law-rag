@@ -10,7 +10,7 @@ from app.core.qdrant_readiness import evaluate_qdrant_gate
 
 SHA = "a" * 64
 ALIAS = "labor_law_active"
-COLLECTION = "labor_law_20260727_fd35bb1a"
+COLLECTION = "labor_law_20260728_fd35bb1a"
 
 
 def settings() -> SimpleNamespace:

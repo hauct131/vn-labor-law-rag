@@ -1,7 +1,7 @@
 {
   "schema_version": "project-bundle-manifest-v2",
-  "bundle": "vn-labor-law-rag-unified-docx-2026-07-27",
-  "release_id": "labor-law-2026-07-27-candidate",
+  "bundle": "vn-labor-law-rag-unified-docx-2026-07-28",
+  "release_id": "labor-law-2026-07-28-candidate",
   "release_status": "technical_candidate_pending_authority_review",
   "law_as_of": "2026-07-27",
   "counts": {
@@ -21,13 +21,13 @@
     }
   ],
   "primary_files": [
-    "data/releases/labor-law-2026-07-27-candidate/manifest.json",
-    "data/releases/labor-law-2026-07-27-candidate/articles.json",
-    "data/releases/labor-law-2026-07-27-candidate/chunks.jsonl",
-    "data/releases/labor-law-2026-07-27-candidate/source_inventory.json",
-    "data/releases/labor-law-2026-07-27-candidate/legal_effect_review.json",
-    "data/releases/labor-law-2026-07-27-candidate/approval.json",
-    "data/releases/labor-law-2026-07-27-candidate/SHA256SUMS.txt",
+    "data/releases/labor-law-2026-07-28-candidate/manifest.json",
+    "data/releases/labor-law-2026-07-28-candidate/articles.json",
+    "data/releases/labor-law-2026-07-28-candidate/chunks.jsonl",
+    "data/releases/labor-law-2026-07-28-candidate/source_inventory.json",
+    "data/releases/labor-law-2026-07-28-candidate/legal_effect_review.json",
+    "data/releases/labor-law-2026-07-28-candidate/approval.json",
+    "data/releases/labor-law-2026-07-28-candidate/SHA256SUMS.txt",
     "data/evaluation/golden_questions_v3_unified_candidate.json",
     "data/evaluation/golden_v3_audit.json",
     "data/evaluation/results/unified_bm25_baseline.json",

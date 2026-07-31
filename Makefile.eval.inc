@@ -1,13 +1,13 @@
-# Retrieval and indexing targets for the unified 2026-07-27 candidate.
+# Retrieval and indexing targets for the unified 2026-07-28 candidate.
 
-UNIFIED_RELEASE_DIR ?= data/releases/labor-law-2026-07-27-candidate
+UNIFIED_RELEASE_DIR ?= data/releases/labor-law-2026-07-28-candidate
 UNIFIED_CHUNKS ?= $(UNIFIED_RELEASE_DIR)/chunks.jsonl
 UNIFIED_GOLDEN ?= data/evaluation/golden_questions_v3_unified_candidate.json
 UNIFIED_E5_AUDIT ?= data/quality/unified_e5_token_audit/summary.json
 UNIFIED_EXPECTED_CHUNKS ?= 833
 UNIFIED_EXPECTED_SHA256 ?= fd35bb1a94a3036f7977781de17bb1b49b12c58be61fc74efac68dcf8a7a8c54
 UNIFIED_RESULTS_DIR ?= data/evaluation/results
-QDRANT_UNIFIED_COLLECTION ?= labor_law_20260727_fd35bb1a
+QDRANT_UNIFIED_COLLECTION ?= labor_law_20260728_fd35bb1a
 QDRANT_ACTIVE_ALIAS ?= labor_law_active
 E5_MODEL ?= intfloat/multilingual-e5-large
 E5_DEVICE ?= cpu
