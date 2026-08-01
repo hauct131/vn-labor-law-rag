@@ -920,6 +920,7 @@ def validate_args(args: argparse.Namespace) -> None:
 
 def run(args: argparse.Namespace) -> dict[str, Any]:
     validate_args(args)
+    args.output_dir = args.output_dir.resolve()
     golden = load_locked_split(args.golden, args.split_role)
     chunks, corpus_sha256 = load_legal_chunks(
         args.chunks,
