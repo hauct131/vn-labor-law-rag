@@ -1,0 +1,26 @@
+{
+  "schema_version": "qdrant-blue-green-readiness-v1",
+  "release_id": "labor-law-canonical-20260727-candidate",
+  "source_candidate_preflight": {
+    "collection": "labor_law_bluegreen_preflight_20260727",
+    "chunk_count": 833,
+    "corpus_sha256": "fd35bb1a94a3036f7977781de17bb1b49b12c58be61fc74efac68dcf8a7a8c54",
+    "exact_e5_audit_bound": true,
+    "dry_run_status": "success",
+    "qdrant_written": false
+  },
+  "canonical_candidate_preflight": {
+    "collection": "labor_law_canonical_20260727",
+    "chunk_count": 844,
+    "corpus_sha256": "34a3f1eb027be1498c10609ef565dbeb2a831a61a362388ac85590f04533624e",
+    "exact_e5_audit_bound": true,
+    "dry_run_status": "success",
+    "qdrant_written": false,
+    "alias_switched": false
+  },
+  "required_before_alias_switch": [
+    "Obtain authorized legal-effect approval bound to the final manifest SHA-256.",
+    "Index a new canonical candidate collection and verify its exact point count and golden regression.",
+    "Switch labor_law_active only after all production release gates pass; retain labor_law for rollback."
+  ]
+}

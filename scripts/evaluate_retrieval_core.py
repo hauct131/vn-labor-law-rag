@@ -1,8 +1,8 @@
 """Evaluate production retrieval core without modifying Qdrant.
 
-This command reads dense vectors through the ``labor_law_active`` alias, builds
-the selected local BM25–VnCoreNLP index, fuses rankings with RRF, and reports
-article-level Hit@k, MRR@k, and latency for the smoke questions.
+This command reads the ``labor_law`` dense vectors, builds the selected local
+BM25–VnCoreNLP index, fuses rankings with RRF, and reports article-level Hit@k,
+MRR@k, and latency for the smoke questions.
 
 Run from the repository root, for example::
 
@@ -21,6 +21,11 @@ import sys
 import time
 from dataclasses import dataclass
 from pathlib import Path
+import sys
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 from typing import Any, Sequence
 
 from backend.app.retrieval.dense_component import DenseRetriever
@@ -36,7 +41,7 @@ from backend.app.retrieval.vncorenlp_bm25 import load_segmenter
 LOGGER = logging.getLogger("retrieval_core_evaluation")
 
 DEFAULT_CHUNKS = Path(
-    "data/releases/labor-law-2026-07-28-candidate/chunks.jsonl"
+    "data/releases/labor-law-2026-07-27-candidate/chunks.jsonl"
 )
 DEFAULT_QUESTIONS = Path(
     "data/evaluation/retrieval_smoke_questions.json"
@@ -79,11 +84,7 @@ def build_parser() -> argparse.ArgumentParser:
         default=("sparse", "dense", "hybrid"),
     )
     parser.add_argument("--qdrant-url", default="http://localhost:6333")
-    parser.add_argument(
-        "--qdrant-api-key",
-        default=os.environ.get("QDRANT_API_KEY", ""),
-    )
-    parser.add_argument("--collection", default="labor_law_active")
+    parser.add_argument("--collection", default="labor_law")
     parser.add_argument(
         "--dense-model",
         default="intfloat/multilingual-e5-large",
@@ -311,7 +312,6 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "candidate_k": args.candidate_k,
         "rrf_k": args.rrf_k,
         "qdrant_url": args.qdrant_url,
-        "qdrant_api_key_configured": bool(args.qdrant_api_key),
         "collection": args.collection,
         "dense_model": args.dense_model,
         "dense_vector_name": args.dense_vector_name,
@@ -347,7 +347,6 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         dense = DenseRetriever(
             qdrant_url=args.qdrant_url,
             collection_name=args.collection,
-            api_key=args.qdrant_api_key,
             model_name=args.dense_model,
             vector_name=args.dense_vector_name,
             vector_size=args.dense_size,

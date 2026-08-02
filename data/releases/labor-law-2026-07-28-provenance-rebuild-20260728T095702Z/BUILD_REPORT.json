@@ -1,0 +1,12 @@
+{
+  "status": "PASS_TECHNICAL_CANDIDATE",
+  "release_dir": "data/releases/labor-law-2026-07-28-provenance-rebuild-20260728T095702Z",
+  "release_id": "labor-law-2026-07-28-provenance-rebuild-20260728T095702Z",
+  "article_containers": 513,
+  "chunks": 833,
+  "official_docx_sources": 2,
+  "raw_snapshots": 2,
+  "authority_review_status": "pending",
+  "production_publishable": false,
+  "manifest_sha256": "1e9239471ef5d2c5e987d4e05b3d012fc0a82f8e94ac8e32b4149514e83ecf70"
+}

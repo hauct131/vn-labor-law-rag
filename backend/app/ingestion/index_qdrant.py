@@ -20,6 +20,12 @@ import uuid
 from pathlib import Path
 from typing import Any, Iterable
 
+# Allow safe direct execution from the repository root in addition to
+# ``python -m backend.app.ingestion.index_qdrant``.
+REPO_ROOT = Path(__file__).resolve().parents[3]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
 from backend.app.core.config import settings
 
 LOGGER = logging.getLogger("qdrant_production_indexer")
@@ -390,15 +396,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--chunks", type=Path, default=DEFAULT_CHUNKS)
     parser.add_argument("--audit-summary", type=Path, default=DEFAULT_AUDIT_SUMMARY)
     parser.add_argument("--qdrant-url", default=settings.qdrant_url)
-    parser.add_argument(
-        "--qdrant-api-key",
-        default=settings.qdrant_api_key,
-        help=(
-            "Qdrant API key. Defaults to QDRANT_API_KEY from settings; "
-            "prefer the environment variable so the secret is not exposed "
-            "in shell history."
-        ),
-    )
+    parser.add_argument("--qdrant-api-key", default=settings.qdrant_api_key)
     parser.add_argument("--collection", default=settings.qdrant_collection)
     parser.add_argument("--dense-model", default=settings.dense_embedding_model)
     parser.add_argument("--dense-vector-name", default=settings.dense_vector_name)
@@ -463,8 +461,23 @@ def run_indexer(args: argparse.Namespace) -> dict[str, Any]:
     }
 
     if args.dry_run:
+        dry_run_report = {
+            "status": "dry_run_success",
+            "generated_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+            "corpus_path": str(args.chunks),
+            "corpus_sha256": actual_sha256,
+            "chunk_count": len(chunks),
+            "audit_summary_path": str(args.audit_summary),
+            "audit_summary_sha256": compute_sha256(args.audit_summary),
+            "exact_e5_audit_bound": True,
+            "collection": args.collection,
+            "qdrant_written": False,
+            "alias_switched": False,
+            "config": config_info,
+        }
+        write_summary_report(args.summary_output, dry_run_report)
         LOGGER.info("Dry-run validation successful. No models loaded, no Qdrant written.")
-        return {"status": "dry_run_success", "config": config_info}
+        return dry_run_report
 
     # Verify imports for actual execution
     try:
