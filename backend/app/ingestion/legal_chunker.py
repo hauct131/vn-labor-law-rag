@@ -311,11 +311,17 @@ def _group_text_units(article: dict) -> tuple[list[dict], list[dict], list[dict]
             if c_occ is None:
                 c_cnt = sum(1 for g in clause_groups if g["clause_number"] == c_num)
                 c_occ = c_cnt + 1
+
+            # Khong mutate canonical corpus. Gan occurrence da suy ra vao ban sao
+            # dung trong chunker de cac buoc tach tiep theo khong lam mat danh tinh
+            # cua khoan trung so trong van ban sua doi, bo sung.
+            grouped_unit = dict(unit)
+            grouped_unit["unit_occurrence"] = c_occ
             active_clause_group = {
                 "clause_number": c_num,
                 "clause_occurrence": c_occ,
-                "clause_unit": unit,
-                "ordered_units": [unit],
+                "clause_unit": grouped_unit,
+                "ordered_units": [grouped_unit],
                 "point_labels": [],
                 "point_occurrences": [],
                 "source_unit_ids": [uid],
@@ -350,7 +356,13 @@ def _group_text_units(article: dict) -> tuple[list[dict], list[dict], list[dict]
                 if p_occ is None:
                     p_cnt = sum(1 for l in target_group["point_labels"] if l == p_label)
                     p_occ = p_cnt + 1
-                target_group["ordered_units"].append(unit)
+
+                # Truyen occurrence da suy ra vao ban sao cua point. Neu khong,
+                # make_points_chunk() se roi ve occurrence=1 sau khi greedy split
+                # va co the tao hai chunk_key giong nhau cho cung nhan diem.
+                grouped_unit = dict(unit)
+                grouped_unit["unit_occurrence"] = p_occ
+                target_group["ordered_units"].append(grouped_unit)
                 target_group["source_unit_ids"].append(uid)
                 target_group["point_labels"].append(p_label)
                 target_group["point_occurrences"].append(p_occ)
