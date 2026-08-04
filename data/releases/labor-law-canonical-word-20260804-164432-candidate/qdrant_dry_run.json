@@ -1,0 +1,32 @@
+{
+  "status": "dry_run_success",
+  "generated_at": "2026-08-04T09:45:27.167765+00:00",
+  "corpus_path": "data/releases/labor-law-canonical-word-20260804-164432-candidate/canonical_chunks.jsonl",
+  "corpus_sha256": "fdbec539efbfb3f4aa3cb3962046321e3a402150d93516ef4256934972c70307",
+  "chunk_count": 804,
+  "audit_summary_path": "data/releases/labor-law-canonical-word-20260804-164432-candidate/e5_audit/summary.json",
+  "audit_summary_sha256": "34668365de73c0de64a686c0c7b4ea1924771a01862765a56470bc567e3b58b2",
+  "exact_e5_audit_bound": true,
+  "collection": "labor_law_canonical_word_20260804T094432Z_fdbec539",
+  "qdrant_written": false,
+  "alias_switched": false,
+  "config": {
+    "chunks": "data/releases/labor-law-canonical-word-20260804-164432-candidate/canonical_chunks.jsonl",
+    "chunk_count": 804,
+    "corpus_sha256": "fdbec539efbfb3f4aa3cb3962046321e3a402150d93516ef4256934972c70307",
+    "audit_summary": "data/releases/labor-law-canonical-word-20260804-164432-candidate/e5_audit/summary.json",
+    "qdrant_url": "http://localhost:6333",
+    "qdrant_api_key_configured": false,
+    "collection": "labor_law_canonical_word_20260804T094432Z_fdbec539",
+    "dense_model": "intfloat/multilingual-e5-large",
+    "dense_vector_name": "dense",
+    "dense_size": 1024,
+    "sparse_model": "Qdrant/bm25",
+    "sparse_vector_name": "sparse",
+    "batch_size": 16,
+    "threads": 6,
+    "dry_run": true,
+    "resume": false,
+    "verify_only": false
+  }
+}

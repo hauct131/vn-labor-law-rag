@@ -20,19 +20,23 @@ import uuid
 from pathlib import Path
 from typing import Any, Iterable
 
+# Allow safe direct execution from the repository root in addition to
+# ``python -m backend.app.ingestion.index_qdrant``.
+REPO_ROOT = Path(__file__).resolve().parents[3]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
 from backend.app.core.config import settings
 
 LOGGER = logging.getLogger("qdrant_production_indexer")
 
-DEFAULT_CHUNKS = Path("data/processed/legal_chunks.jsonl")
-DEFAULT_AUDIT_SUMMARY = Path("data/processed/e5_token_audit/summary.json")
+DEFAULT_CHUNKS = Path(settings.legal_chunks_path)
+DEFAULT_AUDIT_SUMMARY = Path(settings.e5_audit_summary_path)
 DEFAULT_SUMMARY_OUTPUT = Path("data/processed/qdrant_index/summary.json")
-DEFAULT_EXPECTED_CHUNKS = 1395
-DEFAULT_EXPECTED_SHA256 = (
-    "27b80463dd6e0f34f767aa6ec1a5b5cd066b6b7a477c320bb49ef909abcb5e65"
-)
+DEFAULT_EXPECTED_CHUNKS = settings.retrieval_expected_chunks
+DEFAULT_EXPECTED_SHA256 = settings.retrieval_corpus_sha256
 PROBE_COLLECTION = "labor_law_model_probe"
-INDEXER_VERSION = "1.0.0"
+INDEXER_VERSION = "1.1.0"
 
 
 class IndexerError(ValueError):
@@ -392,6 +396,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--chunks", type=Path, default=DEFAULT_CHUNKS)
     parser.add_argument("--audit-summary", type=Path, default=DEFAULT_AUDIT_SUMMARY)
     parser.add_argument("--qdrant-url", default=settings.qdrant_url)
+    parser.add_argument("--qdrant-api-key", default=settings.qdrant_api_key)
     parser.add_argument("--collection", default=settings.qdrant_collection)
     parser.add_argument("--dense-model", default=settings.dense_embedding_model)
     parser.add_argument("--dense-vector-name", default=settings.dense_vector_name)
@@ -441,6 +446,7 @@ def run_indexer(args: argparse.Namespace) -> dict[str, Any]:
         "corpus_sha256": actual_sha256,
         "audit_summary": str(args.audit_summary),
         "qdrant_url": args.qdrant_url,
+        "qdrant_api_key_configured": bool(args.qdrant_api_key),
         "collection": args.collection,
         "dense_model": args.dense_model,
         "dense_vector_name": args.dense_vector_name,
@@ -455,8 +461,23 @@ def run_indexer(args: argparse.Namespace) -> dict[str, Any]:
     }
 
     if args.dry_run:
+        dry_run_report = {
+            "status": "dry_run_success",
+            "generated_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+            "corpus_path": str(args.chunks),
+            "corpus_sha256": actual_sha256,
+            "chunk_count": len(chunks),
+            "audit_summary_path": str(args.audit_summary),
+            "audit_summary_sha256": compute_sha256(args.audit_summary),
+            "exact_e5_audit_bound": True,
+            "collection": args.collection,
+            "qdrant_written": False,
+            "alias_switched": False,
+            "config": config_info,
+        }
+        write_summary_report(args.summary_output, dry_run_report)
         LOGGER.info("Dry-run validation successful. No models loaded, no Qdrant written.")
-        return {"status": "dry_run_success", "config": config_info}
+        return dry_run_report
 
     # Verify imports for actual execution
     try:
@@ -467,7 +488,10 @@ def run_indexer(args: argparse.Namespace) -> dict[str, Any]:
             "Missing retrieval dependency. Activate backend/.venv and install backend/requirements.txt."
         ) from exc
 
-    client = QdrantClient(url=args.qdrant_url)
+    client_kwargs: dict[str, Any] = {"url": args.qdrant_url}
+    if args.qdrant_api_key:
+        client_kwargs["api_key"] = args.qdrant_api_key
+    client = QdrantClient(**client_kwargs)
 
     if args.verify_only:
         LOGGER.info("Running verify-only checks on collection '%s'", args.collection)
@@ -485,8 +509,27 @@ def run_indexer(args: argparse.Namespace) -> dict[str, Any]:
             actual_sha256,
             chunks,
         )
+        verify_report = {
+            "status": "verified",
+            "timestamp_utc": datetime.datetime.now(
+                datetime.timezone.utc
+            ).isoformat(),
+            "corpus_path": str(args.chunks),
+            "corpus_sha256": actual_sha256,
+            "chunk_count": len(chunks),
+            "collection": args.collection,
+            "qdrant_url": args.qdrant_url,
+            "dense_model": args.dense_model,
+            "dense_vector_name": args.dense_vector_name,
+            "sparse_model": args.sparse_model,
+            "sparse_vector_name": args.sparse_vector_name,
+            "dense_dimension": args.dense_size,
+            "exact_point_count": len(chunks),
+            "indexer_version": INDEXER_VERSION,
+        }
+        write_summary_report(args.summary_output, verify_report)
         LOGGER.info("Verify-only checks passed for collection '%s'", args.collection)
-        return {"status": "verify_only_success", "config": config_info}
+        return verify_report
 
     # Safety rule: if collection exists and not resume, fail
     exists = client.collection_exists(args.collection)
@@ -616,6 +659,7 @@ def run_indexer(args: argparse.Namespace) -> dict[str, Any]:
         "exact_point_count": len(chunks),
         "elapsed_seconds": round(elapsed_seconds, 2),
         "collection_status": "green",
+        "indexer_version": INDEXER_VERSION,
     }
 
     write_summary_report(args.summary_output, summary_report)

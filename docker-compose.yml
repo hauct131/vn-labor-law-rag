@@ -27,8 +27,23 @@ services:
       - .env
     environment:
       QDRANT_URL: http://qdrant:6333
+      QDRANT_COLLECTION: labor_law_active
+      QDRANT_EXPECTED_COLLECTION: labor_law_canonical_word_20260804_fdbec539
+      RUNTIME_READINESS_TTL_SECONDS: "30"
+      RUNTIME_READINESS_FAILURE_TTL_SECONDS: "5"
       NEO4J_URI: bolt://neo4j:7687
-      LEGAL_CHUNKS_PATH: /app/data/processed/legal_chunks.jsonl
+      LEGAL_CHUNKS_PATH: /app/data/releases/labor-law-canonical-word-20260804-164432-candidate/canonical_chunks.jsonl
+      CORPUS_RELEASE_MANIFEST_PATH: /app/data/releases/labor-law-canonical-word-20260804-164432-candidate/manifest.json
+      E5_AUDIT_SUMMARY_PATH: /app/data/quality/canonical_word_804_e5_token_audit/summary.json
+      CORPUS_RELEASE_ID: labor-law-canonical-word-20260804-164432-candidate
+      CORPUS_REQUIRE_AUTHORITY_APPROVAL: "true"
+      RETRIEVAL_EXPECTED_CHUNKS: "804"
+      RETRIEVAL_CORPUS_SHA256: fdbec539efbfb3f4aa3cb3962046321e3a402150d93516ef4256934972c70307
+      RETRIEVAL_TOP_K: "5"
+      RETRIEVAL_CANDIDATE_K: "30"
+      HYBRID_RRF_K: "60"
+      HYBRID_DENSE_WEIGHT: "0.9"
+      HYBRID_SPARSE_WEIGHT: "0.1"
       VNCORENLP_MODEL_DIR: /app/models/vncorenlp
       FASTEMBED_CACHE_DIR: /root/.cache/fastembed
     depends_on:
@@ -36,7 +51,27 @@ services:
       - neo4j
     volumes:
       - ./data:/app/data:ro
-      - "${VNCORENLP_HOST_DIR:-../models/vncorenlp}:/app/models/vncorenlp:ro"
+      - "${VNCORENLP_HOST_DIR:-./models/vncorenlp}:/app/models/vncorenlp:ro"
+      - fastembed_cache:/root/.cache/fastembed
+
+  runtime-assets:
+    profiles:
+      - tools
+    build:
+      context: ./backend
+    environment:
+      VNCORENLP_MODEL_DIR: /app/models/vncorenlp
+      FASTEMBED_CACHE_DIR: /root/.cache/fastembed
+    command:
+      - python
+      - -m
+      - app.cli.prepare_runtime_assets
+      - --vncorenlp-dir
+      - /app/models/vncorenlp
+      - --fastembed-cache-dir
+      - /root/.cache/fastembed
+    volumes:
+      - "${VNCORENLP_HOST_DIR:-./models/vncorenlp}:/app/models/vncorenlp"
       - fastembed_cache:/root/.cache/fastembed
 
   frontend:

@@ -1,0 +1,331 @@
+{
+  "schema_version": "labor-law-source-registry-v3",
+  "registry_status": "technical_source_binding_complete_pending_authority_review",
+  "generated_at": "2026-08-04T09:44:51.077135+00:00",
+  "source_policy": {
+    "priority": [
+      "official_gazette_word",
+      "vbpl"
+    ],
+    "official_gazette_word_documents": 17,
+    "vbpl_fallback_documents": 1,
+    "fallback_document": "10/2020/TT-BLĐTBXH",
+    "runtime_phapdien_indexed": false
+  },
+  "summary": {
+    "document_count": 18,
+    "source_container_count": 513,
+    "canonical_container_count": 510,
+    "integrity_failures": 0,
+    "word_vbpl_articles_compared": 273,
+    "word_vbpl_articles_equal": 221,
+    "word_vbpl_articles_changed": 52,
+    "rebuilt_word_body_hash_matches": 273,
+    "authority_review_pending": 18
+  },
+  "documents": [
+    {
+      "document_number": "18/VBHN-VPQH",
+      "canonical_document_id": "vn:bll-2019",
+      "canonical_provider": "official_gazette_word",
+      "fallback_used": false,
+      "fallback_reason": null,
+      "snapshot_dir": "data/raw/official_docx/18_vbhn_vpqh/20260803T210256Z-41341e4f",
+      "source_paths": [
+        "data/sources/official_docx/2026_131_18_VBHN-VPQH.docx"
+      ],
+      "source_sha256s": [
+        "1386441b1f513defdd55186d7e65b8432dcac87c2e0d78676de25facb9c5e6ff"
+      ],
+      "content_sha256": "41341e4fbdf369547f794397faeec5a90005c80a0d7b347c5d539ab435623e69",
+      "selected_article_count": 220,
+      "integrity_verified": true
+    },
+    {
+      "document_number": "135/2020/NĐ-CP",
+      "canonical_document_id": "vn:135-2020-nd-cp",
+      "canonical_provider": "official_gazette_word",
+      "fallback_used": false,
+      "fallback_reason": null,
+      "snapshot_dir": "data/raw/official_docx/135_2020_nd_cp/20260803T210306Z-83aa59ab",
+      "source_paths": [
+        "data/sources/official_docx/135_2020_nd_cp.docx"
+      ],
+      "source_sha256s": [
+        "a30b504695b3e5af838572c2cb947de49668a815634baa547dbf8eb7b9c4c033"
+      ],
+      "content_sha256": "83aa59abd9d6a5a0da88b2b996cfbc4f7c83bc329e95ed1dc03dccb004639020",
+      "selected_article_count": 9,
+      "integrity_verified": true
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "canonical_document_id": "vn:145-2020-nd-cp",
+      "canonical_provider": "official_gazette_word",
+      "fallback_used": false,
+      "fallback_reason": null,
+      "snapshot_dir": "data/raw/official_docx/145_2020_nd_cp/20260803T210310Z-54600f4a",
+      "source_paths": [
+        "data/sources/official_docx/145_2020_nd_cp/145_2020_nd_cp.part-01.docx",
+        "data/sources/official_docx/145_2020_nd_cp/145_2020_nd_cp.part-02.docx"
+      ],
+      "source_sha256s": [
+        "34b0ffcc5184fe8e057407850cdad8a75b14277c52ae3beea023a1371769bdbd",
+        "b71b01b0c6b47e48751af5d240de025f8170dce552060c8f435b88dc36c6a54a"
+      ],
+      "content_sha256": "54600f4a809b341462c39f7ef4982f0e33bf21a0af462027ea2c93e6d88f5c83",
+      "selected_article_count": 115,
+      "integrity_verified": true
+    },
+    {
+      "document_number": "152/2020/NĐ-CP",
+      "canonical_document_id": "vn:152-2020-nd-cp",
+      "canonical_provider": "official_gazette_word",
+      "fallback_used": false,
+      "fallback_reason": null,
+      "snapshot_dir": "data/raw/official_docx/152_2020_nd_cp/20260803T210312Z-afe57922",
+      "source_paths": [
+        "data/sources/official_docx/152_2020_nd_cp.docx"
+      ],
+      "source_sha256s": [
+        "7e849d22cbe656ee71d7ffe26d1f16b2fec8d1df9b0db3227408cde3b0c25cb3"
+      ],
+      "content_sha256": "afe57922569d4fefde77937474553c619ff96bb1adc1494aeeac61975d68850e",
+      "selected_article_count": 7,
+      "integrity_verified": true
+    },
+    {
+      "document_number": "97/2022/NĐ-CP",
+      "canonical_document_id": "vn:97-2022-nd-cp",
+      "canonical_provider": "official_gazette_word",
+      "fallback_used": false,
+      "fallback_reason": null,
+      "snapshot_dir": "data/raw/official_docx/97_2022_nd_cp/20260803T210313Z-7f9cd102",
+      "source_paths": [
+        "data/sources/official_docx/97_2022_nd_cp.docx"
+      ],
+      "source_sha256s": [
+        "e7c86598a929dba80fff3b9a7b3b2db3775219ad2515c016c1c57dbcd35fdad4"
+      ],
+      "content_sha256": "7f9cd102398471aaae5be900f6a078902d8cb5392d12f380cd2ac8d0cb22a20b",
+      "selected_article_count": 14,
+      "integrity_verified": true
+    },
+    {
+      "document_number": "293/2025/NĐ-CP",
+      "canonical_document_id": "vn:293-2025-nd-cp",
+      "canonical_provider": "official_gazette_word",
+      "fallback_used": false,
+      "fallback_reason": null,
+      "snapshot_dir": "data/raw/official_docx/293_2025_nd_cp/20260803T210314Z-6d6986c9",
+      "source_paths": [
+        "data/sources/official_docx/293_2025_nd_cp.docx"
+      ],
+      "source_sha256s": [
+        "436deee6bfa52ac0c9d98af83a13cd469fc4d1efd32c75c02a872b922e9e9790"
+      ],
+      "content_sha256": "6d6986c9109a886b586c4f69efc8391c07805b225350fd98d0205371708820a4",
+      "selected_article_count": 5,
+      "integrity_verified": true
+    },
+    {
+      "document_number": "219/2025/NĐ-CP",
+      "canonical_document_id": "vn:219-2025-nd-cp",
+      "canonical_provider": "official_gazette_word",
+      "fallback_used": false,
+      "fallback_reason": null,
+      "snapshot_dir": "data/raw/official_docx/219_2025_nd_cp/20260803T210316Z-0f95a368",
+      "source_paths": [
+        "data/sources/official_docx/219_2025_nd_cp.docx"
+      ],
+      "source_sha256s": [
+        "039e9cb3fc09ffb8bb6261c5a7c216c1fcda084e8da362e0cf0c97b11d04151e"
+      ],
+      "content_sha256": "0f95a3684231ac64c538631346f50346df925dc4a995a5ff2323317f5539c5d0",
+      "selected_article_count": 36,
+      "integrity_verified": true
+    },
+    {
+      "document_number": "128/2025/NĐ-CP",
+      "canonical_document_id": "vn:128-2025-nd-cp",
+      "canonical_provider": "official_gazette_word",
+      "fallback_used": false,
+      "fallback_reason": null,
+      "snapshot_dir": "data/raw/official_docx/128_2025_nd_cp/20260803T210317Z-78bd889b",
+      "source_paths": [
+        "data/sources/official_docx/128_2025_nd_cp.docx"
+      ],
+      "source_sha256s": [
+        "4493758aa28941d8f1e65e3146e200ab7e3df9a87f88f80d324260d5df9371b1"
+      ],
+      "content_sha256": "78bd889badd9b375694344f18041b28a458e2553f8530258a5effc824aad5cce",
+      "selected_article_count": 1,
+      "integrity_verified": true
+    },
+    {
+      "document_number": "129/2025/NĐ-CP",
+      "canonical_document_id": "vn:129-2025-nd-cp",
+      "canonical_provider": "official_gazette_word",
+      "fallback_used": false,
+      "fallback_reason": null,
+      "snapshot_dir": "data/raw/official_docx/129_2025_nd_cp/20260803T210319Z-ca5082b9",
+      "source_paths": [
+        "data/sources/official_docx/129_2025_nd_cp.docx"
+      ],
+      "source_sha256s": [
+        "56087501bbc909f856a1c2c96531d5ca6782d791658df3b4ff06caada8c0f610"
+      ],
+      "content_sha256": "ca5082b9f517d8aaf45651f2b6e9b24d5b62b9be7b6a19c1f8473998b9b996c0",
+      "selected_article_count": 15,
+      "integrity_verified": true
+    },
+    {
+      "document_number": "09/2020/TT-BLĐTBXH",
+      "canonical_document_id": "vn:09-2020-tt-bldtbxh",
+      "canonical_provider": "official_gazette_word",
+      "fallback_used": false,
+      "fallback_reason": null,
+      "snapshot_dir": "data/raw/official_docx/09_2020_tt_bldtbxh/20260803T210320Z-7f58cc95",
+      "source_paths": [
+        "data/sources/official_docx/09_2020_tt_bldtbxh.docx"
+      ],
+      "source_sha256s": [
+        "75df2dfaf17ef02da780678003850378d38436f856ae7141e7b0a9db842cad1f"
+      ],
+      "content_sha256": "7f58cc95c585deb5d8ff748e83f5cc722a8cf91ae67aa2ee91e6c82bbfc6a245",
+      "selected_article_count": 13,
+      "integrity_verified": true
+    },
+    {
+      "document_number": "10/2020/TT-BLĐTBXH",
+      "canonical_document_id": "vn:10-2020-tt-bldtbxh",
+      "canonical_provider": "vbpl",
+      "fallback_used": true,
+      "fallback_reason": "gazette_record_not_found",
+      "snapshot_dir": "data/raw/vbpl/10_2020_tt_bldtbxh/20260728T093237Z-67146c33",
+      "source_paths": [],
+      "content_sha256": "aade1a07fc1f1f54e809bc7b60f9578c8ecfca0ba9b3c620b36302a5b2c09f4f",
+      "selected_article_count": 12,
+      "integrity_verified": true
+    },
+    {
+      "document_number": "04/2021/TT-BCT",
+      "canonical_document_id": "vn:04-2021-tt-bct",
+      "canonical_provider": "official_gazette_word",
+      "fallback_used": false,
+      "fallback_reason": null,
+      "snapshot_dir": "data/raw/official_docx/04_2021_tt_bct/20260803T210321Z-a6fd1ab0",
+      "source_paths": [
+        "data/sources/official_docx/04_2021_tt_bct.docx"
+      ],
+      "source_sha256s": [
+        "9859afe192ce864051e71be5bb428d66d64846d7de45f009690c88c4225ff000"
+      ],
+      "content_sha256": "a6fd1ab0428d307430fa0b3ef58cf386c47908259f86a9d7ef3ff2119daf71fc",
+      "selected_article_count": 9,
+      "integrity_verified": true
+    },
+    {
+      "document_number": "18/2021/TT-BLĐTBXH",
+      "canonical_document_id": "vn:18-2021-tt-bldtbxh",
+      "canonical_provider": "official_gazette_word",
+      "fallback_used": false,
+      "fallback_reason": null,
+      "snapshot_dir": "data/raw/official_docx/18_2021_tt_bldtbxh/20260803T210322Z-525f7583",
+      "source_paths": [
+        "data/sources/official_docx/18_2021_tt_bldtbxh.docx"
+      ],
+      "source_sha256s": [
+        "44f67f1634f6a98c97763c5af0e1fcc4cea221d1737f40230d132e564b7f16ed"
+      ],
+      "content_sha256": "525f7583bc976c3f89c832c8464732122d548be57277e8d5d121f8a30e124e41",
+      "selected_article_count": 10,
+      "integrity_verified": true
+    },
+    {
+      "document_number": "19/2021/TT-BLĐTBXH",
+      "canonical_document_id": "vn:19-2021-tt-bldtbxh",
+      "canonical_provider": "official_gazette_word",
+      "fallback_used": false,
+      "fallback_reason": null,
+      "snapshot_dir": "data/raw/official_docx/19_2021_tt_bldtbxh/20260803T210324Z-0eb0859a",
+      "source_paths": [
+        "data/sources/official_docx/19_2021_tt_bldtbxh.docx"
+      ],
+      "source_sha256s": [
+        "42df703ca9316b0eedd450e9169afe6dd4044f2e5e8d16648f7f84f38cd6b6ee"
+      ],
+      "content_sha256": "0eb0859ac9a55268cb0d5f87e16e1408e7bc221e6bae0f8cd68119f87948445f",
+      "selected_article_count": 5,
+      "integrity_verified": true
+    },
+    {
+      "document_number": "12/2022/TT-BCT",
+      "canonical_document_id": "vn:12-2022-tt-bct",
+      "canonical_provider": "official_gazette_word",
+      "fallback_used": false,
+      "fallback_reason": null,
+      "snapshot_dir": "data/raw/official_docx/12_2022_tt_bct/20260803T210325Z-400d3571",
+      "source_paths": [
+        "data/sources/official_docx/12_2022_tt_bct.docx"
+      ],
+      "source_sha256s": [
+        "92d28abb1b0a6b1be974db79d8d107391dcc0e49e607916e6d5307473610d012"
+      ],
+      "content_sha256": "400d3571aaba503d7f79a2e5fcee8dcb1c298594aac4db62deab9d70932b4eb3",
+      "selected_article_count": 10,
+      "integrity_verified": true
+    },
+    {
+      "document_number": "20/2023/TT-BCT",
+      "canonical_document_id": "vn:20-2023-tt-bct",
+      "canonical_provider": "official_gazette_word",
+      "fallback_used": false,
+      "fallback_reason": null,
+      "snapshot_dir": "data/raw/official_docx/20_2023_tt_bct/20260803T210326Z-bf9f045e",
+      "source_paths": [
+        "data/sources/official_docx/20_2023_tt_bct.docx"
+      ],
+      "source_sha256s": [
+        "8469b4d096073914a9fe400a10add30559b0699558cbdbcf06d49a7eef5a7583"
+      ],
+      "content_sha256": "bf9f045ef7cbc47d181b4e0218be51666fa933067554f045de728a4acbd405a3",
+      "selected_article_count": 12,
+      "integrity_verified": true
+    },
+    {
+      "document_number": "17/2023/TT-BLĐTBXH",
+      "canonical_document_id": "vn:17-2023-tt-bldtbxh",
+      "canonical_provider": "official_gazette_word",
+      "fallback_used": false,
+      "fallback_reason": null,
+      "snapshot_dir": "data/raw/official_docx/17_2023_tt_bldtbxh/20260803T210327Z-0f3afa36",
+      "source_paths": [
+        "data/sources/official_docx/17_2023_tt_bldtbxh.docx"
+      ],
+      "source_sha256s": [
+        "5ed1316de64f73c76ecce45861e50e3e3c5e26f0458822f15c05c23d5b0b97b6"
+      ],
+      "content_sha256": "0f3afa3650504ad1a0161d1dbe55b3942c12fa5f057171d6ef251652c6339ef8",
+      "selected_article_count": 12,
+      "integrity_verified": true
+    },
+    {
+      "document_number": "66.18/2026/NQ-CP",
+      "canonical_document_id": "vn:66.18-2026-nq-cp",
+      "canonical_provider": "official_gazette_word",
+      "fallback_used": false,
+      "fallback_reason": null,
+      "snapshot_dir": "data/raw/official_docx/66_18_2026_nq_cp/20260803T210329Z-73dbd510",
+      "source_paths": [
+        "data/sources/official_docx/2026_301_66.18_2026_NQ-CP.docx"
+      ],
+      "source_sha256s": [
+        "c65df9bd52c10589ea51cc50ea7a36b8ba64d14470343e5d2e309c806b3f130f"
+      ],
+      "content_sha256": "73dbd510f1d2cd838ed7e77dc7850ef31c71afbee95d9b9877077f8805bbe0fd",
+      "selected_article_count": 8,
+      "integrity_verified": true
+    }
+  ]
+}

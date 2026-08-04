@@ -1,0 +1,36 @@
+{
+  "schema_version": "phapdien-runtime-coverage-v1",
+  "role_policy": {
+    "phapdien_20_2": "coverage_reference_only",
+    "official_18_sources": "runtime_candidate",
+    "direct_merge_allowed": false
+  },
+  "summary": {
+    "phapdien_article_count": 477,
+    "runtime_document_count": 18,
+    "runtime_container_count": 513,
+    "classification_counts": {
+      "covered_by_document_and_article": 233,
+      "source_article_outside_selected_runtime_scope": 23,
+      "source_document_absent_from_runtime_scope": 221
+    }
+  },
+  "phapdien_source_document_counts": {
+    "04/2021/TT-BCT": 9,
+    "09/2020/TT-BLĐTBXH": 13,
+    "10/2020/TT-BLĐTBXH": 12,
+    "12/2022/TT-BCT": 10,
+    "135/2020/NĐ-CP": 9,
+    "145/2020/NĐ-CP": 115,
+    "152/2020/NĐ-CP": 30,
+    "17/2023/TT-BLĐTBXH": 12,
+    "18/2021/TT-BLĐTBXH": 10,
+    "19/2021/TT-BLĐTBXH": 5,
+    "20/2023/TT-BCT": 12,
+    "293/2025/NĐ-CP": 5,
+    "45/2019/QH": 220,
+    "70/2023/NĐ-CP": 1,
+    "97/2022/NĐ-CP": 14
+  },
+  "interpretation": "A missing Pháp điển row is a review lead, not automatic evidence that the runtime corpus is wrong. The runtime scope remains the 18 hash-bound official sources."
+}

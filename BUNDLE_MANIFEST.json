@@ -1,22 +1,52 @@
 {
-  "bundle": "vn_labor_law_data_bootstrap_2026-07-26",
-  "contents": [
-    "Makefile.data-golden.inc",
-    "data/evaluation/golden_questions_v1_legacy.json",
-    "data/evaluation/golden_questions_v2_current_law.json",
-    "data/evaluation/legacy_evidence_catalog.json",
-    "docs/data/README_DATA_BOOTSTRAP.md",
-    "docs/data/gitignore_data_snippet.txt",
-    "scripts/audit_golden_dataset.py",
-    "scripts/build_data_manifests.py",
-    "scripts/rebase_golden_evidence.py"
+  "schema_version": "project-bundle-manifest-v2",
+  "bundle": "vn-labor-law-rag-unified-docx-2026-07-28",
+  "release_id": "labor-law-2026-07-28-candidate",
+  "release_status": "technical_candidate_pending_authority_review",
+  "law_as_of": "2026-07-27",
+  "counts": {
+    "documents": 18,
+    "article_containers": 513,
+    "chunks": 833,
+    "golden_questions": 45
+  },
+  "official_docx_sources": [
+    {
+      "document_number": "18/VBHN-VPQH",
+      "sha256": "1386441b1f513defdd55186d7e65b8432dcac87c2e0d78676de25facb9c5e6ff"
+    },
+    {
+      "document_number": "66.18/2026/NQ-CP",
+      "sha256": "c65df9bd52c10589ea51cc50ea7a36b8ba64d14470343e5d2e309c806b3f130f"
+    }
   ],
-  "legacy_golden_questions": 45,
-  "legacy_evidence_references": 102,
-  "legacy_unique_evidence_references": 77,
-  "legacy_catalog_entries": 77,
-  "recovered_v2_questions": 45,
-  "recovered_v2_disabled_questions": [
-    "r2ai_gold_025"
-  ]
+  "primary_files": [
+    "data/releases/labor-law-2026-07-28-candidate/manifest.json",
+    "data/releases/labor-law-2026-07-28-candidate/articles.json",
+    "data/releases/labor-law-2026-07-28-candidate/chunks.jsonl",
+    "data/releases/labor-law-2026-07-28-candidate/source_inventory.json",
+    "data/releases/labor-law-2026-07-28-candidate/legal_effect_review.json",
+    "data/releases/labor-law-2026-07-28-candidate/approval.json",
+    "data/releases/labor-law-2026-07-28-candidate/SHA256SUMS.txt",
+    "data/evaluation/golden_questions_v3_unified_candidate.json",
+    "data/evaluation/golden_v3_audit.json",
+    "data/evaluation/results/unified_bm25_baseline.json",
+    "data/quality/unified_release_validation.json",
+    "docs/data/DATA_PROVENANCE_2026-07-27.md",
+    "docs/report/UNIFIED_RUNTIME_HANDOFF_2026-07-28.md",
+    "requirements-evaluation.txt",
+    "scripts/index_and_evaluate_unified.sh",
+    "FINAL_BUILD_REPORT_2026-07-27.md"
+  ],
+  "gates": {
+    "structural_validation": "passed",
+    "golden_evidence_rebase": "45/45 resolved",
+    "official_docx_hashes": "passed",
+    "base_vbpl_raw_provenance": "incomplete_supplied_archive",
+    "e5_hard_limit_audit": "passed: 833/833 below 480-token operational cap",
+    "bm25_golden_v3_baseline": "passed: 44 enabled questions",
+    "authority_review": "pending",
+    "qdrant_reindex": "pending",
+    "production_publishable": false
+  }
 }

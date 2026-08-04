@@ -5,9 +5,9 @@ No external search engine or Python dependency is required.
 
 Example:
     python scripts/evaluate_lexical_baseline.py \
-      --golden data/evaluation/golden_questions_v1_rebased_current_phapdien.json \
-      --chunks data/processed/legal_chunks.jsonl \
-      --output data/evaluation/results/phapdien_bm25.json \
+      --golden data/evaluation/golden_questions_v3_unified_candidate.json \
+      --chunks data/releases/labor-law-2026-07-28-candidate/chunks.jsonl \
+      --output data/evaluation/results/unified_bm25_baseline.json \
       --k 5 10 20
 """
 
@@ -213,19 +213,21 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         default=Path(
             "data/evaluation/"
-            "golden_questions_v1_rebased_current_phapdien.json"
+            "golden_questions_v3_unified_candidate.json"
         ),
     )
     parser.add_argument(
         "--chunks",
         type=Path,
-        default=Path("data/processed/legal_chunks.jsonl"),
+        default=Path(
+            "data/releases/labor-law-2026-07-28-candidate/chunks.jsonl"
+        ),
     )
     parser.add_argument(
         "--output",
         type=Path,
         default=Path(
-            "data/evaluation/results/phapdien_bm25_baseline.json"
+            "data/evaluation/results/unified_bm25_baseline.json"
         ),
     )
     parser.add_argument(

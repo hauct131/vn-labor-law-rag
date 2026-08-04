@@ -12,7 +12,7 @@ from backend.app.ingestion.legal_parser import (
 )
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
-HTML_PATH = ROOT_DIR / "data/raw/DeMuc_20.2_Lao_Dong.html"
+HTML_PATH = ROOT_DIR / "data/legacy/phapdien/raw/DeMuc_20.2_Lao_Dong.html"
 
 
 @pytest.fixture(scope="session")

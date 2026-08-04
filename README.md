@@ -1,116 +1,158 @@
 # Vietnamese Labor Law RAG
 
-MVP hỏi đáp pháp luật lao động Việt Nam theo luồng:
+## Corpus thống nhất 2026-07-27
+
+Project hiện đọc một release duy nhất:
 
 ```text
-React → FastAPI → Sparse BM25–VnCoreNLP hoặc Hybrid RRF
-      → Top-5 căn cứ → OpenRouter free → câu trả lời + nguồn
+data/releases/labor-law-2026-07-28-candidate/
+├── articles.json
+├── chunks.jsonl
+├── source_inventory.json
+├── legal_effect_review.json
+├── approval.json
+├── manifest.json
+├── SHA256SUMS.txt
+└── sources/official_docx/
 ```
 
-Graph-enhanced được giữ trong thiết kế nhưng trả `501 Not Implemented` cho tới
-giai đoạn Neo4j tiếp theo. Hệ thống không âm thầm thay Graph bằng Hybrid.
+Kết quả kiểm tra kỹ thuật:
 
-## Chuẩn bị
+- 18 văn bản;
+- 513 đơn vị truy hồi;
+- 833 chunk;
+- đủ 220/220 Điều của `18/VBHN-VPQH`;
+- `66.18/2026/NQ-CP`: Điều 4, Điều 6 và sáu đơn vị Phụ lục I.4 dùng
+  trong golden current-law;
+- 45/45 câu golden v3 đã được bind lại vào chunk ID của release;
+- hash nguồn, hash release, coverage và mã Điều đều đạt validator.
 
-1. Collection Qdrant `labor_law` đã index đủ 1.395 chunks.
-2. Corpus tại `data/processed/legal_chunks.jsonl`.
-3. VnCoreNLP tại:
+Release này chưa được phép gọi là production: 16 snapshot VBPL thiếu checksum
+inventory/raw API response và duyệt hiệu lực bởi người có thẩm quyền vẫn đang
+chờ. E5 audit đã đo chính xác 833/833 chunk, lớn nhất 478 token và không có
+chunk chạm ngưỡng vận hành 480 token. Vì vậy `/api/health` chỉ kiểm liveness,
+còn `/api/ready` chủ động trả `503 authority_review_pending`.
+
+Xem giải thích nguồn dữ liệu tại:
 
 ```text
-models/vncorenlp/VnCoreNLP-1.2.jar
-models/vncorenlp/models/
+docs/data/DATA_PROVENANCE_2026-07-27.md
 ```
 
-4. Tạo API key tại OpenRouter rồi cấu hình:
+Kiểm tra release hiện có:
 
 ```bash
-cp .env.example .env
+make unified-release-validate PYTHON=python3
 ```
 
-Chỉ điền key vào `.env`:
-
-```env
-OPENROUTER_API_KEY=sk-or-v1-...
-OPENROUTER_MODEL=openrouter/free
-OPENROUTER_REQUIRE_FREE_MODEL=true
-```
-
-Chế độ bảo vệ mặc định sẽ chặn model trả phí. Web search không được bật.
-
-## Chạy nhanh khi Qdrant đã hoạt động
-
-Terminal 1 — backend:
+Chạy toàn bộ release check, Qdrant index/verify và retrieval evaluation:
 
 ```bash
-cd /media/hao/Data/vn-labor-law-rag
-source backend/.venv/bin/activate
-PYTHONPATH=backend uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+bash scripts/index_and_evaluate_unified.sh
 ```
 
-Terminal 2 — frontend:
+Script dùng trực tiếp `.venv/bin/python3`, ghi log vào `logs/` và triển khai
+Qdrant theo blue/green:
+
+- giữ nguyên collection cũ `labor_law` để rollback;
+- index/resume release 833 trong
+  `labor_law_20260728_fd35bb1a`;
+- verify fingerprint, count và dense smoke trước khi kích hoạt;
+- tạo/chuyển alias `labor_law_active` theo một cập nhật alias atomic;
+- backend luôn truy vấn qua `labor_law_active`.
+
+Workflow không có lệnh xóa collection. Nếu collection phiên bản mới đang dở
+nhưng có cùng fingerprint thì workflow resume; nếu khác fingerprint thì dừng
+an toàn.
+
+Muốn tạo candidate mới, chọn thư mục release mới để không ghi đè:
 
 ```bash
-cd /media/hao/Data/vn-labor-law-rag/frontend
-npm install
-npm run dev -- --host 0.0.0.0
+make unified-release \
+  PYTHON=python3 \
+  UNIFIED_RELEASE_DIR=data/releases/labor-law-2026-07-28-candidate-v2
 ```
 
-Mở `http://localhost:5173`. API docs ở `http://localhost:8000/docs`.
+## Retrieval tuning
 
-## Kiểm tra không tốn quota
+Các target hiện bind mặc định vào golden v3 và release 833 chunks.
+
+Nếu môi trường chưa có `sentence-transformers`, cài dependency evaluation
+riêng (không cần thêm vào image backend):
 
 ```bash
-cd /media/hao/Data/vn-labor-law-rag
-PYTHONPATH=. backend/.venv/bin/pytest -q backend/tests
-cd frontend && npm run build && npm run lint
+.venv/bin/python3 -m pip install -r requirements-evaluation.txt
 ```
 
-Các test OpenRouter dùng HTTP client giả và không gửi request ra internet.
-
-## Gọi API thật
+Chạy grid nhỏ trước:
 
 ```bash
-curl -sS http://localhost:8000/api/ask \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "question": "Người lao động được nghỉ hằng năm bao nhiêu ngày?",
-    "method": "sparse"
-  }'
+make legal-eval-tune-fast
 ```
 
-Đổi `method` thành `hybrid` để dùng BM25–VnCoreNLP + Dense E5 + RRF.
-Mỗi lần gọi thành công có nguồn sẽ sử dụng một lượt OpenRouter miễn phí.
-
-## Docker Compose
-
-Sau khi có `.env`, corpus và thư mục model:
+Chạy grid mặc định đầy đủ:
 
 ```bash
-docker compose up --build
+make legal-eval-tune
 ```
 
-Backend container dùng Java cho VnCoreNLP và volume riêng để cache FastEmbed.
-
-## Ingestion VBPL an toàn cho production
-
-Lớp crawl chạy độc lập với request path của chatbot. Snapshot chỉ được publish
-sau khi đúng số hiệu, đúng item ID, đủ chuỗi Điều, lưu raw response và vượt qua
-kiểm tra SHA-256.
+Dùng GPU:
 
 ```bash
-python -m pip install -r requirements-corpus.txt
-python -m playwright install --with-deps chromium
-make test-ingestion
-make vbpl-doctor
-make vbpl-canary
-make vbpl-soak
+make legal-eval-tune E5_DEVICE=cuda E5_BATCH_SIZE=8
 ```
 
-Chạy batch có resume, retry, checkpoint và báo cáo từng văn bản:
+Kết quả nằm trong:
+
+```text
+data/evaluation/tuning-unified/
+├── retrieval_grid_results.csv
+├── retrieval_grid_results.json
+├── best_retrieval_configs.json
+├── retrieval_tuning_summary.md
+└── <best-config>.json
+```
+
+Script chọn ba cấu hình:
+
+- `best.article`: ưu tiên tìm đủ điều luật;
+- `best.evidence`: ưu tiên exact evidence chunks;
+- `best.balanced`: cân bằng hai mục tiêu.
+
+`best.balanced` là ứng viên mặc định. Đây vẫn là kết quả trên development set
+44 câu đang bật; cần một holdout riêng trước khi kết luận cuối cùng.
+
+## Production-equivalent retrieval benchmark
+
+Benchmark mới tách biệt với evaluator SentenceTransformers offline ở trên và
+chạy đúng các thành phần production:
+
+- FastEmbed E5 + Qdrant qua alias `labor_law_active` cho Dense;
+- VnCoreNLP + BM25 in-memory cho Sparse;
+- weighted RRF trong backend cho Hybrid.
+
+Tạo và kiểm tra split khóa 31 câu dev / 13 câu test / 1 câu disabled:
 
 ```bash
-make vbpl-fetch
+make runtime-golden-splits
+make runtime-golden-splits-check
+make runtime-benchmark-dry-run
 ```
 
-Không crawl live trong lúc demo chatbot. Quy trình vận hành và promotion gate
-được mô tả tại `docs/ingestion/VBPL_PRODUCTION_RUNBOOK.md`.
+Chỉ tune trên dev. Lệnh này sinh Dense/Sparse baseline, toàn bộ Hybrid trial,
+Hybrid được chọn và bảng tóm tắt trong `data/evaluation/runtime-benchmark/`:
+
+```bash
+make runtime-benchmark-tune-dev
+```
+
+Kiểm tra `dev_hybrid_trials.json` và commit cấu hình đã chọn trước khi mở test.
+Sau đó chỉ chạy test một lần:
+
+```bash
+ALLOW_TEST=1 make runtime-benchmark-test
+```
+
+Split chỉ khóa nhãn và thành viên phục vụ retrieval benchmark; nó không thay
+đổi trạng thái authority review đang pending. `QDRANT_API_KEY` được đọc từ
+settings và không bao giờ được ghi vào báo cáo benchmark.

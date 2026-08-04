@@ -8,6 +8,7 @@ import tempfile
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
+from unittest.mock import patch
 
 from backend.app.retrieval.dense_component import (
     DenseRetriever,
@@ -131,6 +132,22 @@ class RetrievalCoreTests(unittest.TestCase):
         self.assertEqual(hits[0].chunk_id, "chunk-1")
         self.assertEqual(hits[0].payload["article_code"], "20.2.LQ.204")
         self.assertEqual(hits[0].retrieval_origin, "dense_e5")
+
+    def test_dense_retriever_passes_configured_qdrant_api_key(self) -> None:
+        retriever = DenseRetriever(
+            qdrant_url="https://qdrant.example",
+            collection_name="labor_law_active",
+            api_key="test-secret",
+            model_name="intfloat/multilingual-e5-large",
+        )
+
+        with patch("qdrant_client.QdrantClient") as client_class:
+            retriever._get_client()
+
+        client_class.assert_called_once_with(
+            url="https://qdrant.example",
+            api_key="test-secret",
+        )
 
     def test_sparse_retriever_ranks_compound_vietnamese_terms(self) -> None:
         chunks = [

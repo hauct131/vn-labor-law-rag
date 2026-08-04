@@ -56,6 +56,12 @@ data/evaluation/*
 !data/evaluation/*.jsonl
 !data/evaluation/*.csv
 !data/evaluation/*.md
+!data/evaluation/splits/
+!data/evaluation/splits/*.json
+!data/evaluation/runtime-benchmark/
+data/evaluation/runtime-benchmark/*
+!data/evaluation/runtime-benchmark/*.json
+!data/evaluation/runtime-benchmark/*.md
 
 # Reproducibility manifests
 data/manifests/*
@@ -67,6 +73,14 @@ data/quality/*
 !data/quality/vbpl_article_build_report.json
 !data/quality/vbpl_chunk_quality_report.json
 !data/quality/unified_merge_report.json
+!data/quality/unified_release_validation.json
+!data/quality/unified_e5_token_audit/
+!data/quality/unified_e5_token_audit/**
+
+# Stable unified-candidate evaluation reports
+!data/evaluation/results/
+data/evaluation/results/*
+!data/evaluation/results/unified_*.json
 
 # Generated graph/runtime data
 data/graph/*
@@ -102,3 +116,14 @@ data/raw/vbpl/_cache/
 
 # Regenerable VBPL crawler cache
 data/raw/vbpl/_cache/
+
+# Local secrets and audit artifacts
+.env.pre-qdrant-alias-*
+.patch_backups/
+logs/
+
+# Interrupted local releases
+data/releases/.labor-law-*.staging.*/
+data/releases/*.failed-*/
+data/releases/*.pre-resume-*/
+data/releases/*.rollback-*/

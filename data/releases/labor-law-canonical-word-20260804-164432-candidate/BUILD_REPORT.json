@@ -1,0 +1,21 @@
+{
+  "schema_version": "canonical-word-build-report-v1",
+  "status": "PASS_STRUCTURAL_CANDIDATE",
+  "release_id": "labor-law-canonical-word-20260804-164432-candidate",
+  "release_dir": "data/releases/labor-law-canonical-word-20260804-164432-candidate",
+  "structural_candidate_passed": true,
+  "production_publishable": false,
+  "counts": {
+    "documents": 18,
+    "official_gazette_word_documents": 17,
+    "vbpl_fallback_documents": 1,
+    "source_article_containers": 513,
+    "canonical_article_containers": 510,
+    "chunks": 804,
+    "legal_effect_transformations": 56,
+    "word_vbpl_differences_migrated": 52
+  },
+  "canonical_chunks_sha256": "fdbec539efbfb3f4aa3cb3962046321e3a402150d93516ef4256934972c70307",
+  "golden_output": "data/evaluation/golden_questions_v4_canonical_word_candidate.json",
+  "exact_e5_audit_passed": true
+}

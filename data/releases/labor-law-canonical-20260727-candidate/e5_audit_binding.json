@@ -1,0 +1,16 @@
+{
+  "schema_version": "canonical-e5-audit-binding-v1",
+  "audit_summary_path": "data/releases/labor-law-canonical-20260727-candidate/e5_audit/summary.json",
+  "canonical_chunks_path": "data/releases/labor-law-canonical-20260727-candidate/canonical_chunks.jsonl",
+  "canonical_chunks_sha256": "34a3f1eb027be1498c10609ef565dbeb2a831a61a362388ac85590f04533624e",
+  "canonical_chunk_count": 844,
+  "expected_model_name": "intfloat/multilingual-e5-large",
+  "expected_model_max_tokens": 512,
+  "expected_prefix_string": "passage: ",
+  "verified": true,
+  "errors": [],
+  "audit_summary_sha256": "11438b5f26dd58b1363c13ef4f5d3dd28f1976e995d56b2f66d21398376f20e9",
+  "measured_max_tokens": 478,
+  "near_or_above_count": 0,
+  "fastembed_version": "0.8.0"
+}

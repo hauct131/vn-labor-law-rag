@@ -1,0 +1,12 @@
+{
+  "status": "PASS_TECHNICAL_CANDIDATE",
+  "release_dir": "data/releases/labor-law-2026-07-28-candidate",
+  "release_id": "labor-law-2026-07-28-candidate",
+  "article_containers": 513,
+  "chunks": 833,
+  "official_docx_sources": 2,
+  "raw_snapshots": 2,
+  "authority_review_status": "pending",
+  "production_publishable": false,
+  "manifest_sha256": "1f353b7d99dd2c8e29f1660d76509959ae90c5ecfc564c61db90c1b22b154ff7"
+}

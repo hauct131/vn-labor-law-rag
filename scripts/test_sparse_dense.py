@@ -21,6 +21,11 @@ import sys
 import time
 from dataclasses import dataclass
 from pathlib import Path
+import sys
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 from typing import Any, Iterable
 
 from backend.app.retrieval.vncorenlp_bm25 import (
@@ -31,7 +36,9 @@ from backend.app.retrieval.vncorenlp_bm25 import (
 
 LOGGER = logging.getLogger("retrieval_model_probe")
 
-DEFAULT_CHUNKS = Path("data/processed/legal_chunks.jsonl")
+DEFAULT_CHUNKS = Path(
+    "data/releases/labor-law-2026-07-28-candidate/chunks.jsonl"
+)
 DEFAULT_QUESTIONS = Path(
     "data/evaluation/retrieval_smoke_questions.json"
 )
@@ -106,7 +113,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--batch-size", type=int, default=16)
     parser.add_argument("--threads", type=int, default=6)
     parser.add_argument("--top-k", type=int, default=5)
-    parser.add_argument("--expected-chunks", type=int, default=1127)
+    parser.add_argument("--expected-chunks", type=int, default=833)
     parser.add_argument(
         "--recreate",
         action="store_true",

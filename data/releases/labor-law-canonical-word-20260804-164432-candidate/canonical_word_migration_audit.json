@@ -1,0 +1,26 @@
+{
+  "schema_version": "canonical-word-migration-audit-v1",
+  "status": "PASS",
+  "source_binding_audit_sha256": "71a344e8663e3f3072d75f63d895a13bc1f8b977dc4a8c388f255f4bf18738e7",
+  "documents_audited": 18,
+  "documents_errored": 0,
+  "articles_compared": 273,
+  "articles_equal_to_old_vbpl": 221,
+  "articles_changed_from_old_vbpl": 52,
+  "changed_documents": [
+    "135/2020/NĐ-CP",
+    "145/2020/NĐ-CP",
+    "152/2020/NĐ-CP",
+    "97/2022/NĐ-CP",
+    "293/2025/NĐ-CP",
+    "219/2025/NĐ-CP",
+    "129/2025/NĐ-CP",
+    "09/2020/TT-BLĐTBXH",
+    "18/2021/TT-BLĐTBXH",
+    "19/2021/TT-BLĐTBXH",
+    "20/2023/TT-BCT"
+  ],
+  "rebuilt_word_body_hash_matches": 273,
+  "rebuilt_word_body_hash_mismatches": [],
+  "interpretation": "The 52 differences are no longer blockers: the candidate now uses the Gazette Word body hashes. They remain migration evidence explaining why the former VBPL-derived candidate was replaced."
+}

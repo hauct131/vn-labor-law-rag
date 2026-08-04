@@ -1,0 +1,782 @@
+{
+  "schema_version": "labor-law-source-registry-v1",
+  "registry_status": "draft_pending_legal_review",
+  "generated_at": "2026-08-02T07:52:39.947382+00:00",
+  "source_release": {
+    "release_id": "labor-law-2026-07-28-candidate",
+    "release_dir": "data/releases/labor-law-2026-07-28-candidate",
+    "law_as_of": "2026-07-27",
+    "release_status": "technical_candidate_pending_authority_review",
+    "technical_source_gates_passed": true,
+    "authority_review_passed": false
+  },
+  "summary": {
+    "document_count": 18,
+    "vbpl_snapshot_count": 16,
+    "official_docx_count": 2,
+    "included_unit_count": 513,
+    "legal_review_pending": 16,
+    "authority_review_pending": 18,
+    "high_priority_review_count": 6
+  },
+  "documents": [
+    {
+      "document_number": "04/2021/TT-BCT",
+      "title": "Thông tư số 04/2021/TT-BCT quy định về thời giờ làm việc, thời giờ nghỉ ngơi đối với người lao động làm các công việc trong hầm lò",
+      "source_kind": "vbpl_snapshot",
+      "provider": "Cơ sở dữ liệu quốc gia về văn bản pháp luật",
+      "source_item_id": "148825",
+      "official_identity_url": "https://vanban.chinhphu.vn/?docid=203737&pageid=27160",
+      "acquisition": {
+        "detail_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=148825",
+        "gateway_url": "https://vbpl-bientap-gateway.moj.gov.vn/api/qtdc/public/doc/148825",
+        "retrieved_at": "2026-07-28T09:32:39+00:00",
+        "snapshot_path": "data/raw/vbpl/04_2021_tt_bct/20260728T093239Z-2e299df9",
+        "primary_file_path": "data/raw/vbpl/04_2021_tt_bct/20260728T093239Z-2e299df9/full_text.txt",
+        "method": "vbpl_portal"
+      },
+      "integrity": {
+        "content_sha256": "7872c1f6639594265533f21aa8e4f96c9d2887035a32dadf1ac533c9c40cfc77",
+        "content_hash_verified": true,
+        "snapshot_manifest_sha256": "6f3cbaf177be6e66cb9447f2113e054b659fe055404aa56a12acf60c23c227b5",
+        "snapshot_audit_verified": true
+      },
+      "observed_legal_metadata": {
+        "issued_at": "2021-07-16",
+        "effective_from": "2021-09-01",
+        "effective_to": null,
+        "portal_status": "Còn hiệu lực",
+        "relations": {}
+      },
+      "corpus_scope": {
+        "included_unit_count": 9
+      },
+      "legal_review": {
+        "status": "pending",
+        "decision": "unresolved",
+        "priority": "normal",
+        "reviewed_as_of": null,
+        "reviewer": null,
+        "authority_review_passed": false,
+        "evidence_urls": [],
+        "notes": "Review legal effect at document/provision level in Step 3."
+      }
+    },
+    {
+      "document_number": "09/2020/TT-BLĐTBXH",
+      "title": "Thông tư số 09/2020/TT-BLĐTBXH Quy định chi tiết và hướng dẫn thi hành một số điều của Bộ luật Lao động về lao động chưa thành niên",
+      "source_kind": "vbpl_snapshot",
+      "provider": "Cơ sở dữ liệu quốc gia về văn bản pháp luật",
+      "source_item_id": "152670",
+      "official_identity_url": "https://congbao.chinhphu.vn/van-ban/thong-tu-so-09-2020-tt-bldtbxh-33378.htm",
+      "acquisition": {
+        "detail_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=152670",
+        "gateway_url": "https://vbpl-bientap-gateway.moj.gov.vn/api/qtdc/public/doc/152670",
+        "retrieved_at": "2026-07-28T09:32:34+00:00",
+        "snapshot_path": "data/raw/vbpl/09_2020_tt_bldtbxh/20260728T093234Z-3e22a194",
+        "primary_file_path": "data/raw/vbpl/09_2020_tt_bldtbxh/20260728T093234Z-3e22a194/full_text.txt",
+        "method": "vbpl_portal"
+      },
+      "integrity": {
+        "content_sha256": "e7fd815e5f0bbc6fe35cd287a50706169ec56e85881d554fde964c53dcb06d2c",
+        "content_hash_verified": true,
+        "snapshot_manifest_sha256": "af345be72e532f6de5ab1f7f6a9ca630fc9fb9ead0d9c788960f70a6d14a385e",
+        "snapshot_audit_verified": true
+      },
+      "observed_legal_metadata": {
+        "issued_at": "2020-11-12",
+        "effective_from": "2021-03-15",
+        "effective_to": null,
+        "portal_status": "Hết hiệu lực một phần",
+        "relations": {}
+      },
+      "corpus_scope": {
+        "included_unit_count": 13
+      },
+      "legal_review": {
+        "status": "pending",
+        "decision": "unresolved",
+        "priority": "high",
+        "reviewed_as_of": null,
+        "reviewer": null,
+        "authority_review_passed": false,
+        "evidence_urls": [],
+        "notes": "Review legal effect at document/provision level in Step 3."
+      }
+    },
+    {
+      "document_number": "10/2020/TT-BLĐTBXH",
+      "title": "Thông tư số 10/2020/TT-BLĐTBXH Quy định chi tiết và hướng dẫn thi hành một số điều, khoản sau đây của Bộ luật Lao động về nội dung của Hợp đồng lao động, hội đồng thương lượng tập thể và nghề, công việc có ảnh hưởng xấu tới chức năng sinh sản, nuôi con",
+      "source_kind": "vbpl_snapshot",
+      "provider": "Cơ sở dữ liệu quốc gia về văn bản pháp luật",
+      "source_item_id": "146696",
+      "official_identity_url": "https://vbpl.vn/van-ban/chi-tiet/thong-tu-so-10-2020-tt-bldtbxh-quy-dinh-chi-tiet-va-huong-dan-thi-hanh-mot-so-dieu-khoan-sau-day-cua-bo-luat-lao-dong-ve-noi-dung-cua-hop-dong-lao-dong-hoi-dong-thuong-luong-tap-the-va-nghe-cong-viec-co-anh-huong-xau-toi-chuc-nang-sinh-san-nuoi-con--146696",
+      "acquisition": {
+        "detail_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=146696",
+        "gateway_url": "https://vbpl-bientap-gateway.moj.gov.vn/api/qtdc/public/doc/146696",
+        "retrieved_at": "2026-07-28T09:32:37+00:00",
+        "snapshot_path": "data/raw/vbpl/10_2020_tt_bldtbxh/20260728T093237Z-67146c33",
+        "primary_file_path": "data/raw/vbpl/10_2020_tt_bldtbxh/20260728T093237Z-67146c33/full_text.txt",
+        "method": "vbpl_portal"
+      },
+      "integrity": {
+        "content_sha256": "aade1a07fc1f1f54e809bc7b60f9578c8ecfca0ba9b3c620b36302a5b2c09f4f",
+        "content_hash_verified": true,
+        "snapshot_manifest_sha256": "c4a1a25ee7f031885ef4f1b83305ed63de569e20996649f346efd39d091123e1",
+        "snapshot_audit_verified": true
+      },
+      "observed_legal_metadata": {
+        "issued_at": "2020-11-12",
+        "effective_from": "2021-01-01",
+        "effective_to": null,
+        "portal_status": "Còn hiệu lực",
+        "relations": {}
+      },
+      "corpus_scope": {
+        "included_unit_count": 12
+      },
+      "legal_review": {
+        "status": "pending",
+        "decision": "unresolved",
+        "priority": "normal",
+        "reviewed_as_of": null,
+        "reviewer": null,
+        "authority_review_passed": false,
+        "evidence_urls": [],
+        "notes": "Review legal effect at document/provision level in Step 3."
+      }
+    },
+    {
+      "document_number": "12/2022/TT-BCT",
+      "title": "Thông tư số 12/2022/TT-BCT quy định về thời giờ làm việc, thời giờ nghỉ ngơi đối với người lao động làm công việc vận hành, bảo dưỡng, sửa chữa hệ thống đường ống phân phối khí và các công trình khí.",
+      "source_kind": "vbpl_snapshot",
+      "provider": "Cơ sở dữ liệu quốc gia về văn bản pháp luật",
+      "source_item_id": "155202",
+      "official_identity_url": "https://vanban.chinhphu.vn/?docid=206265&pageid=27160",
+      "acquisition": {
+        "detail_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=155202",
+        "gateway_url": "https://vbpl-bientap-gateway.moj.gov.vn/api/qtdc/public/doc/155202",
+        "retrieved_at": "2026-07-28T09:32:49+00:00",
+        "snapshot_path": "data/raw/vbpl/12_2022_tt_bct/20260728T093249Z-6f5bcd04",
+        "primary_file_path": "data/raw/vbpl/12_2022_tt_bct/20260728T093249Z-6f5bcd04/full_text.txt",
+        "method": "vbpl_portal"
+      },
+      "integrity": {
+        "content_sha256": "dd4551a14411fdeec7a99eef814b344aaeac16d47aa28e4cdbe52f7575507a95",
+        "content_hash_verified": true,
+        "snapshot_manifest_sha256": "df4b8f0e55a6171e527c302950ba12acfdf7ce3a0797061bc724abf7ba051dd9",
+        "snapshot_audit_verified": true
+      },
+      "observed_legal_metadata": {
+        "issued_at": "2022-07-25",
+        "effective_from": "2022-09-09",
+        "effective_to": null,
+        "portal_status": "Còn hiệu lực",
+        "relations": {}
+      },
+      "corpus_scope": {
+        "included_unit_count": 10
+      },
+      "legal_review": {
+        "status": "pending",
+        "decision": "unresolved",
+        "priority": "normal",
+        "reviewed_as_of": null,
+        "reviewer": null,
+        "authority_review_passed": false,
+        "evidence_urls": [],
+        "notes": "Review legal effect at document/provision level in Step 3."
+      }
+    },
+    {
+      "document_number": "128/2025/NĐ-CP",
+      "title": "Nghị định số 128/2025/NĐ-CP Quy định về phân quyền, phân cấp trong quản lý nhà nước lĩnh vực nội vụ",
+      "source_kind": "vbpl_snapshot",
+      "provider": "Cơ sở dữ liệu quốc gia về văn bản pháp luật",
+      "source_item_id": "178260",
+      "official_identity_url": null,
+      "acquisition": {
+        "detail_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=178260",
+        "gateway_url": "https://vbpl-bientap-gateway.moj.gov.vn/api/qtdc/public/doc/178260",
+        "retrieved_at": "2026-07-28T09:32:28+00:00",
+        "snapshot_path": "data/raw/vbpl/128_2025_nd_cp/20260728T093228Z-8d578ed9",
+        "primary_file_path": "data/raw/vbpl/128_2025_nd_cp/20260728T093228Z-8d578ed9/full_text.txt",
+        "method": "vbpl_portal"
+      },
+      "integrity": {
+        "content_sha256": "568e78fbb32a30a895e41f51df7c1d87440845b0e921cf603ab16060a52225f8",
+        "content_hash_verified": true,
+        "snapshot_manifest_sha256": "0dcbfaf4f455acdb07835c95c8ac3ff4ee2c9cf5a17a06dc4da5a3416f0bb20e",
+        "snapshot_audit_verified": true
+      },
+      "observed_legal_metadata": {
+        "issued_at": "2025-06-11",
+        "effective_from": "2025-07-01",
+        "effective_to": null,
+        "portal_status": "Hết hiệu lực một phần",
+        "relations": {}
+      },
+      "corpus_scope": {
+        "included_unit_count": 1
+      },
+      "legal_review": {
+        "status": "pending",
+        "decision": "unresolved",
+        "priority": "high",
+        "reviewed_as_of": null,
+        "reviewer": null,
+        "authority_review_passed": false,
+        "evidence_urls": [],
+        "notes": "Review legal effect at document/provision level in Step 3."
+      }
+    },
+    {
+      "document_number": "129/2025/NĐ-CP",
+      "title": "Nghị định số 129/2025/NĐ-CP Quy định về phân định thẩm quyền của chính quyền địa phương 02 cấp trong lĩnh vực quản lý nhà nước của Bộ Nội vụ",
+      "source_kind": "vbpl_snapshot",
+      "provider": "Cơ sở dữ liệu quốc gia về văn bản pháp luật",
+      "source_item_id": "178294",
+      "official_identity_url": null,
+      "acquisition": {
+        "detail_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=178294",
+        "gateway_url": "https://vbpl-bientap-gateway.moj.gov.vn/api/qtdc/public/doc/178294",
+        "retrieved_at": "2026-07-28T09:32:31+00:00",
+        "snapshot_path": "data/raw/vbpl/129_2025_nd_cp/20260728T093231Z-87cc9ff5",
+        "primary_file_path": "data/raw/vbpl/129_2025_nd_cp/20260728T093231Z-87cc9ff5/full_text.txt",
+        "method": "vbpl_portal"
+      },
+      "integrity": {
+        "content_sha256": "5d58fbd903bb0f81117d1f6b8677c4c33f647571bf7bcdf9a75ff5e895419bed",
+        "content_hash_verified": true,
+        "snapshot_manifest_sha256": "14867b4e1b6617c75bfe921278e616ddcc63a8872ebf38b5a6f18922929303bc",
+        "snapshot_audit_verified": true
+      },
+      "observed_legal_metadata": {
+        "issued_at": "2025-06-11",
+        "effective_from": "2025-07-01",
+        "effective_to": "2027-03-01",
+        "portal_status": "Hết hiệu lực một phần",
+        "relations": {}
+      },
+      "corpus_scope": {
+        "included_unit_count": 15
+      },
+      "legal_review": {
+        "status": "pending",
+        "decision": "unresolved",
+        "priority": "high",
+        "reviewed_as_of": null,
+        "reviewer": null,
+        "authority_review_passed": false,
+        "evidence_urls": [],
+        "notes": "Review legal effect at document/provision level in Step 3."
+      }
+    },
+    {
+      "document_number": "135/2020/NĐ-CP",
+      "title": "Nghị định số 135/2020/NĐ-CP Quy định về tuổi nghỉ hưu",
+      "source_kind": "vbpl_snapshot",
+      "provider": "Cơ sở dữ liệu quốc gia về văn bản pháp luật",
+      "source_item_id": "152734",
+      "official_identity_url": "https://vanban.chinhphu.vn/?docid=201650&pageid=27160",
+      "acquisition": {
+        "detail_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=152734",
+        "gateway_url": "https://vbpl-bientap-gateway.moj.gov.vn/api/qtdc/public/doc/152734",
+        "retrieved_at": "2026-07-28T09:32:10+00:00",
+        "snapshot_path": "data/raw/vbpl/135_2020_nd_cp/20260728T093210Z-d0b3bfc6",
+        "primary_file_path": "data/raw/vbpl/135_2020_nd_cp/20260728T093210Z-d0b3bfc6/full_text.txt",
+        "method": "vbpl_portal"
+      },
+      "integrity": {
+        "content_sha256": "cba475ef6a8195181ae4fd860927460c01d2071ca309a04904e348c628cd0ab7",
+        "content_hash_verified": true,
+        "snapshot_manifest_sha256": "ba7218f28cbf005b72a53aaf1605d3f7270c88c44190df465bf256a125a4cb75",
+        "snapshot_audit_verified": true
+      },
+      "observed_legal_metadata": {
+        "issued_at": "2020-11-18",
+        "effective_from": "2021-01-01",
+        "effective_to": null,
+        "portal_status": "Hết hiệu lực một phần",
+        "relations": {}
+      },
+      "corpus_scope": {
+        "included_unit_count": 9
+      },
+      "legal_review": {
+        "status": "pending",
+        "decision": "unresolved",
+        "priority": "high",
+        "reviewed_as_of": null,
+        "reviewer": null,
+        "authority_review_passed": false,
+        "evidence_urls": [],
+        "notes": "Review legal effect at document/provision level in Step 3."
+      }
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "title": "Nghị định số 145/2020/NĐ-CP Quy định chi tiết và hướng dẫn thi hành một số điều của Bộ luật Lao động về điều kiện lao động và quan hệ lao động",
+      "source_kind": "vbpl_snapshot",
+      "provider": "Cơ sở dữ liệu quốc gia về văn bản pháp luật",
+      "source_item_id": "152668",
+      "official_identity_url": "https://vanban.chinhphu.vn/?docid=201967&pageid=27160",
+      "acquisition": {
+        "detail_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=152668",
+        "gateway_url": "https://vbpl-bientap-gateway.moj.gov.vn/api/qtdc/public/doc/152668",
+        "retrieved_at": "2026-07-28T09:32:13+00:00",
+        "snapshot_path": "data/raw/vbpl/145_2020_nd_cp/20260728T093213Z-1e5786e6",
+        "primary_file_path": "data/raw/vbpl/145_2020_nd_cp/20260728T093213Z-1e5786e6/full_text.txt",
+        "method": "vbpl_portal"
+      },
+      "integrity": {
+        "content_sha256": "d0531f0b58ff1f3f988b99bfd59a65bb99c35a4a0f5f1c97e7890184188f0ed4",
+        "content_hash_verified": true,
+        "snapshot_manifest_sha256": "3334412ea9b1bc1d2d1cfa35682bd0955032ae4a0239a8144d9666e1522f831a",
+        "snapshot_audit_verified": true
+      },
+      "observed_legal_metadata": {
+        "issued_at": "2020-12-14",
+        "effective_from": "2021-02-01",
+        "effective_to": null,
+        "portal_status": "Hết hiệu lực một phần",
+        "relations": {}
+      },
+      "corpus_scope": {
+        "included_unit_count": 115
+      },
+      "legal_review": {
+        "status": "pending",
+        "decision": "unresolved",
+        "priority": "high",
+        "reviewed_as_of": null,
+        "reviewer": null,
+        "authority_review_passed": false,
+        "evidence_urls": [],
+        "notes": "Review legal effect at document/provision level in Step 3."
+      }
+    },
+    {
+      "document_number": "152/2020/NĐ-CP",
+      "title": "Nghị định số 152/2020/NĐ-CP Quy định về người lao động nước ngoài làm việc tại Việt Nam và tuyển dụng, quản lý người lao động Việt Nam làm việc cho tổ chức, cá nhân nước ngoài tại Việt Nam",
+      "source_kind": "vbpl_snapshot",
+      "provider": "Cơ sở dữ liệu quốc gia về văn bản pháp luật",
+      "source_item_id": "152669",
+      "official_identity_url": "https://vanban.chinhphu.vn/?docid=202215&pageid=27160",
+      "acquisition": {
+        "detail_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=152669",
+        "gateway_url": "https://vbpl-bientap-gateway.moj.gov.vn/api/qtdc/public/doc/152669",
+        "retrieved_at": "2026-07-28T09:32:17+00:00",
+        "snapshot_path": "data/raw/vbpl/152_2020_nd_cp/20260728T093217Z-6c265a8d",
+        "primary_file_path": "data/raw/vbpl/152_2020_nd_cp/20260728T093217Z-6c265a8d/full_text.txt",
+        "method": "vbpl_portal"
+      },
+      "integrity": {
+        "content_sha256": "83c39d4eebcd6079e69cdcd5e4aa0601259b73332b8c86fe3b6fdd04a9069adb",
+        "content_hash_verified": true,
+        "snapshot_manifest_sha256": "2a604d9dddee946cb46647e953768207c70c0e41b880c1492f4a0d6d33892d18",
+        "snapshot_audit_verified": true
+      },
+      "observed_legal_metadata": {
+        "issued_at": "2020-12-30",
+        "effective_from": "2021-02-15",
+        "effective_to": null,
+        "portal_status": "Hết hiệu lực một phần",
+        "relations": {}
+      },
+      "corpus_scope": {
+        "included_unit_count": 7
+      },
+      "legal_review": {
+        "status": "pending",
+        "decision": "unresolved",
+        "priority": "high",
+        "reviewed_as_of": null,
+        "reviewer": null,
+        "authority_review_passed": false,
+        "evidence_urls": [],
+        "notes": "Review legal effect at document/provision level in Step 3."
+      }
+    },
+    {
+      "document_number": "17/2023/TT-BLĐTBXH",
+      "title": "Thông tư số 17/2023/TT-BLĐTBXH Hướng dẫn việc ủy quyền thực hiện nhiệm vụ quản lý nhà nước về lao động trong các khu công nghiệp, khu kinh tế",
+      "source_kind": "vbpl_snapshot",
+      "provider": "Cơ sở dữ liệu quốc gia về văn bản pháp luật",
+      "source_item_id": "167029",
+      "official_identity_url": "https://vanban.chinhphu.vn/?classid=1&docid=209584&pageid=27160",
+      "acquisition": {
+        "detail_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=167029",
+        "gateway_url": "https://vbpl-bientap-gateway.moj.gov.vn/api/qtdc/public/doc/167029",
+        "retrieved_at": "2026-07-28T09:32:54+00:00",
+        "snapshot_path": "data/raw/vbpl/17_2023_tt_bldtbxh/20260728T093254Z-2a9b204a",
+        "primary_file_path": "data/raw/vbpl/17_2023_tt_bldtbxh/20260728T093254Z-2a9b204a/full_text.txt",
+        "method": "vbpl_portal"
+      },
+      "integrity": {
+        "content_sha256": "ebff6b80b283f941b955bd020649d5dc31de9b59a87e0dcf97130a07076210c9",
+        "content_hash_verified": true,
+        "snapshot_manifest_sha256": "b5aea080c7d5ea4419477a0ab126799b014a8a127ef936103b6b0493203ace84",
+        "snapshot_audit_verified": true
+      },
+      "observed_legal_metadata": {
+        "issued_at": "2023-12-29",
+        "effective_from": "2024-03-01",
+        "effective_to": null,
+        "portal_status": "Còn hiệu lực",
+        "relations": {}
+      },
+      "corpus_scope": {
+        "included_unit_count": 12
+      },
+      "legal_review": {
+        "status": "pending",
+        "decision": "unresolved",
+        "priority": "normal",
+        "reviewed_as_of": null,
+        "reviewer": null,
+        "authority_review_passed": false,
+        "evidence_urls": [],
+        "notes": "Review legal effect at document/provision level in Step 3."
+      }
+    },
+    {
+      "document_number": "18/2021/TT-BLĐTBXH",
+      "title": "Thông tư số 18/2021/TT-BLĐTBXH Quy định về thời giờ làm việc, thời giờ nghỉ ngơi đối với người lao động làm các công việc sản xuất có tính thời vụ, công việc gia công theo đơn đặt hàng",
+      "source_kind": "vbpl_snapshot",
+      "provider": "Cơ sở dữ liệu quốc gia về văn bản pháp luật",
+      "source_item_id": "153297",
+      "official_identity_url": "https://vanban.chinhphu.vn/?docid=204826&pageid=27160",
+      "acquisition": {
+        "detail_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=153297",
+        "gateway_url": "https://vbpl-bientap-gateway.moj.gov.vn/api/qtdc/public/doc/153297",
+        "retrieved_at": "2026-07-28T09:32:42+00:00",
+        "snapshot_path": "data/raw/vbpl/18_2021_tt_bldtbxh/20260728T093242Z-840a5f05",
+        "primary_file_path": "data/raw/vbpl/18_2021_tt_bldtbxh/20260728T093242Z-840a5f05/full_text.txt",
+        "method": "vbpl_portal"
+      },
+      "integrity": {
+        "content_sha256": "458f7f055611598e6d1a7a2c19bb55316131edc55c5cd375c9916d22c832f39b",
+        "content_hash_verified": true,
+        "snapshot_manifest_sha256": "51154422fbb400cebd7c2f7720810ea38f03ba83d5ad1302d5cac12a2325fa55",
+        "snapshot_audit_verified": true
+      },
+      "observed_legal_metadata": {
+        "issued_at": "2021-12-15",
+        "effective_from": "2022-02-01",
+        "effective_to": null,
+        "portal_status": "Còn hiệu lực",
+        "relations": {}
+      },
+      "corpus_scope": {
+        "included_unit_count": 10
+      },
+      "legal_review": {
+        "status": "pending",
+        "decision": "unresolved",
+        "priority": "normal",
+        "reviewed_as_of": null,
+        "reviewer": null,
+        "authority_review_passed": false,
+        "evidence_urls": [],
+        "notes": "Review legal effect at document/provision level in Step 3."
+      }
+    },
+    {
+      "document_number": "18/VBHN-VPQH",
+      "title": "Bộ luật Lao động (văn bản hợp nhất số 18/VBHN-VPQH)",
+      "source_kind": "user_supplied_official_docx",
+      "provider": "Cổng Thông tin điện tử Chính phủ",
+      "source_item_id": "chinhphu:docid:217002",
+      "official_identity_url": "https://vanban.chinhphu.vn/?docid=217002&pageid=27160",
+      "acquisition": {
+        "source_file_path": "data/releases/labor-law-2026-07-28-candidate/sources/official_docx/2026_131_18_VBHN-VPQH.docx",
+        "raw_snapshot_path": "data/raw/official_docx/18_vbhn_vpqh/20260728T121257Z-1386441b",
+        "acquisition_claim": "DOCX supplied to the pipeline, hash-bound, and identity-checked against the official government page.",
+        "direct_download_verified": false
+      },
+      "integrity": {
+        "source_file_sha256": "1386441b1f513defdd55186d7e65b8432dcac87c2e0d78676de25facb9c5e6ff",
+        "source_file_hash_verified": true,
+        "raw_snapshot_manifest_sha256": "2dee51bb5924445c7c019a4b0f55b2b1c5293077174f6c7d4bdbf18ec4d0a4cd",
+        "digital_signature_parts_present": true,
+        "cryptographic_signature_validation": "not_performed"
+      },
+      "observed_legal_metadata": {
+        "issued_at": "2026-02-12",
+        "effective_from": "2021-01-01",
+        "effective_to": null,
+        "portal_status": null,
+        "relations": {}
+      },
+      "corpus_scope": {
+        "included_unit_count": 220
+      },
+      "legal_review": {
+        "status": "technical_review_recorded",
+        "decision": "effective_consolidated_text",
+        "priority": "normal",
+        "reviewed_as_of": "2026-07-27",
+        "reviewer": "pipeline_technical_review",
+        "authority_review_passed": false,
+        "evidence_urls": [
+          "https://vanban.chinhphu.vn/?docid=217002&pageid=27160"
+        ],
+        "notes": "The consolidation identifies amendments 71/2025/QH15, 113/2025/QH15 and 124/2025/QH15; all relevant effective dates are on or before 2026-07-27."
+      }
+    },
+    {
+      "document_number": "19/2021/TT-BLĐTBXH",
+      "title": "Thông tư số 19/2021/TT-BLĐTBXH Ban hành Danh mục vùng có điều kiện kinh tế - xã hội đặc biệt khó khăn làm cơ sở xác định các trường hợp có thể nghỉ hưu ở tuổi thấp hơn tuổi nghỉ hưu trong điều kiện lao động bình thường.",
+      "source_kind": "vbpl_snapshot",
+      "provider": "Cơ sở dữ liệu quốc gia về văn bản pháp luật",
+      "source_item_id": "152735",
+      "official_identity_url": "https://vanban.chinhphu.vn/?docid=205225&pageid=27160",
+      "acquisition": {
+        "detail_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=152735",
+        "gateway_url": "https://vbpl-bientap-gateway.moj.gov.vn/api/qtdc/public/doc/152735",
+        "retrieved_at": "2026-07-28T09:32:46+00:00",
+        "snapshot_path": "data/raw/vbpl/19_2021_tt_bldtbxh/20260728T093246Z-1072ef19",
+        "primary_file_path": "data/raw/vbpl/19_2021_tt_bldtbxh/20260728T093246Z-1072ef19/full_text.txt",
+        "method": "vbpl_portal"
+      },
+      "integrity": {
+        "content_sha256": "3d056a76aba46ef8b39eb39ae8f14ff9ac424f4ea9d44fd53e19f867215932e9",
+        "content_hash_verified": true,
+        "snapshot_manifest_sha256": "663be8ee67ff75b29792744be1c57ad31f212c37969843f8aa5c8c07e553846b",
+        "snapshot_audit_verified": true
+      },
+      "observed_legal_metadata": {
+        "issued_at": "2021-12-15",
+        "effective_from": "2022-01-30",
+        "effective_to": null,
+        "portal_status": "Còn hiệu lực",
+        "relations": {}
+      },
+      "corpus_scope": {
+        "included_unit_count": 5
+      },
+      "legal_review": {
+        "status": "pending",
+        "decision": "unresolved",
+        "priority": "normal",
+        "reviewed_as_of": null,
+        "reviewer": null,
+        "authority_review_passed": false,
+        "evidence_urls": [],
+        "notes": "Review legal effect at document/provision level in Step 3."
+      }
+    },
+    {
+      "document_number": "20/2023/TT-BCT",
+      "title": "Thông tư số 20/2023/TT-BCT quy định về thời giờ làm việc, thời giờ nghỉ ngơi đối với người lao động làm các công việc có tính chất đặc biệt trong lĩnh vực thăm dò, khai thác dầu khí trên biển",
+      "source_kind": "vbpl_snapshot",
+      "provider": "Cơ sở dữ liệu quốc gia về văn bản pháp luật",
+      "source_item_id": "163444",
+      "official_identity_url": "https://vanban.chinhphu.vn/?docid=208961&pageid=27160",
+      "acquisition": {
+        "detail_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=163444",
+        "gateway_url": "https://vbpl-bientap-gateway.moj.gov.vn/api/qtdc/public/doc/163444",
+        "retrieved_at": "2026-07-28T09:32:51+00:00",
+        "snapshot_path": "data/raw/vbpl/20_2023_tt_bct/20260728T093251Z-3d7adf3e",
+        "primary_file_path": "data/raw/vbpl/20_2023_tt_bct/20260728T093251Z-3d7adf3e/full_text.txt",
+        "method": "vbpl_portal"
+      },
+      "integrity": {
+        "content_sha256": "a5f8511401c1a69114c18fbadf49d2f5d99284eea1c0a4807d675871012c870c",
+        "content_hash_verified": true,
+        "snapshot_manifest_sha256": "67b00c198917a896ce0cd7002bb5acdd09b363870276e6a41709e3e03cf0b79d",
+        "snapshot_audit_verified": true
+      },
+      "observed_legal_metadata": {
+        "issued_at": "2023-11-08",
+        "effective_from": "2023-12-25",
+        "effective_to": null,
+        "portal_status": "Còn hiệu lực",
+        "relations": {}
+      },
+      "corpus_scope": {
+        "included_unit_count": 12
+      },
+      "legal_review": {
+        "status": "pending",
+        "decision": "unresolved",
+        "priority": "normal",
+        "reviewed_as_of": null,
+        "reviewer": null,
+        "authority_review_passed": false,
+        "evidence_urls": [],
+        "notes": "Review legal effect at document/provision level in Step 3."
+      }
+    },
+    {
+      "document_number": "219/2025/NĐ-CP",
+      "title": "Nghị định số 219/2025/NĐ-CP Quy định về người lao động nước ngoài làm việc tại Việt Nam",
+      "source_kind": "vbpl_snapshot",
+      "provider": "Cơ sở dữ liệu quốc gia về văn bản pháp luật",
+      "source_item_id": "180273",
+      "official_identity_url": null,
+      "acquisition": {
+        "detail_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=180273",
+        "gateway_url": "https://vbpl-bientap-gateway.moj.gov.vn/api/qtdc/public/doc/180273",
+        "retrieved_at": "2026-07-28T09:39:03+00:00",
+        "snapshot_path": "data/raw/vbpl/219_2025_nd_cp/20260728T093903Z-7f26444f",
+        "primary_file_path": "data/raw/vbpl/219_2025_nd_cp/20260728T093903Z-7f26444f/full_text.txt",
+        "method": "vbpl_portal"
+      },
+      "integrity": {
+        "content_sha256": "e9fe5185ad185a8a8466315eb1ac905694fd608187c176d492725f0cbb5fa209",
+        "content_hash_verified": true,
+        "snapshot_manifest_sha256": "f182c6e58487b3dcaa837270d49bb2bcdaec89a9558ea581623799ddc3a07487",
+        "snapshot_audit_verified": true
+      },
+      "observed_legal_metadata": {
+        "issued_at": "2025-08-07",
+        "effective_from": "2025-08-07",
+        "effective_to": null,
+        "portal_status": "Còn hiệu lực",
+        "relations": {}
+      },
+      "corpus_scope": {
+        "included_unit_count": 36
+      },
+      "legal_review": {
+        "status": "pending",
+        "decision": "unresolved",
+        "priority": "normal",
+        "reviewed_as_of": null,
+        "reviewer": null,
+        "authority_review_passed": false,
+        "evidence_urls": [],
+        "notes": "Review legal effect at document/provision level in Step 3."
+      }
+    },
+    {
+      "document_number": "293/2025/NĐ-CP",
+      "title": "Nghị định số 293/2025/NĐ-CP Quy định mức lương tối thiểu đối với người lao động làm việc theo hợp đồng lao động",
+      "source_kind": "vbpl_snapshot",
+      "provider": "Cơ sở dữ liệu quốc gia về văn bản pháp luật",
+      "source_item_id": "183939",
+      "official_identity_url": "https://vanban.chinhphu.vn/?docid=215832&pageid=27160",
+      "acquisition": {
+        "detail_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=183939",
+        "gateway_url": "https://vbpl-bientap-gateway.moj.gov.vn/api/qtdc/public/doc/183939",
+        "retrieved_at": "2026-07-28T09:32:23+00:00",
+        "snapshot_path": "data/raw/vbpl/293_2025_nd_cp/20260728T093223Z-68361d30",
+        "primary_file_path": "data/raw/vbpl/293_2025_nd_cp/20260728T093223Z-68361d30/full_text.txt",
+        "method": "vbpl_portal"
+      },
+      "integrity": {
+        "content_sha256": "c9d146ce637a6e5dd623bbda0f63c61388ece289496940e0a0cc31693238c54a",
+        "content_hash_verified": true,
+        "snapshot_manifest_sha256": "a1a79eb00f5df6217d5d0f0df4082f97389ad8db200dae871d030902371da337",
+        "snapshot_audit_verified": true
+      },
+      "observed_legal_metadata": {
+        "issued_at": "2025-11-10",
+        "effective_from": "2026-01-01",
+        "effective_to": null,
+        "portal_status": "Còn hiệu lực",
+        "relations": {}
+      },
+      "corpus_scope": {
+        "included_unit_count": 5
+      },
+      "legal_review": {
+        "status": "pending",
+        "decision": "unresolved",
+        "priority": "normal",
+        "reviewed_as_of": null,
+        "reviewer": null,
+        "authority_review_passed": false,
+        "evidence_urls": [],
+        "notes": "Review legal effect at document/provision level in Step 3."
+      }
+    },
+    {
+      "document_number": "66.18/2026/NQ-CP",
+      "title": "Nghị quyết 66.18/2026/NQ-CP về phân quyền, cắt giảm, đơn giản hóa thủ tục hành chính, điều kiện kinh doanh",
+      "source_kind": "user_supplied_official_docx",
+      "provider": "Cổng Thông tin điện tử Chính phủ",
+      "source_item_id": "chinhphu:docid:218181",
+      "official_identity_url": "https://vanban.chinhphu.vn/?docid=218181&pageid=27160",
+      "acquisition": {
+        "source_file_path": "data/releases/labor-law-2026-07-28-candidate/sources/official_docx/2026_301_66.18_2026_NQ-CP.docx",
+        "raw_snapshot_path": "data/raw/official_docx/66_18_2026_nq_cp/20260728T121257Z-c65df9bd",
+        "acquisition_claim": "DOCX supplied to the pipeline, hash-bound, and identity-checked against the official government page.",
+        "direct_download_verified": false
+      },
+      "integrity": {
+        "source_file_sha256": "c65df9bd52c10589ea51cc50ea7a36b8ba64d14470343e5d2e309c806b3f130f",
+        "source_file_hash_verified": true,
+        "raw_snapshot_manifest_sha256": "306cc74a5188b097b437ce93cd038ac5312f43e2f42ad9248996c7de24bedc6c",
+        "digital_signature_parts_present": true,
+        "cryptographic_signature_validation": "not_performed"
+      },
+      "observed_legal_metadata": {
+        "issued_at": "2026-05-18",
+        "effective_from": "2026-07-01",
+        "effective_to": "2027-02-28",
+        "portal_status": null,
+        "relations": {}
+      },
+      "corpus_scope": {
+        "included_unit_count": 8
+      },
+      "legal_review": {
+        "status": "technical_review_recorded",
+        "decision": "effective_temporarily",
+        "priority": "normal",
+        "reviewed_as_of": "2026-07-27",
+        "reviewer": "pipeline_technical_review",
+        "authority_review_passed": false,
+        "evidence_urls": [
+          "https://vanban.chinhphu.vn/?docid=218181&pageid=27160"
+        ],
+        "notes": "Khoản 1 Điều 7 của Nghị quyết."
+      }
+    },
+    {
+      "document_number": "97/2022/NĐ-CP",
+      "title": "Nghị định số 97/2022/NĐ-CP Quy định chính sách đối với người lao động dôi dư khi chuyển đổi sở hữu, sắp xếp lại công ty trách nhiệm hữu hạn một thành viên do Nhà nước nắm giữ 100% vốn điều lệ",
+      "source_kind": "vbpl_snapshot",
+      "provider": "Cơ sở dữ liệu quốc gia về văn bản pháp luật",
+      "source_item_id": "169619",
+      "official_identity_url": "https://vanban.chinhphu.vn/?docid=206935&pageid=27160",
+      "acquisition": {
+        "detail_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=169619",
+        "gateway_url": "https://vbpl-bientap-gateway.moj.gov.vn/api/qtdc/public/doc/169619",
+        "retrieved_at": "2026-07-28T09:38:53+00:00",
+        "snapshot_path": "data/raw/vbpl/97_2022_nd_cp/20260728T093853Z-f97924cd",
+        "primary_file_path": "data/raw/vbpl/97_2022_nd_cp/20260728T093853Z-f97924cd/full_text.txt",
+        "method": "vbpl_portal"
+      },
+      "integrity": {
+        "content_sha256": "dd09998c9626716ebd7b14769cda6419e3f8f1db955bc95e1f745cfced007af1",
+        "content_hash_verified": true,
+        "snapshot_manifest_sha256": "ddb286d3527f8719918d9f0d98fcd960f389f59fe6c23298ff65405841f55e17",
+        "snapshot_audit_verified": true
+      },
+      "observed_legal_metadata": {
+        "issued_at": "2022-11-29",
+        "effective_from": "2023-01-15",
+        "effective_to": null,
+        "portal_status": "Còn hiệu lực",
+        "relations": {}
+      },
+      "corpus_scope": {
+        "included_unit_count": 14
+      },
+      "legal_review": {
+        "status": "pending",
+        "decision": "unresolved",
+        "priority": "normal",
+        "reviewed_as_of": null,
+        "reviewer": null,
+        "authority_review_passed": false,
+        "evidence_urls": [],
+        "notes": "Review legal effect at document/provision level in Step 3."
+      }
+    }
+  ]
+}

@@ -12,6 +12,7 @@ from ...retrieval.models import (
 )
 from ...schemas.ask import AskRequest, AskResponse
 from ...services.rag_service import RAGService, get_rag_service
+from .health import require_authorized_release
 
 
 router = APIRouter(tags=["Question answering"])
@@ -20,6 +21,7 @@ router = APIRouter(tags=["Question answering"])
 @router.post("/ask", response_model=AskResponse)
 async def ask_question(
     payload: AskRequest,
+    _release_gate: None = Depends(require_authorized_release),
     service: RAGService = Depends(get_rag_service),
 ) -> AskResponse:
     try:

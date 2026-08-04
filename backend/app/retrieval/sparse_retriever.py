@@ -3,7 +3,7 @@
 The production Qdrant collection keeps its original ``Qdrant/bm25`` sparse
 vector as a baseline.  The selected Vietnamese sparse pipeline intentionally
 uses a separate in-memory index so it never queries that vector with an
-incompatible VnCoreNLP vocabulary.  At 1,395 legal chunks the index is small,
+incompatible VnCoreNLP vocabulary. At 833 legal chunks the index is small,
 fast to search, and can be shared by all requests in one API process.
 """
 
@@ -291,7 +291,7 @@ def create_sparse_retriever(
         "corpus_path": getattr(
             settings_obj,
             "legal_chunks_path",
-            "data/processed/legal_chunks.jsonl",
+            "data/releases/labor-law-2026-07-28-candidate/chunks.jsonl",
         ),
         "model_dir": getattr(
             settings_obj,

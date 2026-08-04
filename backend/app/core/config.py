@@ -14,7 +14,16 @@ class Settings(BaseSettings):
 
     # Qdrant
     qdrant_url: str = "http://localhost:6333"
-    qdrant_collection: str = "labor_law"
+    # Retrieval always uses an alias. Physical collections are versioned so a
+    # new corpus can be indexed and verified without mutating the old index.
+    qdrant_collection: str = "labor_law_active"
+    qdrant_expected_collection: str = "labor_law_canonical_word_20260804_fdbec539"
+    qdrant_api_key: str = ""
+    qdrant_readiness_timeout_seconds: float = 3.0
+    runtime_readiness_ttl_seconds: float = 30.0
+    runtime_readiness_failure_ttl_seconds: float = 5.0
+    runtime_java_timeout_seconds: float = 3.0
+    runtime_smoke_query: str = "quyền của người lao động"
     dense_embedding_model: str = "intfloat/multilingual-e5-large"
     dense_vector_name: str = "dense"
     dense_vector_size: int = 1024
@@ -25,21 +34,31 @@ class Settings(BaseSettings):
     fastembed_cache_dir: str = ""
 
     # Retrieval core
-    legal_chunks_path: str = "data/processed/legal_chunks.jsonl"
+    legal_chunks_path: str = (
+        "data/releases/labor-law-canonical-word-20260804-164432-candidate/canonical_chunks.jsonl"
+    )
+    corpus_release_manifest_path: str = (
+        "data/releases/labor-law-canonical-word-20260804-164432-candidate/manifest.json"
+    )
+    e5_audit_summary_path: str = (
+        "data/quality/canonical_word_804_e5_token_audit/summary.json"
+    )
+    corpus_release_id: str = "labor-law-canonical-word-20260804-164432-candidate"
+    corpus_require_authority_approval: bool = True
     official_sources_path: str = (
         "data/reference/official_legal_sources.json"
     )
     vncorenlp_model_dir: str = "models/vncorenlp"
-    retrieval_expected_chunks: int = 1395
+    retrieval_expected_chunks: int = 804
     retrieval_corpus_sha256: str = (
-        "27b80463dd6e0f34f767aa6ec1a5b5cd"
-        "066b6b7a477c320bb49ef909abcb5e65"
+        "fdbec539efbfb3f4aa3cb3962046321e3"
+        "a402150d93516ef4256934972c70307"
     )
     retrieval_top_k: int = 5
-    retrieval_candidate_k: int = 20
+    retrieval_candidate_k: int = 30
     hybrid_rrf_k: int = 60
-    hybrid_sparse_weight: float = 1.0
-    hybrid_dense_weight: float = 1.0
+    hybrid_sparse_weight: float = 0.1
+    hybrid_dense_weight: float = 0.9
     bm25_k: float = 1.2
     bm25_b: float = 0.75
 

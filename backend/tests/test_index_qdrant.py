@@ -12,6 +12,10 @@ from unittest.mock import MagicMock, patch
 import pytest
 
 from backend.app.ingestion.index_qdrant import (
+    DEFAULT_AUDIT_SUMMARY,
+    DEFAULT_CHUNKS,
+    DEFAULT_EXPECTED_CHUNKS,
+    DEFAULT_EXPECTED_SHA256,
     IndexerError,
     build_chunk_payload,
     build_parser,
@@ -70,6 +74,17 @@ def audit_summary_file(tmp_path: Path, corpus_file: Path, sample_chunks: list[di
     file_path = tmp_path / "audit_summary.json"
     file_path.write_text(json.dumps(summary, ensure_ascii=False), encoding="utf-8")
     return file_path
+
+@pytest.fixture(autouse=True)
+def isolate_qdrant_summary_output(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Prevent tests from writing index summaries into production data paths."""
+    monkeypatch.setattr(
+        "backend.app.ingestion.index_qdrant.DEFAULT_SUMMARY_OUTPUT",
+        tmp_path / "qdrant_index" / "summary.json",
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -389,9 +404,24 @@ def test_payload_structure(sample_chunks: list[dict]):
     assert payload["_index_corpus_chunk_count"] == 1
     assert payload["_index_dense_model"] == "dense-model"
     assert payload["_index_sparse_model"] == "sparse-model"
-    assert payload["_indexer_version"] == "1.0.0"
+    assert payload["_indexer_version"] == "1.1.0"
 
 
+def test_defaults_target_canonical_word_804_release():
+    expected_chunks = (
+        Path(__file__).resolve().parents[2]
+        / "data/releases/labor-law-canonical-word-20260804-164432-candidate/canonical_chunks.jsonl"
+    )
+
+    assert DEFAULT_CHUNKS.resolve() == expected_chunks.resolve()
+    assert str(DEFAULT_AUDIT_SUMMARY) == (
+        "data/quality/canonical_word_804_e5_token_audit/summary.json"
+    )
+    assert DEFAULT_EXPECTED_CHUNKS == 804
+    assert DEFAULT_EXPECTED_SHA256 == (
+        "fdbec539efbfb3f4aa3cb3962046321e3"
+        "a402150d93516ef4256934972c70307"
+    )
 # ---------------------------------------------------------------------------
 # Test 16: --resume on collection with matching fingerprint succeeds
 # ---------------------------------------------------------------------------
@@ -551,7 +581,8 @@ def test_verify_only_does_not_write_vectors(corpus_file: Path, audit_summary_fil
          patch("fastembed.TextEmbedding") as mock_dense_cls, \
          patch("fastembed.SparseTextEmbedding") as mock_sparse_cls:
         res = run_indexer(args)
-        assert res["status"] == "verify_only_success"
+        assert res["status"] == "verified"
+        assert args.summary_output.is_file()
         mock_dense_cls.assert_not_called()
         mock_sparse_cls.assert_not_called()
         mock_client.upsert.assert_not_called()
@@ -565,3 +596,46 @@ def test_cli_help_exits_zero():
     with pytest.raises(SystemExit) as exc:
         parser.parse_args(["--help"])
     assert exc.value.code == 0
+
+
+def test_indexer_passes_qdrant_api_key_without_reporting_secret(
+    corpus_file: Path,
+    audit_summary_file: Path,
+    sample_chunks: list[dict],
+):
+    sha = compute_sha256(corpus_file)
+    args = build_parser().parse_args([
+        "--chunks", str(corpus_file),
+        "--audit-summary", str(audit_summary_file),
+        "--expected-chunks", "1",
+        "--expected-sha256", sha,
+        "--collection", "labor_law_test",
+        "--qdrant-api-key", "test-secret",
+        "--verify-only",
+    ])
+
+    mock_client = MagicMock()
+    mock_dense_param = MagicMock(size=1024)
+    mock_collection = MagicMock()
+    mock_collection.config.params.vectors = {"dense": mock_dense_param}
+    mock_collection.config.params.sparse_vectors = {"sparse": MagicMock()}
+    mock_client.get_collection.return_value = mock_collection
+    mock_client.count.return_value.count = 1
+    mock_point = MagicMock()
+    mock_point.payload = build_chunk_payload(
+        sample_chunks[0], sha, 1, "dense", "sparse"
+    )
+    mock_client.retrieve.return_value = [mock_point]
+
+    with patch(
+        "qdrant_client.QdrantClient",
+        return_value=mock_client,
+    ) as client_class:
+        report = run_indexer(args)
+
+    client_class.assert_called_once_with(
+        url=args.qdrant_url,
+        api_key="test-secret",
+    )
+    assert report["status"] == "verified"
+    assert "test-secret" not in json.dumps(report)

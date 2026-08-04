@@ -1,0 +1,455 @@
+{
+  "schema_version": "golden-questions-v3-runtime-split-v1",
+  "dataset_status": "retrieval_benchmark_locked_pending_authority_review",
+  "locked": true,
+  "created_at": "2026-07-27",
+  "law_as_of": "2026-07-27",
+  "language": "vi",
+  "domain": "Vietnamese labor law",
+  "benchmark_type": "current_law",
+  "corpus": {
+    "release_id": "labor-law-canonical-word-20260804-164432-candidate",
+    "release_status": "academic_final_dataset_pending_authority_review",
+    "path": "data/releases/labor-law-canonical-word-20260804-164432-candidate/canonical_chunks.jsonl",
+    "article_path": "data/releases/labor-law-canonical-word-20260804-164432-candidate/canonical_articles.json",
+    "chunk_count": 804,
+    "sha256": "fdbec539efbfb3f4aa3cb3962046321e3a402150d93516ef4256934972c70307",
+    "articles_sha256": "5c068e958849d517cac8a65a24930a4aeca4f66273b4ed9cee01399d0539b46f",
+    "scope_note": "17 Word Công báo + 1 VBPL fallback; Pháp điển không được index runtime."
+  },
+  "labeling": {
+    "method": "Evidence labels inherited from the canonical Word golden source; dev/test partitions are locked by connected expected article codes.",
+    "question_count": 13,
+    "benchmark_enabled_count": 13,
+    "benchmark_disabled_count": 0,
+    "category_counts": {
+      "exact_legal_term": 3,
+      "multi_article": 2,
+      "natural_language": 3,
+      "single_scenario": 5
+    },
+    "disabled_question_ids": [],
+    "release_binding": {
+      "release_id": "labor-law-canonical-word-20260804-164432-candidate",
+      "canonical_chunks_sha256": "fdbec539efbfb3f4aa3cb3962046321e3a402150d93516ef4256934972c70307",
+      "chunk_count": 804
+    },
+    "source_labeling_method": "Migrated from golden v1; current-law blocker questions rewritten from verified official sources; all evidence IDs remapped deterministically to the 2026-07-23 current snapshot."
+  },
+  "changelog": [
+    "Cập nhật r2ai_gold_003 theo cơ chế không thực hiện thủ tục cấp phép và thông báo hoạt động từ 01/07/2026.",
+    "Cập nhật r2ai_gold_006 từ NĐ 152/2020 sang Điều 28 NĐ 219/2025: 10-45 ngày và quy trình mới.",
+    "Cập nhật r2ai_gold_022: bổ sung thứ tự ưu tiên thanh toán tiền ký quỹ theo NQ 66.18/2026.",
+    "Cập nhật r2ai_gold_037: phân biệt rút chủ động và trích bắt buộc tiền ký quỹ theo quy định mới.",
+    "Tạm tắt r2ai_gold_025 khỏi benchmark current-law cho đến khi overlay về tên cơ quan hiện hành được xác minh theo điều khoản nguồn.",
+    "Ánh xạ lại toàn bộ evidence_chunk_ids theo snapshot 2026-07-23; không sử dụng chunk ID của corpus legacy.",
+    "Rebound every evidence_chunk_id to the immutable unified 2026-07-27 candidate release; canonical article codes are now shared by corpus, chunks and golden labels.",
+    "Locked test partition for runtime-retrieval-v1; this lock does not constitute legal authority approval."
+  ],
+  "official_sources": [
+    {
+      "document": "Bộ luật Lao động 45/2019/QH14",
+      "url": "https://vbpl.vn/tw/Pages/vbpq-van-ban-goc.aspx?dvid=13&ItemID=139264"
+    },
+    {
+      "document": "Nghị định 145/2020/NĐ-CP",
+      "url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=152668"
+    },
+    {
+      "document": "Nghị định 219/2025/NĐ-CP",
+      "url": "https://congbao.chinhphu.vn/van-ban/nghi-dinh-so-219-2025-nd-cp-45798/58141.htm"
+    },
+    {
+      "document": "Nghị quyết 66.18/2026/NQ-CP",
+      "url": "https://congbao.chinhphu.vn/van-ban/nghi-quyet-so-6618-2026-nq-cp-469585.htm"
+    },
+    {
+      "document": "Nghị định 293/2025/NĐ-CP",
+      "url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=183939"
+    }
+  ],
+  "questions": [
+    {
+      "id": "r2ai_gold_001",
+      "category": "exact_legal_term",
+      "question": "Khi thành lập doanh nghiệp cho thuê lại lao động, số tiền ký quỹ có được hưởng lãi suất không?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.NĐ.3.16"
+      ],
+      "evidence_chunk_ids": [
+        "5d499f24-a44b-5aa8-9091-2061930f19e5"
+      ],
+      "required_points": [
+        "Doanh nghiệp cho thuê lại lao động được hưởng lãi từ tiền ký quỹ.",
+        "Lãi suất thực hiện theo thỏa thuận với ngân hàng nhận ký quỹ và phải phù hợp pháp luật."
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "test",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_002",
+      "category": "exact_legal_term",
+      "question": "Người sử dụng lao động có phải thông báo kết quả thử việc cho người lao động không?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.LQ.27"
+      ],
+      "evidence_chunk_ids": [
+        "96425739-7044-5e77-b890-8b5e43dbf589"
+      ],
+      "required_points": [
+        "Khi kết thúc thời gian thử việc, người sử dụng lao động bắt buộc phải thông báo kết quả cho người lao động.",
+        "Đạt yêu cầu thì tiếp tục hợp đồng đã có hoặc ký hợp đồng lao động; không đạt thì chấm dứt hợp đồng tương ứng.",
+        "Trong thời gian thử việc, mỗi bên có quyền hủy bỏ hợp đồng thử việc/hợp đồng lao động mà không cần báo trước, không phải bồi thường."
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "test",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_003",
+      "category": "exact_legal_term",
+      "question": "Từ ngày 01/07/2026, doanh nghiệp muốn hoạt động cho thuê lại lao động có còn phải nộp hồ sơ đề nghị cấp giấy phép không, và phải thông báo hoạt động cho cơ quan nào?",
+      "answerable": true,
+      "expected_article_codes": [
+        "NQ66.18.PL-I.4.C.I",
+        "NQ66.18.PL-I.4.C.III",
+        "NQ66.18.PL-I.4.C.IX"
+      ],
+      "evidence_chunk_ids": [
+        "49e05e94-44e2-5efc-ba94-bf375c1444b4",
+        "96377f43-717e-5f9d-b8d6-f61bcf054f20",
+        "164e6645-63ae-5952-a89b-a69542fc5b83"
+      ],
+      "required_points": [
+        "Từ ngày 01/07/2026 không thực hiện thủ tục cấp, gia hạn, cấp lại, thu hồi giấy phép hoạt động cho thuê lại lao động theo cơ chế cũ.",
+        "Doanh nghiệp phải thực hiện ký quỹ và gửi văn bản thông báo hoạt động cho thuê lại lao động đến Sở Nội vụ nơi đặt trụ sở chính.",
+        "Nếu có chi nhánh hoặc văn phòng đại diện ở địa phương khác thì phải thông báo đến Sở Nội vụ nơi đặt chi nhánh hoặc văn phòng đại diện theo quy định."
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "annotation_flags": [
+        "current_law_rewritten",
+        "procedure_replaced"
+      ],
+      "current_law_note": "Thay câu hỏi cấp giấy phép theo Điều 25 NĐ 145/2020 bằng cơ chế thông báo hoạt động theo NQ 66.18/2026/NQ-CP.",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "test",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_013",
+      "category": "natural_language",
+      "question": "Doanh nghiệp có được cắt tiền thưởng Tết nếu người lao động không đạt doanh số không?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.LQ.104"
+      ],
+      "evidence_chunk_ids": [
+        "9d1d07fc-3aeb-5d69-862e-f9c7af78e8e0"
+      ],
+      "required_points": [
+        "Thưởng Tết không mặc nhiên là khoản bắt buộc theo Bộ luật Lao động; thưởng căn cứ kết quả sản xuất, kinh doanh và mức độ hoàn thành công việc.",
+        "Doanh nghiệp có thể không thưởng khi không đạt doanh số nếu phù hợp quy chế thưởng đã công bố và các cam kết trong hợp đồng/thỏa ước áp dụng.",
+        "Quy chế thưởng do người sử dụng lao động quyết định, phải công bố công khai và tham khảo ý kiến tổ chức đại diện người lao động tại cơ sở nếu có."
+      ],
+      "annotation_flags": [
+        "conditional_answer"
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "test",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_014",
+      "category": "natural_language",
+      "question": "Trong trường hợp công ty chậm trả lương, nhân viên có được nhận tiền đền bù không?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.LQ.97"
+      ],
+      "evidence_chunk_ids": [
+        "20660aab-c214-5c1f-9473-82128a4e000c"
+      ],
+      "required_points": [
+        "Trường hợp bất khả kháng dù đã khắc phục thì cũng không được chậm quá 30 ngày.",
+        "Nếu trả chậm từ 15 ngày trở lên, người sử dụng lao động phải đền bù ít nhất bằng tiền lãi của số tiền trả chậm theo lãi suất tiền gửi kỳ hạn 01 tháng của ngân hàng nơi mở tài khoản trả lương, tại thời điểm trả."
+      ],
+      "annotation_flags": [
+        "conditional_answer"
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "test",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_020",
+      "category": "natural_language",
+      "question": "Trong trường hợp không được trả lương đúng hạn, người lao động phải bị chậm lương bao nhiêu lần thì có quyền nghỉ việc mà không cần báo trước?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.LQ.35",
+        "20.2.LQ.97"
+      ],
+      "evidence_chunk_ids": [
+        "30e47943-f89a-57e7-8ff1-7d93d86b23ed",
+        "20660aab-c214-5c1f-9473-82128a4e000c"
+      ],
+      "required_points": [
+        "Pháp luật không yêu cầu phải chậm lương một số lần nhất định.",
+        "Chỉ cần người lao động không được trả đủ hoặc đúng hạn thì có quyền đơn phương chấm dứt không cần báo trước.",
+        "Ngoại lệ: chậm trả hợp pháp do bất khả kháng theo khoản 4 Điều 97, tối đa 30 ngày sau khi đã tìm mọi biện pháp khắc phục."
+      ],
+      "annotation_flags": [
+        "false_premise"
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "test",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_021",
+      "category": "single_scenario",
+      "question": "Khi xảy ra tranh chấp lao động tập thể về lợi ích tại nơi không được đình công, công ty phải thực hiện thủ tục hòa giải trước khi yêu cầu cơ quan nào giải quyết?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.NĐ.3.107"
+      ],
+      "evidence_chunk_ids": [
+        "2a6b3bc4-8727-57b5-a10f-e70e01483d11",
+        "d060dbb0-9257-54a5-b1ed-6f7673b96e35",
+        "2e4a5b9c-79ff-57e5-a070-8704d6b9618b",
+        "8653dbd2-6260-5dbf-965b-888f9b0a324e",
+        "cb945abd-72e6-5e6e-989a-ccff4d385da0"
+      ],
+      "required_points": [
+        "Tranh chấp phải qua hòa giải viên lao động trước.",
+        "Nếu hòa giải không thành, hết thời hạn hòa giải, hoặc thỏa thuận hòa giải thành không được thực hiện, các bên có thể yêu cầu Hội đồng trọng tài lao động hoặc Chủ tịch Ủy ban nhân dân cấp tỉnh giải quyết."
+      ],
+      "annotation_flags": [
+        "alternative_authorities"
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "test",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_023",
+      "category": "single_scenario",
+      "question": "Khi nhận được yêu cầu đối thoại từ phía người lao động, công ty phải trả lời bằng văn bản trong thời hạn bao lâu?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.NĐ.3.40"
+      ],
+      "evidence_chunk_ids": [
+        "12909824-48f8-5a23-9593-7672455e8f31"
+      ],
+      "required_points": [
+        "Chậm nhất 05 ngày làm việc kể từ khi nhận nội dung yêu cầu đối thoại, bên nhận yêu cầu phải trả lời bằng văn bản.",
+        "Văn bản trả lời phải thống nhất thời gian và địa điểm tổ chức đối thoại."
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "test",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_024",
+      "category": "single_scenario",
+      "question": "Khi yêu cầu nhân viên làm thêm giờ, công ty cần người lao động đồng ý về những nội dung cụ thể nào?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.NĐ.3.59"
+      ],
+      "evidence_chunk_ids": [
+        "ec7b2ccc-9a54-505e-beb7-fe2ef7625ccc"
+      ],
+      "required_points": [
+        "Trừ trường hợp làm thêm đặc biệt tại Điều 108, phải được người lao động đồng ý về: thời gian làm thêm, địa điểm làm thêm, và công việc làm thêm."
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "test",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_026",
+      "category": "single_scenario",
+      "question": "Khi có khiếu nại về hành vi quấy rối tình dục tại nơi làm việc, công ty phải xử lý và bảo vệ nạn nhân như thế nào?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.NĐ.3.85",
+        "20.2.NĐ.3.86"
+      ],
+      "evidence_chunk_ids": [
+        "3dfe1ab7-1961-5438-8eb9-b41e14107ca3",
+        "02e18f55-ef83-58bc-8940-3470bb3b5571"
+      ],
+      "required_points": [
+        "Phải kịp thời ngăn chặn và xử lý khi xuất hiện khiếu nại/tố cáo về quấy rối tình dục.",
+        "Quy trình nội bộ phải quy định trách nhiệm, thời hạn, trình tự khiếu nại/tố cáo và xử lý; hình thức kỷ luật, bồi thường thiệt hại và biện pháp khắc phục phù hợp.",
+        "Việc xử lý phải nhanh chóng, kịp thời; bảo vệ bí mật, danh dự, uy tín, nhân phẩm, an toàn của nạn nhân, người khiếu nại/tố cáo và cả người bị khiếu nại/tố cáo."
+      ],
+      "annotation_flags": [
+        "sanction_amount_not_in_corpus"
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "test",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_032",
+      "category": "single_scenario",
+      "question": "Khi xây dựng quy chế thưởng cho nhân viên, công ty cần phải thực hiện những bước nào để đảm bảo đúng quy định?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.LQ.104"
+      ],
+      "evidence_chunk_ids": [
+        "9d1d07fc-3aeb-5d69-862e-f9c7af78e8e0"
+      ],
+      "required_points": [
+        "Xác định căn cứ thưởng dựa trên kết quả sản xuất, kinh doanh và mức độ hoàn thành công việc.",
+        "Người sử dụng lao động quyết định quy chế thưởng.",
+        "Tham khảo ý kiến tổ chức đại diện người lao động tại cơ sở (nếu có) trước khi công bố công khai tại nơi làm việc."
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "test",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_039",
+      "category": "multi_article",
+      "question": "Công ty đã ra thông báo đơn phương chấm dứt hợp đồng với nhân viên làm việc 5 năm nhưng nay muốn hủy bỏ quyết định này thì phải thực hiện thế nào, và nếu không hủy mà cho thôi việc thì những trường hợp chấm dứt nào sẽ phát sinh trách nhiệm chi trả trợ cấp thôi việc?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.LQ.38",
+        "20.2.LQ.46",
+        "20.2.NĐ.3.8"
+      ],
+      "evidence_chunk_ids": [
+        "7451b497-9259-5689-89f4-fe7d2847c322",
+        "b154365a-f790-5988-aa1a-15e76271323f",
+        "d60da896-1570-5a23-8b49-5709e8f87b0d",
+        "f043c66b-038d-5787-92d8-04c1636c615d",
+        "6ac2b2a2-f606-534d-89e8-0739ad652c3a",
+        "16dfaf78-1d68-5939-aee4-9d93dd92e438",
+        "93828a92-6a48-53d6-9939-9552ccfb4665",
+        "7be30046-ca25-5375-b5be-959f7316abf2",
+        "a2d13c4c-9e3f-5ff8-a2c8-6d6a4aa68058",
+        "015469c5-0a7a-541e-9967-12ee672e6600",
+        "f8362914-e0be-56cc-9bb7-5ea63cbc123d",
+        "68e44437-d114-5487-8fcc-1e580a7c25d2",
+        "33125160-94e8-5c2c-a4e9-7050b7a4550b",
+        "e7d4283f-18d8-5bcd-8ea5-154803effe64"
+      ],
+      "required_points": [
+        "Chỉ được hủy việc đơn phương chấm dứt trước khi hết thời hạn báo trước; phải thông báo bằng văn bản và được người lao động đồng ý.",
+        "Trợ cấp thôi việc áp dụng khi NLĐ làm thường xuyên từ đủ 12 tháng và HĐLĐ chấm dứt theo các khoản 1,2,3,4,6,7,9,10 Điều 34, trừ người đủ điều kiện hưởng lương hưu và trường hợp tự ý bỏ việc (điểm e khoản 1 Điều 36 / điểm b khoản 1 NĐ.3.8).",
+        "Mức cơ bản: mỗi năm làm việc = 1/2 tháng lương; thời gian tính phải trừ thời gian tham gia bảo hiểm thất nghiệp và thời gian đã được chi trả trợ cấp; tháng lẻ ≤6 tháng tính 1/2 năm, >6 tháng tính 1 năm."
+      ],
+      "annotation_flags": [
+        "compound_question",
+        "calculation_caveat",
+        "missing_key_source_in_suggestions"
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "test",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_041",
+      "category": "multi_article",
+      "question": "Công ty đơn phương chấm dứt hợp đồng trái pháp luật với một nhân viên làm việc 5 năm, nếu nhân viên này không muốn quay lại làm việc thì công ty phải bồi thường những khoản nào và cách xác định thời gian để tính trợ cấp thôi việc cho họ ra sao?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.LQ.41",
+        "20.2.LQ.46",
+        "20.2.NĐ.3.8"
+      ],
+      "evidence_chunk_ids": [
+        "86488093-7eef-59e0-be01-00bb86e69912",
+        "b154365a-f790-5988-aa1a-15e76271323f",
+        "d60da896-1570-5a23-8b49-5709e8f87b0d",
+        "f043c66b-038d-5787-92d8-04c1636c615d",
+        "6ac2b2a2-f606-534d-89e8-0739ad652c3a",
+        "16dfaf78-1d68-5939-aee4-9d93dd92e438",
+        "93828a92-6a48-53d6-9939-9552ccfb4665",
+        "7be30046-ca25-5375-b5be-959f7316abf2",
+        "a2d13c4c-9e3f-5ff8-a2c8-6d6a4aa68058",
+        "015469c5-0a7a-541e-9967-12ee672e6600",
+        "f8362914-e0be-56cc-9bb7-5ea63cbc123d",
+        "68e44437-d114-5487-8fcc-1e580a7c25d2",
+        "33125160-94e8-5c2c-a4e9-7050b7a4550b",
+        "e7d4283f-18d8-5bcd-8ea5-154803effe64"
+      ],
+      "required_points": [
+        "Trả tiền lương và đóng BHXH/BHYT/BHTN cho thời gian không được làm việc, cộng thêm ít nhất 02 tháng lương theo hợp đồng.",
+        "Nếu vi phạm thời hạn báo trước: trả thêm tiền tương ứng những ngày không báo trước.",
+        "Vì NLĐ không muốn trở lại: công ty còn phải trả trợ cấp thôi việc theo Điều 46.",
+        "Thời gian tính trợ cấp = tổng thời gian làm việc thực tế (gồm cả thử việc, nghỉ ốm/thai sản...) trừ thời gian tham gia BHTN và thời gian đã được trả trợ cấp; tháng lẻ ≤6 tháng = 1/2 năm, >6 tháng = 1 năm."
+      ],
+      "annotation_flags": [
+        "compound_question",
+        "calculation_caveat",
+        "corrected_retrieval_suggestion"
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "test",
+      "split_version": "runtime-retrieval-v1"
+    }
+  ],
+  "rebased_from": {
+    "path": "data/evaluation/golden_questions_v2_current_law.json",
+    "sha256": "540616b6f0ba252ff726afdd9563e8b26ecc6741a7a9dbe1ba84619636226456"
+  },
+  "lock_scope": "retrieval_labels_and_split_only",
+  "authority_review_status": "pending",
+  "split": {
+    "version": "runtime-retrieval-v1",
+    "role": "test",
+    "locked": true,
+    "created_at": "2026-08-01",
+    "source_path": "data/evaluation/golden_questions_v4_canonical_word_candidate.json",
+    "source_sha256": "92856a7dd92b8e65d84c161da9a0a61f72d33d11731be211aac08f8c6aaddf21",
+    "grouping_key": "connected_expected_article_codes",
+    "test_access_policy": "Tune only on dev. Test evaluation requires an explicit CLI unlock and a selected dev configuration."
+  }
+}

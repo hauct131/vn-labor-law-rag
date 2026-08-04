@@ -3128,3 +3128,68 @@ def test_single_table_row_between_target_and_max_is_split(base_article):
     for c1, c2 in zip(table_chunks, table_chunks2):
         assert c1["chunk_id"] == c2["chunk_id"]
         assert c1["chunk_key"] == c2["chunk_key"]
+
+def test_repeated_point_labels_keep_inferred_occurrence_after_split():
+    """Khong duoc lam mat occurrence cua diem trung nhan khi tach chunk."""
+
+    class LengthStressTokenCounter:
+        name = "length-stress-v1"
+
+        def count(self, text: str) -> int:
+            return len(text)
+
+    long_text = "Noi dung phap ly rat dai " * 12
+    article = {
+        "article_id": "vn:test:article:219",
+        "article_code": "TEST.219",
+        "article_title": "Kiem tra occurrence",
+        "heading": "Dieu 219. Kiem tra occurrence",
+        "document_id": "vn:test",
+        "document_number": "TEST",
+        "content_units": [
+            {
+                "unit_id": "u-clause-2",
+                "unit_type": "clause",
+                "clause_number": "2",
+                "text": "2. Noi dung mo dau.",
+            },
+            {
+                "unit_id": "u-a-1",
+                "unit_type": "point",
+                "clause_number": "2",
+                "point_label": "a",
+                "text": "a) " + long_text,
+            },
+            {
+                "unit_id": "u-b-1",
+                "unit_type": "point",
+                "clause_number": "2",
+                "point_label": "b",
+                "text": "b) " + long_text,
+            },
+            {
+                "unit_id": "u-a-2",
+                "unit_type": "point",
+                "clause_number": "2",
+                "point_label": "a",
+                "text": "a) " + long_text,
+            },
+        ],
+    }
+    corpus = {"metadata": {}, "articles": [article], "attachments": []}
+    config = ChunkingConfig(
+        target_tokens=350,
+        max_tokens=400,
+        fallback_overlap=20,
+    )
+
+    chunks = build_legal_chunks(
+        corpus,
+        config=config,
+        token_counter=LengthStressTokenCounter(),
+    )
+    keys = [chunk["chunk_key"] for chunk in chunks]
+
+    assert len(keys) == len(set(keys))
+    assert "vn:test:article:219|clause=2|points=a" in keys
+    assert "vn:test:article:219|clause=2|points=a@2" in keys

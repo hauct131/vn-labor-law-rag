@@ -1,0 +1,9 @@
+{
+  "schema_version": "golden-v4-canonical-word-rebind-audit-v1",
+  "status": "PASS",
+  "question_count": 45,
+  "questions_with_changed_evidence_ids": 4,
+  "evidence_reference_count": 166,
+  "missing_expected_articles_by_question": {},
+  "human_review_required": true
+}

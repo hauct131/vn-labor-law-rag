@@ -2,6 +2,10 @@
 
 from fastapi.testclient import TestClient
 
+from app.api.routes.health import (
+    release_gate_dependency,
+    require_authorized_release,
+)
 from app.main import app
 from app.schemas.ask import AskResponse, LegalSource, RetrievalMethod
 from app.services.rag_service import get_rag_service
@@ -36,7 +40,12 @@ class FakeService:
         )
 
 
+def allow_release() -> None:
+    return None
+
+
 def test_post_ask_returns_frontend_contract() -> None:
+    app.dependency_overrides[require_authorized_release] = allow_release
     app.dependency_overrides[get_rag_service] = lambda: FakeService()
     try:
         response = TestClient(app).post("/api/ask", json={
@@ -56,7 +65,23 @@ def test_post_ask_returns_frontend_contract() -> None:
     assert payload["model"] == "free/test-model"
 
 
+def test_post_ask_accepts_dense_method() -> None:
+    app.dependency_overrides[require_authorized_release] = allow_release
+    app.dependency_overrides[get_rag_service] = lambda: FakeService()
+    try:
+        response = TestClient(app).post("/api/ask", json={
+            "question": "Quy định về nghỉ hằng năm?",
+            "method": "dense",
+        })
+    finally:
+        app.dependency_overrides.clear()
+
+    assert response.status_code == 200
+    assert response.json()["method"] == "dense"
+
+
 def test_post_ask_rejects_graph_until_graph_stage() -> None:
+    app.dependency_overrides[require_authorized_release] = allow_release
     app.dependency_overrides[get_rag_service] = lambda: FakeService()
     try:
         response = TestClient(app).post("/api/ask", json={
@@ -71,8 +96,42 @@ def test_post_ask_rejects_graph_until_graph_stage() -> None:
 
 
 def test_post_ask_validates_short_question() -> None:
-    response = TestClient(app).post("/api/ask", json={
-        "question": "a",
-        "method": "sparse",
-    })
+    app.dependency_overrides[require_authorized_release] = allow_release
+    try:
+        response = TestClient(app).post("/api/ask", json={
+            "question": "a",
+            "method": "sparse",
+        })
+    finally:
+        app.dependency_overrides.clear()
     assert response.status_code == 422
+
+
+def test_post_ask_blocks_unapproved_release_before_service_call() -> None:
+    class MustNotRunService:
+        async def ask(self, question, method):
+            raise AssertionError("service must not run behind a closed gate")
+
+    app.dependency_overrides[release_gate_dependency] = lambda: {
+        "status": "not_ready",
+        "release_id": "candidate",
+        "release_status": "pending",
+        "chunk_count": 833,
+        "chunk_sha256": "a" * 64,
+        "errors": ["authority_review_pending"],
+    }
+    app.dependency_overrides[get_rag_service] = lambda: MustNotRunService()
+    try:
+        response = TestClient(app).post("/api/ask", json={
+            "question": "Điều kiện hưởng lương là gì?",
+            "method": "sparse",
+        })
+    finally:
+        app.dependency_overrides.clear()
+
+    assert response.status_code == 503
+    assert response.json()["detail"] == {
+        "code": "release_not_ready",
+        "release_id": "candidate",
+        "errors": ["authority_review_pending"],
+    }

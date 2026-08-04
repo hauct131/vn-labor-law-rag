@@ -1,0 +1,57 @@
+{
+  "schema_version": "academic-final-dataset-pointer-v1",
+  "final_dataset_id": "labor-law-canonical-word-v1.0-academic-final",
+  "status": "FINAL_ACADEMIC_DATASET",
+  "frozen_at_utc": "2026-08-04T10:40:15.273948+00:00",
+  "release_path": "data/releases/labor-law-canonical-word-20260804-164432-candidate",
+  "release_id": "labor-law-canonical-word-20260804-164432-candidate",
+  "git_commit_used_for_chunker_fix": "729ca92b2bcf4f4656c4d722a9d7ea386a000e63",
+  "git_commit_at_freeze_time": "729ca92b2bcf4f4656c4d722a9d7ea386a000e63",
+  "source_policy": {
+    "documents": 18,
+    "official_gazette_word_documents": 17,
+    "vbpl_fallback_documents": 1,
+    "vbpl_fallback_document": "10/2020/TT-BLĐTBXH"
+  },
+  "counts": {
+    "documents": 18,
+    "official_gazette_word_documents": 17,
+    "vbpl_fallback_documents": 1,
+    "source_article_containers": 513,
+    "canonical_article_containers": 510,
+    "chunks": 804,
+    "legal_effect_transformations": 56,
+    "word_vbpl_differences_migrated": 52
+  },
+  "bindings": {
+    "canonical_chunks_sha256": "fdbec539efbfb3f4aa3cb3962046321e3a402150d93516ef4256934972c70307",
+    "release_manifest_sha256": "439230669b4123e4c37c7329b3dc0e1070c8c92f9412a0b9869b9a2a8bc082fa",
+    "source_registry_sha256": "57501ba4ae207cb1f4ace043e663880f69f30c1c3200285be2912adb9b233244",
+    "migration_audit_sha256": "6121238c7cb4834031153e4075233a4564677d2ca6cf6d68f55b565a52a82e47",
+    "legal_effect_review_sha256": "8a2915362cb1b8c0ba61fb0f4d79a32f64748ce1760e31f3d74c28429de17480",
+    "e5_audit_binding_sha256": "123e9017aaf5bfd580e05aa65c4b0ea8679004a47a316808cad0bf2c191d6a6e",
+    "e5_audit_summary_sha256": "34668365de73c0de64a686c0c7b4ea1924771a01862765a56470bc567e3b58b2",
+    "golden_dataset_path": "data/evaluation/golden_questions_v4_canonical_word_candidate.json",
+    "golden_dataset_sha256": "92856a7dd92b8e65d84c161da9a0a61f72d33d11731be211aac08f8c6aaddf21",
+    "golden_locked": false
+  },
+  "validated_gates": {
+    "canonical_source_manifest_passed": true,
+    "source_policy_17_word_plus_1_fallback_passed": true,
+    "source_hashes_verified": true,
+    "all_273_compared_word_bodies_rebuilt": true,
+    "all_52_known_text_differences_migrated": true,
+    "legal_effect_transformations_applied": true,
+    "all_chunks_rebuilt": true,
+    "chunk_validation_passed": true,
+    "golden_expected_articles_resolved": true,
+    "exact_e5_audit_passed": true
+  },
+  "scope": {
+    "academic_dataset_final": true,
+    "runtime_production_promoted": false,
+    "authority_review_passed": false,
+    "official_legal_consolidation": false
+  },
+  "immutability_rule": "Khong sua file ben trong release da bind. Moi thay doi noi dung phai tao release ID va SHA-256 moi."
+}

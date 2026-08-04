@@ -1,0 +1,19 @@
+{
+  "documents": [
+    {
+      "document_number": "35/2022/NĐ-CP",
+      "source_adapter": "vbpl",
+      "item_id": "158798",
+      "attachment_policy": "required",
+      "official_attachments": [
+        {
+          "name": "35-2022-nd.signed.pdf",
+          "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2022/05/35-2022-nd.signed.pdf",
+          "provider": "Cổng Thông tin điện tử Chính phủ",
+          "source_page_url": "https://vanban.chinhphu.vn/?docid=205861&pageid=27160",
+          "role": "signed_original"
+        }
+      ]
+    }
+  ]
+}

@@ -45,6 +45,7 @@ class DenseRetriever:
         *,
         qdrant_url: str,
         collection_name: str,
+        api_key: str | None = None,
         model_name: str,
         vector_name: str = "dense",
         vector_size: int = 1024,
@@ -77,6 +78,7 @@ class DenseRetriever:
 
         self.qdrant_url = qdrant_url
         self.collection_name = collection_name
+        self.api_key = api_key.strip() if api_key and api_key.strip() else None
         self.model_name = model_name
         self.vector_name = vector_name
         self.vector_size = vector_size
@@ -101,7 +103,10 @@ class DenseRetriever:
                 raise RetrievalConfigurationError(
                     "qdrant-client is required for dense retrieval"
                 ) from exc
-            self._client = QdrantClient(url=self.qdrant_url)
+            client_kwargs: dict[str, Any] = {"url": self.qdrant_url}
+            if self.api_key is not None:
+                client_kwargs["api_key"] = self.api_key
+            self._client = QdrantClient(**client_kwargs)
         return self._client
 
     def _get_embedding_model(self) -> Any:
@@ -245,6 +250,7 @@ def create_dense_retriever(
     kwargs: dict[str, Any] = {
         "qdrant_url": settings_obj.qdrant_url,
         "collection_name": settings_obj.qdrant_collection,
+        "api_key": getattr(settings_obj, "qdrant_api_key", None) or None,
         "model_name": settings_obj.dense_embedding_model,
         "vector_name": settings_obj.dense_vector_name,
         "vector_size": settings_obj.dense_vector_size,
