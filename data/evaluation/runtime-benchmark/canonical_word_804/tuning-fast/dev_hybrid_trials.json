@@ -1,0 +1,2996 @@
+{
+  "schema_version": "runtime-hybrid-tuning-v1",
+  "status": "completed",
+  "run_at": "2026-08-04T12:29:04.358489+00:00",
+  "split_role": "dev",
+  "selection_metric": "0.45*all_article_hit@10 + 0.35*article_recall@10 + 0.15*article_mrr@10 + 0.05*any_article_hit@10",
+  "tie_breakers": [
+    "all_article_hit_at_10",
+    "article_recall_at_10",
+    "article_mrr_at_10",
+    "lower_candidate_k",
+    "lower_rrf_k"
+  ],
+  "selected_config": {
+    "candidate_k": 30,
+    "rrf_k": 30,
+    "dense_weight": 0.8,
+    "sparse_weight": 0.2
+  },
+  "selected_trial": {
+    "name": "cand30_dw0p80_sw0p20_rrf30",
+    "config": {
+      "candidate_k": 30,
+      "rrf_k": 30,
+      "dense_weight": 0.8,
+      "sparse_weight": 0.2
+    },
+    "article_selection_score": 0.832338,
+    "summary": {
+      "question_count": 31,
+      "metrics": {
+        "at_5": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.612903,
+          "article_recall": 0.804839,
+          "article_mrr": 0.927419,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.548387,
+          "evidence_recall": 0.748283,
+          "evidence_mrr": 0.927419
+        },
+        "at_10": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.741935,
+          "article_recall": 0.883871,
+          "article_mrr": 0.927419,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.645161,
+          "evidence_recall": 0.833482,
+          "evidence_mrr": 0.927419
+        },
+        "at_20": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.774194,
+          "article_recall": 0.908065,
+          "article_mrr": 0.927419,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.677419,
+          "evidence_recall": 0.879326,
+          "evidence_mrr": 0.927419
+        }
+      },
+      "latency_ms": {
+        "mean": 108.739,
+        "p50": 102.415,
+        "p95": 160.384,
+        "min": 70.09,
+        "max": 183.97
+      },
+      "stratified_at_10": {
+        "single_article": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 0.890625,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 0.890625
+        },
+        "multi_article": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.466667,
+          "article_recall": 0.76,
+          "article_mrr": 0.966667,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.266667,
+          "evidence_recall": 0.655863,
+          "evidence_mrr": 0.966667
+        },
+        "by_category": {
+          "exact_legal_term": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 1.0,
+            "article_recall": 1.0,
+            "article_mrr": 0.928571,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 1.0,
+            "evidence_recall": 1.0,
+            "evidence_mrr": 0.928571
+          },
+          "multi_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.25,
+            "article_recall": 0.64375,
+            "article_mrr": 1.0,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.125,
+            "evidence_recall": 0.563076,
+            "evidence_mrr": 1.0
+          },
+          "natural_language": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.714286,
+            "article_recall": 0.892857,
+            "article_mrr": 1.0,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.571429,
+            "evidence_recall": 0.785714,
+            "evidence_mrr": 1.0
+          },
+          "single_scenario": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 1.0,
+            "article_recall": 1.0,
+            "article_mrr": 0.805556,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.888889,
+            "evidence_recall": 0.981481,
+            "evidence_mrr": 0.805556
+          }
+        }
+      },
+      "latency_note": "Quality-search upper bound from component retrieval at max candidate_k=80; not used for selection."
+    }
+  },
+  "dense_comparison": {
+    "metric": "article_recall_at_10",
+    "improved_count": 1,
+    "regressed_count": 1,
+    "unchanged_count": 29,
+    "improved": [
+      {
+        "question_id": "r2ai_gold_042",
+        "dense_article_recall": 0.2,
+        "hybrid_article_recall": 0.4,
+        "delta": 0.2
+      }
+    ],
+    "regressed": [
+      {
+        "question_id": "r2ai_gold_045",
+        "dense_article_recall": 0.375,
+        "hybrid_article_recall": 0.25,
+        "delta": -0.125
+      }
+    ]
+  },
+  "trials": [
+    {
+      "name": "cand30_dw0p80_sw0p20_rrf30",
+      "config": {
+        "candidate_k": 30,
+        "rrf_k": 30,
+        "dense_weight": 0.8,
+        "sparse_weight": 0.2
+      },
+      "article_selection_score": 0.832338,
+      "summary": {
+        "question_count": 31,
+        "metrics": {
+          "at_5": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.612903,
+            "article_recall": 0.804839,
+            "article_mrr": 0.927419,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.548387,
+            "evidence_recall": 0.748283,
+            "evidence_mrr": 0.927419
+          },
+          "at_10": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.741935,
+            "article_recall": 0.883871,
+            "article_mrr": 0.927419,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.645161,
+            "evidence_recall": 0.833482,
+            "evidence_mrr": 0.927419
+          },
+          "at_20": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.774194,
+            "article_recall": 0.908065,
+            "article_mrr": 0.927419,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.677419,
+            "evidence_recall": 0.879326,
+            "evidence_mrr": 0.927419
+          }
+        },
+        "latency_ms": {
+          "mean": 108.739,
+          "p50": 102.415,
+          "p95": 160.384,
+          "min": 70.09,
+          "max": 183.97
+        },
+        "stratified_at_10": {
+          "single_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 1.0,
+            "article_recall": 1.0,
+            "article_mrr": 0.890625,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 1.0,
+            "evidence_recall": 1.0,
+            "evidence_mrr": 0.890625
+          },
+          "multi_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.466667,
+            "article_recall": 0.76,
+            "article_mrr": 0.966667,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.266667,
+            "evidence_recall": 0.655863,
+            "evidence_mrr": 0.966667
+          },
+          "by_category": {
+            "exact_legal_term": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.928571,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 1.0,
+              "evidence_recall": 1.0,
+              "evidence_mrr": 0.928571
+            },
+            "multi_article": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.25,
+              "article_recall": 0.64375,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.125,
+              "evidence_recall": 0.563076,
+              "evidence_mrr": 1.0
+            },
+            "natural_language": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.714286,
+              "article_recall": 0.892857,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.571429,
+              "evidence_recall": 0.785714,
+              "evidence_mrr": 1.0
+            },
+            "single_scenario": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.805556,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.888889,
+              "evidence_recall": 0.981481,
+              "evidence_mrr": 0.805556
+            }
+          }
+        },
+        "latency_note": "Quality-search upper bound from component retrieval at max candidate_k=80; not used for selection."
+      }
+    },
+    {
+      "name": "cand30_dw0p80_sw0p20_rrf60",
+      "config": {
+        "candidate_k": 30,
+        "rrf_k": 60,
+        "dense_weight": 0.8,
+        "sparse_weight": 0.2
+      },
+      "article_selection_score": 0.832338,
+      "summary": {
+        "question_count": 31,
+        "metrics": {
+          "at_5": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.612903,
+            "article_recall": 0.804839,
+            "article_mrr": 0.927419,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.548387,
+            "evidence_recall": 0.748283,
+            "evidence_mrr": 0.927419
+          },
+          "at_10": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.741935,
+            "article_recall": 0.883871,
+            "article_mrr": 0.927419,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.645161,
+            "evidence_recall": 0.831178,
+            "evidence_mrr": 0.927419
+          },
+          "at_20": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.774194,
+            "article_recall": 0.908065,
+            "article_mrr": 0.927419,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.677419,
+            "evidence_recall": 0.879326,
+            "evidence_mrr": 0.927419
+          }
+        },
+        "latency_ms": {
+          "mean": 108.736,
+          "p50": 102.353,
+          "p95": 160.359,
+          "min": 70.136,
+          "max": 183.954
+        },
+        "stratified_at_10": {
+          "single_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 1.0,
+            "article_recall": 1.0,
+            "article_mrr": 0.890625,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 1.0,
+            "evidence_recall": 1.0,
+            "evidence_mrr": 0.890625
+          },
+          "multi_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.466667,
+            "article_recall": 0.76,
+            "article_mrr": 0.966667,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.266667,
+            "evidence_recall": 0.651101,
+            "evidence_mrr": 0.966667
+          },
+          "by_category": {
+            "exact_legal_term": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.928571,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 1.0,
+              "evidence_recall": 1.0,
+              "evidence_mrr": 0.928571
+            },
+            "multi_article": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.25,
+              "article_recall": 0.64375,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.125,
+              "evidence_recall": 0.554147,
+              "evidence_mrr": 1.0
+            },
+            "natural_language": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.714286,
+              "article_recall": 0.892857,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.571429,
+              "evidence_recall": 0.785714,
+              "evidence_mrr": 1.0
+            },
+            "single_scenario": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.805556,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.888889,
+              "evidence_recall": 0.981481,
+              "evidence_mrr": 0.805556
+            }
+          }
+        },
+        "latency_note": "Quality-search upper bound from component retrieval at max candidate_k=80; not used for selection."
+      }
+    },
+    {
+      "name": "cand50_dw0p80_sw0p20_rrf60",
+      "config": {
+        "candidate_k": 50,
+        "rrf_k": 60,
+        "dense_weight": 0.8,
+        "sparse_weight": 0.2
+      },
+      "article_selection_score": 0.832338,
+      "summary": {
+        "question_count": 31,
+        "metrics": {
+          "at_5": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.612903,
+            "article_recall": 0.804839,
+            "article_mrr": 0.927419,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.548387,
+            "evidence_recall": 0.748283,
+            "evidence_mrr": 0.927419
+          },
+          "at_10": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.741935,
+            "article_recall": 0.883871,
+            "article_mrr": 0.927419,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.645161,
+            "evidence_recall": 0.831178,
+            "evidence_mrr": 0.927419
+          },
+          "at_20": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.806452,
+            "article_recall": 0.921505,
+            "article_mrr": 0.927419,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.677419,
+            "evidence_recall": 0.881024,
+            "evidence_mrr": 0.927419
+          }
+        },
+        "latency_ms": {
+          "mean": 108.739,
+          "p50": 102.384,
+          "p95": 160.41,
+          "min": 70.106,
+          "max": 184.027
+        },
+        "stratified_at_10": {
+          "single_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 1.0,
+            "article_recall": 1.0,
+            "article_mrr": 0.890625,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 1.0,
+            "evidence_recall": 1.0,
+            "evidence_mrr": 0.890625
+          },
+          "multi_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.466667,
+            "article_recall": 0.76,
+            "article_mrr": 0.966667,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.266667,
+            "evidence_recall": 0.651101,
+            "evidence_mrr": 0.966667
+          },
+          "by_category": {
+            "exact_legal_term": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.928571,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 1.0,
+              "evidence_recall": 1.0,
+              "evidence_mrr": 0.928571
+            },
+            "multi_article": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.25,
+              "article_recall": 0.64375,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.125,
+              "evidence_recall": 0.554147,
+              "evidence_mrr": 1.0
+            },
+            "natural_language": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.714286,
+              "article_recall": 0.892857,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.571429,
+              "evidence_recall": 0.785714,
+              "evidence_mrr": 1.0
+            },
+            "single_scenario": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.805556,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.888889,
+              "evidence_recall": 0.981481,
+              "evidence_mrr": 0.805556
+            }
+          }
+        },
+        "latency_note": "Quality-search upper bound from component retrieval at max candidate_k=80; not used for selection."
+      }
+    },
+    {
+      "name": "cand50_dw0p80_sw0p20_rrf30",
+      "config": {
+        "candidate_k": 50,
+        "rrf_k": 30,
+        "dense_weight": 0.8,
+        "sparse_weight": 0.2
+      },
+      "article_selection_score": 0.831532,
+      "summary": {
+        "question_count": 31,
+        "metrics": {
+          "at_5": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.612903,
+            "article_recall": 0.804839,
+            "article_mrr": 0.922043,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.548387,
+            "evidence_recall": 0.748283,
+            "evidence_mrr": 0.922043
+          },
+          "at_10": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.741935,
+            "article_recall": 0.883871,
+            "article_mrr": 0.922043,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.645161,
+            "evidence_recall": 0.833482,
+            "evidence_mrr": 0.922043
+          },
+          "at_20": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.774194,
+            "article_recall": 0.908065,
+            "article_mrr": 0.922043,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.677419,
+            "evidence_recall": 0.883328,
+            "evidence_mrr": 0.922043
+          }
+        },
+        "latency_ms": {
+          "mean": 108.768,
+          "p50": 102.38,
+          "p95": 160.436,
+          "min": 70.097,
+          "max": 184.159
+        },
+        "stratified_at_10": {
+          "single_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 1.0,
+            "article_recall": 1.0,
+            "article_mrr": 0.880208,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 1.0,
+            "evidence_recall": 1.0,
+            "evidence_mrr": 0.880208
+          },
+          "multi_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.466667,
+            "article_recall": 0.76,
+            "article_mrr": 0.966667,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.266667,
+            "evidence_recall": 0.655863,
+            "evidence_mrr": 0.966667
+          },
+          "by_category": {
+            "exact_legal_term": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.904762,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 1.0,
+              "evidence_recall": 1.0,
+              "evidence_mrr": 0.904762
+            },
+            "multi_article": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.25,
+              "article_recall": 0.64375,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.125,
+              "evidence_recall": 0.563076,
+              "evidence_mrr": 1.0
+            },
+            "natural_language": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.714286,
+              "article_recall": 0.892857,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.571429,
+              "evidence_recall": 0.785714,
+              "evidence_mrr": 1.0
+            },
+            "single_scenario": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.805556,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.888889,
+              "evidence_recall": 0.981481,
+              "evidence_mrr": 0.805556
+            }
+          }
+        },
+        "latency_note": "Quality-search upper bound from component retrieval at max candidate_k=80; not used for selection."
+      }
+    },
+    {
+      "name": "cand80_dw0p80_sw0p20_rrf60",
+      "config": {
+        "candidate_k": 80,
+        "rrf_k": 60,
+        "dense_weight": 0.8,
+        "sparse_weight": 0.2
+      },
+      "article_selection_score": 0.831532,
+      "summary": {
+        "question_count": 31,
+        "metrics": {
+          "at_5": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.612903,
+            "article_recall": 0.804839,
+            "article_mrr": 0.922043,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.548387,
+            "evidence_recall": 0.748283,
+            "evidence_mrr": 0.922043
+          },
+          "at_10": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.741935,
+            "article_recall": 0.883871,
+            "article_mrr": 0.922043,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.645161,
+            "evidence_recall": 0.831178,
+            "evidence_mrr": 0.922043
+          },
+          "at_20": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.806452,
+            "article_recall": 0.921505,
+            "article_mrr": 0.922043,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.677419,
+            "evidence_recall": 0.876416,
+            "evidence_mrr": 0.922043
+          }
+        },
+        "latency_ms": {
+          "mean": 108.788,
+          "p50": 102.439,
+          "p95": 160.438,
+          "min": 70.152,
+          "max": 184.04
+        },
+        "stratified_at_10": {
+          "single_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 1.0,
+            "article_recall": 1.0,
+            "article_mrr": 0.880208,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 1.0,
+            "evidence_recall": 1.0,
+            "evidence_mrr": 0.880208
+          },
+          "multi_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.466667,
+            "article_recall": 0.76,
+            "article_mrr": 0.966667,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.266667,
+            "evidence_recall": 0.651101,
+            "evidence_mrr": 0.966667
+          },
+          "by_category": {
+            "exact_legal_term": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.904762,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 1.0,
+              "evidence_recall": 1.0,
+              "evidence_mrr": 0.904762
+            },
+            "multi_article": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.25,
+              "article_recall": 0.64375,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.125,
+              "evidence_recall": 0.554147,
+              "evidence_mrr": 1.0
+            },
+            "natural_language": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.714286,
+              "article_recall": 0.892857,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.571429,
+              "evidence_recall": 0.785714,
+              "evidence_mrr": 1.0
+            },
+            "single_scenario": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.805556,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.888889,
+              "evidence_recall": 0.981481,
+              "evidence_mrr": 0.805556
+            }
+          }
+        },
+        "latency_note": "Quality-search upper bound from component retrieval at max candidate_k=80; not used for selection."
+      }
+    },
+    {
+      "name": "cand80_dw0p80_sw0p20_rrf30",
+      "config": {
+        "candidate_k": 80,
+        "rrf_k": 30,
+        "dense_weight": 0.8,
+        "sparse_weight": 0.2
+      },
+      "article_selection_score": 0.831129,
+      "summary": {
+        "question_count": 31,
+        "metrics": {
+          "at_5": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.612903,
+            "article_recall": 0.804839,
+            "article_mrr": 0.919355,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.548387,
+            "evidence_recall": 0.748283,
+            "evidence_mrr": 0.919355
+          },
+          "at_10": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.741935,
+            "article_recall": 0.883871,
+            "article_mrr": 0.919355,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.645161,
+            "evidence_recall": 0.833482,
+            "evidence_mrr": 0.919355
+          },
+          "at_20": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.774194,
+            "article_recall": 0.908065,
+            "article_mrr": 0.919355,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.677419,
+            "evidence_recall": 0.874111,
+            "evidence_mrr": 0.919355
+          }
+        },
+        "latency_ms": {
+          "mean": 108.799,
+          "p50": 102.421,
+          "p95": 160.433,
+          "min": 70.179,
+          "max": 184.038
+        },
+        "stratified_at_10": {
+          "single_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 1.0,
+            "article_recall": 1.0,
+            "article_mrr": 0.875,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 1.0,
+            "evidence_recall": 1.0,
+            "evidence_mrr": 0.875
+          },
+          "multi_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.466667,
+            "article_recall": 0.76,
+            "article_mrr": 0.966667,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.266667,
+            "evidence_recall": 0.655863,
+            "evidence_mrr": 0.966667
+          },
+          "by_category": {
+            "exact_legal_term": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.892857,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 1.0,
+              "evidence_recall": 1.0,
+              "evidence_mrr": 0.892857
+            },
+            "multi_article": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.25,
+              "article_recall": 0.64375,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.125,
+              "evidence_recall": 0.563076,
+              "evidence_mrr": 1.0
+            },
+            "natural_language": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.714286,
+              "article_recall": 0.892857,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.571429,
+              "evidence_recall": 0.785714,
+              "evidence_mrr": 1.0
+            },
+            "single_scenario": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.805556,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.888889,
+              "evidence_recall": 0.981481,
+              "evidence_mrr": 0.805556
+            }
+          }
+        },
+        "latency_note": "Quality-search upper bound from component retrieval at max candidate_k=80; not used for selection."
+      }
+    },
+    {
+      "name": "cand50_dw0p60_sw0p40_rrf30",
+      "config": {
+        "candidate_k": 50,
+        "rrf_k": 30,
+        "dense_weight": 0.6,
+        "sparse_weight": 0.4
+      },
+      "article_selection_score": 0.828777,
+      "summary": {
+        "question_count": 31,
+        "metrics": {
+          "at_5": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.612903,
+            "article_recall": 0.808602,
+            "article_mrr": 0.88172,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.548387,
+            "evidence_recall": 0.752793,
+            "evidence_mrr": 0.88172
+          },
+          "at_10": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.741935,
+            "article_recall": 0.89328,
+            "article_mrr": 0.88172,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.612903,
+            "evidence_recall": 0.830026,
+            "evidence_mrr": 0.88172
+          },
+          "at_20": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.83871,
+            "article_recall": 0.944086,
+            "article_mrr": 0.88172,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.709677,
+            "evidence_recall": 0.895601,
+            "evidence_mrr": 0.88172
+          }
+        },
+        "latency_ms": {
+          "mean": 108.733,
+          "p50": 102.382,
+          "p95": 160.403,
+          "min": 70.105,
+          "max": 183.978
+        },
+        "stratified_at_10": {
+          "single_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 1.0,
+            "article_recall": 1.0,
+            "article_mrr": 0.895833,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 1.0,
+            "evidence_recall": 1.0,
+            "evidence_mrr": 0.895833
+          },
+          "multi_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.466667,
+            "article_recall": 0.779444,
+            "article_mrr": 0.866667,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.2,
+            "evidence_recall": 0.64872,
+            "evidence_mrr": 0.866667
+          },
+          "by_category": {
+            "exact_legal_term": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.928571,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 1.0,
+              "evidence_recall": 1.0,
+              "evidence_mrr": 0.928571
+            },
+            "multi_article": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.125,
+              "article_recall": 0.648958,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.0,
+              "evidence_recall": 0.552659,
+              "evidence_mrr": 1.0
+            },
+            "natural_language": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.857143,
+              "article_recall": 0.928571,
+              "article_mrr": 0.857143,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.571429,
+              "evidence_recall": 0.806122,
+              "evidence_mrr": 0.857143
+            },
+            "single_scenario": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.759259,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.888889,
+              "evidence_recall": 0.962963,
+              "evidence_mrr": 0.759259
+            }
+          }
+        },
+        "latency_note": "Quality-search upper bound from component retrieval at max candidate_k=80; not used for selection."
+      }
+    },
+    {
+      "name": "cand80_dw0p60_sw0p40_rrf30",
+      "config": {
+        "candidate_k": 80,
+        "rrf_k": 30,
+        "dense_weight": 0.6,
+        "sparse_weight": 0.4
+      },
+      "article_selection_score": 0.828777,
+      "summary": {
+        "question_count": 31,
+        "metrics": {
+          "at_5": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.612903,
+            "article_recall": 0.808602,
+            "article_mrr": 0.88172,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.548387,
+            "evidence_recall": 0.752793,
+            "evidence_mrr": 0.88172
+          },
+          "at_10": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.741935,
+            "article_recall": 0.89328,
+            "article_mrr": 0.88172,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.612903,
+            "evidence_recall": 0.830026,
+            "evidence_mrr": 0.88172
+          },
+          "at_20": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.806452,
+            "article_recall": 0.927957,
+            "article_mrr": 0.88172,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.677419,
+            "evidence_recall": 0.879472,
+            "evidence_mrr": 0.88172
+          }
+        },
+        "latency_ms": {
+          "mean": 108.809,
+          "p50": 102.42,
+          "p95": 160.434,
+          "min": 70.145,
+          "max": 184.059
+        },
+        "stratified_at_10": {
+          "single_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 1.0,
+            "article_recall": 1.0,
+            "article_mrr": 0.895833,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 1.0,
+            "evidence_recall": 1.0,
+            "evidence_mrr": 0.895833
+          },
+          "multi_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.466667,
+            "article_recall": 0.779444,
+            "article_mrr": 0.866667,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.2,
+            "evidence_recall": 0.64872,
+            "evidence_mrr": 0.866667
+          },
+          "by_category": {
+            "exact_legal_term": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.928571,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 1.0,
+              "evidence_recall": 1.0,
+              "evidence_mrr": 0.928571
+            },
+            "multi_article": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.125,
+              "article_recall": 0.648958,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.0,
+              "evidence_recall": 0.552659,
+              "evidence_mrr": 1.0
+            },
+            "natural_language": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.857143,
+              "article_recall": 0.928571,
+              "article_mrr": 0.857143,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.571429,
+              "evidence_recall": 0.806122,
+              "evidence_mrr": 0.857143
+            },
+            "single_scenario": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.759259,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.888889,
+              "evidence_recall": 0.962963,
+              "evidence_mrr": 0.759259
+            }
+          }
+        },
+        "latency_note": "Quality-search upper bound from component retrieval at max candidate_k=80; not used for selection."
+      }
+    },
+    {
+      "name": "cand50_dw0p90_sw0p10_rrf60",
+      "config": {
+        "candidate_k": 50,
+        "rrf_k": 60,
+        "dense_weight": 0.9,
+        "sparse_weight": 0.1
+      },
+      "article_selection_score": 0.827997,
+      "summary": {
+        "question_count": 31,
+        "metrics": {
+          "at_5": {
+            "any_article_hit": 0.967742,
+            "all_article_hit": 0.612903,
+            "article_recall": 0.796774,
+            "article_mrr": 0.91129,
+            "any_evidence_hit": 0.967742,
+            "all_evidence_hit": 0.548387,
+            "evidence_recall": 0.736763,
+            "evidence_mrr": 0.91129
+          },
+          "at_10": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.741935,
+            "article_recall": 0.876075,
+            "article_mrr": 0.916667,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.645161,
+            "evidence_recall": 0.825961,
+            "evidence_mrr": 0.916667
+          },
+          "at_20": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.774194,
+            "article_recall": 0.908065,
+            "article_mrr": 0.916667,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.677419,
+            "evidence_recall": 0.883328,
+            "evidence_mrr": 0.916667
+          }
+        },
+        "latency_ms": {
+          "mean": 108.728,
+          "p50": 102.38,
+          "p95": 160.397,
+          "min": 70.1,
+          "max": 183.977
+        },
+        "stratified_at_10": {
+          "single_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 1.0,
+            "article_recall": 1.0,
+            "article_mrr": 0.869792,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 1.0,
+            "evidence_recall": 1.0,
+            "evidence_mrr": 0.869792
+          },
+          "multi_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.466667,
+            "article_recall": 0.743889,
+            "article_mrr": 0.966667,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.266667,
+            "evidence_recall": 0.640319,
+            "evidence_mrr": 0.966667
+          },
+          "by_category": {
+            "exact_legal_term": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.880952,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 1.0,
+              "evidence_recall": 1.0,
+              "evidence_mrr": 0.880952
+            },
+            "multi_article": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.25,
+              "article_recall": 0.613542,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.125,
+              "evidence_recall": 0.533932,
+              "evidence_mrr": 1.0
+            },
+            "natural_language": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.714286,
+              "article_recall": 0.892857,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.571429,
+              "evidence_recall": 0.785714,
+              "evidence_mrr": 1.0
+            },
+            "single_scenario": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.805556,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.888889,
+              "evidence_recall": 0.981481,
+              "evidence_mrr": 0.805556
+            }
+          }
+        },
+        "latency_note": "Quality-search upper bound from component retrieval at max candidate_k=80; not used for selection."
+      }
+    },
+    {
+      "name": "cand50_dw0p70_sw0p30_rrf60",
+      "config": {
+        "candidate_k": 50,
+        "rrf_k": 60,
+        "dense_weight": 0.7,
+        "sparse_weight": 0.3
+      },
+      "article_selection_score": 0.827903,
+      "summary": {
+        "question_count": 31,
+        "metrics": {
+          "at_5": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.612903,
+            "article_recall": 0.794086,
+            "article_mrr": 0.897849,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.548387,
+            "evidence_recall": 0.741209,
+            "evidence_mrr": 0.897849
+          },
+          "at_10": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.741935,
+            "article_recall": 0.883871,
+            "article_mrr": 0.897849,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.612903,
+            "evidence_recall": 0.824649,
+            "evidence_mrr": 0.897849
+          },
+          "at_20": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.83871,
+            "article_recall": 0.944086,
+            "article_mrr": 0.897849,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.709677,
+            "evidence_recall": 0.897298,
+            "evidence_mrr": 0.897849
+          }
+        },
+        "latency_ms": {
+          "mean": 108.726,
+          "p50": 102.382,
+          "p95": 160.385,
+          "min": 70.107,
+          "max": 183.972
+        },
+        "stratified_at_10": {
+          "single_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 1.0,
+            "article_recall": 1.0,
+            "article_mrr": 0.895833,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 1.0,
+            "evidence_recall": 1.0,
+            "evidence_mrr": 0.895833
+          },
+          "multi_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.466667,
+            "article_recall": 0.76,
+            "article_mrr": 0.9,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.2,
+            "evidence_recall": 0.637609,
+            "evidence_mrr": 0.9
+          },
+          "by_category": {
+            "exact_legal_term": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.928571,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 1.0,
+              "evidence_recall": 1.0,
+              "evidence_mrr": 0.928571
+            },
+            "multi_article": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.125,
+              "article_recall": 0.6125,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.0,
+              "evidence_recall": 0.531826,
+              "evidence_mrr": 1.0
+            },
+            "natural_language": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.857143,
+              "article_recall": 0.928571,
+              "article_mrr": 0.857143,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.571429,
+              "evidence_recall": 0.806122,
+              "evidence_mrr": 0.857143
+            },
+            "single_scenario": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.814815,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.888889,
+              "evidence_recall": 0.962963,
+              "evidence_mrr": 0.814815
+            }
+          }
+        },
+        "latency_note": "Quality-search upper bound from component retrieval at max candidate_k=80; not used for selection."
+      }
+    },
+    {
+      "name": "cand80_dw0p70_sw0p30_rrf60",
+      "config": {
+        "candidate_k": 80,
+        "rrf_k": 60,
+        "dense_weight": 0.7,
+        "sparse_weight": 0.3
+      },
+      "article_selection_score": 0.827903,
+      "summary": {
+        "question_count": 31,
+        "metrics": {
+          "at_5": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.612903,
+            "article_recall": 0.794086,
+            "article_mrr": 0.897849,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.548387,
+            "evidence_recall": 0.741209,
+            "evidence_mrr": 0.897849
+          },
+          "at_10": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.741935,
+            "article_recall": 0.883871,
+            "article_mrr": 0.897849,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.612903,
+            "evidence_recall": 0.824649,
+            "evidence_mrr": 0.897849
+          },
+          "at_20": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.806452,
+            "article_recall": 0.927957,
+            "article_mrr": 0.897849,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.677419,
+            "evidence_recall": 0.881169,
+            "evidence_mrr": 0.897849
+          }
+        },
+        "latency_ms": {
+          "mean": 108.781,
+          "p50": 102.423,
+          "p95": 160.436,
+          "min": 70.146,
+          "max": 184.031
+        },
+        "stratified_at_10": {
+          "single_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 1.0,
+            "article_recall": 1.0,
+            "article_mrr": 0.895833,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 1.0,
+            "evidence_recall": 1.0,
+            "evidence_mrr": 0.895833
+          },
+          "multi_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.466667,
+            "article_recall": 0.76,
+            "article_mrr": 0.9,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.2,
+            "evidence_recall": 0.637609,
+            "evidence_mrr": 0.9
+          },
+          "by_category": {
+            "exact_legal_term": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.928571,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 1.0,
+              "evidence_recall": 1.0,
+              "evidence_mrr": 0.928571
+            },
+            "multi_article": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.125,
+              "article_recall": 0.6125,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.0,
+              "evidence_recall": 0.531826,
+              "evidence_mrr": 1.0
+            },
+            "natural_language": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.857143,
+              "article_recall": 0.928571,
+              "article_mrr": 0.857143,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.571429,
+              "evidence_recall": 0.806122,
+              "evidence_mrr": 0.857143
+            },
+            "single_scenario": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.814815,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.888889,
+              "evidence_recall": 0.962963,
+              "evidence_mrr": 0.814815
+            }
+          }
+        },
+        "latency_note": "Quality-search upper bound from component retrieval at max candidate_k=80; not used for selection."
+      }
+    },
+    {
+      "name": "cand50_dw0p90_sw0p10_rrf30",
+      "config": {
+        "candidate_k": 50,
+        "rrf_k": 30,
+        "dense_weight": 0.9,
+        "sparse_weight": 0.1
+      },
+      "article_selection_score": 0.827795,
+      "summary": {
+        "question_count": 31,
+        "metrics": {
+          "at_5": {
+            "any_article_hit": 0.967742,
+            "all_article_hit": 0.612903,
+            "article_recall": 0.792742,
+            "article_mrr": 0.91129,
+            "any_evidence_hit": 0.967742,
+            "all_evidence_hit": 0.548387,
+            "evidence_recall": 0.73383,
+            "evidence_mrr": 0.91129
+          },
+          "at_10": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.741935,
+            "article_recall": 0.876075,
+            "article_mrr": 0.915323,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.645161,
+            "evidence_recall": 0.830569,
+            "evidence_mrr": 0.915323
+          },
+          "at_20": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.774194,
+            "article_recall": 0.908065,
+            "article_mrr": 0.915323,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.677419,
+            "evidence_recall": 0.883328,
+            "evidence_mrr": 0.915323
+          }
+        },
+        "latency_ms": {
+          "mean": 108.731,
+          "p50": 102.385,
+          "p95": 160.393,
+          "min": 70.105,
+          "max": 183.983
+        },
+        "stratified_at_10": {
+          "single_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 1.0,
+            "article_recall": 1.0,
+            "article_mrr": 0.867188,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 1.0,
+            "evidence_recall": 1.0,
+            "evidence_mrr": 0.867188
+          },
+          "multi_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.466667,
+            "article_recall": 0.743889,
+            "article_mrr": 0.966667,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.266667,
+            "evidence_recall": 0.649843,
+            "evidence_mrr": 0.966667
+          },
+          "by_category": {
+            "exact_legal_term": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.875,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 1.0,
+              "evidence_recall": 1.0,
+              "evidence_mrr": 0.875
+            },
+            "multi_article": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.25,
+              "article_recall": 0.613542,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.125,
+              "evidence_recall": 0.533932,
+              "evidence_mrr": 1.0
+            },
+            "natural_language": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.714286,
+              "article_recall": 0.892857,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.571429,
+              "evidence_recall": 0.806122,
+              "evidence_mrr": 1.0
+            },
+            "single_scenario": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.805556,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.888889,
+              "evidence_recall": 0.981481,
+              "evidence_mrr": 0.805556
+            }
+          }
+        },
+        "latency_note": "Quality-search upper bound from component retrieval at max candidate_k=80; not used for selection."
+      }
+    },
+    {
+      "name": "cand80_dw0p90_sw0p10_rrf30",
+      "config": {
+        "candidate_k": 80,
+        "rrf_k": 30,
+        "dense_weight": 0.9,
+        "sparse_weight": 0.1
+      },
+      "article_selection_score": 0.827795,
+      "summary": {
+        "question_count": 31,
+        "metrics": {
+          "at_5": {
+            "any_article_hit": 0.967742,
+            "all_article_hit": 0.612903,
+            "article_recall": 0.792742,
+            "article_mrr": 0.91129,
+            "any_evidence_hit": 0.967742,
+            "all_evidence_hit": 0.548387,
+            "evidence_recall": 0.73383,
+            "evidence_mrr": 0.91129
+          },
+          "at_10": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.741935,
+            "article_recall": 0.876075,
+            "article_mrr": 0.915323,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.645161,
+            "evidence_recall": 0.830569,
+            "evidence_mrr": 0.915323
+          },
+          "at_20": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.774194,
+            "article_recall": 0.908065,
+            "article_mrr": 0.915323,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.677419,
+            "evidence_recall": 0.883328,
+            "evidence_mrr": 0.915323
+          }
+        },
+        "latency_ms": {
+          "mean": 108.787,
+          "p50": 102.427,
+          "p95": 160.443,
+          "min": 70.188,
+          "max": 184.041
+        },
+        "stratified_at_10": {
+          "single_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 1.0,
+            "article_recall": 1.0,
+            "article_mrr": 0.867188,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 1.0,
+            "evidence_recall": 1.0,
+            "evidence_mrr": 0.867188
+          },
+          "multi_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.466667,
+            "article_recall": 0.743889,
+            "article_mrr": 0.966667,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.266667,
+            "evidence_recall": 0.649843,
+            "evidence_mrr": 0.966667
+          },
+          "by_category": {
+            "exact_legal_term": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.875,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 1.0,
+              "evidence_recall": 1.0,
+              "evidence_mrr": 0.875
+            },
+            "multi_article": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.25,
+              "article_recall": 0.613542,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.125,
+              "evidence_recall": 0.533932,
+              "evidence_mrr": 1.0
+            },
+            "natural_language": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.714286,
+              "article_recall": 0.892857,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.571429,
+              "evidence_recall": 0.806122,
+              "evidence_mrr": 1.0
+            },
+            "single_scenario": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.805556,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.888889,
+              "evidence_recall": 0.981481,
+              "evidence_mrr": 0.805556
+            }
+          }
+        },
+        "latency_note": "Quality-search upper bound from component retrieval at max candidate_k=80; not used for selection."
+      }
+    },
+    {
+      "name": "cand80_dw0p90_sw0p10_rrf60",
+      "config": {
+        "candidate_k": 80,
+        "rrf_k": 60,
+        "dense_weight": 0.9,
+        "sparse_weight": 0.1
+      },
+      "article_selection_score": 0.827795,
+      "summary": {
+        "question_count": 31,
+        "metrics": {
+          "at_5": {
+            "any_article_hit": 0.967742,
+            "all_article_hit": 0.612903,
+            "article_recall": 0.796774,
+            "article_mrr": 0.91129,
+            "any_evidence_hit": 0.967742,
+            "all_evidence_hit": 0.548387,
+            "evidence_recall": 0.736763,
+            "evidence_mrr": 0.91129
+          },
+          "at_10": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.741935,
+            "article_recall": 0.876075,
+            "article_mrr": 0.915323,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.645161,
+            "evidence_recall": 0.825961,
+            "evidence_mrr": 0.915323
+          },
+          "at_20": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.774194,
+            "article_recall": 0.908065,
+            "article_mrr": 0.915323,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.677419,
+            "evidence_recall": 0.883328,
+            "evidence_mrr": 0.915323
+          }
+        },
+        "latency_ms": {
+          "mean": 108.787,
+          "p50": 102.421,
+          "p95": 160.431,
+          "min": 70.142,
+          "max": 184.038
+        },
+        "stratified_at_10": {
+          "single_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 1.0,
+            "article_recall": 1.0,
+            "article_mrr": 0.867188,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 1.0,
+            "evidence_recall": 1.0,
+            "evidence_mrr": 0.867188
+          },
+          "multi_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.466667,
+            "article_recall": 0.743889,
+            "article_mrr": 0.966667,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.266667,
+            "evidence_recall": 0.640319,
+            "evidence_mrr": 0.966667
+          },
+          "by_category": {
+            "exact_legal_term": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.875,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 1.0,
+              "evidence_recall": 1.0,
+              "evidence_mrr": 0.875
+            },
+            "multi_article": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.25,
+              "article_recall": 0.613542,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.125,
+              "evidence_recall": 0.533932,
+              "evidence_mrr": 1.0
+            },
+            "natural_language": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.714286,
+              "article_recall": 0.892857,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.571429,
+              "evidence_recall": 0.785714,
+              "evidence_mrr": 1.0
+            },
+            "single_scenario": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.805556,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.888889,
+              "evidence_recall": 0.981481,
+              "evidence_mrr": 0.805556
+            }
+          }
+        },
+        "latency_note": "Quality-search upper bound from component retrieval at max candidate_k=80; not used for selection."
+      }
+    },
+    {
+      "name": "cand30_dw0p90_sw0p10_rrf60",
+      "config": {
+        "candidate_k": 30,
+        "rrf_k": 60,
+        "dense_weight": 0.9,
+        "sparse_weight": 0.1
+      },
+      "article_selection_score": 0.827392,
+      "summary": {
+        "question_count": 31,
+        "metrics": {
+          "at_5": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.645161,
+            "article_recall": 0.829032,
+            "article_mrr": 0.922043,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.580645,
+            "evidence_recall": 0.769021,
+            "evidence_mrr": 0.922043
+          },
+          "at_10": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.741935,
+            "article_recall": 0.872043,
+            "article_mrr": 0.922043,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.645161,
+            "evidence_recall": 0.823028,
+            "evidence_mrr": 0.922043
+          },
+          "at_20": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.774194,
+            "article_recall": 0.908065,
+            "article_mrr": 0.922043,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.677419,
+            "evidence_recall": 0.881024,
+            "evidence_mrr": 0.922043
+          }
+        },
+        "latency_ms": {
+          "mean": 108.707,
+          "p50": 102.359,
+          "p95": 160.379,
+          "min": 70.076,
+          "max": 183.951
+        },
+        "stratified_at_10": {
+          "single_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 1.0,
+            "article_recall": 1.0,
+            "article_mrr": 0.880208,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 1.0,
+            "evidence_recall": 1.0,
+            "evidence_mrr": 0.880208
+          },
+          "multi_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.466667,
+            "article_recall": 0.735556,
+            "article_mrr": 0.966667,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.266667,
+            "evidence_recall": 0.634259,
+            "evidence_mrr": 0.966667
+          },
+          "by_category": {
+            "exact_legal_term": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.904762,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 1.0,
+              "evidence_recall": 1.0,
+              "evidence_mrr": 0.904762
+            },
+            "multi_article": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.25,
+              "article_recall": 0.597917,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.125,
+              "evidence_recall": 0.522568,
+              "evidence_mrr": 1.0
+            },
+            "natural_language": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.714286,
+              "article_recall": 0.892857,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.571429,
+              "evidence_recall": 0.785714,
+              "evidence_mrr": 1.0
+            },
+            "single_scenario": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.805556,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.888889,
+              "evidence_recall": 0.981481,
+              "evidence_mrr": 0.805556
+            }
+          }
+        },
+        "latency_note": "Quality-search upper bound from component retrieval at max candidate_k=80; not used for selection."
+      }
+    },
+    {
+      "name": "cand30_dw0p90_sw0p10_rrf30",
+      "config": {
+        "candidate_k": 30,
+        "rrf_k": 30,
+        "dense_weight": 0.9,
+        "sparse_weight": 0.1
+      },
+      "article_selection_score": 0.826586,
+      "summary": {
+        "question_count": 31,
+        "metrics": {
+          "at_5": {
+            "any_article_hit": 0.967742,
+            "all_article_hit": 0.612903,
+            "article_recall": 0.792742,
+            "article_mrr": 0.91129,
+            "any_evidence_hit": 0.967742,
+            "all_evidence_hit": 0.548387,
+            "evidence_recall": 0.73383,
+            "evidence_mrr": 0.91129
+          },
+          "at_10": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.741935,
+            "article_recall": 0.872043,
+            "article_mrr": 0.916667,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.645161,
+            "evidence_recall": 0.827637,
+            "evidence_mrr": 0.916667
+          },
+          "at_20": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.774194,
+            "article_recall": 0.908065,
+            "article_mrr": 0.916667,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.677419,
+            "evidence_recall": 0.883328,
+            "evidence_mrr": 0.916667
+          }
+        },
+        "latency_ms": {
+          "mean": 108.71,
+          "p50": 102.362,
+          "p95": 160.374,
+          "min": 70.077,
+          "max": 183.96
+        },
+        "stratified_at_10": {
+          "single_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 1.0,
+            "article_recall": 1.0,
+            "article_mrr": 0.869792,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 1.0,
+            "evidence_recall": 1.0,
+            "evidence_mrr": 0.869792
+          },
+          "multi_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.466667,
+            "article_recall": 0.735556,
+            "article_mrr": 0.966667,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.266667,
+            "evidence_recall": 0.643783,
+            "evidence_mrr": 0.966667
+          },
+          "by_category": {
+            "exact_legal_term": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.880952,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 1.0,
+              "evidence_recall": 1.0,
+              "evidence_mrr": 0.880952
+            },
+            "multi_article": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.25,
+              "article_recall": 0.597917,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.125,
+              "evidence_recall": 0.522568,
+              "evidence_mrr": 1.0
+            },
+            "natural_language": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.714286,
+              "article_recall": 0.892857,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.571429,
+              "evidence_recall": 0.806122,
+              "evidence_mrr": 1.0
+            },
+            "single_scenario": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.805556,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.888889,
+              "evidence_recall": 0.981481,
+              "evidence_mrr": 0.805556
+            }
+          }
+        },
+        "latency_note": "Quality-search upper bound from component retrieval at max candidate_k=80; not used for selection."
+      }
+    },
+    {
+      "name": "cand30_dw0p70_sw0p30_rrf30",
+      "config": {
+        "candidate_k": 30,
+        "rrf_k": 30,
+        "dense_weight": 0.7,
+        "sparse_weight": 0.3
+      },
+      "article_selection_score": 0.812446,
+      "summary": {
+        "question_count": 31,
+        "metrics": {
+          "at_5": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.612903,
+            "article_recall": 0.794086,
+            "article_mrr": 0.897849,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.548387,
+            "evidence_recall": 0.741209,
+            "evidence_mrr": 0.897849
+          },
+          "at_10": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.709677,
+            "article_recall": 0.881183,
+            "article_mrr": 0.897849,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.612903,
+            "evidence_recall": 0.825417,
+            "evidence_mrr": 0.897849
+          },
+          "at_20": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.774194,
+            "article_recall": 0.908065,
+            "article_mrr": 0.897849,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.677419,
+            "evidence_recall": 0.877628,
+            "evidence_mrr": 0.897849
+          }
+        },
+        "latency_ms": {
+          "mean": 108.761,
+          "p50": 102.408,
+          "p95": 160.416,
+          "min": 70.133,
+          "max": 184.004
+        },
+        "stratified_at_10": {
+          "single_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 1.0,
+            "article_recall": 1.0,
+            "article_mrr": 0.895833,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 1.0,
+            "evidence_recall": 1.0,
+            "evidence_mrr": 0.895833
+          },
+          "multi_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.4,
+            "article_recall": 0.754444,
+            "article_mrr": 0.9,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.2,
+            "evidence_recall": 0.639196,
+            "evidence_mrr": 0.9
+          },
+          "by_category": {
+            "exact_legal_term": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.928571,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 1.0,
+              "evidence_recall": 1.0,
+              "evidence_mrr": 0.928571
+            },
+            "multi_article": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.125,
+              "article_recall": 0.633333,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.0,
+              "evidence_recall": 0.552659,
+              "evidence_mrr": 1.0
+            },
+            "natural_language": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.714286,
+              "article_recall": 0.892857,
+              "article_mrr": 0.857143,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.571429,
+              "evidence_recall": 0.785714,
+              "evidence_mrr": 0.857143
+            },
+            "single_scenario": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.814815,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.888889,
+              "evidence_recall": 0.962963,
+              "evidence_mrr": 0.814815
+            }
+          }
+        },
+        "latency_note": "Quality-search upper bound from component retrieval at max candidate_k=80; not used for selection."
+      }
+    },
+    {
+      "name": "cand50_dw0p70_sw0p30_rrf30",
+      "config": {
+        "candidate_k": 50,
+        "rrf_k": 30,
+        "dense_weight": 0.7,
+        "sparse_weight": 0.3
+      },
+      "article_selection_score": 0.812446,
+      "summary": {
+        "question_count": 31,
+        "metrics": {
+          "at_5": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.612903,
+            "article_recall": 0.794086,
+            "article_mrr": 0.897849,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.548387,
+            "evidence_recall": 0.741209,
+            "evidence_mrr": 0.897849
+          },
+          "at_10": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.709677,
+            "article_recall": 0.881183,
+            "article_mrr": 0.897849,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.612903,
+            "evidence_recall": 0.825417,
+            "evidence_mrr": 0.897849
+          },
+          "at_20": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.806452,
+            "article_recall": 0.921505,
+            "article_mrr": 0.897849,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.677419,
+            "evidence_recall": 0.879326,
+            "evidence_mrr": 0.897849
+          }
+        },
+        "latency_ms": {
+          "mean": 108.734,
+          "p50": 102.381,
+          "p95": 160.396,
+          "min": 70.11,
+          "max": 183.98
+        },
+        "stratified_at_10": {
+          "single_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 1.0,
+            "article_recall": 1.0,
+            "article_mrr": 0.895833,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 1.0,
+            "evidence_recall": 1.0,
+            "evidence_mrr": 0.895833
+          },
+          "multi_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.4,
+            "article_recall": 0.754444,
+            "article_mrr": 0.9,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.2,
+            "evidence_recall": 0.639196,
+            "evidence_mrr": 0.9
+          },
+          "by_category": {
+            "exact_legal_term": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.928571,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 1.0,
+              "evidence_recall": 1.0,
+              "evidence_mrr": 0.928571
+            },
+            "multi_article": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.125,
+              "article_recall": 0.633333,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.0,
+              "evidence_recall": 0.552659,
+              "evidence_mrr": 1.0
+            },
+            "natural_language": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.714286,
+              "article_recall": 0.892857,
+              "article_mrr": 0.857143,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.571429,
+              "evidence_recall": 0.785714,
+              "evidence_mrr": 0.857143
+            },
+            "single_scenario": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.814815,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.888889,
+              "evidence_recall": 0.962963,
+              "evidence_mrr": 0.814815
+            }
+          }
+        },
+        "latency_note": "Quality-search upper bound from component retrieval at max candidate_k=80; not used for selection."
+      }
+    },
+    {
+      "name": "cand80_dw0p70_sw0p30_rrf30",
+      "config": {
+        "candidate_k": 80,
+        "rrf_k": 30,
+        "dense_weight": 0.7,
+        "sparse_weight": 0.3
+      },
+      "article_selection_score": 0.812446,
+      "summary": {
+        "question_count": 31,
+        "metrics": {
+          "at_5": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.612903,
+            "article_recall": 0.794086,
+            "article_mrr": 0.897849,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.548387,
+            "evidence_recall": 0.741209,
+            "evidence_mrr": 0.897849
+          },
+          "at_10": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.709677,
+            "article_recall": 0.881183,
+            "article_mrr": 0.897849,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.612903,
+            "evidence_recall": 0.825417,
+            "evidence_mrr": 0.897849
+          },
+          "at_20": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.806452,
+            "article_recall": 0.921505,
+            "article_mrr": 0.897849,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.677419,
+            "evidence_recall": 0.874718,
+            "evidence_mrr": 0.897849
+          }
+        },
+        "latency_ms": {
+          "mean": 108.794,
+          "p50": 102.418,
+          "p95": 160.434,
+          "min": 70.179,
+          "max": 184.042
+        },
+        "stratified_at_10": {
+          "single_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 1.0,
+            "article_recall": 1.0,
+            "article_mrr": 0.895833,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 1.0,
+            "evidence_recall": 1.0,
+            "evidence_mrr": 0.895833
+          },
+          "multi_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.4,
+            "article_recall": 0.754444,
+            "article_mrr": 0.9,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.2,
+            "evidence_recall": 0.639196,
+            "evidence_mrr": 0.9
+          },
+          "by_category": {
+            "exact_legal_term": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.928571,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 1.0,
+              "evidence_recall": 1.0,
+              "evidence_mrr": 0.928571
+            },
+            "multi_article": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.125,
+              "article_recall": 0.633333,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.0,
+              "evidence_recall": 0.552659,
+              "evidence_mrr": 1.0
+            },
+            "natural_language": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.714286,
+              "article_recall": 0.892857,
+              "article_mrr": 0.857143,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.571429,
+              "evidence_recall": 0.785714,
+              "evidence_mrr": 0.857143
+            },
+            "single_scenario": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.814815,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.888889,
+              "evidence_recall": 0.962963,
+              "evidence_mrr": 0.814815
+            }
+          }
+        },
+        "latency_note": "Quality-search upper bound from component retrieval at max candidate_k=80; not used for selection."
+      }
+    },
+    {
+      "name": "cand30_dw0p60_sw0p40_rrf30",
+      "config": {
+        "candidate_k": 30,
+        "rrf_k": 30,
+        "dense_weight": 0.6,
+        "sparse_weight": 0.4
+      },
+      "article_selection_score": 0.811438,
+      "summary": {
+        "question_count": 31,
+        "metrics": {
+          "at_5": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.612903,
+            "article_recall": 0.808602,
+            "article_mrr": 0.88172,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.548387,
+            "evidence_recall": 0.752793,
+            "evidence_mrr": 0.88172
+          },
+          "at_10": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.709677,
+            "article_recall": 0.885215,
+            "article_mrr": 0.88172,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.612903,
+            "evidence_recall": 0.825417,
+            "evidence_mrr": 0.88172
+          },
+          "at_20": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.774194,
+            "article_recall": 0.913441,
+            "article_mrr": 0.88172,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.677419,
+            "evidence_recall": 0.879932,
+            "evidence_mrr": 0.88172
+          }
+        },
+        "latency_ms": {
+          "mean": 108.887,
+          "p50": 102.442,
+          "p95": 160.441,
+          "min": 70.163,
+          "max": 184.02
+        },
+        "stratified_at_10": {
+          "single_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 1.0,
+            "article_recall": 1.0,
+            "article_mrr": 0.895833,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 1.0,
+            "evidence_recall": 1.0,
+            "evidence_mrr": 0.895833
+          },
+          "multi_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.4,
+            "article_recall": 0.762778,
+            "article_mrr": 0.866667,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.2,
+            "evidence_recall": 0.639196,
+            "evidence_mrr": 0.866667
+          },
+          "by_category": {
+            "exact_legal_term": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.928571,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 1.0,
+              "evidence_recall": 1.0,
+              "evidence_mrr": 0.928571
+            },
+            "multi_article": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.125,
+              "article_recall": 0.648958,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.0,
+              "evidence_recall": 0.552659,
+              "evidence_mrr": 1.0
+            },
+            "natural_language": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.714286,
+              "article_recall": 0.892857,
+              "article_mrr": 0.857143,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.571429,
+              "evidence_recall": 0.785714,
+              "evidence_mrr": 0.857143
+            },
+            "single_scenario": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.759259,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.888889,
+              "evidence_recall": 0.962963,
+              "evidence_mrr": 0.759259
+            }
+          }
+        },
+        "latency_note": "Quality-search upper bound from component retrieval at max candidate_k=80; not used for selection."
+      }
+    },
+    {
+      "name": "cand30_dw0p60_sw0p40_rrf60",
+      "config": {
+        "candidate_k": 30,
+        "rrf_k": 60,
+        "dense_weight": 0.6,
+        "sparse_weight": 0.4
+      },
+      "article_selection_score": 0.811438,
+      "summary": {
+        "question_count": 31,
+        "metrics": {
+          "at_5": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.612903,
+            "article_recall": 0.808602,
+            "article_mrr": 0.88172,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.548387,
+            "evidence_recall": 0.752793,
+            "evidence_mrr": 0.88172
+          },
+          "at_10": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.709677,
+            "article_recall": 0.885215,
+            "article_mrr": 0.88172,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.612903,
+            "evidence_recall": 0.825417,
+            "evidence_mrr": 0.88172
+          },
+          "at_20": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.774194,
+            "article_recall": 0.908065,
+            "article_mrr": 0.88172,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.677419,
+            "evidence_recall": 0.877628,
+            "evidence_mrr": 0.88172
+          }
+        },
+        "latency_ms": {
+          "mean": 108.769,
+          "p50": 102.423,
+          "p95": 160.419,
+          "min": 70.145,
+          "max": 184.024
+        },
+        "stratified_at_10": {
+          "single_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 1.0,
+            "article_recall": 1.0,
+            "article_mrr": 0.895833,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 1.0,
+            "evidence_recall": 1.0,
+            "evidence_mrr": 0.895833
+          },
+          "multi_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.4,
+            "article_recall": 0.762778,
+            "article_mrr": 0.866667,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.2,
+            "evidence_recall": 0.639196,
+            "evidence_mrr": 0.866667
+          },
+          "by_category": {
+            "exact_legal_term": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.928571,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 1.0,
+              "evidence_recall": 1.0,
+              "evidence_mrr": 0.928571
+            },
+            "multi_article": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.125,
+              "article_recall": 0.648958,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.0,
+              "evidence_recall": 0.552659,
+              "evidence_mrr": 1.0
+            },
+            "natural_language": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.714286,
+              "article_recall": 0.892857,
+              "article_mrr": 0.857143,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.571429,
+              "evidence_recall": 0.785714,
+              "evidence_mrr": 0.857143
+            },
+            "single_scenario": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.759259,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.888889,
+              "evidence_recall": 0.962963,
+              "evidence_mrr": 0.759259
+            }
+          }
+        },
+        "latency_note": "Quality-search upper bound from component retrieval at max candidate_k=80; not used for selection."
+      }
+    },
+    {
+      "name": "cand50_dw0p60_sw0p40_rrf60",
+      "config": {
+        "candidate_k": 50,
+        "rrf_k": 60,
+        "dense_weight": 0.6,
+        "sparse_weight": 0.4
+      },
+      "article_selection_score": 0.811438,
+      "summary": {
+        "question_count": 31,
+        "metrics": {
+          "at_5": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.612903,
+            "article_recall": 0.808602,
+            "article_mrr": 0.88172,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.548387,
+            "evidence_recall": 0.752793,
+            "evidence_mrr": 0.88172
+          },
+          "at_10": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.709677,
+            "article_recall": 0.885215,
+            "article_mrr": 0.88172,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.612903,
+            "evidence_recall": 0.825417,
+            "evidence_mrr": 0.88172
+          },
+          "at_20": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.83871,
+            "article_recall": 0.950538,
+            "article_mrr": 0.88172,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.709677,
+            "evidence_recall": 0.902052,
+            "evidence_mrr": 0.88172
+          }
+        },
+        "latency_ms": {
+          "mean": 108.728,
+          "p50": 102.374,
+          "p95": 160.405,
+          "min": 70.098,
+          "max": 183.982
+        },
+        "stratified_at_10": {
+          "single_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 1.0,
+            "article_recall": 1.0,
+            "article_mrr": 0.895833,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 1.0,
+            "evidence_recall": 1.0,
+            "evidence_mrr": 0.895833
+          },
+          "multi_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.4,
+            "article_recall": 0.762778,
+            "article_mrr": 0.866667,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.2,
+            "evidence_recall": 0.639196,
+            "evidence_mrr": 0.866667
+          },
+          "by_category": {
+            "exact_legal_term": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.928571,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 1.0,
+              "evidence_recall": 1.0,
+              "evidence_mrr": 0.928571
+            },
+            "multi_article": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.125,
+              "article_recall": 0.648958,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.0,
+              "evidence_recall": 0.552659,
+              "evidence_mrr": 1.0
+            },
+            "natural_language": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.714286,
+              "article_recall": 0.892857,
+              "article_mrr": 0.857143,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.571429,
+              "evidence_recall": 0.785714,
+              "evidence_mrr": 0.857143
+            },
+            "single_scenario": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.759259,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.888889,
+              "evidence_recall": 0.962963,
+              "evidence_mrr": 0.759259
+            }
+          }
+        },
+        "latency_note": "Quality-search upper bound from component retrieval at max candidate_k=80; not used for selection."
+      }
+    },
+    {
+      "name": "cand80_dw0p60_sw0p40_rrf60",
+      "config": {
+        "candidate_k": 80,
+        "rrf_k": 60,
+        "dense_weight": 0.6,
+        "sparse_weight": 0.4
+      },
+      "article_selection_score": 0.811438,
+      "summary": {
+        "question_count": 31,
+        "metrics": {
+          "at_5": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.612903,
+            "article_recall": 0.808602,
+            "article_mrr": 0.88172,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.548387,
+            "evidence_recall": 0.752793,
+            "evidence_mrr": 0.88172
+          },
+          "at_10": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.709677,
+            "article_recall": 0.885215,
+            "article_mrr": 0.88172,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.612903,
+            "evidence_recall": 0.825417,
+            "evidence_mrr": 0.88172
+          },
+          "at_20": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.806452,
+            "article_recall": 0.927957,
+            "article_mrr": 0.88172,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.677419,
+            "evidence_recall": 0.874863,
+            "evidence_mrr": 0.88172
+          }
+        },
+        "latency_ms": {
+          "mean": 108.783,
+          "p50": 102.432,
+          "p95": 160.437,
+          "min": 70.151,
+          "max": 184.029
+        },
+        "stratified_at_10": {
+          "single_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 1.0,
+            "article_recall": 1.0,
+            "article_mrr": 0.895833,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 1.0,
+            "evidence_recall": 1.0,
+            "evidence_mrr": 0.895833
+          },
+          "multi_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.4,
+            "article_recall": 0.762778,
+            "article_mrr": 0.866667,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.2,
+            "evidence_recall": 0.639196,
+            "evidence_mrr": 0.866667
+          },
+          "by_category": {
+            "exact_legal_term": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.928571,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 1.0,
+              "evidence_recall": 1.0,
+              "evidence_mrr": 0.928571
+            },
+            "multi_article": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.125,
+              "article_recall": 0.648958,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.0,
+              "evidence_recall": 0.552659,
+              "evidence_mrr": 1.0
+            },
+            "natural_language": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.714286,
+              "article_recall": 0.892857,
+              "article_mrr": 0.857143,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.571429,
+              "evidence_recall": 0.785714,
+              "evidence_mrr": 0.857143
+            },
+            "single_scenario": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.759259,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.888889,
+              "evidence_recall": 0.962963,
+              "evidence_mrr": 0.759259
+            }
+          }
+        },
+        "latency_note": "Quality-search upper bound from component retrieval at max candidate_k=80; not used for selection."
+      }
+    },
+    {
+      "name": "cand30_dw0p70_sw0p30_rrf60",
+      "config": {
+        "candidate_k": 30,
+        "rrf_k": 60,
+        "dense_weight": 0.7,
+        "sparse_weight": 0.3
+      },
+      "article_selection_score": 0.810564,
+      "summary": {
+        "question_count": 31,
+        "metrics": {
+          "at_5": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.612903,
+            "article_recall": 0.794086,
+            "article_mrr": 0.897849,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.548387,
+            "evidence_recall": 0.741209,
+            "evidence_mrr": 0.897849
+          },
+          "at_10": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.709677,
+            "article_recall": 0.875806,
+            "article_mrr": 0.897849,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.612903,
+            "evidence_recall": 0.820041,
+            "evidence_mrr": 0.897849
+          },
+          "at_20": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.774194,
+            "article_recall": 0.908065,
+            "article_mrr": 0.897849,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.677419,
+            "evidence_recall": 0.877628,
+            "evidence_mrr": 0.897849
+          }
+        },
+        "latency_ms": {
+          "mean": 108.713,
+          "p50": 102.363,
+          "p95": 160.376,
+          "min": 70.084,
+          "max": 183.953
+        },
+        "stratified_at_10": {
+          "single_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 1.0,
+            "article_recall": 1.0,
+            "article_mrr": 0.895833,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 1.0,
+            "evidence_recall": 1.0,
+            "evidence_mrr": 0.895833
+          },
+          "multi_article": {
+            "any_article_hit": 1.0,
+            "all_article_hit": 0.4,
+            "article_recall": 0.743333,
+            "article_mrr": 0.9,
+            "any_evidence_hit": 1.0,
+            "all_evidence_hit": 0.2,
+            "evidence_recall": 0.628085,
+            "evidence_mrr": 0.9
+          },
+          "by_category": {
+            "exact_legal_term": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.928571,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 1.0,
+              "evidence_recall": 1.0,
+              "evidence_mrr": 0.928571
+            },
+            "multi_article": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.125,
+              "article_recall": 0.6125,
+              "article_mrr": 1.0,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.0,
+              "evidence_recall": 0.531826,
+              "evidence_mrr": 1.0
+            },
+            "natural_language": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 0.714286,
+              "article_recall": 0.892857,
+              "article_mrr": 0.857143,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.571429,
+              "evidence_recall": 0.785714,
+              "evidence_mrr": 0.857143
+            },
+            "single_scenario": {
+              "any_article_hit": 1.0,
+              "all_article_hit": 1.0,
+              "article_recall": 1.0,
+              "article_mrr": 0.814815,
+              "any_evidence_hit": 1.0,
+              "all_evidence_hit": 0.888889,
+              "evidence_recall": 0.962963,
+              "evidence_mrr": 0.814815
+            }
+          }
+        },
+        "latency_note": "Quality-search upper bound from component retrieval at max candidate_k=80; not used for selection."
+      }
+    }
+  ],
+  "base_config": {
+    "golden": "data/evaluation/splits/canonical_word_804/golden_v3_dev.json",
+    "golden_split_version": "runtime-retrieval-v1",
+    "corpus": "data/releases/labor-law-canonical-word-20260804-164432-candidate/canonical_chunks.jsonl",
+    "corpus_sha256": "fdbec539efbfb3f4aa3cb3962046321e3a402150d93516ef4256934972c70307",
+    "qdrant_url": "http://localhost:6333",
+    "qdrant_api_key_configured": false,
+    "collection": "labor_law_canonical_word_20260804_fdbec539",
+    "dense_model": "intfloat/multilingual-e5-large",
+    "dense_vector_name": "dense",
+    "dense_size": 1024,
+    "vncorenlp_model_dir": "models/vncorenlp",
+    "bm25_k": 1.2,
+    "bm25_b": 0.75,
+    "k_values": [
+      5,
+      10,
+      20
+    ],
+    "package_versions": {
+      "fastembed": "0.8.0",
+      "qdrant-client": "1.18.0",
+      "py-vncorenlp": "0.1.4"
+    },
+    "writes_qdrant": false,
+    "evidence_metrics_decision_role": "secondary_only"
+  }
+}
