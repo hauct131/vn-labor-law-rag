@@ -407,20 +407,20 @@ def test_payload_structure(sample_chunks: list[dict]):
     assert payload["_indexer_version"] == "1.1.0"
 
 
-def test_defaults_target_unified_833_release():
+def test_defaults_target_canonical_word_804_release():
     expected_chunks = (
         Path(__file__).resolve().parents[2]
-        / "data/releases/labor-law-2026-07-28-candidate/chunks.jsonl"
+        / "data/releases/labor-law-canonical-word-20260804-164432-candidate/canonical_chunks.jsonl"
     )
 
     assert DEFAULT_CHUNKS.resolve() == expected_chunks.resolve()
     assert str(DEFAULT_AUDIT_SUMMARY) == (
-        "data/quality/unified_e5_token_audit/summary.json"
+        "data/quality/canonical_word_804_e5_token_audit/summary.json"
     )
-    assert DEFAULT_EXPECTED_CHUNKS == 833
+    assert DEFAULT_EXPECTED_CHUNKS == 804
     assert DEFAULT_EXPECTED_SHA256 == (
-        "fd35bb1a94a3036f7977781de17bb1b49"
-        "b12c58be61fc74efac68dcf8a7a8c54"
+        "fdbec539efbfb3f4aa3cb3962046321e3"
+        "a402150d93516ef4256934972c70307"
     )
 # ---------------------------------------------------------------------------
 # Test 16: --resume on collection with matching fingerprint succeeds

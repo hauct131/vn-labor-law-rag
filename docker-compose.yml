@@ -28,17 +28,22 @@ services:
     environment:
       QDRANT_URL: http://qdrant:6333
       QDRANT_COLLECTION: labor_law_active
-      QDRANT_EXPECTED_COLLECTION: labor_law_20260728_fd35bb1a
+      QDRANT_EXPECTED_COLLECTION: labor_law_canonical_word_20260804_fdbec539
       RUNTIME_READINESS_TTL_SECONDS: "30"
       RUNTIME_READINESS_FAILURE_TTL_SECONDS: "5"
       NEO4J_URI: bolt://neo4j:7687
-      LEGAL_CHUNKS_PATH: /app/data/releases/labor-law-2026-07-28-candidate/chunks.jsonl
-      CORPUS_RELEASE_MANIFEST_PATH: /app/data/releases/labor-law-2026-07-28-candidate/manifest.json
-      E5_AUDIT_SUMMARY_PATH: /app/data/quality/unified_e5_token_audit/summary.json
-      CORPUS_RELEASE_ID: labor-law-2026-07-28-candidate
+      LEGAL_CHUNKS_PATH: /app/data/releases/labor-law-canonical-word-20260804-164432-candidate/canonical_chunks.jsonl
+      CORPUS_RELEASE_MANIFEST_PATH: /app/data/releases/labor-law-canonical-word-20260804-164432-candidate/manifest.json
+      E5_AUDIT_SUMMARY_PATH: /app/data/quality/canonical_word_804_e5_token_audit/summary.json
+      CORPUS_RELEASE_ID: labor-law-canonical-word-20260804-164432-candidate
       CORPUS_REQUIRE_AUTHORITY_APPROVAL: "true"
-      RETRIEVAL_EXPECTED_CHUNKS: "833"
-      RETRIEVAL_CORPUS_SHA256: fd35bb1a94a3036f7977781de17bb1b49b12c58be61fc74efac68dcf8a7a8c54
+      RETRIEVAL_EXPECTED_CHUNKS: "804"
+      RETRIEVAL_CORPUS_SHA256: fdbec539efbfb3f4aa3cb3962046321e3a402150d93516ef4256934972c70307
+      RETRIEVAL_TOP_K: "5"
+      RETRIEVAL_CANDIDATE_K: "30"
+      HYBRID_RRF_K: "60"
+      HYBRID_DENSE_WEIGHT: "0.9"
+      HYBRID_SPARSE_WEIGHT: "0.1"
       VNCORENLP_MODEL_DIR: /app/models/vncorenlp
       FASTEMBED_CACHE_DIR: /root/.cache/fastembed
     depends_on:

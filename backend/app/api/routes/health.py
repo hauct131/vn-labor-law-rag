@@ -13,6 +13,16 @@ from app.schemas.health import HealthResponse
 
 router = APIRouter(tags=["Health"])
 
+_PROJECT_ROOT = Path(__file__).resolve().parents[4]
+
+
+def _resolve_runtime_path(value: str | Path) -> Path:
+    """Resolve duong dan runtime tuong doi theo thu muc goc project."""
+    path = Path(value)
+    if path.is_absolute():
+        return path
+    return _PROJECT_ROOT / path
+
 
 @router.get("/live", response_model=HealthResponse)
 async def liveness_check() -> HealthResponse:
@@ -36,8 +46,12 @@ def _sha256(path: Path) -> str:
 
 def evaluate_release_gate(settings_obj: Any = settings) -> dict[str, Any]:
     """Validate the immutable corpus release used by question answering."""
-    chunks_path = Path(settings_obj.legal_chunks_path)
-    manifest_path = Path(settings_obj.corpus_release_manifest_path)
+    chunks_path = _resolve_runtime_path(
+        settings_obj.legal_chunks_path
+    )
+    manifest_path = _resolve_runtime_path(
+        settings_obj.corpus_release_manifest_path
+    )
     errors: list[str] = []
     manifest: dict = {}
 
@@ -81,8 +95,10 @@ def evaluate_release_gate(settings_obj: Any = settings) -> dict[str, Any]:
             and manifest_chunk_count != actual_count
         ):
             errors.append("manifest_chunk_count_mismatch")
+        manifest_hashes = manifest.get("hashes", {})
         manifest_chunk_hash = (
-            manifest.get("hashes", {}).get("chunks_sha256")
+            manifest_hashes.get("canonical_chunks_sha256")
+            or manifest_hashes.get("chunks_sha256")
         )
         if actual_hash and manifest_chunk_hash != actual_hash:
             errors.append("manifest_chunk_hash_mismatch")
@@ -93,11 +109,18 @@ def evaluate_release_gate(settings_obj: Any = settings) -> dict[str, Any]:
             )
         ):
             errors.append("authority_review_pending")
+        production_publishable = manifest.get(
+            "production_publishable"
+        )
+        if production_publishable is None:
+            production_publishable = manifest.get("gates", {}).get(
+                "production_publishable",
+                False,
+            )
+
         if (
             settings_obj.corpus_require_authority_approval
-            and not manifest.get("gates", {}).get(
-                "production_publishable", False
-            )
+            and not production_publishable
         ):
             errors.append("release_not_publishable")
 

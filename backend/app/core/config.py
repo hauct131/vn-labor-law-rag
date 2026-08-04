@@ -17,7 +17,7 @@ class Settings(BaseSettings):
     # Retrieval always uses an alias. Physical collections are versioned so a
     # new corpus can be indexed and verified without mutating the old index.
     qdrant_collection: str = "labor_law_active"
-    qdrant_expected_collection: str = "labor_law_20260728_fd35bb1a"
+    qdrant_expected_collection: str = "labor_law_canonical_word_20260804_fdbec539"
     qdrant_api_key: str = ""
     qdrant_readiness_timeout_seconds: float = 3.0
     runtime_readiness_ttl_seconds: float = 30.0
@@ -35,30 +35,30 @@ class Settings(BaseSettings):
 
     # Retrieval core
     legal_chunks_path: str = (
-        "data/releases/labor-law-2026-07-28-candidate/chunks.jsonl"
+        "data/releases/labor-law-canonical-word-20260804-164432-candidate/canonical_chunks.jsonl"
     )
     corpus_release_manifest_path: str = (
-        "data/releases/labor-law-2026-07-28-candidate/manifest.json"
+        "data/releases/labor-law-canonical-word-20260804-164432-candidate/manifest.json"
     )
     e5_audit_summary_path: str = (
-        "data/quality/unified_e5_token_audit/summary.json"
+        "data/quality/canonical_word_804_e5_token_audit/summary.json"
     )
-    corpus_release_id: str = "labor-law-2026-07-28-candidate"
+    corpus_release_id: str = "labor-law-canonical-word-20260804-164432-candidate"
     corpus_require_authority_approval: bool = True
     official_sources_path: str = (
         "data/reference/official_legal_sources.json"
     )
     vncorenlp_model_dir: str = "models/vncorenlp"
-    retrieval_expected_chunks: int = 833
+    retrieval_expected_chunks: int = 804
     retrieval_corpus_sha256: str = (
-        "fd35bb1a94a3036f7977781de17bb1b49"
-        "b12c58be61fc74efac68dcf8a7a8c54"
+        "fdbec539efbfb3f4aa3cb3962046321e3"
+        "a402150d93516ef4256934972c70307"
     )
     retrieval_top_k: int = 5
-    retrieval_candidate_k: int = 20
+    retrieval_candidate_k: int = 30
     hybrid_rrf_k: int = 60
-    hybrid_sparse_weight: float = 1.0
-    hybrid_dense_weight: float = 1.0
+    hybrid_sparse_weight: float = 0.1
+    hybrid_dense_weight: float = 0.9
     bm25_k: float = 1.2
     bm25_b: float = 0.75
 
