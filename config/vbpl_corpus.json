@@ -6,11 +6,13 @@
     "website": "https://vbpl.vn/",
     "allowed_active_sources": [
       "vbpl_portal",
-      "official_government_docx"
+      "official_government_docx",
+      "official_gazette_docx",
+      "official_gazette_word"
     ],
     "forbidden_active_sources": [
       "phap_dien",
-      "official_gazette",
+      "official_gazette_pdf_ocr",
       "third_party",
       "ocr"
     ],
@@ -32,7 +34,28 @@
     "require_explicit_snapshot_approval": true,
     "require_legal_effect_review": true,
     "rebuild_all_indexes": true,
-    "allow_automatic_source_fallback": false
+    "allow_automatic_source_fallback": true
+  },
+  "canonical_source_policy": {
+    "name": "official-gazette-word-then-vbpl-v1",
+    "priority": [
+      "official_gazette_word",
+      "vbpl"
+    ],
+    "fallback_on": [
+      "gazette_record_not_found",
+      "word_attachment_not_found"
+    ],
+    "never_fallback_on": [
+      "identity_mismatch",
+      "metadata_conflict",
+      "corrupt_attachment",
+      "checksum_failure",
+      "network_error",
+      "normalization_tooling_error"
+    ],
+    "one_canonical_snapshot_per_document": true,
+    "automatic_production_promotion": false
   },
   "indexing": {
     "dense_model": "intfloat/multilingual-e5-large",
@@ -50,9 +73,16 @@
       "required_for_release": true,
       "scope_note": "Canonical ID bám Bộ luật 45/2019/QH14; số VBHN chỉ xác định phiên bản nguồn.",
       "source_adapter": "official_government_docx",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word"
+      },
       "source_file": "2026_131_18_VBHN-VPQH.docx",
+      "canonical_content_source": "official_gazette_docx",
+      "metadata_source": "official_government_portal_plus_gazette",
+      "legal_effect_source": "explicit_legal_effect_review",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/van-ban-hop-nhat-so-18-vbhn-vpqh-468971.htm",
       "official_page_url": "https://vanban.chinhphu.vn/?docid=217002&pageid=27160",
-      "source_note": "Văn bản hợp nhất Bộ luật Lao động ngày 12/02/2026; không được resolve theo số hiệu đơn lẻ trên VBPL vì số 18/VBHN-VPQH được tái sử dụng cho nhiều văn bản."
+      "source_note": "DOCX Công báo là nội dung canonical; Cổng TTĐT Chính phủ và legal-effect review cung cấp metadata. Không resolve theo số hiệu đơn lẻ trên VBPL vì số 18/VBHN-VPQH được tái sử dụng cho nhiều văn bản."
     },
     {
       "document_number": "135/2020/NĐ-CP",
@@ -62,7 +92,12 @@
       "include_articles": "1-9",
       "required_for_release": true,
       "source_adapter": "vbpl",
-      "item_id": "152734"
+      "item_id": "152734",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/nghi-dinh-so-135-2020-nd-cp-32525.htm",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word",
+        "fallback_adapter": "vbpl"
+      }
     },
     {
       "document_number": "145/2020/NĐ-CP",
@@ -72,7 +107,12 @@
       "include_articles": "1-115",
       "required_for_release": true,
       "source_adapter": "vbpl",
-      "item_id": "152668"
+      "item_id": "152668",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/nghi-dinh-so-145-2020-nd-cp-32732.htm",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word",
+        "fallback_adapter": "vbpl"
+      }
     },
     {
       "document_number": "152/2020/NĐ-CP",
@@ -83,7 +123,12 @@
       "required_for_release": true,
       "scope_note": "Chỉ Điều 22-28; phần người lao động nước ngoài tại Việt Nam phải được loại theo effect review.",
       "source_adapter": "vbpl",
-      "item_id": "152669"
+      "item_id": "152669",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/nghi-dinh-so-152-2020-nd-cp-32864.htm",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word",
+        "fallback_adapter": "vbpl"
+      }
     },
     {
       "document_number": "97/2022/NĐ-CP",
@@ -109,7 +154,12 @@
           "role": "signed_original_with_appendices"
         }
       ],
-      "attachment_source_policy": "explicit_official_government_portal"
+      "attachment_source_policy": "explicit_official_government_portal",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/nghi-dinh-so-97-2022-nd-cp-38263.htm",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word",
+        "fallback_adapter": "vbpl"
+      }
     },
     {
       "document_number": "293/2025/NĐ-CP",
@@ -119,7 +169,12 @@
       "include_articles": "1-5",
       "required_for_release": true,
       "source_adapter": "vbpl",
-      "item_id": "183939"
+      "item_id": "183939",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/nghi-dinh-so-293-2025-nd-cp-46568.htm",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word",
+        "fallback_adapter": "vbpl"
+      }
     },
     {
       "document_number": "219/2025/NĐ-CP",
@@ -144,7 +199,12 @@
           "role": "signed_original_with_appendices"
         }
       ],
-      "attachment_source_policy": "explicit_official_government_portal"
+      "attachment_source_policy": "explicit_official_government_portal",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/nghi-dinh-so-219-2025-nd-cp-45798.htm",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word",
+        "fallback_adapter": "vbpl"
+      }
     },
     {
       "document_number": "128/2025/NĐ-CP",
@@ -155,7 +215,12 @@
       "required_for_release": true,
       "scope_note": "Chỉ Điều 7 thuộc phạm vi corpus lao động.",
       "source_adapter": "vbpl",
-      "item_id": "178260"
+      "item_id": "178260",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/nghi-dinh-so-128-2025-nd-cp-45067.htm",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word",
+        "fallback_adapter": "vbpl"
+      }
     },
     {
       "document_number": "129/2025/NĐ-CP",
@@ -165,7 +230,12 @@
       "include_articles": "67-81",
       "required_for_release": true,
       "source_adapter": "vbpl",
-      "item_id": "178294"
+      "item_id": "178294",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/nghi-dinh-so-129-2025-nd-cp-45076.htm",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word",
+        "fallback_adapter": "vbpl"
+      }
     },
     {
       "document_number": "09/2020/TT-BLĐTBXH",
@@ -175,7 +245,12 @@
       "include_articles": "1-13",
       "required_for_release": true,
       "source_adapter": "vbpl",
-      "item_id": "152670"
+      "item_id": "152670",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/thong-tu-so-09-2020-tt-bldtbxh-33378.htm",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word",
+        "fallback_adapter": "vbpl"
+      }
     },
     {
       "document_number": "10/2020/TT-BLĐTBXH",
@@ -185,7 +260,14 @@
       "include_articles": "1-12",
       "required_for_release": true,
       "source_adapter": "vbpl",
-      "item_id": "146696"
+      "item_id": "146696",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word",
+        "preferred_status": "not_found",
+        "fallback_adapter": "vbpl",
+        "fallback_reason": "gazette_record_not_found"
+      },
+      "source_exception_reason": "not_found_on_official_gazette_portal"
     },
     {
       "document_number": "04/2021/TT-BCT",
@@ -195,7 +277,12 @@
       "include_articles": "1-9",
       "required_for_release": true,
       "source_adapter": "vbpl",
-      "item_id": "148825"
+      "item_id": "148825",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/thong-tu-so-04-2021-tt-bct-34055/36356.htm",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word",
+        "fallback_adapter": "vbpl"
+      }
     },
     {
       "document_number": "18/2021/TT-BLĐTBXH",
@@ -205,7 +292,12 @@
       "include_articles": "1-10",
       "required_for_release": true,
       "source_adapter": "vbpl",
-      "item_id": "153297"
+      "item_id": "153297",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/thong-tu-so-18-2021-tt-bldtbxh-36338.htm",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word",
+        "fallback_adapter": "vbpl"
+      }
     },
     {
       "document_number": "19/2021/TT-BLĐTBXH",
@@ -215,7 +307,12 @@
       "include_articles": "1-5",
       "required_for_release": true,
       "source_adapter": "vbpl",
-      "item_id": "152735"
+      "item_id": "152735",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/thong-tu-so-19-2021-tt-bldtbxh-36628.htm",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word",
+        "fallback_adapter": "vbpl"
+      }
     },
     {
       "document_number": "12/2022/TT-BCT",
@@ -225,7 +322,12 @@
       "include_articles": "1-10",
       "required_for_release": true,
       "source_adapter": "vbpl",
-      "item_id": "155202"
+      "item_id": "155202",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/thong-tu-so-12-2022-tt-bct-37615.htm",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word",
+        "fallback_adapter": "vbpl"
+      }
     },
     {
       "document_number": "20/2023/TT-BCT",
@@ -235,7 +337,12 @@
       "include_articles": "1-12",
       "required_for_release": true,
       "source_adapter": "vbpl",
-      "item_id": "163444"
+      "item_id": "163444",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/thong-tu-so-20-2023-tt-bct-40438.htm",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word",
+        "fallback_adapter": "vbpl"
+      }
     },
     {
       "document_number": "17/2023/TT-BLĐTBXH",
@@ -245,7 +352,12 @@
       "include_articles": "1-12",
       "required_for_release": true,
       "source_adapter": "vbpl",
-      "item_id": "167029"
+      "item_id": "167029",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/thong-tu-so-17-2023-tt-bldtbxh-41049.htm",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word",
+        "fallback_adapter": "vbpl"
+      }
     },
     {
       "document_number": "66.18/2026/NQ-CP",
@@ -271,9 +383,16 @@
       "scope_note": "Chỉ Điều 4, Điều 6 và Phụ lục I. Các mục I.4.C.* cũ là alias đánh giá của cùng phụ lục, không phải bằng chứng độc lập; không cắt tiểu mục bằng regex thiếu kiểm chứng.",
       "attachment_policy": "required",
       "source_adapter": "official_government_docx",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word"
+      },
       "source_file": "2026_301_66.18_2026_NQ-CP.docx",
+      "canonical_content_source": "official_gazette_docx",
+      "metadata_source": "official_government_portal_plus_gazette",
+      "legal_effect_source": "explicit_legal_effect_review",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/nghi-quyet-so-6618-2026-nq-cp-469585.htm",
       "official_page_url": "https://vanban.chinhphu.vn/?docid=218181&pageid=27160",
-      "source_note": "Nguồn chính thức hiện dùng Cổng TTĐT Chính phủ và Công báo; chưa có VBPL item_id được xác minh."
+      "source_note": "DOCX Công báo là nội dung canonical; Cổng TTĐT Chính phủ cung cấp metadata nhận dạng. Trạng thái, thời hạn hiệu lực và quan hệ pháp lý chỉ được lấy từ VBPL đã xác minh hoặc legal-effect review; chưa có VBPL item_id được xác minh."
     }
   ],
   "ingestion_policy": {

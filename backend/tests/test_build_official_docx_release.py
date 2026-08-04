@@ -12,6 +12,8 @@ from scripts.build_official_docx_release import (
     E5PassageTokenCounter,
     INTER_ARTICLE_HEADING_RE,
     find_inter_article_heading_leaks,
+    strip_gazette_page_artifacts,
+    strip_inline_administrative_tail,
     strip_inter_article_headings,
 )
 
@@ -57,10 +59,37 @@ def test_strip_section_heading_and_following_title() -> None:
 
 @pytest.mark.parametrize(
     "line",
-    ["Chương II", "CHƯƠNG XVII", "Mục 1", "mục IV."],
+    [
+        "Chương II",
+        "CHƯƠNG XVII",
+        "Mục 1",
+        "mục IV.",
+        "Chương IIQUẢN LÝ LAO ĐỘNG",
+        "Mục 2CHẤM DỨT HỢP ĐỒNG LAO ĐỘNG",
+    ],
 )
 def test_inter_article_heading_pattern_accepts_real_headings(line: str) -> None:
     assert INTER_ARTICLE_HEADING_RE.fullmatch(line)
+
+
+def test_strip_gazette_continuation_headers_between_word_parts() -> None:
+    lines = [
+        "Nội dung trước.",
+        "(Xem tiếp theo Công báo số 1205 + 1206)",
+        "Số 1205 + 1206Ngày 28 tháng 12 năm 2020",
+        "Nội dung sau.",
+    ]
+
+    assert strip_gazette_page_artifacts(lines) == [
+        "Nội dung trước.",
+        "Nội dung sau.",
+    ]
+
+
+def test_strip_inline_signature_after_legal_terminator() -> None:
+    value = "Nội dung pháp lý./. KT. BỘ TRƯỞNGTHỨ TRƯỞNGNguyễn Văn A"
+
+    assert strip_inline_administrative_tail(value) == "Nội dung pháp lý./."
 
 
 def test_e5_counter_includes_passage_prefix() -> None:

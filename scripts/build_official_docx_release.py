@@ -40,6 +40,11 @@ from backend.app.ingestion.legal_chunker import (
 )
 from scripts.audit_e5_token_lengths import load_audit_tokenizer
 from scripts.build_vbpl_articles import parse_content_units
+from scripts.congbao_docx import (
+    SNAPSHOT_SCHEMA as CONGBAO_SNAPSHOT_SCHEMA,
+    verify_snapshot as verify_congbao_snapshot,
+)
+from scripts.docx_numbering import WordNumberingResolver
 
 
 NS = {"w": "http://schemas.openxmlformats.org/wordprocessingml/2006/main"}
@@ -64,6 +69,13 @@ DOCUMENTS: dict[str, dict[str, Any]] = {
         "official_page_url": (
             "https://vanban.chinhphu.vn/?docid=217002&pageid=27160"
         ),
+        "gazette_page_url": (
+            "https://congbao.chinhphu.vn/van-ban/"
+            "van-ban-hop-nhat-so-18-vbhn-vpqh-468971.htm"
+        ),
+        "canonical_content_source": "official_gazette_docx",
+        "metadata_source": "official_government_portal_plus_gazette",
+        "legal_effect_source": "explicit_legal_effect_review",
         "source_item_id": "chinhphu:docid:217002",
         "expected_articles": 220,
         "selected_articles": list(range(1, 221)),
@@ -84,6 +96,13 @@ DOCUMENTS: dict[str, dict[str, Any]] = {
         "official_page_url": (
             "https://vanban.chinhphu.vn/?docid=218181&pageid=27160"
         ),
+        "gazette_page_url": (
+            "https://congbao.chinhphu.vn/van-ban/"
+            "nghi-quyet-so-6618-2026-nq-cp-469585.htm"
+        ),
+        "canonical_content_source": "official_gazette_docx",
+        "metadata_source": "official_government_portal_plus_gazette",
+        "legal_effect_source": "explicit_legal_effect_review",
         "source_item_id": "chinhphu:docid:218181",
         "expected_articles": 7,
         "selected_articles": [4, 6],
@@ -182,8 +201,10 @@ def normalized_member_map(archive: ZipFile) -> tuple[dict[str, str], bool]:
     return mapping, used_backslashes
 
 
-def extract_docx_paragraphs(path: Path) -> tuple[list[str], dict[str, Any]]:
-    """Return visible body paragraphs in document order and package metadata."""
+def _extract_docx_paragraphs(
+    path: Path, *, render_automatic_numbering: bool
+) -> tuple[list[str], dict[str, Any]]:
+    """Read body paragraphs with an explicit numbering-rendering policy."""
     with ZipFile(path) as archive:
         members, used_backslashes = normalized_member_map(archive)
         document_member = members.get("word/document.xml")
@@ -191,11 +212,46 @@ def extract_docx_paragraphs(path: Path) -> tuple[list[str], dict[str, Any]]:
             raise ValueError(f"{path.name}: word/document.xml is missing")
 
         root = etree.fromstring(archive.read(document_member))
+        numbering_member = members.get("word/numbering.xml")
+        styles_member = members.get("word/styles.xml")
+        numbering_root = (
+            etree.fromstring(archive.read(numbering_member))
+            if numbering_member
+            else None
+        )
+        styles_root = (
+            etree.fromstring(archive.read(styles_member))
+            if styles_member
+            else None
+        )
+        numbering = WordNumberingResolver(numbering_root, styles_root)
         paragraphs: list[str] = []
+        rendered_prefixes = 0
         for paragraph in root.xpath(".//w:body//w:p", namespaces=NS):
-            text = "".join(
+            prefix = (
+                numbering.prefix_for(paragraph)
+                if render_automatic_numbering
+                else ""
+            )
+            stored_text = "".join(
                 paragraph.xpath(".//w:t/text()", namespaces=NS)
             )
+            # LibreOffice can preserve a list definition whose visible label
+            # is only punctuation (for example ``.``), and can attach that
+            # definition to a heading that already contains ``Điều N.``.
+            # Such a prefix is layout residue, not legal text.  Empty list
+            # paragraphs must not become phantom ``24.``/``25.`` body lines.
+            prefix_has_content = any(character.isalnum() for character in prefix)
+            explicit_heading = re.match(
+                r"^(?:Điều\s+\d+|Chương\s+(?:[IVXLCDM]+|\d+)"
+                r"|Mục\s+(?:[IVXLCDM]+|\d+))\b",
+                stored_text,
+                re.IGNORECASE,
+            )
+            text = stored_text
+            if stored_text and prefix_has_content and not explicit_heading:
+                text = f"{prefix} {stored_text}"
+                rendered_prefixes += 1
             text = normalize_text(text)
             if text:
                 paragraphs.append(text)
@@ -231,8 +287,28 @@ def extract_docx_paragraphs(path: Path) -> tuple[list[str], dict[str, Any]]:
             "digital_signature_part_names": signature_members,
             "signer_certificate_subjects": signer_subjects,
             "cryptographic_signature_validation": "not_performed",
+            "automatic_numbering_instances": numbering.numbering_instances,
+            "automatic_numbering_prefixes_rendered": rendered_prefixes,
         }
     return paragraphs, metadata
+
+
+def extract_docx_paragraphs(path: Path) -> tuple[list[str], dict[str, Any]]:
+    """Return stored paragraph text without changing legacy release bytes."""
+
+    return _extract_docx_paragraphs(
+        path, render_automatic_numbering=False
+    )
+
+
+def extract_docx_display_paragraphs(
+    path: Path,
+) -> tuple[list[str], dict[str, Any]]:
+    """Return paragraph text as Word displays it, including list labels."""
+
+    return _extract_docx_paragraphs(
+        path, render_automatic_numbering=True
+    )
 
 
 def certificate_subject(encoded: str) -> str | None:
@@ -249,7 +325,19 @@ def certificate_subject(encoded: str) -> str | None:
 
 ARTICLE_RE = re.compile(r"^Điều\s+(\d+)\s*[.．]\s*(.*)$", re.IGNORECASE)
 INTER_ARTICLE_HEADING_RE = re.compile(
-    r"^(?:Chương|Mục)\s+(?:[IVXLCDM]+|\d+[A-Za-zĐđ]?)\s*[.．]?$",
+    r"^(?:Chương|Mục)\s+(?:[IVXLCDM]+|\d+[A-Za-zĐđ]?)"
+    r"(?:$|[.．:][\s\S]*|\s[\s\S]*|(?=[A-ZÀ-ỸĐ])[\s\S]+)$",
+    re.IGNORECASE,
+)
+GAZETTE_PAGE_ARTIFACT_RE = re.compile(
+    r"^(?:\(Xem tiếp theo Công báo số\s+\d+(?:\s*\+\s*\d+)?\)"
+    r"|Số\s+\d+(?:\s*\+\s*\d+)?\s*Ngày\s+\d{1,2}\s+tháng\s+\d{1,2}"
+    r"\s+năm\s+\d{4})$",
+    re.IGNORECASE,
+)
+INLINE_ADMINISTRATIVE_TAIL_RE = re.compile(
+    r"/\.(?=\s*(?:(?:TM|KT|TL|TUQ)\.\s*)?"
+    r"(?:CHÍNH PHỦ|BỘ TRƯỞNG)(?:\s|(?=[A-ZÀ-ỸĐ])|$))",
     re.IGNORECASE,
 )
 
@@ -283,6 +371,23 @@ def strip_inter_article_headings(body_lines: list[str]) -> list[str]:
         if INTER_ARTICLE_HEADING_RE.fullmatch(normalize_text(line)):
             return body_lines[:index]
     return body_lines
+
+
+def strip_gazette_page_artifacts(body_lines: list[str]) -> list[str]:
+    """Remove Gazette issue-continuation headers between Word file parts."""
+
+    return [
+        line
+        for line in body_lines
+        if not GAZETTE_PAGE_ARTIFACT_RE.fullmatch(normalize_text(line))
+    ]
+
+
+def strip_inline_administrative_tail(value: str) -> str:
+    """Cut a signature block concatenated to the final legal paragraph."""
+
+    match = INLINE_ADMINISTRATIVE_TAIL_RE.search(value)
+    return value[: match.end()].strip() if match else value
 
 
 def find_inter_article_heading_leaks(
@@ -345,8 +450,14 @@ def administrative_tail_index(
 ) -> int:
     patterns = (
         re.compile(r"^VĂN PHÒNG QUỐC HỘI$"),
-        re.compile(r"^TM\. CHÍNH PHỦ$"),
-        re.compile(r"^Phụ lục I$", re.IGNORECASE),
+        re.compile(r"^TM\.\s*CHÍNH PHỦ(?:\s|$)"),
+        re.compile(
+            r"^(?:(?:KT\.|TL\.|TUQ\.)\s*)?BỘ TRƯỞNG(?:\s|$)"
+        ),
+        re.compile(
+            r"^(?:CÁC\s+)?PHỤ\s+LỤC(?:\s+[IVXLCDM\d]+)?(?:\s|$)",
+            re.IGNORECASE,
+        ),
     )
     for index in range(start, len(paragraphs)):
         if any(pattern.match(paragraphs[index]) for pattern in patterns):
@@ -375,10 +486,12 @@ def build_main_articles(
             end = administrative_tail_index(
                 paragraphs, index + 1, len(paragraphs)
             )
-        body_lines = strip_inter_article_headings(
-            paragraphs[index + 1 : end]
+        body_lines = strip_gazette_page_artifacts(
+            strip_inter_article_headings(paragraphs[index + 1 : end])
         )
-        body_text = "\n".join(body_lines).strip()
+        body_text = strip_inline_administrative_tail(
+            "\n".join(body_lines).strip()
+        )
         if not body_text:
             raise ValueError(
                 f"{meta['source_file']}: Điều {number} has an empty body"
@@ -402,7 +515,10 @@ def build_main_articles(
                 "source_item_id": meta["source_item_id"],
                 "source_adapter": "official_government_docx",
                 "corpus_role": "canonical",
-                "source_urls": [meta["official_page_url"]],
+                "source_urls": [
+                    meta["gazette_page_url"],
+                    meta["official_page_url"],
+                ],
                 "source_sha256": source_sha256,
                 "retrieved_at": generated_at(),
                 "issued_at": meta["issued_at"],
@@ -423,8 +539,9 @@ def build_main_articles(
                 "section": None,
                 "source_type": meta["source_type"],
                 "source_note_text": (
-                    "Trích trực tiếp từ DOCX chính thức; file gốc được giữ "
-                    "nguyên và khóa bằng SHA-256."
+                    "Nội dung canonical trích trực tiếp từ DOCX Công báo; "
+                    "metadata nhận dạng đối chiếu với Cổng TTĐT Chính phủ; "
+                    "file gốc được giữ nguyên và khóa bằng SHA-256."
                 ),
                 "parser_version": BUILDER_VERSION,
                 "relations": [],
@@ -577,7 +694,10 @@ def build_nq_appendix_units(
                 "source_item_id": meta["source_item_id"],
                 "source_adapter": "official_government_docx",
                 "corpus_role": "canonical_appendix_evidence",
-                "source_urls": [meta["official_page_url"]],
+                "source_urls": [
+                    meta["gazette_page_url"],
+                    meta["official_page_url"],
+                ],
                 "source_sha256": source_sha256,
                 "retrieved_at": generated_at(),
                 "issued_at": meta["issued_at"],
@@ -684,6 +804,41 @@ def portable_path(path: Path) -> str:
         return str(resolved)
 
 
+def find_crawled_docx_snapshot(
+    raw_root: Path,
+    document_number: str,
+    meta: dict[str, Any],
+    source_sha: str,
+) -> tuple[Path, dict[str, Any]] | None:
+    """Return a verified crawler snapshot bound to the materialized DOCX.
+
+    The release builder must not manufacture a second acquisition record when
+    ``congbao_docx.py`` has already persisted the official pages and DOCX.
+    """
+    root = raw_root / meta["slug"]
+    if not root.is_dir():
+        return None
+    for candidate in sorted(root.iterdir(), reverse=True):
+        manifest_path = candidate / "manifest.json"
+        if not candidate.is_dir() or not manifest_path.is_file():
+            continue
+        try:
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            if manifest.get("schema_version") != CONGBAO_SNAPSHOT_SCHEMA:
+                continue
+            verify_congbao_snapshot(
+                candidate, expected_document_number=document_number
+            )
+            actual_sha = (manifest.get("content_hashes") or {}).get(
+                "original_docx_sha256"
+            )
+            if actual_sha == source_sha:
+                return candidate, manifest
+        except Exception:
+            continue
+    return None
+
+
 def create_raw_snapshot(
     raw_root: Path,
     source_path: Path,
@@ -693,6 +848,12 @@ def create_raw_snapshot(
     package_meta: dict[str, Any],
 ) -> tuple[Path, dict[str, Any]]:
     source_sha = sha256_file(source_path)
+    crawled = find_crawled_docx_snapshot(
+        raw_root, document_number, meta, source_sha
+    )
+    if crawled is not None:
+        return crawled
+
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     snapshot = raw_root / meta["slug"] / f"{timestamp}-{source_sha[:8]}"
     snapshot.mkdir(parents=True, exist_ok=False)
@@ -718,11 +879,16 @@ def create_raw_snapshot(
             "legal_status": meta["legal_status"],
         },
         "source": {
-            "provider": "Cổng Thông tin điện tử Chính phủ",
-            "official_page_url": meta["official_page_url"],
+            "provider": "Công báo điện tử Chính phủ",
+            "canonical_content_source": meta["canonical_content_source"],
+            "metadata_source": meta["metadata_source"],
+            "legal_effect_source": meta["legal_effect_source"],
+            "gazette_page_url": meta["gazette_page_url"],
+            "government_metadata_page_url": meta["official_page_url"],
             "source_item_id": meta["source_item_id"],
             "source_format": "docx",
-            "uploaded_filename": source_path.name,
+            "materialized_filename": source_path.name,
+            "acquisition_record": "missing_legacy_fallback",
         },
         "content_hashes": {
             "original_docx_sha256": source_sha,
@@ -734,6 +900,12 @@ def create_raw_snapshot(
             "status": "pending_authority_review",
             "hash_binding": source_sha,
         },
+        "limitations": [
+            "No matching congbao-docx-source-snapshot-v2 was found; "
+            "this is a derived fallback snapshot.",
+            "Current legal status, expiry and relations require explicit "
+            "legal-effect review.",
+        ],
     }
     write_json(snapshot / "manifest.json", manifest)
     checksums = checksum_lines(
@@ -927,8 +1099,16 @@ def build_release(args: argparse.Namespace) -> dict[str, Any]:
             {
                 "document_number": document_number,
                 "canonical_document_id": meta["canonical_document_id"],
-                "provider": "Cổng Thông tin điện tử Chính phủ",
-                "official_page_url": meta["official_page_url"],
+                "provider": "Công báo điện tử Chính phủ",
+                "canonical_content_source": meta[
+                    "canonical_content_source"
+                ],
+                "metadata_source": meta["metadata_source"],
+                "legal_effect_source": meta["legal_effect_source"],
+                "gazette_page_url": meta["gazette_page_url"],
+                "government_metadata_page_url": meta[
+                    "official_page_url"
+                ],
                 "source_item_id": meta["source_item_id"],
                 "release_path": str(destination.relative_to(release_dir)),
                 "sha256": source_sha,
@@ -1060,9 +1240,11 @@ def build_release(args: argparse.Namespace) -> dict[str, Any]:
         "official_docx_sources": source_records,
         "raw_snapshots": raw_snapshots,
         "provenance_statement": (
-            "The original DOCX bytes are preserved unchanged and hash-bound. "
-            "OOXML member-name normalization is applied only in memory for "
-            "parsing the nonconformant NQ package."
+            "Canonical content comes from official Gazette DOCX bytes, which "
+            "are preserved unchanged and hash-bound. Government-portal and "
+            "Gazette HTML provide observed identity metadata; current legal "
+            "status, expiry and relations come only from explicit legal-effect "
+            "review. OOXML member-name normalization is applied only in memory."
         ),
     }
     write_json(release_dir / "source_inventory.json", source_inventory)
