@@ -133,6 +133,68 @@ def build_split_dataset(
         raise SplitError(f"unsupported split role: {role}")
 
     dataset = copy.deepcopy(source)
+
+    corpus = copy.deepcopy(dataset.get("corpus", {}))
+    release_id = corpus.get("release_id")
+    corpus_sha256 = corpus.get("sha256")
+    chunk_count = corpus.get("chunk_count")
+
+    if (
+        not release_id
+        or not corpus_sha256
+        or not isinstance(chunk_count, int)
+    ):
+        raise SplitError(
+            "golden source corpus binding must include release_id, "
+            "sha256, and integer chunk_count"
+        )
+
+    corpus["release_status"] = (
+        "academic_final_dataset_pending_authority_review"
+    )
+    repo_root = Path(__file__).resolve().parents[1]
+
+    for path_field in ("path", "article_path"):
+        raw_value = corpus.get(path_field)
+
+        if not raw_value:
+            continue
+
+        corpus_path = Path(raw_value)
+
+        if not corpus_path.is_absolute():
+            corpus[path_field] = corpus_path.as_posix()
+            continue
+
+        try:
+            relative_path = corpus_path.relative_to(repo_root)
+        except ValueError:
+            # Ho tro build lai source da tao tren may khac.
+            parts = corpus_path.parts
+
+            try:
+                data_index = max(
+                    index
+                    for index, part in enumerate(parts)
+                    if part == "data"
+                )
+            except ValueError as exc:
+                raise SplitError(
+                    "split corpus path cannot be mapped into repository: "
+                    f"{raw_value}"
+                ) from exc
+
+            relative_path = Path(*parts[data_index:])
+
+            if not (repo_root / relative_path).is_file():
+                raise SplitError(
+                    "split corpus path cannot be mapped into repository: "
+                    f"{raw_value}"
+                )
+
+        corpus[path_field] = relative_path.as_posix()
+
+    dataset["corpus"] = corpus
     dataset["schema_version"] = "golden-questions-v3-runtime-split-v1"
     dataset["dataset_status"] = (
         "retrieval_benchmark_locked_pending_authority_review"
@@ -170,6 +232,22 @@ def build_split_dataset(
         "disabled_question_ids": [],
         "category_counts": _category_counts(split_questions),
     })
+
+    source_method = labeling.get("method")
+    if source_method:
+        labeling["source_labeling_method"] = source_method
+
+    labeling["method"] = (
+        "Evidence labels inherited from the canonical Word golden "
+        "source; dev/test partitions are locked by connected "
+        "expected article codes."
+    )
+    labeling["release_binding"] = {
+        "release_id": release_id,
+        "canonical_chunks_sha256": corpus_sha256,
+        "chunk_count": chunk_count,
+    }
+
     dataset["labeling"] = labeling
     dataset["changelog"] = list(dataset.get("changelog", [])) + [
         f"Locked {role} partition for {SPLIT_VERSION}; this lock does not "
@@ -266,7 +344,10 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--source",
         type=Path,
-        default=Path("data/evaluation/golden_questions_v3_unified_candidate.json"),
+        default=Path(
+            "data/evaluation/"
+            "golden_questions_v4_canonical_word_candidate.json"
+        ),
     )
     parser.add_argument(
         "--output-dir",
