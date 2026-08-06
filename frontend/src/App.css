@@ -816,6 +816,25 @@ footer p {
   margin: 0;
 }
 
+
+@media (max-width: 1050px) {
+  .topbar {
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .top-navigation {
+    order: 3;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    width: 100%;
+  }
+
+  .nav-tab {
+    flex: 0 0 auto;
+  }
+}
+
 @media (max-width: 900px) {
   .workspace {
     grid-template-columns: 1fr;
@@ -835,6 +854,15 @@ footer p {
 
   .mvp-badge {
     display: none;
+  }
+
+  .brand small {
+    display: none;
+  }
+
+  .nav-tab {
+    font-size: 13px;
+    padding: 8px 12px;
   }
 
   main {

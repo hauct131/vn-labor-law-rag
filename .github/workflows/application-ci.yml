@@ -100,8 +100,63 @@ jobs:
       - name: Install frontend dependencies
         run: npm ci
 
+      - name: Lint frontend
+        run: npm run lint
+
       - name: Build frontend
         run: npm run build
+
+  postgres-integration:
+    name: PostgreSQL history integration
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: history_test
+          POSTGRES_USER: history_test
+          POSTGRES_PASSWORD: history_test_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U history_test -d history_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+
+    env:
+      PYTHONPATH: backend
+      TEST_POSTGRES_URL: postgresql+psycopg://history_test:history_test_password@localhost:5432/history_test
+      ALLOW_DESTRUCTIVE_POSTGRES_TEST: "1"
+      PIP_DISABLE_PIP_VERSION_CHECK: "1"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: backend/requirements.txt
+
+      - name: Install PostgreSQL test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install \
+            pytest \
+            pydantic \
+            pydantic-settings \
+            sqlalchemy==2.0.43 \
+            "psycopg[binary]==3.2.10"
+
+      - name: Run PostgreSQL migration integration test
+        run: |
+          python -m pytest -q \
+            backend/tests/test_conversation_postgres_integration.py
 
   compose:
     name: Docker Compose validation

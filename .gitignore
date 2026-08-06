@@ -3,6 +3,7 @@
 
 __pycache__/
 *.py[cod]
+application.db
 .pytest_cache/
 .venv/
 venv/
@@ -11,7 +12,7 @@ frontend/node_modules/
 frontend/dist/
 
 # Local NLP/embedding model files
-models/
+/models/
 
 .vscode/
 .idea/

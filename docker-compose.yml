@@ -7,6 +7,24 @@ services:
     volumes:
       - qdrant_data:/qdrant/storage
 
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-labor_law_rag}
+      POSTGRES_USER: ${POSTGRES_USER:-labor_law}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change_this_local_password}
+    ports:
+      - "${POSTGRES_HOST_BIND:-127.0.0.1}:${POSTGRES_PORT:-5432}:5432"
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U ${POSTGRES_USER:-labor_law} -d ${POSTGRES_DB:-labor_law_rag}
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
   backend:
     build:
       context: ./backend
@@ -34,8 +52,13 @@ services:
       HYBRID_SPARSE_WEIGHT: "0.1"
       VNCORENLP_MODEL_DIR: /app/models/vncorenlp
       FASTEMBED_CACHE_DIR: /root/.cache/fastembed
+      DATABASE_URL: ${DATABASE_URL_DOCKER:-postgresql+psycopg://labor_law:change_this_local_password@postgres:5432/labor_law_rag}
+      DATABASE_AUTO_CREATE: "true"
     depends_on:
-      - qdrant
+      qdrant:
+        condition: service_started
+      postgres:
+        condition: service_healthy
     volumes:
       - ./data:/app/data:ro
       - "${VNCORENLP_HOST_DIR:-./models/vncorenlp}:/app/models/vncorenlp:ro"
@@ -72,5 +95,6 @@ services:
       - backend
 
 volumes:
+  postgres_data:
   qdrant_data:
   fastembed_cache:
