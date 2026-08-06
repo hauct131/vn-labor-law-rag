@@ -33,7 +33,6 @@ export function SavedAnswersPage({
 
   useEffect(() => {
     const controller = new AbortController()
-    setIsLoading(true)
     fetchSavedAnswers(controller.signal)
       .then(setItems)
       .catch((requestError: unknown) => {

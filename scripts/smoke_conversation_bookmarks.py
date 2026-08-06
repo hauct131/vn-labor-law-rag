@@ -71,7 +71,7 @@ def wait_for_live(base_url: str, timeout: float = 90.0) -> None:
             with urlopen(live_url, timeout=5) as response:
                 if response.status == 200:
                     return
-        except (HTTPError, URLError, TimeoutError) as exc:
+        except (HTTPError, URLError, TimeoutError, OSError) as exc:
             last_error = exc
         time.sleep(2)
     raise RuntimeError(f"Backend không hoạt động lại sau restart: {last_error}")
