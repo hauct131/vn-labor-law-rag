@@ -48,6 +48,9 @@ class Settings(BaseSettings):
     official_sources_path: str = (
         "data/reference/official_legal_sources.json"
     )
+    canonical_articles_path: str = (
+        "data/releases/labor-law-canonical-word-20260804-164432-candidate/canonical_articles.json"
+    )
     vncorenlp_model_dir: str = "models/vncorenlp"
     retrieval_expected_chunks: int = 804
     retrieval_corpus_sha256: str = (
