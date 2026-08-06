@@ -11,6 +11,8 @@ from pathlib import Path
 from typing import Any, Mapping
 from urllib.parse import urlsplit
 
+from ..core.paths import resolve_project_path
+
 
 logger = logging.getLogger(__name__)
 
@@ -72,7 +74,7 @@ class OfficialSourceRegistry:
 
     @classmethod
     def from_path(cls, path: str | Path) -> "OfficialSourceRegistry":
-        registry_path = Path(path)
+        registry_path = resolve_project_path(path)
         try:
             payload = json.loads(registry_path.read_text(encoding="utf-8"))
         except json.JSONDecodeError as exc:

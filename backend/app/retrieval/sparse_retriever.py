@@ -15,6 +15,8 @@ import math
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
+from ..core.paths import resolve_project_path
+
 from .models import (
     RetrievalConfigurationError,
     RetrievalHit,
@@ -43,7 +45,7 @@ def load_legal_chunks(
     expected_sha256: str | None = None,
 ) -> tuple[list[dict[str, Any]], str]:
     """Load and validate the JSONL corpus used by local sparse retrieval."""
-    resolved = Path(path).expanduser()
+    resolved = resolve_project_path(path)
     if not resolved.is_file():
         raise RetrievalConfigurationError(
             f"legal chunk corpus not found: {resolved}"
@@ -190,7 +192,7 @@ class VnCoreNlpBm25Retriever:
         )
         encoder = VnCoreNlpBm25.from_model_dir(
             [chunk["content"] for chunk in chunks],
-            Path(model_dir),
+            resolve_project_path(model_dir),
             k=k,
             b=b,
         )

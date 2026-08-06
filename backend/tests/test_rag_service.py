@@ -105,12 +105,15 @@ def test_service_skips_llm_when_retrieval_has_no_evidence() -> None:
     assert generator.calls == []
 
 
-def test_service_keeps_graph_explicitly_postponed() -> None:
-    service = RAGService(retriever_provider=lambda _method: FakeRetriever([]))
+def test_service_rejects_unsupported_method_before_retrieval() -> None:
+    def must_not_create_retriever(_method):
+        raise AssertionError("retriever must not run for unsupported method")
+
+    service = RAGService(retriever_provider=must_not_create_retriever)
 
     try:
         asyncio.run(service.ask("Câu hỏi", "graph_enhanced"))
-    except NotImplementedError as exc:
-        assert "được hoãn" in str(exc)
+    except ValueError as exc:
+        assert "sparse, dense hoặc hybrid" in str(exc)
     else:
-        raise AssertionError("graph_enhanced must not silently fall back")
+        raise AssertionError("unsupported method must be rejected")

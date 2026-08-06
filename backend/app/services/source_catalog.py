@@ -8,6 +8,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Any, Mapping
 
+from ..core.paths import resolve_project_path
 from ..schemas.source import LegalArticleResponse, LegalArticleUnit
 from .legal_citation import build_citation_metadata
 from .official_sources import (
@@ -97,7 +98,7 @@ class LegalSourceCatalog:
         chunks_path: str | Path,
         official_sources: OfficialSourceRegistry | None = None,
     ) -> None:
-        self.chunks_path = Path(chunks_path)
+        self.chunks_path = resolve_project_path(chunks_path)
         self.official_sources = (
             official_sources
             if official_sources is not None

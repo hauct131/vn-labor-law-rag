@@ -7,7 +7,6 @@ class RetrievalMethod(StrEnum):
     SPARSE = "sparse"
     DENSE = "dense"
     HYBRID = "hybrid"
-    GRAPH_ENHANCED = "graph_enhanced"
 
 
 class AskRequest(BaseModel):

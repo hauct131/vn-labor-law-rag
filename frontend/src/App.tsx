@@ -74,10 +74,9 @@ const API_BASE_URL = (
 ).replace(/\/$/, '')
 
 const methods: Array<{
-  value: RetrievalMethod | 'graph_enhanced'
+  value: RetrievalMethod
   name: string
   description: string
-  disabled?: boolean
 }> = [
   {
     value: 'sparse',
@@ -87,18 +86,12 @@ const methods: Array<{
   {
     value: 'dense',
     name: 'Dense',
-    description: 'E5 · tốt nhất trên golden hiện tại',
+    description: 'E5 · truy hồi theo ngữ nghĩa',
   },
   {
     value: 'hybrid',
     name: 'Hybrid',
-    description: 'BM25 + Dense E5 + RRF',
-  },
-  {
-    value: 'graph_enhanced',
-    name: 'Graph-enhanced',
-    description: 'Sẽ bổ sung ở giai đoạn sau',
-    disabled: true,
+    description: 'BM25 + Dense E5 + RRF · cấu hình đã khóa',
   },
 ]
 
@@ -301,7 +294,7 @@ function LegalArticlePage({ articleCode }: { articleCode: string }) {
 
 function QuestionAnswerPage() {
   const [question, setQuestion] = useState(examples[0])
-  const [method, setMethod] = useState<RetrievalMethod>('dense')
+  const [method, setMethod] = useState<RetrievalMethod>('hybrid')
   const [result, setResult] = useState<AskResponse | null>(null)
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -371,17 +364,13 @@ function QuestionAnswerPage() {
               <legend>1. Chọn phương pháp truy hồi</legend>
               <div className="method-grid">
                 {methods.map((item) => (
-                  <label
-                    className={`method-card ${item.disabled ? 'is-disabled' : ''}`}
-                    key={item.value}
-                  >
+                  <label className="method-card" key={item.value}>
                     <input
                       type="radio"
                       name="method"
                       value={item.value}
                       checked={method === item.value}
-                      disabled={item.disabled}
-                      onChange={() => setMethod(item.value as RetrievalMethod)}
+                      onChange={() => setMethod(item.value)}
                     />
                     <span className="radio-dot" aria-hidden="true" />
                     <span>

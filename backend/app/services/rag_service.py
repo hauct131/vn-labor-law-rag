@@ -127,9 +127,10 @@ class RAGService:
     ) -> AskResponse:
         normalized_question = question.strip()
         normalized_method = _method_value(method)
-        if normalized_method == "graph_enhanced":
-            raise NotImplementedError(
-                "Graph-enhanced đang được hoãn sang giai đoạn tiếp theo."
+        if normalized_method not in {"sparse", "dense", "hybrid"}:
+            raise ValueError(
+                "Phương pháp truy hồi không được hỗ trợ; "
+                "chỉ chấp nhận sparse, dense hoặc hybrid."
             )
 
         started = perf_counter()

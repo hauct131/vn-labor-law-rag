@@ -7,21 +7,12 @@ from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import JSONResponse
 
 from app.core.config import settings
+from app.core.paths import resolve_project_path
 from app.core.qdrant_readiness import evaluate_qdrant_gate
 from app.core.runtime_readiness import evaluate_cached_runtime_gate
 from app.schemas.health import HealthResponse
 
 router = APIRouter(tags=["Health"])
-
-_PROJECT_ROOT = Path(__file__).resolve().parents[4]
-
-
-def _resolve_runtime_path(value: str | Path) -> Path:
-    """Resolve duong dan runtime tuong doi theo thu muc goc project."""
-    path = Path(value)
-    if path.is_absolute():
-        return path
-    return _PROJECT_ROOT / path
 
 
 @router.get("/live", response_model=HealthResponse)
@@ -46,10 +37,10 @@ def _sha256(path: Path) -> str:
 
 def evaluate_release_gate(settings_obj: Any = settings) -> dict[str, Any]:
     """Validate the immutable corpus release used by question answering."""
-    chunks_path = _resolve_runtime_path(
+    chunks_path = resolve_project_path(
         settings_obj.legal_chunks_path
     )
-    manifest_path = _resolve_runtime_path(
+    manifest_path = resolve_project_path(
         settings_obj.corpus_release_manifest_path
     )
     errors: list[str] = []

@@ -13,8 +13,6 @@ from app.services.rag_service import get_rag_service
 
 class FakeService:
     async def ask(self, question, method):
-        if method == RetrievalMethod.GRAPH_ENHANCED:
-            raise NotImplementedError("Graph-enhanced đang được hoãn.")
         return AskResponse(
             answer="Câu trả lời có căn cứ [S1].",
             method=method,
@@ -80,19 +78,32 @@ def test_post_ask_accepts_dense_method() -> None:
     assert response.json()["method"] == "dense"
 
 
-def test_post_ask_rejects_graph_until_graph_stage() -> None:
+def test_post_ask_rejects_method_outside_public_contract() -> None:
     app.dependency_overrides[require_authorized_release] = allow_release
     app.dependency_overrides[get_rag_service] = lambda: FakeService()
     try:
         response = TestClient(app).post("/api/ask", json={
-            "question": "Câu hỏi graph",
+            "question": "Câu hỏi phương pháp chưa hỗ trợ",
             "method": "graph_enhanced",
         })
     finally:
         app.dependency_overrides.clear()
 
-    assert response.status_code == 501
-    assert "được hoãn" in response.json()["detail"]
+    assert response.status_code == 422
+    assert any(
+        item.get("loc", [])[-1:] == ["method"]
+        for item in response.json()["detail"]
+    )
+
+
+def test_openapi_exposes_only_completed_retrieval_methods() -> None:
+    schema = TestClient(app).get("/openapi.json").json()
+
+    assert schema["components"]["schemas"]["RetrievalMethod"]["enum"] == [
+        "sparse",
+        "dense",
+        "hybrid",
+    ]
 
 
 def test_post_ask_validates_short_question() -> None:

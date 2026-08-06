@@ -87,12 +87,7 @@ def get_retriever(
             dense_retriever=dense,
         )
 
-    if normalized in {"graph", "graph_enhanced"}:
-        raise NotImplementedError(
-            "graph_enhanced retrieval is the next MVP stage; "
-            "sparse, dense, and hybrid are available now"
-        )
     raise ValueError(
         "unsupported retrieval method "
-        f"{normalized!r}; expected sparse, dense, hybrid, or graph_enhanced"
+        f"{normalized!r}; expected sparse, dense, or hybrid"
     )

@@ -27,11 +27,14 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from backend.app.core.config import settings
+from backend.app.core.paths import resolve_project_path
 
 LOGGER = logging.getLogger("qdrant_production_indexer")
 
-DEFAULT_CHUNKS = Path(settings.legal_chunks_path)
-DEFAULT_AUDIT_SUMMARY = Path(settings.e5_audit_summary_path)
+DEFAULT_CHUNKS = resolve_project_path(settings.legal_chunks_path)
+DEFAULT_AUDIT_SUMMARY = resolve_project_path(
+    settings.e5_audit_summary_path
+)
 DEFAULT_SUMMARY_OUTPUT = Path("data/processed/qdrant_index/summary.json")
 DEFAULT_EXPECTED_CHUNKS = settings.retrieval_expected_chunks
 DEFAULT_EXPECTED_SHA256 = settings.retrieval_corpus_sha256

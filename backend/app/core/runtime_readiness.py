@@ -6,12 +6,12 @@ import copy
 import shutil
 import subprocess
 import time
-from pathlib import Path
 from threading import RLock
 from typing import Any, Callable
 
 from app.chains.generation_chain import create_generation_chain
 from app.core.config import settings
+from app.core.paths import resolve_project_path
 from app.retrieval.retriever_factory import get_retriever
 
 
@@ -60,7 +60,7 @@ def evaluate_runtime_gate(
         "errors": errors,
     }
 
-    model_dir = Path(settings_obj.vncorenlp_model_dir).expanduser().resolve()
+    model_dir = resolve_project_path(settings_obj.vncorenlp_model_dir)
     jar_path = model_dir / "VnCoreNLP-1.2.jar"
     models_path = model_dir / "models"
     java_path = java_locator("java")

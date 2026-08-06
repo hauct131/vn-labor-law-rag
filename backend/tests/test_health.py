@@ -5,6 +5,7 @@ from app.api.routes.health import (
     release_gate_dependency,
     runtime_gate_dependency,
 )
+from app.core.config import settings
 from app.main import app
 
 client = TestClient(app)
@@ -43,7 +44,14 @@ def test_liveness_and_legacy_health() -> None:
         assert response.json() == {"status": "ok"}
 
 
-def test_readiness_blocks_unapproved_candidate_release() -> None:
+def test_readiness_blocks_unapproved_candidate_release(
+    monkeypatch,
+) -> None:
+    monkeypatch.setattr(
+        settings,
+        "corpus_require_authority_approval",
+        True,
+    )
     app.dependency_overrides[qdrant_gate_dependency] = lambda: QDRANT_READY
     app.dependency_overrides[runtime_gate_dependency] = lambda: RUNTIME_READY
     try:
