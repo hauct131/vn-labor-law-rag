@@ -1,4 +1,5 @@
 from enum import StrEnum
+from uuid import UUID
 
 from pydantic import BaseModel, Field
 
@@ -12,6 +13,7 @@ class RetrievalMethod(StrEnum):
 class AskRequest(BaseModel):
     question: str = Field(min_length=3, max_length=2000)
     method: RetrievalMethod
+    conversation_id: UUID | None = None
 
 
 class LegalSource(BaseModel):
@@ -45,3 +47,8 @@ class AskResponse(BaseModel):
     insufficient_evidence: bool = False
     out_of_scope: bool = False
     generation_failed: bool = False
+    history_saved: bool = False
+    history_error: str | None = None
+    conversation_id: str | None = None
+    user_message_id: str | None = None
+    assistant_message_id: str | None = None

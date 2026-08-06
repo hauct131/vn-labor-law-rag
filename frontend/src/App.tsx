@@ -1,48 +1,33 @@
 import { type FormEvent, useEffect, useMemo, useState } from 'react'
-import Markdown from 'react-markdown'
 import './App.css'
 import { API_BASE_URL } from './api/apiConfig'
 import type { LegalArticleResponse } from './api/legalArticleTypes'
+import type { AskResponse, RetrievalMethod } from './api/qaTypes'
 import './features/library/documentLibrary.css'
 import { DocumentLibraryPage } from './features/library/DocumentLibraryPage'
 import { DocumentDetailPage } from './features/library/DocumentDetailPage'
-
-type RetrievalMethod = 'sparse' | 'dense' | 'hybrid'
-
-type LegalSource = {
-  source_id: string | null
-  chunk_id: string
-  article_code: string | null
-  article_number: string | null
-  article_title: string | null
-  document_title: string | null
-  document_number: string | null
-  citation_label: string | null
-  clause_number: string | null
-  point_labels: string[]
-  content: string
-  score: number | null
-  rank: number
-  retrieval_origin: string | null
-  source_type: string | null
-  source_url: string | null
-  component_ranks: Record<string, number>
-}
-
-type AskResponse = {
-  answer: string
-  method: RetrievalMethod
-  sources: LegalSource[]
-  retrieval_ms: number
-  generation_ms: number
-  total_ms: number
-  model: string | null
-  insufficient_evidence: boolean
-  out_of_scope: boolean
-  generation_failed: boolean
-}
-
-
+import { AnswerCard, type DisplayAnswer } from './features/history/AnswerCard'
+import { ConversationSidebar } from './features/history/ConversationSidebar'
+import { SavedAnswersPage } from './features/history/SavedAnswersPage'
+import {
+  deleteBookmark,
+  deleteConversation,
+  fetchConversation,
+  fetchConversations,
+  renameConversation,
+  saveBookmark,
+} from './features/history/conversationApi'
+import {
+  getActiveConversationId,
+  getClientId,
+  setActiveConversationId,
+} from './features/history/clientIdentity'
+import type {
+  ConversationDetail,
+  ConversationSummary,
+  StoredMessage,
+} from './features/history/conversationTypes'
+import './features/history/history.css'
 
 const methods: Array<{
   value: RetrievalMethod
@@ -72,27 +57,6 @@ const examples = [
   'Tuổi nghỉ hưu của người lao động được quy định như thế nào?',
 ]
 
-function formatMs(value: number) {
-  if (value >= 1000) return `${(value / 1000).toFixed(2)} giây`
-  return `${Math.round(value)} ms`
-}
-
-function sourceLocation(source: LegalSource) {
-  const parts: string[] = []
-  if (source.clause_number) parts.push(`Khoản ${source.clause_number}`)
-  if (source.point_labels.length) {
-    parts.push(`Điểm ${source.point_labels.join(', ')}`)
-  }
-  return parts.join(' · ')
-}
-
-function sourceTypeLabel(sourceType: string | null) {
-  if (sourceType === 'LQ') return 'Bộ luật/Luật'
-  if (sourceType === 'NĐ') return 'Nghị định'
-  if (sourceType === 'TT') return 'Thông tư'
-  return sourceType
-}
-
 async function readError(response: Response) {
   try {
     const body = await response.json()
@@ -101,10 +65,6 @@ async function readError(response: Response) {
     // The fallback below is clearer than exposing an invalid provider body.
   }
   return `Yêu cầu thất bại (HTTP ${response.status}).`
-}
-
-function articlePagePath(articleCode: string) {
-  return `/sources/${encodeURIComponent(articleCode)}`
 }
 
 function navigateTo(path: string) {
@@ -117,7 +77,7 @@ function TopNav({
   badgeText = 'Phiên bản v1.0',
   showBackLink = false,
 }: {
-  activeTab: 'qa' | 'library' | 'source'
+  activeTab: 'qa' | 'library' | 'source' | 'saved'
   badgeText?: string
   showBackLink?: boolean
 }) {
@@ -153,6 +113,13 @@ function TopNav({
           onClick={() => navigateTo('/library')}
         >
           📚 Thư viện pháp luật
+        </button>
+        <button
+          type="button"
+          className={`nav-tab ${activeTab === 'saved' ? 'active' : ''}`}
+          onClick={() => navigateTo('/saved')}
+        >
+          ★ Đã lưu
         </button>
       </nav>
 
@@ -311,17 +278,187 @@ function LegalArticlePage({ articleCode }: { articleCode: string }) {
   )
 }
 
+function storedMessageToAnswer(message: StoredMessage): DisplayAnswer {
+  return {
+    id: message.id,
+    content: message.content,
+    method: message.retrieval_method,
+    sources: message.sources,
+    retrievalMs: message.retrieval_ms,
+    generationMs: message.generation_ms,
+    totalMs: message.total_ms,
+    model: message.model,
+    insufficientEvidence: message.insufficient_evidence,
+    outOfScope: message.out_of_scope,
+    generationFailed: message.generation_failed,
+    bookmarked: message.bookmarked,
+  }
+}
+
+function transientResultToAnswer(result: AskResponse): DisplayAnswer {
+  return {
+    id: result.assistant_message_id,
+    content: result.answer,
+    method: result.method,
+    sources: result.sources,
+    retrievalMs: result.retrieval_ms,
+    generationMs: result.generation_ms,
+    totalMs: result.total_ms,
+    model: result.model,
+    insufficientEvidence: result.insufficient_evidence,
+    outOfScope: result.out_of_scope,
+    generationFailed: result.generation_failed,
+    bookmarked: false,
+    historyWarning: result.history_error,
+  }
+}
+
 function QuestionAnswerPage() {
   const [question, setQuestion] = useState(examples[0])
   const [method, setMethod] = useState<RetrievalMethod>('hybrid')
-  const [result, setResult] = useState<AskResponse | null>(null)
+  const [conversations, setConversations] = useState<ConversationSummary[]>([])
+  const [activeConversationId, setActiveId] = useState<string | null>(
+    () => getActiveConversationId(),
+  )
+  const [activeConversation, setActiveConversation] = useState<ConversationDetail | null>(null)
+  const [transientResult, setTransientResult] = useState<AskResponse | null>(null)
+  const [transientQuestion, setTransientQuestion] = useState('')
   const [error, setError] = useState('')
+  const [historyError, setHistoryError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [isHistoryLoading, setIsHistoryLoading] = useState(true)
+  const [isConversationLoading, setIsConversationLoading] = useState(false)
+  const [busyBookmarkId, setBusyBookmarkId] = useState<string | null>(null)
 
   const activeMethod = useMemo(
     () => methods.find((item) => item.value === method),
     [method],
   )
+
+  useEffect(() => {
+    const controller = new AbortController()
+    async function loadInitialHistory() {
+      setIsHistoryLoading(true)
+      setHistoryError('')
+      try {
+        const items = await fetchConversations(controller.signal)
+        setConversations(items)
+        const requestedId = getActiveConversationId()
+        if (requestedId && items.some((item) => item.id === requestedId)) {
+          setIsConversationLoading(true)
+          const detail = await fetchConversation(requestedId, controller.signal)
+          setActiveConversation(detail)
+          setActiveId(requestedId)
+        } else {
+          setActiveConversationId(null)
+          setActiveId(null)
+        }
+      } catch (requestError) {
+        if (requestError instanceof DOMException && requestError.name === 'AbortError') return
+        // Do not let an unavailable history database block the primary Q&A flow.
+        // A new answer can still be generated and returned with history_saved=false.
+        setActiveConversationId(null)
+        setActiveId(null)
+        setActiveConversation(null)
+        setHistoryError(requestError instanceof Error
+          ? requestError.message
+          : 'Không thể tải lịch sử hội thoại.')
+      } finally {
+        if (!controller.signal.aborted) {
+          setIsHistoryLoading(false)
+          setIsConversationLoading(false)
+        }
+      }
+    }
+    void loadInitialHistory()
+    return () => controller.abort()
+  }, [])
+
+  async function reloadConversation(conversationId: string) {
+    const [detail, items] = await Promise.all([
+      fetchConversation(conversationId),
+      fetchConversations(),
+    ])
+    setActiveConversation(detail)
+    setConversations(items)
+    setHistoryError('')
+    setActiveId(conversationId)
+    setActiveConversationId(conversationId)
+    return detail
+  }
+
+  async function selectConversation(conversationId: string) {
+    setError('')
+    setHistoryError('')
+    setTransientResult(null)
+    setTransientQuestion('')
+    setIsConversationLoading(true)
+    try {
+      await reloadConversation(conversationId)
+    } catch (requestError) {
+      setHistoryError(requestError instanceof Error
+        ? requestError.message
+        : 'Không thể mở hội thoại.')
+    } finally {
+      setIsConversationLoading(false)
+    }
+  }
+
+  function startNewConversation() {
+    setActiveId(null)
+    setActiveConversation(null)
+    setActiveConversationId(null)
+    setTransientResult(null)
+    setTransientQuestion('')
+    setError('')
+    setQuestion('')
+  }
+
+  async function handleRename(conversation: ConversationSummary) {
+    const nextTitle = window.prompt('Tên hội thoại mới:', conversation.title)?.trim()
+    if (!nextTitle || nextTitle === conversation.title) return
+    setHistoryError('')
+    try {
+      const detail = await renameConversation(conversation.id, nextTitle)
+      setConversations(await fetchConversations())
+      if (activeConversationId === conversation.id) setActiveConversation(detail)
+    } catch (requestError) {
+      setHistoryError(requestError instanceof Error
+        ? requestError.message
+        : 'Không thể đổi tên hội thoại.')
+    }
+  }
+
+  async function handleDelete(conversation: ConversationSummary) {
+    if (!window.confirm(`Xóa hội thoại “${conversation.title}”?`)) return
+    setHistoryError('')
+    try {
+      await deleteConversation(conversation.id)
+      const items = await fetchConversations()
+      setConversations(items)
+      if (activeConversationId === conversation.id) startNewConversation()
+    } catch (requestError) {
+      setHistoryError(requestError instanceof Error
+        ? requestError.message
+        : 'Không thể xóa hội thoại.')
+    }
+  }
+
+  async function handleToggleBookmark(messageId: string, shouldSave: boolean) {
+    setBusyBookmarkId(messageId)
+    setHistoryError('')
+    try {
+      if (shouldSave) await saveBookmark(messageId)
+      else await deleteBookmark(messageId)
+      if (activeConversationId) await reloadConversation(activeConversationId)
+    } catch (requestError) {
+      setHistoryError(requestError instanceof Error
+        ? requestError.message
+        : 'Không thể cập nhật đánh dấu.')
+    } finally {
+      setBusyBookmarkId(null)
+    }
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -332,20 +469,44 @@ function QuestionAnswerPage() {
     }
 
     setError('')
-    setResult(null)
+    setHistoryError('')
+    setTransientResult(null)
+    setTransientQuestion(normalizedQuestion)
     setIsLoading(true)
     try {
       const response = await fetch(`${API_BASE_URL}/ask`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question: normalizedQuestion, method }),
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Client-Id': getClientId(),
+        },
+        body: JSON.stringify({
+          question: normalizedQuestion,
+          method,
+          conversation_id: activeConversationId,
+        }),
       })
       if (!response.ok) throw new Error(await readError(response))
-      setResult((await response.json()) as AskResponse)
+      const nextResult = await response.json() as AskResponse
+      setTransientResult(nextResult)
+      setQuestion('')
+
+      if (nextResult.history_saved && nextResult.conversation_id) {
+        try {
+          await reloadConversation(nextResult.conversation_id)
+          setTransientResult(null)
+          setTransientQuestion('')
+        } catch (historyRequestError) {
+          setHistoryError(historyRequestError instanceof Error
+            ? historyRequestError.message
+            : 'Đã trả lời nhưng chưa tải lại được lịch sử.')
+        }
+      }
     } catch (requestError) {
       const message = requestError instanceof Error
         ? requestError.message
         : 'Không thể kết nối đến hệ thống.'
+      setTransientQuestion('')
       setError(message === 'Failed to fetch'
         ? 'Không kết nối được backend tại cổng 8000. Hãy kiểm tra API đang chạy.'
         : message)
@@ -353,6 +514,8 @@ function QuestionAnswerPage() {
       setIsLoading(false)
     }
   }
+
+  const hasTranscript = Boolean(activeConversation?.messages.length || transientResult)
 
   return (
     <div className="app-shell">
@@ -363,202 +526,143 @@ function QuestionAnswerPage() {
           <p className="eyebrow">Tra cứu có căn cứ nguồn</p>
           <h1>Hỏi đáp pháp luật lao động<br />bằng tiếng Việt</h1>
           <p className="intro-copy">
-            Hệ thống truy hồi các điều khoản liên quan trước khi tạo câu trả lời,
-            đồng thời hiển thị nguồn để bạn tự đối chiếu.
+            Hội thoại được lưu bền vững phía máy chủ; mỗi câu trả lời giữ nguyên
+            nguồn để bạn mở lại và đối chiếu sau này.
           </p>
         </section>
 
-        <section className="workspace" aria-label="Khu vực hỏi đáp">
-          <form className="query-panel" onSubmit={handleSubmit}>
-            <fieldset>
-              <legend>1. Chọn phương pháp truy hồi</legend>
-              <div className="method-grid">
-                {methods.map((item) => (
-                  <label className="method-card" key={item.value}>
-                    <input
-                      type="radio"
-                      name="method"
-                      value={item.value}
-                      checked={method === item.value}
-                      onChange={() => setMethod(item.value)}
-                    />
-                    <span className="radio-dot" aria-hidden="true" />
-                    <span>
-                      <strong>{item.name}</strong>
-                      <small>{item.description}</small>
-                    </span>
-                  </label>
-                ))}
-              </div>
-            </fieldset>
+        <section className="conversation-layout">
+          <ConversationSidebar
+            conversations={conversations}
+            activeConversationId={activeConversationId}
+            isLoading={isHistoryLoading}
+            isBusy={isHistoryLoading || isLoading || isConversationLoading}
+            error={historyError}
+            onNew={startNewConversation}
+            onSelect={(conversationId) => void selectConversation(conversationId)}
+            onRename={(conversation) => void handleRename(conversation)}
+            onDelete={(conversation) => void handleDelete(conversation)}
+          />
 
-            <div className="question-field">
-              <label htmlFor="question">2. Nhập câu hỏi</label>
-              <textarea
-                id="question"
-                value={question}
-                onChange={(event) => setQuestion(event.target.value)}
-                placeholder="Ví dụ: Người lao động được nghỉ hằng năm bao nhiêu ngày?"
-                maxLength={2000}
-                rows={5}
-              />
-              <span className="character-count">{question.length}/2000</span>
-            </div>
-
-            <div className="examples" aria-label="Câu hỏi gợi ý">
-              <span>Gợi ý:</span>
-              {examples.map((example, index) => (
-                <button
-                  type="button"
-                  key={example}
-                  onClick={() => setQuestion(example)}
-                >
-                  Câu {index + 1}
-                </button>
-              ))}
-            </div>
-
-            <button className="submit-button" type="submit" disabled={isLoading}>
-              {isLoading ? (
-                <><span className="spinner" aria-hidden="true" />Đang tra cứu…</>
-              ) : (
-                <>Tra cứu với {activeMethod?.name}<span aria-hidden="true">→</span></>
-              )}
-            </button>
-            <p className="quota-note">
-              Mỗi câu hỏi thật sử dụng 1 lượt OpenRouter miễn phí.
-            </p>
-          </form>
-
-          <section className="result-panel" aria-live="polite">
-            {!result && !error && !isLoading && (
-              <div className="empty-state">
-                <span aria-hidden="true">¶</span>
-                <h2>Câu trả lời sẽ xuất hiện tại đây</h2>
-                <p>Bao gồm nội dung trả lời, điều luật nguồn và thời gian xử lý.</p>
-              </div>
-            )}
-
-            {isLoading && (
-              <div className="empty-state loading-state">
-                <span className="large-spinner" aria-hidden="true" />
-                <h2>Đang tìm căn cứ pháp lý</h2>
-                <p>Lần chạy Dense/Hybrid đầu tiên có thể lâu hơn vì cần nạp mô hình E5.</p>
-              </div>
-            )}
-
-            {error && (
-              <div className="error-state" role="alert">
-                <strong>Chưa thể trả lời</strong>
-                <p>{error}</p>
-              </div>
-            )}
-
-            {result && (
-              <div className="answer-stack">
-                <div className="answer-header">
-                  <div>
-                    <p className="eyebrow">Kết quả · {result.method}</p>
-                    <h2>Câu trả lời</h2>
-                  </div>
-                  {result.out_of_scope ? (
-                    <span className="warning-badge">Ngoài phạm vi</span>
-                  ) : result.generation_failed ? (
-                    <span className="warning-badge">Lỗi sinh đáp án</span>
-                  ) : result.insufficient_evidence ? (
-                    <span className="warning-badge">Thiếu căn cứ</span>
-                  ) : null}
-                </div>
-
-                <div className="answer-text">
-                  <Markdown
-                    components={{
-                      a: ({ children, ...props }) => (
-                        <a {...props} target="_blank" rel="noreferrer">
-                          {children}
-                        </a>
-                      ),
-                    }}
-                  >
-                    {result.answer}
-                  </Markdown>
-                </div>
-
-                <dl className="metrics">
-                  <div><dt>Truy hồi</dt><dd>{formatMs(result.retrieval_ms)}</dd></div>
-                  <div><dt>Sinh đáp án</dt><dd>{formatMs(result.generation_ms)}</dd></div>
-                  <div><dt>Tổng cộng</dt><dd>{formatMs(result.total_ms)}</dd></div>
-                  <div><dt>Mô hình</dt><dd title={result.model || ''}>{result.model || 'Không gọi LLM'}</dd></div>
-                </dl>
-
-                <div className="sources-heading">
-                  <h3>Nguồn đối chiếu</h3>
-                  <span>{result.sources.length} đoạn luật</span>
-                </div>
-
-                <div className="source-list">
-                  {result.sources.map((source, index) => (
-                    <article className="source-card" key={source.chunk_id}>
-                      <div className="source-topline">
-                        <span className="source-index">
-                          {source.source_id || `S${index + 1}`}
-                        </span>
-                        {source.source_type && (
-                          <span className="source-type">
-                            {sourceTypeLabel(source.source_type)}
-                          </span>
-                        )}
-                      </div>
-                      <h4 className="source-citation">
-                        {source.citation_label || source.article_code || source.chunk_id}
-                      </h4>
-                      {source.article_title && (
-                        <p className="source-article-title">{source.article_title}</p>
-                      )}
-                      {sourceLocation(source) && (
-                        <p className="source-location">{sourceLocation(source)}</p>
-                      )}
-                      {source.article_code && (
-                        <p className="source-code">
-                          Mã pháp điển: {source.article_code}
-                        </p>
-                      )}
-                      <p className="source-content">{source.content}</p>
-                      <div className="source-footer">
+          <div className="qa-main-column">
+            <section className="workspace" aria-label="Khu vực hỏi đáp">
+              <form className="query-panel" onSubmit={handleSubmit}>
+                <fieldset>
+                  <legend>1. Chọn phương pháp truy hồi</legend>
+                  <div className="method-grid">
+                    {methods.map((item) => (
+                      <label className="method-card" key={item.value}>
+                        <input
+                          type="radio"
+                          name="method"
+                          value={item.value}
+                          checked={method === item.value}
+                          onChange={() => setMethod(item.value)}
+                        />
+                        <span className="radio-dot" aria-hidden="true" />
                         <span>
-                          Hạng {source.rank}
-                          {source.score !== null ? ` · score ${source.score.toFixed(4)}` : ''}
+                          <strong>{item.name}</strong>
+                          <small>{item.description}</small>
                         </span>
-                        <span className="source-actions">
-                          {source.article_code && (
-                            <a
-                              href={articlePagePath(source.article_code)}
-                              target="_blank"
-                              rel="noreferrer"
-                            >
-                              Xem đầy đủ điều luật
-                            </a>
-                          )}
-                          {source.source_url && (
-                            <a href={source.source_url} target="_blank" rel="noreferrer">
-                              Văn bản chính thức ↗
-                            </a>
-                          )}
-                        </span>
-                      </div>
-                    </article>
+                      </label>
+                    ))}
+                  </div>
+                </fieldset>
+
+                <div className="question-field">
+                  <label htmlFor="question">2. Nhập câu hỏi</label>
+                  <textarea
+                    id="question"
+                    value={question}
+                    onChange={(event) => setQuestion(event.target.value)}
+                    placeholder="Ví dụ: Người lao động được nghỉ hằng năm bao nhiêu ngày?"
+                    maxLength={2000}
+                    rows={5}
+                  />
+                  <span className="character-count">{question.length}/2000</span>
+                </div>
+
+                <div className="examples" aria-label="Câu hỏi gợi ý">
+                  <span>Gợi ý:</span>
+                  {examples.map((example, index) => (
+                    <button type="button" key={example} onClick={() => setQuestion(example)}>
+                      Câu {index + 1}
+                    </button>
                   ))}
                 </div>
-              </div>
-            )}
-          </section>
+
+                <button className="submit-button" type="submit" disabled={isLoading}>
+                  {isLoading ? (
+                    <><span className="spinner" aria-hidden="true" />Đang tra cứu…</>
+                  ) : (
+                    <>Tra cứu với {activeMethod?.name}<span aria-hidden="true">→</span></>
+                  )}
+                </button>
+                <p className="quota-note">
+                  Mỗi câu hỏi thật sử dụng 1 lượt OpenRouter miễn phí.
+                </p>
+              </form>
+
+              <section className="result-panel" aria-live="polite">
+                {!hasTranscript && !error && !isLoading && !isConversationLoading && (
+                  <div className="empty-state">
+                    <span aria-hidden="true">¶</span>
+                    <h2>Câu trả lời sẽ xuất hiện tại đây</h2>
+                    <p>Bao gồm nội dung trả lời, điều luật nguồn và thời gian xử lý.</p>
+                  </div>
+                )}
+
+                {(isLoading || isConversationLoading) && (
+                  <div className="empty-state loading-state">
+                    <span className="large-spinner" aria-hidden="true" />
+                    <h2>{isLoading ? 'Đang tìm căn cứ pháp lý' : 'Đang mở hội thoại'}</h2>
+                    <p>Lần chạy Dense/Hybrid đầu tiên có thể lâu hơn vì cần nạp mô hình E5.</p>
+                  </div>
+                )}
+
+                {error && (
+                  <div className="error-state" role="alert">
+                    <strong>Chưa thể trả lời</strong>
+                    <p>{error}</p>
+                  </div>
+                )}
+
+                {!isConversationLoading && hasTranscript && (
+                  <div className="transcript">
+                    {activeConversation?.messages.map((message) => (
+                      message.role === 'user' ? (
+                        <div className="transcript-question" key={message.id}>
+                          <p>{message.content}</p>
+                        </div>
+                      ) : (
+                        <AnswerCard
+                          key={message.id}
+                          answer={storedMessageToAnswer(message)}
+                          isBookmarkBusy={busyBookmarkId === message.id}
+                          onToggleBookmark={(messageId, shouldSave) => {
+                            void handleToggleBookmark(messageId, shouldSave)
+                          }}
+                        />
+                      )
+                    ))}
+                    {transientResult && transientQuestion && (
+                      <div className="transcript-question transient" key="transient-question">
+                        <p>{transientQuestion}</p>
+                      </div>
+                    )}
+                    {transientResult && (
+                      <AnswerCard answer={transientResultToAnswer(transientResult)} />
+                    )}
+                  </div>
+                )}
+              </section>
+            </section>
+          </div>
         </section>
       </main>
 
       <footer>
-        <p>
-          Công cụ hỗ trợ tra cứu học thuật, không thay thế tư vấn pháp lý chuyên môn.
-        </p>
+        <p>Công cụ hỗ trợ tra cứu học thuật, không thay thế tư vấn pháp lý chuyên môn.</p>
       </footer>
     </div>
   )
@@ -569,6 +673,7 @@ type Route =
   | { type: 'source'; articleCode: string }
   | { type: 'library-list' }
   | { type: 'library-detail'; documentId: string }
+  | { type: 'saved' }
 
 function parseRoute(pathname: string): Route {
   const sourceMatch = pathname.match(/^\/sources\/([^/]+)\/?$/)
@@ -587,6 +692,10 @@ function parseRoute(pathname: string): Route {
     } catch {
       return { type: 'library-detail', documentId: docMatch[1] }
     }
+  }
+
+  if (pathname === '/saved' || pathname.startsWith('/saved/')) {
+    return { type: 'saved' }
   }
 
   if (pathname === '/library' || pathname.startsWith('/library/')) {
@@ -620,6 +729,25 @@ function App() {
             key={route.documentId}
             documentId={route.documentId}
             onBack={() => navigateTo('/library')}
+          />
+        </main>
+        <footer>
+          <p>Công cụ hỗ trợ tra cứu học thuật, không thay thế tư vấn pháp lý chuyên môn.</p>
+        </footer>
+      </div>
+    )
+  }
+
+  if (route.type === 'saved') {
+    return (
+      <div className="app-shell">
+        <TopNav activeTab="saved" />
+        <main>
+          <SavedAnswersPage
+            onOpenConversation={(conversationId) => {
+              setActiveConversationId(conversationId)
+              navigateTo('/')
+            }}
           />
         </main>
         <footer>

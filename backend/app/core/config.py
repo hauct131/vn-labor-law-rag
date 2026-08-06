@@ -12,6 +12,12 @@ class Settings(BaseSettings):
         "http://127.0.0.1:5173"
     )
 
+    # Relational application data. Docker Compose overrides this with
+    # PostgreSQL; SQLite keeps direct local runs and tests self-contained.
+    database_url: str = "sqlite+pysqlite:///./application.db"
+    database_echo: bool = False
+    database_auto_create: bool = True
+
     # Qdrant
     qdrant_url: str = "http://localhost:6333"
     # Retrieval always uses an alias. Physical collections are versioned so a
