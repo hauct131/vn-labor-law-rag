@@ -1,158 +1,376 @@
 # Vietnamese Labor Law RAG
 
-## Corpus thống nhất 2026-07-27
+Hệ thống hỏi đáp pháp luật lao động Việt Nam sử dụng Retrieval-Augmented Generation (RAG). Ứng dụng truy hồi căn cứ từ corpus pháp luật đã khóa, sinh câu trả lời có dẫn nguồn và từ chối trả lời khi câu hỏi nằm ngoài phạm vi hoặc chứng cứ không đủ.
 
-Project hiện đọc một release duy nhất:
+> Corpus canonical Word 804 là **bản phát hành kỹ thuật cuối cùng đã đóng băng**
+> cho hệ thống, benchmark và báo cáo hiện tại. Corpus, hash, golden split và cấu
+> hình retrieval không được tiếp tục thay đổi.
+>
+> Corpus chưa được xác nhận cuối cùng về hiệu lực và tính đúng pháp lý bởi người
+> có thẩm quyền. Hệ thống không thay thế tư vấn của luật sư hoặc cơ quan nhà nước.
 
-```text
-data/releases/labor-law-2026-07-28-candidate/
-├── articles.json
-├── chunks.jsonl
-├── source_inventory.json
-├── legal_effect_review.json
-├── approval.json
-├── manifest.json
-├── SHA256SUMS.txt
-└── sources/official_docx/
-```
+## 1. Trạng thái phiên bản hiện tại
 
-Kết quả kiểm tra kỹ thuật:
+### Corpus runtime
 
-- 18 văn bản;
-- 513 đơn vị truy hồi;
-- 833 chunk;
-- đủ 220/220 Điều của `18/VBHN-VPQH`;
-- `66.18/2026/NQ-CP`: Điều 4, Điều 6 và sáu đơn vị Phụ lục I.4 dùng
-  trong golden current-law;
-- 45/45 câu golden v3 đã được bind lại vào chunk ID của release;
-- hash nguồn, hash release, coverage và mã Điều đều đạt validator.
+| Thuộc tính | Giá trị |
+|---|---|
+| Release | `labor-law-canonical-word-20260804-164432-candidate` |
+| Chunk artifact | `data/releases/labor-law-canonical-word-20260804-164432-candidate/canonical_chunks.jsonl` |
+| Số chunk | `804` |
+| Corpus SHA256 | `fdbec539efbfb3f4aa3cb3962046321e3a402150d93516ef4256934972c70307` |
+| Physical collection | `labor_law_canonical_word_20260804_fdbec539` |
+| Alias local/demo | `labor_law_dev` |
+| Alias runtime legacy | `labor_law_active` |
 
-Release này chưa được phép gọi là production: 16 snapshot VBPL thiếu checksum
-inventory/raw API response và duyệt hiệu lực bởi người có thẩm quyền vẫn đang
-chờ. E5 audit đã đo chính xác 833/833 chunk, lớn nhất 478 token và không có
-chunk chạm ngưỡng vận hành 480 token. Vì vậy `/api/health` chỉ kiểm liveness,
-còn `/api/ready` chủ động trả `503 authority_review_pending`.
+`labor_law_active` hiện vẫn trỏ đến collection legacy từng được runtime sử dụng.
+Collection legacy này cũng chưa hoàn thành authority review và không được xem là
+bản đã kiểm chứng pháp lý. Nó chỉ được giữ lại để rollback kỹ thuật.
 
-Xem giải thích nguồn dữ liệu tại:
+Demo local hiện sử dụng corpus canonical Word 804 thông qua alias `labor_law_dev`.
+
+### Golden benchmark
+
+Golden source:
 
 ```text
-docs/data/DATA_PROVENANCE_2026-07-27.md
+data/evaluation/golden_questions_v4_canonical_word_candidate.json
 ```
 
-Kiểm tra release hiện có:
-
-```bash
-make unified-release-validate PYTHON=python3
-```
-
-Chạy toàn bộ release check, Qdrant index/verify và retrieval evaluation:
-
-```bash
-bash scripts/index_and_evaluate_unified.sh
-```
-
-Script dùng trực tiếp `.venv/bin/python3`, ghi log vào `logs/` và triển khai
-Qdrant theo blue/green:
-
-- giữ nguyên collection cũ `labor_law` để rollback;
-- index/resume release 833 trong
-  `labor_law_20260728_fd35bb1a`;
-- verify fingerprint, count và dense smoke trước khi kích hoạt;
-- tạo/chuyển alias `labor_law_active` theo một cập nhật alias atomic;
-- backend luôn truy vấn qua `labor_law_active`.
-
-Workflow không có lệnh xóa collection. Nếu collection phiên bản mới đang dở
-nhưng có cùng fingerprint thì workflow resume; nếu khác fingerprint thì dừng
-an toàn.
-
-Muốn tạo candidate mới, chọn thư mục release mới để không ghi đè:
-
-```bash
-make unified-release \
-  PYTHON=python3 \
-  UNIFIED_RELEASE_DIR=data/releases/labor-law-2026-07-28-candidate-v2
-```
-
-## Retrieval tuning
-
-Các target hiện bind mặc định vào golden v3 và release 833 chunks.
-
-Nếu môi trường chưa có `sentence-transformers`, cài dependency evaluation
-riêng (không cần thêm vào image backend):
-
-```bash
-.venv/bin/python3 -m pip install -r requirements-evaluation.txt
-```
-
-Chạy grid nhỏ trước:
-
-```bash
-make legal-eval-tune-fast
-```
-
-Chạy grid mặc định đầy đủ:
-
-```bash
-make legal-eval-tune
-```
-
-Dùng GPU:
-
-```bash
-make legal-eval-tune E5_DEVICE=cuda E5_BATCH_SIZE=8
-```
-
-Kết quả nằm trong:
+Split đã khóa:
 
 ```text
-data/evaluation/tuning-unified/
-├── retrieval_grid_results.csv
-├── retrieval_grid_results.json
-├── best_retrieval_configs.json
-├── retrieval_tuning_summary.md
-└── <best-config>.json
+data/evaluation/splits/canonical_word_804/
 ```
 
-Script chọn ba cấu hình:
+Thành phần:
 
-- `best.article`: ưu tiên tìm đủ điều luật;
-- `best.evidence`: ưu tiên exact evidence chunks;
-- `best.balanced`: cân bằng hai mục tiêu.
+- source: 45 câu;
+- development: 31 câu;
+- test: 13 câu;
+- disabled: 1 câu.
 
-`best.balanced` là ứng viên mặc định. Đây vẫn là kết quả trên development set
-44 câu đang bật; cần một holdout riêng trước khi kết luận cuối cùng.
+Test split đã được mở đúng một lần. Không tuning lại retrieval bằng test split.
 
-## Production-equivalent retrieval benchmark
+Cấu hình retrieval đã khóa:
 
-Benchmark mới tách biệt với evaluator SentenceTransformers offline ở trên và
-chạy đúng các thành phần production:
+```text
+top_k           = 5
+candidate_k     = 30
+rrf_k           = 60
+dense_weight    = 0.9
+sparse_weight   = 0.1
+```
 
-- FastEmbed E5 + Qdrant qua alias `labor_law_active` cho Dense;
-- VnCoreNLP + BM25 in-memory cho Sparse;
-- weighted RRF trong backend cho Hybrid.
+Kết quả retrieval test đã khóa:
 
-Tạo và kiểm tra split khóa 31 câu dev / 13 câu test / 1 câu disabled:
+| Chỉ số | Kết quả |
+|---|---:|
+| Any article hit@5 | 1.000000 |
+| All article hit@5 | 0.923077 |
+| Article recall@5 | 0.948718 |
+| Article MRR | 0.848718 |
+| All evidence hit@5 | 0.692308 |
+| Evidence recall@5 | 0.817949 |
+
+Các chỉ số trên đo retrieval, không chứng minh câu trả lời cuối cùng đúng hoàn toàn về pháp lý.
+
+## 2. Kiến trúc runtime
+
+```text
+Vite frontend
+      |
+      v
+FastAPI API
+      |
+      +--> Sparse retrieval: VnCoreNLP + BM25
+      |
+      +--> Dense retrieval: FastEmbed E5 + Qdrant
+      |
+      +--> Hybrid retrieval: weighted Reciprocal Rank Fusion
+      |
+      v
+Structured answer guardrail
+      |
+      v
+OpenRouter LLM
+```
+
+Graph RAG và Neo4j chưa thuộc MVP runtime công khai. Giao diện hiện chỉ sử dụng Sparse, Dense và Hybrid.
+
+### Thành phần chính
+
+- `frontend/`: giao diện Vite.
+- `backend/app/api/`: API FastAPI.
+- `backend/app/retrieval/`: truy hồi Sparse, Dense và Hybrid.
+- `backend/app/services/`: điều phối RAG, citation và guardrail.
+- `data/releases/`: các corpus release bất biến.
+- `data/evaluation/`: golden set, split và báo cáo benchmark.
+- `scripts/`: ingestion, index, audit và evaluation.
+- `config/`: quyết định hiệu lực, corpus và runtime binding.
+
+## 3. Structured answer guardrail
+
+LLM phải trả về một trong ba trạng thái:
+
+| Trạng thái | Ý nghĩa |
+|---|---|
+| `answerable` | Câu hỏi thuộc pháp luật lao động và nguồn đủ để trả lời |
+| `out_of_scope` | Vấn đề chính không thuộc pháp luật lao động Việt Nam |
+| `insufficient_evidence` | Có thể đúng phạm vi nhưng nguồn chưa đủ căn cứ |
+
+Với câu trả lời `answerable`, backend bắt buộc:
+
+- có ít nhất một citation;
+- citation phải thuộc các nguồn đã cung cấp cho LLM;
+- inline citation phải khớp với `cited_source_ids`;
+- chỉ trả về các source thực sự được trích dẫn;
+- loại source trùng lặp hoặc thiếu metadata cần thiết.
+
+Với `out_of_scope` và `insufficient_evidence`, hệ thống không cho phép citation giả. JSON không hợp lệ, citation ngoài context hoặc lỗi provider đều được xử lý theo hướng fail-closed.
+
+## 4. API
+
+Base URL mặc định:
+
+```text
+http://localhost:8000/api
+```
+
+Endpoint chính:
+
+| Method | Endpoint | Vai trò |
+|---|---|---|
+| `GET` | `/api/live` | Kiểm tra process backend |
+| `GET` | `/api/health` | Health check tương thích |
+| `GET` | `/api/ready` | Kiểm tra corpus, Qdrant và authority gate |
+| `POST` | `/api/ask` | Hỏi đáp pháp luật lao động |
+| `GET` | `/api/sources/{article_code}` | Đọc thông tin nguồn theo mã điều |
+
+Swagger UI:
+
+```text
+http://localhost:8000/docs
+```
+
+## 5. Chạy local bằng Docker
+
+### Yêu cầu
+
+- Docker Engine;
+- Docker Compose v2;
+- collection Qdrant 804 đã được index;
+- alias `labor_law_dev` trỏ đến `labor_law_canonical_word_20260804_fdbec539`;
+- API key OpenRouter khi cần sinh câu trả lời thật.
+
+### Tạo file môi trường
 
 ```bash
-make runtime-golden-splits
-make runtime-golden-splits-check
-make runtime-benchmark-dry-run
+cp .env.example .env
 ```
 
-Chỉ tune trên dev. Lệnh này sinh Dense/Sparse baseline, toàn bộ Hybrid trial,
-Hybrid được chọn và bảng tóm tắt trong `data/evaluation/runtime-benchmark/`:
+Điền khóa thật vào `.env`:
+
+```dotenv
+OPENROUTER_API_KEY=...
+```
+
+Không commit `.env` hoặc khóa API.
+
+### Chuẩn bị model runtime
 
 ```bash
-make runtime-benchmark-tune-dev
+docker compose \
+  -f docker-compose.yml \
+  -f docker-compose.dev.yml \
+  --profile tools \
+  run --rm runtime-assets
 ```
 
-Kiểm tra `dev_hybrid_trials.json` và commit cấu hình đã chọn trước khi mở test.
-Sau đó chỉ chạy test một lần:
+### Khởi động demo local
+
+Luôn dùng cả hai compose file để backend sử dụng alias `labor_law_dev` và bỏ authority gate chỉ trong môi trường demo:
 
 ```bash
-ALLOW_TEST=1 make runtime-benchmark-test
+docker compose \
+  -f docker-compose.yml \
+  -f docker-compose.dev.yml \
+  up --build
 ```
 
-Split chỉ khóa nhãn và thành viên phục vụ retrieval benchmark; nó không thay
-đổi trạng thái authority review đang pending. `QDRANT_API_KEY` được đọc từ
-settings và không bao giờ được ghi vào báo cáo benchmark.
+Truy cập:
+
+```text
+Frontend: http://localhost:5173
+Backend:  http://localhost:8000
+Swagger:  http://localhost:8000/docs
+Qdrant:   http://localhost:6333/dashboard
+```
+
+Xem log:
+
+```bash
+docker compose \
+  -f docker-compose.yml \
+  -f docker-compose.dev.yml \
+  logs -f backend frontend
+```
+
+Dừng dịch vụ:
+
+```bash
+docker compose \
+  -f docker-compose.yml \
+  -f docker-compose.dev.yml \
+  down
+```
+
+Không thêm `-v` trừ khi chủ động muốn xóa Docker volumes.
+
+## 6. Chạy backend không dùng Docker
+
+```bash
+python3 -m venv .venv
+.venv/bin/python -m pip install --upgrade pip
+.venv/bin/python -m pip install -r backend/requirements.txt
+```
+
+Chạy API:
+
+```bash
+PYTHONPATH=backend \
+.venv/bin/python -m uvicorn app.main:app \
+  --host 0.0.0.0 \
+  --port 8000 \
+  --reload
+```
+
+Qdrant, VnCoreNLP model và các biến môi trường vẫn phải được chuẩn bị trước.
+
+## 7. Chạy frontend
+
+```bash
+cd frontend
+npm ci
+npm run dev
+```
+
+Production build:
+
+```bash
+cd frontend
+npm ci
+npm run build
+```
+
+## 8. Kiểm thử
+
+### Toàn bộ backend
+
+Từ thư mục gốc:
+
+```bash
+PYTHONPATH=backend .venv/bin/python -m pytest -q backend/tests
+```
+
+Kết quả đã xác nhận trên branch hiện tại:
+
+```text
+508 passed
+15 skipped
+```
+
+Các test integration bị skip có thể yêu cầu model cache, corpus runtime hoặc external service.
+
+### Kiểm tra frontend
+
+```bash
+cd frontend
+npm ci
+npm run build
+```
+
+### Kiểm tra Docker Compose
+
+```bash
+docker compose \
+  -f docker-compose.yml \
+  -f docker-compose.dev.yml \
+  config
+```
+
+## 9. Continuous Integration
+
+Repository có hai workflow:
+
+```text
+.github/workflows/application-ci.yml
+.github/workflows/ingestion-ci.yml
+```
+
+`Application CI` kiểm tra:
+
+- toàn bộ backend test suite;
+- frontend production build;
+- cấu hình Docker Compose.
+
+`VBPL ingestion CI` kiểm tra crawler và các invariant fail-closed của ingestion.
+
+CI phải chạy trên checkout sạch. Vì vậy những evidence snapshot và quality artifact được test tham chiếu phải được Git theo dõi, không chỉ tồn tại trên máy phát triển.
+
+## 10. Quy tắc an toàn dữ liệu và release
+
+- Không chỉnh sửa corpus release đã khóa tại chỗ.
+- Candidate mới phải dùng release ID và thư mục mới.
+- Không thay đổi golden test sau khi đã xem kết quả test.
+- Không tuning retrieval bằng test split.
+- Không chuyển production alias khi authority review còn pending.
+- Không commit `.env`, API key, model cache hoặc Qdrant storage.
+- Mọi snapshot bắt buộc phải khớp SHA256 trong manifest hoặc quyết định hiệu lực.
+- Giữ collection cũ để rollback khi promotion collection mới.
+
+## 11. Giới hạn hiện tại
+
+- Authority review và legal-effect review chưa hoàn tất.
+- Retrieval benchmark không thay thế đánh giá độ đúng pháp lý của câu trả lời.
+- OpenRouter và model miễn phí có thể thay đổi chất lượng hoặc khả dụng.
+- Graph RAG chưa được đưa vào API và giao diện chính thức.
+- Alias runtime legacy chưa được chuyển sang corpus canonical Word 804; cả collection legacy và collection 804 đều chưa hoàn thành authority review.
+
+## 12. Trạng thái phát hành và triển khai
+
+### Bản phát hành kỹ thuật
+
+Corpus canonical Word 804 là bản kỹ thuật cuối cùng đã đóng băng cho đồ án:
+
+```text
+Release: labor-law-canonical-word-20260804-164432-candidate
+Chunks: 804
+SHA256: fdbec539efbfb3f4aa3cb3962046321e3a402150d93516ef4256934972c70307
+```
+
+Hậu tố `candidate` được giữ nguyên vì release ID, đường dẫn và manifest đã được
+khóa. Hậu tố này không có nghĩa corpus kỹ thuật vẫn đang được chỉnh sửa.
+
+### Local/demo
+
+```text
+labor_law_dev
+    -> labor_law_canonical_word_20260804_fdbec539
+```
+
+Demo local đang sử dụng corpus canonical Word 804 cuối cùng.
+
+### Alias runtime legacy
+
+```text
+labor_law_active
+    -> labor_law_20260728_fd35bb1a
+```
+
+Collection này là bản legacy từng được runtime sử dụng. Nó cũng chưa được xác
+nhận pháp lý cuối cùng và chỉ được giữ lại để rollback kỹ thuật.
+
+Sau khi corpus 804 hoàn thành authority review và legal-effect review, alias
+`labor_law_active` mới được chuyển sang collection 804. Sau khi chuyển phải chạy
+readiness check, retrieval smoke test và kiểm tra rollback.
