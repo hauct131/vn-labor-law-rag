@@ -4,6 +4,10 @@ on:
   push:
     paths:
       - "backend/**"
+      - "scripts/**"
+      - "config/**"
+      - "data/**"
+      - ".gitattributes"
       - "frontend/**"
       - "docker-compose.yml"
       - "docker-compose.dev.yml"
@@ -13,6 +17,10 @@ on:
   pull_request:
     paths:
       - "backend/**"
+      - "scripts/**"
+      - "config/**"
+      - "data/**"
+      - ".gitattributes"
       - "frontend/**"
       - "docker-compose.yml"
       - "docker-compose.dev.yml"
