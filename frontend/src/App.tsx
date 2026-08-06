@@ -1,6 +1,11 @@
 import { type FormEvent, useEffect, useMemo, useState } from 'react'
 import Markdown from 'react-markdown'
 import './App.css'
+import { API_BASE_URL } from './api/apiConfig'
+import type { LegalArticleResponse } from './api/legalArticleTypes'
+import './features/library/documentLibrary.css'
+import { DocumentLibraryPage } from './features/library/DocumentLibraryPage'
+import { DocumentDetailPage } from './features/library/DocumentDetailPage'
 
 type RetrievalMethod = 'sparse' | 'dense' | 'hybrid'
 
@@ -37,44 +42,7 @@ type AskResponse = {
   generation_failed: boolean
 }
 
-type LegalArticleUnit = {
-  chunk_id: string
-  label: string
-  unit_type: string
-  clause_number: string | null
-  point_labels: string[]
-  table_index: number | null
-  segment_index: number | null
-  content: string
-}
 
-type LegalArticleResponse = {
-  article_code: string
-  article_number: string | null
-  article_title: string | null
-  citation_label: string
-  document_title: string | null
-  document_number: string | null
-  source_type: string | null
-  source_document_id: string | null
-  source_note_text: string | null
-  topic_code: string | null
-  topic_name: string | null
-  chapter_number: string | null
-  chapter_title: string | null
-  section_number: string | null
-  section_title: string | null
-  official_url: string | null
-  original_source_urls: string[]
-  url_status: string | null
-  url_last_checked_at: string | null
-  chunk_count: number
-  units: LegalArticleUnit[]
-}
-
-const API_BASE_URL = (
-  import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api'
-).replace(/\/$/, '')
 
 const methods: Array<{
   value: RetrievalMethod
@@ -139,14 +107,71 @@ function articlePagePath(articleCode: string) {
   return `/sources/${encodeURIComponent(articleCode)}`
 }
 
-function articleCodeFromPath() {
-  const match = window.location.pathname.match(/^\/sources\/([^/]+)\/?$/)
-  if (!match) return null
-  try {
-    return decodeURIComponent(match[1])
-  } catch {
-    return match[1]
-  }
+function navigateTo(path: string) {
+  window.history.pushState({}, '', path)
+  window.dispatchEvent(new PopStateEvent('popstate'))
+}
+
+function TopNav({
+  activeTab,
+  badgeText = 'Phiên bản v1.0',
+  showBackLink = false,
+}: {
+  activeTab: 'qa' | 'library' | 'source'
+  badgeText?: string
+  showBackLink?: boolean
+}) {
+  return (
+    <header className="topbar">
+      <a
+        className="brand"
+        href="/"
+        aria-label="Trang chủ"
+        onClick={(e) => {
+          e.preventDefault()
+          navigateTo('/')
+        }}
+      >
+        <span className="brand-mark" aria-hidden="true">§</span>
+        <span>
+          <strong>Luật Lao động Việt Nam</strong>
+          <small>RAG Legal Assistant</small>
+        </span>
+      </a>
+
+      <nav className="top-navigation" aria-label="Điều hướng chính">
+        <button
+          type="button"
+          className={`nav-tab ${activeTab === 'qa' ? 'active' : ''}`}
+          onClick={() => navigateTo('/')}
+        >
+          💬 Hỏi đáp
+        </button>
+        <button
+          type="button"
+          className={`nav-tab ${activeTab === 'library' ? 'active' : ''}`}
+          onClick={() => navigateTo('/library')}
+        >
+          📚 Thư viện pháp luật
+        </button>
+      </nav>
+
+      {showBackLink ? (
+        <a
+          className="back-link"
+          href="/"
+          onClick={(e) => {
+            e.preventDefault()
+            navigateTo('/')
+          }}
+        >
+          ← Quay lại hỏi đáp
+        </a>
+      ) : (
+        <span className="mvp-badge">{badgeText}</span>
+      )}
+    </header>
+  )
 }
 
 function LegalArticlePage({ articleCode }: { articleCode: string }) {
@@ -197,16 +222,7 @@ function LegalArticlePage({ articleCode }: { articleCode: string }) {
 
   return (
     <div className="app-shell source-page-shell">
-      <header className="topbar">
-        <a className="brand" href="/" aria-label="Trang hỏi đáp">
-          <span className="brand-mark" aria-hidden="true">§</span>
-          <span>
-            <strong>Luật Lao động Việt Nam</strong>
-            <small>RAG Legal Assistant</small>
-          </span>
-        </a>
-        <a className="back-link" href="/">← Quay lại hỏi đáp</a>
-      </header>
+      <TopNav activeTab="source" showBackLink />
 
       <main className="source-page-main">
         {isLoading && (
@@ -340,16 +356,7 @@ function QuestionAnswerPage() {
 
   return (
     <div className="app-shell">
-      <header className="topbar">
-        <a className="brand" href="#top" aria-label="Trang đầu">
-          <span className="brand-mark" aria-hidden="true">§</span>
-          <span>
-            <strong>Luật Lao động Việt Nam</strong>
-            <small>RAG Legal Assistant</small>
-          </span>
-        </a>
-        <span className="mvp-badge">MVP · Sparse, Dense & Hybrid</span>
-      </header>
+      <TopNav activeTab="qa" badgeText="MVP · Sparse, Dense & Hybrid" />
 
       <main id="top">
         <section className="intro">
@@ -557,11 +564,88 @@ function QuestionAnswerPage() {
   )
 }
 
+type Route =
+  | { type: 'qa' }
+  | { type: 'source'; articleCode: string }
+  | { type: 'library-list' }
+  | { type: 'library-detail'; documentId: string }
+
+function parseRoute(pathname: string): Route {
+  const sourceMatch = pathname.match(/^\/sources\/([^/]+)\/?$/)
+  if (sourceMatch) {
+    try {
+      return { type: 'source', articleCode: decodeURIComponent(sourceMatch[1]) }
+    } catch {
+      return { type: 'source', articleCode: sourceMatch[1] }
+    }
+  }
+
+  const docMatch = pathname.match(/^\/library\/([^/]+)\/?$/)
+  if (docMatch) {
+    try {
+      return { type: 'library-detail', documentId: decodeURIComponent(docMatch[1]) }
+    } catch {
+      return { type: 'library-detail', documentId: docMatch[1] }
+    }
+  }
+
+  if (pathname === '/library' || pathname.startsWith('/library/')) {
+    return { type: 'library-list' }
+  }
+
+  return { type: 'qa' }
+}
+
 function App() {
-  const articleCode = articleCodeFromPath()
-  return articleCode
-    ? <LegalArticlePage articleCode={articleCode} />
-    : <QuestionAnswerPage />
+  const [currentPath, setCurrentPath] = useState(window.location.pathname)
+
+  useEffect(() => {
+    const handlePopState = () => setCurrentPath(window.location.pathname)
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
+  }, [])
+
+  const route = parseRoute(currentPath)
+
+  if (route.type === 'source') {
+    return <LegalArticlePage articleCode={route.articleCode} />
+  }
+
+  if (route.type === 'library-detail') {
+    return (
+      <div className="app-shell">
+        <TopNav activeTab="library" />
+        <main>
+          <DocumentDetailPage
+            key={route.documentId}
+            documentId={route.documentId}
+            onBack={() => navigateTo('/library')}
+          />
+        </main>
+        <footer>
+          <p>Công cụ hỗ trợ tra cứu học thuật, không thay thế tư vấn pháp lý chuyên môn.</p>
+        </footer>
+      </div>
+    )
+  }
+
+  if (route.type === 'library-list') {
+    return (
+      <div className="app-shell">
+        <TopNav activeTab="library" />
+        <main>
+          <DocumentLibraryPage
+            onSelectDocument={(docId) => navigateTo(`/library/${encodeURIComponent(docId)}`)}
+          />
+        </main>
+        <footer>
+          <p>Công cụ hỗ trợ tra cứu học thuật, không thay thế tư vấn pháp lý chuyên môn.</p>
+        </footer>
+      </div>
+    )
+  }
+
+  return <QuestionAnswerPage />
 }
 
 export default App

@@ -62,6 +62,35 @@
   padding: 7px 11px;
 }
 
+.top-navigation {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+}
+
+.nav-tab {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 16px;
+  transition: all 150ms ease;
+}
+
+.nav-tab:hover {
+  background: var(--cream);
+  color: var(--ink);
+}
+
+.nav-tab.active {
+  background: #fcf3ee;
+  border-color: #ebd0c4;
+  color: var(--red);
+}
+
 main {
   margin: 0 auto;
   max-width: 1240px;
