@@ -61,6 +61,8 @@ def test_post_ask_returns_frontend_contract() -> None:
         "Điều 1 Bộ luật Lao động số 45/2019/QH14"
     )
     assert payload["model"] == "free/test-model"
+    assert payload["out_of_scope"] is False
+    assert payload["generation_failed"] is False
 
 
 def test_post_ask_accepts_dense_method() -> None:

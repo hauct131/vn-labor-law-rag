@@ -5,6 +5,7 @@ import './App.css'
 type RetrievalMethod = 'sparse' | 'dense' | 'hybrid'
 
 type LegalSource = {
+  source_id: string | null
   chunk_id: string
   article_code: string | null
   article_number: string | null
@@ -32,6 +33,8 @@ type AskResponse = {
   total_ms: number
   model: string | null
   insufficient_evidence: boolean
+  out_of_scope: boolean
+  generation_failed: boolean
 }
 
 type LegalArticleUnit = {
@@ -451,9 +454,13 @@ function QuestionAnswerPage() {
                     <p className="eyebrow">Kết quả · {result.method}</p>
                     <h2>Câu trả lời</h2>
                   </div>
-                  {result.insufficient_evidence && (
+                  {result.out_of_scope ? (
+                    <span className="warning-badge">Ngoài phạm vi</span>
+                  ) : result.generation_failed ? (
+                    <span className="warning-badge">Lỗi sinh đáp án</span>
+                  ) : result.insufficient_evidence ? (
                     <span className="warning-badge">Thiếu căn cứ</span>
-                  )}
+                  ) : null}
                 </div>
 
                 <div className="answer-text">
@@ -486,7 +493,9 @@ function QuestionAnswerPage() {
                   {result.sources.map((source, index) => (
                     <article className="source-card" key={source.chunk_id}>
                       <div className="source-topline">
-                        <span className="source-index">S{index + 1}</span>
+                        <span className="source-index">
+                          {source.source_id || `S${index + 1}`}
+                        </span>
                         {source.source_type && (
                           <span className="source-type">
                             {sourceTypeLabel(source.source_type)}

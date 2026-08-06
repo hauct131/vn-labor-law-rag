@@ -1,5 +1,7 @@
 """In-process HTTP → real RAGService → response contract smoke test."""
 
+import json
+
 from fastapi.testclient import TestClient
 
 from app.api.routes.health import require_authorized_release
@@ -41,7 +43,14 @@ class GroundedGenerator:
             in values["context"]
         )
         return GenerationResult(
-            answer="Quy định nằm tại Điều 113 [S1].",
+            answer=json.dumps(
+                {
+                    "status": "answerable",
+                    "answer": "Quy định nằm tại Điều 113 [S1].",
+                    "cited_source_ids": ["S1"],
+                },
+                ensure_ascii=False,
+            ),
             model="free/e2e-model",
         )
 

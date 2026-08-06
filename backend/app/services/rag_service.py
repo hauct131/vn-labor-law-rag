@@ -10,17 +10,29 @@ from typing import Any, Callable, Mapping
 
 from ..chains.generation_chain import (
     AsyncAnswerGenerator,
+    GenerationProviderError,
     create_generation_chain,
 )
 from ..retrieval.models import LegalRetriever, RetrievalHit
 from ..retrieval.retriever_factory import get_retriever
 from ..schemas.ask import AskResponse, LegalSource, RetrievalMethod
+from .answer_guardrail import (
+    AnswerStatus,
+    GuardrailValidationError,
+    parse_and_validate_guarded_answer,
+)
 from .legal_citation import build_citation_metadata
 from .official_sources import resolved_source_url
 
 
 INSUFFICIENT_EVIDENCE_ANSWER = (
     "Không đủ căn cứ trong dữ liệu được cung cấp để trả lời chắc chắn."
+)
+OUT_OF_SCOPE_ANSWER = (
+    "Câu hỏi nằm ngoài phạm vi pháp luật lao động mà hệ thống hiện hỗ trợ."
+)
+GENERATION_FAILED_ANSWER = (
+    "Hệ thống tạm thời chưa thể xác nhận câu trả lời từ các nguồn hiện có."
 )
 
 # VnCoreNLP is Java-backed. Keeping retrieval on one worker avoids using the
@@ -82,6 +94,25 @@ def source_from_hit(hit: RetrievalHit) -> LegalSource:
     )
 
 
+def sanitize_sources(sources: list[LegalSource]) -> list[LegalSource]:
+    """Remove unusable and duplicate evidence while preserving rank order."""
+    sanitized: list[LegalSource] = []
+    seen_chunk_ids: set[str] = set()
+    for source in sources:
+        if not source.chunk_id.strip() or not source.content.strip():
+            continue
+        if not source.citation_label.strip():
+            continue
+        if source.chunk_id in seen_chunk_ids:
+            continue
+        seen_chunk_ids.add(source.chunk_id)
+        sanitized.append(source)
+    return [
+        source.model_copy(update={"source_id": f"S{index}"})
+        for index, source in enumerate(sanitized, 1)
+    ]
+
+
 def render_legal_context(sources: list[LegalSource]) -> str:
     blocks: list[str] = []
     for index, source in enumerate(sources, 1):
@@ -93,7 +124,7 @@ def render_legal_context(sources: list[LegalSource]) -> str:
         location = "; ".join(location_parts) or "Toàn điều/đơn vị pháp lý"
         blocks.append(
             "\n".join([
-                f"[S{index}]",
+                f"[{source.source_id or f'S{index}'}]",
                 f"Dẫn chứng: {source.citation_label}",
                 f"Mã pháp điển: {source.article_code or 'Không có'}",
                 f"Tên điều: {source.article_title or 'Không có'}",
@@ -143,7 +174,7 @@ class RAGService:
         loop = asyncio.get_running_loop()
         hits = await loop.run_in_executor(_RETRIEVAL_EXECUTOR, retrieve)
         retrieval_ms = (perf_counter() - retrieval_started) * 1000
-        sources = [source_from_hit(hit) for hit in hits]
+        sources = sanitize_sources([source_from_hit(hit) for hit in hits])
 
         if not sources:
             total_ms = (perf_counter() - started) * 1000
@@ -164,24 +195,87 @@ class RAGService:
         if generator is None:
             generator = self.generator_factory()
             self.generator = generator
-        result = await generator.ainvoke({
-            "question": normalized_question,
-            "context": context,
-        })
+        try:
+            result = await generator.ainvoke({
+                "question": normalized_question,
+                "context": context,
+            })
+        except GenerationProviderError:
+            generation_ms = (perf_counter() - generation_started) * 1000
+            total_ms = (perf_counter() - started) * 1000
+            return AskResponse(
+                answer=GENERATION_FAILED_ANSWER,
+                method=RetrievalMethod(normalized_method),
+                sources=[],
+                retrieval_ms=round(retrieval_ms, 2),
+                generation_ms=round(generation_ms, 2),
+                total_ms=round(total_ms, 2),
+                model=None,
+                insufficient_evidence=True,
+                generation_failed=True,
+            )
+
         generation_ms = (perf_counter() - generation_started) * 1000
         total_ms = (perf_counter() - started) * 1000
-        insufficient = INSUFFICIENT_EVIDENCE_ANSWER.casefold() in (
-            result.answer.casefold()
-        )
+        source_map = {
+            source.source_id: source
+            for source in sources
+            if source.source_id is not None
+        }
+        try:
+            guarded = parse_and_validate_guarded_answer(
+                result.answer,
+                source_map,
+            )
+        except GuardrailValidationError:
+            return AskResponse(
+                answer=INSUFFICIENT_EVIDENCE_ANSWER,
+                method=RetrievalMethod(normalized_method),
+                sources=[],
+                retrieval_ms=round(retrieval_ms, 2),
+                generation_ms=round(generation_ms, 2),
+                total_ms=round(total_ms, 2),
+                model=result.model,
+                insufficient_evidence=True,
+            )
+
+        if guarded.status == AnswerStatus.OUT_OF_SCOPE:
+            return AskResponse(
+                answer=OUT_OF_SCOPE_ANSWER,
+                method=RetrievalMethod(normalized_method),
+                sources=[],
+                retrieval_ms=round(retrieval_ms, 2),
+                generation_ms=round(generation_ms, 2),
+                total_ms=round(total_ms, 2),
+                model=result.model,
+                insufficient_evidence=True,
+                out_of_scope=True,
+            )
+
+        if guarded.status == AnswerStatus.INSUFFICIENT_EVIDENCE:
+            return AskResponse(
+                answer=INSUFFICIENT_EVIDENCE_ANSWER,
+                method=RetrievalMethod(normalized_method),
+                sources=[],
+                retrieval_ms=round(retrieval_ms, 2),
+                generation_ms=round(generation_ms, 2),
+                total_ms=round(total_ms, 2),
+                model=result.model,
+                insufficient_evidence=True,
+            )
+
+        cited_sources = [
+            source_map[source_id]
+            for source_id in guarded.cited_source_ids
+        ]
         return AskResponse(
-            answer=result.answer,
+            answer=guarded.answer,
             method=RetrievalMethod(normalized_method),
-            sources=sources,
+            sources=cited_sources,
             retrieval_ms=round(retrieval_ms, 2),
             generation_ms=round(generation_ms, 2),
             total_ms=round(total_ms, 2),
             model=result.model,
-            insufficient_evidence=insufficient,
         )
 
 

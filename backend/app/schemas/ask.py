@@ -15,6 +15,7 @@ class AskRequest(BaseModel):
 
 
 class LegalSource(BaseModel):
+    source_id: str | None = None
     chunk_id: str
     article_code: str | None = None
     article_number: str | None = None
@@ -42,3 +43,5 @@ class AskResponse(BaseModel):
     total_ms: float
     model: str | None = None
     insufficient_evidence: bool = False
+    out_of_scope: bool = False
+    generation_failed: bool = False
