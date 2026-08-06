@@ -1,5 +1,7 @@
+import { useState } from 'react'
 import Markdown from 'react-markdown'
 import type { LegalSource, RetrievalMethod } from '../../api/qaTypes'
+import { CitationList } from '../../components/CitationList'
 
 export type DisplayAnswer = {
   id: string | null
@@ -19,26 +21,16 @@ export type DisplayAnswer = {
 
 function formatMs(value: number | null) {
   if (value === null) return 'Không ghi nhận'
-  if (value >= 1000) return `${(value / 1000).toFixed(2)} giây`
+  if (value >= 1000) return `${(value / 1000).toFixed(1).replace('.', ',')} giây`
   return `${Math.round(value)} ms`
 }
 
-function sourceLocation(source: LegalSource) {
-  const parts: string[] = []
-  if (source.clause_number) parts.push(`Khoản ${source.clause_number}`)
-  if (source.point_labels.length) parts.push(`Điểm ${source.point_labels.join(', ')}`)
-  return parts.join(' · ')
-}
-
-function sourceTypeLabel(sourceType: string | null) {
-  if (sourceType === 'LQ') return 'Bộ luật/Luật'
-  if (sourceType === 'NĐ') return 'Nghị định'
-  if (sourceType === 'TT') return 'Thông tư'
-  return sourceType
-}
-
-function articlePagePath(articleCode: string) {
-  return `/sources/${encodeURIComponent(articleCode)}`
+function methodLabel(method: RetrievalMethod | null) {
+  if (!method) return 'Đã lưu'
+  if (method === 'hybrid') return 'Kết hợp'
+  if (method === 'dense') return 'Ngữ nghĩa'
+  if (method === 'sparse') return 'Từ khóa'
+  return method
 }
 
 export function AnswerCard({
@@ -50,11 +42,19 @@ export function AnswerCard({
   isBookmarkBusy?: boolean
   onToggleBookmark?: (messageId: string, shouldSave: boolean) => void
 }) {
+  const [isProcessingOpen, setIsProcessingOpen] = useState(false)
+
+  const hasMetrics =
+    answer.retrievalMs !== null ||
+    answer.generationMs !== null ||
+    answer.totalMs !== null ||
+    Boolean(answer.model)
+
   return (
     <article className="answer-stack stored-answer">
       <div className="answer-header">
         <div>
-          <p className="eyebrow">Kết quả · {answer.method || 'đã lưu'}</p>
+          <p className="eyebrow">Kết quả · {methodLabel(answer.method)}</p>
           <h2>Câu trả lời</h2>
         </div>
         <div className="answer-header-actions">
@@ -97,69 +97,35 @@ export function AnswerCard({
         </Markdown>
       </div>
 
-      <dl className="metrics">
-        <div><dt>Truy hồi</dt><dd>{formatMs(answer.retrievalMs)}</dd></div>
-        <div><dt>Sinh đáp án</dt><dd>{formatMs(answer.generationMs)}</dd></div>
-        <div><dt>Tổng cộng</dt><dd>{formatMs(answer.totalMs)}</dd></div>
-        <div><dt>Mô hình</dt><dd title={answer.model || ''}>{answer.model || 'Không gọi LLM'}</dd></div>
-      </dl>
+      <CitationList sources={answer.sources} />
 
-      <div className="sources-heading">
-        <h3>Nguồn đối chiếu</h3>
-        <span>{answer.sources.length} đoạn luật</span>
-      </div>
+      {hasMetrics && (
+        <div className="processing-details-section">
+          <button
+            type="button"
+            className="processing-details-trigger"
+            onClick={() => setIsProcessingOpen((prev) => !prev)}
+            aria-expanded={isProcessingOpen}
+          >
+            <span>
+              Chi tiết xử lý · {methodLabel(answer.method)}
+              {answer.totalMs !== null ? ` · ${formatMs(answer.totalMs)}` : ''}
+            </span>
+            <span className={`processing-chevron ${isProcessingOpen ? 'open' : ''}`} aria-hidden="true">
+              ▼
+            </span>
+          </button>
 
-      <div className="source-list">
-        {answer.sources.map((source, index) => (
-          <article className="source-card" key={`${source.chunk_id}-${index}`}>
-            <div className="source-topline">
-              <span className="source-index">{source.source_id || `S${index + 1}`}</span>
-              {source.source_type && (
-                <span className="source-type">{sourceTypeLabel(source.source_type)}</span>
-              )}
-            </div>
-            <h4 className="source-citation">
-              {source.citation_label || source.article_code || source.chunk_id}
-            </h4>
-            {source.article_title && (
-              <p className="source-article-title">{source.article_title}</p>
-            )}
-            {sourceLocation(source) && (
-              <p className="source-location">{sourceLocation(source)}</p>
-            )}
-            {source.article_code && (
-              <p className="source-code">Mã pháp điển: {source.article_code}</p>
-            )}
-            <p className="source-content">{source.content}</p>
-            <div className="source-footer">
-              <span>
-                Hạng {source.rank}
-                {source.score !== null ? ` · score ${source.score.toFixed(4)}` : ''}
-              </span>
-              <span className="source-actions">
-                {source.article_code && (
-                  <a
-                    href={articlePagePath(source.article_code)}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    Xem đầy đủ điều luật
-                  </a>
-                )}
-                {source.source_url && (
-                  <a
-                    href={source.source_url}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    Văn bản chính thức ↗
-                  </a>
-                )}
-              </span>
-            </div>
-          </article>
-        ))}
-      </div>
+          {isProcessingOpen && (
+            <dl className="metrics processing-metrics-grid">
+              <div><dt>Truy hồi</dt><dd>{formatMs(answer.retrievalMs)}</dd></div>
+              <div><dt>Sinh đáp án</dt><dd>{formatMs(answer.generationMs)}</dd></div>
+              <div><dt>Tổng cộng</dt><dd>{formatMs(answer.totalMs)}</dd></div>
+              <div><dt>Mô hình</dt><dd title={answer.model || ''}>{answer.model || 'Không gọi LLM'}</dd></div>
+            </dl>
+          )}
+        </div>
+      )}
     </article>
   )
 }
