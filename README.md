@@ -29,6 +29,21 @@ bản đã kiểm chứng pháp lý. Nó chỉ được giữ lại để rollba
 
 Demo local hiện sử dụng corpus canonical Word 804 thông qua alias `labor_law_dev`.
 
+### Nguồn dữ liệu
+
+Corpus gồm 18 văn bản được pipeline tự động thu thập từ web và lưu thành
+snapshot bất biến trước khi parse, chuẩn hóa và chia chunk.
+
+- 17 văn bản được lấy từ các website chính thức của cơ quan nhà nước;
+- 1 văn bản sử dụng cơ chế fallback sang Cơ sở dữ liệu quốc gia về văn bản
+  pháp luật.
+
+Về mặt kỹ thuật, 17 nguồn chính thức gồm:
+
+- 15 tài liệu được tải qua adapter `official-gazette-word`;
+- 2 tài liệu DOCX được pipeline tải trực tiếp từ website chính thức của cơ quan
+  ban hành qua adapter `official-docx`.
+
 ### Golden benchmark
 
 Golden source:
