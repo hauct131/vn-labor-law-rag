@@ -1,0 +1,129 @@
+{
+  "schema_version": "canonical-word-804-final-evaluation-v1",
+  "status": "final_technical_locked_pending_authority_review",
+  "generated_at_utc": "2026-08-06T08:16:02+00:00",
+  "generated_from_git": {
+    "branch": "integrate/canonical-word-804-e2e",
+    "source_commit": "f22ac0c831212daf008ad244fe56530bbd1ed4df"
+  },
+  "corpus": {
+    "release_id": "labor-law-canonical-word-20260804-164432-candidate",
+    "chunk_path": "data/releases/labor-law-canonical-word-20260804-164432-candidate/canonical_chunks.jsonl",
+    "chunk_count": 804,
+    "sha256": "fdbec539efbfb3f4aa3cb3962046321e3a402150d93516ef4256934972c70307",
+    "physical_collection": "labor_law_canonical_word_20260804_fdbec539",
+    "local_alias": "labor_law_dev",
+    "legacy_runtime_alias": "labor_law_active"
+  },
+  "source_provenance": {
+    "audit": {
+      "path": "data/quality/canonical_word_804_provenance_audit.json",
+      "sha256": "7a4468b6f8e0f08fb3b38c366ac588f3da354c6e0ca822b274bd77c2c54629fc",
+      "size_bytes": 8463
+    },
+    "all_sources_downloaded_from_web": true,
+    "official_web_sources": 17,
+    "official_gazette_word_sources": 15,
+    "official_docx_sources": 2,
+    "vbpl_fallback_sources": 1
+  },
+  "golden": {
+    "source_path": "data/evaluation/golden_questions_v4_canonical_word_candidate.json",
+    "source_sha256": "92856a7dd92b8e65d84c161da9a0a61f72d33d11731be211aac08f8c6aaddf21",
+    "split_directory": "data/evaluation/splits/canonical_word_804",
+    "source_count": 45,
+    "dev_count": 31,
+    "test_count": 13,
+    "disabled_count": 1,
+    "split_manifest": {
+      "path": "data/evaluation/splits/canonical_word_804/split_manifest.json",
+      "sha256": "58a2c1f5a2f39d6b75e6e132ae01bf4adb6ce4cb5229b7927e74bbeb02151426",
+      "size_bytes": 4046
+    }
+  },
+  "retrieval_config": {
+    "top_k": 5,
+    "candidate_k": 30,
+    "rrf_k": 60,
+    "dense_weight": 0.9,
+    "sparse_weight": 0.1
+  },
+  "locked_test_policy": {
+    "test_split_consumed": true,
+    "allowed_test_runs": 1,
+    "post_test_tuning_allowed": false,
+    "test_rerun_performed_by_this_script": false
+  },
+  "locked_test_metrics": {
+    "any_article_hit_at_5": 1.0,
+    "all_article_hit_at_5": 0.923077,
+    "article_recall_at_5": 0.948718,
+    "article_mrr": 0.848718,
+    "all_evidence_hit_at_5": 0.692308,
+    "evidence_recall_at_5": 0.817949
+  },
+  "authoritative_artifacts": [
+    {
+      "path": "data/evaluation/runtime-benchmark/canonical_word_804/locked/dev_hybrid_trials.json",
+      "sha256": "456a93385f632af27a5f1f1d78dd96d891fc3f022d476152bf28f99cf382d52d",
+      "size_bytes": 97974
+    },
+    {
+      "path": "data/evaluation/runtime-benchmark/canonical_word_804/locked/dev_selected_top5_hybrid.json",
+      "sha256": "5c6ed60be506f87a4399b81610a2e8d75599c4cd248df402f9226499fcd5e118",
+      "size_bytes": 734824
+    },
+    {
+      "path": "data/evaluation/runtime-benchmark/canonical_word_804/locked/production_selection_top5.json",
+      "sha256": "feeeeb448599fae4b7c51030be7596370907d9665ec5a598cd3f7ff8710b58bc",
+      "size_bytes": 2085
+    },
+    {
+      "path": "data/evaluation/runtime-benchmark/canonical_word_804/locked/test_hybrid_config_top5.json",
+      "sha256": "0282197ba68e85d5f771669210f78a3d007875225aebdd734dab2f6fe3fc3dc3",
+      "size_bytes": 767
+    },
+    {
+      "path": "data/evaluation/runtime-benchmark/canonical_word_804/locked/test_final_hybrid.json",
+      "sha256": "72c5fe4a07e9e2ad0b80ef8693eaddd398dfb4e24085bbac1c3486832a6a724a",
+      "size_bytes": 313243
+    },
+    {
+      "path": "data/evaluation/splits/canonical_word_804/split_manifest.json",
+      "sha256": "58a2c1f5a2f39d6b75e6e132ae01bf4adb6ce4cb5229b7927e74bbeb02151426",
+      "size_bytes": 4046
+    },
+    {
+      "path": "data/quality/canonical_word_804_e5_token_audit/summary.json",
+      "sha256": "34668365de73c0de64a686c0c7b4ea1924771a01862765a56470bc567e3b58b2",
+      "size_bytes": 6799
+    },
+    {
+      "path": "data/raw/canonical_sources/run_manifest.json",
+      "sha256": "ce02affa744491cc7eeab336e203cc6df673f561ed2ddba48e6373314ce39f75",
+      "size_bytes": 11270
+    },
+    {
+      "path": "data/quality/canonical_word_804_provenance_audit.json",
+      "sha256": "7a4468b6f8e0f08fb3b38c366ac588f3da354c6e0ca822b274bd77c2c54629fc",
+      "size_bytes": 8463
+    }
+  ],
+  "quality_status": {
+    "e5_audit": {
+      "path": "data/quality/canonical_word_804_e5_token_audit/summary.json",
+      "sha256": "34668365de73c0de64a686c0c7b4ea1924771a01862765a56470bc567e3b58b2",
+      "reported_status": "completed"
+    },
+    "post_rebuild_provenance_audit": "PASS"
+  },
+  "legal_status": {
+    "authority_review_complete": false,
+    "legal_effect_review_complete": false,
+    "legally_approved_production_release": false
+  },
+  "legacy_policy": {
+    "pre_rebuild_source_binding_audit_is_historical": true,
+    "legacy_reports_document": "data/evaluation/LEGACY_REPORTS.md"
+  }
+}
