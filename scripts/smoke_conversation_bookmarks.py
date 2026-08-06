@@ -328,11 +328,46 @@ def run(
             "GET",
             f"/conversations/{encoded_conversation}",
         )
-        assert detail is not None
+        assert detail is not None, "API không trả chi tiết hội thoại."
         messages = detail.get("messages", [])
-        assert [item.get("role") for item in messages] == ["user", "assistant"]
-        assert messages[1].get("bookmarked") is True
-        assert messages[1].get("sources") == answer.get("sources")
+        roles = [item.get("role") for item in messages]
+        assert roles == ["user", "assistant"], {
+            "expected_roles": ["user", "assistant"],
+            "stored_roles": roles,
+            "detail": detail,
+        }
+        assert messages[1].get("id") == assistant_id, {
+            "expected_assistant_id": assistant_id,
+            "stored_assistant_id": messages[1].get("id"),
+        }
+        assert messages[1].get("bookmarked") is True, messages[1]
+
+        # Bản ghi nguồn có thêm khóa nội bộ `id`, vì vậy chỉ so sánh
+        # các trường nghiệp vụ được round-trip từ AskResponse.
+        expected_sources = [
+            (
+                item.get("source_id"),
+                item.get("chunk_id"),
+                item.get("article_code"),
+                item.get("content"),
+                item.get("rank"),
+            )
+            for item in answer.get("sources", [])
+        ]
+        stored_sources = [
+            (
+                item.get("source_id"),
+                item.get("chunk_id"),
+                item.get("article_code"),
+                item.get("content"),
+                item.get("rank"),
+            )
+            for item in messages[1].get("sources", [])
+        ]
+        assert stored_sources == expected_sources, {
+            "expected_sources": expected_sources,
+            "stored_sources": stored_sources,
+        }
         print("PASS 9/14: reload giữ transcript, nguồn và bookmark")
 
         saved = user_a.request_json("GET", "/bookmarks")
