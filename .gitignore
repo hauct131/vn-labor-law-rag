@@ -97,6 +97,7 @@ experiments/*
 
 # Backups and runtime state
 .env.bak.*
+.env.backup-*
 docker-compose.yml.bak.*
 qdrant_storage/
 .cache/

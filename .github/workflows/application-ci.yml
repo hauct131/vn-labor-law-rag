@@ -107,7 +107,7 @@ jobs:
         run: npm run build
 
   postgres-integration:
-    name: PostgreSQL history integration
+    name: PostgreSQL session/history integration
     runs-on: ubuntu-latest
     timeout-minutes: 20
 

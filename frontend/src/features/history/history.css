@@ -301,3 +301,26 @@
     flex-direction: column;
   }
 }
+
+.history-login-state {
+  background: var(--cream);
+  border-radius: 12px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+  padding: 14px;
+}
+
+.history-login-state p {
+  margin: 0 0 10px;
+}
+
+.history-login-state button {
+  background: transparent;
+  border: 1px solid var(--red);
+  border-radius: 9px;
+  color: var(--red);
+  cursor: pointer;
+  font-weight: 700;
+  padding: 7px 10px;
+}

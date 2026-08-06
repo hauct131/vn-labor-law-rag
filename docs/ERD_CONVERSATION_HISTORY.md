@@ -1,7 +1,8 @@
-# ERD dữ liệu hội thoại và bookmark
+# ERD tài khoản, session, hội thoại và bookmark
 
 ```mermaid
 erDiagram
+    APP_USER ||--o{ USER_SESSION : has
     APP_USER ||--o{ CONVERSATION : owns
     CONVERSATION ||--o{ MESSAGE : contains
     MESSAGE ||--o{ MESSAGE_SOURCE : cites
@@ -10,7 +11,24 @@ erDiagram
 
     APP_USER {
         varchar36 id PK
+        varchar320 email UK
+        varchar255 password_hash
+        varchar120 display_name
+        boolean is_active
+        boolean is_anonymous
         timestamptz created_at
+        timestamptz updated_at
+    }
+
+    USER_SESSION {
+        varchar36 id PK
+        varchar36 user_id FK
+        varchar64 token_hash UK
+        varchar64 csrf_token_hash
+        timestamptz created_at
+        timestamptz expires_at
+        timestamptz last_seen_at
+        timestamptz revoked_at
     }
 
     CONVERSATION {
@@ -64,22 +82,27 @@ erDiagram
 
 ## Giải thích khi trình bày
 
-ERD trên mô tả dữ liệu nghiệp vụ được lưu trong PostgreSQL. `APP_USER` hiện là
-người dùng ẩn danh được nhận diện bằng UUID của trình duyệt. Một người dùng có
-nhiều hội thoại; một hội thoại có nhiều message; một message assistant có thể có
-nhiều snapshot nguồn và được đánh dấu tối đa một lần cho mỗi người dùng.
+`APP_USER` là tài khoản nghiệp vụ. Email được chuẩn hóa và đặt unique; mật khẩu
+chỉ lưu dưới dạng PBKDF2 hash. Các dòng ẩn danh cũ được giữ tạm với
+`is_anonymous=true` để có thể chuyển lịch sử vào tài khoản khi người dùng đăng
+ký hoặc đăng nhập lần đầu.
 
-`MESSAGE_SOURCE` lưu snapshot nguồn đúng tại thời điểm câu trả lời được tạo. Vì
-vậy lịch sử vẫn hiển thị đúng căn cứ đã dùng ngay cả khi Qdrant được rebuild hoặc
-corpus mới được phát hành sau này.
+`USER_SESSION` lưu phiên đăng nhập phía server. Trình duyệt chỉ giữ session token
+ngẫu nhiên trong cookie `HttpOnly`; PostgreSQL chỉ giữ SHA-256 hash của token.
+Một tài khoản có thể có nhiều session tương ứng nhiều trình duyệt hoặc thiết bị.
+Logout đặt `revoked_at`, nên session bị thu hồi ngay.
 
-Corpus JSON/JSONL và Qdrant không được biểu diễn thành bảng trong ERD này:
+Một tài khoản có nhiều hội thoại; một hội thoại có nhiều message. Message
+assistant có thể có nhiều snapshot nguồn và chỉ có tối đa một bookmark cho mỗi
+người dùng nhờ unique constraint `(user_id, message_id)`.
 
-- JSON/JSONL là release canonical bất biến, không phải dữ liệu quan hệ phát sinh;
-- Qdrant là vector database và được thể hiện trong sơ đồ kiến trúc, không phải ERD
-  quan hệ;
-- `document_id`, `article_code` và `chunk_id` trong `MESSAGE_SOURCE` là khóa tham
-  chiếu logic sang corpus tại `corpus_release_id` đã ghi trên message.
+`MESSAGE_SOURCE` lưu snapshot căn cứ đúng tại thời điểm câu trả lời được tạo. Vì
+vậy lịch sử vẫn hiển thị căn cứ đã dùng ngay cả khi Qdrant được rebuild hoặc có
+corpus release mới.
 
-Khi bổ sung đăng nhập, `APP_USER` có thể mở rộng với email, password hash hoặc
-liên kết OAuth mà không phải thay đổi quan hệ Conversation–Message–Bookmark.
+Corpus JSON/JSONL và Qdrant không được biến thành bảng trong ERD này:
+
+- JSON/JSONL là release canonical bất biến;
+- Qdrant là vector database và thuộc sơ đồ kiến trúc hệ thống;
+- `article_code`, `chunk_id` và `corpus_release_id` là liên kết logic từ snapshot
+  nguồn về corpus đã dùng.

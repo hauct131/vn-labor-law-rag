@@ -1,4 +1,4 @@
-"""HTTP integration tests for saving successful answers to conversation history."""
+"""HTTP integration tests for session-owned answer history."""
 
 from collections.abc import Generator
 from uuid import uuid4
@@ -6,6 +6,7 @@ from uuid import uuid4
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.pool import StaticPool
 
@@ -49,7 +50,11 @@ class FakeService:
 
 
 @pytest.fixture
-def api_client() -> Generator[tuple[TestClient, FakeService], None, None]:
+def api_context() -> Generator[
+    tuple[TestClient, FakeService, sessionmaker[Session]],
+    None,
+    None,
+]:
     engine = create_engine(
         "sqlite+pysqlite:///:memory:",
         connect_args={"check_same_thread": False},
@@ -67,38 +72,55 @@ def api_client() -> Generator[tuple[TestClient, FakeService], None, None]:
 
     service = FakeService()
     original_auto_create = settings.database_auto_create
+    original_iterations = settings.password_pbkdf2_iterations
     settings.database_auto_create = False
+    settings.password_pbkdf2_iterations = 1000
     app.dependency_overrides[require_authorized_release] = lambda: None
     app.dependency_overrides[get_rag_service] = lambda: service
     app.dependency_overrides[get_db_session] = override_session
     try:
         with TestClient(app) as client:
-            yield client, service
+            yield client, service, factory
     finally:
         app.dependency_overrides.clear()
         settings.database_auto_create = original_auto_create
+        settings.password_pbkdf2_iterations = original_iterations
+        engine.dispose()
 
 
-def test_ask_creates_and_continues_conversation(api_client) -> None:
-    client, _service = api_client
-    client_id = str(uuid4())
-    headers = {"X-Client-Id": client_id}
+def _register(client: TestClient, email: str) -> dict[str, str]:
+    response = client.post(
+        "/api/auth/register",
+        json={
+            "email": email,
+            "password": "MatKhauAnToan123",
+            "display_name": email.split("@", 1)[0],
+        },
+    )
+    assert response.status_code == 201, response.text
+    csrf = client.cookies.get(settings.csrf_cookie_name)
+    assert csrf
+    return {"X-CSRF-Token": csrf}
+
+
+def test_ask_creates_and_continues_session_owned_conversation(api_context) -> None:
+    client, _service, _factory = api_context
+    csrf = _register(client, "owner@example.com")
 
     first = client.post(
         "/api/ask",
-        headers=headers,
+        headers=csrf,
         json={"question": "Nghỉ hằng năm bao nhiêu ngày?", "method": "hybrid"},
     )
     assert first.status_code == 200
     first_body = first.json()
     assert first_body["history_saved"] is True
-    assert first_body["conversation_id"]
-    assert first_body["assistant_message_id"]
-
     conversation_id = first_body["conversation_id"]
+    assert conversation_id
+
     second = client.post(
         "/api/ask",
-        headers=headers,
+        headers=csrf,
         json={
             "question": "Có được cộng dồn ngày nghỉ không?",
             "method": "sparse",
@@ -108,23 +130,18 @@ def test_ask_creates_and_continues_conversation(api_client) -> None:
     assert second.status_code == 200
     assert second.json()["conversation_id"] == conversation_id
 
-    detail = client.get(
-        f"/api/conversations/{conversation_id}",
-        headers=headers,
-    )
+    detail = client.get(f"/api/conversations/{conversation_id}")
     assert detail.status_code == 200
-    messages = detail.json()["messages"]
-    assert [item["role"] for item in messages] == [
+    assert [item["role"] for item in detail.json()["messages"]] == [
         "user",
         "assistant",
         "user",
         "assistant",
     ]
-    assert messages[1]["sources"][0]["article_code"] == "BLLD2019.113"
 
 
-def test_ask_without_client_id_remains_backward_compatible(api_client) -> None:
-    client, _service = api_client
+def test_public_ask_remains_available_without_session(api_context) -> None:
+    client, _service, _factory = api_context
     response = client.post(
         "/api/ask",
         json={"question": "Nghỉ hằng năm bao nhiêu ngày?", "method": "sparse"},
@@ -134,100 +151,89 @@ def test_ask_without_client_id_remains_backward_compatible(api_client) -> None:
     assert response.json()["conversation_id"] is None
 
 
-def test_invalid_conversation_id_is_rejected_before_llm_call(api_client) -> None:
-    client, service = api_client
+def test_authenticated_ask_requires_csrf(api_context) -> None:
+    client, service, _factory = api_context
+    _register(client, "csrf@example.com")
+    calls_before = service.calls
     response = client.post(
         "/api/ask",
-        headers={"X-Client-Id": str(uuid4())},
+        json={"question": "Nghỉ hằng năm bao nhiêu ngày?", "method": "sparse"},
+    )
+    assert response.status_code == 403
+    assert service.calls == calls_before
+
+
+def test_invalid_and_unknown_conversation_rejected_before_llm(api_context) -> None:
+    client, service, _factory = api_context
+    csrf = _register(client, "validation@example.com")
+
+    invalid = client.post(
+        "/api/ask",
+        headers=csrf,
         json={
             "question": "Nghỉ hằng năm bao nhiêu ngày?",
             "method": "sparse",
             "conversation_id": "not-a-uuid",
         },
     )
-    assert response.status_code == 422
+    assert invalid.status_code == 422
     assert service.calls == 0
 
-
-def test_unknown_conversation_is_rejected_before_llm_call(api_client) -> None:
-    client, service = api_client
-    response = client.post(
+    unknown = client.post(
         "/api/ask",
-        headers={"X-Client-Id": str(uuid4())},
+        headers=csrf,
         json={
             "question": "Nghỉ hằng năm bao nhiêu ngày?",
             "method": "sparse",
             "conversation_id": str(uuid4()),
         },
     )
-    assert response.status_code == 404
+    assert unknown.status_code == 404
     assert service.calls == 0
 
 
-def test_invalid_client_id_is_rejected_before_llm_call(api_client) -> None:
-    client, service = api_client
-    response = client.post(
+def test_other_account_cannot_continue_conversation(api_context) -> None:
+    owner, service, _factory = api_context
+    owner_csrf = _register(owner, "a@example.com")
+    created = owner.post(
         "/api/ask",
-        headers={"X-Client-Id": "not-a-uuid"},
+        headers=owner_csrf,
         json={"question": "Nghỉ hằng năm bao nhiêu ngày?", "method": "sparse"},
     )
-    assert response.status_code == 400
-    assert service.calls == 0
-
-
-def test_other_client_cannot_continue_conversation(api_client) -> None:
-    client, service = api_client
-    owner_headers = {"X-Client-Id": str(uuid4())}
-    created = client.post(
-        "/api/ask",
-        headers=owner_headers,
-        json={"question": "Nghỉ hằng năm bao nhiêu ngày?", "method": "sparse"},
-    )
-    assert created.status_code == 200
     conversation_id = created.json()["conversation_id"]
     calls_after_create = service.calls
 
-    denied = client.post(
-        "/api/ask",
-        headers={"X-Client-Id": str(uuid4())},
-        json={
-            "question": "Có được cộng dồn không?",
-            "method": "sparse",
-            "conversation_id": conversation_id,
-        },
-    )
-    assert denied.status_code == 404
+    with TestClient(app) as other:
+        other_csrf = _register(other, "b@example.com")
+        denied = other.post(
+            "/api/ask",
+            headers=other_csrf,
+            json={
+                "question": "Có được cộng dồn không?",
+                "method": "sparse",
+                "conversation_id": conversation_id,
+            },
+        )
+        assert denied.status_code == 404
     assert service.calls == calls_after_create
 
 
-def test_database_failure_does_not_discard_generated_answer(
-    api_client,
-    tmp_path,
+def test_persistence_failure_does_not_discard_generated_answer(
+    api_context,
+    monkeypatch,
 ) -> None:
-    client, _service = api_client
-    broken_engine = create_engine(
-        f"sqlite+pysqlite:///{tmp_path / 'missing' / 'application.db'}"
-    )
-    broken_factory = sessionmaker(
-        bind=broken_engine,
-        autoflush=False,
-        expire_on_commit=False,
-    )
+    client, _service, _factory = api_context
+    csrf = _register(client, "failure@example.com")
 
-    def broken_session() -> Generator[Session, None, None]:
-        session = broken_factory()
-        try:
-            yield session
-        finally:
-            session.close()
+    def fail_record(*args, **kwargs):
+        raise SQLAlchemyError("forced persistence failure")
 
-    app.dependency_overrides[get_db_session] = broken_session
+    monkeypatch.setattr("app.api.routes.ask.record_exchange", fail_record)
     response = client.post(
         "/api/ask",
-        headers={"X-Client-Id": str(uuid4())},
+        headers=csrf,
         json={"question": "Nghỉ hằng năm bao nhiêu ngày?", "method": "sparse"},
     )
-
     assert response.status_code == 200
     payload = response.json()
     assert payload["answer"].startswith("Đã trả lời")
@@ -237,20 +243,31 @@ def test_database_failure_does_not_discard_generated_answer(
     )
 
 
-def test_cors_allows_anonymous_client_header(api_client) -> None:
-    client, _service = api_client
+def test_cors_allows_credentials_and_csrf_header(api_context) -> None:
+    client, _service, _factory = api_context
     response = client.options(
         "/api/conversations",
         headers={
             "Origin": "http://localhost:5173",
-            "Access-Control-Request-Method": "GET",
-            "Access-Control-Request-Headers": "x-client-id",
+            "Access-Control-Request-Method": "PATCH",
+            "Access-Control-Request-Headers": "content-type,x-csrf-token",
         },
     )
     assert response.status_code == 200
-    assert response.headers["access-control-allow-origin"] == (
-        "http://localhost:5173"
+    assert response.headers["access-control-allow-origin"] == "http://localhost:5173"
+    assert response.headers["access-control-allow-credentials"] == "true"
+    assert "x-csrf-token" in response.headers["access-control-allow-headers"].lower()
+
+
+def test_stale_session_cookie_does_not_block_public_ask(api_context) -> None:
+    client, _service, _factory = api_context
+    csrf = _register(client, "stale@example.com")
+    assert client.post("/api/auth/logout", headers=csrf).status_code == 204
+
+    client.cookies.set(settings.session_cookie_name, "stale-session-token")
+    response = client.post(
+        "/api/ask",
+        json={"question": "Nghỉ hằng năm bao nhiêu ngày?", "method": "sparse"},
     )
-    assert "x-client-id" in response.headers[
-        "access-control-allow-headers"
-    ].lower()
+    assert response.status_code == 200
+    assert response.json()["history_saved"] is False

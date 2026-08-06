@@ -70,5 +70,8 @@ def initialize_database() -> None:
 
     # Import models here so their metadata is registered before create_all.
     from app.models import conversation as _conversation_models  # noqa: F401
+    from app.db.migrations import apply_session_auth_compatibility
 
-    Base.metadata.create_all(bind=get_engine())
+    engine = get_engine()
+    apply_session_auth_compatibility(engine)
+    Base.metadata.create_all(bind=engine)

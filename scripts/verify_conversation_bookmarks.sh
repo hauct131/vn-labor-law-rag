@@ -15,7 +15,7 @@ mkdir -p "$(dirname "$REPORT")"
 
 {
   echo '============================================================'
-  echo 'CONVERSATION HISTORY + BOOKMARK VERIFICATION'
+  echo 'SESSION AUTH + CONVERSATION HISTORY VERIFICATION'
   echo '============================================================'
   date --iso-8601=seconds
   echo
@@ -56,6 +56,7 @@ mkdir -p "$(dirname "$REPORT")"
 
   echo '=== FEATURE TESTS ==='
   PYTHONPATH=backend "$PYTHON_BIN" -m pytest -q \
+    backend/tests/test_session_auth.py \
     backend/tests/test_conversation_history.py \
     backend/tests/test_ask_history_api.py \
     --tb=short
@@ -110,7 +111,9 @@ mkdir -p "$(dirname "$REPORT")"
       sleep 2
     done
 
-    python3 scripts/smoke_conversation_bookmarks.py --restart-backend
+    python3 scripts/smoke_conversation_bookmarks.py \
+      --restart-backend \
+      --restart-postgres
     echo
   else
     echo '=== DOCKER RUNTIME + POSTGRESQL SMOKE ==='

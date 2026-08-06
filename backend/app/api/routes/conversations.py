@@ -1,13 +1,18 @@
-"""Conversation history and bookmark endpoints."""
+"""Authenticated conversation history and bookmark endpoints."""
 
 import logging
 from typing import Annotated
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, Header, HTTPException, Response, status
+from fastapi import APIRouter, Depends, HTTPException, Response, status
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
+from app.api.dependencies.auth import (
+    AuthenticatedSession,
+    require_authenticated_session,
+    require_csrf,
+)
 from app.db.database import get_db_session
 from app.repositories.conversations import (
     ConversationNotFoundError,
@@ -34,30 +39,8 @@ from app.schemas.conversation import (
 router = APIRouter(tags=["Conversation history"])
 logger = logging.getLogger(__name__)
 DbSession = Annotated[Session, Depends(get_db_session)]
-
-
-def _normalize_client_id(value: str) -> str:
-    try:
-        return str(UUID(value))
-    except (TypeError, ValueError) as exc:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="X-Client-Id phải là UUID hợp lệ.",
-        ) from exc
-
-
-def require_client_id(
-    x_client_id: Annotated[str, Header(alias="X-Client-Id")],
-) -> str:
-    return _normalize_client_id(x_client_id)
-
-
-def optional_client_id(
-    x_client_id: Annotated[str | None, Header(alias="X-Client-Id")] = None,
-) -> str | None:
-    if x_client_id is None:
-        return None
-    return _normalize_client_id(x_client_id)
+ReadAuth = Annotated[AuthenticatedSession, Depends(require_authenticated_session)]
+WriteAuth = Annotated[AuthenticatedSession, Depends(require_csrf)]
 
 
 def _database_error(exc: SQLAlchemyError) -> HTTPException:
@@ -71,11 +54,14 @@ def _database_error(exc: SQLAlchemyError) -> HTTPException:
 @router.get("/conversations", response_model=ConversationListResponse)
 def get_conversations(
     session: DbSession,
-    client_id: Annotated[str, Depends(require_client_id)],
+    authenticated: ReadAuth,
 ) -> ConversationListResponse:
     try:
         return ConversationListResponse(
-            conversations=list_conversations(session, user_id=client_id)
+            conversations=list_conversations(
+                session,
+                user_id=authenticated.user.id,
+            )
         )
     except SQLAlchemyError as exc:
         session.rollback()
@@ -90,17 +76,17 @@ def get_conversations(
 def post_conversation(
     payload: ConversationCreate,
     session: DbSession,
-    client_id: Annotated[str, Depends(require_client_id)],
+    authenticated: WriteAuth,
 ) -> ConversationDetail:
     try:
         conversation = create_conversation(
             session,
-            user_id=client_id,
+            user_id=authenticated.user.id,
             title=payload.title,
         )
         return conversation_detail(
             session,
-            user_id=client_id,
+            user_id=authenticated.user.id,
             conversation_id=conversation.id,
         )
     except SQLAlchemyError as exc:
@@ -115,12 +101,12 @@ def post_conversation(
 def get_conversation(
     conversation_id: UUID,
     session: DbSession,
-    client_id: Annotated[str, Depends(require_client_id)],
+    authenticated: ReadAuth,
 ) -> ConversationDetail:
     try:
         return conversation_detail(
             session,
-            user_id=client_id,
+            user_id=authenticated.user.id,
             conversation_id=str(conversation_id),
         )
     except ConversationNotFoundError as exc:
@@ -138,18 +124,18 @@ def patch_conversation(
     conversation_id: UUID,
     payload: ConversationUpdate,
     session: DbSession,
-    client_id: Annotated[str, Depends(require_client_id)],
+    authenticated: WriteAuth,
 ) -> ConversationDetail:
     try:
         update_conversation_title(
             session,
-            user_id=client_id,
+            user_id=authenticated.user.id,
             conversation_id=str(conversation_id),
             title=payload.title,
         )
         return conversation_detail(
             session,
-            user_id=client_id,
+            user_id=authenticated.user.id,
             conversation_id=str(conversation_id),
         )
     except ConversationNotFoundError as exc:
@@ -166,12 +152,12 @@ def patch_conversation(
 def remove_conversation(
     conversation_id: UUID,
     session: DbSession,
-    client_id: Annotated[str, Depends(require_client_id)],
+    authenticated: WriteAuth,
 ) -> Response:
     try:
         delete_conversation(
             session,
-            user_id=client_id,
+            user_id=authenticated.user.id,
             conversation_id=str(conversation_id),
         )
         return Response(status_code=status.HTTP_204_NO_CONTENT)
@@ -185,11 +171,11 @@ def remove_conversation(
 @router.get("/bookmarks", response_model=SavedAnswerListResponse)
 def get_bookmarks(
     session: DbSession,
-    client_id: Annotated[str, Depends(require_client_id)],
+    authenticated: ReadAuth,
 ) -> SavedAnswerListResponse:
     try:
         return SavedAnswerListResponse(
-            items=list_saved_answers(session, user_id=client_id)
+            items=list_saved_answers(session, user_id=authenticated.user.id)
         )
     except SQLAlchemyError as exc:
         session.rollback()
@@ -204,12 +190,12 @@ def put_bookmark(
     message_id: UUID,
     payload: BookmarkCreate,
     session: DbSession,
-    client_id: Annotated[str, Depends(require_client_id)],
+    authenticated: WriteAuth,
 ) -> BookmarkResponse:
     try:
         bookmark = set_bookmark(
             session,
-            user_id=client_id,
+            user_id=authenticated.user.id,
             message_id=str(message_id),
             note=payload.note,
         )
@@ -236,10 +222,14 @@ def put_bookmark(
 def delete_bookmark(
     message_id: UUID,
     session: DbSession,
-    client_id: Annotated[str, Depends(require_client_id)],
+    authenticated: WriteAuth,
 ) -> Response:
     try:
-        remove_bookmark(session, user_id=client_id, message_id=str(message_id))
+        remove_bookmark(
+            session,
+            user_id=authenticated.user.id,
+            message_id=str(message_id),
+        )
         return Response(status_code=status.HTTP_204_NO_CONTENT)
     except SQLAlchemyError as exc:
         session.rollback()

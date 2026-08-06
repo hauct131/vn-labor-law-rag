@@ -19,7 +19,15 @@ pytestmark = pytest.mark.integration
 from sqlalchemy import create_engine, select
 from sqlalchemy.orm import Session, sessionmaker
 
-from app.models.conversation import Bookmark, Conversation, Message
+from app.core.config import settings
+from app.models.conversation import Bookmark, Conversation, Message, UserSession
+from app.repositories.auth import (
+    InvalidSessionError,
+    get_session_by_token,
+    issue_session,
+    register_user,
+    revoke_session,
+)
 from app.repositories.conversations import (
     conversation_detail,
     delete_conversation,
@@ -44,21 +52,22 @@ def _psycopg_url(sqlalchemy_url: str) -> str:
 
 
 def _reset_schema_and_apply_migration(database_url: str) -> None:
-    migration = (
-        Path(__file__).resolve().parents[1]
-        / "migrations"
-        / "001_conversations_bookmarks.sql"
-    ).read_text(encoding="utf-8")
+    migrations_dir = Path(__file__).resolve().parents[1] / "migrations"
+    migrations = [
+        (migrations_dir / "001_conversations_bookmarks.sql").read_text(encoding="utf-8"),
+        (migrations_dir / "002_session_auth.sql").read_text(encoding="utf-8"),
+    ]
 
     with psycopg.connect(_psycopg_url(database_url), autocommit=True) as connection:
         connection.execute("DROP SCHEMA public CASCADE")
         connection.execute("CREATE SCHEMA public")
-        # The migration contains only ordinary DDL statements. Executing each
+        # The migrations contain ordinary DDL statements. Executing each
         # statement separately avoids driver-specific multi-statement behavior.
-        for statement in migration.split(";"):
-            normalized = statement.strip()
-            if normalized:
-                connection.execute(normalized)
+        for migration in migrations:
+            for statement in migration.split(";"):
+                normalized = statement.strip()
+                if normalized:
+                    connection.execute(normalized)
 
 
 def _answer() -> AskResponse:
@@ -157,3 +166,43 @@ def test_postgres_migration_roundtrip_jsonb_and_cascade() -> None:
         assert session.scalars(select(Bookmark)).all() == []
 
     engine.dispose()
+
+
+def test_postgres_session_auth_roundtrip_and_revocation() -> None:
+    database_url = _database_url()
+    _reset_schema_and_apply_migration(database_url)
+
+    engine = create_engine(database_url, pool_pre_ping=True)
+    factory = sessionmaker(bind=engine, expire_on_commit=False, class_=Session)
+    original_iterations = settings.password_pbkdf2_iterations
+    settings.password_pbkdf2_iterations = 1000
+    try:
+        with factory() as session:
+            user, migrated = register_user(
+                session,
+                email="postgres-session@example.test",
+                password="PostgresSessionPassword123",
+                display_name="Postgres Session",
+            )
+            assert migrated is False
+            issued = issue_session(session, user=user)
+            session.commit()
+            user_id = user.id
+            session_id = issued.record.id
+            token = issued.token
+
+        with factory() as session:
+            stored = session.get(UserSession, session_id)
+            assert stored is not None
+            assert stored.user_id == user_id
+            assert stored.token_hash != token
+            resolved = get_session_by_token(session, token=token, touch=False)
+            assert resolved.user.email == "postgres-session@example.test"
+            revoke_session(session, record=resolved)
+
+        with factory() as session:
+            with pytest.raises(InvalidSessionError):
+                get_session_by_token(session, token=token, touch=False)
+    finally:
+        settings.password_pbkdf2_iterations = original_iterations
+        engine.dispose()
