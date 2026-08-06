@@ -1,0 +1,3 @@
+
+# Treat PDF evidence files as binary
+*.pdf binary

@@ -16,7 +16,7 @@ from bs4 import BeautifulSoup, Tag
 
 logger = logging.getLogger(__name__)
 
-PARSER_VERSION = "1.2.0"
+PARSER_VERSION = "1.3.0"
 
 __all__ = [
     "PARSER_VERSION",
@@ -53,13 +53,19 @@ TARGET_CODE_RE = re.compile(
     r"\.",
     re.IGNORECASE,
 )
-CLAUSE_RE = re.compile(r"^\s*(?P<number>\d+)\.\s+(?P<body>.+)$", re.DOTALL)
+CLAUSE_RE = re.compile(r"^\s*(?P<number>\d+[a-zA-ZđĐ]?)\.\s+(?P<body>.+)$", re.DOTALL)
 POINT_RE = re.compile(
     r"^\s*(?P<label>[a-zđ])\)\s+(?P<body>.+)$",
     re.IGNORECASE | re.DOTALL,
 )
+QUOTE_OPEN_RE = re.compile(r'^["“]Điều\s+\d+', re.IGNORECASE)
+QUOTE_CLOSE_RE = re.compile(r'["”]\s*[;.]?\s*$', re.IGNORECASE)
 ATTACHMENT_RE = re.compile(
     r"\.(?:docx?|pdf|xlsx?|xls|zip|rar)(?:$|[?#])",
+    re.IGNORECASE,
+)
+FORM_MARKER_RE = re.compile(
+    r"^Mẫu\s+số\s+(?P<number>\d+[a-zA-Z]?)$",
     re.IGNORECASE,
 )
 
@@ -506,6 +512,31 @@ def parse_content_block(
         None,
     )
 
+def is_appendix_boundary_tag(tag: Tag) -> bool:
+    if tag.name not in ("p", "div", "h1", "h2", "h3", "h4"):
+        return False
+    text = tag_text(tag)
+    if not text:
+        return False
+    import re
+    match = re.match(r"^PHỤ\s+LỤC(?:\s+(?:[IVXLCDM]+|\d+))?[\.\s:]*$", text, re.IGNORECASE)
+    return bool(match)
+
+
+def article_appendix_siblings(article_tag: Tag) -> list[Tag]:
+    result: list[Tag] = []
+    in_appendix = False
+    for sibling in article_tag.find_next_siblings():
+        if not isinstance(sibling, Tag):
+            continue
+        if tag_classes(sibling) & ARTICLE_BOUNDARY_CLASSES:
+            break
+        if is_appendix_boundary_tag(sibling):
+            in_appendix = True
+        if in_appendix:
+            result.append(sibling)
+    return result
+
 
 def article_siblings(article_tag: Tag) -> list[Tag]:
     result: list[Tag] = []
@@ -513,6 +544,8 @@ def article_siblings(article_tag: Tag) -> list[Tag]:
         if not isinstance(sibling, Tag):
             continue
         if tag_classes(sibling) & ARTICLE_BOUNDARY_CLASSES:
+            break
+        if is_appendix_boundary_tag(sibling):
             break
         result.append(sibling)
     return result
@@ -536,6 +569,7 @@ def build_content_units(
     preamble_index = 0
     continuation_index = 0
     id_occurrences: Counter[str] = Counter()
+    state_stack = []
 
     def unique_unit_id(base_id: str) -> tuple[str, int]:
         id_occurrences[base_id] += 1
@@ -595,9 +629,7 @@ def build_content_units(
                     "text": text,
                 }
             )
-            continue
-
-        if point_match:
+        elif point_match:
             label = point_match.group("label").casefold()
             if current_clause is None:
                 warnings.append(
@@ -625,37 +657,45 @@ def build_content_units(
                     "text": text,
                 }
             )
-            continue
-
-        if current_clause is None:
-            preamble_index += 1
-            base_id = (
-                f"{article_id}|preamble={preamble_index}"
-                if article_id
-                else f"preamble={preamble_index}"
-            )
-            unit_type = "preamble"
         else:
-            continuation_index += 1
-            base_id = (
-                f"{article_id}|clause={current_clause}|continuation={continuation_index}"
-                if article_id
-                else f"clause={current_clause}|continuation={continuation_index}"
-            )
-            unit_type = "clause_continuation"
+            if current_clause is None:
+                preamble_index += 1
+                base_id = (
+                    f"{article_id}|preamble={preamble_index}"
+                    if article_id
+                    else f"preamble={preamble_index}"
+                )
+                unit_type = "preamble"
+            else:
+                continuation_index += 1
+                base_id = (
+                    f"{article_id}|clause={current_clause}|continuation={continuation_index}"
+                    if article_id
+                    else f"clause={current_clause}|continuation={continuation_index}"
+                )
+                unit_type = "clause_continuation"
 
-        unit_id, occurrence = unique_unit_id(base_id)
-        units.append(
-            {
-                "unit_id": unit_id,
-                "unit_occurrence": occurrence,
-                "unit_type": unit_type,
-                "clause_number": current_clause,
-                "point_label": None,
-                "raw_text": block["raw_text"],
-                "text": text,
-            }
-        )
+            unit_id, occurrence = unique_unit_id(base_id)
+            units.append(
+                {
+                    "unit_id": unit_id,
+                    "unit_occurrence": occurrence,
+                    "unit_type": unit_type,
+                    "clause_number": current_clause,
+                    "point_label": None,
+                    "raw_text": block["raw_text"],
+                    "text": text,
+                }
+            )
+
+        # Quote detection and state stack push/pop
+        stripped = text.strip()
+        if QUOTE_OPEN_RE.match(stripped):
+            state_stack.append((current_clause, continuation_index))
+            current_clause = None
+            continuation_index = 0
+        if QUOTE_CLOSE_RE.search(stripped) and state_stack:
+            current_clause, continuation_index = state_stack.pop()
 
     return units, list(dict.fromkeys(warnings))
 
@@ -665,6 +705,7 @@ def parse_article(
     index: int,
     context: dict[str, dict[str, Any] | None],
     provenance: dict[str, Any],
+    document_attachments: list[dict[str, Any]],
 ) -> dict[str, Any]:
     heading = tag_text(article_tag)
     heading_match = ARTICLE_HEADING_RE.match(heading)
@@ -722,6 +763,124 @@ def parse_article(
             tables.append(table)
         if attachment is not None:
             attachments.append(attachment)
+
+    # Parse appendixes as document-level containers. They follow the final
+    # article in source HTML, but are not children of that article.
+    appendix_siblings = article_appendix_siblings(article_tag)
+    if appendix_siblings:
+        groups = []
+        current_group = []
+        for tag in appendix_siblings:
+            if is_appendix_boundary_tag(tag):
+                if current_group:
+                    groups.append(current_group)
+                current_group = [tag]
+            else:
+                if current_group:
+                    current_group.append(tag)
+        if current_group:
+            groups.append(current_group)
+
+        for group in groups:
+            if not group:
+                continue
+            title = tag_text(group[0])
+            subtitle = None
+            if len(group) > 1 and group[1].name != "table":
+                subtitle = tag_text(group[1])
+
+            parent_document_id = (
+                source_note.get("source_document_id")
+                if source_note
+                else None
+            ) or provenance["document_id"]
+            attachment_number = 1 + sum(
+                attachment.get("parent_document_id") == parent_document_id
+                for attachment in document_attachments
+            )
+            attachment_id = (
+                f"{parent_document_id}|attachment={attachment_number}"
+            )
+
+            group_blocks = []
+            group_tables = []
+            group_linked_attachments = []
+            group_form_markers = []
+            group_raw_texts = []
+            group_texts = []
+            current_form_number = None
+
+            for tag in group:
+                table_index = len(group_tables) + 1
+                attachment_index = len(group_linked_attachments) + 1
+                block, table, attachment_item = parse_content_block(
+                    tag,
+                    attachment_id,
+                    table_index,
+                    attachment_index,
+                )
+                if block is None:
+                    continue
+
+                group_blocks.append(block)
+                group_raw_texts.append(block["raw_text"])
+                group_texts.append(block["text"])
+
+                if block["kind"] == "text":
+                    text_val = block["text"]
+                    form_match = FORM_MARKER_RE.match(text_val)
+                    if form_match:
+                        current_form_number = (
+                            f"Mẫu số {form_match.group('number')}"
+                        )
+                    if "Mẫu số" in text_val:
+                        group_form_markers.append(text_val)
+
+                if table is not None:
+                    table.update(
+                        {
+                            "container_type": "attachment",
+                            "attachment_id": attachment_id,
+                            "attachment_title": title,
+                            "parent_document_id": parent_document_id,
+                            "parent_article_id": None,
+                            "form_number": current_form_number,
+                        }
+                    )
+                    group_tables.append(table)
+                if attachment_item is not None:
+                    group_linked_attachments.append(attachment_item)
+
+            # Build the appendix attachment
+            appendix_attachment = {
+                **provenance,
+                "container_type": "attachment",
+                "attachment_id": attachment_id,
+                "attachment_title": title,
+                "title": title,
+                "subtitle": subtitle,
+                "text": "\n".join(group_texts),
+                "raw_text": "\n".join(group_raw_texts),
+                "content_blocks": group_blocks,
+                "tables": group_tables,
+                "linked_attachments": group_linked_attachments,
+                "form_markers": group_form_markers,
+                "href": None,
+                "filename": None,
+                "extension": "html",
+                "file_extension": "html",
+                "downloaded": True,
+                "parent_document_id": parent_document_id,
+                "parent_article_id": None,
+                "source_type": heading_match.group("source_type").upper(),
+                "source_document_id": parent_document_id,
+                "source_note_text": (
+                    source_note["text"] if source_note else None
+                ),
+                "source_urls": source_note["urls"] if source_note else [],
+                "relations": [],
+            }
+            document_attachments.append(appendix_attachment)
 
     content_texts = [
         block["text"]
@@ -905,6 +1064,7 @@ def flatten_structure_relations(
 
 def _validate_corpus_internal(
     articles: list[dict[str, Any]],
+    document_attachments: list[dict[str, Any]],
     all_relations: list[dict[str, Any]],
     structure_relations: list[dict[str, Any]],
     class_counts: dict[str, int],
@@ -918,8 +1078,44 @@ def _validate_corpus_internal(
     valid_ids = [str(value) for value in article_ids if value is not None]
     source_counts = Counter(article["source_type"] for article in articles)
 
-    table_count = sum(len(article["tables"]) for article in articles)
-    attachment_count = sum(len(article["attachments"]) for article in articles)
+    article_table_count = sum(len(article["tables"]) for article in articles)
+    attachment_table_count = sum(
+        len(attachment.get("tables", []))
+        for attachment in document_attachments
+    )
+    table_count = article_table_count + attachment_table_count
+    article_attachment_count = sum(
+        len(article["attachments"])
+        for article in articles
+    )
+    document_attachment_count = len(document_attachments)
+    attachment_count = article_attachment_count + document_attachment_count
+
+    attachment_ids = [
+        attachment.get("attachment_id")
+        for attachment in document_attachments
+    ]
+    duplicate_attachment_ids = [
+        value
+        for value, count in Counter(attachment_ids).items()
+        if value is not None and count > 1
+    ]
+    invalid_document_attachments = [
+        str(attachment.get("attachment_id") or "<missing>")
+        for attachment in document_attachments
+        if attachment.get("container_type") != "attachment"
+        or not attachment.get("attachment_id")
+        or not attachment.get("parent_document_id")
+        or attachment.get("parent_article_id") is not None
+    ]
+    invalid_attachment_tables = [
+        str(table.get("table_id") or "<missing>")
+        for attachment in document_attachments
+        for table in attachment.get("tables", [])
+        if table.get("attachment_id") != attachment.get("attachment_id")
+        or table.get("parent_document_id") != attachment.get("parent_document_id")
+        or table.get("parent_article_id") is not None
+    ]
     empty_articles = [
         article["article_code"]
         for article in articles
@@ -999,6 +1195,21 @@ def _validate_corpus_internal(
         errors.append(f"Có article_id bị trùng: {len(duplicate_ids)}.")
     if duplicate_unit_ids:
         errors.append(f"Có unit_id bị trùng: {len(duplicate_unit_ids)}.")
+    if duplicate_attachment_ids:
+        errors.append(
+            f"Có attachment_id cấp tài liệu bị trùng: "
+            f"{len(duplicate_attachment_ids)}."
+        )
+    if invalid_document_attachments:
+        errors.append(
+            f"Có document attachment sai provenance: "
+            f"{len(invalid_document_attachments)}."
+        )
+    if invalid_attachment_tables:
+        errors.append(
+            f"Có bảng trong attachment sai provenance: "
+            f"{len(invalid_attachment_tables)}."
+        )
     if empty_articles:
         errors.append(f"Có điều rỗng: {len(empty_articles)}.")
     if without_chapter:
@@ -1042,6 +1253,12 @@ def _validate_corpus_internal(
         "duplicate_article_ids": duplicate_ids,
         "duplicate_unit_id_count": len(duplicate_unit_ids),
         "duplicate_unit_ids": duplicate_unit_ids,
+        "duplicate_attachment_id_count": len(duplicate_attachment_ids),
+        "duplicate_attachment_ids": duplicate_attachment_ids,
+        "invalid_document_attachment_count": len(invalid_document_attachments),
+        "invalid_document_attachments": invalid_document_attachments,
+        "invalid_attachment_table_count": len(invalid_attachment_tables),
+        "invalid_attachment_tables": invalid_attachment_tables,
         "repeated_unit_occurrence_count": repeated_unit_occurrence_count,
         "empty_article_count": len(empty_articles),
         "empty_articles": empty_articles,
@@ -1049,7 +1266,11 @@ def _validate_corpus_internal(
         "articles_without_chapter": without_chapter,
         "articles_without_source_note_count": len(without_source_note),
         "table_count": table_count,
+        "article_table_count": article_table_count,
+        "attachment_table_count": attachment_table_count,
         "attachment_count": attachment_count,
+        "article_attachment_count": article_attachment_count,
+        "document_attachment_count": document_attachment_count,
         "p_noi_dung_count": p_noi_dung_count,
         "empty_p_noi_dung_count": empty_markers,
         "article_relation_count": len(all_relations),
@@ -1081,6 +1302,7 @@ def validate_corpus(
     """
     metadata = canonical_corpus["metadata"]
     articles = canonical_corpus["articles"]
+    document_attachments = canonical_corpus.get("attachments", [])
     structure_relations = canonical_corpus["structure_relations"]
     class_counts = metadata.get("class_counts", {})
     topic_code = metadata["topic_code"]
@@ -1091,6 +1313,7 @@ def validate_corpus(
 
     return _validate_corpus_internal(
         articles=articles,
+        document_attachments=document_attachments,
         all_relations=all_relations,
         structure_relations=structure_relations,
         class_counts=class_counts,
@@ -1159,6 +1382,7 @@ def parse_legal_document(
     ]
     logger.info("Found %d articles", len(article_tags))
 
+    document_attachments: list[dict[str, Any]] = []
     articles = [
         parse_article(
             tag,
@@ -1168,6 +1392,7 @@ def parse_legal_document(
                 {"chapter": None, "section": None},
             ),
             provenance,
+            document_attachments,
         )
         for index, tag in enumerate(article_tags, start=1)
     ]
@@ -1243,6 +1468,7 @@ def parse_legal_document(
         "structure": structure,
         "structure_relations": structure_relations,
         "articles": articles,
+        "attachments": document_attachments,
     }
     return canonical
 
@@ -1289,7 +1515,11 @@ def build_inspection_report(
                 validation["articles_without_chapter_count"]
             ),
             "table_count": validation["table_count"],
+            "article_table_count": validation["article_table_count"],
+            "attachment_table_count": validation["attachment_table_count"],
             "attachment_count": validation["attachment_count"],
+            "article_attachment_count": validation["article_attachment_count"],
+            "document_attachment_count": validation["document_attachment_count"],
             "p_noi_dung_count": validation["p_noi_dung_count"],
             "empty_p_noi_dung_count": validation["empty_p_noi_dung_count"],
         },

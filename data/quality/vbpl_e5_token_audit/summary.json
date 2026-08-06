@@ -1,0 +1,248 @@
+{
+  "status": "completed",
+  "input_path": "data/processed/vbpl_legal_chunks.jsonl",
+  "input_sha256": "3f6452f103d3e5fdddd6927df8113d20ed4c496e79715937a6b3ea0ba632f3bd",
+  "chunk_count": 744,
+  "model_name": "intfloat/multilingual-e5-large",
+  "fastembed_version": "0.8.0",
+  "tokenizer_class": "Tokenizer",
+  "actual_model_max_tokens": 512,
+  "prefix_string": "passage: ",
+  "near_limit_threshold": 480,
+  "exact_measurement": true,
+  "token_statistics": {
+    "min": 32,
+    "max": 326,
+    "mean": 154.1855,
+    "median": 139.0,
+    "p95": 291.0,
+    "p99": 307.71,
+    "total": 114714
+  },
+  "content_token_statistics": {
+    "min": 30,
+    "max": 324,
+    "mean": 152.1855,
+    "median": 137.0,
+    "p95": 289.0,
+    "p99": 305.71,
+    "total": 113226
+  },
+  "prefix_overhead_statistics": {
+    "min": 2,
+    "max": 2,
+    "mean": 2.0,
+    "median": 2.0,
+    "p95": 2.0,
+    "p99": 2.0,
+    "total": 1488
+  },
+  "risk_counts": {
+    "near_or_above_count": 0,
+    "at_model_limit_count": 0,
+    "strictly_over_model_limit_count": 0
+  },
+  "counts_by_chunk_type": {
+    "article": 176,
+    "clause": 412,
+    "fallback_segment": 47,
+    "points": 104,
+    "preamble": 5
+  },
+  "risk_counts_by_chunk_type": {},
+  "counts_by_container_type": {
+    "article": 744
+  },
+  "risk_counts_by_container_type": {},
+  "top_20_longest": [
+    {
+      "chunk_id": "1175a15c-0ca4-51e7-aff1-2ead7be904c9",
+      "article_code": "3",
+      "chunk_type": "article",
+      "e5_passage_token_count": 326,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "63852c41-ab13-552a-9c66-cc28458c80cc",
+      "article_code": "57",
+      "chunk_type": "clause",
+      "e5_passage_token_count": 324,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "050cdd76-c087-5722-ba6b-29fc3b2e7ed3",
+      "article_code": "5",
+      "chunk_type": "fallback_segment",
+      "e5_passage_token_count": 317,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "22cd8091-b923-51ec-8e38-146eaf9b229c",
+      "article_code": "51",
+      "chunk_type": "points",
+      "e5_passage_token_count": 311,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "48835007-0f67-538e-a668-f6bd93e7010d",
+      "article_code": "97",
+      "chunk_type": "points",
+      "e5_passage_token_count": 311,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "b87fccb1-a76e-5953-8006-9a2e570ec0d2",
+      "article_code": "2",
+      "chunk_type": "points",
+      "e5_passage_token_count": 310,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "e39f078e-6cfa-52e2-af32-c8a54b2557fc",
+      "article_code": "69",
+      "chunk_type": "points",
+      "e5_passage_token_count": 310,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "015469c5-0a7a-541e-9967-12ee672e6600",
+      "article_code": "8",
+      "chunk_type": "fallback_segment",
+      "e5_passage_token_count": 309,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "3556633d-133d-5600-b0be-93a2b80eee30",
+      "article_code": "41",
+      "chunk_type": "points",
+      "e5_passage_token_count": 306,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "a4202d87-91c1-551f-9a14-8c7a80658398",
+      "article_code": "71",
+      "chunk_type": "points",
+      "e5_passage_token_count": 306,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "68e44437-d114-5487-8fcc-1e580a7c25d2",
+      "article_code": "8",
+      "chunk_type": "fallback_segment",
+      "e5_passage_token_count": 305,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "3d052910-4267-5db2-9da9-013e571ab638",
+      "article_code": "41",
+      "chunk_type": "points",
+      "e5_passage_token_count": 304,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "d7a99eab-4398-5a19-ab08-0e755fa0ed09",
+      "article_code": "3",
+      "chunk_type": "points",
+      "e5_passage_token_count": 304,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "eade5b8a-3ca8-5c2b-a04b-b3ce3fd41783",
+      "article_code": "26",
+      "chunk_type": "article",
+      "e5_passage_token_count": 304,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "7f870eac-abee-5315-975d-b9a7cca64fff",
+      "article_code": "20",
+      "chunk_type": "article",
+      "e5_passage_token_count": 303,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "36de508c-43f9-5eac-9019-800c54793ee1",
+      "article_code": "18",
+      "chunk_type": "points",
+      "e5_passage_token_count": 302,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "59c3ac0c-c17f-577e-bbb7-e592357e8af9",
+      "article_code": "8",
+      "chunk_type": "fallback_segment",
+      "e5_passage_token_count": 302,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "79c96dbe-fabf-5b49-8d8c-6c9f9990bc34",
+      "article_code": "57",
+      "chunk_type": "points",
+      "e5_passage_token_count": 302,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "b2af3abb-5a18-56ae-be71-fbebb9f41e54",
+      "article_code": "5",
+      "chunk_type": "clause",
+      "e5_passage_token_count": 302,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "ea99322d-24a8-59be-bebe-2e9b48e96100",
+      "article_code": "104",
+      "chunk_type": "points",
+      "e5_passage_token_count": 302,
+      "overflow_tokens": 0
+    }
+  ],
+  "cl100k_comparison": {
+    "available_count": 744,
+    "missing_count": 0,
+    "source_tokenizers": [
+      "tiktoken:cl100k_base"
+    ],
+    "difference_definition": "e5_passage_token_count - chunker_token_count",
+    "difference_statistics": {
+      "count": 744,
+      "min": -304,
+      "max": -27,
+      "mean": -146.2648,
+      "median": -132.0,
+      "p95": -48.0
+    },
+    "proxy_at_or_above_limit_count": 92,
+    "exact_strictly_over_limit_count": 0,
+    "true_positive_count": 0,
+    "true_negative_count": 652,
+    "false_positive_count": 92,
+    "false_negative_count": 0
+  },
+  "comparison_against_cl100k": {
+    "available_count": 744,
+    "missing_count": 0,
+    "source_tokenizers": [
+      "tiktoken:cl100k_base"
+    ],
+    "difference_definition": "e5_passage_token_count - chunker_token_count",
+    "difference_statistics": {
+      "count": 744,
+      "min": -304,
+      "max": -27,
+      "mean": -146.2648,
+      "median": -132.0,
+      "p95": -48.0
+    },
+    "proxy_at_or_above_limit_count": 92,
+    "exact_strictly_over_limit_count": 0,
+    "true_positive_count": 0,
+    "true_negative_count": 652,
+    "false_positive_count": 92,
+    "false_negative_count": 0
+  },
+  "validation": {
+    "error_count": 0,
+    "warning_count": 0,
+    "is_valid": true
+  }
+}

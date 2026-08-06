@@ -1,0 +1,253 @@
+{
+  "schema_version": "canonical-word-804-provenance-audit-v1",
+  "status": "PASS",
+  "generated_at_utc": "2026-08-06T08:16:02+00:00",
+  "release": {
+    "release_id": "labor-law-canonical-word-20260804-164432-candidate",
+    "chunk_path": "data/releases/labor-law-canonical-word-20260804-164432-candidate/canonical_chunks.jsonl",
+    "chunk_count": 804,
+    "sha256": "fdbec539efbfb3f4aa3cb3962046321e3a402150d93516ef4256934972c70307"
+  },
+  "source_policy": {
+    "total_documents": 18,
+    "official_web_sources": 17,
+    "official_gazette_word": 15,
+    "official_docx": 2,
+    "vbpl_fallback": 1,
+    "fallback_document": "10/2020/TT-BLĐTBXH",
+    "fallback_source_id": "vbpl:item:146696",
+    "all_sources_downloaded_from_web": true,
+    "one_canonical_snapshot_per_document": true
+  },
+  "canonical_source_manifest": {
+    "path": "data/raw/canonical_sources/run_manifest.json",
+    "sha256": "ce02affa744491cc7eeab336e203cc6df673f561ed2ddba48e6373314ce39f75",
+    "size_bytes": 11270
+  },
+  "checks": [
+    {
+      "name": "corpus_sha256",
+      "status": "PASS",
+      "details": {
+        "expected": "fdbec539efbfb3f4aa3cb3962046321e3a402150d93516ef4256934972c70307",
+        "actual": "fdbec539efbfb3f4aa3cb3962046321e3a402150d93516ef4256934972c70307"
+      }
+    },
+    {
+      "name": "chunk_count",
+      "status": "PASS",
+      "details": {
+        "expected": 804,
+        "actual": 804
+      }
+    },
+    {
+      "name": "required_provenance_metadata",
+      "status": "PASS",
+      "details": {
+        "missing_rows": [],
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "unique_document_count",
+      "status": "PASS",
+      "details": {
+        "expected": 18,
+        "actual": 18
+      }
+    },
+    {
+      "name": "one_source_per_document",
+      "status": "PASS",
+      "details": {}
+    },
+    {
+      "name": "official_source_count",
+      "status": "PASS",
+      "details": {
+        "expected": 17,
+        "actual": 17,
+        "official_gazette_word": 15,
+        "official_docx": 2
+      }
+    },
+    {
+      "name": "official_gazette_word_count",
+      "status": "PASS",
+      "details": {
+        "expected": 15,
+        "actual": 15
+      }
+    },
+    {
+      "name": "official_docx_count",
+      "status": "PASS",
+      "details": {
+        "expected": 2,
+        "actual": 2
+      }
+    },
+    {
+      "name": "vbpl_fallback_count",
+      "status": "PASS",
+      "details": {
+        "expected": 1,
+        "actual": 1,
+        "documents": [
+          "10/2020/TT-BLĐTBXH"
+        ]
+      }
+    },
+    {
+      "name": "fallback_binding",
+      "status": "PASS",
+      "details": {
+        "document": "10/2020/TT-BLĐTBXH",
+        "expected_source": "vbpl:item:146696",
+        "actual_sources": [
+          "vbpl:item:146696"
+        ]
+      }
+    },
+    {
+      "name": "known_source_types_only",
+      "status": "PASS",
+      "details": {}
+    },
+    {
+      "name": "canonical_source_policy_manifest",
+      "status": "PASS",
+      "details": {}
+    }
+  ],
+  "documents": [
+    {
+      "document_number": "04/2021/TT-BCT",
+      "chunk_count": 9,
+      "source_class": "official_gazette_word",
+      "source_document_id": "official-gazette-word:sha256:a6fd1ab0428d307430fa0b3ef58cf386c47908259f86a9d7ef3ff2119daf71fc"
+    },
+    {
+      "document_number": "09/2020/TT-BLĐTBXH",
+      "chunk_count": 13,
+      "source_class": "official_gazette_word",
+      "source_document_id": "official-gazette-word:sha256:7f58cc95c585deb5d8ff748e83f5cc722a8cf91ae67aa2ee91e6c82bbfc6a245"
+    },
+    {
+      "document_number": "10/2020/TT-BLĐTBXH",
+      "chunk_count": 26,
+      "source_class": "vbpl_fallback",
+      "source_document_id": "vbpl:item:146696"
+    },
+    {
+      "document_number": "12/2022/TT-BCT",
+      "chunk_count": 10,
+      "source_class": "official_gazette_word",
+      "source_document_id": "official-gazette-word:sha256:400d3571aaba503d7f79a2e5fcee8dcb1c298594aac4db62deab9d70932b4eb3"
+    },
+    {
+      "document_number": "128/2025/NĐ-CP",
+      "chunk_count": 1,
+      "source_class": "official_gazette_word",
+      "source_document_id": "official-gazette-word:sha256:78bd889badd9b375694344f18041b28a458e2553f8530258a5effc824aad5cce"
+    },
+    {
+      "document_number": "129/2025/NĐ-CP",
+      "chunk_count": 18,
+      "source_class": "official_gazette_word",
+      "source_document_id": "official-gazette-word:sha256:ca5082b9f517d8aaf45651f2b6e9b24d5b62b9be7b6a19c1f8473998b9b996c0"
+    },
+    {
+      "document_number": "135/2020/NĐ-CP",
+      "chunk_count": 10,
+      "source_class": "official_gazette_word",
+      "source_document_id": "official-gazette-word:sha256:83aa59abd9d6a5a0da88b2b996cfbc4f7c83bc329e95ed1dc03dccb004639020"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "chunk_count": 235,
+      "source_class": "official_gazette_word",
+      "source_document_id": "official-gazette-word:sha256:54600f4a809b341462c39f7ef4982f0e33bf21a0af462027ea2c93e6d88f5c83"
+    },
+    {
+      "document_number": "152/2020/NĐ-CP",
+      "chunk_count": 9,
+      "source_class": "official_gazette_word",
+      "source_document_id": "official-gazette-word:sha256:afe57922569d4fefde77937474553c619ff96bb1adc1494aeeac61975d68850e"
+    },
+    {
+      "document_number": "17/2023/TT-BLĐTBXH",
+      "chunk_count": 12,
+      "source_class": "official_gazette_word",
+      "source_document_id": "official-gazette-word:sha256:0f3afa3650504ad1a0161d1dbe55b3942c12fa5f057171d6ef251652c6339ef8"
+    },
+    {
+      "document_number": "18/2021/TT-BLĐTBXH",
+      "chunk_count": 10,
+      "source_class": "official_gazette_word",
+      "source_document_id": "official-gazette-word:sha256:525f7583bc976c3f89c832c8464732122d548be57277e8d5d121f8a30e124e41"
+    },
+    {
+      "document_number": "18/VBHN-VPQH",
+      "chunk_count": 277,
+      "source_class": "official_docx",
+      "source_document_id": "official-docx:sha256:41341e4fbdf369547f794397faeec5a90005c80a0d7b347c5d539ab435623e69"
+    },
+    {
+      "document_number": "19/2021/TT-BLĐTBXH",
+      "chunk_count": 5,
+      "source_class": "official_gazette_word",
+      "source_document_id": "official-gazette-word:sha256:0eb0859ac9a55268cb0d5f87e16e1408e7bc221e6bae0f8cd68119f87948445f"
+    },
+    {
+      "document_number": "20/2023/TT-BCT",
+      "chunk_count": 16,
+      "source_class": "official_gazette_word",
+      "source_document_id": "official-gazette-word:sha256:bf9f045ef7cbc47d181b4e0218be51666fa933067554f045de728a4acbd405a3"
+    },
+    {
+      "document_number": "219/2025/NĐ-CP",
+      "chunk_count": 88,
+      "source_class": "official_gazette_word",
+      "source_document_id": "official-gazette-word:sha256:0f95a3684231ac64c538631346f50346df925dc4a995a5ff2323317f5539c5d0"
+    },
+    {
+      "document_number": "293/2025/NĐ-CP",
+      "chunk_count": 9,
+      "source_class": "official_gazette_word",
+      "source_document_id": "official-gazette-word:sha256:6d6986c9109a886b586c4f69efc8391c07805b225350fd98d0205371708820a4"
+    },
+    {
+      "document_number": "66.18/2026/NQ-CP",
+      "chunk_count": 24,
+      "source_class": "official_docx",
+      "source_document_id": "official-docx:sha256:73dbd510f1d2cd838ed7e77dc7850ef31c71afbee95d9b9877077f8805bbe0fd"
+    },
+    {
+      "document_number": "97/2022/NĐ-CP",
+      "chunk_count": 32,
+      "source_class": "official_gazette_word",
+      "source_document_id": "official-gazette-word:sha256:7f9cd102398471aaae5be900f6a078902d8cb5392d12f380cd2ac8d0cb22a20b"
+    }
+  ],
+  "failures": [],
+  "safe_to_finalize_technical_evaluation": true,
+  "authority_review_complete": false,
+  "legal_effect_review_complete": false,
+  "production_promotion_performed": false,
+  "pre_rebuild_divergence_audit": {
+    "path": "data/quality/canonical_source_binding_audit.json",
+    "sha256": "71a344e8663e3f3072d75f63d895a13bc1f8b977dc4a8c388f255f4bf18738e7",
+    "status": "FAIL",
+    "base_corpus": "/media/hao/Data/vn-labor-law-rag/data/processed/vbpl_articles_raw.json",
+    "classification": "historical_pre_rebuild_vbpl_vs_canonical_source_divergence",
+    "is_release_gate_for_804": false
+  },
+  "notes": [
+    "The 18 canonical documents were downloaded from web sources, then stored as immutable snapshots.",
+    "The 17 official web sources consist of 15 official-gazette-word bindings and 2 official-docx bindings.",
+    "The remaining document uses the approved VBPL fallback.",
+    "This provenance audit does not constitute final legal approval."
+  ]
+}

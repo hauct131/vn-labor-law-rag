@@ -1,0 +1,123 @@
+{
+  "config": "config/vbpl_corpus.json",
+  "external_source_documents": [
+    {
+      "document_number": "18/VBHN-VPQH",
+      "official_page_url": "https://vanban.chinhphu.vn/?docid=217002&pageid=27160",
+      "source_adapter": "official_government_docx"
+    },
+    {
+      "document_number": "66.18/2026/NQ-CP",
+      "official_page_url": "https://vanban.chinhphu.vn/?docid=218181&pageid=27160",
+      "source_adapter": "official_government_docx"
+    }
+  ],
+  "failed": 0,
+  "finished_at": "2026-07-28T12:06:59+00:00",
+  "results": [
+    {
+      "document_number": "135/2020/NĐ-CP",
+      "elapsed_ms": 8.926,
+      "snapshot_dir": "data/raw/vbpl/135_2020_nd_cp/20260728T093210Z-d0b3bfc6",
+      "status": "skipped_valid"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "elapsed_ms": 12.024,
+      "snapshot_dir": "data/raw/vbpl/145_2020_nd_cp/20260728T093213Z-1e5786e6",
+      "status": "skipped_valid"
+    },
+    {
+      "document_number": "152/2020/NĐ-CP",
+      "elapsed_ms": 8.463,
+      "snapshot_dir": "data/raw/vbpl/152_2020_nd_cp/20260728T093217Z-6c265a8d",
+      "status": "skipped_valid"
+    },
+    {
+      "document_number": "97/2022/NĐ-CP",
+      "elapsed_ms": 13.786,
+      "snapshot_dir": "data/raw/vbpl/97_2022_nd_cp/20260728T093853Z-f97924cd",
+      "status": "skipped_valid"
+    },
+    {
+      "document_number": "293/2025/NĐ-CP",
+      "elapsed_ms": 8.046,
+      "snapshot_dir": "data/raw/vbpl/293_2025_nd_cp/20260728T093223Z-68361d30",
+      "status": "skipped_valid"
+    },
+    {
+      "document_number": "219/2025/NĐ-CP",
+      "elapsed_ms": 12.337,
+      "snapshot_dir": "data/raw/vbpl/219_2025_nd_cp/20260728T093903Z-7f26444f",
+      "status": "skipped_valid"
+    },
+    {
+      "document_number": "128/2025/NĐ-CP",
+      "elapsed_ms": 9.396,
+      "snapshot_dir": "data/raw/vbpl/128_2025_nd_cp/20260728T093228Z-8d578ed9",
+      "status": "skipped_valid"
+    },
+    {
+      "document_number": "129/2025/NĐ-CP",
+      "elapsed_ms": 9.002,
+      "snapshot_dir": "data/raw/vbpl/129_2025_nd_cp/20260728T093231Z-87cc9ff5",
+      "status": "skipped_valid"
+    },
+    {
+      "document_number": "09/2020/TT-BLĐTBXH",
+      "elapsed_ms": 7.796,
+      "snapshot_dir": "data/raw/vbpl/09_2020_tt_bldtbxh/20260728T093234Z-3e22a194",
+      "status": "skipped_valid"
+    },
+    {
+      "document_number": "10/2020/TT-BLĐTBXH",
+      "elapsed_ms": 7.981,
+      "snapshot_dir": "data/raw/vbpl/10_2020_tt_bldtbxh/20260728T093237Z-67146c33",
+      "status": "skipped_valid"
+    },
+    {
+      "document_number": "04/2021/TT-BCT",
+      "elapsed_ms": 7.853,
+      "snapshot_dir": "data/raw/vbpl/04_2021_tt_bct/20260728T093239Z-2e299df9",
+      "status": "skipped_valid"
+    },
+    {
+      "document_number": "18/2021/TT-BLĐTBXH",
+      "elapsed_ms": 8.029,
+      "snapshot_dir": "data/raw/vbpl/18_2021_tt_bldtbxh/20260728T093242Z-840a5f05",
+      "status": "skipped_valid"
+    },
+    {
+      "document_number": "19/2021/TT-BLĐTBXH",
+      "elapsed_ms": 8.073,
+      "snapshot_dir": "data/raw/vbpl/19_2021_tt_bldtbxh/20260728T093246Z-1072ef19",
+      "status": "skipped_valid"
+    },
+    {
+      "document_number": "12/2022/TT-BCT",
+      "elapsed_ms": 8.91,
+      "snapshot_dir": "data/raw/vbpl/12_2022_tt_bct/20260728T093249Z-6f5bcd04",
+      "status": "skipped_valid"
+    },
+    {
+      "document_number": "20/2023/TT-BCT",
+      "elapsed_ms": 7.933,
+      "snapshot_dir": "data/raw/vbpl/20_2023_tt_bct/20260728T093251Z-3d7adf3e",
+      "status": "skipped_valid"
+    },
+    {
+      "document_number": "17/2023/TT-BLĐTBXH",
+      "elapsed_ms": 7.859,
+      "snapshot_dir": "data/raw/vbpl/17_2023_tt_bldtbxh/20260728T093254Z-2a9b204a",
+      "status": "skipped_valid"
+    }
+  ],
+  "run_id": "bfdc7c7b5d124167a88b7d0e17e73403",
+  "schema_version": "vbpl-ingestion-run-v1",
+  "skipped": 16,
+  "started_at": "2026-07-28T12:06:29+00:00",
+  "status": "completed",
+  "success": 0,
+  "total": 16,
+  "unchanged": 0
+}

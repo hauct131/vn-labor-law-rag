@@ -1,0 +1,10 @@
+{
+  "schema_version": "golden-canonical-audit-v1",
+  "question_count": 45,
+  "locked": true,
+  "evidence_reference_count": 178,
+  "evidence_missing_count": 0,
+  "questions_with_changed_evidence_ids": 1,
+  "missing_evidence_by_question": {},
+  "status": "PASS"
+}

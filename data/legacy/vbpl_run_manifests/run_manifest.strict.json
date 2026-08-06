@@ -1,0 +1,28 @@
+{
+  "config": "/tmp/vbpl-strict-documents.json",
+  "external_source_documents": [],
+  "failed": 0,
+  "finished_at": "2026-07-24T10:39:17+00:00",
+  "results": [
+    {
+      "document_number": "97/2022/NĐ-CP",
+      "elapsed_ms": 7785.477,
+      "snapshot_dir": "data/raw/vbpl/97_2022_nd_cp/20260724T103908Z-f97924cd",
+      "status": "created"
+    },
+    {
+      "document_number": "219/2025/NĐ-CP",
+      "elapsed_ms": 6655.113,
+      "snapshot_dir": "data/raw/vbpl/219_2025_nd_cp/20260724T103917Z-7f26444f",
+      "status": "created"
+    }
+  ],
+  "run_id": "5eabea8dc48e42a88f66f4af75e2c446",
+  "schema_version": "vbpl-ingestion-run-v1",
+  "skipped": 0,
+  "started_at": "2026-07-24T10:39:00+00:00",
+  "status": "completed",
+  "success": 2,
+  "total": 2,
+  "unchanged": 0
+}

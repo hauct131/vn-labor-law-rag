@@ -1,0 +1,5 @@
+# Offline dense/hybrid and retrieval-tuning scripts only.
+# Kept separate to avoid adding PyTorch/SentenceTransformers to the API image.
+sentence-transformers
+
+fastembed==0.8.0

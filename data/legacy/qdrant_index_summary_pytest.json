@@ -1,0 +1,19 @@
+{
+  "status": "completed",
+  "timestamp_utc": "2026-07-26T05:41:39.256783+00:00",
+  "corpus_path": "/tmp/pytest-of-hao/pytest-18/test_resume_matching_fingerpri0/legal_chunks.jsonl",
+  "corpus_sha256": "6aa31b4ff25d2df6dbfaa1839886d9e210b9281643822c7258e191b10a38110e",
+  "chunk_count": 1,
+  "collection": "labor_law_test",
+  "qdrant_url": "http://localhost:6333",
+  "dense_model": "intfloat/multilingual-e5-large",
+  "dense_vector_name": "dense",
+  "sparse_model": "Qdrant/bm25",
+  "sparse_vector_name": "sparse",
+  "dense_dimension": 1024,
+  "batch_size": 16,
+  "threads": 6,
+  "exact_point_count": 1,
+  "elapsed_seconds": 0.0,
+  "collection_status": "green"
+}

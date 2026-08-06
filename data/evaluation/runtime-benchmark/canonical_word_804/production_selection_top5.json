@@ -1,0 +1,58 @@
+{
+  "schema_version": "runtime-production-selection-v1",
+  "status": "locked_pending_test_evaluation",
+  "selected_at": "2026-08-04T12:38:58.745402+00:00",
+  "selection_split": "dev",
+  "production_top_k": 5,
+  "selection_metric": "0.45*all_article_hit@5 + 0.35*article_recall@5 + 0.15*article_mrr@5 + 0.05*any_article_hit@5",
+  "selected_trial_name": "cand30_dw0p90_sw0p10_rrf60",
+  "selected_config": {
+    "candidate_k": 30,
+    "rrf_k": 60,
+    "dense_weight": 0.9,
+    "sparse_weight": 0.1,
+    "top_k": 5
+  },
+  "dev_metrics_at_5": {
+    "any_article_hit": 1.0,
+    "all_article_hit": 0.645161,
+    "article_recall": 0.829032,
+    "article_mrr": 0.922043,
+    "any_evidence_hit": 1.0,
+    "all_evidence_hit": 0.580645,
+    "evidence_recall": 0.769021,
+    "evidence_mrr": 0.922043
+  },
+  "dev_metrics_at_10": {
+    "any_article_hit": 1.0,
+    "all_article_hit": 0.741935,
+    "article_recall": 0.872043,
+    "article_mrr": 0.922043,
+    "any_evidence_hit": 1.0,
+    "all_evidence_hit": 0.645161,
+    "evidence_recall": 0.823028,
+    "evidence_mrr": 0.922043
+  },
+  "dev_latency_ms": {
+    "mean": 91.825,
+    "p50": 81.507,
+    "p95": 144.995,
+    "min": 59.682,
+    "max": 191.896
+  },
+  "corpus_sha256": "fdbec539efbfb3f4aa3cb3962046321e3a402150d93516ef4256934972c70307",
+  "collection": "labor_law_canonical_word_20260804_fdbec539",
+  "package_versions": {
+    "fastembed": "0.8.0",
+    "qdrant-client": "1.18.0",
+    "py-vncorenlp": "0.1.4"
+  },
+  "provenance": {
+    "tuning_trials": "data/evaluation/runtime-benchmark/canonical_word_804/tuning-fast/dev_hybrid_trials.json",
+    "tuning_trials_sha256": "456a93385f632af27a5f1f1d78dd96d891fc3f022d476152bf28f99cf382d52d",
+    "confirmation": "data/evaluation/runtime-benchmark/canonical_word_804/selected-top5-confirmation/dev_hybrid.json",
+    "confirmation_sha256": "5c6ed60be506f87a4399b81610a2e8d75599c4cd248df402f9226499fcd5e118",
+    "trial_count": 24,
+    "note": "Selected independently on canonical Word corpus 804 using the locked dev split and production top_k=5. The test split was not used for selection."
+  }
+}

@@ -1,0 +1,649 @@
+{
+  "schema_version": "legal-effect-review-v2",
+  "release_id": "labor-law-canonical-20260727-candidate",
+  "law_as_of": "2026-07-27",
+  "review_status": "technical_review_complete_pending_authority_approval",
+  "authority_review_status": "pending",
+  "document_decisions": {
+    "04/2021/TT-BCT": {
+      "decision": "active",
+      "scope": "Điều 1-9"
+    },
+    "09/2020/TT-BLĐTBXH": {
+      "decision": "amended",
+      "scope": "Điều 1-13"
+    },
+    "10/2020/TT-BLĐTBXH": {
+      "decision": "active",
+      "scope": "Điều 1-12"
+    },
+    "12/2022/TT-BCT": {
+      "decision": "active",
+      "scope": "Điều 1-10"
+    },
+    "128/2025/NĐ-CP": {
+      "decision": "active_scoped",
+      "scope": "Chỉ Điều 7",
+      "notes": "Điều 8 và Mục 2 Phụ lục II hết hiệu lực theo khoản 3 Điều 35 Nghị định 219/2025/NĐ-CP nhưng không thuộc phạm vi đã chọn."
+    },
+    "129/2025/NĐ-CP": {
+      "decision": "active_temporarily",
+      "scope": "Điều 67-81",
+      "effective_from": "2025-07-01",
+      "effective_to": "2027-02-28",
+      "notes": "Áp dụng đến trước 2027-03-01, trừ trường hợp quy định tương ứng chấm dứt sớm theo khoản 2 Điều 80."
+    },
+    "135/2020/NĐ-CP": {
+      "decision": "amended",
+      "scope": "Điều 1-9 sau khi loại phần hết hiệu lực"
+    },
+    "145/2020/NĐ-CP": {
+      "decision": "amended",
+      "scope": "Điều 1-115 sau khi áp dụng quy định thẩm quyền tạm thời của Nghị định 129/2025/NĐ-CP"
+    },
+    "152/2020/NĐ-CP": {
+      "decision": "active_scoped",
+      "scope": "Chỉ Điều 22-28",
+      "notes": "Phần về lao động nước ngoài làm việc tại Việt Nam hết hiệu lực theo khoản 2 Điều 35 Nghị định 219/2025/NĐ-CP; Điều 22-28 về lao động Việt Nam không thuộc phần bị loại."
+    },
+    "17/2023/TT-BLĐTBXH": {
+      "decision": "active",
+      "scope": "Điều 1-12"
+    },
+    "18/2021/TT-BLĐTBXH": {
+      "decision": "active",
+      "scope": "Điều 1-10"
+    },
+    "18/VBHN-VPQH": {
+      "decision": "active_consolidated_text",
+      "scope": "Điều 1-220"
+    },
+    "19/2021/TT-BLĐTBXH": {
+      "decision": "active",
+      "scope": "Điều 1-5"
+    },
+    "20/2023/TT-BCT": {
+      "decision": "active",
+      "scope": "Điều 1-12"
+    },
+    "219/2025/NĐ-CP": {
+      "decision": "active",
+      "scope": "Điều 1-36"
+    },
+    "293/2025/NĐ-CP": {
+      "decision": "active",
+      "scope": "Điều 1-5"
+    },
+    "66.18/2026/NQ-CP": {
+      "decision": "active_temporarily",
+      "scope": "Điều 4, Điều 6 và các đơn vị bằng chứng Phụ lục I đã chọn",
+      "effective_from": "2026-07-01",
+      "effective_to": "2027-02-28"
+    },
+    "97/2022/NĐ-CP": {
+      "decision": "active",
+      "scope": "Điều 1-14"
+    }
+  },
+  "evidence": [
+    {
+      "id": "nd158-2025-art44",
+      "url": "https://xaydungchinhsach.chinhphu.vn/toan-van-nghi-dinh-158-2025-nd-cp-quy-dinh-ve-bao-hiem-xa-hoi-bat-buoc-119250629171336803.htm",
+      "supports": "Từ 2025-07-01, khoản 2 Điều 3, khoản 1 và khoản 3 Điều 7, khoản 2 Điều 8 và Phụ lục III của Nghị định 135/2020/NĐ-CP hết hiệu lực."
+    },
+    {
+      "id": "nd219-2025-art35",
+      "url": "https://vanban.chinhphu.vn/?docid=214840&pageid=27160",
+      "local_snapshot": "data/raw/vbpl/219_2025_nd_cp/20260728T093903Z-7f26444f/full_text.txt",
+      "supports": "Từ 2025-08-07, phần lao động nước ngoài của Nghị định 152/2020/NĐ-CP và Điều 8, Mục 2 Phụ lục II của Nghị định 128/2025/NĐ-CP hết hiệu lực."
+    },
+    {
+      "id": "nd129-2025",
+      "url": "https://vanban.chinhphu.vn/?docid=213920&pageid=27160",
+      "supports": "Quy định tạm thời về thẩm quyền chính quyền địa phương hai cấp, có hiệu lực từ 2025-07-01."
+    },
+    {
+      "id": "tt08-2023",
+      "url": "https://vanban.chinhphu.vn/?docid=208729&pageid=27160",
+      "supports": "Bãi bỏ yêu cầu bản sao sổ hộ khẩu hoặc giấy tạm trú tại khoản 2 Điều 6 Thông tư 09/2020/TT-BLĐTBXH."
+    },
+    {
+      "id": "nd35-2022",
+      "url": "https://vanban.chinhphu.vn/?docid=205861&pageid=27160",
+      "local_snapshot": "data/raw/vbpl_amendments/35_2022_nd_cp/20260802T190133Z-8f8d2fbe/attachments/35-2022-nd.signed.pdf",
+      "sha256": "e74b6cf08e204c105130e34937044475f27a59d9559bde11720551ef37ef0e35",
+      "hash_binding_required": true,
+      "supports": "Sửa đổi khoản 2 Điều 4 và khoản 2 Điều 31 Nghị định 145/2020/NĐ-CP."
+    },
+    {
+      "id": "nd10-2024",
+      "url": "https://vanban.chinhphu.vn/?docid=209657&pageid=27160",
+      "local_snapshot": "data/raw/vbpl_amendments/10_2024_nd_cp/20260802T191417Z-bf7b1006/attachments/10-cp.signed.pdf",
+      "sha256": "9bbb4c8c7ee072b5b79d89e2444ef6a8686922557719b0138881bd39c6fd30fe",
+      "hash_binding_required": true,
+      "supports": "Bổ sung khoản 4 Điều 4, khoản 5 Điều 31 và khoản 4 Điều 62 Nghị định 145/2020/NĐ-CP."
+    }
+  ],
+  "effect_evidence_verification": {
+    "nd35-2022": {
+      "local_snapshot": "data/raw/vbpl_amendments/35_2022_nd_cp/20260802T190133Z-8f8d2fbe/attachments/35-2022-nd.signed.pdf",
+      "sha256": "e74b6cf08e204c105130e34937044475f27a59d9559bde11720551ef37ef0e35",
+      "hash_verified": true
+    },
+    "nd10-2024": {
+      "local_snapshot": "data/raw/vbpl_amendments/10_2024_nd_cp/20260802T191417Z-bf7b1006/attachments/10-cp.signed.pdf",
+      "sha256": "9bbb4c8c7ee072b5b79d89e2444ef6a8686922557719b0138881bd39c6fd30fe",
+      "hash_verified": true
+    }
+  },
+  "transformations": [
+    {
+      "document_number": "135/2020/NĐ-CP",
+      "article_number": 3,
+      "article_id": "vn:135-2020-nd-cp:article:3",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:135-2020-nd-cp:article:3|clause=2",
+      "matched_rule": "vbpl:vn:135-2020-nd-cp:article:3|clause=2"
+    },
+    {
+      "document_number": "135/2020/NĐ-CP",
+      "article_number": 7,
+      "article_id": "vn:135-2020-nd-cp:article:7",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:135-2020-nd-cp:article:7|clause=1",
+      "matched_rule": "vbpl:vn:135-2020-nd-cp:article:7|clause=1"
+    },
+    {
+      "document_number": "135/2020/NĐ-CP",
+      "article_number": 7,
+      "article_id": "vn:135-2020-nd-cp:article:7",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:135-2020-nd-cp:article:7|clause=3",
+      "matched_rule": "vbpl:vn:135-2020-nd-cp:article:7|clause=3"
+    },
+    {
+      "document_number": "135/2020/NĐ-CP",
+      "article_number": 7,
+      "article_id": "vn:135-2020-nd-cp:article:7",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:135-2020-nd-cp:article:7|clause=3|point=a",
+      "matched_rule": "vbpl:vn:135-2020-nd-cp:article:7|clause=3"
+    },
+    {
+      "document_number": "135/2020/NĐ-CP",
+      "article_number": 7,
+      "article_id": "vn:135-2020-nd-cp:article:7",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:135-2020-nd-cp:article:7|clause=3|point=b",
+      "matched_rule": "vbpl:vn:135-2020-nd-cp:article:7|clause=3"
+    },
+    {
+      "document_number": "135/2020/NĐ-CP",
+      "article_number": 8,
+      "article_id": "vn:135-2020-nd-cp:article:8",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:135-2020-nd-cp:article:8|clause=2",
+      "matched_rule": "vbpl:vn:135-2020-nd-cp:article:8|clause=2"
+    },
+    {
+      "document_number": "135/2020/NĐ-CP",
+      "article_number": 8,
+      "article_id": "vn:135-2020-nd-cp:article:8",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:135-2020-nd-cp:article:8|clause=2|point=a",
+      "matched_rule": "vbpl:vn:135-2020-nd-cp:article:8|clause=2"
+    },
+    {
+      "document_number": "135/2020/NĐ-CP",
+      "article_number": 8,
+      "article_id": "vn:135-2020-nd-cp:article:8",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:135-2020-nd-cp:article:8|clause=2|point=b",
+      "matched_rule": "vbpl:vn:135-2020-nd-cp:article:8|clause=2"
+    },
+    {
+      "document_number": "135/2020/NĐ-CP",
+      "article_number": 8,
+      "article_id": "vn:135-2020-nd-cp:article:8",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:135-2020-nd-cp:article:8|clause=2|point=c",
+      "matched_rule": "vbpl:vn:135-2020-nd-cp:article:8|clause=2"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 4,
+      "article_id": "vn:145-2020-nd-cp:article:4",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:4|clause=2",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:4|clause=2"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 4,
+      "article_id": "vn:145-2020-nd-cp:article:4",
+      "action": "insert_unit",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:4|clause=4",
+      "after_unit_id": "vbpl:vn:145-2020-nd-cp:article:4|clause=3",
+      "after_sha256": "bb6c617e7dc7998e3e240218b878b1dcc6954ddd2908814495d392bd4b178831",
+      "evidence_id": "nd10-2024",
+      "evidence_snapshot": {
+        "local_snapshot": "data/raw/vbpl_amendments/10_2024_nd_cp/20260802T191417Z-bf7b1006/attachments/10-cp.signed.pdf",
+        "sha256": "9bbb4c8c7ee072b5b79d89e2444ef6a8686922557719b0138881bd39c6fd30fe",
+        "hash_verified": true
+      }
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 4,
+      "article_id": "vn:145-2020-nd-cp:article:4",
+      "action": "insert_unit",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:4|clause=4|point=a",
+      "after_unit_id": "vbpl:vn:145-2020-nd-cp:article:4|clause=3",
+      "after_sha256": "75f36e045ffac5a3f35a058104442f039a494479b530ed07146339b7eb729445",
+      "evidence_id": "nd10-2024",
+      "evidence_snapshot": {
+        "local_snapshot": "data/raw/vbpl_amendments/10_2024_nd_cp/20260802T191417Z-bf7b1006/attachments/10-cp.signed.pdf",
+        "sha256": "9bbb4c8c7ee072b5b79d89e2444ef6a8686922557719b0138881bd39c6fd30fe",
+        "hash_verified": true
+      }
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 4,
+      "article_id": "vn:145-2020-nd-cp:article:4",
+      "action": "insert_unit",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:4|clause=4|point=b",
+      "after_unit_id": "vbpl:vn:145-2020-nd-cp:article:4|clause=3",
+      "after_sha256": "aaba8ea857fed9e010bcc2bfbf0285047428b35b95c1aace0ac2661a941911a7",
+      "evidence_id": "nd10-2024",
+      "evidence_snapshot": {
+        "local_snapshot": "data/raw/vbpl_amendments/10_2024_nd_cp/20260802T191417Z-bf7b1006/attachments/10-cp.signed.pdf",
+        "sha256": "9bbb4c8c7ee072b5b79d89e2444ef6a8686922557719b0138881bd39c6fd30fe",
+        "hash_verified": true
+      }
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 31,
+      "article_id": "vn:145-2020-nd-cp:article:31",
+      "action": "replace_text",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:31|clause=2",
+      "before_sha256": "38a396cd77fb7df5880c496b6acf4c80f0a4f3c0e5c384ce7950cbd2db2549a0",
+      "after_sha256": "cd112a981478959eec696677db25a0954bb573206bbfd79329c8a7e14b2dd0f9",
+      "evidence_id": "nd35-2022",
+      "evidence_snapshot": {
+        "local_snapshot": "data/raw/vbpl_amendments/35_2022_nd_cp/20260802T190133Z-8f8d2fbe/attachments/35-2022-nd.signed.pdf",
+        "sha256": "e74b6cf08e204c105130e34937044475f27a59d9559bde11720551ef37ef0e35",
+        "hash_verified": true
+      }
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 31,
+      "article_id": "vn:145-2020-nd-cp:article:31",
+      "action": "insert_unit",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:31|clause=5",
+      "after_unit_id": "vbpl:vn:145-2020-nd-cp:article:31|clause=4",
+      "after_sha256": "b9309e394b462a63e035828c25e4ce5becee965cbbbc3dbe93fde22bd8780bdc",
+      "evidence_id": "nd10-2024",
+      "evidence_snapshot": {
+        "local_snapshot": "data/raw/vbpl_amendments/10_2024_nd_cp/20260802T191417Z-bf7b1006/attachments/10-cp.signed.pdf",
+        "sha256": "9bbb4c8c7ee072b5b79d89e2444ef6a8686922557719b0138881bd39c6fd30fe",
+        "hash_verified": true
+      }
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 62,
+      "article_id": "vn:145-2020-nd-cp:article:62",
+      "action": "insert_unit",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:62|clause=4",
+      "after_unit_id": "vbpl:vn:145-2020-nd-cp:article:62|clause=3",
+      "after_sha256": "0732382926f45af00696d5d38d40ec8772ef51566558203ad821afedc564a9ba",
+      "evidence_id": "nd10-2024",
+      "evidence_snapshot": {
+        "local_snapshot": "data/raw/vbpl_amendments/10_2024_nd_cp/20260802T191417Z-bf7b1006/attachments/10-cp.signed.pdf",
+        "sha256": "9bbb4c8c7ee072b5b79d89e2444ef6a8686922557719b0138881bd39c6fd30fe",
+        "hash_verified": true
+      }
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 91,
+      "article_id": "vn:145-2020-nd-cp:article:91",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:91|clause=1",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:91|"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 91,
+      "article_id": "vn:145-2020-nd-cp:article:91",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:91|clause=2",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:91|"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 91,
+      "article_id": "vn:145-2020-nd-cp:article:91",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:91|clause=3",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:91|"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 91,
+      "article_id": "vn:145-2020-nd-cp:article:91",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:91|clause=3|point=a",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:91|"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 91,
+      "article_id": "vn:145-2020-nd-cp:article:91",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:91|clause=3|point=b",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:91|"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 91,
+      "article_id": "vn:145-2020-nd-cp:article:91",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:91|clause=3|point=c",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:91|"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 91,
+      "article_id": "vn:145-2020-nd-cp:article:91",
+      "action": "exclude_empty_article_after_provision_filter"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 93,
+      "article_id": "vn:145-2020-nd-cp:article:93",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:93|clause=1",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:93|clause=1"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 93,
+      "article_id": "vn:145-2020-nd-cp:article:93",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:93|clause=1|point=a",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:93|clause=1"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 93,
+      "article_id": "vn:145-2020-nd-cp:article:93",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:93|clause=1|point=b",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:93|clause=1"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 93,
+      "article_id": "vn:145-2020-nd-cp:article:93",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:93|clause=2",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:93|clause=2"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 93,
+      "article_id": "vn:145-2020-nd-cp:article:93",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:93|clause=2|point=a",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:93|clause=2"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 93,
+      "article_id": "vn:145-2020-nd-cp:article:93",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:93|clause=2|point=b",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:93|clause=2"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 93,
+      "article_id": "vn:145-2020-nd-cp:article:93",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:93|clause=2|point=c",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:93|clause=2"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 93,
+      "article_id": "vn:145-2020-nd-cp:article:93",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:93|clause=2|point=d",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:93|clause=2"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 93,
+      "article_id": "vn:145-2020-nd-cp:article:93",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:93|clause=2|point=đ",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:93|clause=2"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 93,
+      "article_id": "vn:145-2020-nd-cp:article:93",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:93|clause=4",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:93|clause=4"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 94,
+      "article_id": "vn:145-2020-nd-cp:article:94",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:94|clause=2|point=b",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:94|clause=2|point=b"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 95,
+      "article_id": "vn:145-2020-nd-cp:article:95",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:95|clause=1",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:95|clause=1"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 95,
+      "article_id": "vn:145-2020-nd-cp:article:95",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:95|clause=2",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:95|clause=2"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 95,
+      "article_id": "vn:145-2020-nd-cp:article:95",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:95|clause=2|point=a",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:95|clause=2"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 95,
+      "article_id": "vn:145-2020-nd-cp:article:95",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:95|clause=2|point=b",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:95|clause=2"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 95,
+      "article_id": "vn:145-2020-nd-cp:article:95",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:95|clause=3",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:95|clause=3"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 95,
+      "article_id": "vn:145-2020-nd-cp:article:95",
+      "action": "exclude_empty_article_after_provision_filter"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 97,
+      "article_id": "vn:145-2020-nd-cp:article:97",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:97|clause=2|point=b",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:97|clause=2|point=b"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 97,
+      "article_id": "vn:145-2020-nd-cp:article:97",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:97|clause=4",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:97|clause=4"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 97,
+      "article_id": "vn:145-2020-nd-cp:article:97",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:97|clause=4|point=a",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:97|clause=4"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 97,
+      "article_id": "vn:145-2020-nd-cp:article:97",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:97|clause=4|point=b",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:97|clause=4"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 97,
+      "article_id": "vn:145-2020-nd-cp:article:97",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:97|clause=4|point=c",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:97|clause=4"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 97,
+      "article_id": "vn:145-2020-nd-cp:article:97",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:97|clause=4|point=d",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:97|clause=4"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 97,
+      "article_id": "vn:145-2020-nd-cp:article:97",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:97|clause=4|point=đ",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:97|clause=4"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 110,
+      "article_id": "vn:145-2020-nd-cp:article:110",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:110|clause=2",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:110|clause=2"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 111,
+      "article_id": "vn:145-2020-nd-cp:article:111",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:111|clause=1",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:111|clause=1"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 111,
+      "article_id": "vn:145-2020-nd-cp:article:111",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:111|clause=2",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:111|clause=2"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 111,
+      "article_id": "vn:145-2020-nd-cp:article:111",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:111|clause=3",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:111|clause=3"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 111,
+      "article_id": "vn:145-2020-nd-cp:article:111",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:111|clause=5",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:111|clause=5"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 112,
+      "article_id": "vn:145-2020-nd-cp:article:112",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:112|clause=1",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:112|clause=1"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 112,
+      "article_id": "vn:145-2020-nd-cp:article:112",
+      "action": "exclude",
+      "unit_id": "vbpl:vn:145-2020-nd-cp:article:112|clause=2",
+      "matched_rule": "vbpl:vn:145-2020-nd-cp:article:112|clause=2"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "article_number": 112,
+      "article_id": "vn:145-2020-nd-cp:article:112",
+      "action": "exclude_empty_article_after_provision_filter"
+    },
+    {
+      "document_number": "09/2020/TT-BLĐTBXH",
+      "article_number": 6,
+      "article_id": "vn:09-2020-tt-bldtbxh:article:6",
+      "action": "replace_text",
+      "unit_id": "vbpl:vn:09-2020-tt-bldtbxh:article:6|clause=2",
+      "before_sha256": "df34a1d8469b07c63f21b4ff42c2276a54bbe1a76949e9026b02b322e3a36f92",
+      "after_sha256": "feb5b7952b2528f05405c3580d7d2de97f5e05b97fc9fcdb44f76dac8f5861f6",
+      "evidence_id": "tt08-2023"
+    }
+  ],
+  "replacement_documents": [
+    {
+      "source_document": "145/2020/NĐ-CP",
+      "replacement_document": "129/2025/NĐ-CP",
+      "replacement_articles": [
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79
+      ],
+      "basis": "Các Điều 71-79 quy định thẩm quyền và thủ tục hiện hành tương ứng trong giai đoạn áp dụng Nghị định 129/2025/NĐ-CP."
+    }
+  ],
+  "known_source_gaps": [],
+  "technical_unresolved_count": 0,
+  "authority_approval_required": true,
+  "not_legal_advice": true
+}

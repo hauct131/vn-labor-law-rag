@@ -1,0 +1,410 @@
+{
+  "schema_version": "vbpl-corpus-config-v3",
+  "snapshot_date": "2026-07-24",
+  "source": {
+    "provider": "Cơ sở dữ liệu quốc gia về văn bản pháp luật",
+    "website": "https://vbpl.vn/",
+    "allowed_active_sources": [
+      "vbpl_portal",
+      "official_government_docx",
+      "official_gazette_docx",
+      "official_gazette_word"
+    ],
+    "forbidden_active_sources": [
+      "phap_dien",
+      "official_gazette_pdf_ocr",
+      "third_party",
+      "ocr"
+    ],
+    "portal": {
+      "sitemap_url": "https://vbpl.vn/sitemap.xml",
+      "api_url_substring": "/api/qtdc/public/doc/",
+      "warmup_url": "https://vbpl.vn/"
+    },
+    "allowed_staging_sources": [
+      "vbpl_portal",
+      "official_government_portal"
+    ]
+  },
+  "release_policy": {
+    "fail_closed": true,
+    "require_exact_document_number": true,
+    "require_full_text": true,
+    "require_contiguous_article_sequence": true,
+    "require_explicit_snapshot_approval": true,
+    "require_legal_effect_review": true,
+    "rebuild_all_indexes": true,
+    "allow_automatic_source_fallback": true
+  },
+  "canonical_source_policy": {
+    "name": "official-gazette-word-then-vbpl-v1",
+    "priority": [
+      "official_gazette_word",
+      "vbpl"
+    ],
+    "fallback_on": [
+      "gazette_record_not_found",
+      "word_attachment_not_found"
+    ],
+    "never_fallback_on": [
+      "identity_mismatch",
+      "metadata_conflict",
+      "corrupt_attachment",
+      "checksum_failure",
+      "network_error",
+      "normalization_tooling_error"
+    ],
+    "one_canonical_snapshot_per_document": true,
+    "automatic_production_promotion": false
+  },
+  "indexing": {
+    "dense_model": "intfloat/multilingual-e5-large",
+    "dense_vector_size": 1024,
+    "sparse_model": "Qdrant/bm25",
+    "model_revision_binding": "tokenizer_sha256_and_fastembed_version_from_exact_e5_audit"
+  },
+  "documents": [
+    {
+      "document_number": "18/VBHN-VPQH",
+      "canonical_document_id": "vn:bll-2019",
+      "title": "Bộ luật Lao động (văn bản hợp nhất số 18/VBHN-VPQH)",
+      "expected_articles": 220,
+      "include_articles": "1-220",
+      "required_for_release": true,
+      "scope_note": "Canonical ID bám Bộ luật 45/2019/QH14; số VBHN chỉ xác định phiên bản nguồn.",
+      "source_adapter": "official_government_docx",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word"
+      },
+      "source_file": "2026_131_18_VBHN-VPQH.docx",
+      "canonical_content_source": "official_gazette_docx",
+      "metadata_source": "official_government_portal_plus_gazette",
+      "legal_effect_source": "explicit_legal_effect_review",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/van-ban-hop-nhat-so-18-vbhn-vpqh-468971.htm",
+      "official_page_url": "https://vanban.chinhphu.vn/?docid=217002&pageid=27160",
+      "source_note": "DOCX Công báo là nội dung canonical; Cổng TTĐT Chính phủ và legal-effect review cung cấp metadata. Không resolve theo số hiệu đơn lẻ trên VBPL vì số 18/VBHN-VPQH được tái sử dụng cho nhiều văn bản."
+    },
+    {
+      "document_number": "135/2020/NĐ-CP",
+      "canonical_document_id": "vn:135-2020-nd-cp",
+      "title": "Tuổi nghỉ hưu",
+      "expected_articles": 9,
+      "include_articles": "1-9",
+      "required_for_release": true,
+      "source_adapter": "vbpl",
+      "item_id": "152734",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/nghi-dinh-so-135-2020-nd-cp-32525.htm",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word",
+        "fallback_adapter": "vbpl"
+      }
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "canonical_document_id": "vn:145-2020-nd-cp",
+      "title": "Điều kiện lao động và quan hệ lao động",
+      "expected_articles": 115,
+      "include_articles": "1-115",
+      "required_for_release": true,
+      "source_adapter": "vbpl",
+      "item_id": "152668",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/nghi-dinh-so-145-2020-nd-cp-32732.htm",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word",
+        "fallback_adapter": "vbpl"
+      }
+    },
+    {
+      "document_number": "152/2020/NĐ-CP",
+      "canonical_document_id": "vn:152-2020-nd-cp",
+      "title": "Người lao động Việt Nam làm việc cho tổ chức, cá nhân nước ngoài",
+      "expected_articles": 30,
+      "include_articles": "22-28",
+      "required_for_release": true,
+      "scope_note": "Chỉ Điều 22-28; phần người lao động nước ngoài tại Việt Nam phải được loại theo effect review.",
+      "source_adapter": "vbpl",
+      "item_id": "152669",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/nghi-dinh-so-152-2020-nd-cp-32864.htm",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word",
+        "fallback_adapter": "vbpl"
+      }
+    },
+    {
+      "document_number": "97/2022/NĐ-CP",
+      "canonical_document_id": "vn:97-2022-nd-cp",
+      "title": "Chính sách đối với người lao động dôi dư",
+      "expected_articles": 14,
+      "include_articles": "1-14",
+      "required_for_release": true,
+      "detach_appendices": true,
+      "include_attachments": [
+        "appendix-i",
+        "appendix-ii"
+      ],
+      "attachment_policy": "required",
+      "source_adapter": "vbpl",
+      "item_id": "169619",
+      "official_attachments": [
+        {
+          "name": "97.signed.pdf",
+          "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2022/12/97.signed.pdf",
+          "provider": "Cổng Thông tin điện tử Chính phủ",
+          "source_page_url": "https://vanban.chinhphu.vn/?classid=1&docid=206935&pageid=27160&typegroupid=4",
+          "role": "signed_original_with_appendices"
+        }
+      ],
+      "attachment_source_policy": "explicit_official_government_portal",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/nghi-dinh-so-97-2022-nd-cp-38263.htm",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word",
+        "fallback_adapter": "vbpl"
+      }
+    },
+    {
+      "document_number": "293/2025/NĐ-CP",
+      "canonical_document_id": "vn:293-2025-nd-cp",
+      "title": "Mức lương tối thiểu",
+      "expected_articles": 5,
+      "include_articles": "1-5",
+      "required_for_release": true,
+      "source_adapter": "vbpl",
+      "item_id": "183939",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/nghi-dinh-so-293-2025-nd-cp-46568.htm",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word",
+        "fallback_adapter": "vbpl"
+      }
+    },
+    {
+      "document_number": "219/2025/NĐ-CP",
+      "canonical_document_id": "vn:219-2025-nd-cp",
+      "title": "Người lao động nước ngoài làm việc tại Việt Nam",
+      "expected_articles": 36,
+      "include_articles": "1-36",
+      "required_for_release": true,
+      "detach_appendices": true,
+      "include_all_detected_attachments": true,
+      "scope_note": "Mọi phụ lục VBPL phát hiện được phải thành entity riêng; không được dính vào Điều 36 hoặc bị bỏ âm thầm.",
+      "portal_url": "https://vbpl.vn/van-ban/chi-tiet/nghi-dinh-so-219-2025-nd-cp-quy-dinh-ve-nguoi-lao-dong-nuoc-ngoai-lam-viec-tai-viet-nam--180273",
+      "attachment_policy": "required_if_listed",
+      "source_adapter": "vbpl",
+      "item_id": "180273",
+      "official_attachments": [
+        {
+          "name": "219-cp.signed.pdf",
+          "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2025/8/219-cp.signed.pdf",
+          "provider": "Cổng Thông tin điện tử Chính phủ",
+          "source_page_url": "https://vanban.chinhphu.vn/?classid=1&docid=214840&pageid=27160&typegroupid=4",
+          "role": "signed_original_with_appendices"
+        }
+      ],
+      "attachment_source_policy": "explicit_official_government_portal",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/nghi-dinh-so-219-2025-nd-cp-45798.htm",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word",
+        "fallback_adapter": "vbpl"
+      }
+    },
+    {
+      "document_number": "128/2025/NĐ-CP",
+      "canonical_document_id": "vn:128-2025-nd-cp",
+      "title": "Phân quyền, phân cấp trong quản lý nhà nước lĩnh vực nội vụ",
+      "expected_articles": 16,
+      "include_articles": "7",
+      "required_for_release": true,
+      "scope_note": "Chỉ Điều 7 thuộc phạm vi corpus lao động.",
+      "source_adapter": "vbpl",
+      "item_id": "178260",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/nghi-dinh-so-128-2025-nd-cp-45067.htm",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word",
+        "fallback_adapter": "vbpl"
+      }
+    },
+    {
+      "document_number": "129/2025/NĐ-CP",
+      "canonical_document_id": "vn:129-2025-nd-cp",
+      "title": "Phân định thẩm quyền chính quyền địa phương hai cấp",
+      "expected_articles": 81,
+      "include_articles": "67-81",
+      "required_for_release": true,
+      "source_adapter": "vbpl",
+      "item_id": "178294",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/nghi-dinh-so-129-2025-nd-cp-45076.htm",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word",
+        "fallback_adapter": "vbpl"
+      }
+    },
+    {
+      "document_number": "09/2020/TT-BLĐTBXH",
+      "canonical_document_id": "vn:09-2020-tt-bldtbxh",
+      "title": "Lao động chưa thành niên",
+      "expected_articles": 13,
+      "include_articles": "1-13",
+      "required_for_release": true,
+      "source_adapter": "vbpl",
+      "item_id": "152670",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/thong-tu-so-09-2020-tt-bldtbxh-33378.htm",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word",
+        "fallback_adapter": "vbpl"
+      }
+    },
+    {
+      "document_number": "10/2020/TT-BLĐTBXH",
+      "canonical_document_id": "vn:10-2020-tt-bldtbxh",
+      "title": "Hợp đồng lao động",
+      "expected_articles": 12,
+      "include_articles": "1-12",
+      "required_for_release": true,
+      "source_adapter": "vbpl",
+      "item_id": "146696",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word",
+        "preferred_status": "not_found",
+        "fallback_adapter": "vbpl",
+        "fallback_reason": "gazette_record_not_found"
+      },
+      "source_exception_reason": "not_found_on_official_gazette_portal"
+    },
+    {
+      "document_number": "04/2021/TT-BCT",
+      "canonical_document_id": "vn:04-2021-tt-bct",
+      "title": "Công việc trong hầm lò",
+      "expected_articles": 9,
+      "include_articles": "1-9",
+      "required_for_release": true,
+      "source_adapter": "vbpl",
+      "item_id": "148825",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/thong-tu-so-04-2021-tt-bct-34055/36356.htm",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word",
+        "fallback_adapter": "vbpl"
+      }
+    },
+    {
+      "document_number": "18/2021/TT-BLĐTBXH",
+      "canonical_document_id": "vn:18-2021-tt-bldtbxh",
+      "title": "Công việc thời vụ",
+      "expected_articles": 10,
+      "include_articles": "1-10",
+      "required_for_release": true,
+      "source_adapter": "vbpl",
+      "item_id": "153297",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/thong-tu-so-18-2021-tt-bldtbxh-36338.htm",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word",
+        "fallback_adapter": "vbpl"
+      }
+    },
+    {
+      "document_number": "19/2021/TT-BLĐTBXH",
+      "canonical_document_id": "vn:19-2021-tt-bldtbxh",
+      "title": "Vùng nghỉ hưu sớm",
+      "expected_articles": 5,
+      "include_articles": "1-5",
+      "required_for_release": true,
+      "source_adapter": "vbpl",
+      "item_id": "152735",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/thong-tu-so-19-2021-tt-bldtbxh-36628.htm",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word",
+        "fallback_adapter": "vbpl"
+      }
+    },
+    {
+      "document_number": "12/2022/TT-BCT",
+      "canonical_document_id": "vn:12-2022-tt-bct",
+      "title": "Công trình khí",
+      "expected_articles": 10,
+      "include_articles": "1-10",
+      "required_for_release": true,
+      "source_adapter": "vbpl",
+      "item_id": "155202",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/thong-tu-so-12-2022-tt-bct-37615.htm",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word",
+        "fallback_adapter": "vbpl"
+      }
+    },
+    {
+      "document_number": "20/2023/TT-BCT",
+      "canonical_document_id": "vn:20-2023-tt-bct",
+      "title": "Dầu khí trên biển",
+      "expected_articles": 12,
+      "include_articles": "1-12",
+      "required_for_release": true,
+      "source_adapter": "vbpl",
+      "item_id": "163444",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/thong-tu-so-20-2023-tt-bct-40438.htm",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word",
+        "fallback_adapter": "vbpl"
+      }
+    },
+    {
+      "document_number": "17/2023/TT-BLĐTBXH",
+      "canonical_document_id": "vn:17-2023-tt-bldtbxh",
+      "title": "Khu công nghiệp, khu kinh tế",
+      "expected_articles": 12,
+      "include_articles": "1-12",
+      "required_for_release": true,
+      "source_adapter": "vbpl",
+      "item_id": "167029",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/thong-tu-so-17-2023-tt-bldtbxh-41049.htm",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word",
+        "fallback_adapter": "vbpl"
+      }
+    },
+    {
+      "document_number": "66.18/2026/NQ-CP",
+      "canonical_document_id": "vn:66.18-2026-nq-cp",
+      "title": "Phân quyền, cắt giảm, đơn giản hóa thủ tục hành chính, điều kiện kinh doanh",
+      "expected_articles": 7,
+      "include_articles": "4,6",
+      "include_attachments": [
+        "appendix-i"
+      ],
+      "attachment_aliases": {
+        "appendix-i": [
+          "NQ66.18.PL-I.4.C.I",
+          "NQ66.18.PL-I.4.C.III",
+          "NQ66.18.PL-I.4.C.V",
+          "NQ66.18.PL-I.4.C.VII",
+          "NQ66.18.PL-I.4.C.VIII",
+          "NQ66.18.PL-I.4.C.IX"
+        ]
+      },
+      "required_for_release": true,
+      "detach_appendices": true,
+      "scope_note": "Chỉ Điều 4, Điều 6 và Phụ lục I. Các mục I.4.C.* cũ là alias đánh giá của cùng phụ lục, không phải bằng chứng độc lập; không cắt tiểu mục bằng regex thiếu kiểm chứng.",
+      "attachment_policy": "required",
+      "source_adapter": "official_government_docx",
+      "canonical_source_policy": {
+        "preferred_adapter": "official_gazette_word"
+      },
+      "source_file": "2026_301_66.18_2026_NQ-CP.docx",
+      "canonical_content_source": "official_gazette_docx",
+      "metadata_source": "official_government_portal_plus_gazette",
+      "legal_effect_source": "explicit_legal_effect_review",
+      "gazette_page_url": "https://congbao.chinhphu.vn/van-ban/nghi-quyet-so-6618-2026-nq-cp-469585.htm",
+      "official_page_url": "https://vanban.chinhphu.vn/?docid=218181&pageid=27160",
+      "source_note": "DOCX Công báo là nội dung canonical; Cổng TTĐT Chính phủ cung cấp metadata nhận dạng. Trạng thái, thời hạn hiệu lực và quan hệ pháp lý chỉ được lấy từ VBPL đã xác minh hoặc legal-effect review; chưa có VBPL item_id được xác minh."
+    }
+  ],
+  "ingestion_policy": {
+    "default_attachment_policy": "best_effort",
+    "snapshot_schema": "vbpl-source-snapshot-v3",
+    "resume_requires_checksum_verification": true,
+    "publish_atomically": true,
+    "live_soak": {
+      "document_number": "219/2025/NĐ-CP",
+      "iterations": 10,
+      "max_failure_rate": 0.0,
+      "require_stable_content_hash": true
+    }
+  }
+}

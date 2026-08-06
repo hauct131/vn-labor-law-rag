@@ -1,0 +1,34 @@
+{
+  "config": "/tmp/vbpl-retry-articles.json",
+  "external_source_documents": [],
+  "failed": 0,
+  "finished_at": "2026-07-24T10:24:18+00:00",
+  "results": [
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "elapsed_ms": 1301.226,
+      "snapshot_dir": "data/raw/vbpl/145_2020_nd_cp/20260724T102412Z-1e5786e6",
+      "status": "created"
+    },
+    {
+      "document_number": "152/2020/NĐ-CP",
+      "elapsed_ms": 728.338,
+      "snapshot_dir": "data/raw/vbpl/152_2020_nd_cp/20260724T102414Z-6c265a8d",
+      "status": "created"
+    },
+    {
+      "document_number": "129/2025/NĐ-CP",
+      "elapsed_ms": 1031.638,
+      "snapshot_dir": "data/raw/vbpl/129_2025_nd_cp/20260724T102417Z-87cc9ff5",
+      "status": "created"
+    }
+  ],
+  "run_id": "3bed501641c64ddeaf04885b25130f94",
+  "schema_version": "vbpl-ingestion-run-v1",
+  "skipped": 0,
+  "started_at": "2026-07-24T10:24:10+00:00",
+  "status": "completed",
+  "success": 3,
+  "total": 3,
+  "unchanged": 0
+}

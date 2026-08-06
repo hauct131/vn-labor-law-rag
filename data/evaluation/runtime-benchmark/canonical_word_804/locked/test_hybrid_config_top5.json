@@ -1,0 +1,17 @@
+{
+  "schema_version": "runtime-hybrid-test-config-v1",
+  "status": "locked_pending_test_evaluation",
+  "split_role": "dev",
+  "selected_config": {
+    "candidate_k": 30,
+    "rrf_k": 60,
+    "dense_weight": 0.9,
+    "sparse_weight": 0.1
+  },
+  "production_top_k": 5,
+  "corpus_sha256": "fdbec539efbfb3f4aa3cb3962046321e3a402150d93516ef4256934972c70307",
+  "collection": "labor_law_canonical_word_20260804_fdbec539",
+  "source_selection": "data/evaluation/runtime-benchmark/canonical_word_804/locked/production_selection_top5.json",
+  "source_selection_sha256": "feeeeb448599fae4b7c51030be7596370907d9665ec5a598cd3f7ff8710b58bc",
+  "note": "Adapter for the evaluator test gate. Parameters are copied without modification from the locked production top-5 selection."
+}

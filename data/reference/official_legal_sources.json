@@ -1,0 +1,150 @@
+{
+  "version": 1,
+  "description": "Ánh xạ tập trung từ nguồn VBPL trong corpus sang trang văn bản chính thức.",
+  "documents": {
+    "vbpl:item:139264": {
+      "item_id": "139264",
+      "document_number": "45/2019/QH14",
+      "title": "Bộ luật Lao động",
+      "canonical_url": "https://vanban.chinhphu.vn/?docid=198540&pageid=27160",
+      "original_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=139264",
+      "last_checked_at": "2026-07-22",
+      "url_status": "active"
+    },
+    "vbpl:item:146696": {
+      "item_id": "146696",
+      "document_number": "10/2020/TT-BLĐTBXH",
+      "title": "Hướng dẫn một số nội dung của Bộ luật Lao động",
+      "canonical_url": "https://vbpl.vn/van-ban/chi-tiet/thong-tu-so-10-2020-tt-bldtbxh-quy-dinh-chi-tiet-va-huong-dan-thi-hanh-mot-so-dieu-khoan-sau-day-cua-bo-luat-lao-dong-ve-noi-dung-cua-hop-dong-lao-dong-hoi-dong-thuong-luong-tap-the-va-nghe-cong-viec-co-anh-huong-xau-toi-chuc-nang-sinh-san-nuoi-con--146696",
+      "original_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=146696",
+      "last_checked_at": "2026-07-22",
+      "url_status": "active"
+    },
+    "vbpl:item:148825": {
+      "item_id": "148825",
+      "document_number": "04/2021/TT-BCT",
+      "title": "Thời giờ làm việc, nghỉ ngơi đối với công việc trong hầm lò",
+      "canonical_url": "https://vanban.chinhphu.vn/?docid=203737&pageid=27160",
+      "original_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=148825",
+      "last_checked_at": "2026-07-22",
+      "url_status": "active"
+    },
+    "vbpl:item:152668": {
+      "item_id": "152668",
+      "document_number": "145/2020/NĐ-CP",
+      "title": "Hướng dẫn Bộ luật Lao động về điều kiện và quan hệ lao động",
+      "canonical_url": "https://vanban.chinhphu.vn/?docid=201967&pageid=27160",
+      "original_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=152668",
+      "last_checked_at": "2026-07-22",
+      "url_status": "active"
+    },
+    "vbpl:item:152669": {
+      "item_id": "152669",
+      "document_number": "152/2020/NĐ-CP",
+      "title": "Người lao động nước ngoài làm việc tại Việt Nam",
+      "canonical_url": "https://vanban.chinhphu.vn/?docid=202215&pageid=27160",
+      "original_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=152669",
+      "last_checked_at": "2026-07-22",
+      "url_status": "active"
+    },
+    "vbpl:item:152670": {
+      "item_id": "152670",
+      "document_number": "09/2020/TT-BLĐTBXH",
+      "title": "Hướng dẫn Bộ luật Lao động về lao động chưa thành niên",
+      "canonical_url": "https://congbao.chinhphu.vn/van-ban/thong-tu-so-09-2020-tt-bldtbxh-33378.htm",
+      "original_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=152670",
+      "last_checked_at": "2026-07-22",
+      "url_status": "active"
+    },
+    "vbpl:item:152734": {
+      "item_id": "152734",
+      "document_number": "135/2020/NĐ-CP",
+      "title": "Quy định về tuổi nghỉ hưu",
+      "canonical_url": "https://vanban.chinhphu.vn/?docid=201650&pageid=27160",
+      "original_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=152734",
+      "last_checked_at": "2026-07-22",
+      "url_status": "active"
+    },
+    "vbpl:item:152735": {
+      "item_id": "152735",
+      "document_number": "19/2021/TT-BLĐTBXH",
+      "title": "Danh mục vùng có điều kiện kinh tế - xã hội đặc biệt khó khăn",
+      "canonical_url": "https://vanban.chinhphu.vn/?docid=205225&pageid=27160",
+      "original_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=152735",
+      "last_checked_at": "2026-07-22",
+      "url_status": "active"
+    },
+    "vbpl:item:153297": {
+      "item_id": "153297",
+      "document_number": "18/2021/TT-BLĐTBXH",
+      "title": "Thời giờ làm việc, nghỉ ngơi đối với công việc có tính thời vụ",
+      "canonical_url": "https://vanban.chinhphu.vn/?docid=204826&pageid=27160",
+      "original_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=153297",
+      "last_checked_at": "2026-07-22",
+      "url_status": "active"
+    },
+    "vbpl:item:155202": {
+      "item_id": "155202",
+      "document_number": "12/2022/TT-BCT",
+      "title": "Thời giờ làm việc, nghỉ ngơi đối với công việc khí",
+      "canonical_url": "https://vanban.chinhphu.vn/?docid=206265&pageid=27160",
+      "original_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=155202",
+      "last_checked_at": "2026-07-22",
+      "url_status": "active"
+    },
+    "vbpl:item:158798": {
+      "item_id": "158798",
+      "document_number": "35/2022/NĐ-CP",
+      "title": "Quản lý khu công nghiệp và khu kinh tế",
+      "canonical_url": "https://vanban.chinhphu.vn/?docid=205861&pageid=27160",
+      "original_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=158798",
+      "last_checked_at": "2026-07-22",
+      "url_status": "active"
+    },
+    "vbpl:item:162330": {
+      "item_id": "162330",
+      "document_number": "70/2023/NĐ-CP",
+      "title": "Sửa đổi Nghị định 152/2020/NĐ-CP",
+      "canonical_url": "https://vanban.chinhphu.vn/?docid=208673&pageid=27160",
+      "original_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=162330",
+      "last_checked_at": "2026-07-22",
+      "url_status": "active"
+    },
+    "vbpl:item:163444": {
+      "item_id": "163444",
+      "document_number": "20/2023/TT-BCT",
+      "title": "Thời giờ làm việc, nghỉ ngơi trong khai thác dầu khí trên biển",
+      "canonical_url": "https://vanban.chinhphu.vn/?docid=208961&pageid=27160",
+      "original_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=163444",
+      "last_checked_at": "2026-07-22",
+      "url_status": "active"
+    },
+    "vbpl:item:167029": {
+      "item_id": "167029",
+      "document_number": "17/2023/TT-BLĐTBXH",
+      "title": "Ủy quyền quản lý nhà nước về lao động trong khu công nghiệp",
+      "canonical_url": "https://vanban.chinhphu.vn/?classid=1&docid=209584&pageid=27160",
+      "original_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=167029",
+      "last_checked_at": "2026-07-22",
+      "url_status": "active"
+    },
+    "vbpl:item:169619": {
+      "item_id": "169619",
+      "document_number": "97/2022/NĐ-CP",
+      "title": "Chính sách đối với người lao động dôi dư",
+      "canonical_url": "https://vanban.chinhphu.vn/?docid=206935&pageid=27160",
+      "original_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=169619",
+      "last_checked_at": "2026-07-22",
+      "url_status": "active"
+    },
+    "vbpl:item:183939": {
+      "item_id": "183939",
+      "document_number": "293/2025/NĐ-CP",
+      "title": "Mức lương tối thiểu đối với người lao động",
+      "canonical_url": "https://vanban.chinhphu.vn/?docid=215832&pageid=27160",
+      "original_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=183939",
+      "last_checked_at": "2026-07-22",
+      "url_status": "active"
+    }
+  }
+}

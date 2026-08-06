@@ -1,0 +1,5 @@
+-r requirements.txt
+
+# Backward-compatible install target. VnCoreNLP is now the selected production
+# sparse retriever, so its Python dependencies are pinned in requirements.txt.
+# The runtime/container must also provide a Java runtime.

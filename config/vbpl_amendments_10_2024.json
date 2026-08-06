@@ -1,0 +1,19 @@
+{
+  "documents": [
+    {
+      "document_number": "10/2024/NĐ-CP",
+      "source_adapter": "vbpl",
+      "item_id": "165573",
+      "attachment_policy": "required",
+      "official_attachments": [
+        {
+          "name": "10-cp.signed.pdf",
+          "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2024/02/10-cp.signed.pdf",
+          "provider": "Cổng Thông tin điện tử Chính phủ",
+          "source_page_url": "https://vanban.chinhphu.vn/?docid=209657&pageid=27160",
+          "role": "signed_original"
+        }
+      ]
+    }
+  ]
+}

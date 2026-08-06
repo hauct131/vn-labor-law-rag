@@ -1,0 +1,20 @@
+{
+  "schema_version": "canonical-build-report-v1",
+  "release_id": "labor-law-canonical-20260727-candidate",
+  "generated_at": "2026-08-02T21:37:19.015264+00:00",
+  "source_release_id": "labor-law-2026-07-28-provenance-rebuild-20260728T095702Z",
+  "source_release_manifest_sha256": "1e9239471ef5d2c5e987d4e05b3d012fc0a82f8e94ac8e32b4149514e83ecf70",
+  "technical_candidate_passed": true,
+  "production_publishable": false,
+  "counts": {
+    "documents": 18,
+    "source_containers": 513,
+    "canonical_containers": 510,
+    "canonical_chunks": 844,
+    "changed_articles": 15,
+    "transformations": 56,
+    "known_source_gaps": 0,
+    "chunk_trace_errors": 0,
+    "golden_missing_evidence": 0
+  }
+}

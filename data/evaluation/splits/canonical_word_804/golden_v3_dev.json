@@ -1,0 +1,993 @@
+{
+  "schema_version": "golden-questions-v3-runtime-split-v1",
+  "dataset_status": "retrieval_benchmark_locked_pending_authority_review",
+  "locked": true,
+  "created_at": "2026-07-27",
+  "law_as_of": "2026-07-27",
+  "language": "vi",
+  "domain": "Vietnamese labor law",
+  "benchmark_type": "current_law",
+  "corpus": {
+    "release_id": "labor-law-canonical-word-20260804-164432-candidate",
+    "release_status": "academic_final_dataset_pending_authority_review",
+    "path": "data/releases/labor-law-canonical-word-20260804-164432-candidate/canonical_chunks.jsonl",
+    "article_path": "data/releases/labor-law-canonical-word-20260804-164432-candidate/canonical_articles.json",
+    "chunk_count": 804,
+    "sha256": "fdbec539efbfb3f4aa3cb3962046321e3a402150d93516ef4256934972c70307",
+    "articles_sha256": "5c068e958849d517cac8a65a24930a4aeca4f66273b4ed9cee01399d0539b46f",
+    "scope_note": "17 Word Công báo + 1 VBPL fallback; Pháp điển không được index runtime."
+  },
+  "labeling": {
+    "method": "Evidence labels inherited from the canonical Word golden source; dev/test partitions are locked by connected expected article codes.",
+    "question_count": 31,
+    "benchmark_enabled_count": 31,
+    "benchmark_disabled_count": 0,
+    "category_counts": {
+      "exact_legal_term": 7,
+      "multi_article": 8,
+      "natural_language": 7,
+      "single_scenario": 9
+    },
+    "disabled_question_ids": [],
+    "release_binding": {
+      "release_id": "labor-law-canonical-word-20260804-164432-candidate",
+      "canonical_chunks_sha256": "fdbec539efbfb3f4aa3cb3962046321e3a402150d93516ef4256934972c70307",
+      "chunk_count": 804
+    },
+    "source_labeling_method": "Migrated from golden v1; current-law blocker questions rewritten from verified official sources; all evidence IDs remapped deterministically to the 2026-07-23 current snapshot."
+  },
+  "changelog": [
+    "Cập nhật r2ai_gold_003 theo cơ chế không thực hiện thủ tục cấp phép và thông báo hoạt động từ 01/07/2026.",
+    "Cập nhật r2ai_gold_006 từ NĐ 152/2020 sang Điều 28 NĐ 219/2025: 10-45 ngày và quy trình mới.",
+    "Cập nhật r2ai_gold_022: bổ sung thứ tự ưu tiên thanh toán tiền ký quỹ theo NQ 66.18/2026.",
+    "Cập nhật r2ai_gold_037: phân biệt rút chủ động và trích bắt buộc tiền ký quỹ theo quy định mới.",
+    "Tạm tắt r2ai_gold_025 khỏi benchmark current-law cho đến khi overlay về tên cơ quan hiện hành được xác minh theo điều khoản nguồn.",
+    "Ánh xạ lại toàn bộ evidence_chunk_ids theo snapshot 2026-07-23; không sử dụng chunk ID của corpus legacy.",
+    "Rebound every evidence_chunk_id to the immutable unified 2026-07-27 candidate release; canonical article codes are now shared by corpus, chunks and golden labels.",
+    "Locked dev partition for runtime-retrieval-v1; this lock does not constitute legal authority approval."
+  ],
+  "official_sources": [
+    {
+      "document": "Bộ luật Lao động 45/2019/QH14",
+      "url": "https://vbpl.vn/tw/Pages/vbpq-van-ban-goc.aspx?dvid=13&ItemID=139264"
+    },
+    {
+      "document": "Nghị định 145/2020/NĐ-CP",
+      "url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=152668"
+    },
+    {
+      "document": "Nghị định 219/2025/NĐ-CP",
+      "url": "https://congbao.chinhphu.vn/van-ban/nghi-dinh-so-219-2025-nd-cp-45798/58141.htm"
+    },
+    {
+      "document": "Nghị quyết 66.18/2026/NQ-CP",
+      "url": "https://congbao.chinhphu.vn/van-ban/nghi-quyet-so-6618-2026-nq-cp-469585.htm"
+    },
+    {
+      "document": "Nghị định 293/2025/NĐ-CP",
+      "url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=183939"
+    }
+  ],
+  "questions": [
+    {
+      "id": "r2ai_gold_004",
+      "category": "exact_legal_term",
+      "question": "Ai là người có thẩm quyền giao kết hợp đồng lao động bên phía người sử dụng lao động?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.LQ.18"
+      ],
+      "evidence_chunk_ids": [
+        "66bb55e9-8b79-54a1-9a40-00289be4e062"
+      ],
+      "required_points": [
+        "Người đại diện theo pháp luật của doanh nghiệp hoặc người được ủy quyền hợp pháp.",
+        "Người đứng đầu cơ quan/tổ chức có tư cách pháp nhân hoặc người được ủy quyền.",
+        "Người đại diện của hộ gia đình, tổ hợp tác, tổ chức không có tư cách pháp nhân hoặc người được ủy quyền.",
+        "Cá nhân trực tiếp sử dụng lao động."
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "dev",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_005",
+      "category": "exact_legal_term",
+      "question": "Thời giờ làm việc tối đa trong ngày và trong tuần đối với người lao động 16 tuổi là bao nhiêu?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.LQ.146"
+      ],
+      "evidence_chunk_ids": [
+        "38620a4e-8bef-5ae1-8a57-5c05a82b693b"
+      ],
+      "required_points": [
+        "Người lao động 16 tuổi thuộc nhóm từ đủ 15 đến chưa đủ 18 tuổi.",
+        "Thời giờ làm việc tối đa là 08 giờ trong 01 ngày và 40 giờ trong 01 tuần."
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "dev",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_006",
+      "category": "exact_legal_term",
+      "question": "Đối với giấy phép lao động được cấp theo thời hạn của hợp đồng lao động dự kiến ký kết, cần nộp hồ sơ xin gia hạn trước bao nhiêu ngày kể từ ngày hết hạn?",
+      "answerable": true,
+      "expected_article_codes": [
+        "NĐ219.28"
+      ],
+      "evidence_chunk_ids": [
+        "393e0ead-2df6-5c15-910a-e0960351d67a"
+      ],
+      "required_points": [
+        "Nộp hồ sơ trước ít nhất 10 ngày nhưng không quá 45 ngày trước ngày giấy phép lao động hết hạn.",
+        "Hồ sơ được nộp đến Trung tâm Phục vụ hành chính công tại địa phương nơi người lao động nước ngoài đang làm việc bằng một trong các phương thức được pháp luật cho phép.",
+        "Trong 10 ngày làm việc kể từ ngày nhận đủ hồ sơ, cơ quan có thẩm quyền thực hiện gia hạn hoặc trả lời bằng văn bản và nêu rõ lý do nếu không gia hạn."
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "annotation_flags": [
+        "current_law_rewritten",
+        "replaced_source"
+      ],
+      "current_law_note": "NĐ 219/2025/NĐ-CP thay phần quy định về lao động nước ngoài của NĐ 152/2020/NĐ-CP.",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "dev",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_007",
+      "category": "exact_legal_term",
+      "question": "Người lao động nước ngoài làm việc tại Việt Nam có được nghỉ ngày Tết cổ truyền của dân tộc họ không?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.LQ.112"
+      ],
+      "evidence_chunk_ids": [
+        "a862043e-40bf-5684-8323-2439363bc0fa"
+      ],
+      "required_points": [
+        "Có. Ngoài các ngày nghỉ lễ, tết chung, người lao động nước ngoài được nghỉ thêm 01 ngày Tết cổ truyền của dân tộc họ.",
+        "Họ còn được nghỉ thêm 01 ngày Quốc khánh của nước họ."
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "dev",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_008",
+      "category": "exact_legal_term",
+      "question": "Sau bao nhiêu ngày kể từ khi cơ quan nhà nước có thẩm quyền nhận đủ hồ sơ đăng ký thì nội quy lao động bắt đầu có hiệu lực?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.LQ.121"
+      ],
+      "evidence_chunk_ids": [
+        "599d15fa-90fc-5749-90d1-5e6965c7917d"
+      ],
+      "required_points": [
+        "Nội quy lao động thuộc diện đăng ký có hiệu lực sau 15 ngày kể từ ngày cơ quan có thẩm quyền nhận đủ hồ sơ.",
+        "Nếu người sử dụng lao động dưới 10 người lao động và vẫn ban hành nội quy bằng văn bản, hiệu lực do người sử dụng lao động quy định trong nội quy."
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "dev",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_009",
+      "category": "exact_legal_term",
+      "question": "Trong hoạt động cho thuê lại lao động, đơn vị nào có trách nhiệm trả lương cho người lao động thuê lại?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.LQ.56"
+      ],
+      "evidence_chunk_ids": [
+        "89117117-0107-59d0-9327-f982cf858137"
+      ],
+      "required_points": [
+        "Doanh nghiệp cho thuê lại lao động là đơn vị có trách nhiệm trả lương cho người lao động thuê lại.",
+        "Mức lương phải không thấp hơn người lao động của bên thuê lại có cùng trình độ, làm cùng công việc hoặc công việc có giá trị như nhau."
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "dev",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_010",
+      "category": "exact_legal_term",
+      "question": "Người sử dụng lao động có được tự ý sửa đổi nội dung hợp đồng lao động không?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.LQ.33"
+      ],
+      "evidence_chunk_ids": [
+        "7a525a6f-7240-5f48-9f35-c9c232f4fa2a"
+      ],
+      "required_points": [
+        "Không được tự ý sửa đổi.",
+        "Bên đề nghị sửa đổi phải báo trước ít nhất 03 ngày làm việc về nội dung cần sửa.",
+        "Chỉ khi hai bên thỏa thuận được mới ký phụ lục hoặc hợp đồng mới; nếu không thỏa thuận được thì tiếp tục hợp đồng cũ."
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "dev",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_011",
+      "category": "natural_language",
+      "question": "Trong trường hợp kết hôn nhiều lần, người lao động có được nghỉ hưởng nguyên lương cho mỗi lần kết hôn hay không?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.LQ.115"
+      ],
+      "evidence_chunk_ids": [
+        "f446df4e-d3b6-5f2e-a871-5bb9a9a16187"
+      ],
+      "required_points": [
+        "Mỗi sự kiện kết hôn hợp pháp thuộc trường hợp nghỉ 03 ngày hưởng nguyên lương và người lao động phải thông báo cho người sử dụng lao động.",
+        "Điều 115 khoản 1 điểm a không đặt giới hạn chỉ áp dụng cho lần kết hôn đầu tiên."
+      ],
+      "annotation_flags": [
+        "interpretive_caveat"
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "dev",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_012",
+      "category": "natural_language",
+      "question": "Khi bố nuôi hoặc mẹ nuôi qua đời, người lao động có được nghỉ việc riêng 3 ngày mà vẫn hưởng nguyên lương không?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.LQ.115"
+      ],
+      "evidence_chunk_ids": [
+        "f446df4e-d3b6-5f2e-a871-5bb9a9a16187"
+      ],
+      "required_points": [
+        "Có. Khi cha nuôi hoặc mẹ nuôi của người lao động qua đời (khoản 1 điểm c), người lao động được nghỉ 03 ngày hưởng nguyên lương.",
+        "Người lao động phải thông báo cho người sử dụng lao động."
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "dev",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_015",
+      "category": "natural_language",
+      "question": "Doanh nghiệp có được phép trả lương cho người lao động bằng sản phẩm không?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.LQ.94",
+        "20.2.LQ.95",
+        "20.2.LQ.96"
+      ],
+      "evidence_chunk_ids": [
+        "90609d1b-fad6-59a7-9486-25c4f110e22f",
+        "4b4bbace-3ff6-5867-b8f2-39fde050a966",
+        "19142e1d-00d9-5ec0-abf1-8309112ff2f4"
+      ],
+      "required_points": [
+        "Không được trả lương bằng sản phẩm/hiện vật thay cho tiền.",
+        "Lương phải trả bằng Đồng Việt Nam; người lao động nước ngoài tại Việt Nam có thể được trả bằng ngoại tệ.",
+        "Hình thức trả là tiền mặt hoặc qua tài khoản ngân hàng; không được ép người lao động dùng lương để mua hàng hóa/dịch vụ do NSDLĐ chỉ định."
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "dev",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_016",
+      "category": "natural_language",
+      "question": "Người sử dụng lao động có được phép giữ lương của người lao động trong thời gian thử việc không?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.LQ.26",
+        "20.2.LQ.94"
+      ],
+      "evidence_chunk_ids": [
+        "77c5022b-7ccf-54d2-a5af-cccfe8f5b990",
+        "90609d1b-fad6-59a7-9486-25c4f110e22f"
+      ],
+      "required_points": [
+        "Không được giữ hoặc không trả lương thử việc trái kỳ hạn; lương phải trả trực tiếp, đầy đủ, đúng hạn.",
+        "Mức lương thử việc do hai bên thỏa thuận nhưng ít nhất bằng 85% mức lương của công việc đó.",
+        "Trả theo kỳ hạn hợp pháp đã thỏa thuận không đồng nghĩa với hành vi 'giữ lương' trái luật."
+      ],
+      "annotation_flags": [
+        "payment_timing_caveat"
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "dev",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_017",
+      "category": "natural_language",
+      "question": "Công ty có được phép sa thải người lao động đang nghỉ ốm theo chỉ định của bác sĩ không?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.LQ.36",
+        "20.2.LQ.37",
+        "20.2.LQ.122",
+        "20.2.LQ.125"
+      ],
+      "evidence_chunk_ids": [
+        "25dd9a57-f47f-52d8-9bb0-e2456c6c250e",
+        "ac79208c-121a-559c-8666-94cb5b9f489d",
+        "093a31e3-748f-5187-9a8f-e7f5e0eb5fe9",
+        "f98cf3fe-3d8a-5d9d-b684-c77e43ff2f25",
+        "c17372aa-1a9e-507a-8978-beb4b96c7a1a",
+        "42963c0c-22e4-5f03-a66b-f107d2d6510e",
+        "bf0d029a-dc70-5b7a-bbb6-205f55b1d835"
+      ],
+      "required_points": [
+        "Nếu 'sa thải' được hiểu là kỷ luật sa thải: không được xử lý kỷ luật khi người lao động đang nghỉ ốm/điều dưỡng; ốm đau tự nó không phải căn cứ sa thải.",
+        "Nếu được hiểu là đơn phương chấm dứt hợp đồng: không được thực hiện khi người lao động đang điều trị theo chỉ định, trừ ngoại lệ tại điểm b khoản 1 Điều 36.",
+        "Ngưỡng ngoại lệ (Điều 36 khoản 1 điểm b, đã xác nhận nguyên văn): đã điều trị 12 tháng liên tục (HĐLĐ không xác định thời hạn); 06 tháng liên tục (HĐLĐ 12-36 tháng); hoặc quá nửa thời hạn hợp đồng (HĐLĐ dưới 12 tháng) mà khả năng lao động chưa hồi phục."
+      ],
+      "annotation_flags": [
+        "terminology_ambiguity"
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "dev",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_018",
+      "category": "natural_language",
+      "question": "Lao động nữ mang thai đến tháng thứ 7 thì có được về sớm 30 phút mỗi ngày không?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.LQ.137",
+        "20.2.NĐ.3.80"
+      ],
+      "evidence_chunk_ids": [
+        "beeaf23f-a054-51c6-bcb6-eaa6a028c0e3",
+        "4abf1dc7-6bcc-5b2c-87c4-89e72c184723",
+        "01259c67-4a72-572a-8a29-5f649b96b129",
+        "48900dd9-350c-5713-89ce-ff2b65b9b6f2",
+        "240ca392-e545-5680-ab4c-8e021ecae4ca",
+        "49bf1a3b-b126-51a1-a9c5-ace1fce6e771",
+        "2f1a9719-4a6d-5984-bfb8-6333c2796a9b"
+      ],
+      "required_points": [
+        "Không có quyền chung được về sớm 30 phút chỉ vì mang thai đến tháng thứ 7.",
+        "Từ tháng thứ 7, lao động nữ không bị bố trí làm đêm/thêm giờ/đi công tác xa; vùng cao/sâu/xa/biên giới/hải đảo áp dụng từ tháng thứ 6.",
+        "Nếu làm nghề/công việc nặng nhọc, độc hại, nguy hiểm hoặc ảnh hưởng xấu tới sinh sản và đã thông báo, được chuyển việc an toàn hơn hoặc giảm 01 giờ mỗi ngày mà không giảm quyền lợi.",
+        "Quyền nghỉ 30 phút mỗi ngày là quyền trong thời gian hành kinh (Điều 137 khoản 4), không phải quyền phát sinh do thai đến tháng thứ 7."
+      ],
+      "annotation_flags": [
+        "false_premise"
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "dev",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_019",
+      "category": "natural_language",
+      "question": "Khi ông hoặc bà mất, người lao động được nghỉ bao nhiêu ngày?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.LQ.115"
+      ],
+      "evidence_chunk_ids": [
+        "f446df4e-d3b6-5f2e-a871-5bb9a9a16187"
+      ],
+      "required_points": [
+        "Khi ông nội, bà nội, ông ngoại hoặc bà ngoại qua đời (khoản 2), người lao động được nghỉ KHÔNG hưởng lương 01 ngày và phải thông báo cho người sử dụng lao động.",
+        "Ngoài quy định tại khoản 1, khoản 2, người lao động có thể thỏa thuận thêm để nghỉ không hưởng lương."
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "dev",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_022",
+      "category": "single_scenario",
+      "question": "Trong trường hợp doanh nghiệp cho thuê lại không thanh toán quyền lợi cho người lao động, tiền ký quỹ được dùng cho những khoản nào và nếu không đủ thì ưu tiên thanh toán theo thứ tự nào?",
+      "answerable": true,
+      "expected_article_codes": [
+        "NQ66.18.PL-I.4.C.V",
+        "NQ66.18.PL-I.4.C.VIII"
+      ],
+      "evidence_chunk_ids": [
+        "f295f903-7006-5d4f-afdc-fa52ccaad17b",
+        "33505a62-857e-54eb-b285-3a9fe68b53e2",
+        "3f014f7d-ce6b-5c4b-8169-30072649587f",
+        "039ef8b7-bf8e-5684-a624-6c353bd253da",
+        "5875dbc2-2f6b-5105-a699-8ccd625e19c9",
+        "e3621b4d-191d-5da1-a9e7-76f7f7c20fe2"
+      ],
+      "required_points": [
+        "Tiền ký quỹ được dùng để thanh toán tiền lương, các khoản bảo hiểm bắt buộc, chế độ khác theo thỏa thuận hoặc nội quy và bồi thường khi doanh nghiệp vi phạm hoặc gây thiệt hại.",
+        "Khi tiền ký quỹ không đủ, thứ tự ưu tiên là: tiền lương; tiếp theo BHXH, BHYT, BHTN; sau đó BHTNLĐ-BNN và các chế độ khác.",
+        "Sau 60 ngày kể từ ngày đến hạn mà doanh nghiệp chưa thanh toán, Sở Nội vụ yêu cầu thanh toán; sau 10 ngày không thực hiện và không đề nghị rút tiền ký quỹ thì tiến hành thủ tục trích tiền ký quỹ.",
+        "Ngân hàng nhận ký quỹ trực tiếp chi trả cho người lao động theo quyết định và danh sách được phê duyệt."
+      ],
+      "annotation_flags": [
+        "current_law_rewritten",
+        "priority_order_added"
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "current_law_note": "Bản v1 đã bỏ thứ tự ưu tiên theo NĐ 145/2020; NQ 66.18/2026/NQ-CP hiện quy định rõ thứ tự ưu tiên.",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "dev",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_027",
+      "category": "single_scenario",
+      "question": "Khi giao kết hoặc chấm dứt hợp đồng lao động với người giúp việc gia đình, người sử dụng lao động phải thông báo cho UBND cấp xã trong thời hạn bao lâu?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.NĐ.3.90"
+      ],
+      "evidence_chunk_ids": [
+        "151d1dfa-abde-5f9d-9786-3739d0d9c680"
+      ],
+      "required_points": [
+        "Thông báo cho UBND cấp xã trong thời hạn 10 ngày kể từ ngày ký hợp đồng lao động hoặc chấm dứt hợp đồng lao động với người giúp việc gia đình."
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "dev",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_028",
+      "category": "single_scenario",
+      "question": "Khi hợp đồng lao động bị tuyên bố vô hiệu từng phần thì công ty và nhân viên phải làm gì để xử lý?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.NĐ.3.9"
+      ],
+      "evidence_chunk_ids": [
+        "bae534df-500b-5fbd-bf7b-c010712e0bbd",
+        "7b405487-be52-5587-b08c-71ee48efa7db",
+        "c07d6cf7-6c3e-5fef-8531-f1570e42329d",
+        "395a595a-9db1-5d70-9d96-5bd60524cdb1"
+      ],
+      "required_points": [
+        "Hai bên sửa đổi, bổ sung phần bị vô hiệu để phù hợp thỏa ước lao động tập thể và pháp luật.",
+        "Quyền/nghĩa vụ/lợi ích trong giai đoạn trước khi sửa theo thỏa ước; không có thì theo pháp luật. Nếu lương thấp hơn chuẩn, phải thỏa thuận lại và hoàn trả chênh lệch.",
+        "Nếu không thống nhất sửa đổi thì chấm dứt hợp đồng, giải quyết trợ cấp thôi việc (Điều 8 NĐ) và tính thời gian đã làm việc vào thời gian làm việc cho NSDLĐ."
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "dev",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_029",
+      "category": "single_scenario",
+      "question": "Khi trả lương theo sản phẩm hoặc lương khoán, công ty cần đảm bảo mức lương quy đổi như thế nào để không vi phạm luật?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.NĐ.8.4"
+      ],
+      "evidence_chunk_ids": [
+        "2158915d-6cac-5559-8ba0-d8fc4b2380ef"
+      ],
+      "required_points": [
+        "Lương theo sản phẩm/khoán khi quy đổi theo tháng hoặc giờ không được thấp hơn mức lương tối thiểu tháng hoặc giờ tương ứng.",
+        "Việc quy đổi dựa trên thời giờ làm việc bình thường để sản xuất sản phẩm hoặc hoàn thành nhiệm vụ khoán."
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "dev",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_030",
+      "category": "single_scenario",
+      "question": "Công ty có chi nhánh hoạt động ở nhiều vùng khác nhau thì áp dụng mức lương tối thiểu như thế nào?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.NĐ.8.3"
+      ],
+      "evidence_chunk_ids": [
+        "8c254e83-3775-5189-93e9-4c8621c65786"
+      ],
+      "required_points": [
+        "Mỗi đơn vị/chi nhánh áp dụng mức lương tối thiểu của địa bàn nơi đơn vị/chi nhánh đó hoạt động.",
+        "Nếu hoạt động trong khu công nghiệp/khu chế xuất/khu công nghệ cao/khu công nghệ số tập trung nằm trên nhiều vùng khác nhau thì áp dụng mức cao nhất."
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "dev",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_031",
+      "category": "single_scenario",
+      "question": "Trong trường hợp nào công ty có quyền yêu cầu nhân viên làm thêm giờ mà không bị giới hạn số giờ và nhân viên không được từ chối?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.LQ.108"
+      ],
+      "evidence_chunk_ids": [
+        "3df78b85-94a6-56c4-a7d6-217a598ce399"
+      ],
+      "required_points": [
+        "Thực hiện lệnh động viên/huy động bảo đảm quốc phòng, an ninh.",
+        "Bảo vệ tính mạng/tài sản trong phòng ngừa, khắc phục thiên tai, hỏa hoạn, dịch bệnh nguy hiểm và thảm họa.",
+        "Ngoại lệ: người lao động có thể không thực hiện nếu có nguy cơ ảnh hưởng tính mạng/sức khỏe theo pháp luật an toàn, vệ sinh lao động."
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "dev",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_033",
+      "category": "single_scenario",
+      "question": "Trong thời hạn bao nhiêu ngày kể từ ngày ban hành nội quy lao động thì công ty phải nộp hồ sơ đăng ký?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.LQ.119"
+      ],
+      "evidence_chunk_ids": [
+        "7bbae293-e731-566e-b332-6a6719a6302b"
+      ],
+      "required_points": [
+        "Trong thời hạn 10 ngày kể từ ngày ban hành nội quy lao động.",
+        "Nghĩa vụ đăng ký áp dụng với người sử dụng lao động có từ 10 người lao động trở lên."
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "dev",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_034",
+      "category": "single_scenario",
+      "question": "Khi nhân viên làm việc không trọn thời gian hết thời hạn tạm hoãn hợp đồng lao động thì thời hạn quay lại làm việc là bao lâu và công ty phải sắp xếp công việc cho họ như thế nào?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.LQ.31",
+        "20.2.LQ.32"
+      ],
+      "evidence_chunk_ids": [
+        "95f91be0-a805-5406-85ff-0aae2b0022d4",
+        "48fb511d-393b-5813-a82c-477131e2a966"
+      ],
+      "required_points": [
+        "Trong 15 ngày kể từ ngày hết thời hạn tạm hoãn, người lao động phải có mặt tại nơi làm việc.",
+        "Người sử dụng lao động phải nhận lại vào đúng công việc theo hợp đồng nếu hợp đồng còn thời hạn, trừ thỏa thuận/quy định khác.",
+        "Làm việc không trọn thời gian không làm mất quyền này; người lao động bán thời gian bình đẳng về quyền, nghĩa vụ và không bị phân biệt đối xử."
+      ],
+      "annotation_flags": [
+        "irrelevant_fact"
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "dev",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_035",
+      "category": "single_scenario",
+      "question": "Khi công ty ký hợp đồng lao động với nhân viên từ đủ 15 đến dưới 18 tuổi, ai là người có thẩm quyền giao kết và công ty cần lưu ý không được yêu cầu điều kiện gì về tài sản bảo đảm?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.LQ.17",
+        "20.2.LQ.18"
+      ],
+      "evidence_chunk_ids": [
+        "33b34c3d-789e-551c-9e7e-239c93aa97d0",
+        "66bb55e9-8b79-54a1-9a40-00289be4e062"
+      ],
+      "required_points": [
+        "Người lao động từ đủ 15 đến chưa đủ 18 tuổi tự giao kết hợp đồng khi có sự đồng ý bằng văn bản của người đại diện theo pháp luật.",
+        "Người sử dụng lao động không được yêu cầu người lao động thực hiện biện pháp bảo đảm bằng tiền hoặc tài sản khác cho việc thực hiện hợp đồng."
+      ],
+      "annotation_flags": [
+        "missing_key_source_in_suggestions"
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "dev",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_036",
+      "category": "multi_article",
+      "question": "Công ty muốn thuê một nhóm lao động làm việc thời vụ dưới 1 tháng, cho phép một người đại diện ký hợp đồng thử việc và yêu cầu cả nhóm đặt cọc tiền bảo đảm thì cách làm này có đúng quy định không và cần điều chỉnh những điểm nào?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.LQ.17",
+        "20.2.LQ.18",
+        "20.2.LQ.24"
+      ],
+      "evidence_chunk_ids": [
+        "33b34c3d-789e-551c-9e7e-239c93aa97d0",
+        "66bb55e9-8b79-54a1-9a40-00289be4e062",
+        "71864258-5a3a-5c94-8d6f-a6526097d670"
+      ],
+      "required_points": [
+        "Không được áp dụng thử việc với HĐLĐ có thời hạn dưới 01 tháng; vì vậy không được ký hợp đồng thử việc cho nhóm này.",
+        "Với công việc mùa vụ/nhất định dưới 12 tháng, nhóm NLĐ từ đủ 18 tuổi có thể ủy quyền một người ký HĐLĐ bằng văn bản, kèm danh sách và chữ ký từng người — nhưng chỉ áp dụng cho HĐLĐ chính thức, không hợp pháp hóa hợp đồng thử việc vốn bị cấm.",
+        "Tuyệt đối không được yêu cầu đặt cọc bằng tiền/tài sản để bảo đảm thực hiện hợp đồng lao động."
+      ],
+      "annotation_flags": [
+        "age_condition",
+        "compound_question",
+        "missing_key_source_in_suggestions"
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "dev",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_037",
+      "category": "multi_article",
+      "question": "Trong trường hợp hợp đồng lao động bị tuyên bố vô hiệu toàn bộ dẫn đến doanh nghiệp cho thuê lại không đủ khả năng bồi thường cho người lao động, công ty cần xử lý hợp đồng và sử dụng tiền ký quỹ theo cơ chế nào?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.LQ.51",
+        "20.2.NĐ.3.10",
+        "20.2.NĐ.3.11",
+        "NQ66.18.PL-I.4.C.V",
+        "NQ66.18.PL-I.4.C.VII",
+        "NQ66.18.PL-I.4.C.VIII"
+      ],
+      "evidence_chunk_ids": [
+        "775e1bfc-762e-52ea-86d6-213ce1ec1783",
+        "94b16cc3-d79e-5fa6-bf3c-6a1d7da2b883",
+        "6ce39945-08b5-5190-b2a0-053ba6c8fc12",
+        "1b592ba9-af3e-5f4e-be1a-8d8d7eacf374",
+        "a92ddc35-e5bb-56b1-95a6-2b957e5f393a",
+        "99fbb0af-0c7b-569d-8f85-4cfbbac77413",
+        "f295f903-7006-5d4f-afdc-fa52ccaad17b",
+        "3c10863f-3df5-531d-96a8-3cfb565083d1",
+        "a3371ba4-6253-52e4-a40c-d5f9a25773e5",
+        "2667daf3-2edf-5a70-94d2-87b6b5e058b4",
+        "9892325a-a1d4-5b65-84b8-2a5ed60938ef",
+        "b14bf70f-d0ef-520e-a890-2dfe911166f5",
+        "66350587-68b8-5693-8a2f-40b841c7f500",
+        "19239861-4f5f-539f-9def-a2a443f194f8",
+        "33505a62-857e-54eb-b285-3a9fe68b53e2",
+        "3f014f7d-ce6b-5c4b-8169-30072649587f",
+        "039ef8b7-bf8e-5684-a624-6c353bd253da",
+        "5875dbc2-2f6b-5105-a699-8ccd625e19c9",
+        "e3621b4d-191d-5da1-a9e7-76f7f7c20fe2"
+      ],
+      "required_points": [
+        "Nếu hợp đồng vô hiệu toàn bộ do sai thẩm quyền hoặc vi phạm nguyên tắc giao kết thì hai bên ký lại đúng thẩm quyền; nếu toàn bộ nội dung hoặc công việc trái pháp luật thì giao kết hợp đồng mới theo quy định.",
+        "Doanh nghiệp có thể chủ động đề nghị rút tiền ký quỹ để bồi thường khi đã quá 60 ngày kể từ ngày đến hạn mà không đủ khả năng thanh toán.",
+        "Cơ chế trích bắt buộc áp dụng khi đã quá 60 ngày chưa thanh toán, Sở Nội vụ yêu cầu doanh nghiệp thực hiện, sau 10 ngày doanh nghiệp vẫn không thanh toán và không đề nghị rút tiền ký quỹ.",
+        "Rút tiền ký quỹ chủ động và trích tiền ký quỹ bắt buộc là hai thủ tục khác nhau; phải áp dụng đúng điều kiện và trình tự của từng thủ tục."
+      ],
+      "annotation_flags": [
+        "current_law_rewritten",
+        "compound_question",
+        "two_deposit_mechanisms"
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "current_law_note": "Cập nhật mốc 60 ngày và hai cơ chế rút/trích theo NQ 66.18/2026/NQ-CP.",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "dev",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_038",
+      "category": "multi_article",
+      "question": "Một nhân viên nữ mang thai có xác nhận của bệnh viện về việc tiếp tục làm việc sẽ ảnh hưởng xấu tới thai nhi nên muốn tạm hoãn hợp đồng, đồng thời cô ấy phản ánh công ty không cho nghỉ 30 phút mỗi ngày trong thời gian hành kinh thì công ty phải xử lý yêu cầu tạm hoãn này thế nào và rủi ro pháp lý đối với việc không cho nghỉ hành kinh là gì?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.LQ.137",
+        "20.2.LQ.138",
+        "20.2.NĐ.3.80"
+      ],
+      "evidence_chunk_ids": [
+        "beeaf23f-a054-51c6-bcb6-eaa6a028c0e3",
+        "80a0d1d0-7df3-5b1b-b1eb-0805e735e518",
+        "4abf1dc7-6bcc-5b2c-87c4-89e72c184723",
+        "01259c67-4a72-572a-8a29-5f649b96b129",
+        "48900dd9-350c-5713-89ce-ff2b65b9b6f2",
+        "240ca392-e545-5680-ab4c-8e021ecae4ca",
+        "49bf1a3b-b126-51a1-a9c5-ace1fce6e771",
+        "2f1a9719-4a6d-5984-bfb8-6333c2796a9b"
+      ],
+      "required_points": [
+        "Lao động nữ có quyền tạm hoãn hợp đồng khi có xác nhận y tế về ảnh hưởng xấu tới thai nhi; phải thông báo kèm xác nhận cho công ty.",
+        "Thời gian tạm hoãn do hai bên thỏa thuận nhưng tối thiểu bằng thời gian cơ sở y tế chỉ định; không có chỉ định thì hai bên tự thỏa thuận.",
+        "Trong thời gian hành kinh: nghỉ 30 phút/ngày, tính vào giờ làm việc, hưởng đủ lương; số ngày nghỉ trong tháng do hai bên thỏa thuận nhưng tối thiểu 03 ngày làm việc/tháng.",
+        "Nếu người lao động không có nhu cầu nghỉ và công ty đồng ý cho làm thì phải trả thêm tiền cho thời gian làm đó.",
+        "Rủi ro: vi phạm nghĩa vụ bảo đảm quyền lợi lao động nữ; mức xử phạt hành chính cụ thể không thuộc phạm vi corpus hiện có."
+      ],
+      "annotation_flags": [
+        "compound_question",
+        "sanction_amount_not_in_corpus"
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "dev",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_040",
+      "category": "multi_article",
+      "question": "Công ty có nhân viên làm việc không trọn thời gian vừa hết thời hạn tạm hoãn hợp đồng nhưng hiện đang nuôi con dưới 12 tháng tuổi thì công ty phải xử lý việc nhận lại và quyền đơn phương chấm dứt hợp đồng với nhân viên này như thế nào?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.LQ.31",
+        "20.2.LQ.32",
+        "20.2.LQ.37",
+        "20.2.LQ.137"
+      ],
+      "evidence_chunk_ids": [
+        "95f91be0-a805-5406-85ff-0aae2b0022d4",
+        "48fb511d-393b-5813-a82c-477131e2a966",
+        "c17372aa-1a9e-507a-8978-beb4b96c7a1a",
+        "beeaf23f-a054-51c6-bcb6-eaa6a028c0e3"
+      ],
+      "required_points": [
+        "Trong 15 ngày sau khi hết tạm hoãn, người lao động phải có mặt và công ty phải nhận lại vào công việc theo hợp đồng nếu hợp đồng còn thời hạn.",
+        "Làm việc không trọn thời gian không làm giảm quyền; NLĐ phải được bình đẳng, không bị phân biệt đối xử.",
+        "Không được đơn phương chấm dứt HĐLĐ khi NLĐ đang nuôi con dưới 12 tháng tuổi (Điều 37 khoản 3); cũng không được sa thải/chấm dứt vì lý do nuôi con dưới 12 tháng (Điều 137 khoản 3), trừ các trường hợp NSDLĐ chấm dứt hoạt động/cá nhân chết theo luật định."
+      ],
+      "annotation_flags": [
+        "compound_question",
+        "scope_exception"
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "dev",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_042",
+      "category": "multi_article",
+      "question": "Công ty đang tái cơ cấu tổ chức dẫn đến nhiều người mất việc, đối với những nhân viên đang tạm hoãn hợp đồng hoặc đang làm việc không trọn thời gian thì công ty phải xử lý việc nhận lại và cho thôi việc như thế nào để đúng luật?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.LQ.31",
+        "20.2.LQ.32",
+        "20.2.LQ.42",
+        "20.2.LQ.44",
+        "20.2.LQ.47"
+      ],
+      "evidence_chunk_ids": [
+        "95f91be0-a805-5406-85ff-0aae2b0022d4",
+        "48fb511d-393b-5813-a82c-477131e2a966",
+        "1f975c88-a8e6-5aca-b073-4e320fb93eee",
+        "965d441b-130d-58db-a34d-97aec12c9ccb",
+        "822babc1-f355-57d2-a9fd-24ad0fecf307"
+      ],
+      "required_points": [
+        "NLĐ hết tạm hoãn phải được nhận lại trong 15 ngày nếu hợp đồng còn hạn; NLĐ không trọn thời gian có quyền bình đẳng, không bị loại chỉ vì làm bán thời gian.",
+        "Tái cơ cấu ảnh hưởng nhiều người: công ty phải xây dựng và thực hiện phương án sử dụng lao động (Điều 44), ưu tiên đào tạo lại nếu có chỗ làm mới.",
+        "Phương án phải nêu danh sách tiếp tục sử dụng/đào tạo/chuyển bán thời gian/chấm dứt, quyền nghĩa vụ, nguồn tài chính; tham khảo tổ chức đại diện NLĐ và công khai trong 15 ngày sau khi thông qua.",
+        "Chỉ khi không giải quyết được việc làm mới thì cho thôi việc; phải trao đổi với tổ chức đại diện NLĐ và báo trước 30 ngày cho UBND cấp tỉnh và NLĐ.",
+        "Người mất việc được trợ cấp mỗi năm 01 tháng lương, tối thiểu 02 tháng lương (Điều 47)."
+      ],
+      "annotation_flags": [
+        "compound_question",
+        "missing_key_source_in_suggestions"
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "dev",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_043",
+      "category": "multi_article",
+      "question": "Trong trường hợp hợp đồng lao động bị tuyên bố vô hiệu toàn bộ, công ty cần xử lý việc ký lại hợp đồng như thế nào, cách tính lương cho những ngày nghỉ lễ tết của nhân viên trong giai đoạn này ra sao và tiêu chuẩn thiết lập phòng vắt sữa mẹ tại nơi làm việc cho lao động nữ là gì?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.NĐ.3.10",
+        "20.2.NĐ.3.11",
+        "20.2.LQ.112",
+        "20.2.NĐ.3.67",
+        "20.2.NĐ.3.76",
+        "20.2.NĐ.3.80"
+      ],
+      "evidence_chunk_ids": [
+        "94b16cc3-d79e-5fa6-bf3c-6a1d7da2b883",
+        "6ce39945-08b5-5190-b2a0-053ba6c8fc12",
+        "1b592ba9-af3e-5f4e-be1a-8d8d7eacf374",
+        "a92ddc35-e5bb-56b1-95a6-2b957e5f393a",
+        "99fbb0af-0c7b-569d-8f85-4cfbbac77413",
+        "a862043e-40bf-5684-8323-2439363bc0fa",
+        "06444bdd-be81-5f77-99f2-188891020052",
+        "a5122f59-ecc7-5c77-a36b-70dd53ac28ac",
+        "4abf1dc7-6bcc-5b2c-87c4-89e72c184723",
+        "01259c67-4a72-572a-8a29-5f649b96b129",
+        "48900dd9-350c-5713-89ce-ff2b65b9b6f2",
+        "240ca392-e545-5680-ab4c-8e021ecae4ca",
+        "49bf1a3b-b126-51a1-a9c5-ace1fce6e771",
+        "2f1a9719-4a6d-5984-bfb8-6333c2796a9b"
+      ],
+      "required_points": [
+        "Xử lý HĐLĐ vô hiệu toàn bộ theo hai nhánh nguyên nhân: sai thẩm quyền → ký lại (NĐ.3.10); nội dung/công việc trái luật → giao kết mới (NĐ.3.11) — câu hỏi không nêu rõ nguyên nhân nên cần trình bày cả hai khả năng.",
+        "Nghỉ lễ, tết hưởng nguyên lương theo Điều 112; tiền lương làm căn cứ trả cho những ngày nghỉ lễ, tết là TIỀN LƯƠNG THEO HỢP ĐỒNG LAO ĐỘNG TẠI THỜI ĐIỂM người lao động nghỉ (Điều 67 NĐ 145/2020, khoản 2 — đã xác nhận nguyên văn).",
+        "Phòng vắt, trữ sữa: không gian riêng tư, không phải buồng tắm/vệ sinh; có điện nước bàn ghế tủ lạnh quạt/điều hòa; vị trí thuận tiện, được che chắn (NĐ.3.76).",
+        "Khuyến khích lắp đặt phù hợp điều kiện và nhu cầu; bắt buộc nếu sử dụng từ 1.000 lao động nữ trở lên (NĐ.3.80 khoản 5)."
+      ],
+      "annotation_flags": [
+        "cause_unspecified",
+        "compound_question"
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "dev",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_044",
+      "category": "multi_article",
+      "question": "Công ty đang thực hiện sáp nhập và ảnh hưởng đến nhiều nhân sự, trong đó có một nhân viên đang tạm hoãn hợp đồng và một nhân viên làm việc không trọn thời gian, thì công ty phải xử lý phương án sử dụng lao động và quyền lợi cho hai nhóm này như thế nào?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.LQ.30",
+        "20.2.LQ.31",
+        "20.2.LQ.32",
+        "20.2.LQ.43",
+        "20.2.LQ.44",
+        "20.2.LQ.47"
+      ],
+      "evidence_chunk_ids": [
+        "16ccfe28-10fb-5967-9463-9069796b514f",
+        "95f91be0-a805-5406-85ff-0aae2b0022d4",
+        "48fb511d-393b-5813-a82c-477131e2a966",
+        "75fb37df-0043-5627-87d5-36c7077decdf",
+        "965d441b-130d-58db-a34d-97aec12c9ccb",
+        "822babc1-f355-57d2-a9fd-24ad0fecf307"
+      ],
+      "required_points": [
+        "Sáp nhập ảnh hưởng nhiều NLĐ: NSDLĐ hiện tại phải xây dựng phương án; cả NSDLĐ hiện tại và kế tiếp phải thực hiện phương án đã thông qua (Điều 43).",
+        "Phương án phải phân loại NLĐ tiếp tục làm/đào tạo lại/chuyển không trọn thời gian/nghỉ hưu/chấm dứt; nêu quyền nghĩa vụ, nguồn tài chính; tham khảo tổ chức đại diện NLĐ, công khai trong 15 ngày (Điều 44).",
+        "NLĐ tạm hoãn không đương nhiên mất hợp đồng; trong tạm hoãn không hưởng lương/quyền lợi trừ thỏa thuận khác; hết hạn phải được nhận lại trong 15 ngày nếu hợp đồng còn hạn.",
+        "NLĐ không trọn thời gian có quyền bình đẳng; nếu bị thôi việc theo phương án thì được hưởng trợ cấp mất việc khi đủ điều kiện (Điều 47)."
+      ],
+      "annotation_flags": [
+        "compound_question"
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "dev",
+      "split_version": "runtime-retrieval-v1"
+    },
+    {
+      "id": "r2ai_gold_045",
+      "category": "multi_article",
+      "question": "Công ty vận hành hệ thống đường ống phân phối khí ký hợp đồng lao động sai thẩm quyền dẫn đến bị tuyên bố vô hiệu toàn bộ, vậy việc xử lý hợp đồng này, cách tính lương cho những ngày nghỉ lễ tết và quyền lợi về thời giờ làm việc đặc thù của nhân viên sẽ được thực hiện như thế nào?",
+      "answerable": true,
+      "expected_article_codes": [
+        "20.2.NĐ.3.10",
+        "20.2.LQ.112",
+        "20.2.NĐ.3.67",
+        "20.2.TT.6.2",
+        "20.2.TT.6.4",
+        "20.2.TT.6.5",
+        "20.2.TT.6.7",
+        "20.2.TT.6.8"
+      ],
+      "evidence_chunk_ids": [
+        "94b16cc3-d79e-5fa6-bf3c-6a1d7da2b883",
+        "6ce39945-08b5-5190-b2a0-053ba6c8fc12",
+        "1b592ba9-af3e-5f4e-be1a-8d8d7eacf374",
+        "a92ddc35-e5bb-56b1-95a6-2b957e5f393a",
+        "a862043e-40bf-5684-8323-2439363bc0fa",
+        "06444bdd-be81-5f77-99f2-188891020052",
+        "795c5663-ca36-55f3-958b-d684a04c20d9",
+        "4b4799ee-8097-5a33-a1ce-7ee7368624b3",
+        "b6188185-ee94-55e9-bcbd-2947f7c3eee7",
+        "7721a7b8-e95a-5d7e-9c93-053b01312d15",
+        "701c8082-dc37-5935-bd95-f8f5645c794c"
+      ],
+      "required_points": [
+        "HĐLĐ vô hiệu do ký sai thẩm quyền: hai bên ký lại HĐLĐ đúng pháp luật (NĐ.3.10 khoản 1); không ký lại thì chấm dứt HĐLĐ (khoản 3).",
+        "Nghỉ lễ, tết hưởng nguyên lương theo Điều 112; tiền lương căn cứ là tiền lương theo HĐLĐ tại thời điểm nghỉ (Điều 67 NĐ 145/2020 khoản 2).",
+        "Quy định đặc thù (TT 12/2022/TT-BCT) CHỈ áp dụng cho người TRỰC TIẾP vận hành, bảo dưỡng, sửa chữa hệ thống đường ống phân phối khí/công trình khí (TT.6.2) — KHÔNG áp dụng cho lao động gián tiếp tại cùng cơ sở (loại trừ rõ ràng ở khoản 2 Điều này).",
+        "Ca làm việc không quá 12 giờ/ngày, phiên làm việc tối đa 07 ngày (TT.6.4); tổng giờ ca + làm thêm không quá 12 giờ/ngày, làm thêm không quá 300 giờ/năm, cần đồng ý của NLĐ (TT.6.5).",
+        "Nghỉ lễ/tết/nghỉ việc riêng/nghỉ không hưởng lương tuân thủ Điều 110, 112, 115 BLLĐ; nghỉ hằng năm theo Điều 113, 114, có thể thỏa thuận bố trí vào thời gian nghỉ chuyển phiên (TT.6.7). Sau mỗi phiên làm việc, nghỉ liên tục bằng số ngày đã làm trong phiên trước đó (TT.6.8)."
+      ],
+      "annotation_flags": [
+        "scope_condition",
+        "compound_question"
+      ],
+      "corpus_verification": "rebound_to_canonical_word_candidate",
+      "benchmark_enabled": true,
+      "law_as_of": "2026-07-27",
+      "evidence_mapping_policy": "all_candidate_chunks_for_expected_article_codes",
+      "benchmark_split": "dev",
+      "split_version": "runtime-retrieval-v1"
+    }
+  ],
+  "rebased_from": {
+    "path": "data/evaluation/golden_questions_v2_current_law.json",
+    "sha256": "540616b6f0ba252ff726afdd9563e8b26ecc6741a7a9dbe1ba84619636226456"
+  },
+  "lock_scope": "retrieval_labels_and_split_only",
+  "authority_review_status": "pending",
+  "split": {
+    "version": "runtime-retrieval-v1",
+    "role": "dev",
+    "locked": true,
+    "created_at": "2026-08-01",
+    "source_path": "data/evaluation/golden_questions_v4_canonical_word_candidate.json",
+    "source_sha256": "92856a7dd92b8e65d84c161da9a0a61f72d33d11731be211aac08f8c6aaddf21",
+    "grouping_key": "connected_expected_article_codes",
+    "test_access_policy": "Tune only on dev. Test evaluation requires an explicit CLI unlock and a selected dev configuration."
+  }
+}

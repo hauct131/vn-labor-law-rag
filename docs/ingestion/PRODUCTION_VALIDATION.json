@@ -1,0 +1,66 @@
+{
+  "validated_at": "2026-07-24",
+  "upstream": {
+    "branch": "feat/e2e-openrouter-mvp",
+    "base_commit": "447b1cd",
+    "working_branch": "feat/e2e-vbpl-production-ingestion"
+  },
+  "scope": "VBPL acquisition and immutable raw snapshot publication only",
+  "checks": {
+    "ingestion_unit_and_local_integration_tests": {
+      "command": "PYTHONPATH=.:backend python -m pytest -q backend/tests/test_vbpl_ingestion.py",
+      "result": "14 passed"
+    },
+    "python_compile": {
+      "command": "python -m py_compile scripts/vbpl_portal.py",
+      "result": "passed"
+    },
+    "config_json_validation": {
+      "command": "python -m json.tool config/vbpl_corpus.json",
+      "result": "passed"
+    },
+    "git_whitespace_check": {
+      "command": "git diff --check",
+      "result": "passed"
+    },
+    "full_backend_regression": {
+      "result": "not_run_in_isolated_runtime",
+      "reason": "The isolated artifact runtime does not contain the E2E branch's LangChain, FastAPI, Qdrant and VnCoreNLP dependencies. The ingestion patch does not modify backend application modules. Run the existing backend suite in the project's normal backend virtual environment before merge."
+    },
+    "live_vbpl_soak": {
+      "result": "required_on_operator_machine",
+      "gate": "10 iterations, zero failures, stable full-text SHA-256, valid 36-article sequence for 219/2025/NĐ-CP",
+      "command": "make vbpl-soak"
+    }
+  },
+  "implemented_controls": [
+    "exact document-number resolver",
+    "detail item-id verification",
+    "JSON and XML gateway parsing",
+    "retry with exponential backoff, jitter and Retry-After",
+    "response size cap",
+    "sitemap disk cache",
+    "direct gateway with reusable Playwright fallback",
+    "in-memory browser cookies and bearer token only",
+    "truthful attachment policy without vacuous success",
+    "browser-context attachment download fallback",
+    "raw response preservation",
+    "per-file SHA-256",
+    "checksum verification before resume",
+    "per-document lock with stale-lock recovery",
+    "atomic snapshot publication",
+    "unchanged-content deduplication",
+    "incremental batch run manifest",
+    "live soak reliability command",
+    "GitHub Actions ingestion CI"
+  ],
+  "release_decision": "code_ready_for_live_soak_not_yet_declared_production",
+  "promotion_requirements": [
+    "Run the full existing backend test suite in the normal project environment",
+    "Run make vbpl-doctor",
+    "Run make vbpl-canary and verify SHA256SUMS.txt",
+    "Run make vbpl-soak in at least three separate time windows",
+    "Resolve strict attachment failures for documents whose appendices are required",
+    "Do not put live crawling on the chatbot request path"
+  ]
+}

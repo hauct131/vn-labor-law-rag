@@ -1,0 +1,140 @@
+{
+  "config": "config/vbpl_corpus.json",
+  "failed": 17,
+  "finished_at": "2026-07-24T09:33:38+00:00",
+  "results": [
+    {
+      "document_number": "18/VBHN-VPQH",
+      "elapsed_ms": 4.58,
+      "error": "No exact sitemap URL for 18/VBHN-VPQH; pass --portal-url or set portal_url in config",
+      "error_type": "VbplPortalNotFound",
+      "status": "failed"
+    },
+    {
+      "document_number": "135/2020/NĐ-CP",
+      "elapsed_ms": 4.6,
+      "error": "No exact sitemap URL for 135/2020/NĐ-CP; pass --portal-url or set portal_url in config",
+      "error_type": "VbplPortalNotFound",
+      "status": "failed"
+    },
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "elapsed_ms": 4.921,
+      "error": "No exact sitemap URL for 145/2020/NĐ-CP; pass --portal-url or set portal_url in config",
+      "error_type": "VbplPortalNotFound",
+      "status": "failed"
+    },
+    {
+      "document_number": "152/2020/NĐ-CP",
+      "elapsed_ms": 4.858,
+      "error": "No exact sitemap URL for 152/2020/NĐ-CP; pass --portal-url or set portal_url in config",
+      "error_type": "VbplPortalNotFound",
+      "status": "failed"
+    },
+    {
+      "document_number": "97/2022/NĐ-CP",
+      "elapsed_ms": 6.789,
+      "error": "No exact sitemap URL for 97/2022/NĐ-CP; pass --portal-url or set portal_url in config",
+      "error_type": "VbplPortalNotFound",
+      "status": "failed"
+    },
+    {
+      "document_number": "293/2025/NĐ-CP",
+      "elapsed_ms": 4.559,
+      "error": "No exact sitemap URL for 293/2025/NĐ-CP; pass --portal-url or set portal_url in config",
+      "error_type": "VbplPortalNotFound",
+      "status": "failed"
+    },
+    {
+      "document_number": "219/2025/NĐ-CP",
+      "elapsed_ms": 9.431,
+      "snapshot_dir": "data/raw/vbpl/219_2025_nd_cp/20260724T091235Z-7f26444f",
+      "status": "skipped_valid"
+    },
+    {
+      "document_number": "128/2025/NĐ-CP",
+      "elapsed_ms": 4.489,
+      "error": "No exact sitemap URL for 128/2025/NĐ-CP; pass --portal-url or set portal_url in config",
+      "error_type": "VbplPortalNotFound",
+      "status": "failed"
+    },
+    {
+      "document_number": "129/2025/NĐ-CP",
+      "elapsed_ms": 4.882,
+      "error": "No exact sitemap URL for 129/2025/NĐ-CP; pass --portal-url or set portal_url in config",
+      "error_type": "VbplPortalNotFound",
+      "status": "failed"
+    },
+    {
+      "document_number": "09/2020/TT-BLĐTBXH",
+      "elapsed_ms": 4.509,
+      "error": "No exact sitemap URL for 09/2020/TT-BLĐTBXH; pass --portal-url or set portal_url in config",
+      "error_type": "VbplPortalNotFound",
+      "status": "failed"
+    },
+    {
+      "document_number": "10/2020/TT-BLĐTBXH",
+      "elapsed_ms": 4.818,
+      "error": "No exact sitemap URL for 10/2020/TT-BLĐTBXH; pass --portal-url or set portal_url in config",
+      "error_type": "VbplPortalNotFound",
+      "status": "failed"
+    },
+    {
+      "document_number": "04/2021/TT-BCT",
+      "elapsed_ms": 4.375,
+      "error": "No exact sitemap URL for 04/2021/TT-BCT; pass --portal-url or set portal_url in config",
+      "error_type": "VbplPortalNotFound",
+      "status": "failed"
+    },
+    {
+      "document_number": "18/2021/TT-BLĐTBXH",
+      "elapsed_ms": 4.58,
+      "error": "No exact sitemap URL for 18/2021/TT-BLĐTBXH; pass --portal-url or set portal_url in config",
+      "error_type": "VbplPortalNotFound",
+      "status": "failed"
+    },
+    {
+      "document_number": "19/2021/TT-BLĐTBXH",
+      "elapsed_ms": 5.203,
+      "error": "No exact sitemap URL for 19/2021/TT-BLĐTBXH; pass --portal-url or set portal_url in config",
+      "error_type": "VbplPortalNotFound",
+      "status": "failed"
+    },
+    {
+      "document_number": "12/2022/TT-BCT",
+      "elapsed_ms": 4.505,
+      "error": "No exact sitemap URL for 12/2022/TT-BCT; pass --portal-url or set portal_url in config",
+      "error_type": "VbplPortalNotFound",
+      "status": "failed"
+    },
+    {
+      "document_number": "20/2023/TT-BCT",
+      "elapsed_ms": 4.549,
+      "error": "No exact sitemap URL for 20/2023/TT-BCT; pass --portal-url or set portal_url in config",
+      "error_type": "VbplPortalNotFound",
+      "status": "failed"
+    },
+    {
+      "document_number": "17/2023/TT-BLĐTBXH",
+      "elapsed_ms": 4.418,
+      "error": "No exact sitemap URL for 17/2023/TT-BLĐTBXH; pass --portal-url or set portal_url in config",
+      "error_type": "VbplPortalNotFound",
+      "status": "failed"
+    },
+    {
+      "document_number": "66.18/2026/NQ-CP",
+      "elapsed_ms": 4.559,
+      "error": "No exact sitemap URL for 66.18/2026/NQ-CP; pass --portal-url or set portal_url in config",
+      "error_type": "VbplPortalNotFound",
+      "status": "failed"
+    }
+  ],
+  "run_id": "5b08671dafa54714a323d96e285fdbb0",
+  "schema_version": "vbpl-ingestion-run-v1",
+  "skipped": 1,
+  "started_at": "2026-07-24T09:33:04+00:00",
+  "status": "failed",
+  "success": 0,
+  "total": 18,
+  "unchanged": 0
+}

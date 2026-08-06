@@ -1,0 +1,69 @@
+{
+  "article_count": 285,
+  "article_coverage": {
+    "covered": 285,
+    "expected": 285,
+    "missing_count": 0,
+    "missing_ids": []
+  },
+  "chunk_count": 744,
+  "chunk_type_counts": {
+    "article": 176,
+    "clause": 412,
+    "fallback_segment": 47,
+    "points": 104,
+    "preamble": 5
+  },
+  "chunker_version": "1.1.0",
+  "config": {
+    "chunker_version": "1.1.0",
+    "fallback_overlap": 80,
+    "max_tokens": 600,
+    "target_tokens": 400
+  },
+  "document_id": "vn:135-2020-nd-cp",
+  "fallback_statistics": {
+    "fallback_segment_count": 47,
+    "requires_fallback_count": 0
+  },
+  "non_table_unit_coverage": {
+    "covered": 1530,
+    "expected": 1530,
+    "missing_count": 0,
+    "unknown_count": 0
+  },
+  "parser_version": "vbpl-article-adapter-v1",
+  "source_sha256": "cba475ef6a8195181ae4fd860927460c01d2071ca309a04904e348c628cd0ab7",
+  "source_type_counts": {
+    "NĐ": 607,
+    "TT": 137
+  },
+  "table_coverage": {
+    "covered": 0,
+    "expected": 0,
+    "missing_count": 0,
+    "unknown_count": 0
+  },
+  "token_statistics": {
+    "max": 600,
+    "mean": 300.45,
+    "median": 271.0,
+    "min": 60,
+    "p95": 566.0,
+    "total": 223535
+  },
+  "tokenizer_name": "tiktoken:cl100k_base",
+  "topic_code": null,
+  "topic_name": null,
+  "unit_type_counts": {
+    "article": 178,
+    "clause": 422,
+    "point_group": 139,
+    "preamble": 5
+  },
+  "validation": {
+    "error_count": 0,
+    "is_valid": true,
+    "warning_count": 0
+  }
+}

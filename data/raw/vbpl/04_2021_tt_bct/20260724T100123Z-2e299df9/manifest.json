@@ -1,0 +1,89 @@
+{
+  "appendix_present": false,
+  "article_validation": {
+    "detected_count": 9,
+    "duplicates": [],
+    "first": 1,
+    "last": 9,
+    "missing": [],
+    "ordered": true,
+    "unexpected": [],
+    "unique_count": 9,
+    "valid": true
+  },
+  "attachment_inventory": {
+    "count": 1,
+    "downloaded_count": 0,
+    "resolved_count": 0,
+    "unresolved_count": 1
+  },
+  "attachment_policy": "best_effort",
+  "attachments": [
+    {
+      "has_bytes": false,
+      "name": "VanBanGoc_04.2021.TT-BCT.pdf",
+      "resolution_status": "unresolved",
+      "source_field": "document_content_file",
+      "url": null
+    }
+  ],
+  "content_hashes": {
+    "appendix_html_sha256": null,
+    "full_text_html_sha256": "2e299df96c4212b3dae5d57a76309ee7920c7c784ac6a332812e88566a654bd3",
+    "full_text_text_sha256": "7872c1f6639594265533f21aa8e4f96c9d2887035a32dadf1ac533c9c40cfc77",
+    "primary_response_sha256": "0e67f3fbe300bd45bc040d6269882da31902aa3a72991234ee47e4c55a6ce24d"
+  },
+  "document": {
+    "document_number": "04/2021/TT-BCT",
+    "effective_from": "2021-09-01",
+    "effective_to": null,
+    "issued_at": "2021-07-16",
+    "issuing_authority": "Bộ Công Thương",
+    "item_id": "148825",
+    "legal_status": "Còn hiệu lực",
+    "relations": {},
+    "title": "Thông tư số 04/2021/TT-BCT quy định về thời giờ làm việc, thời giờ nghỉ ngơi đối với người lao động làm các công việc trong hầm lò",
+    "type_vb": {
+      "code": "TT",
+      "id": "178c63a9-73ff-4fd4-9d91-18d690520090",
+      "name": "Thông tư",
+      "parentCode": "VBQPPL",
+      "parentName": null
+    }
+  },
+  "gates": {
+    "article_sequence_valid": true,
+    "attachment_policy_satisfied": true,
+    "detail_item_id_consistent": true,
+    "exact_document_number": true,
+    "full_text_nonempty": true,
+    "identity_metadata_complete": true,
+    "legal_effect_metadata_present": true,
+    "official_response_persisted": true
+  },
+  "retrieved_at": "2026-07-24T10:01:23+00:00",
+  "review_status": "staged_unapproved",
+  "schema_version": "vbpl-source-snapshot-v3",
+  "source": {
+    "acquisition_method": "vbpl_portal",
+    "acquisition_modes": [
+      "direct_gateway"
+    ],
+    "detail_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=148825",
+    "gateway_url": "https://vbpl-bientap-gateway.moj.gov.vn/api/qtdc/public/doc/148825",
+    "operations": [
+      "ResolveRegistryItemId",
+      "FetchDirectGateway",
+      "InspectAttachmentInventory"
+    ],
+    "primary_response_path": "portal/responses/001.response.json",
+    "provider": "Cơ sở dữ liệu quốc gia về văn bản pháp luật",
+    "response_count": 1,
+    "sitemap_url": "https://vbpl.vn/sitemap.xml",
+    "website": "https://vbpl.vn/"
+  },
+  "warnings": [
+    "1 attachment metadata record(s) have no resolvable URL",
+    "Detail-page HTML was unavailable; gateway response is the primary source"
+  ]
+}

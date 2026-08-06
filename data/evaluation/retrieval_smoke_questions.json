@@ -1,0 +1,96 @@
+[
+  {
+    "id": "exact_contract_form",
+    "category": "exact_legal_term",
+    "question": "Hình thức của hợp đồng lao động được quy định như thế nào?",
+    "expected_article_codes": ["20.2.LQ.14"]
+  },
+  {
+    "id": "natural_original_documents",
+    "category": "natural_language",
+    "question": "Công ty có được giữ bản chính căn cước công dân hoặc bằng cấp của người lao động không?",
+    "expected_article_codes": ["20.2.LQ.17"]
+  },
+  {
+    "id": "natural_probation_duration",
+    "category": "natural_language",
+    "question": "Thử việc tối đa bao lâu đối với công việc cần trình độ từ cao đẳng trở lên?",
+    "expected_article_codes": ["20.2.LQ.25"]
+  },
+  {
+    "id": "exact_part_time",
+    "category": "exact_legal_term",
+    "question": "Người lao động làm việc không trọn thời gian có quyền bình đẳng như người làm toàn thời gian không?",
+    "expected_article_codes": ["20.2.LQ.32"]
+  },
+  {
+    "id": "natural_employee_notice",
+    "category": "natural_language",
+    "question": "Người lao động muốn tự nghỉ việc thì phải báo trước bao nhiêu ngày?",
+    "expected_article_codes": ["20.2.LQ.35"]
+  },
+  {
+    "id": "exact_protected_termination",
+    "category": "exact_legal_term",
+    "question": "Khi nào người sử dụng lao động không được đơn phương chấm dứt hợp đồng lao động?",
+    "expected_article_codes": ["20.2.LQ.37"]
+  },
+  {
+    "id": "natural_overtime_night_pay",
+    "category": "natural_language",
+    "question": "Đi làm thêm giờ vào ban đêm thì tiền lương được tính như thế nào?",
+    "expected_article_codes": ["20.2.LQ.98", "20.2.NĐ.3.57"]
+  },
+  {
+    "id": "natural_wage_deduction",
+    "category": "natural_language",
+    "question": "Doanh nghiệp được khấu trừ tiền lương của nhân viên trong trường hợp nào?",
+    "expected_article_codes": ["20.2.LQ.102"]
+  },
+  {
+    "id": "exact_weekly_rest",
+    "category": "exact_legal_term",
+    "question": "Pháp luật quy định thế nào về nghỉ hằng tuần?",
+    "expected_article_codes": ["20.2.LQ.111"]
+  },
+  {
+    "id": "natural_annual_leave",
+    "category": "natural_language",
+    "question": "Người làm đủ một năm được nghỉ phép năm bao nhiêu ngày?",
+    "expected_article_codes": ["20.2.LQ.113"]
+  },
+  {
+    "id": "natural_marriage_leave",
+    "category": "natural_language",
+    "question": "Người lao động kết hôn thì được nghỉ mấy ngày và có hưởng lương không?",
+    "expected_article_codes": ["20.2.LQ.115"]
+  },
+  {
+    "id": "natural_dismissal",
+    "category": "natural_language",
+    "question": "Những hành vi nào có thể khiến người lao động bị xử lý kỷ luật sa thải?",
+    "expected_article_codes": ["20.2.LQ.125"]
+  },
+  {
+    "id": "natural_under_fifteen",
+    "category": "natural_language",
+    "question": "Người chưa đủ 15 tuổi có được đi làm không và cần điều kiện gì?",
+    "expected_article_codes": [
+      "20.2.LQ.145",
+      "20.2.TT.1.3",
+      "20.2.TT.1.4"
+    ]
+  },
+  {
+    "id": "natural_retirement_age",
+    "category": "natural_language",
+    "question": "Tuổi nghỉ hưu của người lao động được xác định như thế nào?",
+    "expected_article_codes": ["20.2.LQ.169", "20.2.NĐ.2.4"]
+  },
+  {
+    "id": "exact_illegal_strike",
+    "category": "exact_legal_term",
+    "question": "Những trường hợp nào bị xem là đình công bất hợp pháp?",
+    "expected_article_codes": ["20.2.LQ.204"]
+  }
+]

@@ -1,0 +1,248 @@
+{
+  "status": "completed",
+  "input_path": "/tmp/vn-labor-law-rebuild.zTuGFA/labor-law-2026-07-27-candidate/chunks.jsonl",
+  "input_sha256": "fd35bb1a94a3036f7977781de17bb1b49b12c58be61fc74efac68dcf8a7a8c54",
+  "chunk_count": 833,
+  "model_name": "intfloat/multilingual-e5-large",
+  "fastembed_version": "0.8.0",
+  "tokenizer_class": "Tokenizer",
+  "actual_model_max_tokens": 512,
+  "prefix_string": "passage: ",
+  "near_limit_threshold": 480,
+  "exact_measurement": true,
+  "token_statistics": {
+    "min": 34,
+    "max": 478,
+    "mean": 198.8427,
+    "median": 173,
+    "p95": 424.4,
+    "p99": 464.0,
+    "total": 165636
+  },
+  "content_token_statistics": {
+    "min": 32,
+    "max": 476,
+    "mean": 196.8427,
+    "median": 171,
+    "p95": 422.4,
+    "p99": 462.0,
+    "total": 163970
+  },
+  "prefix_overhead_statistics": {
+    "min": 2,
+    "max": 2,
+    "mean": 2.0,
+    "median": 2,
+    "p95": 2.0,
+    "p99": 2.0,
+    "total": 1666
+  },
+  "risk_counts": {
+    "near_or_above_count": 0,
+    "at_model_limit_count": 0,
+    "strictly_over_model_limit_count": 0
+  },
+  "counts_by_chunk_type": {
+    "article": 441,
+    "clause": 334,
+    "fallback_segment": 8,
+    "points": 48,
+    "preamble": 2
+  },
+  "risk_counts_by_chunk_type": {},
+  "counts_by_container_type": {
+    "article": 833
+  },
+  "risk_counts_by_container_type": {},
+  "top_20_longest": [
+    {
+      "chunk_id": "65895d0b-cc9d-5f1a-8874-27460dac1939",
+      "article_code": "20.2.LQ.179",
+      "chunk_type": "article",
+      "e5_passage_token_count": 478,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "a87d2963-36d4-5f37-b003-c13a26fd43df",
+      "article_code": "20.2.NĐ.3.24",
+      "chunk_type": "article",
+      "e5_passage_token_count": 478,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "1a70dd43-fc01-53a8-8b9e-203c3cef4add",
+      "article_code": "20.2.LQ.174",
+      "chunk_type": "article",
+      "e5_passage_token_count": 475,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "3b8b6a1b-2df2-595c-ad68-68f3a9f4c52a",
+      "article_code": "20.2.LQ.21",
+      "chunk_type": "article",
+      "e5_passage_token_count": 471,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "fc7b217d-4135-53fe-ba12-d31c24f7c480",
+      "article_code": "20.2.NĐ.3.43",
+      "chunk_type": "article",
+      "e5_passage_token_count": 471,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "61f70170-f93d-5e79-b64f-860aae89ccbf",
+      "article_code": "NĐ129.75",
+      "chunk_type": "article",
+      "e5_passage_token_count": 469,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "49e05e94-44e2-5efc-ba94-bf375c1444b4",
+      "article_code": "NQ66.18.PL-I.4.C.I",
+      "chunk_type": "article",
+      "e5_passage_token_count": 465,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "3f014f7d-ce6b-5c4b-8169-30072649587f",
+      "article_code": "NQ66.18.PL-I.4.C.VIII",
+      "chunk_type": "points",
+      "e5_passage_token_count": 464,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "719556b8-c973-51eb-a6cb-67baba9c6c78",
+      "article_code": "20.2.TT.2.3",
+      "chunk_type": "clause",
+      "e5_passage_token_count": 464,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "afa63d5c-3842-53f5-8886-39c83e1bd04f",
+      "article_code": "NĐ129.71",
+      "chunk_type": "article",
+      "e5_passage_token_count": 464,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "25dd9a57-f47f-52d8-9bb0-e2456c6c250e",
+      "article_code": "20.2.LQ.36",
+      "chunk_type": "points",
+      "e5_passage_token_count": 463,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "83645248-8e09-50d4-bf1d-e4aabe06aeaf",
+      "article_code": "20.2.NĐ.3.69",
+      "chunk_type": "points",
+      "e5_passage_token_count": 463,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "e101a5bc-b32b-5d6e-9a8a-40a9e2b48b9f",
+      "article_code": "20.2.LQ.219",
+      "chunk_type": "points",
+      "e5_passage_token_count": 463,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "7f9e6612-f4dc-5667-b348-634ba7fe57aa",
+      "article_code": "20.2.LQ.193",
+      "chunk_type": "article",
+      "e5_passage_token_count": 462,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "a54da9c8-6009-56e3-8961-695b9ac503cf",
+      "article_code": "20.2.NĐ.3.96",
+      "chunk_type": "article",
+      "e5_passage_token_count": 462,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "3c10863f-3df5-531d-96a8-3cfb565083d1",
+      "article_code": "NQ66.18.PL-I.4.C.VII",
+      "chunk_type": "points",
+      "e5_passage_token_count": 461,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "5cfc603b-e547-53f0-967c-fce66ba7dc6d",
+      "article_code": "20.2.NĐ.3.41",
+      "chunk_type": "points",
+      "e5_passage_token_count": 458,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "beeaf23f-a054-51c6-bcb6-eaa6a028c0e3",
+      "article_code": "20.2.LQ.137",
+      "chunk_type": "article",
+      "e5_passage_token_count": 458,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "ed739167-fcbf-5876-9af0-88154115cda4",
+      "article_code": "20.2.NĐ.3.54",
+      "chunk_type": "clause",
+      "e5_passage_token_count": 458,
+      "overflow_tokens": 0
+    },
+    {
+      "chunk_id": "c948e561-8704-5aa9-9a5d-7ac10d0efec6",
+      "article_code": "20.2.NĐ.3.100",
+      "chunk_type": "article",
+      "e5_passage_token_count": 456,
+      "overflow_tokens": 0
+    }
+  ],
+  "cl100k_comparison": {
+    "available_count": 833,
+    "missing_count": 0,
+    "source_tokenizers": [
+      "fastembed-tokenizers:intfloat/multilingual-e5-large:document"
+    ],
+    "difference_definition": "e5_passage_token_count - chunker_token_count",
+    "difference_statistics": {
+      "count": 833,
+      "min": 0,
+      "max": 0,
+      "mean": 0.0,
+      "median": 0,
+      "p95": 0.0
+    },
+    "proxy_at_or_above_limit_count": 0,
+    "exact_strictly_over_limit_count": 0,
+    "true_positive_count": 0,
+    "true_negative_count": 833,
+    "false_positive_count": 0,
+    "false_negative_count": 0
+  },
+  "comparison_against_cl100k": {
+    "available_count": 833,
+    "missing_count": 0,
+    "source_tokenizers": [
+      "fastembed-tokenizers:intfloat/multilingual-e5-large:document"
+    ],
+    "difference_definition": "e5_passage_token_count - chunker_token_count",
+    "difference_statistics": {
+      "count": 833,
+      "min": 0,
+      "max": 0,
+      "mean": 0.0,
+      "median": 0,
+      "p95": 0.0
+    },
+    "proxy_at_or_above_limit_count": 0,
+    "exact_strictly_over_limit_count": 0,
+    "true_positive_count": 0,
+    "true_negative_count": 833,
+    "false_positive_count": 0,
+    "false_negative_count": 0
+  },
+  "validation": {
+    "error_count": 0,
+    "warning_count": 0,
+    "is_valid": true
+  }
+}

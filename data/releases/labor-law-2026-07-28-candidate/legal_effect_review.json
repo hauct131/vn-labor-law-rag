@@ -1,0 +1,29 @@
+{
+  "schema_version": "legal-effect-review-v1",
+  "release_id": "labor-law-2026-07-28-candidate",
+  "law_as_of": "2026-07-27",
+  "review_type": "technical_source-clause_review",
+  "authority_review_status": "pending",
+  "documents": [
+    {
+      "document_number": "18/VBHN-VPQH",
+      "included_scope": "Điều 1-220",
+      "status_at_law_as_of": "effective_consolidated_text",
+      "basis": "The consolidation identifies amendments 71/2025/QH15, 113/2025/QH15 and 124/2025/QH15; all relevant effective dates are on or before 2026-07-27."
+    },
+    {
+      "document_number": "66.18/2026/NQ-CP",
+      "included_scope": "Điều 4, Điều 6; Phụ lục I.4/Mục 1/C.I,III,V,VII,VIII,IX",
+      "status_at_law_as_of": "effective_temporarily",
+      "effective_from": "2026-07-01",
+      "effective_to": "2027-02-28",
+      "basis": "Khoản 1 Điều 7 của Nghị quyết.",
+      "temporal_warning": "Khoản 4 Điều 7 can terminate corresponding provisions earlier when later instruments enter into force."
+    }
+  ],
+  "approval": {
+    "required": true,
+    "status": "pending_authority_review",
+    "not_legal_advice": true
+  }
+}

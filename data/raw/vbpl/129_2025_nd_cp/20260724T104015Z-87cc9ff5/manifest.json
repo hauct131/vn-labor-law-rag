@@ -1,0 +1,112 @@
+{
+  "appendix_present": false,
+  "article_validation": {
+    "detected_count": 93,
+    "duplicates": [
+      1,
+      2,
+      3,
+      5,
+      20,
+      24,
+      37,
+      38,
+      52,
+      61,
+      63,
+      65
+    ],
+    "first": 1,
+    "last": 81,
+    "missing": [],
+    "ordered": true,
+    "unexpected": [],
+    "unique_count": 81,
+    "valid": true
+  },
+  "attachment_inventory": {
+    "count": 1,
+    "downloaded_count": 0,
+    "resolved_count": 0,
+    "unresolved_count": 1
+  },
+  "attachment_policy": "best_effort",
+  "attachments": [
+    {
+      "has_bytes": false,
+      "name": "VanBanGoc_129-2025-nd-cp.signed.pdf",
+      "resolution_status": "unresolved",
+      "source_field": "document_content_file",
+      "url": null
+    }
+  ],
+  "content_hashes": {
+    "appendix_html_sha256": null,
+    "full_text_html_sha256": "87cc9ff5480b8542c375ec24aacd414aa360b371cc51d02bc1335ff81972a25b",
+    "full_text_text_sha256": "5d58fbd903bb0f81117d1f6b8677c4c33f647571bf7bcdf9a75ff5e895419bed",
+    "primary_response_sha256": "97692381ffc00c8b8cd6f863ca874aa90c6328193d5aef9cc49f0ce7cfcfd6ce"
+  },
+  "document": {
+    "document_number": "129/2025/NĐ-CP",
+    "effective_from": "2025-07-01",
+    "effective_to": "2027-03-01",
+    "issued_at": "2025-06-11",
+    "issuing_authority": "Chính phủ",
+    "item_id": "178294",
+    "legal_status": "Hết hiệu lực một phần",
+    "relations": {},
+    "title": "Nghị định số 129/2025/NĐ-CP Quy định về phân định thẩm quyền của chính quyền địa phương 02 cấp trong lĩnh vực quản lý nhà nước của Bộ Nội vụ",
+    "type_vb": {
+      "code": "NĐ",
+      "id": "0d08b84c-7de7-4800-8760-2a68265e7890",
+      "name": "Nghị định",
+      "parentCode": "VBQPPL",
+      "parentName": null
+    }
+  },
+  "gates": {
+    "article_sequence_valid": true,
+    "attachment_policy_satisfied": true,
+    "detail_item_id_consistent": true,
+    "exact_document_number": true,
+    "full_text_nonempty": true,
+    "identity_metadata_complete": true,
+    "legal_effect_metadata_present": true,
+    "official_response_persisted": true
+  },
+  "ingestion_contract": {
+    "attachment_policy": "best_effort",
+    "configured_attachments": [],
+    "document_number": "129/2025/NĐ-CP",
+    "expected_articles": 81,
+    "item_id": "178294",
+    "schema_version": "vbpl-ingestion-contract-v1",
+    "snapshot_schema": "vbpl-source-snapshot-v3"
+  },
+  "ingestion_contract_sha256": "65d359b77a02fe183b6b7e48c47916ba77fbea0404c0fa231285aeecbb611041",
+  "retrieved_at": "2026-07-24T10:40:15+00:00",
+  "review_status": "staged_unapproved",
+  "schema_version": "vbpl-source-snapshot-v3",
+  "source": {
+    "acquisition_method": "vbpl_portal",
+    "acquisition_modes": [
+      "direct_gateway"
+    ],
+    "detail_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=178294",
+    "gateway_url": "https://vbpl-bientap-gateway.moj.gov.vn/api/qtdc/public/doc/178294",
+    "operations": [
+      "ResolveRegistryItemId",
+      "FetchDirectGateway",
+      "InspectAttachmentInventory"
+    ],
+    "primary_response_path": "portal/responses/001.response.json",
+    "provider": "Cơ sở dữ liệu quốc gia về văn bản pháp luật",
+    "response_count": 1,
+    "sitemap_url": "https://vbpl.vn/sitemap.xml",
+    "website": "https://vbpl.vn/"
+  },
+  "warnings": [
+    "1 attachment metadata record(s) have no resolvable URL",
+    "Detail-page HTML was unavailable; gateway response is the primary source"
+  ]
+}

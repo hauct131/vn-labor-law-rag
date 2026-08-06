@@ -14,16 +14,79 @@ class Settings(BaseSettings):
 
     # Qdrant
     qdrant_url: str = "http://localhost:6333"
-    qdrant_collection: str = "labor_law"
+    # Retrieval always uses an alias. Physical collections are versioned so a
+    # new corpus can be indexed and verified without mutating the old index.
+    qdrant_collection: str = "labor_law_active"
+    qdrant_expected_collection: str = "labor_law_canonical_word_20260804_fdbec539"
+    qdrant_api_key: str = ""
+    qdrant_readiness_timeout_seconds: float = 3.0
+    runtime_readiness_ttl_seconds: float = 30.0
+    runtime_readiness_failure_ttl_seconds: float = 5.0
+    runtime_java_timeout_seconds: float = 3.0
+    runtime_smoke_query: str = "quyền của người lao động"
+    dense_embedding_model: str = "intfloat/multilingual-e5-large"
+    dense_vector_name: str = "dense"
+    dense_vector_size: int = 1024
+    sparse_embedding_model: str = "Qdrant/bm25"
+    sparse_vector_name: str = "sparse"
+    embedding_batch_size: int = 16
+    embedding_threads: int = 6
+    fastembed_cache_dir: str = ""
+
+    # Retrieval core
+    legal_chunks_path: str = (
+        "data/releases/labor-law-canonical-word-20260804-164432-candidate/canonical_chunks.jsonl"
+    )
+    corpus_release_manifest_path: str = (
+        "data/releases/labor-law-canonical-word-20260804-164432-candidate/manifest.json"
+    )
+    e5_audit_summary_path: str = (
+        "data/quality/canonical_word_804_e5_token_audit/summary.json"
+    )
+    corpus_release_id: str = "labor-law-canonical-word-20260804-164432-candidate"
+    corpus_require_authority_approval: bool = True
+    official_sources_path: str = (
+        "data/reference/official_legal_sources.json"
+    )
+    vncorenlp_model_dir: str = "models/vncorenlp"
+    retrieval_expected_chunks: int = 804
+    retrieval_corpus_sha256: str = (
+        "fdbec539efbfb3f4aa3cb3962046321e3"
+        "a402150d93516ef4256934972c70307"
+    )
+    retrieval_top_k: int = 5
+    retrieval_candidate_k: int = 30
+    hybrid_rrf_k: int = 60
+    hybrid_sparse_weight: float = 0.1
+    hybrid_dense_weight: float = 0.9
+    bm25_k: float = 1.2
+    bm25_b: float = 0.75
 
     # Neo4j
     neo4j_uri: str = "bolt://localhost:7687"
     neo4j_user: str = "neo4j"
     neo4j_password: str = "change_me"
 
-    # LLM
-    llm_provider: str = "not_configured"
-    llm_api_key: str = ""
+    # LLM generation (OpenRouter is OpenAI-compatible, but is called through
+    # httpx so the backend does not need another SDK dependency.)
+    llm_provider: str = "openrouter"
+    llm_api_key: str = ""  # Backward-compatible fallback only.
+    openrouter_api_key: str = ""
+    openrouter_base_url: str = "https://openrouter.ai/api/v1"
+    openrouter_model: str = "openrouter/free"
+    openrouter_require_free_model: bool = True
+    openrouter_timeout_seconds: float = 90.0
+    # Completion budget includes any reasoning tokens used by reasoning models.
+    # Keep enough room for a complete, cited Vietnamese answer.
+    openrouter_max_tokens: int = 1200
+    # A value of 0 disables the explicit reasoning override. For models such as
+    # Nemotron 3 Ultra, a small budget prevents hidden reasoning from consuming
+    # nearly the entire completion budget.
+    openrouter_reasoning_max_tokens: int = 128
+    openrouter_exclude_reasoning: bool = True
+    openrouter_temperature: float = 0.0
+    openrouter_app_url: str = ""
+    openrouter_app_title: str = "Vietnamese Labor Law RAG"
 
     # LangSmith
     langsmith_tracing: bool = False

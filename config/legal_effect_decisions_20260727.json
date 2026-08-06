@@ -1,0 +1,183 @@
+{
+  "schema_version": "legal-effect-decisions-v2",
+  "law_as_of": "2026-07-27",
+  "review_status": "technical_review_complete_pending_authority_approval",
+  "authority_review_required": true,
+  "not_legal_advice": true,
+  "documents": {
+    "04/2021/TT-BCT": {"decision": "active", "scope": "Điều 1-9"},
+    "09/2020/TT-BLĐTBXH": {"decision": "amended", "scope": "Điều 1-13"},
+    "10/2020/TT-BLĐTBXH": {"decision": "active", "scope": "Điều 1-12"},
+    "12/2022/TT-BCT": {"decision": "active", "scope": "Điều 1-10"},
+    "128/2025/NĐ-CP": {
+      "decision": "active_scoped",
+      "scope": "Chỉ Điều 7",
+      "notes": "Điều 8 và Mục 2 Phụ lục II hết hiệu lực theo khoản 3 Điều 35 Nghị định 219/2025/NĐ-CP nhưng không thuộc phạm vi đã chọn."
+    },
+    "129/2025/NĐ-CP": {
+      "decision": "active_temporarily",
+      "scope": "Điều 67-81",
+      "effective_from": "2025-07-01",
+      "effective_to": "2027-02-28",
+      "notes": "Áp dụng đến trước 2027-03-01, trừ trường hợp quy định tương ứng chấm dứt sớm theo khoản 2 Điều 80."
+    },
+    "135/2020/NĐ-CP": {"decision": "amended", "scope": "Điều 1-9 sau khi loại phần hết hiệu lực"},
+    "145/2020/NĐ-CP": {"decision": "amended", "scope": "Điều 1-115 sau khi áp dụng quy định thẩm quyền tạm thời của Nghị định 129/2025/NĐ-CP"},
+    "152/2020/NĐ-CP": {
+      "decision": "active_scoped",
+      "scope": "Chỉ Điều 22-28",
+      "notes": "Phần về lao động nước ngoài làm việc tại Việt Nam hết hiệu lực theo khoản 2 Điều 35 Nghị định 219/2025/NĐ-CP; Điều 22-28 về lao động Việt Nam không thuộc phần bị loại."
+    },
+    "17/2023/TT-BLĐTBXH": {"decision": "active", "scope": "Điều 1-12"},
+    "18/2021/TT-BLĐTBXH": {"decision": "active", "scope": "Điều 1-10"},
+    "18/VBHN-VPQH": {"decision": "active_consolidated_text", "scope": "Điều 1-220"},
+    "19/2021/TT-BLĐTBXH": {"decision": "active", "scope": "Điều 1-5"},
+    "20/2023/TT-BCT": {"decision": "active", "scope": "Điều 1-12"},
+    "219/2025/NĐ-CP": {"decision": "active", "scope": "Điều 1-36"},
+    "293/2025/NĐ-CP": {"decision": "active", "scope": "Điều 1-5"},
+    "66.18/2026/NQ-CP": {
+      "decision": "active_temporarily",
+      "scope": "Điều 4, Điều 6 và các đơn vị bằng chứng Phụ lục I đã chọn",
+      "effective_from": "2026-07-01",
+      "effective_to": "2027-02-28"
+    },
+    "97/2022/NĐ-CP": {"decision": "active", "scope": "Điều 1-14"}
+  },
+  "evidence": [
+    {
+      "id": "nd158-2025-art44",
+      "url": "https://xaydungchinhsach.chinhphu.vn/toan-van-nghi-dinh-158-2025-nd-cp-quy-dinh-ve-bao-hiem-xa-hoi-bat-buoc-119250629171336803.htm",
+      "supports": "Từ 2025-07-01, khoản 2 Điều 3, khoản 1 và khoản 3 Điều 7, khoản 2 Điều 8 và Phụ lục III của Nghị định 135/2020/NĐ-CP hết hiệu lực."
+    },
+    {
+      "id": "nd219-2025-art35",
+      "url": "https://vanban.chinhphu.vn/?docid=214840&pageid=27160",
+      "local_snapshot": "data/raw/vbpl/219_2025_nd_cp/20260728T093903Z-7f26444f/full_text.txt",
+      "supports": "Từ 2025-08-07, phần lao động nước ngoài của Nghị định 152/2020/NĐ-CP và Điều 8, Mục 2 Phụ lục II của Nghị định 128/2025/NĐ-CP hết hiệu lực."
+    },
+    {
+      "id": "nd129-2025",
+      "url": "https://vanban.chinhphu.vn/?docid=213920&pageid=27160",
+      "supports": "Quy định tạm thời về thẩm quyền chính quyền địa phương hai cấp, có hiệu lực từ 2025-07-01."
+    },
+    {
+      "id": "tt08-2023",
+      "url": "https://vanban.chinhphu.vn/?docid=208729&pageid=27160",
+      "supports": "Bãi bỏ yêu cầu bản sao sổ hộ khẩu hoặc giấy tạm trú tại khoản 2 Điều 6 Thông tư 09/2020/TT-BLĐTBXH."
+    },
+    {
+      "id": "nd35-2022",
+      "url": "https://vanban.chinhphu.vn/?docid=205861&pageid=27160",
+      "local_snapshot": "data/raw/vbpl_amendments/35_2022_nd_cp/20260802T190133Z-8f8d2fbe/attachments/35-2022-nd.signed.pdf",
+      "sha256": "e74b6cf08e204c105130e34937044475f27a59d9559bde11720551ef37ef0e35",
+      "hash_binding_required": true,
+      "supports": "Sửa đổi khoản 2 Điều 4 và khoản 2 Điều 31 Nghị định 145/2020/NĐ-CP."
+    },
+    {
+      "id": "nd10-2024",
+      "url": "https://vanban.chinhphu.vn/?docid=209657&pageid=27160",
+      "local_snapshot": "data/raw/vbpl_amendments/10_2024_nd_cp/20260802T191417Z-bf7b1006/attachments/10-cp.signed.pdf",
+      "sha256": "9bbb4c8c7ee072b5b79d89e2444ef6a8686922557719b0138881bd39c6fd30fe",
+      "hash_binding_required": true,
+      "supports": "Bổ sung khoản 4 Điều 4, khoản 5 Điều 31 và khoản 4 Điều 62 Nghị định 145/2020/NĐ-CP."
+    }
+  ],
+  "exclude_unit_prefixes": [
+    "vbpl:vn:135-2020-nd-cp:article:3|clause=2",
+    "vbpl:vn:135-2020-nd-cp:article:7|clause=1",
+    "vbpl:vn:135-2020-nd-cp:article:7|clause=3",
+    "vbpl:vn:135-2020-nd-cp:article:8|clause=2",
+    "vbpl:vn:145-2020-nd-cp:article:4|clause=2",
+    "vbpl:vn:145-2020-nd-cp:article:91|",
+    "vbpl:vn:145-2020-nd-cp:article:93|clause=1",
+    "vbpl:vn:145-2020-nd-cp:article:93|clause=2",
+    "vbpl:vn:145-2020-nd-cp:article:93|clause=4",
+    "vbpl:vn:145-2020-nd-cp:article:94|clause=2|point=b",
+    "vbpl:vn:145-2020-nd-cp:article:95|clause=1",
+    "vbpl:vn:145-2020-nd-cp:article:95|clause=2",
+    "vbpl:vn:145-2020-nd-cp:article:95|clause=3",
+    "vbpl:vn:145-2020-nd-cp:article:97|clause=2|point=b",
+    "vbpl:vn:145-2020-nd-cp:article:97|clause=4",
+    "vbpl:vn:145-2020-nd-cp:article:110|clause=2",
+    "vbpl:vn:145-2020-nd-cp:article:111|clause=1",
+    "vbpl:vn:145-2020-nd-cp:article:111|clause=2",
+    "vbpl:vn:145-2020-nd-cp:article:111|clause=3",
+    "vbpl:vn:145-2020-nd-cp:article:111|clause=5",
+    "vbpl:vn:145-2020-nd-cp:article:112|clause=1",
+    "vbpl:vn:145-2020-nd-cp:article:112|clause=2"
+  ],
+  "replace_unit_text": {
+    "vbpl:vn:09-2020-tt-bldtbxh:article:6|clause=2": {
+      "text": "2. Bản sao giấy chứng nhận đăng ký doanh nghiệp, hợp tác xã, liên hợp tác xã hoặc giấy chứng nhận đăng ký đầu tư hoặc văn bản chấp thuận chủ trương đầu tư hoặc quyết định thành lập cơ quan, tổ chức hoặc hợp đồng hợp tác của tổ hợp tác, trong trường hợp người sử dụng lao động là doanh nghiệp, cơ quan, tổ chức, hợp tác xã.",
+      "evidence_id": "tt08-2023"
+    },
+    "vbpl:vn:145-2020-nd-cp:article:31|clause=2": {
+      "text": "2. Định kỳ 06 tháng và hằng năm, báo cáo tình hình hoạt động cho thuê lại lao động theo Mẫu số 09/PLIII Phụ lục III ban hành kèm theo Nghị định này, gửi Chủ tịch Ủy ban nhân dân cấp tỉnh, Sở Lao động - Thương binh và Xã hội và Ban quản lý khu công nghiệp, khu kinh tế nơi doanh nghiệp đặt trụ sở chính; đồng thời báo cáo Sở Lao động - Thương binh và Xã hội và Ban quản lý khu công nghiệp, khu kinh tế nơi doanh nghiệp đến hoạt động cho thuê lại lao động về tình hình hoạt động cho thuê lại lao động trên địa bàn đó đối với trường hợp doanh nghiệp cho thuê lại sang địa bàn cấp tỉnh khác hoạt động. Báo cáo 06 tháng gửi trước ngày 20 tháng 6 và báo cáo năm gửi trước ngày 20 tháng 12.",
+      "evidence_id": "nd35-2022"
+    }
+  },
+  "insert_content_units": [
+    {
+      "article_id": "vn:145-2020-nd-cp:article:4",
+      "after_unit_id": "vbpl:vn:145-2020-nd-cp:article:4|clause=3",
+      "evidence_id": "nd10-2024",
+      "units": [
+        {
+          "unit_id": "vbpl:vn:145-2020-nd-cp:article:4|clause=4",
+          "unit_type": "clause",
+          "clause_number": "4",
+          "text": "4. Đối với khu công nghệ cao, việc báo cáo sử dụng lao động thực hiện như sau:"
+        },
+        {
+          "unit_id": "vbpl:vn:145-2020-nd-cp:article:4|clause=4|point=a",
+          "unit_type": "point",
+          "clause_number": "4",
+          "point_label": "a",
+          "text": "a) Người sử dụng lao động báo cáo tình hình thay đổi lao động đến Sở Lao động - Thương binh và Xã hội và Ban quản lý khu công nghệ cao thông qua Cổng Dịch vụ công Quốc gia. Trường hợp người sử dụng lao động không thể báo cáo tình hình thay đổi lao động thông qua Cổng Dịch vụ công Quốc gia thì gửi báo cáo bằng bản giấy đến Ban quản lý khu công nghệ cao.\nYêu cầu về thời gian và biểu mẫu báo cáo của người sử dụng lao động thực hiện theo quy định tại khoản 2 Điều này."
+        },
+        {
+          "unit_id": "vbpl:vn:145-2020-nd-cp:article:4|clause=4|point=b",
+          "unit_type": "point",
+          "clause_number": "4",
+          "point_label": "b",
+          "text": "b) Ban quản lý khu công nghệ cao có trách nhiệm cập nhật đầy đủ thông tin và báo cáo Bộ Lao động - Thương binh và Xã hội, Sở Lao động - Thương binh và Xã hội về tình hình sử dụng lao động trên địa bàn thông qua Cổng Dịch vụ công Quốc gia theo thời gian và biểu mẫu quy định tại khoản 3 Điều này."
+        }
+      ]
+    },
+    {
+      "article_id": "vn:145-2020-nd-cp:article:31",
+      "after_unit_id": "vbpl:vn:145-2020-nd-cp:article:31|clause=4",
+      "evidence_id": "nd10-2024",
+      "units": [
+        {
+          "unit_id": "vbpl:vn:145-2020-nd-cp:article:31|clause=5",
+          "unit_type": "clause",
+          "clause_number": "5",
+          "text": "5. Trường hợp doanh nghiệp cho thuê lại lao động đặt trụ sở chính hoặc có hoạt động cho thuê lại lao động trên địa bàn khu công nghệ cao thì khi gửi các báo cáo theo quy định tại Điều này, doanh nghiệp cho thuê lại lao động đồng thời gửi 01 bản báo cáo cho Ban quản lý khu công nghệ cao."
+        }
+      ]
+    },
+    {
+      "article_id": "vn:145-2020-nd-cp:article:62",
+      "after_unit_id": "vbpl:vn:145-2020-nd-cp:article:62|clause=3",
+      "evidence_id": "nd10-2024",
+      "units": [
+        {
+          "unit_id": "vbpl:vn:145-2020-nd-cp:article:62|clause=4",
+          "unit_type": "clause",
+          "clause_number": "4",
+          "text": "4. Trường hợp người sử dụng lao động đặt trụ sở chính hoặc tổ chức làm thêm từ trên 200 giờ đến 300 giờ trong một năm trên địa bàn khu công nghệ cao thì phải thông báo cho Ban quản lý khu công nghệ cao về việc tổ chức làm thêm theo thời gian và biểu mẫu quy định tại khoản 2 và khoản 3 Điều này."
+        }
+      ]
+    }
+  ],
+  "replacement_documents": [
+    {
+      "source_document": "145/2020/NĐ-CP",
+      "replacement_document": "129/2025/NĐ-CP",
+      "replacement_articles": [71, 72, 73, 74, 75, 76, 77, 78, 79],
+      "basis": "Các Điều 71-79 quy định thẩm quyền và thủ tục hiện hành tương ứng trong giai đoạn áp dụng Nghị định 129/2025/NĐ-CP."
+    }
+  ],
+  "known_source_gaps": []
+}

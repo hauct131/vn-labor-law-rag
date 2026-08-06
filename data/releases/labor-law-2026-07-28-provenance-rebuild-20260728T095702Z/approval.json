@@ -1,0 +1,10 @@
+{
+  "schema_version": "release-approval-v1",
+  "release_id": "labor-law-2026-07-28-provenance-rebuild-20260728T095702Z",
+  "required": true,
+  "status": "pending_authority_review",
+  "instructions": "An authorized reviewer must verify legal_effect_review.json and bind approval to manifest_sha256 before production publication.",
+  "approved_by": null,
+  "approved_at": null,
+  "manifest_sha256": "1e9239471ef5d2c5e987d4e05b3d012fc0a82f8e94ac8e32b4149514e83ecf70"
+}

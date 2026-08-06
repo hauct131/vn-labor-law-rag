@@ -1,0 +1,85 @@
+{
+  "status": "PASS",
+  "golden_input": "data/evaluation/golden_questions_v1_legacy.json",
+  "current_chunks": "data/processed/legal_chunks.jsonl",
+  "output": "data/evaluation/golden_questions_v1_rebased_current_phapdien.json",
+  "current_chunk_count": 1382,
+  "current_chunk_sha256": "beed2fd67804dc7679fc4573a07a0101101a4dbceebf70ed916b72c49810442c",
+  "replacements": [
+    {
+      "question_id": "r2ai_gold_022",
+      "old_chunk_id": "b925759f-9b2f-524b-9d17-a25492678675",
+      "new_chunk_id": "5c4fdbe5-3e25-5995-9ca5-e166e7fba63f",
+      "article_code": "20.2.NĐ.3.19",
+      "old_chunk_key": "20002000000000003000005000000000000000000540000000000000000000402749701450001900|clause=1|points=c|segment=3",
+      "new_chunk_key": "20002000000000003000005000000000000000000540000000000000000000402749701450001900|clause=1|points=b",
+      "score": 0.769606,
+      "score_components": {
+        "same_chunk_key": false,
+        "same_chunk_type": false,
+        "body_ratio": 0.816688,
+        "content_ratio": 0.846617,
+        "body_token_f1": 0.880383,
+        "heading_ratio": 1.0
+      },
+      "runner_up_score": 0.582945
+    },
+    {
+      "question_id": "r2ai_gold_037",
+      "old_chunk_id": "b925759f-9b2f-524b-9d17-a25492678675",
+      "new_chunk_id": "5c4fdbe5-3e25-5995-9ca5-e166e7fba63f",
+      "article_code": "20.2.NĐ.3.19",
+      "old_chunk_key": "20002000000000003000005000000000000000000540000000000000000000402749701450001900|clause=1|points=c|segment=3",
+      "new_chunk_key": "20002000000000003000005000000000000000000540000000000000000000402749701450001900|clause=1|points=b",
+      "score": 0.769606,
+      "score_components": {
+        "same_chunk_key": false,
+        "same_chunk_type": false,
+        "body_ratio": 0.816688,
+        "content_ratio": 0.846617,
+        "body_token_f1": 0.880383,
+        "heading_ratio": 1.0
+      },
+      "runner_up_score": 0.582945
+    }
+  ],
+  "unresolved": [],
+  "low_confidence": [
+    {
+      "question_id": "r2ai_gold_022",
+      "old_chunk_id": "b925759f-9b2f-524b-9d17-a25492678675",
+      "new_chunk_id": "5c4fdbe5-3e25-5995-9ca5-e166e7fba63f",
+      "article_code": "20.2.NĐ.3.19",
+      "old_chunk_key": "20002000000000003000005000000000000000000540000000000000000000402749701450001900|clause=1|points=c|segment=3",
+      "new_chunk_key": "20002000000000003000005000000000000000000540000000000000000000402749701450001900|clause=1|points=b",
+      "score": 0.769606,
+      "score_components": {
+        "same_chunk_key": false,
+        "same_chunk_type": false,
+        "body_ratio": 0.816688,
+        "content_ratio": 0.846617,
+        "body_token_f1": 0.880383,
+        "heading_ratio": 1.0
+      },
+      "runner_up_score": 0.582945
+    },
+    {
+      "question_id": "r2ai_gold_037",
+      "old_chunk_id": "b925759f-9b2f-524b-9d17-a25492678675",
+      "new_chunk_id": "5c4fdbe5-3e25-5995-9ca5-e166e7fba63f",
+      "article_code": "20.2.NĐ.3.19",
+      "old_chunk_key": "20002000000000003000005000000000000000000540000000000000000000402749701450001900|clause=1|points=c|segment=3",
+      "new_chunk_key": "20002000000000003000005000000000000000000540000000000000000000402749701450001900|clause=1|points=b",
+      "score": 0.769606,
+      "score_components": {
+        "same_chunk_key": false,
+        "same_chunk_type": false,
+        "body_ratio": 0.816688,
+        "content_ratio": 0.846617,
+        "body_token_f1": 0.880383,
+        "heading_ratio": 1.0
+      },
+      "runner_up_score": 0.582945
+    }
+  ]
+}

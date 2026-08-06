@@ -1,0 +1,99 @@
+{
+  "appendix_present": false,
+  "article_validation": {
+    "detected_count": 5,
+    "duplicates": [],
+    "first": 1,
+    "last": 5,
+    "missing": [],
+    "ordered": true,
+    "unexpected": [],
+    "unique_count": 5,
+    "valid": true
+  },
+  "attachment_inventory": {
+    "count": 1,
+    "downloaded_count": 0,
+    "resolved_count": 0,
+    "unresolved_count": 1
+  },
+  "attachment_policy": "best_effort",
+  "attachments": [
+    {
+      "has_bytes": false,
+      "name": "VanBanGoc_293-cp.signed.pdf",
+      "resolution_status": "unresolved",
+      "source_field": "document_content_file",
+      "url": null
+    }
+  ],
+  "content_hashes": {
+    "appendix_html_sha256": null,
+    "full_text_html_sha256": "68361d30c280a0e9176d3c80c585fdc140c5c3a416e8e98d4992e06e23d3522c",
+    "full_text_text_sha256": "c9d146ce637a6e5dd623bbda0f63c61388ece289496940e0a0cc31693238c54a",
+    "primary_response_sha256": "d1ad594ffecae87aa1b1d3d461e223ab59f3927e6e5591c3ce0c138c72bc30ef"
+  },
+  "document": {
+    "document_number": "293/2025/NĐ-CP",
+    "effective_from": "2026-01-01",
+    "effective_to": null,
+    "issued_at": "2025-11-10",
+    "issuing_authority": "Chính phủ",
+    "item_id": "183939",
+    "legal_status": "Còn hiệu lực",
+    "relations": {},
+    "title": "Nghị định số 293/2025/NĐ-CP Quy định mức lương tối thiểu đối với người lao động làm việc theo hợp đồng lao động",
+    "type_vb": {
+      "code": "NĐ",
+      "id": "0d08b84c-7de7-4800-8760-2a68265e7890",
+      "name": "Nghị định",
+      "parentCode": "VBQPPL",
+      "parentName": null
+    }
+  },
+  "gates": {
+    "article_sequence_valid": true,
+    "attachment_policy_satisfied": true,
+    "detail_item_id_consistent": true,
+    "exact_document_number": true,
+    "full_text_nonempty": true,
+    "identity_metadata_complete": true,
+    "legal_effect_metadata_present": true,
+    "official_response_persisted": true
+  },
+  "ingestion_contract": {
+    "attachment_policy": "best_effort",
+    "configured_attachments": [],
+    "document_number": "293/2025/NĐ-CP",
+    "expected_articles": 5,
+    "item_id": "183939",
+    "schema_version": "vbpl-ingestion-contract-v1",
+    "snapshot_schema": "vbpl-source-snapshot-v3"
+  },
+  "ingestion_contract_sha256": "b3477250421d8b0e85f591c1c54ddd5253610ebc781dc847898ed43be0dd079e",
+  "retrieved_at": "2026-07-24T10:40:07+00:00",
+  "review_status": "staged_unapproved",
+  "schema_version": "vbpl-source-snapshot-v3",
+  "source": {
+    "acquisition_method": "vbpl_portal",
+    "acquisition_modes": [
+      "direct_gateway"
+    ],
+    "detail_url": "https://vbpl.vn/TW/Pages/vbpq-toanvan.aspx?ItemID=183939",
+    "gateway_url": "https://vbpl-bientap-gateway.moj.gov.vn/api/qtdc/public/doc/183939",
+    "operations": [
+      "ResolveRegistryItemId",
+      "FetchDirectGateway",
+      "InspectAttachmentInventory"
+    ],
+    "primary_response_path": "portal/responses/001.response.json",
+    "provider": "Cơ sở dữ liệu quốc gia về văn bản pháp luật",
+    "response_count": 1,
+    "sitemap_url": "https://vbpl.vn/sitemap.xml",
+    "website": "https://vbpl.vn/"
+  },
+  "warnings": [
+    "1 attachment metadata record(s) have no resolvable URL",
+    "Detail-page HTML was unavailable; gateway response is the primary source"
+  ]
+}

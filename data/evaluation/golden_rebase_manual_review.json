@@ -1,0 +1,26 @@
+{
+  "schema_version": "golden-evidence-manual-review-v1",
+  "reviewed_at": "2026-07-26",
+  "status": "APPROVED_WITH_CORRECTION",
+  "mappings": [
+    {
+      "affected_questions": [
+        "r2ai_gold_022",
+        "r2ai_gold_037"
+      ],
+      "article_code": "20.2.NĐ.3.19",
+      "old_chunk_id": "b925759f-9b2f-524b-9d17-a25492678675",
+      "mapping_type": "one_to_many_due_rechunking",
+      "new_chunk_ids": [
+        "5c4fdbe5-3e25-5995-9ca5-e166e7fba63f",
+        "8d2ddced-2114-5cfc-a15b-f70d1859d79b"
+      ],
+      "automated_best_score": 0.769606,
+      "manual_verification": {
+        "point_b_chunk": "Contains the 60-day and 10-day conditions and the 5-working-day decision step.",
+        "point_c_chunk": "Contains the 7-working-day bank extraction and direct-payment step.",
+        "legal_label_correction": "Article 19(1)(c) expressly provides the payment priority; the prior claim that no priority existed was incorrect."
+      }
+    }
+  ]
+}

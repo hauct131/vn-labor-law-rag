@@ -1,0 +1,95 @@
+{
+  "documents_expected": 16,
+  "documents_processed": 16,
+  "articles_validated_total": 389,
+  "articles_selected": 285,
+  "articles_excluded_by_scope": 104,
+  "appendix_sections_detected_count": 7,
+  "appendix_sections_detected": [
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "start_offset": 190003,
+      "heading": "Phụ lục I",
+      "character_count": 54644
+    },
+    {
+      "document_number": "97/2022/NĐ-CP",
+      "start_offset": 24883,
+      "heading": "Phụ lục I",
+      "character_count": 34305
+    },
+    {
+      "document_number": "219/2025/NĐ-CP",
+      "start_offset": 51632,
+      "heading": "Phụ lục",
+      "character_count": 16919
+    },
+    {
+      "document_number": "129/2025/NĐ-CP",
+      "start_offset": 68158,
+      "heading": "PHỤ LỤC I",
+      "character_count": 35813
+    },
+    {
+      "document_number": "09/2020/TT-BLĐTBXH",
+      "start_offset": 12044,
+      "heading": "Phụ lục I",
+      "character_count": 28238
+    },
+    {
+      "document_number": "18/2021/TT-BLĐTBXH",
+      "start_offset": 8753,
+      "heading": "PHỤ LỤC 1",
+      "character_count": 9123
+    },
+    {
+      "document_number": "19/2021/TT-BLĐTBXH",
+      "start_offset": 2880,
+      "heading": "PHỤ LỤC",
+      "character_count": 11891
+    }
+  ],
+  "appendix_leakage_articles": [],
+  "administrative_tail_sections_detected_count": 5,
+  "administrative_tail_sections_detected": [
+    {
+      "document_number": "145/2020/NĐ-CP",
+      "start_offset": 189165,
+      "heading": "Nơi nhận:",
+      "character_count": 55482
+    },
+    {
+      "document_number": "152/2020/NĐ-CP",
+      "start_offset": 54635,
+      "heading": "Nơi nhận:",
+      "character_count": 790
+    },
+    {
+      "document_number": "219/2025/NĐ-CP",
+      "start_offset": 50910,
+      "heading": "Nơi nhận:",
+      "character_count": 17641
+    },
+    {
+      "document_number": "129/2025/NĐ-CP",
+      "start_offset": 67462,
+      "heading": "Nơi nhận:",
+      "character_count": 36509
+    },
+    {
+      "document_number": "09/2020/TT-BLĐTBXH",
+      "start_offset": 11388,
+      "heading": "Nơi nhận:",
+      "character_count": 28894
+    }
+  ],
+  "administrative_tail_leakage_articles": [],
+  "missing_expected_articles": [],
+  "missing_selected_articles": [],
+  "duplicate_article_ids": [],
+  "empty_articles": [],
+  "status": "PASS",
+  "adapter_version": "vbpl-article-adapter-v1",
+  "warnings": [],
+  "strict_failures": []
+}
