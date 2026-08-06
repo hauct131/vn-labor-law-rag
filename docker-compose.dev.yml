@@ -1,0 +1,10 @@
+services:
+  backend:
+    environment:
+      QDRANT_COLLECTION: labor_law_dev
+      QDRANT_EXPECTED_COLLECTION: labor_law_canonical_word_20260804_fdbec539
+      CORPUS_REQUIRE_AUTHORITY_APPROVAL: "false"
+
+  frontend:
+    environment:
+      VITE_API_BASE_URL: http://localhost:8000/api
