@@ -193,4 +193,4 @@ jobs:
           docker compose \
             -f docker-compose.yml \
             -f docker-compose.dev.yml \
-            config --services\n
+            config --services
