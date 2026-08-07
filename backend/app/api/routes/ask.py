@@ -7,6 +7,10 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
+from ...api.dependencies.auth import (
+    AuthenticatedSession,
+    optional_write_authenticated_session,
+)
 from ...chains.generation_chain import (
     GenerationConfigurationError,
     GenerationProviderError,
@@ -24,7 +28,6 @@ from ...retrieval.models import (
 )
 from ...schemas.ask import AskRequest, AskResponse
 from ...services.rag_service import RAGService, get_rag_service
-from .conversations import optional_client_id
 from .health import require_authorized_release
 
 
@@ -37,20 +40,24 @@ async def ask_question(
     payload: AskRequest,
     _release_gate: None = Depends(require_authorized_release),
     service: RAGService = Depends(get_rag_service),
-    client_id: Annotated[str | None, Depends(optional_client_id)] = None,
+    authenticated: Annotated[
+        AuthenticatedSession | None,
+        Depends(optional_write_authenticated_session),
+    ] = None,
     session: Session = Depends(get_db_session),
 ) -> AskResponse:
-    if payload.conversation_id and client_id is None:
+    if payload.conversation_id and authenticated is None:
         raise HTTPException(
-            status_code=400,
-            detail="Cần X-Client-Id khi tiếp tục một hội thoại.",
+            status_code=401,
+            detail="Cần đăng nhập để tiếp tục một hội thoại.",
         )
 
-    if payload.conversation_id and client_id:
+    user_id = authenticated.user.id if authenticated is not None else None
+    if payload.conversation_id and user_id:
         try:
             get_owned_conversation(
                 session,
-                user_id=client_id,
+                user_id=user_id,
                 conversation_id=str(payload.conversation_id),
             )
         except ConversationNotFoundError as exc:
@@ -84,13 +91,13 @@ async def ask_question(
             detail=f"Không thể khởi tạo bộ truy hồi: {exc}",
         ) from exc
 
-    if client_id is None:
+    if user_id is None:
         return result
 
     try:
         conversation, user_message, assistant_message = record_exchange(
             session,
-            user_id=client_id,
+            user_id=user_id,
             question=payload.question,
             result=result,
             corpus_release_id=settings.corpus_release_id,

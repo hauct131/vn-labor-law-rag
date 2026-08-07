@@ -15,7 +15,8 @@ Hệ thống hỏi đáp pháp luật lao động Việt Nam sử dụng Retriev
 
 - Hỏi đáp RAG bằng Sparse, Dense hoặc Hybrid, có trích nguồn;
 - thư viện 18 văn bản và nội dung điều luật từ corpus canonical;
-- lịch sử hội thoại lưu bền vững trong PostgreSQL;
+- đăng ký, đăng nhập và đăng xuất bằng server-side session;
+- lịch sử hội thoại lưu bền vững và phân tách theo tài khoản trong PostgreSQL;
 - đánh dấu và mở lại câu trả lời cùng snapshot nguồn đã sử dụng.
 
 Lịch sử chỉ tổ chức dữ liệu đã hỏi. Retrieval của từng câu vẫn chạy độc lập và
@@ -105,12 +106,13 @@ Các chỉ số trên đo retrieval, không chứng minh câu trả lời cuối
 ```text
 Vite frontend
       |
-      +--> localStorage: client UUID + hội thoại đang mở
+      +--> HttpOnly cookie: session token
+      +--> localStorage: hội thoại đang mở + UUID cũ để migration một lần
       |
       v
 FastAPI API
       |
-      +--> PostgreSQL: hội thoại, message, snapshot nguồn, bookmark
+      +--> PostgreSQL: tài khoản, session, hội thoại, nguồn, bookmark
       |
       +--> Sparse retrieval: VnCoreNLP + BM25
       |
@@ -133,7 +135,7 @@ Graph RAG và Neo4j chưa thuộc MVP runtime công khai. Giao diện hiện ch�
 - `backend/app/api/`: API FastAPI.
 - `backend/app/retrieval/`: truy hồi Sparse, Dense và Hybrid.
 - `backend/app/services/`: điều phối RAG, citation và guardrail.
-- `backend/app/models/` và `backend/app/repositories/`: dữ liệu hội thoại PostgreSQL.
+- `backend/app/models/` và `backend/app/repositories/`: tài khoản, session và dữ liệu hội thoại PostgreSQL.
 - `backend/migrations/`: DDL quản lý schema dữ liệu nghiệp vụ.
 - `data/releases/`: các corpus release bất biến.
 - `data/evaluation/`: golden set, split và báo cáo benchmark.
@@ -180,7 +182,13 @@ Endpoint chính:
 | `GET` | `/api/documents` | Danh sách thư viện văn bản |
 | `GET` | `/api/documents/{document_id}` | Chi tiết một văn bản |
 | `GET` | `/api/documents/{document_id}/articles` | Danh sách điều thuộc văn bản |
-| `GET` | `/api/conversations` | Danh sách hội thoại của client UUID |
+| `POST` | `/api/auth/register` | Tạo tài khoản và session |
+| `POST` | `/api/auth/login` | Đăng nhập |
+| `GET` | `/api/auth/me` | Đọc người dùng của session hiện tại |
+| `GET` | `/api/auth/sessions` | Liệt kê session còn hiệu lực |
+| `POST` | `/api/auth/logout` | Thu hồi session hiện tại |
+| `POST` | `/api/auth/logout-all` | Thu hồi toàn bộ session của tài khoản |
+| `GET` | `/api/conversations` | Danh sách hội thoại của tài khoản hiện tại |
 | `POST` | `/api/conversations` | Tạo hội thoại rỗng |
 | `GET` | `/api/conversations/{id}` | Đọc transcript và snapshot nguồn |
 | `PATCH` | `/api/conversations/{id}` | Đổi tên hội thoại |
@@ -195,11 +203,13 @@ Swagger UI:
 http://localhost:8000/docs
 ```
 
-Các endpoint hội thoại dùng header `X-Client-Id` là UUID ẩn danh của trình
-duyệt. Đây là định danh MVP, không phải xác thực người dùng. Chi tiết dữ liệu,
-API và ERD nằm tại:
+Các endpoint hội thoại và bookmark lấy `user_id` từ server-side session trong
+cookie `HttpOnly`; frontend không được tự khai báo chủ sở hữu dữ liệu. Request
+làm thay đổi dữ liệu còn phải gửi `X-CSRF-Token`. `X-Client-Id` chỉ còn dùng ở
+đăng ký/đăng nhập để chuyển lịch sử ẩn danh của phiên bản cũ. Chi tiết:
 
 ```text
+docs/SESSION_AUTH.md
 docs/CONVERSATION_HISTORY_BOOKMARKS.md
 docs/ERD_CONVERSATION_HISTORY.md
 ```
@@ -228,12 +238,14 @@ OPENROUTER_API_KEY=...
 POSTGRES_PASSWORD=mot-mat-khau-local-khong-commit
 DATABASE_URL=sqlite+pysqlite:///./application.db
 DATABASE_URL_DOCKER=postgresql+psycopg://labor_law:mot-mat-khau-local-khong-commit@postgres:5432/labor_law_rag
+SESSION_COOKIE_SECURE=false
 ```
 
 Ba giá trị `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB` phải khớp với
 `DATABASE_URL_DOCKER`. Ký tự đặc biệt trong mật khẩu phải được URL-encode trong
 URL kết nối. `DATABASE_URL` dùng SQLite khi chạy backend trực tiếp ngoài Docker.
-Không commit `.env` hoặc khóa API.
+Không commit `.env` hoặc khóa API. `SESSION_COOKIE_SECURE=false` chỉ dùng cho
+HTTP local; khi triển khai HTTPS phải đổi thành `true`.
 
 ### Chuẩn bị model runtime
 
@@ -284,9 +296,18 @@ docker compose \
 ```
 
 Không thêm `-v` trừ khi chủ động muốn xóa Docker volumes. Tùy chọn `-v`
-cũng xóa `postgres_data`, tức toàn bộ lịch sử hội thoại và bookmark local.
+cũng xóa `postgres_data`, tức toàn bộ tài khoản, session, lịch sử và bookmark
+local.
 
-PostgreSQL local mặc định chỉ bind ở `127.0.0.1:5432`. Corpus vẫn nằm trong
+Named volume thường có tên `vn-labor-law-rag_postgres_data`. Xem vị trí thật:
+
+```bash
+docker volume inspect vn-labor-law-rag_postgres_data \
+  --format $'Name: {{.Name}}\nMountpoint: {{.Mountpoint}}'
+```
+
+Không chỉnh sửa trực tiếp file trong mountpoint. PostgreSQL local mặc định chỉ
+bind ở `127.0.0.1:5432`. Corpus vẫn nằm trong
 JSON/JSONL release bất biến và vector vẫn nằm ở Qdrant; chỉ dữ liệu nghiệp vụ
 phát sinh được lưu trong PostgreSQL.
 
@@ -341,10 +362,11 @@ giao của đúng commit là nguồn xác nhận, không sử dụng một con s
 Các test integration bị skip có thể yêu cầu model cache, corpus runtime hoặc
 external service.
 
-Test riêng cho hội thoại và bookmark:
+Test riêng cho session, hội thoại và bookmark:
 
 ```bash
 PYTHONPATH=backend .venv/bin/python -m pytest -q \
+  backend/tests/test_session_auth.py \
   backend/tests/test_conversation_history.py \
   backend/tests/test_ask_history_api.py
 ```
@@ -366,14 +388,18 @@ docker compose \
   config
 ```
 
-Chạy toàn bộ cổng kiểm tra của chức năng mới và ghi báo cáo:
+Chạy toàn bộ cổng kiểm tra và ghi báo cáo:
 
 ```bash
-bash scripts/verify_conversation_bookmarks.sh
+RUN_RUNTIME_SMOKE=1 \
+BASE_REF=main \
+bash scripts/verify_conversation_bookmarks.sh \
+  "$HOME/Downloads/session-auth-final-verification.txt"
 ```
 
-Sau khi Compose đang chạy, smoke test runtime tạo một hội thoại thật, bookmark,
-restart backend, reload từ PostgreSQL, đổi tên và dọn dữ liệu thử nghiệm:
+Smoke runtime tạo hai tài khoản, xác minh User B không đọc hoặc bookmark dữ liệu
+User A, restart backend, kiểm tra session và dữ liệu vẫn tồn tại, rồi dọn dữ liệu
+thử nghiệm:
 
 ```bash
 python3 scripts/smoke_conversation_bookmarks.py --restart-backend
@@ -416,8 +442,9 @@ CI phải chạy trên checkout sạch. Vì vậy những evidence snapshot và 
 - Authority review và legal-effect review chưa hoàn tất.
 - Retrieval benchmark không thay thế đánh giá độ đúng pháp lý của câu trả lời.
 - OpenRouter và model miễn phí có thể thay đổi chất lượng hoặc khả dụng.
-- Client UUID hiện là định danh ẩn danh, chưa phải tài khoản hoặc cơ chế xác thực.
-- Lịch sử không đồng bộ giữa các trình duyệt nếu chưa có chức năng đăng nhập.
+- Chưa có xác minh email, quên/đặt lại mật khẩu, MFA hoặc OAuth/OIDC.
+- Chưa có khóa tạm/rate limit chuyên dụng cho nhiều lần đăng nhập sai.
+- Session local chỉ dùng cookie `Secure=false`; triển khai thật bắt buộc HTTPS và `Secure=true`.
 - Graph RAG chưa được đưa vào API và giao diện chính thức.
 - Alias runtime legacy chưa được chuyển sang corpus canonical Word 804; cả collection legacy và collection 804 đều chưa hoàn thành authority review.
 

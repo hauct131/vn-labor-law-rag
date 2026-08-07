@@ -1,5 +1,7 @@
 from functools import lru_cache
+from typing import Literal
 
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -17,6 +19,19 @@ class Settings(BaseSettings):
     database_url: str = "sqlite+pysqlite:///./application.db"
     database_echo: bool = False
     database_auto_create: bool = True
+
+    # Account and server-side session authentication
+    session_cookie_name: str = "legal_rag_session"
+    csrf_cookie_name: str = "legal_rag_csrf"
+    session_cookie_secure: bool = False
+    session_cookie_samesite: Literal["lax", "strict", "none"] = "lax"
+    session_ttl_seconds: int = Field(default=604800, ge=300, le=31536000)
+    session_touch_interval_seconds: int = Field(default=300, ge=0, le=86400)
+    password_pbkdf2_iterations: int = Field(
+        default=600000,
+        ge=100000,
+        le=5000000,
+    )
 
     # Qdrant
     qdrant_url: str = "http://localhost:6333"

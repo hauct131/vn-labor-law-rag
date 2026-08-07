@@ -1,4 +1,4 @@
-import { type FormEvent, useEffect, useMemo, useState } from 'react'
+import { type FormEvent, type ReactNode, useEffect, useMemo, useState } from 'react'
 import './App.css'
 import { API_BASE_URL } from './api/apiConfig'
 import type { LegalArticleResponse } from './api/legalArticleTypes'
@@ -19,7 +19,6 @@ import {
 } from './features/history/conversationApi'
 import {
   getActiveConversationId,
-  getClientId,
   setActiveConversationId,
 } from './features/history/clientIdentity'
 import type {
@@ -28,6 +27,15 @@ import type {
   StoredMessage,
 } from './features/history/conversationTypes'
 import './features/history/history.css'
+import './features/auth/auth.css'
+import { AuthDialog } from './features/auth/AuthDialog'
+import {
+  AUTH_SESSION_EXPIRED_EVENT,
+  fetchCurrentUser,
+  logoutAccount,
+  sessionFetch,
+} from './features/auth/authApi'
+import type { AuthResult, AuthUser } from './features/auth/authTypes'
 
 const methods: Array<{
   value: RetrievalMethod
@@ -72,15 +80,26 @@ function navigateTo(path: string) {
   window.dispatchEvent(new PopStateEvent('popstate'))
 }
 
+type NavAuthProps = {
+  authUser: AuthUser | null
+  isAuthLoading: boolean
+  onOpenAuth: () => void
+  onLogout: () => void
+}
+
 function TopNav({
   activeTab,
   badgeText = 'Phiên bản v1.0',
   showBackLink = false,
+  authUser,
+  isAuthLoading,
+  onOpenAuth,
+  onLogout,
 }: {
   activeTab: 'qa' | 'library' | 'source' | 'saved'
   badgeText?: string
   showBackLink?: boolean
-}) {
+} & NavAuthProps) {
   return (
     <header className="topbar">
       <a
@@ -123,25 +142,55 @@ function TopNav({
         </button>
       </nav>
 
-      {showBackLink ? (
-        <a
-          className="back-link"
-          href="/"
-          onClick={(e) => {
-            e.preventDefault()
-            navigateTo('/')
-          }}
-        >
-          ← Quay lại hỏi đáp
-        </a>
-      ) : (
-        <span className="mvp-badge">{badgeText}</span>
-      )}
+      <div className="topbar-right">
+        {showBackLink ? (
+          <a
+            className="back-link"
+            href="/"
+            onClick={(e) => {
+              e.preventDefault()
+              navigateTo('/')
+            }}
+          >
+            ← Quay lại hỏi đáp
+          </a>
+        ) : (
+          <span className="mvp-badge">{badgeText}</span>
+        )}
+        <div className="auth-actions">
+          {authUser ? (
+            <>
+              <span className="auth-user">
+                <strong>{authUser.display_name}</strong>
+                <small>{authUser.email}</small>
+              </span>
+              <button className="auth-button secondary" type="button" onClick={onLogout}>
+                Đăng xuất
+              </button>
+            </>
+          ) : (
+            <button
+              className="auth-button"
+              type="button"
+              disabled={isAuthLoading}
+              onClick={onOpenAuth}
+            >
+              {isAuthLoading ? 'Đang kiểm tra…' : 'Đăng nhập'}
+            </button>
+          )}
+        </div>
+      </div>
     </header>
   )
 }
 
-function LegalArticlePage({ articleCode }: { articleCode: string }) {
+function LegalArticlePage({
+  articleCode,
+  navAuth,
+}: {
+  articleCode: string
+  navAuth: NavAuthProps
+}) {
   const [article, setArticle] = useState<LegalArticleResponse | null>(null)
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(true)
@@ -189,7 +238,7 @@ function LegalArticlePage({ articleCode }: { articleCode: string }) {
 
   return (
     <div className="app-shell source-page-shell">
-      <TopNav activeTab="source" showBackLink />
+      <TopNav activeTab="source" showBackLink {...navAuth} />
 
       <main className="source-page-main">
         {isLoading && (
@@ -313,7 +362,12 @@ function transientResultToAnswer(result: AskResponse): DisplayAnswer {
   }
 }
 
-function QuestionAnswerPage() {
+function QuestionAnswerPage({
+  authUser,
+  isAuthLoading,
+  onOpenAuth,
+  onLogout,
+}: NavAuthProps) {
   const [question, setQuestion] = useState(examples[0])
   const [method, setMethod] = useState<RetrievalMethod>('hybrid')
   const [conversations, setConversations] = useState<ConversationSummary[]>([])
@@ -326,7 +380,7 @@ function QuestionAnswerPage() {
   const [error, setError] = useState('')
   const [historyError, setHistoryError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [isHistoryLoading, setIsHistoryLoading] = useState(true)
+  const [isHistoryLoading, setIsHistoryLoading] = useState(Boolean(authUser))
   const [isConversationLoading, setIsConversationLoading] = useState(false)
   const [busyBookmarkId, setBusyBookmarkId] = useState<string | null>(null)
 
@@ -336,6 +390,7 @@ function QuestionAnswerPage() {
   )
 
   useEffect(() => {
+    if (!authUser) return
     const controller = new AbortController()
     async function loadInitialHistory() {
       setIsHistoryLoading(true)
@@ -372,7 +427,7 @@ function QuestionAnswerPage() {
     }
     void loadInitialHistory()
     return () => controller.abort()
-  }, [])
+  }, [authUser])
 
   async function reloadConversation(conversationId: string) {
     const [detail, items] = await Promise.all([
@@ -474,18 +529,15 @@ function QuestionAnswerPage() {
     setTransientQuestion(normalizedQuestion)
     setIsLoading(true)
     try {
-      const response = await fetch(`${API_BASE_URL}/ask`, {
+      const response = await sessionFetch('/ask', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Client-Id': getClientId(),
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           question: normalizedQuestion,
           method,
-          conversation_id: activeConversationId,
+          conversation_id: authUser ? activeConversationId : null,
         }),
-      })
+      }, Boolean(authUser))
       if (!response.ok) throw new Error(await readError(response))
       const nextResult = await response.json() as AskResponse
       setTransientResult(nextResult)
@@ -519,15 +571,24 @@ function QuestionAnswerPage() {
 
   return (
     <div className="app-shell">
-      <TopNav activeTab="qa" badgeText="MVP · Sparse, Dense & Hybrid" />
+      <TopNav
+        activeTab="qa"
+        badgeText="MVP · Sparse, Dense & Hybrid"
+        authUser={authUser}
+        isAuthLoading={isAuthLoading}
+        onOpenAuth={onOpenAuth}
+        onLogout={onLogout}
+      />
 
       <main id="top">
         <section className="intro">
           <p className="eyebrow">Tra cứu có căn cứ nguồn</p>
           <h1>Hỏi đáp pháp luật lao động<br />bằng tiếng Việt</h1>
           <p className="intro-copy">
-            Hội thoại được lưu bền vững phía máy chủ; mỗi câu trả lời giữ nguyên
-            nguồn để bạn mở lại và đối chiếu sau này.
+            {authUser
+              ? 'Hội thoại được lưu bền vững phía máy chủ; mỗi câu trả lời giữ nguyên ' +
+                'nguồn để bạn mở lại và đối chiếu sau này.'
+              : 'Bạn vẫn có thể tra cứu ngay. Đăng nhập để lưu lịch sử và đánh dấu câu trả lời theo tài khoản.'}
           </p>
         </section>
 
@@ -538,6 +599,8 @@ function QuestionAnswerPage() {
             isLoading={isHistoryLoading}
             isBusy={isHistoryLoading || isLoading || isConversationLoading}
             error={historyError}
+            isAuthenticated={Boolean(authUser)}
+            onLogin={onOpenAuth}
             onNew={startNewConversation}
             onSelect={(conversationId) => void selectConversation(conversationId)}
             onRename={(conversation) => void handleRename(conversation)}
@@ -639,9 +702,11 @@ function QuestionAnswerPage() {
                           key={message.id}
                           answer={storedMessageToAnswer(message)}
                           isBookmarkBusy={busyBookmarkId === message.id}
-                          onToggleBookmark={(messageId, shouldSave) => {
-                            void handleToggleBookmark(messageId, shouldSave)
-                          }}
+                          onToggleBookmark={authUser
+                            ? (messageId, shouldSave) => {
+                                void handleToggleBookmark(messageId, shouldSave)
+                              }
+                            : undefined}
                         />
                       )
                     ))}
@@ -707,6 +772,10 @@ function parseRoute(pathname: string): Route {
 
 function App() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname)
+  const [authUser, setAuthUser] = useState<AuthUser | null>(null)
+  const [isAuthLoading, setIsAuthLoading] = useState(true)
+  const [showAuthDialog, setShowAuthDialog] = useState(false)
+  const [authNotice, setAuthNotice] = useState('')
 
   useEffect(() => {
     const handlePopState = () => setCurrentPath(window.location.pathname)
@@ -714,16 +783,78 @@ function App() {
     return () => window.removeEventListener('popstate', handlePopState)
   }, [])
 
-  const route = parseRoute(currentPath)
+  useEffect(() => {
+    function handleExpiredSession() {
+      setAuthUser(null)
+      setActiveConversationId(null)
+      setAuthNotice('Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.')
+      navigateTo('/')
+    }
+    window.addEventListener(AUTH_SESSION_EXPIRED_EVENT, handleExpiredSession)
+    return () => {
+      window.removeEventListener(AUTH_SESSION_EXPIRED_EVENT, handleExpiredSession)
+    }
+  }, [])
 
-  if (route.type === 'source') {
-    return <LegalArticlePage articleCode={route.articleCode} />
+  useEffect(() => {
+    const controller = new AbortController()
+    async function restoreSession() {
+      try {
+        setAuthUser(await fetchCurrentUser(controller.signal))
+      } catch (requestError) {
+        if (requestError instanceof DOMException && requestError.name === 'AbortError') return
+        setAuthNotice(requestError instanceof Error
+          ? requestError.message
+          : 'Không thể kiểm tra phiên đăng nhập.')
+      } finally {
+        if (!controller.signal.aborted) setIsAuthLoading(false)
+      }
+    }
+    void restoreSession()
+    return () => controller.abort()
+  }, [])
+
+  function handleAuthenticated(result: AuthResult) {
+    setAuthUser(result.user)
+    setShowAuthDialog(false)
+    setActiveConversationId(null)
+    setAuthNotice(result.migrated_anonymous_history
+      ? 'Đăng nhập thành công. Lịch sử ẩn danh trên trình duyệt này đã được chuyển vào tài khoản.'
+      : 'Đăng nhập thành công.')
   }
 
-  if (route.type === 'library-detail') {
-    return (
+  async function handleLogout() {
+    setIsAuthLoading(true)
+    try {
+      await logoutAccount()
+      setAuthUser(null)
+      setActiveConversationId(null)
+      setAuthNotice('Đã đăng xuất khỏi tài khoản.')
+      navigateTo('/')
+    } catch (requestError) {
+      setAuthNotice(requestError instanceof Error
+        ? requestError.message
+        : 'Không thể đăng xuất.')
+    } finally {
+      setIsAuthLoading(false)
+    }
+  }
+
+  const navAuth: NavAuthProps = {
+    authUser,
+    isAuthLoading,
+    onOpenAuth: () => setShowAuthDialog(true),
+    onLogout: () => void handleLogout(),
+  }
+  const route = parseRoute(currentPath)
+
+  let page: ReactNode
+  if (route.type === 'source') {
+    page = <LegalArticlePage articleCode={route.articleCode} navAuth={navAuth} />
+  } else if (route.type === 'library-detail') {
+    page = (
       <div className="app-shell">
-        <TopNav activeTab="library" />
+        <TopNav activeTab="library" {...navAuth} />
         <main>
           <DocumentDetailPage
             key={route.documentId}
@@ -736,31 +867,39 @@ function App() {
         </footer>
       </div>
     )
-  }
-
-  if (route.type === 'saved') {
-    return (
+  } else if (route.type === 'saved') {
+    page = (
       <div className="app-shell">
-        <TopNav activeTab="saved" />
+        <TopNav activeTab="saved" {...navAuth} />
         <main>
-          <SavedAnswersPage
-            onOpenConversation={(conversationId) => {
-              setActiveConversationId(conversationId)
-              navigateTo('/')
-            }}
-          />
+          {authUser ? (
+            <SavedAnswersPage
+              key={authUser.id}
+              onOpenConversation={(conversationId) => {
+                setActiveConversationId(conversationId)
+                navigateTo('/')
+              }}
+            />
+          ) : (
+            <section className="auth-required">
+              <p className="eyebrow">Dữ liệu cá nhân</p>
+              <h1>Cần đăng nhập để xem câu trả lời đã lưu</h1>
+              <p>Bookmark được lưu trong PostgreSQL và chỉ tài khoản sở hữu mới đọc được.</p>
+              <button className="auth-button" type="button" onClick={navAuth.onOpenAuth}>
+                Đăng nhập
+              </button>
+            </section>
+          )}
         </main>
         <footer>
           <p>Công cụ hỗ trợ tra cứu học thuật, không thay thế tư vấn pháp lý chuyên môn.</p>
         </footer>
       </div>
     )
-  }
-
-  if (route.type === 'library-list') {
-    return (
+  } else if (route.type === 'library-list') {
+    page = (
       <div className="app-shell">
-        <TopNav activeTab="library" />
+        <TopNav activeTab="library" {...navAuth} />
         <main>
           <DocumentLibraryPage
             onSelectDocument={(docId) => navigateTo(`/library/${encodeURIComponent(docId)}`)}
@@ -771,9 +910,34 @@ function App() {
         </footer>
       </div>
     )
+  } else {
+    page = (
+      <QuestionAnswerPage
+        key={authUser?.id ?? 'anonymous'}
+        {...navAuth}
+      />
+    )
   }
 
-  return <QuestionAnswerPage />
+  return (
+    <>
+      {page}
+      {authNotice && (
+        <div className="auth-toast" role="status">
+          <span>{authNotice}</span>
+          <button type="button" aria-label="Đóng thông báo" onClick={() => setAuthNotice('')}>
+            ×
+          </button>
+        </div>
+      )}
+      {showAuthDialog && (
+        <AuthDialog
+          onClose={() => setShowAuthDialog(false)}
+          onAuthenticated={handleAuthenticated}
+        />
+      )}
+    </>
+  )
 }
 
 export default App

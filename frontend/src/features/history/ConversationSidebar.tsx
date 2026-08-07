@@ -17,6 +17,8 @@ export function ConversationSidebar({
   isLoading,
   isBusy,
   error,
+  isAuthenticated,
+  onLogin,
   onNew,
   onSelect,
   onRename,
@@ -27,6 +29,8 @@ export function ConversationSidebar({
   isLoading: boolean
   isBusy: boolean
   error: string
+  isAuthenticated: boolean
+  onLogin: () => void
   onNew: () => void
   onSelect: (conversationId: string) => void
   onRename: (conversation: ConversationSummary) => void
@@ -42,17 +46,26 @@ export function ConversationSidebar({
         <button
           type="button"
           className="new-conversation-button"
-          disabled={isBusy}
+          disabled={isBusy || !isAuthenticated}
           onClick={onNew}
         >
           + Mới
         </button>
       </div>
 
-      {isLoading && <p className="history-state">Đang tải lịch sử…</p>}
-      {error && <p className="history-state history-error" role="alert">{error}</p>}
-      {!isLoading && !error && conversations.length === 0 && (
-        <p className="history-state">Chưa có hội thoại nào.</p>
+      {!isAuthenticated ? (
+        <div className="history-login-state">
+          <p>Đăng nhập để lưu và mở lại lịch sử hội thoại.</p>
+          <button type="button" onClick={onLogin}>Đăng nhập</button>
+        </div>
+      ) : (
+        <>
+          {isLoading && <p className="history-state">Đang tải lịch sử…</p>}
+          {error && <p className="history-state history-error" role="alert">{error}</p>}
+          {!isLoading && !error && conversations.length === 0 && (
+            <p className="history-state">Chưa có hội thoại nào.</p>
+          )}
+        </>
       )}
 
       <div className="conversation-list">

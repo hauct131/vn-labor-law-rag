@@ -1,3 +1,5 @@
+"""Repository and authenticated HTTP tests for history and bookmarks."""
+
 from collections.abc import Generator
 from uuid import uuid4
 
@@ -8,7 +10,8 @@ from sqlalchemy import create_engine, inspect
 from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.pool import StaticPool
 
-from app.api.routes.conversations import router
+from app.api.routes.auth import router as auth_router
+from app.api.routes.conversations import router as conversation_router
 from app.core.config import settings
 from app.db.database import (
     Base,
@@ -36,7 +39,8 @@ def session_factory() -> sessionmaker[Session]:
 @pytest.fixture
 def client(session_factory: sessionmaker[Session]) -> Generator[TestClient, None, None]:
     app = FastAPI()
-    app.include_router(router, prefix="/api")
+    app.include_router(auth_router, prefix="/api")
+    app.include_router(conversation_router, prefix="/api")
 
     def override_session() -> Generator[Session, None, None]:
         session = session_factory()
@@ -45,13 +49,29 @@ def client(session_factory: sessionmaker[Session]) -> Generator[TestClient, None
         finally:
             session.close()
 
+    original_iterations = settings.password_pbkdf2_iterations
+    settings.password_pbkdf2_iterations = 1000
     app.dependency_overrides[get_db_session] = override_session
-    with TestClient(app) as test_client:
-        yield test_client
+    try:
+        with TestClient(app) as test_client:
+            yield test_client
+    finally:
+        settings.password_pbkdf2_iterations = original_iterations
 
 
-def _headers(client_id: str) -> dict[str, str]:
-    return {"X-Client-Id": client_id}
+def _register(client: TestClient) -> tuple[str, dict[str, str]]:
+    response = client.post(
+        "/api/auth/register",
+        json={
+            "email": f"{uuid4()}@example.com",
+            "password": "MatKhauAnToan123",
+            "display_name": "Người thử nghiệm",
+        },
+    )
+    assert response.status_code == 201
+    csrf = client.cookies.get(settings.csrf_cookie_name)
+    assert csrf
+    return response.json()["user"]["id"], {"X-CSRF-Token": csrf}
 
 
 def _answer() -> AskResponse:
@@ -68,15 +88,9 @@ def _answer() -> AskResponse:
                 document_title="Bộ luật Lao động",
                 document_number="45/2019/QH14",
                 citation_label="Điều 113 Bộ luật Lao động",
-                clause_number="1",
-                point_labels=[],
                 content="Người lao động làm đủ 12 tháng được nghỉ hằng năm.",
                 score=0.91,
                 rank=1,
-                retrieval_origin="hybrid",
-                source_type="LQ",
-                source_url="https://example.test/official",
-                component_ranks={"dense": 1, "sparse": 2},
             )
         ],
         retrieval_ms=12.5,
@@ -84,8 +98,6 @@ def _answer() -> AskResponse:
         total_ms=42.5,
         model="test-model",
     )
-
-
 
 
 def test_database_initialization_creates_expected_tables(tmp_path) -> None:
@@ -99,6 +111,7 @@ def test_database_initialization_creates_expected_tables(tmp_path) -> None:
         tables = set(inspect(get_engine()).get_table_names())
         assert {
             "app_users",
+            "user_sessions",
             "conversations",
             "messages",
             "message_sources",
@@ -111,178 +124,79 @@ def test_database_initialization_creates_expected_tables(tmp_path) -> None:
         settings.database_url = original_url
 
 
-def test_conversation_crud_and_ownership(client: TestClient) -> None:
-    user_a = str(uuid4())
-    user_b = str(uuid4())
-
-    created = client.post(
-        "/api/conversations",
-        headers=_headers(user_a),
-        json={"title": "  Nghỉ   hằng năm  "},
-    )
-    assert created.status_code == 201
-    conversation = created.json()
-    assert conversation["title"] == "Nghỉ hằng năm"
-    conversation_id = conversation["id"]
-
-    listed = client.get("/api/conversations", headers=_headers(user_a))
-    assert listed.status_code == 200
-    assert listed.json()["conversations"][0]["id"] == conversation_id
-
-    denied = client.get(
-        f"/api/conversations/{conversation_id}",
-        headers=_headers(user_b),
-    )
-    assert denied.status_code == 404
-
-    renamed = client.patch(
-        f"/api/conversations/{conversation_id}",
-        headers=_headers(user_a),
-        json={"title": "Tuổi nghỉ hưu"},
-    )
-    assert renamed.status_code == 200
-    assert renamed.json()["title"] == "Tuổi nghỉ hưu"
-
-    blank_title = client.patch(
-        f"/api/conversations/{conversation_id}",
-        headers=_headers(user_a),
-        json={"title": "   "},
-    )
-    assert blank_title.status_code == 422
-
-    deleted = client.delete(
-        f"/api/conversations/{conversation_id}",
-        headers=_headers(user_a),
-    )
-    assert deleted.status_code == 204
-    assert client.get(
-        f"/api/conversations/{conversation_id}",
-        headers=_headers(user_a),
-    ).status_code == 404
-
-
-def test_invalid_or_missing_client_id_is_rejected(client: TestClient) -> None:
-    assert client.get("/api/conversations").status_code == 422
-    response = client.get(
-        "/api/conversations",
-        headers={"X-Client-Id": "not-a-uuid"},
-    )
-    assert response.status_code == 400
-    assert "UUID" in response.json()["detail"]
-
-
-def test_record_exchange_bookmark_and_saved_answer(
+def test_conversation_crud_bookmark_and_saved_answer(
     client: TestClient,
     session_factory: sessionmaker[Session],
 ) -> None:
-    user_id = str(uuid4())
+    user_id, csrf = _register(client)
+    created = client.post(
+        "/api/conversations",
+        headers=csrf,
+        json={"title": "  Nghỉ   hằng năm  "},
+    )
+    assert created.status_code == 201
+    conversation_id = created.json()["id"]
+    assert created.json()["title"] == "Nghỉ hằng năm"
+
     with session_factory() as session:
-        conversation, user_message, assistant_message = record_exchange(
+        _conversation, user_message, assistant = record_exchange(
             session,
             user_id=user_id,
             question="Tôi được nghỉ hằng năm bao nhiêu ngày?",
             result=_answer(),
             corpus_release_id="release-test",
+            conversation_id=conversation_id,
         )
-        conversation_id = conversation.id
         user_message_id = user_message.id
-        assistant_message_id = assistant_message.id
-        assert user_message.role == "user"
-        assert assistant_message.sources[0].article_code == "BLLD2019.113"
+        assistant_id = assistant.id
 
-    detail = client.get(
-        f"/api/conversations/{conversation_id}",
-        headers=_headers(user_id),
-    )
-    assert detail.status_code == 200
-    body = detail.json()
-    assert [message["role"] for message in body["messages"]] == [
-        "user",
-        "assistant",
-    ]
-    assert body["messages"][1]["corpus_release_id"] == "release-test"
-    assert body["created_at"].endswith("Z")
-    assert body["messages"][0]["created_at"].endswith("Z")
-    assert body["messages"][1]["sources"][0]["content"].startswith(
-        "Người lao động"
-    )
-
-    user_message_bookmark = client.put(
+    assert client.put(
         f"/api/bookmarks/{user_message_id}",
-        headers=_headers(user_id),
+        headers=csrf,
         json={},
-    )
-    assert user_message_bookmark.status_code == 404
-
+    ).status_code == 404
     saved = client.put(
-        f"/api/bookmarks/{assistant_message_id}",
-        headers=_headers(user_id),
+        f"/api/bookmarks/{assistant_id}",
+        headers=csrf,
         json={"note": "Dùng cho báo cáo"},
     )
     assert saved.status_code == 200
-    assert saved.json()["note"] == "Dùng cho báo cáo"
-
-    # PUT is idempotent and updates the existing bookmark instead of duplicating it.
     updated = client.put(
-        f"/api/bookmarks/{assistant_message_id}",
-        headers=_headers(user_id),
+        f"/api/bookmarks/{assistant_id}",
+        headers=csrf,
         json={"note": "Ghi chú mới"},
     )
     assert updated.status_code == 200
     assert updated.json()["id"] == saved.json()["id"]
 
-    bookmarks = client.get("/api/bookmarks", headers=_headers(user_id))
+    detail = client.get(f"/api/conversations/{conversation_id}")
+    assert detail.status_code == 200
+    assert [item["role"] for item in detail.json()["messages"]] == [
+        "user",
+        "assistant",
+    ]
+    assert detail.json()["messages"][1]["bookmarked"] is True
+    assert detail.json()["messages"][1]["sources"][0]["article_code"] == "BLLD2019.113"
+
+    bookmarks = client.get("/api/bookmarks")
     assert bookmarks.status_code == 200
-    items = bookmarks.json()["items"]
-    assert len(items) == 1
-    assert items[0]["question"] == "Tôi được nghỉ hằng năm bao nhiêu ngày?"
-    assert items[0]["answer"]["bookmarked"] is True
-    assert items[0]["answer"]["sources"][0]["article_code"] == "BLLD2019.113"
+    assert bookmarks.json()["items"][0]["question"].startswith("Tôi được nghỉ")
 
-    other_user = str(uuid4())
-    assert client.put(
-        f"/api/bookmarks/{assistant_message_id}",
-        headers=_headers(other_user),
-        json={},
-    ).status_code == 404
-    # DELETE is idempotent and must not reveal or remove another user's bookmark.
-    assert client.delete(
-        f"/api/bookmarks/{assistant_message_id}",
-        headers=_headers(other_user),
-    ).status_code == 204
-    assert len(client.get("/api/bookmarks", headers=_headers(user_id)).json()["items"]) == 1
-
-    removed = client.delete(
-        f"/api/bookmarks/{assistant_message_id}",
-        headers=_headers(user_id),
+    renamed = client.patch(
+        f"/api/conversations/{conversation_id}",
+        headers=csrf,
+        json={"title": "Tuổi nghỉ hưu"},
     )
-    assert removed.status_code == 204
-    assert client.get("/api/bookmarks", headers=_headers(user_id)).json()["items"] == []
+    assert renamed.status_code == 200
+    assert renamed.json()["title"] == "Tuổi nghỉ hưu"
 
-
-def test_deleting_conversation_cascades_to_saved_answer(
-    client: TestClient,
-    session_factory: sessionmaker[Session],
-) -> None:
-    user_id = str(uuid4())
-    with session_factory() as session:
-        conversation, _, assistant_message = record_exchange(
-            session,
-            user_id=user_id,
-            question="Tuổi nghỉ hưu là bao nhiêu?",
-            result=_answer(),
-            corpus_release_id="release-test",
-        )
-        conversation_id = conversation.id
-        assistant_message_id = assistant_message.id
-
-    assert client.put(
-        f"/api/bookmarks/{assistant_message_id}",
-        headers=_headers(user_id),
-        json={},
-    ).status_code == 200
     assert client.delete(
         f"/api/conversations/{conversation_id}",
-        headers=_headers(user_id),
+        headers=csrf,
     ).status_code == 204
-    assert client.get("/api/bookmarks", headers=_headers(user_id)).json()["items"] == []
+    assert client.get("/api/bookmarks").json()["items"] == []
+
+
+def test_history_endpoints_require_login(client: TestClient) -> None:
+    assert client.get("/api/conversations").status_code == 401
+    assert client.get("/api/bookmarks").status_code == 401

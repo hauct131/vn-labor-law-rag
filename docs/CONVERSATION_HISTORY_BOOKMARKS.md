@@ -1,122 +1,153 @@
-# Lịch sử hội thoại và bookmark
+# Lịch sử hội thoại, bookmark và phiên đăng nhập
 
 ## Phạm vi
 
-Chức năng này bổ sung lưu trữ bền vững cho dữ liệu phát sinh khi người dùng sử
-dụng ứng dụng. Nó không thay đổi corpus canonical Word 804, cấu hình retrieval,
-Qdrant collection hoặc production alias.
-
-Dữ liệu được tách như sau:
+Chức năng này lưu dữ liệu phát sinh của người dùng và phân tách dữ liệu theo tài
+khoản đã đăng nhập. Nó không thay đổi corpus canonical Word 804, cấu hình
+retrieval, Qdrant collection hoặc production alias.
 
 | Nhóm dữ liệu | Nơi lưu | Vai trò |
 |---|---|---|
 | Văn bản sau tiền xử lý | JSON/JSONL release bất biến | Nguồn canonical có thể kiểm toán và rebuild |
 | Embedding và metadata chunk | Qdrant | Chỉ mục vector phục vụ retrieval |
-| Hội thoại, tin nhắn, nguồn đã dùng, bookmark | PostgreSQL | Dữ liệu nghiệp vụ phát sinh |
-| Client UUID và hội thoại đang mở | `localStorage` | Nhận diện ẩn danh phía trình duyệt |
+| Tài khoản, session, hội thoại, message, snapshot nguồn, bookmark | PostgreSQL | Dữ liệu nghiệp vụ phát sinh |
+| Hội thoại đang mở và UUID ẩn danh cũ | `localStorage` | Trạng thái giao diện và di chuyển dữ liệu cũ một lần |
 
-`X-Client-Id` chỉ là định danh ẩn danh cho MVP, không phải cơ chế xác thực. Không
-lưu dữ liệu nhạy cảm và không dùng mô hình này cho hệ thống nhiều tài khoản trước
-khi bổ sung đăng nhập, phiên đăng nhập và phân quyền server-side.
+UUID tại `legal_rag_client_id_v1` không còn được dùng để cấp quyền truy cập hội
+thoại. Nó chỉ được gửi khi đăng ký hoặc đăng nhập để chuyển lịch sử ẩn danh đã có
+trước đây vào tài khoản. Các API dữ liệu cá nhân lấy `user_id` từ session phía
+server.
 
-Hội thoại trong phiên bản này là chức năng lưu và tổ chức lịch sử. Mỗi câu hỏi
-vẫn được retrieval xử lý độc lập; nội dung các message trước không được đưa vào
-query hoặc prompt. Thiết kế này tránh thay đổi retrieval đã khóa.
+Hội thoại chỉ lưu và tổ chức lịch sử. Retrieval của từng câu hỏi vẫn chạy độc
+lập; message trước không được đưa vào query hoặc prompt, nên cấu hình retrieval
+đã khóa không bị thay đổi.
 
 ## Luồng hoạt động
 
-1. Frontend tạo một UUID và lưu dưới key `legal_rag_client_id_v1`.
-2. Mỗi yêu cầu lịch sử gửi UUID qua header `X-Client-Id`.
-3. Khi gọi `POST /api/ask`, backend sinh đáp án như trước.
-4. Sau khi có đáp án, backend lưu câu hỏi, câu trả lời và snapshot nguồn trong
-   một transaction.
-5. Frontend tải lại hội thoại từ PostgreSQL và hiển thị transcript.
-6. Bookmark liên kết người dùng ẩn danh với đúng message assistant đã lưu.
+1. Người dùng đăng ký hoặc đăng nhập bằng email và mật khẩu.
+2. Backend kiểm tra mật khẩu PBKDF2 và tạo một session token ngẫu nhiên.
+3. Chỉ hash của session token được lưu trong bảng `user_sessions`.
+4. Token gốc được gửi bằng cookie `legal_rag_session` có cờ `HttpOnly`.
+5. Backend cấp thêm CSRF token để bảo vệ các request làm thay đổi dữ liệu.
+6. Mỗi API hội thoại tra session, lấy `user_id` đã xác thực và luôn truy vấn kèm
+   điều kiện sở hữu.
+7. Khi `/api/ask` hoàn thành, backend lưu câu hỏi, câu trả lời và snapshot nguồn
+   trong PostgreSQL nếu người dùng đã đăng nhập.
+8. Người chưa đăng nhập vẫn hỏi đáp được, nhưng câu trả lời không được lưu vào
+   lịch sử.
 
 Nếu PostgreSQL gặp lỗi sau khi LLM đã sinh đáp án, backend vẫn trả đáp án với
-`history_saved=false`. Nhờ đó lỗi của chức năng lịch sử không làm mất kết quả RAG
-đã tạo. Khi tiếp tục một hội thoại đã có, backend kiểm tra quyền sở hữu trước khi
-gọi LLM để tránh tốn lượt provider cho một conversation ID không hợp lệ.
+`history_saved=false`. Khi tiếp tục một hội thoại đã có, backend kiểm tra quyền
+sở hữu trước khi gọi LLM để tránh tốn lượt provider cho một conversation ID
+không hợp lệ.
 
-## API
-
-Mọi endpoint dưới đây yêu cầu header:
-
-```http
-X-Client-Id: <UUID>
-```
+## API xác thực
 
 | Method | Endpoint | Vai trò |
 |---|---|---|
-| `GET` | `/api/conversations` | Danh sách hội thoại của client |
+| `POST` | `/api/auth/register` | Tạo tài khoản và session |
+| `POST` | `/api/auth/login` | Đăng nhập và tạo session mới |
+| `GET` | `/api/auth/me` | Khôi phục người dùng hiện tại và CSRF token |
+| `GET` | `/api/auth/sessions` | Liệt kê các session còn hiệu lực |
+| `POST` | `/api/auth/logout` | Thu hồi session hiện tại |
+| `POST` | `/api/auth/logout-all` | Thu hồi toàn bộ session của tài khoản |
+
+Ví dụ đăng ký:
+
+```http
+POST /api/auth/register
+Content-Type: application/json
+
+{
+  "email": "usera@example.com",
+  "password": "MatKhauAnToan123",
+  "display_name": "Nguyễn Văn A"
+}
+```
+
+Cookie session được trình duyệt gửi tự động. Frontend không lưu session token
+trong `localStorage`.
+
+## API hội thoại và bookmark
+
+Các endpoint đọc yêu cầu session hợp lệ. Các endpoint `POST`, `PUT`, `PATCH` và
+`DELETE` còn yêu cầu header `X-CSRF-Token` khớp với session.
+
+| Method | Endpoint | Vai trò |
+|---|---|---|
+| `GET` | `/api/conversations` | Danh sách hội thoại của tài khoản hiện tại |
 | `POST` | `/api/conversations` | Tạo hội thoại rỗng |
-| `GET` | `/api/conversations/{id}` | Đọc transcript và nguồn đã lưu |
+| `GET` | `/api/conversations/{id}` | Đọc transcript và snapshot nguồn |
 | `PATCH` | `/api/conversations/{id}` | Đổi tên hội thoại |
 | `DELETE` | `/api/conversations/{id}` | Xóa hội thoại và dữ liệu con |
 | `GET` | `/api/bookmarks` | Danh sách câu trả lời đã đánh dấu |
 | `PUT` | `/api/bookmarks/{message_id}` | Tạo/cập nhật bookmark theo kiểu idempotent |
 | `DELETE` | `/api/bookmarks/{message_id}` | Bỏ bookmark |
 
-`POST /api/ask` nhận thêm trường tùy chọn:
+`POST /api/ask` nhận trường `conversation_id` tùy chọn. Người chưa đăng nhập chỉ
+được gửi `conversation_id=null` và response có `history_saved=false`.
 
-```json
-{
-  "question": "Người lao động được nghỉ hằng năm bao nhiêu ngày?",
-  "method": "hybrid",
-  "conversation_id": null
-}
+## Phân tách User A và User B
+
+Backend không tin `user_id` hoặc `conversation_id` do frontend tự khai báo. Với
+mỗi request, backend thực hiện hai bước:
+
+```text
+session cookie -> user_sessions -> authenticated user_id
 ```
 
-Response có thêm:
+sau đó truy vấn:
 
-```json
-{
-  "history_saved": true,
-  "history_error": null,
-  "conversation_id": "...",
-  "user_message_id": "...",
-  "assistant_message_id": "..."
-}
+```sql
+WHERE conversation_id = :conversation_id
+  AND user_id = :authenticated_user_id
 ```
 
-Không gửi `X-Client-Id` thì `/api/ask` vẫn tương thích với client cũ và không lưu
-lịch sử.
+Vì vậy token session của User B không đọc, đổi tên, xóa hoặc bookmark dữ liệu của
+User A. API trả `404` cho tài nguyên không thuộc tài khoản để không tiết lộ tài
+nguyên đó có tồn tại hay không.
+
+Hai người dùng chung cùng profile trình duyệt vẫn dùng cùng session đang đăng
+nhập. Muốn đổi tài khoản phải đăng xuất rồi đăng nhập tài khoản khác.
 
 ## PostgreSQL và migration
 
-Docker Compose khởi tạo service `postgres` và volume `postgres_data`. Môi trường
-demo để `DATABASE_AUTO_CREATE=true`, vì vậy SQLAlchemy tạo các bảng còn thiếu
-khi backend khởi động.
+Docker Compose dùng named volume:
 
-DDL tương ứng được lưu tại:
+```text
+vn-labor-law-rag_postgres_data
+```
+
+Bên trong container, PostgreSQL lưu tại:
+
+```text
+/var/lib/postgresql/data
+```
+
+Xem mountpoint thật trên máy:
+
+```bash
+docker volume inspect vn-labor-law-rag_postgres_data \
+  --format $'Name: {{.Name}}\nMountpoint: {{.Mountpoint}}'
+```
+
+Không chỉnh sửa trực tiếp file trong mountpoint.
+
+DDL được chia thành:
 
 ```text
 backend/migrations/001_conversations_bookmarks.sql
+backend/migrations/002_session_auth.sql
 ```
 
-Với môi trường quản trị chặt chẽ, chạy migration trước rồi đặt:
+Môi trường demo để `DATABASE_AUTO_CREATE=true`; backend tự mở rộng schema cũ và
+tạo bảng còn thiếu. Với môi trường quản trị migration thủ công, chạy `001` rồi
+`002`, sau đó đặt `DATABASE_AUTO_CREATE=false`.
 
-```dotenv
-DATABASE_AUTO_CREATE=false
-```
+Không dùng `docker compose down -v` khi cần giữ dữ liệu, vì `-v` xóa volume
+PostgreSQL.
 
-Ví dụ chạy migration trong Docker:
-
-```bash
-docker compose \
-  -f docker-compose.yml \
-  -f docker-compose.dev.yml \
-  exec -T postgres \
-  sh -lc 'psql -U "$POSTGRES_USER" -d "$POSTGRES_DB"' \
-  < backend/migrations/001_conversations_bookmarks.sql
-```
-
-Không dùng `docker compose down -v` khi cần giữ lịch sử, vì tùy chọn `-v` sẽ xóa
-volume `postgres_data`.
-
-## Sao lưu dữ liệu
-
-Ví dụ xuất database:
+## Sao lưu
 
 ```bash
 docker compose \
@@ -124,25 +155,27 @@ docker compose \
   -f docker-compose.dev.yml \
   exec -T postgres \
   sh -lc 'pg_dump -U "$POSTGRES_USER" -d "$POSTGRES_DB"' \
-  > postgres-history-backup.sql
+  > postgres-session-history-backup.sql
 ```
 
 ## Kiểm thử
 
-Test tập trung không gọi LLM thật:
-
 ```bash
 PYTHONPATH=backend .venv/bin/python -m pytest -q \
+  backend/tests/test_session_auth.py \
   backend/tests/test_conversation_history.py \
   backend/tests/test_ask_history_api.py
 ```
 
-Kiểm thử runtime đầy đủ sau khi Docker Compose đã chạy:
+Cổng kiểm tra đầy đủ:
 
 ```bash
-python3 scripts/smoke_conversation_bookmarks.py --restart-backend
+RUN_RUNTIME_SMOKE=1 \
+BASE_REF=main \
+bash scripts/verify_conversation_bookmarks.sh \
+  "$HOME/Downloads/session-auth-final-verification.txt"
 ```
 
-Smoke runtime tạo một client tạm, gọi một câu hỏi thật, tạo bookmark, restart
-backend, kiểm tra dữ liệu PostgreSQL vẫn tồn tại, đổi tên và cuối cùng dọn toàn
-bộ dữ liệu thử nghiệm.
+Smoke runtime tạo User A và User B, xác minh B không đọc hoặc bookmark dữ liệu A,
+restart backend, kiểm tra session và dữ liệu còn tồn tại, rồi dọn tài khoản thử
+nghiệm.
