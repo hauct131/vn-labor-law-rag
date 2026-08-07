@@ -1,4 +1,4 @@
-import { type FormEvent, type ReactNode, useEffect, useMemo, useState } from 'react'
+import { type FormEvent, type ReactNode, useEffect, useRef, useState } from 'react'
 import './App.css'
 import { API_BASE_URL } from './api/apiConfig'
 import type { LegalArticleResponse } from './api/legalArticleTypes'
@@ -28,6 +28,7 @@ import type {
 } from './features/history/conversationTypes'
 import './features/history/history.css'
 import './features/auth/auth.css'
+import './ui-refresh.css'
 import { AuthDialog } from './features/auth/AuthDialog'
 import {
   AUTH_SESSION_EXPIRED_EVENT,
@@ -89,7 +90,6 @@ type NavAuthProps = {
 
 function TopNav({
   activeTab,
-  badgeText = 'Phiên bản v1.0',
   showBackLink = false,
   authUser,
   isAuthLoading,
@@ -102,48 +102,50 @@ function TopNav({
 } & NavAuthProps) {
   return (
     <header className="topbar">
-      <a
-        className="brand"
-        href="/"
-        aria-label="Trang chủ"
-        onClick={(e) => {
-          e.preventDefault()
-          navigateTo('/')
-        }}
-      >
-        <span className="brand-mark" aria-hidden="true">§</span>
-        <span>
-          <strong>Luật Lao động Việt Nam</strong>
-          <small>RAG Legal Assistant</small>
-        </span>
-      </a>
+      <div className="topbar-left">
+        <a
+          className="brand"
+          href="/"
+          aria-label="Trang chủ"
+          onClick={(e) => {
+            e.preventDefault()
+            navigateTo('/')
+          }}
+        >
+          <span className="brand-mark" aria-hidden="true">§</span>
+          <span className="brand-text">
+            <strong>Luật Lao động Việt Nam</strong>
+            <small>RAG Legal Assistant</small>
+          </span>
+        </a>
 
-      <nav className="top-navigation" aria-label="Điều hướng chính">
-        <button
-          type="button"
-          className={`nav-tab ${activeTab === 'qa' ? 'active' : ''}`}
-          onClick={() => navigateTo('/')}
-        >
-          💬 Hỏi đáp
-        </button>
-        <button
-          type="button"
-          className={`nav-tab ${activeTab === 'library' ? 'active' : ''}`}
-          onClick={() => navigateTo('/library')}
-        >
-          📚 Thư viện pháp luật
-        </button>
-        <button
-          type="button"
-          className={`nav-tab ${activeTab === 'saved' ? 'active' : ''}`}
-          onClick={() => navigateTo('/saved')}
-        >
-          ★ Đã lưu
-        </button>
-      </nav>
+        <nav className="top-navigation" aria-label="Điều hướng chính">
+          <button
+            type="button"
+            className={`nav-tab ${activeTab === 'qa' ? 'active' : ''}`}
+            onClick={() => navigateTo('/')}
+          >
+            Hỏi đáp
+          </button>
+          <button
+            type="button"
+            className={`nav-tab ${activeTab === 'library' ? 'active' : ''}`}
+            onClick={() => navigateTo('/library')}
+          >
+            Thư viện
+          </button>
+          <button
+            type="button"
+            className={`nav-tab ${activeTab === 'saved' ? 'active' : ''}`}
+            onClick={() => navigateTo('/saved')}
+          >
+            Đã lưu
+          </button>
+        </nav>
+      </div>
 
       <div className="topbar-right">
-        {showBackLink ? (
+        {showBackLink && (
           <a
             className="back-link"
             href="/"
@@ -154,8 +156,6 @@ function TopNav({
           >
             ← Quay lại hỏi đáp
           </a>
-        ) : (
-          <span className="mvp-badge">{badgeText}</span>
         )}
         <div className="auth-actions">
           {authUser ? (
@@ -362,13 +362,128 @@ function transientResultToAnswer(result: AskResponse): DisplayAnswer {
   }
 }
 
+type RetrievalDropdownProps = {
+  value: RetrievalMethod
+  onChange: (method: RetrievalMethod) => void
+  disabled?: boolean
+}
+
+function RetrievalDropdown({ value, onChange, disabled }: RetrievalDropdownProps) {
+  const [isOpen, setIsOpen] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false)
+      }
+    }
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        setIsOpen(false)
+      }
+    }
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+      document.addEventListener('keydown', handleKeyDown)
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isOpen])
+
+  const labelMap: Record<RetrievalMethod, string> = {
+    hybrid: 'Kết hợp',
+    dense: 'Ngữ nghĩa',
+    sparse: 'Từ khóa',
+  }
+
+  const optionDetails: Record<
+    RetrievalMethod,
+    { title: string; subtitle: string; badge?: string }
+  > = {
+    hybrid: {
+      title: 'Kết hợp',
+      subtitle: 'Hybrid · Từ khóa + ngữ nghĩa',
+      badge: 'Khuyến nghị',
+    },
+    dense: {
+      title: 'Ngữ nghĩa',
+      subtitle: 'Dense · Truy hồi theo ý nghĩa',
+    },
+    sparse: {
+      title: 'Từ khóa',
+      subtitle: 'Sparse · Khớp từ và cụm từ chính xác',
+    },
+  }
+
+  return (
+    <div className="retrieval-dropdown-container" ref={dropdownRef}>
+      <button
+        type="button"
+        className="retrieval-dropdown-trigger"
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
+        aria-label="Chọn phương pháp truy hồi"
+        disabled={disabled}
+        onClick={() => setIsOpen((prev) => !prev)}
+      >
+        <span className="retrieval-trigger-text">{labelMap[value]}</span>
+        <svg
+          className={`retrieval-chevron ${isOpen ? 'open' : ''}`}
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          width="14"
+          height="14"
+          aria-hidden="true"
+        >
+          <path
+            fillRule="evenodd"
+            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+            clipRule="evenodd"
+          />
+        </svg>
+      </button>
+
+      {isOpen && (
+        <div className="retrieval-dropdown-menu" role="listbox" aria-label="Phương pháp truy hồi">
+          {methods.map((item) => {
+            const detail = optionDetails[item.value]
+            const isSelected = value === item.value
+            return (
+              <button
+                key={item.value}
+                type="button"
+                role="option"
+                aria-selected={isSelected}
+                className={`retrieval-dropdown-option ${isSelected ? 'selected' : ''}`}
+                onClick={() => {
+                  onChange(item.value)
+                  setIsOpen(false)
+                }}
+              >
+                <div className="retrieval-option-header">
+                  <span className="retrieval-option-title">{detail.title}</span>
+                  {detail.badge && <span className="retrieval-option-badge">{detail.badge}</span>}
+                </div>
+                <span className="retrieval-option-subtitle">{detail.subtitle}</span>
+              </button>
+            )
+          })}
+        </div>
+      )}
+    </div>
+  )
+}
+
 function QuestionAnswerPage({
   authUser,
   isAuthLoading,
   onOpenAuth,
   onLogout,
 }: NavAuthProps) {
-  const [question, setQuestion] = useState(examples[0])
+  const [question, setQuestion] = useState('')
   const [method, setMethod] = useState<RetrievalMethod>('hybrid')
   const [conversations, setConversations] = useState<ConversationSummary[]>([])
   const [activeConversationId, setActiveId] = useState<string | null>(
@@ -383,11 +498,21 @@ function QuestionAnswerPage({
   const [isHistoryLoading, setIsHistoryLoading] = useState(Boolean(authUser))
   const [isConversationLoading, setIsConversationLoading] = useState(false)
   const [busyBookmarkId, setBusyBookmarkId] = useState<string | null>(null)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
-  const activeMethod = useMemo(
-    () => methods.find((item) => item.value === method),
-    [method],
-  )
+  useEffect(() => {
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape' && isSidebarOpen) {
+        setIsSidebarOpen(false)
+      }
+    }
+    if (isSidebarOpen) {
+      window.addEventListener('keydown', handleKeyDown)
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isSidebarOpen])
 
   useEffect(() => {
     if (!authUser) return
@@ -469,18 +594,13 @@ function QuestionAnswerPage({
     setQuestion('')
   }
 
-  async function handleRename(conversation: ConversationSummary) {
-    const nextTitle = window.prompt('Tên hội thoại mới:', conversation.title)?.trim()
-    if (!nextTitle || nextTitle === conversation.title) return
+  async function handleRename(conversationId: string, nextTitle: string) {
     setHistoryError('')
-    try {
-      const detail = await renameConversation(conversation.id, nextTitle)
-      setConversations(await fetchConversations())
-      if (activeConversationId === conversation.id) setActiveConversation(detail)
-    } catch (requestError) {
-      setHistoryError(requestError instanceof Error
-        ? requestError.message
-        : 'Không thể đổi tên hội thoại.')
+    const detail = await renameConversation(conversationId, nextTitle)
+    const items = await fetchConversations()
+    setConversations(items)
+    if (activeConversationId === conversationId) {
+      setActiveConversation(detail)
     }
   }
 
@@ -570,165 +690,216 @@ function QuestionAnswerPage({
   const hasTranscript = Boolean(activeConversation?.messages.length || transientResult)
 
   return (
-    <div className="app-shell">
+    <div className="app-shell qa-app-shell">
       <TopNav
         activeTab="qa"
-        badgeText="MVP · Sparse, Dense & Hybrid"
         authUser={authUser}
         isAuthLoading={isAuthLoading}
         onOpenAuth={onOpenAuth}
         onLogout={onLogout}
       />
 
-      <main id="top">
-        <section className="intro">
-          <p className="eyebrow">Tra cứu có căn cứ nguồn</p>
-          <h1>Hỏi đáp pháp luật lao động<br />bằng tiếng Việt</h1>
-          <p className="intro-copy">
-            {authUser
-              ? 'Hội thoại được lưu bền vững phía máy chủ; mỗi câu trả lời giữ nguyên ' +
-                'nguồn để bạn mở lại và đối chiếu sau này.'
-              : 'Bạn vẫn có thể tra cứu ngay. Đăng nhập để lưu lịch sử và đánh dấu câu trả lời theo tài khoản.'}
-          </p>
-        </section>
+      <aside className={`app-sidebar qa-sidebar-wrapper ${isSidebarOpen ? 'open' : ''}`}>
+        <ConversationSidebar
+          conversations={conversations}
+          activeConversationId={activeConversationId}
+          isLoading={isHistoryLoading}
+          isBusy={isHistoryLoading || isLoading || isConversationLoading}
+          error={historyError}
+          isAuthenticated={Boolean(authUser)}
+          onLogin={onOpenAuth}
+          onNew={() => {
+            startNewConversation()
+            setIsSidebarOpen(false)
+          }}
+          onSelect={(conversationId) => {
+            void selectConversation(conversationId)
+            setIsSidebarOpen(false)
+          }}
+          onRename={(conversationId, title) => handleRename(conversationId, title)}
+          onDelete={(conversation) => void handleDelete(conversation)}
+        />
+      </aside>
 
-        <section className="conversation-layout">
-          <ConversationSidebar
-            conversations={conversations}
-            activeConversationId={activeConversationId}
-            isLoading={isHistoryLoading}
-            isBusy={isHistoryLoading || isLoading || isConversationLoading}
-            error={historyError}
-            isAuthenticated={Boolean(authUser)}
-            onLogin={onOpenAuth}
-            onNew={startNewConversation}
-            onSelect={(conversationId) => void selectConversation(conversationId)}
-            onRename={(conversation) => void handleRename(conversation)}
-            onDelete={(conversation) => void handleDelete(conversation)}
-          />
+      {isSidebarOpen && (
+        <div
+          className="sidebar-backdrop"
+          onClick={() => setIsSidebarOpen(false)}
+          aria-hidden="true"
+        />
+      )}
 
-          <div className="qa-main-column">
-            <section className="workspace" aria-label="Khu vực hỏi đáp">
-              <form className="query-panel" onSubmit={handleSubmit}>
-                <fieldset>
-                  <legend>1. Chọn phương pháp truy hồi</legend>
-                  <div className="method-grid">
-                    {methods.map((item) => (
-                      <label className="method-card" key={item.value}>
-                        <input
-                          type="radio"
-                          name="method"
-                          value={item.value}
-                          checked={method === item.value}
-                          onChange={() => setMethod(item.value)}
-                        />
-                        <span className="radio-dot" aria-hidden="true" />
-                        <span>
-                          <strong>{item.name}</strong>
-                          <small>{item.description}</small>
-                        </span>
-                      </label>
-                    ))}
-                  </div>
-                </fieldset>
+      <main className="chat-main qa-main-column">
+        <header className="chat-header">
+          <button
+            type="button"
+            className="sidebar-toggle-btn"
+            onClick={() => setIsSidebarOpen((prev) => !prev)}
+            aria-expanded={isSidebarOpen}
+            aria-label="Mở lịch sử hội thoại"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          </button>
+          <h1 className="chat-header-title">
+            {activeConversation?.title || 'Hỏi đáp pháp luật lao động'}
+          </h1>
+        </header>
 
-                <div className="question-field">
-                  <label htmlFor="question">2. Nhập câu hỏi</label>
-                  <textarea
-                    id="question"
-                    value={question}
-                    onChange={(event) => setQuestion(event.target.value)}
-                    placeholder="Ví dụ: Người lao động được nghỉ hằng năm bao nhiêu ngày?"
-                    maxLength={2000}
-                    rows={5}
-                  />
-                  <span className="character-count">{question.length}/2000</span>
-                </div>
-
-                <div className="examples" aria-label="Câu hỏi gợi ý">
-                  <span>Gợi ý:</span>
-                  {examples.map((example, index) => (
-                    <button type="button" key={example} onClick={() => setQuestion(example)}>
-                      Câu {index + 1}
+        <section className="chat-scroll-area">
+          <div className="chat-content-column chat-content-container">
+            {!hasTranscript && !error && !isLoading && !isConversationLoading && (
+              <div className="chat-empty-state">
+                <div className="empty-icon" aria-hidden="true">§</div>
+                <h2>Bạn cần tra cứu vấn đề gì?</h2>
+                <p>Hỏi đáp pháp luật lao động Việt Nam có căn cứ, điều luật trích dẫn chính xác.</p>
+                <div className="suggestion-cards" aria-label="Câu hỏi gợi ý">
+                  {examples.map((example) => (
+                    <button
+                      type="button"
+                      key={example}
+                      className="suggestion-card"
+                      onClick={() => setQuestion(example)}
+                    >
+                      <span className="suggestion-text">{example}</span>
+                      <span className="suggestion-arrow" aria-hidden="true">→</span>
                     </button>
                   ))}
                 </div>
+              </div>
+            )}
 
-                <button className="submit-button" type="submit" disabled={isLoading}>
-                  {isLoading ? (
-                    <><span className="spinner" aria-hidden="true" />Đang tra cứu…</>
+            {(isLoading || isConversationLoading) && !hasTranscript && (
+              <div className="chat-loading-state">
+                <span className="large-spinner" aria-hidden="true" />
+                <h2>{isLoading ? 'Đang tìm căn cứ pháp lý…' : 'Đang mở hội thoại…'}</h2>
+                <p>Hệ thống đang tìm và đối chiếu các căn cứ phù hợp.</p>
+              </div>
+            )}
+
+            {error && (
+              <div className="error-state" role="alert">
+                <strong>Chưa thể trả lời</strong>
+                <p>{error}</p>
+              </div>
+            )}
+
+            {!isConversationLoading && hasTranscript && (
+              <div className="transcript">
+                {activeConversation?.messages.map((message) => (
+                  message.role === 'user' ? (
+                    <div className="transcript-question" key={message.id}>
+                      <p>{message.content}</p>
+                    </div>
                   ) : (
-                    <>Tra cứu với {activeMethod?.name}<span aria-hidden="true">→</span></>
-                  )}
-                </button>
-                <p className="quota-note">
-                  Mỗi câu hỏi thật sử dụng 1 lượt OpenRouter miễn phí.
-                </p>
-              </form>
-
-              <section className="result-panel" aria-live="polite">
-                {!hasTranscript && !error && !isLoading && !isConversationLoading && (
-                  <div className="empty-state">
-                    <span aria-hidden="true">¶</span>
-                    <h2>Câu trả lời sẽ xuất hiện tại đây</h2>
-                    <p>Bao gồm nội dung trả lời, điều luật nguồn và thời gian xử lý.</p>
+                    <AnswerCard
+                      key={message.id}
+                      answer={storedMessageToAnswer(message)}
+                      isBookmarkBusy={busyBookmarkId === message.id}
+                      onToggleBookmark={authUser
+                        ? (messageId, shouldSave) => {
+                            void handleToggleBookmark(messageId, shouldSave)
+                          }
+                        : undefined}
+                    />
+                  )
+                ))}
+                {transientResult && transientQuestion && (
+                  <div className="transcript-question transient" key="transient-question">
+                    <p>{transientQuestion}</p>
                   </div>
                 )}
-
-                {(isLoading || isConversationLoading) && (
-                  <div className="empty-state loading-state">
+                {isLoading && (
+                  <div className="chat-inline-loading">
                     <span className="large-spinner" aria-hidden="true" />
-                    <h2>{isLoading ? 'Đang tìm căn cứ pháp lý' : 'Đang mở hội thoại'}</h2>
-                    <p>Lần chạy Dense/Hybrid đầu tiên có thể lâu hơn vì cần nạp mô hình E5.</p>
+                    <span>Đang tra cứu và tổng hợp đáp án…</span>
                   </div>
                 )}
-
-                {error && (
-                  <div className="error-state" role="alert">
-                    <strong>Chưa thể trả lời</strong>
-                    <p>{error}</p>
-                  </div>
+                {transientResult && (
+                  <AnswerCard answer={transientResultToAnswer(transientResult)} />
                 )}
-
-                {!isConversationLoading && hasTranscript && (
-                  <div className="transcript">
-                    {activeConversation?.messages.map((message) => (
-                      message.role === 'user' ? (
-                        <div className="transcript-question" key={message.id}>
-                          <p>{message.content}</p>
-                        </div>
-                      ) : (
-                        <AnswerCard
-                          key={message.id}
-                          answer={storedMessageToAnswer(message)}
-                          isBookmarkBusy={busyBookmarkId === message.id}
-                          onToggleBookmark={authUser
-                            ? (messageId, shouldSave) => {
-                                void handleToggleBookmark(messageId, shouldSave)
-                              }
-                            : undefined}
-                        />
-                      )
-                    ))}
-                    {transientResult && transientQuestion && (
-                      <div className="transcript-question transient" key="transient-question">
-                        <p>{transientQuestion}</p>
-                      </div>
-                    )}
-                    {transientResult && (
-                      <AnswerCard answer={transientResultToAnswer(transientResult)} />
-                    )}
-                  </div>
-                )}
-              </section>
-            </section>
+              </div>
+            )}
           </div>
         </section>
-      </main>
 
-      <footer>
-        <p>Công cụ hỗ trợ tra cứu học thuật, không thay thế tư vấn pháp lý chuyên môn.</p>
-      </footer>
+        <footer className="chat-composer-area composer-sticky-wrapper">
+          <form className="chat-composer" onSubmit={handleSubmit}>
+            <div className="composer-inner">
+              <textarea
+                id="question"
+                value={question}
+                onChange={(event) => setQuestion(event.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault()
+                    if (question.trim().length >= 3 && !isLoading) {
+                      e.currentTarget.form?.requestSubmit()
+                    }
+                  }
+                }}
+                placeholder="Hỏi đáp về Luật Lao động Việt Nam..."
+                maxLength={2000}
+                rows={1}
+              />
+
+              <div className="composer-footer-bar">
+                <RetrievalDropdown
+                  value={method}
+                  onChange={setMethod}
+                  disabled={isLoading}
+                />
+
+                <div className="composer-actions-right">
+                  <span className="character-count">{question.length}/2000</span>
+                  <button
+                    className="composer-submit-btn"
+                    type="submit"
+                    disabled={isLoading || question.trim().length < 3}
+                    aria-label="Gửi câu hỏi"
+                  >
+                    {isLoading ? (
+                      <span className="spinner" aria-hidden="true" />
+                    ) : (
+                      <svg
+                        viewBox="0 0 24 24"
+                        width="18"
+                        height="18"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden="true"
+                      >
+                        <line x1="12" y1="19" x2="12" y2="5" />
+                        <polyline points="5 12 12 5 19 12" />
+                      </svg>
+                    )}
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <p className="composer-disclaimer">
+              Công cụ hỗ trợ tra cứu học thuật, không thay thế tư vấn pháp lý chuyên môn.
+            </p>
+          </form>
+        </footer>
+      </main>
     </div>
   )
 }
