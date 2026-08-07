@@ -1,7 +1,13 @@
 name: Application CI
 
 on:
+  workflow_dispatch:
+
+  # Feature branches are validated through pull_request.
+  # Only run push CI after changes land on main.
   push:
+    branches:
+      - main
     paths:
       - "backend/**"
       - "scripts/**"
@@ -32,7 +38,9 @@ permissions:
   contents: read
 
 concurrency:
-  group: application-ci-${{ github.workflow }}-${{ github.ref }}
+  # Cancel only an older run for the same PR/ref.
+  # PR runs are grouped by PR number; main pushes are grouped by ref name.
+  group: application-ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref_name }}
   cancel-in-progress: true
 
 jobs:
@@ -185,4 +193,4 @@ jobs:
           docker compose \
             -f docker-compose.yml \
             -f docker-compose.dev.yml \
-            config --services
+            config --services\n
