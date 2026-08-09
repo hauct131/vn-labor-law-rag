@@ -17,7 +17,8 @@ Hệ thống hỏi đáp pháp luật lao động Việt Nam sử dụng Retriev
 - thư viện 18 văn bản và nội dung điều luật từ corpus canonical;
 - đăng ký, đăng nhập và đăng xuất bằng server-side session;
 - lịch sử hội thoại lưu bền vững và phân tách theo tài khoản trong PostgreSQL;
-- đánh dấu và mở lại câu trả lời cùng snapshot nguồn đã sử dụng.
+- đánh dấu và mở lại câu trả lời cùng snapshot nguồn đã sử dụng;
+- rà soát hợp đồng lao động PDF/DOCX theo bốn nhóm điều khoản, lưu báo cáo theo tài khoản.
 
 Lịch sử chỉ tổ chức dữ liệu đã hỏi. Retrieval của từng câu vẫn chạy độc lập và
 không sử dụng message trước làm context, nhằm giữ nguyên cấu hình retrieval đã khóa.
@@ -196,6 +197,10 @@ Endpoint chính:
 | `GET` | `/api/bookmarks` | Danh sách câu trả lời đã đánh dấu |
 | `PUT` | `/api/bookmarks/{message_id}` | Tạo hoặc cập nhật bookmark |
 | `DELETE` | `/api/bookmarks/{message_id}` | Bỏ bookmark |
+| `POST` | `/api/contract-reviews` | Tải PDF/DOCX và tạo báo cáo rà soát |
+| `GET` | `/api/contract-reviews` | Danh sách báo cáo của tài khoản |
+| `GET` | `/api/contract-reviews/{id}` | Đọc findings và căn cứ đã lưu |
+| `DELETE` | `/api/contract-reviews/{id}` | Xóa báo cáo thuộc tài khoản |
 
 Swagger UI:
 
@@ -213,6 +218,44 @@ docs/SESSION_AUTH.md
 docs/CONVERSATION_HISTORY_BOOKMARKS.md
 docs/ERD_CONVERSATION_HISTORY.md
 ```
+
+
+## Rà soát hợp đồng lao động v1
+
+Trang `Rà soát hợp đồng` chấp nhận PDF có lớp văn bản và DOCX tối đa 10 MB.
+File gốc chỉ được đọc trong request, không được lưu vào PostgreSQL hoặc corpus. Báo cáo lưu:
+
+- SHA-256 và metadata file;
+- bốn nhóm finding: thử việc, tiền lương, thời giờ làm việc, chấm dứt;
+- đoạn hợp đồng liên quan;
+- nhận xét thận trọng và khuyến nghị;
+- snapshot căn cứ từ corpus canonical Word 804.
+
+Phiên bản v1 sử dụng bộ truy hồi từ khóa chuyên biệt trên corpus canonical để
+hoạt động độc lập với Qdrant và LLM. Nó không thay đổi retrieval đã khóa của chức
+năng hỏi đáp. PDF scan không có text chưa được OCR.
+
+Chạy runtime E2E cục bộ bằng HTTP thật và database file bền vững:
+
+```bash
+PYTHONPATH=backend python3 scripts/smoke_contract_review_runtime.py \
+  --output "$HOME/Downloads/contract-review-runtime.json"
+```
+
+Chạy Docker/PostgreSQL E2E đầy đủ trên máy có Docker:
+
+```bash
+bash scripts/verify_contract_review_e2e.sh
+```
+
+Tệp kiểm thử thật:
+
+```text
+samples/contract-review/sample_labor_contract.docx
+samples/contract-review/sample_labor_contract.pdf
+```
+
+Chi tiết thiết kế và giới hạn: `docs/CONTRACT_REVIEW_V1.md`.
 
 ## 5. Chạy local bằng Docker
 

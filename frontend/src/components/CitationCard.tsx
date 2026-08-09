@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import type { LegalSource } from '../api/qaTypes'
 
 function sourceTypeLabel(sourceType: string | null) {
@@ -17,6 +17,7 @@ export function CitationCard({
 }) {
   const [isExcerptOpen, setIsExcerptOpen] = useState(false)
   const [isTechOpen, setIsTechOpen] = useState(false)
+  const excerptId = `citation-excerpt-${useId().replace(/:/g, '')}`
 
   const badgeText = source.source_id || `S${index + 1}`
 
@@ -61,7 +62,7 @@ export function CitationCard({
           className="citation-btn citation-btn-ghost"
           onClick={() => setIsExcerptOpen((prev) => !prev)}
           aria-expanded={isExcerptOpen}
-          aria-controls={`excerpt-${index}`}
+          aria-controls={excerptId}
         >
           {isExcerptOpen ? 'Thu gọn' : 'Xem trích đoạn'}
         </button>
@@ -99,7 +100,7 @@ export function CitationCard({
       </div>
 
       {isExcerptOpen && (
-        <div className="citation-excerpt" id={`excerpt-${index}`}>
+        <div className="citation-excerpt" id={excerptId}>
           <p>{source.content}</p>
         </div>
       )}
