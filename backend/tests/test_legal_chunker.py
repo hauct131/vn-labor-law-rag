@@ -800,9 +800,9 @@ def test_invalid_canonical_input_rejected():
 
 @pytest.fixture(scope="session")
 def real_corpus_chunks():
-    path = Path("data/processed/articles_raw.json")
+    path = Path("data/legacy/phapdien/processed/articles_raw.json")
     if not path.is_file():
-        pytest.skip("Real corpus file data/processed/articles_raw.json not found")
+        pytest.skip("Legacy Pháp điển corpus file not found")
 
     with open(path, "r", encoding="utf-8") as f:
         corpus = json.load(f)
@@ -1460,9 +1460,9 @@ def test_canonical_input_not_mutated(base_article):
 
 
 def test_real_corpus_tables():
-    path = Path("data/processed/articles_raw.json")
+    path = Path("data/legacy/phapdien/processed/articles_raw.json")
     if not path.is_file():
-        pytest.skip("data/processed/articles_raw.json not found")
+        pytest.skip("Legacy Pháp điển corpus file not found")
 
     with path.open("r", encoding="utf-8") as file:
         corpus = json.load(file)
@@ -1550,9 +1550,9 @@ def test_real_corpus_tables():
 
 
 def test_validation_happy_path():
-    path = Path("data/processed/articles_raw.json")
+    path = Path("data/legacy/phapdien/processed/articles_raw.json")
     if not path.is_file():
-        pytest.skip("data/processed/articles_raw.json not found")
+        pytest.skip("Legacy Pháp điển corpus file not found")
 
     with path.open("r", encoding="utf-8") as file:
         corpus = json.load(file)
@@ -1888,9 +1888,9 @@ def test_validation_empty_and_no_table():
 
 
 def test_build_chunking_summary():
-    path = Path("data/processed/articles_raw.json")
+    path = Path("data/legacy/phapdien/processed/articles_raw.json")
     if not path.is_file():
-        pytest.skip("data/processed/articles_raw.json not found")
+        pytest.skip("Legacy Pháp điển corpus file not found")
 
     with path.open("r", encoding="utf-8") as file:
         corpus = json.load(file)

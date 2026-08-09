@@ -59,7 +59,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--corpus",
         type=Path,
-        default=Path("data/processed/articles_raw.json"),
+        default=Path("data/legacy/phapdien/processed/articles_raw.json"),
     )
     parser.add_argument(
         "--chunks",

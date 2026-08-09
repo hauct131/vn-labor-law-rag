@@ -62,7 +62,8 @@ class Settings(BaseSettings):
         "data/releases/labor-law-canonical-word-20260804-164432-candidate/manifest.json"
     )
     e5_audit_summary_path: str = (
-        "data/quality/canonical_word_804_e5_token_audit/summary.json"
+        "data/releases/labor-law-canonical-word-20260804-164432-candidate/"
+        "e5_audit/summary.json"
     )
     corpus_release_id: str = "labor-law-canonical-word-20260804-164432-candidate"
     corpus_require_authority_approval: bool = True

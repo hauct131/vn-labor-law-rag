@@ -40,7 +40,7 @@ services:
       RUNTIME_READINESS_FAILURE_TTL_SECONDS: "5"
       LEGAL_CHUNKS_PATH: /app/data/releases/labor-law-canonical-word-20260804-164432-candidate/canonical_chunks.jsonl
       CORPUS_RELEASE_MANIFEST_PATH: /app/data/releases/labor-law-canonical-word-20260804-164432-candidate/manifest.json
-      E5_AUDIT_SUMMARY_PATH: /app/data/quality/canonical_word_804_e5_token_audit/summary.json
+      E5_AUDIT_SUMMARY_PATH: /app/data/releases/labor-law-canonical-word-20260804-164432-candidate/e5_audit/summary.json
       CORPUS_RELEASE_ID: labor-law-canonical-word-20260804-164432-candidate
       CORPUS_REQUIRE_AUTHORITY_APPROVAL: "true"
       RETRIEVAL_EXPECTED_CHUNKS: "804"

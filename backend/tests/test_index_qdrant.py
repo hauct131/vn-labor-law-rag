@@ -415,7 +415,7 @@ def test_defaults_target_canonical_word_804_release():
 
     expected_audit_summary = (
         Path(__file__).resolve().parents[2]
-        / "data/quality/canonical_word_804_e5_token_audit/summary.json"
+        / "data/releases/labor-law-canonical-word-20260804-164432-candidate/e5_audit/summary.json"
     )
 
     assert DEFAULT_CHUNKS.resolve() == expected_chunks.resolve()
