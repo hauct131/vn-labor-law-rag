@@ -378,8 +378,8 @@ def _analysis(
         return (
             "info",
             f"Đã tìm thấy lịch làm việc"
-            f"{f' ({', '.join(schedule)})' if schedule else ''} và nghỉ ngơi. "
-            f"Cần kiểm tra thêm cơ chế làm thêm giờ, "
+            + (" ({}) và nghỉ ngơi. ".format(", ".join(schedule)) if schedule else " và nghỉ ngơi. ")
+            + f"Cần kiểm tra thêm cơ chế làm thêm giờ, "
             f"sự đồng ý của người lao động và giới hạn tổng thời gian theo {markers}.",
             "supported",
         )
