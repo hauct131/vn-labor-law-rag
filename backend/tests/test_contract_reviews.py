@@ -301,3 +301,70 @@ def test_contract_review_recognizes_any_fixed_term_up_to_36_months() -> None:
     assert termination.severity == "warning"
     assert "24 tháng" in termination.analysis
     assert "10 ngày" in termination.analysis
+
+
+def test_contract_review_does_not_invent_categories_from_unrelated_numbers() -> None:
+    from app.schemas.ask import RetrievalMethod
+    from app.services.contract_review_service import review_contract
+
+    draft = review_contract(
+        """
+        Số hợp đồng 123/2026.
+        Người lao động: Nguyễn Văn A.
+        Căn cước công dân số 012345678901, cấp ngày 01/01/2026.
+        """,
+        RetrievalMethod.SPARSE,
+    )
+
+    assert "4 nhóm chưa tìm thấy" in draft.summary
+    for finding in draft.findings:
+        assert finding.severity == "attention"
+        assert finding.contract_excerpt.startswith("Chưa tìm thấy")
+
+
+def test_contract_review_sources_are_unique_and_all_are_cited() -> None:
+    from app.schemas.ask import RetrievalMethod
+    from app.services.contract_review_service import review_contract
+
+    draft = review_contract(
+        """
+        HỢP ĐỒNG LAO ĐỘNG XÁC ĐỊNH THỜI HẠN 24 tháng.
+        Thử việc 30 ngày, lương thử việc bằng 85 phần trăm tiền lương chính thức.
+        Tiền lương 12.000.000 đồng, trả vào ngày 05 hằng tháng.
+        Thời giờ làm việc 8 giờ/ngày, 48 giờ/tuần và nghỉ hằng tuần.
+        Khi chấm dứt hợp đồng, mỗi bên phải báo trước 45 ngày.
+        """,
+        RetrievalMethod.SPARSE,
+    )
+
+    for finding in draft.findings:
+        article_codes = [source.article_code for source in finding.sources]
+        assert len(article_codes) == len(set(article_codes))
+        for source in finding.sources:
+            assert f"[{source.source_id}]" in finding.analysis
+
+    termination = next(
+        finding for finding in draft.findings if finding.category == "termination"
+    )
+    assert {source.article_code for source in termination.sources} == {
+        "20.2.LQ.34",
+        "20.2.LQ.35",
+        "20.2.LQ.36",
+    }
+
+
+def test_probation_salary_does_not_replace_the_main_salary_clause() -> None:
+    from app.schemas.ask import RetrievalMethod
+    from app.services.contract_review_service import review_contract
+
+    draft = review_contract(
+        """
+        Hợp đồng lao động số 123/2026.
+        Thử việc 30 ngày, lương thử việc bằng 85 phần trăm lương chính thức.
+        """,
+        RetrievalMethod.SPARSE,
+    )
+    salary = next(finding for finding in draft.findings if finding.category == "salary")
+
+    assert salary.severity == "attention"
+    assert salary.contract_excerpt.startswith("Chưa tìm thấy")

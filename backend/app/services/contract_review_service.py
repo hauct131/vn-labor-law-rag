@@ -61,7 +61,14 @@ CATEGORIES = (
         "salary",
         "Tiền lương và phương thức trả lương",
         "quy định tiền lương kỳ hạn trả lương hình thức trả lương chậm trả lương",
-        ("tiền lương", "mức lương", "lương cơ bản", "trả lương", "ngày trả lương"),
+        (
+            "tiền lương",
+            "mức lương",
+            "lương cơ bản",
+            "trả lương",
+            "ngày trả lương",
+            "lương",
+        ),
         ("20.2.LQ.90", "20.2.LQ.94", "20.2.LQ.95", "20.2.LQ.96", "20.2.LQ.97"),
         "Làm rõ mức lương, phụ cấp, kỳ hạn, hình thức trả và các khoản khấu trừ trong hợp đồng.",
     ),
@@ -142,13 +149,22 @@ class CanonicalEvidenceRetriever:
                 scored.append((ranking_score, raw_score, index))
         scored.sort(key=lambda item: (-item[0], str(self.chunks[item[2]]["chunk_id"])))
         result: list[LegalSource] = []
-        for rank, (_ranking_score, raw_score, index) in enumerate(scored[:top_k], 1):
+        seen_articles: set[str] = set()
+        for _ranking_score, raw_score, index in scored:
             payload = self.chunks[index]
+            article_code = str(
+                payload.get("article_code") or payload.get("codification_code") or ""
+            )
+            deduplication_key = article_code or str(payload["chunk_id"])
+            if deduplication_key in seen_articles:
+                continue
+            seen_articles.add(deduplication_key)
+            rank = len(result) + 1
             citation = build_citation_metadata(payload)
             result.append(LegalSource(
                 source_id=f"S{rank}",
                 chunk_id=str(payload["chunk_id"]),
-                article_code=str(payload.get("article_code") or payload.get("codification_code") or "") or None,
+                article_code=article_code or None,
                 article_number=citation.article_number,
                 article_title=str(payload.get("article_title") or "") or None,
                 document_title=citation.document_title,
@@ -164,6 +180,8 @@ class CanonicalEvidenceRetriever:
                 source_url=resolved_source_url(payload),
                 component_ranks={"contract_lexical": rank},
             ))
+            if len(result) == top_k:
+                break
         return result
 
 
@@ -193,7 +211,12 @@ def _excerpt_for(rule: CategoryRule, paragraphs: list[str]) -> str:
     for index, paragraph in enumerate(paragraphs):
         plain = _ascii(paragraph)
         paragraph_tokens = set(_tokens(paragraph))
-        score = sum(4 for term in rule.terms if _ascii(term) in plain)
+        term_hits = sum(1 for term in rule.terms if _ascii(term) in plain)
+        if term_hits == 0:
+            continue
+        if rule.key == "salary" and "thu viec" in plain:
+            continue
+        score = term_hits * 4
         score += sum(
             1 for token in set(_tokens(rule.title)) if token in paragraph_tokens
         )
@@ -202,8 +225,6 @@ def _excerpt_for(rule: CategoryRule, paragraphs: list[str]) -> str:
                 score += 8
             if re.search(r"\btra\b.{0,40}\bngay\b|\bngay\b.{0,40}\btra\b", plain):
                 score += 4
-            if "thu viec" in plain:
-                score -= 4
         if re.search(r"\d", paragraph):
             score += 2
         if len(paragraph) > 80:
@@ -286,7 +307,7 @@ def _analysis(
             "Không đủ căn cứ pháp luật trong corpus để đưa ra nhận xét cho nhóm này.",
             "insufficient_evidence",
         )
-    markers = " ".join(f"[{source.source_id}]" for source in sources[:2])
+    markers = " ".join(f"[{source.source_id}]" for source in sources)
     if not excerpt:
         return (
             "attention",

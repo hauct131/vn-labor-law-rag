@@ -32,6 +32,12 @@ V1 dùng `contract_canonical_lexical_v1`, một index từ khóa chỉ đọc đ
 tránh tài liệu đặc thù lấn át quy định chung. Điểm hiển thị vẫn là điểm lexical
 thô; mức ưu tiên chỉ dùng để sắp xếp nội bộ.
 
+Một đoạn hợp đồng chỉ được nhận diện cho một nhóm khi có ít nhất một anchor
+ngữ nghĩa của nhóm đó. Con số, độ dài đoạn và mẫu đơn vị chỉ dùng để xếp hạng
+sau bước này; số hợp đồng, CCCD hoặc ngày ký không tự tạo finding giả. Nguồn
+được loại trùng theo `article_code`, đánh lại mã `S1...` và mọi nguồn được lưu
+đều phải xuất hiện trong phần nhận xét.
+
 Việc này không sửa `get_retriever`, Qdrant alias, golden split hoặc tham số
 Sparse/Dense/Hybrid của Q&A.
 
@@ -70,9 +76,10 @@ Docker dùng SQLAlchemy `create_all` theo cơ chế hiện có để tạo bản
 `backend/tests/test_contract_reviews.py` kiểm tra DOCX thật, PDF thật, validation,
 citation mapping và cách ly tài khoản.
 
-`scripts/smoke_contract_review_runtime.py` khởi động Uvicorn thật, gọi HTTP thật,
-đăng ký hai tài khoản, upload DOCX, đọc danh sách/chi tiết, kiểm tra cách ly,
-restart process backend và xác nhận session/report còn tồn tại.
+`scripts/smoke_contract_review_runtime.py` khởi động toàn bộ `app.main:app` bằng
+Uvicorn thật và gọi HTTP thật. Kịch bản kiểm tra authority gate, 11 đầu vào lỗi
+hoặc không an toàn, DOCX/PDF thật, số không liên quan, citation không trùng,
+hai tài khoản, list/detail/delete và persistence sau khi restart backend.
 
 `scripts/verify_contract_review_e2e.sh` chạy Docker Compose và
 `scripts/smoke_contract_review_docker.py`; kịch bản này còn restart PostgreSQL,

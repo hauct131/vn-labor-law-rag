@@ -4,6 +4,7 @@ WORKDIR /app
 
 ENV JAVA_HOME=/usr/lib/jvm/default-java
 ENV PATH="${JAVA_HOME}/bin:${PATH}"
+ENV APP_PROJECT_ROOT=/app
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
