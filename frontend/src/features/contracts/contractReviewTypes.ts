@@ -33,6 +33,7 @@ export type ContractReviewListItem = {
   status: string
   summary: string
   finding_count: number
+  attention_count: number
   warning_count: number
   created_at: string
 }

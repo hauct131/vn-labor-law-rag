@@ -16,7 +16,7 @@ from app.schemas.contract_review import (
     ContractReviewListItem,
     ContractReviewResponse,
 )
-from app.services.contract_review_service import ReviewDraft
+from app.services.contract_review_service import ReviewDraft, build_review_summary
 
 
 class ContractReviewNotFoundError(LookupError):
@@ -124,6 +124,20 @@ def _source_response(source: ContractReviewSource) -> LegalSource:
 
 
 def contract_review_response(review: ContractReview) -> ContractReviewResponse:
+    findings = [
+        ContractReviewFindingResponse(
+            id=finding.id,
+            category=finding.category,
+            title=finding.title,
+            severity=finding.severity,
+            contract_excerpt=finding.contract_excerpt,
+            analysis=finding.analysis,
+            recommendation=finding.recommendation,
+            evidence_status=finding.evidence_status,
+            sources=[_source_response(source) for source in finding.sources],
+        )
+        for finding in review.findings
+    ]
     return ContractReviewResponse(
         id=review.id,
         original_filename=review.original_filename,
@@ -132,22 +146,9 @@ def contract_review_response(review: ContractReview) -> ContractReviewResponse:
         file_size_bytes=review.file_size_bytes,
         method=RetrievalMethod(review.retrieval_method),
         status=review.status,
-        summary=review.summary,
+        summary=build_review_summary(findings),
         extracted_character_count=review.extracted_character_count,
-        findings=[
-            ContractReviewFindingResponse(
-                id=finding.id,
-                category=finding.category,
-                title=finding.title,
-                severity=finding.severity,
-                contract_excerpt=finding.contract_excerpt,
-                analysis=finding.analysis,
-                recommendation=finding.recommendation,
-                evidence_status=finding.evidence_status,
-                sources=[_source_response(source) for source in finding.sources],
-            )
-            for finding in review.findings
-        ],
+        findings=findings,
         created_at=review.created_at,
         updated_at=review.updated_at,
     )
@@ -176,8 +177,11 @@ def list_contract_reviews(
             id=review.id,
             original_filename=review.original_filename,
             status=review.status,
-            summary=review.summary,
+            summary=build_review_summary(review.findings),
             finding_count=len(review.findings),
+            attention_count=sum(
+                item.severity == "attention" for item in review.findings
+            ),
             warning_count=sum(item.severity == "warning" for item in review.findings),
             created_at=review.created_at,
         )

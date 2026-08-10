@@ -430,6 +430,8 @@ def run() -> dict[str, object]:
             review_id = review["id"]
             assert review["extracted_character_count"] > 500
             assert_markers(review)
+            assert "Có 2 nhóm cần kiểm tra" in review["summary"]
+            assert "1 nhóm cần ưu tiên kiểm tra" in review["summary"]
             steps.append("PASS 5: uploaded real DOCX and created four grounded findings")
 
             adversarial_response = upload_contract(
@@ -483,6 +485,11 @@ def run() -> dict[str, object]:
 
             listing = user_a.get("/contract-reviews")
             assert listing.status_code == 200 and listing.json()["total"] == 4
+            sample_item = next(
+                item for item in listing.json()["items"] if item["id"] == review_id
+            )
+            assert sample_item["attention_count"] == 2
+            assert sample_item["warning_count"] == 1
             detail = user_a.get(f"/contract-reviews/{review_id}")
             assert detail.status_code == 200
             assert detail.json()["file_sha256"] == review["file_sha256"]

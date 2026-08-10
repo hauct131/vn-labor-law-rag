@@ -49,6 +49,7 @@ class ContractReviewListItem(BaseModel):
     status: str
     summary: str
     finding_count: int
+    attention_count: int
     warning_count: int
     created_at: datetime
 

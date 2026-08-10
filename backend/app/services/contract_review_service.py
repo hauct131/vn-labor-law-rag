@@ -380,6 +380,16 @@ def _analysis(
             schedule.append(f"{daily} giờ/ngày")
         if weekly is not None:
             schedule.append(f"{weekly} giờ/tuần")
+        has_rest_clause = any(
+            marker in plain_excerpt
+            for marker in (
+                "nghi giua gio",
+                "nghi trong gio lam viec",
+                "thoi gian nghi",
+                "nghi trua",
+                "nghi hang tuan",
+            )
+        )
         if (daily is not None and daily > 10) or (weekly is not None and weekly > 48):
             return (
                 "warning",
@@ -398,8 +408,16 @@ def _analysis(
             )
         return (
             "info",
-            f"Đã tìm thấy lịch làm việc"
-            + (" ({}) và nghỉ ngơi. ".format(", ".join(schedule)) if schedule else " và nghỉ ngơi. ")
+            (
+                f"Đã tìm thấy lịch làm việc ({', '.join(schedule)}). "
+                if schedule
+                else "Đã tìm thấy điều khoản thời giờ làm việc. "
+            )
+            + (
+                "Đoạn được nhận diện cũng có nội dung về thời gian nghỉ. "
+                if has_rest_clause
+                else "Chưa thấy nội dung cụ thể về thời gian nghỉ trong đoạn được nhận diện. "
+            )
             + f"Cần kiểm tra thêm cơ chế làm thêm giờ, "
             f"sự đồng ý của người lao động và giới hạn tổng thời gian theo {markers}.",
             "supported",
@@ -470,6 +488,17 @@ def _analysis(
     )
 
 
+def build_review_summary(findings: list[FindingDraft]) -> str:
+    attention = sum(item.severity == "attention" for item in findings)
+    warnings = sum(item.severity == "warning" for item in findings)
+    missing = sum("Chưa tìm thấy" in item.contract_excerpt for item in findings)
+    return (
+        f"Đã rà soát {len(findings)} nhóm điều khoản. Có {attention} nhóm cần kiểm tra, "
+        f"{warnings} nhóm cần ưu tiên kiểm tra và {missing} nhóm chưa tìm thấy nội dung "
+        f"thể hiện rõ trong hợp đồng."
+    )
+
+
 def review_contract(text: str, method: RetrievalMethod) -> ReviewDraft:
     paragraphs = _paragraphs(text)
     retriever = evidence_retriever()
@@ -495,10 +524,4 @@ def review_contract(text: str, method: RetrievalMethod) -> ReviewDraft:
             evidence_status=evidence_status,
             sources=sources,
         ))
-    warnings = sum(item.severity == "warning" for item in findings)
-    missing = sum("Chưa tìm thấy" in item.contract_excerpt for item in findings)
-    summary = (
-        f"Đã rà soát 4 nhóm điều khoản. Có {warnings} nhóm có dấu hiệu cần ưu tiên kiểm tra "
-        f"và {missing} nhóm chưa tìm thấy nội dung thể hiện rõ trong hợp đồng."
-    )
-    return ReviewDraft(summary=summary, findings=findings)
+    return ReviewDraft(summary=build_review_summary(findings), findings=findings)

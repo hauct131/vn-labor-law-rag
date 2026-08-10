@@ -171,7 +171,10 @@ export function ContractReviewPage({ isAuthenticated, onLogin }: {
               <button type="button" onClick={() => void openReview(item.id)}>
                 <strong>{item.original_filename}</strong>
                 <span>{formatDate(item.created_at)}</span>
-                <small>{item.finding_count} nhóm · {item.warning_count} ưu tiên</small>
+                <small>
+                  {item.finding_count} nhóm · {item.attention_count} cần kiểm tra ·{' '}
+                  {item.warning_count} ưu tiên
+                </small>
               </button>
               <button type="button" className="contract-delete" onClick={() => void removeReview(item.id)} aria-label={`Xóa ${item.original_filename}`}>×</button>
             </article>
@@ -200,7 +203,6 @@ export function ContractReviewPage({ isAuthenticated, onLogin }: {
                   <article key={finding.id} className={`contract-finding severity-${finding.severity}`}>
                     <header>
                       <div>
-                        <p className="eyebrow">{finding.category}</p>
                         <h3>{finding.title}</h3>
                       </div>
                       <span>{severityLabels[finding.severity]}</span>

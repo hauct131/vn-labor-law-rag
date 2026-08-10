@@ -127,6 +127,8 @@ def test_contract_review_real_docx_and_user_isolation(app_client: TestClient) ->
     assert listing.status_code == 200
     assert listing.json()["total"] == 1
     assert listing.json()["items"][0]["id"] == review_id
+    assert listing.json()["items"][0]["attention_count"] == 2
+    assert listing.json()["items"][0]["warning_count"] == 1
 
     detail = app_client.get(f"/api/contract-reviews/{review_id}")
     assert detail.status_code == 200
@@ -278,6 +280,7 @@ def test_contract_review_binds_numbers_to_their_legal_terms() -> None:
     assert findings["working_time"].severity == "info"
     assert "8 giờ/ngày" in findings["working_time"].analysis
     assert "48 giờ/ngày" not in findings["working_time"].analysis
+    assert "Chưa thấy nội dung cụ thể về thời gian nghỉ" in findings["working_time"].analysis
     assert "45 ngày" in findings["termination"].analysis
     assert "1 ngày" not in findings["termination"].analysis
 
@@ -351,6 +354,30 @@ def test_contract_review_sources_are_unique_and_all_are_cited() -> None:
         "20.2.LQ.35",
         "20.2.LQ.36",
     }
+
+    working_time = next(
+        finding for finding in draft.findings if finding.category == "working_time"
+    )
+    assert "cũng có nội dung về thời gian nghỉ" in working_time.analysis
+
+
+def test_contract_review_summary_separates_attention_from_warning() -> None:
+    from app.schemas.ask import RetrievalMethod
+    from app.services.contract_review_service import review_contract
+
+    draft = review_contract(
+        """
+        HỢP ĐỒNG LAO ĐỘNG XÁC ĐỊNH THỜI HẠN 24 tháng.
+        Thử việc 30 ngày.
+        Tiền lương 12.000.000 đồng, trả vào ngày 05 hằng tháng.
+        Thời giờ làm việc 8 giờ/ngày, 40 giờ/tuần.
+        Khi đơn phương chấm dứt hợp đồng, các bên báo trước 30 ngày.
+        """,
+        RetrievalMethod.SPARSE,
+    )
+
+    assert "Có 1 nhóm cần kiểm tra" in draft.summary
+    assert "0 nhóm cần ưu tiên kiểm tra" in draft.summary
 
 
 def test_probation_salary_does_not_replace_the_main_salary_clause() -> None:
