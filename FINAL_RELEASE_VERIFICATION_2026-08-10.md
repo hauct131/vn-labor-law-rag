@@ -53,7 +53,7 @@ không phải lỗi runtime.
 ### Full FastAPI qua HTTP thật
 
 `scripts/smoke_contract_review_runtime.py` chạy Uvicorn với `app.main:app`, dùng
-database SQLite file tách biệt và đạt 12/12 bước:
+database SQLite file tách biệt và đạt 13/13 bước:
 
 1. backend live;
 2. đăng ký hai tài khoản và session cookie;
@@ -62,11 +62,12 @@ database SQLite file tách biệt và đạt 12/12 bước:
 5. upload DOCX thật và tạo bốn finding;
 6. giữ đúng quan hệ giữa con số và thuật ngữ pháp lý;
 7. không tạo điều khoản từ số hợp đồng/CCCD/ngày ký;
-8. upload PDF có text layer;
-9. list và detail trả đúng dữ liệu đã lưu;
-10. tài khoản khác không đọc/xóa chéo;
-11. session và bốn report còn nguyên sau restart backend;
-12. chủ sở hữu xóa sạch report và danh sách trở về 0.
+8. tiêu đề phủ định “không có thử việc” không bị nhận nhầm là điều khoản;
+9. upload PDF có text layer;
+10. list và detail trả đúng dữ liệu đã lưu, tách riêng số nhóm không tìm thấy;
+11. tài khoản khác không đọc/xóa chéo;
+12. session và năm report còn nguyên sau restart backend;
+13. chủ sở hữu xóa sạch report và danh sách trở về 0.
 
 Nhóm 11 input bị từ chối gồm: chưa đăng nhập, CSRF sai, TXT, file rỗng, DOCX
 hỏng, PDF giả, PDF scan, PDF hơn 250 trang, DOCX vượt giới hạn giải nén, file hơn

@@ -259,6 +259,18 @@
   line-height:1.6
 }
 
+.contract-missing-evidence-note {
+  margin-top:12px;
+  padding:12px 14px;
+  background:#f7f9fb;
+  border:1px solid #e2e8f0;
+  border-left:3px solid #64748b;
+  border-radius:8px;
+  font-size:13.5px;
+  line-height:1.6;
+  color:#334155
+}
+
 .contract-analysis {
   margin-top:16px
 }

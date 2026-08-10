@@ -25,7 +25,29 @@ const severityLabels = {
   info: 'Thông tin',
   attention: 'Cần kiểm tra',
   warning: 'Ưu tiên kiểm tra',
-  insufficient_evidence: 'Không đủ căn cứ',
+  insufficient_evidence: 'Không tìm thấy trong hợp đồng',
+}
+
+function isMissingFinding(finding: ContractReview['findings'][number]) {
+  return finding.evidence_status === 'insufficient_evidence'
+}
+
+function usableSources(finding: ContractReview['findings'][number]) {
+  return (finding.sources || []).filter((source) => {
+    const hasIdentity = Boolean(source.source_id?.trim() || source.chunk_id?.trim() || source.article_code?.trim())
+    return hasIdentity && Boolean(source.content?.trim())
+  })
+}
+
+function reviewCounts(value: ContractReview) {
+  const missing = value.findings.filter(isMissingFinding).length
+  const priority = value.findings.filter(
+    (finding) => !isMissingFinding(finding) && finding.severity === 'warning',
+  ).length
+  const attention = value.findings.filter(
+    (finding) => !isMissingFinding(finding) && finding.severity === 'attention',
+  ).length
+  return { missing, priority, attention }
 }
 
 export function ContractReviewPage({ isAuthenticated, onLogin }: {
@@ -173,7 +195,7 @@ export function ContractReviewPage({ isAuthenticated, onLogin }: {
                 <span>{formatDate(item.created_at)}</span>
                 <small>
                   {item.finding_count} nhóm · {item.attention_count} cần kiểm tra ·{' '}
-                  {item.warning_count} ưu tiên
+                  {item.warning_count} ưu tiên · {item.missing_count} không tìm thấy
                 </small>
               </button>
               <button type="button" className="contract-delete" onClick={() => void removeReview(item.id)} aria-label={`Xóa ${item.original_filename}`}>×</button>
@@ -197,32 +219,67 @@ export function ContractReviewPage({ isAuthenticated, onLogin }: {
                 </div>
                 <span className="contract-method">Căn cứ canonical</span>
               </header>
-              <p className="contract-summary">{review.summary}</p>
+              {(() => {
+                const counts = reviewCounts(review)
+                return (
+                  <p className="contract-summary">
+                    Đã rà soát {review.findings.length} nhóm điều khoản. Có {counts.attention} nhóm cần kiểm tra,{' '}
+                    {counts.priority} nhóm cần ưu tiên kiểm tra và {counts.missing} nhóm không tìm thấy nội dung
+                    thể hiện rõ trong hợp đồng.
+                  </p>
+                )
+              })()}
               <div className="contract-findings">
-                {review.findings.map((finding) => (
-                  <article key={finding.id} className={`contract-finding severity-${finding.severity}`}>
-                    <header>
-                      <div>
-                        <h3>{finding.title}</h3>
+                {review.findings.map((finding) => {
+                  const isMissing = isMissingFinding(finding)
+                  const sources = usableSources(finding)
+                  const label = isMissing ? 'Không tìm thấy trong hợp đồng' : severityLabels[finding.severity]
+                  return (
+                    <article
+                      key={finding.id}
+                      className={`contract-finding severity-${isMissing ? 'insufficient_evidence' : finding.severity}`}
+                    >
+                      <header>
+                        <div>
+                          <h3>{finding.title}</h3>
+                        </div>
+                        <span>{label}</span>
+                      </header>
+                      {!isMissing && (
+                        <details>
+                          <summary>Bằng chứng trong hợp đồng</summary>
+                          <blockquote>{finding.contract_excerpt}</blockquote>
+                        </details>
+                      )}
+                      {isMissing && (
+                        <div className="contract-missing-evidence-note">
+                          Không tìm thấy nội dung liên quan trong phần văn bản được trích xuất. Các căn cứ pháp luật
+                          bên dưới chỉ dùng để hỗ trợ đối chiếu và không chứng minh rằng hợp đồng đã có điều khoản này.
+                        </div>
+                      )}
+                      <div className="contract-analysis">
+                        {!isMissing && finding.analysis?.trim() && (
+                          <>
+                            <h4>Phân tích</h4>
+                            <p>{finding.analysis}</p>
+                          </>
+                        )}
+                        {finding.recommendation?.trim() && (
+                          <>
+                            <h4>Khuyến nghị</h4>
+                            <p>{finding.recommendation}</p>
+                          </>
+                        )}
                       </div>
-                      <span>{severityLabels[finding.severity]}</span>
-                    </header>
-                    <details>
-                      <summary>Xem đoạn hợp đồng</summary>
-                      <blockquote>{finding.contract_excerpt}</blockquote>
-                    </details>
-                    <div className="contract-analysis">
-                      <h4>Phân tích</h4>
-                      <p>{finding.analysis}</p>
-                      <h4>Khuyến nghị</h4>
-                      <p>{finding.recommendation}</p>
-                    </div>
-                    <details className="contract-evidence">
-                      <summary>Xem căn cứ pháp luật ({finding.sources.length})</summary>
-                      <CitationList sources={finding.sources} />
-                    </details>
-                  </article>
-                ))}
+                      {sources.length > 0 && (
+                        <details className="contract-evidence">
+                          <summary>Căn cứ pháp luật để đối chiếu ({sources.length})</summary>
+                          <CitationList sources={sources} />
+                        </details>
+                      )}
+                    </article>
+                  )
+                })}
               </div>
               <p className="contract-disclaimer">Kết quả chỉ mang tính hỗ trợ rà soát thông tin và không thay thế tư vấn của luật sư hoặc cơ quan có thẩm quyền.</p>
             </>

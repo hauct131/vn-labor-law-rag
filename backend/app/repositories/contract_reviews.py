@@ -180,9 +180,19 @@ def list_contract_reviews(
             summary=build_review_summary(review.findings),
             finding_count=len(review.findings),
             attention_count=sum(
-                item.severity == "attention" for item in review.findings
+                item.evidence_status != "insufficient_evidence"
+                and item.severity == "attention"
+                for item in review.findings
             ),
-            warning_count=sum(item.severity == "warning" for item in review.findings),
+            warning_count=sum(
+                item.evidence_status != "insufficient_evidence"
+                and item.severity == "warning"
+                for item in review.findings
+            ),
+            missing_count=sum(
+                item.evidence_status == "insufficient_evidence"
+                for item in review.findings
+            ),
             created_at=review.created_at,
         )
         for review in records

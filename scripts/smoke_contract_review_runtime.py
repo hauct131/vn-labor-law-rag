@@ -187,6 +187,24 @@ def create_unrelated_numbers_docx(path: Path) -> None:
     document.save(path)
 
 
+def create_missing_probation_docx(path: Path) -> None:
+    document = Document()
+    for paragraph in (
+        "HỢP ĐỒNG LAO ĐỘNG MẪU - KHÔNG CÓ ĐIỀU KHOẢN THỬ VIỆC",
+        "Loại hợp đồng: Hợp đồng lao động xác định thời hạn 12 tháng.",
+        "Điều 2. Tiền lương",
+        "Mức lương chính thức là 12.000.000 đồng/tháng, trả qua tài khoản ngân hàng "
+        "vào ngày 10 hằng tháng.",
+        "Điều 3. Thời giờ làm việc",
+        "Người lao động làm việc 8 giờ/ngày, từ thứ Hai đến thứ Sáu, "
+        "tổng cộng 40 giờ/tuần.",
+        "Điều 4. Chấm dứt hợp đồng",
+        "Khi đơn phương chấm dứt hợp đồng, các bên áp dụng thời hạn báo trước 30 ngày.",
+    ):
+        document.add_paragraph(paragraph)
+    document.save(path)
+
+
 def create_blank_pdf(path: Path, page_count: int) -> None:
     document = pymupdf.open()
     try:
@@ -241,11 +259,13 @@ def run() -> dict[str, object]:
         server_log = temp / "server.log"
         adversarial_path = temp / "adversarial_numbers_contract.docx"
         unrelated_path = temp / "unrelated_numbers_contract.docx"
+        missing_probation_path = temp / "03_missing_probation_clause.docx"
         scan_pdf_path = temp / "scan.pdf"
         too_many_pages_path = temp / "too-many-pages.pdf"
         zip_bomb_path = temp / "expanded-too-large.docx"
         create_adversarial_docx(adversarial_path)
         create_unrelated_numbers_docx(unrelated_path)
+        create_missing_probation_docx(missing_probation_path)
         create_blank_pdf(scan_pdf_path, 1)
         create_blank_pdf(too_many_pages_path, 251)
         create_docx_zip_bomb_probe(zip_bomb_path)
@@ -470,6 +490,31 @@ def run() -> dict[str, object]:
             )
             steps.append("PASS 7: unrelated numbers did not invent contract clauses")
 
+            missing_probation_response = upload_contract(
+                user_a,
+                csrf_a,
+                missing_probation_path,
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            )
+            assert missing_probation_response.status_code == 201, (
+                missing_probation_response.text
+            )
+            missing_probation_review = missing_probation_response.json()
+            missing_probation_id = missing_probation_review["id"]
+            missing_probation_findings = {
+                item["category"]: item
+                for item in missing_probation_review["findings"]
+            }
+            probation = missing_probation_findings["probation"]
+            assert probation["severity"] == "attention"
+            assert probation["contract_excerpt"].startswith("Chưa tìm thấy")
+            assert probation["analysis"].startswith("Chưa tìm thấy điều khoản")
+            assert "Hợp đồng có điều khoản thử việc" not in probation["analysis"]
+            assert "Có 1 nhóm cần kiểm tra" in missing_probation_review["summary"]
+            assert "0 nhóm cần ưu tiên kiểm tra" in missing_probation_review["summary"]
+            assert "1 nhóm chưa tìm thấy" in missing_probation_review["summary"]
+            steps.append("PASS 8: negated probation heading did not invent a clause")
+
             pdf_response = upload_contract(
                 user_a,
                 csrf_a,
@@ -481,25 +526,34 @@ def run() -> dict[str, object]:
             pdf_id = pdf_review["id"]
             assert pdf_review["extracted_character_count"] > 300
             assert_markers(pdf_review)
-            steps.append("PASS 8: uploaded a real text-layer PDF through the HTTP API")
+            steps.append("PASS 9: uploaded a real text-layer PDF through the HTTP API")
 
             listing = user_a.get("/contract-reviews")
-            assert listing.status_code == 200 and listing.json()["total"] == 4
+            assert listing.status_code == 200 and listing.json()["total"] == 5
             sample_item = next(
                 item for item in listing.json()["items"] if item["id"] == review_id
             )
             assert sample_item["attention_count"] == 2
             assert sample_item["warning_count"] == 1
+            assert sample_item["missing_count"] == 0
+            missing_item = next(
+                item
+                for item in listing.json()["items"]
+                if item["id"] == missing_probation_id
+            )
+            assert missing_item["attention_count"] == 1
+            assert missing_item["warning_count"] == 0
+            assert missing_item["missing_count"] == 1
             detail = user_a.get(f"/contract-reviews/{review_id}")
             assert detail.status_code == 200
             assert detail.json()["file_sha256"] == review["file_sha256"]
-            steps.append("PASS 9: list and detail APIs returned all persisted reports")
+            steps.append("PASS 10: list and detail APIs returned all persisted reports")
 
             assert user_b.get(f"/contract-reviews/{review_id}").status_code == 404
             assert user_b.delete(
                 f"/contract-reviews/{review_id}", headers={"X-CSRF-Token": csrf_b}
             ).status_code == 404
-            steps.append("PASS 10: cross-user read and delete were denied with 404")
+            steps.append("PASS 11: cross-user read and delete were denied with 404")
 
             stop_server(process)
             process = start_server(
@@ -514,11 +568,20 @@ def run() -> dict[str, object]:
             assert_markers(persisted.json())
             assert user_a.get(f"/contract-reviews/{adversarial_id}").status_code == 200
             assert user_a.get(f"/contract-reviews/{unrelated_id}").status_code == 200
+            assert user_a.get(
+                f"/contract-reviews/{missing_probation_id}"
+            ).status_code == 200
             assert user_a.get(f"/contract-reviews/{pdf_id}").status_code == 200
             assert user_a.get("/auth/me").status_code == 200
-            steps.append("PASS 11: session and all reports survived backend process restart")
+            steps.append("PASS 12: session and all reports survived backend process restart")
 
-            for stored_id in (review_id, adversarial_id, unrelated_id, pdf_id):
+            for stored_id in (
+                review_id,
+                adversarial_id,
+                unrelated_id,
+                missing_probation_id,
+                pdf_id,
+            ):
                 deleted = user_a.delete(
                     f"/contract-reviews/{stored_id}",
                     headers={"X-CSRF-Token": csrf_a},
@@ -526,7 +589,7 @@ def run() -> dict[str, object]:
                 assert deleted.status_code == 204, deleted.text
                 assert user_a.get(f"/contract-reviews/{stored_id}").status_code == 404
             assert user_a.get("/contract-reviews").json()["total"] == 0
-            steps.append("PASS 12: owner deleted all reports and no data remained")
+            steps.append("PASS 13: owner deleted all reports and no data remained")
 
             user_a.close()
             user_b.close()

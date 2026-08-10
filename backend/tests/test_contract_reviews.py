@@ -129,6 +129,7 @@ def test_contract_review_real_docx_and_user_isolation(app_client: TestClient) ->
     assert listing.json()["items"][0]["id"] == review_id
     assert listing.json()["items"][0]["attention_count"] == 2
     assert listing.json()["items"][0]["warning_count"] == 1
+    assert listing.json()["items"][0]["missing_count"] == 0
 
     detail = app_client.get(f"/api/contract-reviews/{review_id}")
     assert detail.status_code == 200
@@ -323,6 +324,50 @@ def test_contract_review_does_not_invent_categories_from_unrelated_numbers() -> 
     for finding in draft.findings:
         assert finding.severity == "attention"
         assert finding.contract_excerpt.startswith("Chưa tìm thấy")
+
+
+@pytest.mark.parametrize(
+    "negative_label",
+    (
+        "KHÔNG CÓ ĐIỀU KHOẢN THỬ VIỆC",
+        "Không áp dụng thử việc",
+        "Hai bên không thỏa thuận về thử việc",
+    ),
+)
+def test_contract_review_does_not_treat_negated_probation_as_a_clause(
+    negative_label: str,
+) -> None:
+    from app.schemas.ask import RetrievalMethod
+    from app.services.contract_review_service import review_contract
+
+    draft = review_contract(
+        f"""
+        HỢP ĐỒNG LAO ĐỘNG MẪU - {negative_label}
+        Loại hợp đồng: Hợp đồng lao động xác định thời hạn 12 tháng.
+        Điều 2. Tiền lương
+        Mức lương chính thức là 12.000.000 đồng/tháng, trả qua tài khoản ngân hàng vào ngày 10 hằng tháng.
+        Điều 3. Thời giờ làm việc
+        Người lao động làm việc 8 giờ/ngày, từ thứ Hai đến thứ Sáu, tổng cộng 40 giờ/tuần.
+        Điều 4. Chấm dứt hợp đồng
+        Khi đơn phương chấm dứt hợp đồng, các bên áp dụng thời hạn báo trước 30 ngày.
+        """,
+        RetrievalMethod.SPARSE,
+    )
+    probation = next(
+        finding for finding in draft.findings if finding.category == "probation"
+    )
+
+    assert probation.severity == "attention"
+    assert probation.contract_excerpt == (
+        "Chưa tìm thấy điều khoản liên quan trong nội dung được trích xuất."
+    )
+    assert probation.analysis.startswith(
+        "Chưa tìm thấy điều khoản thể hiện rõ nội dung thử việc."
+    )
+    assert "Hợp đồng có điều khoản thử việc" not in probation.analysis
+    assert "Có 1 nhóm cần kiểm tra" in draft.summary
+    assert "0 nhóm cần ưu tiên kiểm tra" in draft.summary
+    assert "1 nhóm chưa tìm thấy" in draft.summary
 
 
 def test_contract_review_sources_are_unique_and_all_are_cited() -> None:

@@ -206,6 +206,17 @@ def _paragraphs(text: str) -> list[str]:
     return [part for part in paragraphs if len(part) >= 12]
 
 
+def _is_negated_probation_mention(plain: str) -> bool:
+    """Reject labels that only say a probation clause does not exist."""
+    patterns = (
+        r"\bkhong\s+co\s+(?:dieu\s+khoan|thoa\s+thuan)\s+thu\s+viec\b",
+        r"\bkhong\s+ap\s+dung(?:\s+(?:che\s+do|dieu\s+khoan))?\s+thu\s+viec\b",
+        r"\bkhong\s+thoa\s+thuan(?:\s+ve)?\s+thu\s+viec\b",
+        r"\bkhong\s+(?:phai\s+)?thu\s+viec\b",
+    )
+    return any(re.search(pattern, plain) for pattern in patterns)
+
+
 def _excerpt_for(rule: CategoryRule, paragraphs: list[str]) -> str:
     scored: list[tuple[int, int]] = []
     for index, paragraph in enumerate(paragraphs):
@@ -213,6 +224,8 @@ def _excerpt_for(rule: CategoryRule, paragraphs: list[str]) -> str:
         paragraph_tokens = set(_tokens(paragraph))
         term_hits = sum(1 for term in rule.terms if _ascii(term) in plain)
         if term_hits == 0:
+            continue
+        if rule.key == "probation" and _is_negated_probation_mention(plain):
             continue
         if rule.key == "salary" and "thu viec" in plain:
             continue
@@ -313,7 +326,7 @@ def _analysis(
             "attention",
             f"Chưa tìm thấy điều khoản thể hiện rõ nội dung {rule.title.lower()}. "
             f"Các quy định liên quan cần được đối chiếu khi hoàn thiện hợp đồng {markers}.",
-            "supported",
+            "insufficient_evidence",
         )
 
     plain_excerpt = _ascii(excerpt)
@@ -489,9 +502,19 @@ def _analysis(
 
 
 def build_review_summary(findings: list[FindingDraft]) -> str:
-    attention = sum(item.severity == "attention" for item in findings)
-    warnings = sum(item.severity == "warning" for item in findings)
-    missing = sum("Chưa tìm thấy" in item.contract_excerpt for item in findings)
+    missing = sum(
+        item.evidence_status == "insufficient_evidence" for item in findings
+    )
+    attention = sum(
+        item.evidence_status != "insufficient_evidence"
+        and item.severity == "attention"
+        for item in findings
+    )
+    warnings = sum(
+        item.evidence_status != "insufficient_evidence"
+        and item.severity == "warning"
+        for item in findings
+    )
     return (
         f"Đã rà soát {len(findings)} nhóm điều khoản. Có {attention} nhóm cần kiểm tra, "
         f"{warnings} nhóm cần ưu tiên kiểm tra và {missing} nhóm chưa tìm thấy nội dung "
