@@ -57,6 +57,14 @@ def prepare_vncorenlp(model_dir: Path) -> None:
         ) from exc
 
     if not _vncorenlp_ready(resolved):
+        # py_vncorenlp 0.1.4 cannot resume an interrupted download because it
+        # creates the directory tree before invoking wget. Remove only its
+        # known incomplete outputs so a retry starts from a consistent state.
+        jar_path = resolved / "VnCoreNLP-1.2.jar"
+        models_path = resolved / "models"
+        jar_path.unlink(missing_ok=True)
+        if models_path.exists():
+            shutil.rmtree(models_path)
         print(f"vncorenlp=downloading target={resolved}")
         py_vncorenlp.download_model(save_dir=str(resolved))
     if not _vncorenlp_ready(resolved):
