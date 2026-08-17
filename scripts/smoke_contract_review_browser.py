@@ -11,6 +11,7 @@ from pathlib import Path
 from uuid import uuid4
 
 try:
+    from playwright.sync_api import Error as PlaywrightError
     from playwright.sync_api import Page, sync_playwright
 except ImportError as exc:  # pragma: no cover - environment preflight
     raise SystemExit(
@@ -24,6 +25,7 @@ from smoke_contract_review_docker import cleanup_users
 ROOT = Path(__file__).resolve().parents[1]
 DOCX_SAMPLE = ROOT / "samples/contract-review/sample_labor_contract.docx"
 PDF_SAMPLE = ROOT / "samples/contract-review/sample_labor_contract.pdf"
+CONTRACT_ROUTE = "/contract-reviews"
 
 
 def _upload_and_assert(page: Page, sample: Path) -> None:
@@ -44,6 +46,8 @@ def _upload_and_assert(page: Page, sample: Path) -> None:
 
 
 def run(frontend_url: str, output: Path, screenshot: Path, headed: bool) -> None:
+    base_url = frontend_url.rstrip("/")
+    contract_url = base_url + CONTRACT_ROUTE
     suffix = uuid4().hex
     email = f"contract-browser-{suffix}@example.test"
     password = "MatKhauAnToan123"
@@ -77,7 +81,7 @@ def run(frontend_url: str, output: Path, screenshot: Path, headed: bool) -> None
 
             page.on("response", record_bad_response)
             page.goto(
-                frontend_url.rstrip("/") + "/contract-reviews",
+                contract_url,
                 wait_until="networkidle",
                 timeout=120_000,
             )
@@ -134,9 +138,20 @@ def run(frontend_url: str, output: Path, screenshot: Path, headed: bool) -> None
 
             page.get_by_role("button", name="Đăng xuất", exact=True).click()
             page.get_by_role(
+                "button",
+                name="Đăng nhập",
+                exact=True,
+            ).first.wait_for(timeout=30_000)
+            page.locator(".top-navigation").get_by_role(
+                "button",
+                name="Rà soát hợp đồng",
+                exact=True,
+            ).click()
+            page.wait_for_url(contract_url, timeout=30_000)
+            page.get_by_role(
                 "heading",
                 name="Cần đăng nhập để rà soát hợp đồng",
-            ).wait_for()
+            ).wait_for(timeout=30_000)
             steps.append("PASS 7/8: logout returned UI to protected state")
 
             screenshot.parent.mkdir(parents=True, exist_ok=True)
@@ -181,7 +196,7 @@ def main() -> int:
 
     try:
         run(args.frontend_url, args.output, args.screenshot, args.headed)
-    except (AssertionError, RuntimeError, OSError) as exc:
+    except (AssertionError, RuntimeError, OSError, PlaywrightError) as exc:
         print(f"BROWSER E2E: FAIL: {exc}", file=sys.stderr)
         return 1
     print("BROWSER E2E: PASS")

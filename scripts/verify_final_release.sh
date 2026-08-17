@@ -56,6 +56,32 @@ if not settings.openrouter_api_key.strip():
 print("PASS: OpenRouter generation configuration is present")
 PY
 
+"$PYTHON_BIN" - <<'PY'
+from dotenv import dotenv_values
+from sqlalchemy.engine import make_url
+
+values = dotenv_values(".env")
+postgres_user = values.get("POSTGRES_USER") or "labor_law"
+postgres_password = values.get("POSTGRES_PASSWORD") or "change_this_local_password"
+postgres_db = values.get("POSTGRES_DB") or "labor_law_rag"
+database_url = values.get("DATABASE_URL_DOCKER") or (
+    "postgresql+psycopg://labor_law:change_this_local_password"
+    "@postgres:5432/labor_law_rag"
+)
+parsed = make_url(database_url)
+
+if (
+    parsed.username != postgres_user
+    or parsed.password != postgres_password
+    or parsed.database != postgres_db
+):
+    raise SystemExit(
+        "ERROR: POSTGRES_USER/POSTGRES_PASSWORD/POSTGRES_DB and "
+        "DATABASE_URL_DOCKER are inconsistent in .env."
+    )
+print("PASS: Docker PostgreSQL credentials are internally consistent")
+PY
+
 echo
 echo "===== 1. SOURCE INTEGRITY ====="
 git diff --check
@@ -170,20 +196,38 @@ fi
 "${COMPOSE[@]}" --profile tools build runtime-assets
 "${COMPOSE[@]}" --profile tools run --rm runtime-assets
 
-PYTHONPATH=".:backend:${PYTHONPATH:-}" "$PYTHON_BIN" \
+if PYTHONPATH=".:backend:${PYTHONPATH:-}" "$PYTHON_BIN" \
   -m backend.app.ingestion.index_qdrant \
-  --chunks "$RUNTIME_CHUNKS" \
-  --audit-summary "$RUNTIME_AUDIT" \
-  --collection "$RUNTIME_COLLECTION" \
-  --expected-chunks 804 \
-  --expected-sha256 "$RUNTIME_CHUNKS_SHA256" \
-  --dense-model intfloat/multilingual-e5-large \
-  --dense-vector-name dense \
-  --dense-size 1024 \
-  --sparse-model Qdrant/bm25 \
-  --sparse-vector-name sparse \
-  --resume \
-  --summary-output "$ARTIFACT_DIR/qdrant-index.json"
+    --chunks "$RUNTIME_CHUNKS" \
+    --audit-summary "$RUNTIME_AUDIT" \
+    --collection "$RUNTIME_COLLECTION" \
+    --expected-chunks 804 \
+    --expected-sha256 "$RUNTIME_CHUNKS_SHA256" \
+    --dense-model intfloat/multilingual-e5-large \
+    --dense-vector-name dense \
+    --dense-size 1024 \
+    --sparse-model Qdrant/bm25 \
+    --sparse-vector-name sparse \
+    --verify-only \
+    --summary-output "$ARTIFACT_DIR/qdrant-preflight.json"; then
+  echo "PASS: existing Qdrant collection is valid; skipping 804-chunk re-index"
+else
+  echo "Qdrant collection is missing or invalid; indexing canonical 804 chunks"
+  PYTHONPATH=".:backend:${PYTHONPATH:-}" "$PYTHON_BIN" \
+    -m backend.app.ingestion.index_qdrant \
+      --chunks "$RUNTIME_CHUNKS" \
+      --audit-summary "$RUNTIME_AUDIT" \
+      --collection "$RUNTIME_COLLECTION" \
+      --expected-chunks 804 \
+      --expected-sha256 "$RUNTIME_CHUNKS_SHA256" \
+      --dense-model intfloat/multilingual-e5-large \
+      --dense-vector-name dense \
+      --dense-size 1024 \
+      --sparse-model Qdrant/bm25 \
+      --sparse-vector-name sparse \
+      --resume \
+      --summary-output "$ARTIFACT_DIR/qdrant-index.json"
+fi
 
 PYTHONPATH=".:backend:${PYTHONPATH:-}" "$PYTHON_BIN" \
   -m backend.app.ingestion.index_qdrant \
@@ -216,6 +260,18 @@ PYTHONPATH=".:backend:${PYTHONPATH:-}" "$PYTHON_BIN" \
   --expected-sha256 "$RUNTIME_CHUNKS_SHA256" \
   --verify-only \
   --summary-output "$ARTIFACT_DIR/qdrant-alias-verify.json"
+
+# POSTGRES_PASSWORD only initializes a new volume. Keep an existing local
+# verification volume aligned with the current .env without deleting data.
+"${COMPOSE[@]}" exec -T postgres sh -lc \
+  'psql -v ON_ERROR_STOP=1 \
+    -U "$POSTGRES_USER" \
+    -d "$POSTGRES_DB" \
+    --set="db_user=$POSTGRES_USER" \
+    --set="db_password=$POSTGRES_PASSWORD"' <<'SQL'
+ALTER ROLE :"db_user" WITH PASSWORD :'db_password';
+SQL
+echo "PASS: PostgreSQL role password matches the current Compose environment"
 
 PYTHON_BIN="$PYTHON_BIN" bash scripts/verify_contract_review_e2e.sh \
   "$ARTIFACT_DIR/contract-review-docker-e2e.json"

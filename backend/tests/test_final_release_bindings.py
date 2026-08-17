@@ -75,3 +75,30 @@ def test_final_verifier_prepares_real_runtime_dependencies() -> None:
     assert "-m backend.app.ingestion.qdrant_alias" in verifier
     assert '--alias "$RUNTIME_ALIAS"' in verifier
     assert "settings.openrouter_api_key.strip()" in verifier
+    assert "Docker PostgreSQL credentials are internally consistent" in verifier
+    assert 'ALTER ROLE :"db_user" WITH PASSWORD :' in verifier
+    assert "qdrant-preflight.json" in verifier
+    assert "skipping 804-chunk re-index" in verifier
+
+
+def test_browser_verifier_checks_protected_route_after_logout() -> None:
+    browser_verifier = (
+        PROJECT_ROOT / "scripts/smoke_contract_review_browser.py"
+    ).read_text(encoding="utf-8")
+
+    assert 'CONTRACT_ROUTE = "/contract-reviews"' in browser_verifier
+    assert 'page.wait_for_url(contract_url, timeout=30_000)' in browser_verifier
+    assert 'name="Cần đăng nhập để rà soát hợp đồng"' in browser_verifier
+
+
+def test_browser_resume_reuses_only_verified_non_product_gates() -> None:
+    resume_verifier = (
+        PROJECT_ROOT / "scripts/resume_final_browser_verification.sh"
+    ).read_text(encoding="utf-8")
+
+    assert "635 passed, 3 skipped" in resume_verifier
+    assert "RUNTIME SMOKE: PASS" in resume_verifier
+    assert "git merge-base --is-ancestor" in resume_verifier
+    assert "product file changed after prior verification" in resume_verifier
+    assert "smoke_contract_review_browser.py" in resume_verifier
+    assert "FINAL VERIFICATION: PASS" in resume_verifier
