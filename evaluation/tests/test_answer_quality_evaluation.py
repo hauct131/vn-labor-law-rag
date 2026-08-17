@@ -184,6 +184,9 @@ def test_locked_dataset_rejects_multi_llm_only_labels() -> None:
                 "authority_review_status": "pending",
                 "source_corpus_release_id": "release-1",
                 "source_corpus_sha256": CORPUS_SHA256,
+                "source_corpus_path": "data/chunks.jsonl",
+                "source_dataset_path": "data/source.json",
+                "source_dataset_sha256": "b" * 64,
                 "questions": [
                     answerable_question(label_status="multi_llm_candidate")
                 ],
@@ -201,6 +204,9 @@ def test_dataset_rejects_unknown_schema_version() -> None:
                 "authority_review_status": "pending",
                 "source_corpus_release_id": "release-1",
                 "source_corpus_sha256": CORPUS_SHA256,
+                "source_corpus_path": "data/chunks.jsonl",
+                "source_dataset_path": "data/source.json",
+                "source_dataset_sha256": "b" * 64,
                 "questions": [answerable_question()],
             }
         )
@@ -225,6 +231,9 @@ def test_loader_accepts_valid_pending_candidate(tmp_path) -> None:
                 "authority_review_status": "pending",
                 "source_corpus_release_id": "release-1",
                 "source_corpus_sha256": CORPUS_SHA256,
+                "source_corpus_path": "data/chunks.jsonl",
+                "source_dataset_path": "data/source.json",
+                "source_dataset_sha256": "b" * 64,
                 "questions": [answerable_question()],
             },
             ensure_ascii=False,

@@ -21,7 +21,10 @@ The first implementation stage provides:
 - state rules that prevent multi-LLM consensus from being reported as legal
   authority approval.
 
-It does not yet call an LLM or create legal labels.
+The 20 existing held-out questions are migrated deterministically into a draft
+candidate file. The external panel can call explicitly selected OpenRouter
+models and create candidate labels, but it never enables benchmarking or locks
+a golden dataset.
 
 ## Dataset states
 
@@ -80,17 +83,124 @@ python3 -m evaluation.answer_quality.validate_dataset \
 Validation performs no network call, retrieval, generation, or write to the
 locked retrieval benchmark.
 
+Rebuild and verify the migrated 20-question candidate file:
+
+```bash
+python3 -m evaluation.answer_quality.migrate_candidates
+python3 -m evaluation.answer_quality.migrate_candidates --check
+```
+
+The migration fails instead of guessing when a source label cannot be mapped,
+when an evidence chunk is missing, or when the source/corpus hash changes.
+
+## Select current panel models
+
+No model version is hard-coded. Query OpenRouter's current model metadata and
+select at least three exact model IDs from distinct organizations. Only models
+reporting structured-output support and enough context are returned:
+
+```bash
+.venv-evaluation/bin/python -m \
+  evaluation.answer_quality.list_models \
+  --minimum-context 20000
+```
+
+Add `--free-only` only when all three selected organizations have a compatible
+free model. Availability is checked at run time and is not assumed.
+
+## Validate the multi-model plan without network generation
+
+Replace the values below with exact IDs returned by the live model query:
+
+```bash
+MODEL_A='organization-a/exact-model-id'
+MODEL_B='organization-b/exact-model-id'
+MODEL_C='organization-c/exact-model-id'
+
+.venv-evaluation/bin/python -m evaluation.answer_quality.panel \
+  --dataset data/evaluation/answer-quality-v1/candidate_questions.json \
+  --models "$MODEL_A" "$MODEL_B" "$MODEL_C" \
+  --dry-run
+```
+
+The expected result for the current candidate set is 20 questions and 60
+planned requests. Dry-run performs zero provider calls.
+
+## Run a real three-model smoke annotation
+
+Export the API key without printing or writing it to reports. Use a fresh
+artifact directory outside the repository:
+
+```bash
+export OPENROUTER_API_KEY='set-this-in-your-shell'
+
+SMOKE_DIR="$HOME/Downloads/answer-quality-panel-smoke"
+
+.venv-evaluation/bin/python -m evaluation.answer_quality.panel \
+  --dataset data/evaluation/answer-quality-v1/candidate_questions.json \
+  --models "$MODEL_A" "$MODEL_B" "$MODEL_C" \
+  --case-id labor_candidate_046 \
+  --workers 3 \
+  --output-dir "$SMOKE_DIR"
+```
+
+This makes three real requests. Inspect `manifest.json`, the three files under
+`records/labor_candidate_046/`, and `consensus-report.json`. Authorization
+headers and the API key are never persisted.
+
+## Run the full panel
+
+Only after the smoke run succeeds, use a separate output directory:
+
+```bash
+PANEL_DIR="$HOME/Downloads/answer-quality-panel-full"
+
+.venv-evaluation/bin/python -m evaluation.answer_quality.panel \
+  --dataset data/evaluation/answer-quality-v1/candidate_questions.json \
+  --models "$MODEL_A" "$MODEL_B" "$MODEL_C" \
+  --workers 3 \
+  --output-dir "$PANEL_DIR"
+```
+
+The runner stores one atomic record per case/model. Interrupted runs can be
+continued only with the same dataset, cases and model list:
+
+```bash
+.venv-evaluation/bin/python -m evaluation.answer_quality.panel \
+  --dataset data/evaluation/answer-quality-v1/candidate_questions.json \
+  --models "$MODEL_A" "$MODEL_B" "$MODEL_C" \
+  --workers 3 \
+  --output-dir "$PANEL_DIR" \
+  --resume
+```
+
+Provider failures, missing records, reference violations, or non-identical
+claim sets produce `needs_human_adjudication`. Even exact model agreement is
+only `multi_llm_candidate`; authority review remains `pending` and
+`golden_locked` remains `false`.
+
+## Provider references
+
+The adapter follows the current official OpenRouter contracts for
+`POST /api/v1/chat/completions`, strict `response_format=json_schema`,
+`provider.require_parameters=true`, and live model discovery:
+
+- <https://openrouter.ai/docs/api_reference/overview>
+- <https://openrouter.ai/docs/guides/features/structured-outputs>
+- <https://openrouter.ai/docs/guides/overview/models>
+
 Install and run the isolated test suite with:
 
 ```bash
 python3 -m venv .venv-evaluation
 .venv-evaluation/bin/python -m pip install \
-  -r evaluation/requirements.txt
+  -r evaluation/requirements.txt \
+  -c evaluation/requirements-lock.txt
 .venv-evaluation/bin/python -m pytest -q evaluation/tests
 ```
 
 ## Next stage
 
-The next stage migrates the existing 20 held-out candidates without inventing
-missing claims, adds negative categories, and creates independent multi-LLM
-annotation files. Legal labels remain pending until human adjudication.
+The next stage adds reviewed out-of-scope, insufficient-evidence and
+false-premise candidates, then provides a human adjudication sheet. Legal
+labels remain pending until that adjudication is completed.

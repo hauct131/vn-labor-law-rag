@@ -1,0 +1,597 @@
+{
+  "schema_version": "answer-quality-dataset-v1",
+  "dataset_status": "draft_candidate",
+  "locked": false,
+  "authority_review_status": "pending",
+  "source_corpus_release_id": "labor-law-canonical-word-20260804-164432-candidate",
+  "source_corpus_sha256": "fdbec539efbfb3f4aa3cb3962046321e3a402150d93516ef4256934972c70307",
+  "source_corpus_path": "data/releases/labor-law-canonical-word-20260804-164432-candidate/canonical_chunks.jsonl",
+  "source_dataset_path": "data/evaluation/heldout_20_review_candidate.json",
+  "source_dataset_sha256": "e47d6fa52e7fa99f3949f4de5fe5efcccf92f401597fed72f42528cf34b1fa8d",
+  "questions": [
+    {
+      "id": "labor_candidate_046",
+      "question": "Đối với công việc trong hầm lò, trách nhiệm của người sử dụng lao động gồm những nghĩa vụ cụ thể nào?",
+      "category": "working_time_rest",
+      "question_type": "direct_rule",
+      "difficulty": "easy",
+      "document_number": "04/2021/TT-BCT",
+      "document_title": "Thông tư số 04/2021/TT-BCT quy định về thời giờ làm việc, thời giờ nghỉ ngơi đối với người lao động làm các công việc trong hầm lò",
+      "retrieval_label_origin": "question_derived_from_cited_article",
+      "expected_status": "answerable",
+      "expected_article_codes": [
+        "20.2.TT.3.8"
+      ],
+      "expected_article_ids": [
+        "vn:04-2021-tt-bct:article:8"
+      ],
+      "evidence_chunk_ids": [
+        "c04d9569-184f-5daa-9c59-dd53087c9995"
+      ],
+      "evidence_excerpt": "1. Quy định cụ thể ca làm việc, thời giờ làm việc, thời giờ nghỉ ngơi của các công việc trong hầm lò tại nội quy lao động và thông báo cho người lao động theo quy định của pháp luật. 2. Hàng năm, báo cáo Bộ Công Thương theo định kỳ trước ngày 15 tháng 01 và báo cáo đột xuất trong trường hợp có yêu cầu của cơ quan có thẩm quyền về tình hình thực hiện các quy định tại Thông tư này.",
+      "required_claims": [],
+      "forbidden_claims": [],
+      "label_status": "pending_human_extraction",
+      "authority_review_status": "pending",
+      "reviewer": "",
+      "review_notes": "",
+      "benchmark_enabled": false
+    },
+    {
+      "id": "labor_candidate_047",
+      "question": "Trình tự, thủ tục đề nghị việc sử dụng người chưa đủ 13 tuổi làm việc được thực hiện theo các bước nào?",
+      "category": "wage_bonus",
+      "question_type": "numeric_or_deadline",
+      "difficulty": "medium",
+      "document_number": "09/2020/TT-BLĐTBXH",
+      "document_title": "Thông tư số 09/2020/TT-BLĐTBXH Quy định chi tiết và hướng dẫn thi hành một số điều của Bộ luật Lao động về lao động chưa thành niên",
+      "retrieval_label_origin": "question_derived_from_cited_article",
+      "expected_status": "answerable",
+      "expected_article_codes": [
+        "20.2.TT.1.7"
+      ],
+      "expected_article_ids": [
+        "vn:09-2020-tt-bldtbxh:article:7"
+      ],
+      "evidence_chunk_ids": [
+        "3b91bfb1-e6c6-52d1-ae05-3f4101ef5169"
+      ],
+      "evidence_excerpt": "1. Khi có nhu cầu sử dụng người chưa đủ 13 tuổi làm việc, người sử dụng lao động gửi trực tiếp hoặc qua đường bưu điện hoặc trực tuyến 01 bộ hồ sơ đối với từng người chưa đủ 13 tuổi làm việc quy định tại Điều 6 của Thông tư này đến Sở Lao động - Thương binh và Xã hội quy định tại Điều 5 của Thông tư này. 2. Sở Lao động - Thương binh và Xã hội tiếp nhận hồ sơ đề nghị việc sử dụng người chưa đủ 13 tuổi làm việc khi có đủ các thành phần hồ sơ quy định tại Điều 6 của Thông tư này. 3. Trong thời hạn 10 ngày làm việc kể từ ngày nhận đủ hồ sơ theo quy định tại khoản 2 Điều này, Sở Lao động - Thương binh và Xã hội phối hợp với các cơ quan, tổ chức có liên quan tiến hành xác minh thông tin (nếu cần), thẩm định hồ sơ và trả lời bằng văn bản cho người sử dụng lao động việc đồng ý sử dụng người chưa đủ 13 tuổi làm việc theo Mẫu số 04 tại Phụ lục I ban hành kèm theo Thông tư này. Trường hợp không đồng ý việc sử dụng người chưa đủ 13 tuổi làm việc, Sở Lao động - Thương binh và Xã hội phải có văn bản trả lời nêu rõ lý do, gửi người sử dụng lao động. Chương III DANH MỤC NGHỀ, CÔNG VIỆC, NƠI LÀM VIỆC ÁP DỤNG ĐỐI VỚI LAO ĐỘNG CHƯA THÀNH NIÊN",
+      "required_claims": [],
+      "forbidden_claims": [],
+      "label_status": "pending_human_extraction",
+      "authority_review_status": "pending",
+      "reviewer": "",
+      "review_notes": "",
+      "benchmark_enabled": false
+    },
+    {
+      "id": "labor_candidate_048",
+      "question": "Nội dung chủ yếu của hợp đồng lao động được pháp luật lao động quy định như thế nào?",
+      "category": "foreign_workers",
+      "question_type": "numeric_or_deadline",
+      "difficulty": "medium",
+      "document_number": "10/2020/TT-BLĐTBXH",
+      "document_title": "Thông tư số 10/2020/TT-BLĐTBXH Quy định chi tiết và hướng dẫn thi hành một số điều, khoản sau đây của Bộ luật Lao động về nội dung của Hợp đồng lao động, hội đồng thương lượng tập thể và nghề, công việc có ảnh hưởng xấu tới chức năng sinh sản, nuôi con",
+      "retrieval_label_origin": "question_derived_from_cited_article",
+      "expected_status": "answerable",
+      "expected_article_codes": [
+        "20.2.TT.2.3"
+      ],
+      "expected_article_ids": [
+        "vn:10-2020-tt-bldtbxh:article:3"
+      ],
+      "evidence_chunk_ids": [
+        "719556b8-c973-51eb-a6cb-67baba9c6c78",
+        "be8377c0-ab3b-5b2c-9979-ceef1d9d5e0e",
+        "355ce729-5229-50c7-a997-b1ebb3a2f99c",
+        "d9fe49ab-7230-57f4-96c0-fae707e5e448",
+        "52b99d0e-cc32-5b2c-8ecb-aeaa748a0638",
+        "23190da7-e444-5187-9af0-d7e20db2420d",
+        "062bea11-a1f6-53fa-93e5-458b02127e00",
+        "9b734884-f4c4-585d-8b7b-7d7dc6bb8a53",
+        "e9278de8-62e5-5161-819d-0d23d089cfbc",
+        "3a482c5f-3265-5478-9b4b-de5d59980d8a",
+        "94d21e89-1cba-5cae-9930-10098c313bc5"
+      ],
+      "evidence_excerpt": "Nội dung chủ yếu phải có của hợp đồng lao động theo khoản 1 Điều 21 của Bộ luật Lao động được quy định như sau: 1. Thông tin về tên, địa chỉ của người sử dụng lao động và họ tên, chức danh của người giao kết hợp đồng lao động bên phía người sử dụng lao động được quy định như sau: a) Tên của người sử dụng lao động: đối với doanh nghiệp, cơ quan, tổ chức, hợp tác xã, liên hiệp hợp tác xã thì lấy theo tên của doanh nghiệp, cơ quan, tổ chức, hợp tác xã, liên hiệp hợp tác xã ghi trong giấy chứng nhận đăng ký doanh nghiệp, hợp tác xã, liên hiệp hợp tác xã hoặc giấy chứng nhận đăng ký đầu tư hoặc văn bản chấp thuận chủ trương đầu tư hoặc quyết định thành lập cơ quan, tổ chức; đối với tổ hợp tác thì lấy theo tên tổ hợp tác ghi trong hợp đồng hợp tác; đối với hộ gia đình, cá nhân thì lấy theo họ tên của người đại diện hộ gia đình, cá nhân ghi trong Căn cước công dân hoặc Chứng minh nhân dân hoặc hộ chiếu được cấp; b) Địa chỉ của người sử dụng lao động: đối với doanh nghiệp, cơ quan, tổ chức, hợp tác xã, liên hiệp hợp tác xã thì lấy theo địa chỉ ghi trong giấy chứng nhận đăng ký doanh nghiệp, hợp tác xã, liên hiệp hợp tác xã hoặc giấy chứng nhận đăng ký đầu tư hoặc văn bản chấp thuận chủ trương đầu tư hoặc quyết định thành lập cơ quan, tổ chức; đối với tổ hợp tác thì lấy theo địa chỉ trong hợp đồng hợp tác; đối với hộ gia đình, cá nhân thì lấy theo địa chỉ nơi cư trú của hộ gia đình, cá nhân đó; số điện thoại, địa chỉ thư điện tử (nếu có); c) Họ tên, chức danh của người giao kết hợp đồng lao động bên phía người sử dụng lao động: ghi theo họ tên, chức danh của người có thẩm quyền giao",
+      "required_claims": [],
+      "forbidden_claims": [],
+      "label_status": "pending_human_extraction",
+      "authority_review_status": "pending",
+      "reviewer": "",
+      "review_notes": "",
+      "benchmark_enabled": false
+    },
+    {
+      "id": "labor_candidate_049",
+      "question": "Đối với vận hành, bảo dưỡng đường ống và công trình khí, trách nhiệm của người sử dụng lao động gồm những nghĩa vụ cụ thể nào?",
+      "category": "wage_bonus",
+      "question_type": "direct_rule",
+      "difficulty": "easy",
+      "document_number": "12/2022/TT-BCT",
+      "document_title": "Thông tư số 12/2022/TT-BCT quy định về thời giờ làm việc, thời giờ nghỉ ngơi đối với người lao động làm công việc vận hành, bảo dưỡng, sửa chữa hệ thống đường ống phân phối khí và các công trình khí.",
+      "retrieval_label_origin": "question_derived_from_cited_article",
+      "expected_status": "answerable",
+      "expected_article_codes": [
+        "20.2.TT.6.9"
+      ],
+      "expected_article_ids": [
+        "vn:12-2022-tt-bct:article:9"
+      ],
+      "evidence_chunk_ids": [
+        "bf598857-dd22-57c6-8cfe-22f9e6b6bb3f"
+      ],
+      "evidence_excerpt": "1. Người sử dụng lao động có trách nhiệm quy định cụ thể ca làm việc và phiên làm việc của người lao động trong Nội quy lao động và thông báo cho người lao động trước khi đến làm việc theo đúng quy định của pháp luật. 2. Hàng năm, trước ngày 15 tháng 01 báo cáo Bộ Công Thương tình hình thực hiện Thông tư này và báo cáo đột xuất trong trường hợp có yêu cầu của cơ quan có thẩm quyền.",
+      "required_claims": [],
+      "forbidden_claims": [],
+      "label_status": "pending_human_extraction",
+      "authority_review_status": "pending",
+      "reviewer": "",
+      "review_notes": "",
+      "benchmark_enabled": false
+    },
+    {
+      "id": "labor_candidate_050",
+      "question": "Phân quyền nhiệm vụ quản lý nhà nước về lao động, tiền lương áp dụng với người sử dụng lao động và người lao động làm việc theo hợp đồng lao động được pháp luật lao động quy định như thế nào?",
+      "category": "working_time_rest",
+      "question_type": "direct_rule",
+      "difficulty": "easy",
+      "document_number": "128/2025/NĐ-CP",
+      "document_title": "Nghị định số 128/2025/NĐ-CP Quy định về phân quyền, phân cấp trong quản lý nhà nước lĩnh vực nội vụ",
+      "retrieval_label_origin": "question_derived_from_cited_article",
+      "expected_status": "answerable",
+      "expected_article_codes": [
+        "NĐ128.7"
+      ],
+      "expected_article_ids": [
+        "vn:128-2025-nd-cp:article:7"
+      ],
+      "evidence_chunk_ids": [
+        "7a5f53d2-aa2a-51ca-bbf8-2f4d46fa236a"
+      ],
+      "evidence_excerpt": "1. Nhiệm vụ, quyền hạn quy định chức năng, nhiệm vụ, cơ cấu tổ chức và hoạt động của Hội đồng tiền lương quốc gia theo quy định tại khoản 3 Điều 92 của Bộ luật Lao động do Thủ tướng Chính phủ thực hiện. 2. Nhiệm vụ thông báo cụ thể ngày nghỉ lễ, tết hằng năm theo quy định tại khoản 3 Điều 112 của Bộ luật Lao động do Bộ trưởng Bộ Nội vụ thực hiện (để áp dụng cán bộ, công chức, viên chức và người lao động làm việc trong cơ quan hành chính, đơn vị sự nghiệp, tổ chức chính trị, tổ chức chính trị - xã hội).",
+      "required_claims": [],
+      "forbidden_claims": [],
+      "label_status": "pending_human_extraction",
+      "authority_review_status": "pending",
+      "reviewer": "",
+      "review_notes": "",
+      "benchmark_enabled": false
+    },
+    {
+      "id": "labor_candidate_051",
+      "question": "Thẩm quyền, trình tự, thủ tục cử hòa giải viên lao động được pháp luật lao động quy định như thế nào?",
+      "category": "other_labor_rule",
+      "question_type": "numeric_or_deadline",
+      "difficulty": "medium",
+      "document_number": "129/2025/NĐ-CP",
+      "document_title": "Nghị định số 129/2025/NĐ-CP Quy định về phân định thẩm quyền của chính quyền địa phương 02 cấp trong lĩnh vực quản lý nhà nước của Bộ Nội vụ",
+      "retrieval_label_origin": "question_derived_from_cited_article",
+      "expected_status": "answerable",
+      "expected_article_codes": [
+        "NĐ129.75"
+      ],
+      "expected_article_ids": [
+        "vn:129-2025-nd-cp:article:75"
+      ],
+      "evidence_chunk_ids": [
+        "61f70170-f93d-5e79-b64f-860aae89ccbf"
+      ],
+      "evidence_excerpt": "1. Sở Nội vụ hoặc cơ quan chuyên môn thực hiện nhiệm vụ về lĩnh vực nội vụ thuộc Ủy ban nhân dân cấp xã thực hiện việc cử hòa giải viên lao động theo quy định tại khoản 1 Điều 95 Nghị định số 145/2020/NĐ-CP. 2. Trình tự, thủ tục cử hòa giải viên lao động theo quy định tại khoản 2 Điều 95 Nghị định số 145/2020/NĐ-CP như sau: a) Đơn yêu cầu giải quyết tranh chấp lao động, tranh chấp về hợp đồng đào tạo nghề và yêu cầu hỗ trợ phát triển quan hệ lao động được gửi đến Sở Nội vụ hoặc cơ quan chuyên môn thực hiện nhiệm vụ về lĩnh vực nội vụ thuộc Ủy ban nhân dân cấp xã hoặc hòa giải viên lao động. Trường hợp hòa giải viên lao động trực tiếp nhận đơn yêu cầu từ đối tượng tranh chấp đề nghị giải quyết thì trong thời hạn 12 giờ kể từ khi tiếp nhận đơn, hòa giải viên lao động phải chuyển cho Sở Nội vụ hoặc cơ quan chuyên môn thực hiện nhiệm vụ về lĩnh vực nội vụ thuộc Ủy ban nhân dân cấp xã đang quản lý hòa giải viên lao động để phân loại xử lý; b) Trong thời hạn 05 ngày làm việc kể từ ngày nhận được yêu cầu, Sở Nội vụ hoặc cơ quan chuyên môn thực hiện nhiệm vụ về lĩnh vực nội vụ thuộc Ủy ban nhân dân cấp xã có trách nhiệm phân loại và có văn bản cử hòa giải viên lao động giải quyết theo quy định. Trường hợp tiếp nhận đơn từ hòa giải viên lao động theo quy định tại điểm a khoản này thì trong thời hạn 12 giờ kể từ khi tiếp nhận đơn, Sở Nội vụ hoặc cơ quan chuyên môn thực hiện nhiệm vụ về lĩnh vực nội vụ thuộc Ủy ban nhân dân cấp xã ra văn bản cử hòa giải viên lao động theo quy định tại điểm b khoản 2 Điều 95 Nghị định số 145/2020/NĐ-CP. 3. Sở Nội vụ hoặc cơ quan chuyên môn thực hiện nh",
+      "required_claims": [],
+      "forbidden_claims": [],
+      "label_status": "pending_human_extraction",
+      "authority_review_status": "pending",
+      "reviewer": "",
+      "review_notes": "",
+      "benchmark_enabled": false
+    },
+    {
+      "id": "labor_candidate_052",
+      "question": "Nghỉ hưu ở tuổi thấp hơn tuổi nghỉ hưu trong điều kiện lao động bình thường được pháp luật lao động quy định như thế nào?",
+      "category": "retirement",
+      "question_type": "exception_or_scope",
+      "difficulty": "hard",
+      "document_number": "135/2020/NĐ-CP",
+      "document_title": "Nghị định số 135/2020/NĐ-CP Quy định về tuổi nghỉ hưu",
+      "retrieval_label_origin": "question_derived_from_cited_article",
+      "expected_status": "answerable",
+      "expected_article_codes": [
+        "20.2.NĐ.2.5"
+      ],
+      "expected_article_ids": [
+        "vn:135-2020-nd-cp:article:5"
+      ],
+      "evidence_chunk_ids": [
+        "b2af3abb-5a18-56ae-be71-fbebb9f41e54",
+        "5b610cb8-92bd-5f52-9cd0-d2c66cba5f6a"
+      ],
+      "evidence_excerpt": "Nghỉ hưu ở tuổi thấp hơn tuổi nghỉ hưu trong điều kiện lao động bình thường của người lao động theo khoản 3 Điều 169 của Bộ luật Lao động được quy định cụ thể như sau: 1. Người lao động thuộc các trường hợp dưới đây có thể nghỉ hưu ở tuổi thấp hơn nhưng không quá 05 tuổi so với tuổi nghỉ hưu quy định tại Điều 4 của Nghị định này tại thời điểm nghỉ hưu, trừ trường hợp pháp luật có quy định khác: a) Người lao động có từ đủ 15 năm trở lên làm nghề, công việc nặng nhọc, độc hại, nguy hiểm hoặc đặc biệt nặng nhọc, độc hại, nguy hiểm thuộc danh mục do Bộ Lao động - Thương binh và Xã hội ban hành. b) Người lao động có từ đủ 15 năm trở lên làm việc ở vùng có điều kiện kinh tế - xã hội đặc biệt khó khăn, bao gồm cả thời gian làm việc ở nơi có phụ cấp khu vực hệ số 0,7 trở lên trước ngày 01 tháng 01 năm 2021. Bộ trưởng Bộ Lao động - Thương binh và Xã hội ban hành danh mục vùng có điều kiện kinh tế - xã hội đặc biệt khó khăn. c) Người lao động bị suy giảm khả năng lao động từ 61% trở lên. d) Người lao động có tổng thời gian làm nghề, công việc quy định tại điểm a và thời gian làm việc ở vùng quy định tại điểm b khoản này từ đủ 15 năm trở lên. 2. Tuổi nghỉ hưu thấp nhất của người lao động quy định tại khoản 1 Điều này được thực hiện theo bảng dưới đây: Lao động nam Lao động nữ Năm nghỉ hưu Tuổi nghỉ hưu thấp nhất Năm nghỉ hưu Tuổi nghỉ hưu thấp nhất 2021 55 tuổi 3 tháng 2021 50 tuổi 4 tháng 2022 55 tuổi 6 tháng 2022 50 tuổi 8 tháng 2023 55 tuổi 9 tháng 2023 51 tuổi 2024 56 tuổi 2024 51 tuổi 4 tháng 2025 56 tuổi 3 tháng 2025 51 tuổi 8 tháng 2026 56 tuổi 6 tháng 2026 52 tuổi 2027 56 tuổi",
+      "required_claims": [],
+      "forbidden_claims": [],
+      "label_status": "pending_human_extraction",
+      "authority_review_status": "pending",
+      "reviewer": "",
+      "review_notes": "",
+      "benchmark_enabled": false
+    },
+    {
+      "id": "labor_candidate_053",
+      "question": "Một số quy định riêng đối với lao động là người giúp việc gia đình được pháp luật lao động quy định như thế nào?",
+      "category": "retirement",
+      "question_type": "exception_or_scope",
+      "difficulty": "hard",
+      "document_number": "145/2020/NĐ-CP",
+      "document_title": "Nghị định số 145/2020/NĐ-CP Quy định chi tiết và hướng dẫn thi hành một số điều của Bộ luật Lao động về điều kiện lao động và quan hệ lao động",
+      "retrieval_label_origin": "question_derived_from_cited_article",
+      "expected_status": "answerable",
+      "expected_article_codes": [
+        "20.2.NĐ.3.89"
+      ],
+      "expected_article_ids": [
+        "vn:145-2020-nd-cp:article:89"
+      ],
+      "evidence_chunk_ids": [
+        "fca048c3-4124-576b-84b6-fb50c164e778",
+        "eca5edfc-c9ec-520a-bdf7-c9fea3157d6a",
+        "e2bb8871-4d8d-5a64-ac00-45de30088b42",
+        "3178fa85-35a1-5895-92be-d3c239198632",
+        "922ba47e-66fe-582a-aea2-db3259618c9a",
+        "234e8211-1436-57de-b13e-0931050f1ebe",
+        "ca990485-578c-569f-b1d5-939f8878349c",
+        "9ab06f13-749a-53e1-97ae-ec56862ce314",
+        "72fbcc80-4f83-55f2-b7a5-9d60f639dabf",
+        "d9a19cb6-5802-5837-af9f-6aaa4875c602"
+      ],
+      "evidence_excerpt": "1. Quy định về hình thức hợp đồng lao động theo Điều 14 và khoản 1 Điều 162; nghĩa vụ cung cấp thông tin khi giao kết hợp đồng lao động theo Điều 16; nội dung hợp đồng lao động theo khoản 1 Điều 21; đơn phương chấm dứt hợp đồng lao động theo khoản 2 Điều 35, khoản 3 Điều 36 và khoản 2 Điều 162; nghĩa vụ khi đơn phương chấm dứt hợp đồng lao động trái pháp luật theo Điều 40, Điều 41; trợ cấp thôi việc theo Điều 46 của Bộ luật Lao động được thực hiện như sau: a) Khi nhận người lao động vào làm việc thì người sử dụng lao động phải ký kết hợp đồng lao động với người lao động. Hình thức hợp đồng lao động ký kết phải bằng văn bản theo quy định tại khoản 1 Điều 14 và khoản 1 Điều 162 của Bộ luật Lao động; b) Trước khi ký kết hợp đồng lao động, người lao động và người sử dụng lao động có nghĩa vụ cung cấp thông tin theo quy định tại Điều 16 của Bộ luật Lao động, đồng thời người sử dụng lao động phải cung cấp rõ các thông tin về phạm vi công việc phải làm, điều kiện ăn, ở của người lao động tại gia đình người sử dụng lao động và những thông tin cần thiết khác liên quan đến việc bảo đảm an toàn sức khỏe trong việc thực hiện công việc mà người lao động yêu cầu; c) Nội dung hợp đồng lao động theo quy định tại khoản 1 Điều 21 của Bộ luật Lao động. Căn cứ Mẫu số 01/PLV Phụ lục V ban hành kèm theo Nghị định này, người sử dụng lao động và người lao động có trách nhiệm thỏa thuận cụ thể các quyền, nghĩa vụ và lợi ích của mỗi bên trong hợp đồng lao động để thực hiện phù hợp với điều kiện thực tế nhưng phải bảo đảm các nội dung chủ yếu quy định tại khoản 1 Điều 21 của Bộ luật Lao động; d) Tron",
+      "required_claims": [],
+      "forbidden_claims": [],
+      "label_status": "pending_human_extraction",
+      "authority_review_status": "pending",
+      "reviewer": "",
+      "review_notes": "",
+      "benchmark_enabled": false
+    },
+    {
+      "id": "labor_candidate_054",
+      "question": "Hồ sơ đăng ký dự tuyển của người lao động Việt Nam phải có những giấy tờ hoặc nội dung nào?",
+      "category": "other_labor_rule",
+      "question_type": "exception_or_scope",
+      "difficulty": "hard",
+      "document_number": "152/2020/NĐ-CP",
+      "document_title": "Nghị định số 152/2020/NĐ-CP Quy định về người lao động nước ngoài làm việc tại Việt Nam và tuyển dụng, quản lý người lao động Việt Nam làm việc cho tổ chức, cá nhân nước ngoài tại Việt Nam",
+      "retrieval_label_origin": "question_derived_from_cited_article",
+      "expected_status": "answerable",
+      "expected_article_codes": [
+        "20.2.NĐ.4.23"
+      ],
+      "expected_article_ids": [
+        "vn:152-2020-nd-cp:article:23"
+      ],
+      "evidence_chunk_ids": [
+        "edb58bcd-79d7-53e1-bb4f-bc13092f3342"
+      ],
+      "evidence_excerpt": "1. Phiếu đăng ký dự tuyển lao động theo Mẫu số 01/PLII Phụ lục II ban hành kèm theo Nghị định này. 2. Bản sao có chứng thực của một trong các giấy tờ sau: giấy khai sinh hoặc chứng minh nhân dân hoặc căn cước công dân. 3. Giấy chứng nhận sức khỏe hoặc giấy khám sức khỏe của cơ sở y tế có thẩm quyền cấp có giá trị trong thời hạn 12 tháng tính đến thời điểm nộp hồ sơ. 4. Bản sao có chứng thực văn bằng, chứng chỉ về trình độ chuyên môn kỹ thuật, nghiệp vụ, ngoại ngữ liên quan đến công việc mà người lao động đăng ký dự tuyển. Nếu của nước ngoài thì phải được hợp pháp hóa lãnh sự, trừ trường hợp được miễn hợp pháp hỏa lãnh sự theo điều ước quốc tế mà nước Cộng hòa xã hội chủ nghĩa Việt Nam và nước ngoài liên quan đều là thành viên hoặc theo nguyên tắc có đi có lại hoặc theo quy định của pháp luật; dịch ra tiếng Việt và chứng thực theo quy định của pháp luật Việt Nam.",
+      "required_claims": [],
+      "forbidden_claims": [],
+      "label_status": "pending_human_extraction",
+      "authority_review_status": "pending",
+      "reviewer": "",
+      "review_notes": "",
+      "benchmark_enabled": false
+    },
+    {
+      "id": "labor_candidate_055",
+      "question": "Đối với ủy quyền quản lý lao động tại khu công nghiệp, khu kinh tế, nguyên tắc ủy quyền được quy định như thế nào?",
+      "category": "other_labor_rule",
+      "question_type": "condition_or_procedure",
+      "difficulty": "medium",
+      "document_number": "17/2023/TT-BLĐTBXH",
+      "document_title": "Thông tư số 17/2023/TT-BLĐTBXH Hướng dẫn việc ủy quyền thực hiện nhiệm vụ quản lý nhà nước về lao động trong các khu công nghiệp, khu kinh tế",
+      "retrieval_label_origin": "question_derived_from_cited_article",
+      "expected_status": "answerable",
+      "expected_article_codes": [
+        "20.2.TT.8.4"
+      ],
+      "expected_article_ids": [
+        "vn:17-2023-tt-bldtbxh:article:4"
+      ],
+      "evidence_chunk_ids": [
+        "0729de37-93c0-59fe-a2e2-63e76ea0c56b"
+      ],
+      "evidence_excerpt": "1. Đảm bảo hiệu lực, hiệu quả công tác quản lý nhà nước về lao động trong khu công nghiệp. 2. Tạo điều kiện thuận lợi cho hoạt động sản xuất kinh doanh của doanh nghiệp trong khu công nghiệp. 3. Nội dung ủy quyền do cơ quan ủy quyền và cơ quan được ủy quyền thống nhất và phải phù hợp với tình hình thực tế của địa phương và tổ chức bộ máy làm công tác lao động của Ban quản lý khu công nghiệp.",
+      "required_claims": [],
+      "forbidden_claims": [],
+      "label_status": "pending_human_extraction",
+      "authority_review_status": "pending",
+      "reviewer": "",
+      "review_notes": "",
+      "benchmark_enabled": false
+    },
+    {
+      "id": "labor_candidate_056",
+      "question": "Đối với công việc thời vụ và gia công theo đơn đặt hàng, trách nhiệm của người sử dụng lao động gồm những nghĩa vụ cụ thể nào?",
+      "category": "working_time_rest",
+      "question_type": "numeric_or_deadline",
+      "difficulty": "medium",
+      "document_number": "18/2021/TT-BLĐTBXH",
+      "document_title": "Thông tư số 18/2021/TT-BLĐTBXH Quy định về thời giờ làm việc, thời giờ nghỉ ngơi đối với người lao động làm các công việc sản xuất có tính thời vụ, công việc gia công theo đơn đặt hàng",
+      "retrieval_label_origin": "question_derived_from_cited_article",
+      "expected_status": "answerable",
+      "expected_article_codes": [
+        "20.2.TT.4.8"
+      ],
+      "expected_article_ids": [
+        "vn:18-2021-tt-bldtbxh:article:8"
+      ],
+      "evidence_chunk_ids": [
+        "2dd8090c-1b52-510d-9a6f-001c066e032b"
+      ],
+      "evidence_excerpt": "1. Căn cứ vào kế hoạch sản xuất, kinh doanh, hằng năm chủ động quyết định áp dụng chế độ thời giờ làm việc, thời giờ nghỉ ngơi bình thường theo quy định của Bộ luật Lao động hoặc áp dụng chế độ thời giờ làm việc quy định tại Thông tư này. 2. Trường hợp quyết định thực hiện chế độ thời giờ làm việc, thời giờ nghỉ ngơi theo Thông tư này thì phải thực hiện đầy đủ các nội dung sau: a) Lập và điều chỉnh kế hoạch thời giờ làm việc, thời giờ nghỉ ngơi trong năm theo mẫu tại Phụ lục 1 ban hành kèm theo Thông tư này. Khi lập, điều chỉnh kế hoạch, phải tham khảo ý kiến của tổ chức đại diện người lao động tại cơ sở. Tham khảo các ví dụ tại Phụ lục 2 ban hành kèm theo Thông tư này trong quá trình xây dựng và tổ chức triển khai kế hoạch thời giờ làm việc, thời giờ nghỉ ngơi; b) Thông báo kế hoạch, kế hoạch điều chỉnh thời giờ làm việc, thời giờ nghỉ ngơi trong phạm vi doanh nghiệp, cơ quan, tổ chức, hợp tác xã, hộ gia đình, cá nhân để người lao động biết, trước khi thực hiện ít nhất 30 ngày; thỏa thuận với người lao động khi làm thêm giờ theo quy định của Bộ luật Lao động; c) Trả lương cho người lao động theo hợp đồng lao động và các quy định của pháp luật lao động về tiền lương; d) Báo cáo định kỳ hằng năm về Sở Lao động - Thương binh và Xã hội địa phương về việc thực hiện Thông tư này trong báo cáo về công tác an toàn, vệ sinh lao động.",
+      "required_claims": [],
+      "forbidden_claims": [],
+      "label_status": "pending_human_extraction",
+      "authority_review_status": "pending",
+      "reviewer": "",
+      "review_notes": "",
+      "benchmark_enabled": false
+    },
+    {
+      "id": "labor_candidate_057",
+      "question": "Đối với Bộ luật Lao động, trách nhiệm khi chấm dứt hợp đồng lao động gồm những nghĩa vụ cụ thể nào?",
+      "category": "wage_bonus",
+      "question_type": "exception_or_scope",
+      "difficulty": "hard",
+      "document_number": "18/VBHN-VPQH",
+      "document_title": "Bộ luật Lao động (văn bản hợp nhất số 18/VBHN-VPQH)",
+      "retrieval_label_origin": "question_derived_from_cited_article",
+      "expected_status": "answerable",
+      "expected_article_codes": [
+        "20.2.LQ.48"
+      ],
+      "expected_article_ids": [
+        "vn:bll-2019:article:48"
+      ],
+      "evidence_chunk_ids": [
+        "d06103cf-d8ad-5921-8a60-db5468efcd87"
+      ],
+      "evidence_excerpt": "1. Trong thời hạn 14 ngày làm việc kể từ ngày chấm dứt hợp đồng lao động, hai bên có trách nhiệm thanh toán đầy đủ các khoản tiền có liên quan đến quyền lợi của mỗi bên, trừ trường hợp sau đây có thể kéo dài nhưng không được quá 30 ngày: a) Người sử dụng lao động không phải là cá nhân chấm dứt hoạt động; b) Người sử dụng lao động thay đổi cơ cấu, công nghệ hoặc vì lý do kinh tế; c) Chia, tách, hợp nhất, sáp nhập; bán, cho thuê, chuyển đổi loại hình doanh nghiệp; chuyển nhượng quyền sở hữu, quyền sử dụng tài sản của doanh nghiệp, hợp tác xã; d) Do thiên tai, hỏa hoạn, địch họa hoặc dịch bệnh nguy hiểm. 2. Tiền lương, bảo hiểm xã hội, bảo hiểm y tế, bảo hiểm thất nghiệp, trợ cấp thôi việc và các quyền lợi khác của người lao động theo thỏa ước lao động tập thể, hợp đồng lao động được ưu tiên thanh toán trong trường hợp doanh nghiệp, hợp tác xã bị chấm dứt hoạt động, bị giải thể, phá sản. 3. Người sử dụng lao động có trách nhiệm sau đây: a) Hoàn thành thủ tục xác nhận thời gian đóng bảo hiểm xã hội, bảo hiểm thất nghiệp và trả lại cùng với bản chính giấy tờ khác nếu người sử dụng lao động đã giữ của người lao động; b) Cung cấp bản sao các tài liệu liên quan đến quá trình làm việc của người lao động nếu người lao động có yêu cầu. Chi phí sao, gửi tài liệu do người sử dụng lao động trả.",
+      "required_claims": [],
+      "forbidden_claims": [],
+      "label_status": "pending_human_extraction",
+      "authority_review_status": "pending",
+      "reviewer": "",
+      "review_notes": "",
+      "benchmark_enabled": false
+    },
+    {
+      "id": "labor_candidate_058",
+      "question": "Danh mục vùng có điều kiện kinh tế - xã hội đặc biệt khó khăn để làm căn cứ xác định các trường hợp có thể nghỉ hưu ở tuổi thấp hơn tuổi nghỉ hưu trong điều kiện lao động bình thường được pháp luật lao động quy định như thế nào?",
+      "category": "retirement",
+      "question_type": "condition_or_procedure",
+      "difficulty": "medium",
+      "document_number": "19/2021/TT-BLĐTBXH",
+      "document_title": "Thông tư số 19/2021/TT-BLĐTBXH Ban hành Danh mục vùng có điều kiện kinh tế - xã hội đặc biệt khó khăn làm cơ sở xác định các trường hợp có thể nghỉ hưu ở tuổi thấp hơn tuổi nghỉ hưu trong điều kiện lao động bình thường.",
+      "retrieval_label_origin": "question_derived_from_cited_article",
+      "expected_status": "answerable",
+      "expected_article_codes": [
+        "20.2.TT.5.3"
+      ],
+      "expected_article_ids": [
+        "vn:19-2021-tt-bldtbxh:article:3"
+      ],
+      "evidence_chunk_ids": [
+        "e747b06a-8c28-5140-9b45-c3524544d9da"
+      ],
+      "evidence_excerpt": "Ban hành kèm theo Thông tư này Danh mục vùng có điều kiện kinh tế - xã hội đặc biệt khó khăn để làm căn cứ xác định các trường hợp có thể nghỉ hưu ở tuổi thấp hơn tuổi nghỉ hưu trong điều kiện lao động bình thường.",
+      "required_claims": [],
+      "forbidden_claims": [],
+      "label_status": "pending_human_extraction",
+      "authority_review_status": "pending",
+      "reviewer": "",
+      "review_notes": "",
+      "benchmark_enabled": false
+    },
+    {
+      "id": "labor_candidate_059",
+      "question": "Thời giờ làm việc đối với người lao động làm việc không thường xuyên được xác định hoặc giới hạn như thế nào?",
+      "category": "working_time_rest",
+      "question_type": "numeric_or_deadline",
+      "difficulty": "medium",
+      "document_number": "20/2023/TT-BCT",
+      "document_title": "Thông tư số 20/2023/TT-BCT quy định về thời giờ làm việc, thời giờ nghỉ ngơi đối với người lao động làm các công việc có tính chất đặc biệt trong lĩnh vực thăm dò, khai thác dầu khí trên biển",
+      "retrieval_label_origin": "question_derived_from_cited_article",
+      "expected_status": "answerable",
+      "expected_article_codes": [
+        "20.2.TT.7.5"
+      ],
+      "expected_article_ids": [
+        "vn:20-2023-tt-bct:article:5"
+      ],
+      "evidence_chunk_ids": [
+        "0f83b422-592b-5d5a-b226-09e701c3ceff",
+        "b24c5362-5aac-5455-85b4-916a1ee39d72",
+        "c20b5675-39c8-5e42-8af9-4b85189fe61d",
+        "ebc92ff0-743b-58fa-867d-4db674d181bf",
+        "d1b9e7b9-1c1a-50b4-8f98-5ad5e377df18"
+      ],
+      "evidence_excerpt": "1. Thời giờ làm việc tiêu chuẩn Tổng số giờ làm việc tiêu chuẩn trong 1 năm của người lao động làm việc không thường xuyên được tính như sau: SGLVN = (SNN-SNHN) x 12h 2 Trong đó: SGLVN: Số giờ làm việc chuẩn trong năm SNN: Số ngày trong năm SNHN: Số ngày nghỉ hàng năm của người lao động theo quy định của Bộ luật lao động Trường hợp người lao động chưa làm đủ 12 tháng trong năm, số ngày trong năm (SNN) và số ngày nghỉ hàng năm (SNHN) được tính tỷ lệ theo thời gian làm việc từ thời điểm người lao động bắt đầu làm việc cho người sử dụng lao động trong năm đấy. Ví dụ 1: Anh A làm việc cho Công ty Dầu khí X liên tục từ năm 2007 đến 2023. Số ngày nghỉ hàng năm tăng thêm tương ứng với 16 năm làm việc là 3 ngày. Số ngày nghỉ hàng năm của anh A trong năm 2023 theo quy định của Bộ luật lao động là: SNHN =12 + 3 = 15 ngày Tổng số ngày trong năm 2023: SNN = 365 ngày Vậy số giờ làm việc chuẩn trong năm 2023 của anh A sẽ là: SGLVN = (365 - 15 x 12h = 2100 giờ 2 Ví dụ 2: Anh B làm việc cho Công ty Dầu khí Y từ ngày 01/4/2023. Số ngày nghỉ hàng năm của anh B tại công ty Dầu khí Y trong năm 2023 theo quy định của Bộ luật lao động và quy định tại Điều 66, Nghị định 145/2020/NĐ-CP của Chính phủ là: SNHN = 9 tháng làm việc X 12 ngày = 9 ngày 12 tháng trong năm Tổng số ngày còn lại trong năm 2023 là: SNN = 275 ngày Vậy số giờ làm việc chuẩn trong năm 2023 của anh B sẽ là: SGLVN = (275 - 9) x 12h = 1596 giờ 2 2. Người lao động làm việc không thường xuyên tại các công trình dầu khí trên biển theo phiên và theo ca làm việc, cụ thể như sau: a. Ca làm việc không quá 12 giờ trong 01 ngày; b. Phiên là",
+      "required_claims": [],
+      "forbidden_claims": [],
+      "label_status": "pending_human_extraction",
+      "authority_review_status": "pending",
+      "reviewer": "",
+      "review_notes": "",
+      "benchmark_enabled": false
+    },
+    {
+      "id": "labor_candidate_060",
+      "question": "Hồ sơ đề nghị gia hạn giấy xác nhận không thuộc diện cấp giấy phép lao động phải có những giấy tờ hoặc nội dung nào?",
+      "category": "foreign_workers",
+      "question_type": "exception_or_scope",
+      "difficulty": "hard",
+      "document_number": "219/2025/NĐ-CP",
+      "document_title": "Nghị định số 219/2025/NĐ-CP Quy định về người lao động nước ngoài làm việc tại Việt Nam",
+      "retrieval_label_origin": "question_derived_from_cited_article",
+      "expected_status": "answerable",
+      "expected_article_codes": [
+        "NĐ219.15"
+      ],
+      "expected_article_ids": [
+        "vn:219-2025-nd-cp:article:15"
+      ],
+      "evidence_chunk_ids": [
+        "46077ec7-f72b-5f43-80ec-3a03b0fe09ef"
+      ],
+      "evidence_excerpt": "1. Văn bản của người sử dụng lao động đề nghị gia hạn giấy xác nhận không thuộc diện cấp giấy phép lao động theo Mẫu số 01 Phụ lục ban hành kèm theo Nghị định này. 2. Giấy khám sức khỏe do cơ sở khám bệnh, chữa bệnh có đủ điều kiện cấp, trừ trường hợp kết quả khám sức khỏe đã được kết nối, chia sẻ trên Hệ thống thông tin về quản lý hoạt động khám bệnh, chữa bệnh hoặc cơ sở dữ liệu quốc gia về y tế. Đối với giấy khám sức khỏe do cơ sở y tế có thẩm quyền của nước ngoài cấp được sử dụng trong trường hợp Việt Nam và quốc gia hoặc vùng lãnh thổ cấp giấy khám sức khỏe có điều ước hoặc thỏa thuận thừa nhận lẫn nhau và thời hạn sử dụng của giấy khám sức khỏe đó không quá 12 tháng kể từ ngày được cấp. 3. Giấy xác nhận không thuộc diện cấp giấy phép lao động còn thời hạn đã được cấp. 4. Hộ chiếu còn thời hạn. 5. Giấy tờ chứng minh người lao động nước ngoài không thuộc diện cấp giấy phép lao động là một trong các giấy tờ sau: a) Một trong các giấy tờ quy định tại điểm a, b khoản 5 Điều 8 Nghị định này; b) Văn bản chứng minh là nhà quản lý, giám đốc điều hành, chuyên gia, lao động kỹ thuật theo quy định tại Điều 19 Nghị định này kèm theo văn bản của người sử dụng lao động tại nước ngoài cử người lao động nước ngoài sang làm việc có thời hạn tại hiện diện thương mại trên lãnh thổ Việt Nam đối với trường hợp quy định tại điểm b khoản 13 Điều 7 Nghị định này.",
+      "required_claims": [],
+      "forbidden_claims": [],
+      "label_status": "pending_human_extraction",
+      "authority_review_status": "pending",
+      "reviewer": "",
+      "review_notes": "",
+      "benchmark_enabled": false
+    },
+    {
+      "id": "labor_candidate_061",
+      "question": "Đối với chính sách đối với người lao động dôi dư, trách nhiệm của doanh nghiệp thực hiện sắp xếp lại gồm những nghĩa vụ cụ thể nào?",
+      "category": "labor_contract",
+      "question_type": "numeric_or_deadline",
+      "difficulty": "medium",
+      "document_number": "97/2022/NĐ-CP",
+      "document_title": "Nghị định số 97/2022/NĐ-CP Quy định chính sách đối với người lao động dôi dư khi chuyển đổi sở hữu, sắp xếp lại công ty trách nhiệm hữu hạn một thành viên do Nhà nước nắm giữ 100% vốn điều lệ",
+      "retrieval_label_origin": "question_derived_from_cited_article",
+      "expected_status": "answerable",
+      "expected_article_codes": [
+        "20.2.NĐ.6.9"
+      ],
+      "expected_article_ids": [
+        "vn:97-2022-nd-cp:article:9"
+      ],
+      "evidence_chunk_ids": [
+        "6a1ea8ed-3e8a-5f0e-8b75-ea0e3591e2e2"
+      ],
+      "evidence_excerpt": "1. Tổ chức tuyên truyền, phổ biến chính sách lao động dôi dư đến người lao động trong doanh nghiệp trước và trong quá trình xây dựng phương án sử dụng lao động. 2. Xây dựng phương án sử dụng lao động theo quy định tại Điều 44 Bộ luật Lao động và quy trình quy định tại Phụ lục I ban hành kèm theo Nghị định này. 3. Phối hợp với tổ chức đại diện người lao động tại cơ sở để lấy ý kiến về phương án sử dụng lao động; trình cơ quan đại diện chủ sở hữu phê duyệt; công khai cho người lao động biết trong thời hạn 15 ngày kể từ ngày được phê duyệt. 4. Thực hiện chấm dứt hợp đồng lao động và thông báo bằng văn bản đối với người lao động quy định tại khoản 1 Điều 2 Nghị định này; giải quyết chế độ cho người lao động trong thời hạn 30 ngày kể từ ngày chấm dứt hợp đồng lao động; thanh toán, quyết toán kinh phí giải quyết chế độ cho người lao động dôi dư theo quy định của pháp luật. 5. Đề nghị cơ quan bảo hiểm xã hội tỉnh, thành phố trực thuộc trung ương giải quyết chế độ cho người lao động dôi dư hưởng chính sách quy định tại khoản 1, 2 và 3 Điều 3 Nghị định này; đồng thời, cung cấp hồ sơ liên quan đến việc giải quyết chế độ cho người lao động dôi dư theo quy định của cơ quan bảo hiểm xã hội. 6. Báo cáo cơ quan đại diện chủ sở hữu tình hình giải quyết chế độ đối với người lao động dôi dư theo quy định tại Mẫu số 12 Phụ lục II ban hành kèm theo Nghị định này trong thời hạn 30 ngày kể từ ngày hoàn thành việc giải quyết chế độ đối với người lao động dôi dư.",
+      "required_claims": [],
+      "forbidden_claims": [],
+      "label_status": "pending_human_extraction",
+      "authority_review_status": "pending",
+      "reviewer": "",
+      "review_notes": "",
+      "benchmark_enabled": false
+    },
+    {
+      "id": "labor_candidate_062",
+      "question": "Đối với công việc trong hầm lò, làm thêm giờ được quy định như thế nào?",
+      "category": "other_labor_rule",
+      "question_type": "direct_rule",
+      "difficulty": "easy",
+      "document_number": "04/2021/TT-BCT",
+      "document_title": "Thông tư số 04/2021/TT-BCT quy định về thời giờ làm việc, thời giờ nghỉ ngơi đối với người lao động làm các công việc trong hầm lò",
+      "retrieval_label_origin": "question_derived_from_cited_article",
+      "expected_status": "answerable",
+      "expected_article_codes": [
+        "20.2.TT.3.5"
+      ],
+      "expected_article_ids": [
+        "vn:04-2021-tt-bct:article:5"
+      ],
+      "evidence_chunk_ids": [
+        "c30e738d-5579-5405-9da5-f09be278692c"
+      ],
+      "evidence_excerpt": "1. Thời gian làm thêm giờ là khoảng thời gian làm việc ngoài ca làm việc quy định tại khoản 1 Điều 4 Thông tư này. 2. Bảo đảm tổng số giờ làm việc của ca làm việc và số giờ làm thêm không quá 12 giờ trong 01 ngày; số giờ làm thêm không quá 300 giờ trong 01 năm. 3. Việc tổ chức làm thêm giờ phải được sự đồng ý của người lao động và tuân thủ quy định tại Điều 59 và Điều 62 Nghị định số 145/2020/NĐ-CP của Chính phủ. 4. Việc tổ chức làm thêm giờ trong trường hợp đặc biệt tuân thủ quy định tại Điều 108 Bộ luật Lao động.",
+      "required_claims": [],
+      "forbidden_claims": [],
+      "label_status": "pending_human_extraction",
+      "authority_review_status": "pending",
+      "reviewer": "",
+      "review_notes": "",
+      "benchmark_enabled": false
+    },
+    {
+      "id": "labor_candidate_063",
+      "question": "Pháp luật quy định những điều kiện nào đối với sử dụng người chưa đủ 15 tuổi làm việc?",
+      "category": "working_time_rest",
+      "question_type": "condition_or_procedure",
+      "difficulty": "medium",
+      "document_number": "09/2020/TT-BLĐTBXH",
+      "document_title": "Thông tư số 09/2020/TT-BLĐTBXH Quy định chi tiết và hướng dẫn thi hành một số điều của Bộ luật Lao động về lao động chưa thành niên",
+      "retrieval_label_origin": "question_derived_from_cited_article",
+      "expected_status": "answerable",
+      "expected_article_codes": [
+        "20.2.TT.1.3"
+      ],
+      "expected_article_ids": [
+        "vn:09-2020-tt-bldtbxh:article:3"
+      ],
+      "evidence_chunk_ids": [
+        "ff586d3c-2e7e-5d15-bd60-ebf81597bed7"
+      ],
+      "evidence_excerpt": "Người sử dụng lao động phải tuân thủ Điều 145 của Bộ luật Lao động khi sử dụng người chưa đủ 15 tuổi làm việc, với các quy định cụ thể sau: 1. Giao kết hợp đồng lao động bằng văn bản với người chưa đủ 15 tuổi và người đại diện theo pháp luật của người đó theo quy định tại Điều 4 của Thông tư này. 2. Bố trí thời giờ làm việc của người chưa đủ 15 tuổi theo quy định tại khoản 1 Điều 146 của Bộ luật Lao động. Người chưa đủ 15 tuổi vừa làm việc vừa học tập hoặc có nhu cầu học tập thì việc bố trí thời giờ làm việc phải bảo đảm không ảnh hưởng đến thời gian học tập của người chưa đủ 15 tuổi. 3. Bố trí các đợt nghỉ giải lao cho người chưa đủ 15 tuổi theo quy định tại khoản 2 Điều 109 của Bộ luật Lao động. 4. Tuân thủ quy định về khám sức khỏe, khám phát hiện bệnh nghề nghiệp và bảo đảm điều kiện làm việc, an toàn, vệ sinh lao động quy định tại điểm c và điểm d khoản 1 Điều 145 của Bộ luật Lao động và Luật An toàn, vệ sinh lao động. 5. Chỉ được tuyển dụng và sử dụng người từ đủ 13 tuổi đến chưa đủ 15 tuổi vào làm công việc nhẹ khi công việc đó đáp ứng các điều kiện sau: a) Là công việc có trong danh mục quy định tại Điều 8 của Thông tư này; b) Nơi làm việc không thuộc các trường hợp quy định tại các điểm a, b, c, d khoản 2 Điều 147 của Bộ luật Lao động và khoản 2 Điều 9 của Thông tư này. 6. Không được tuyển dụng và sử dụng người chưa đủ 13 tuổi làm việc, trừ các công việc nghệ thuật, thể dục, thể thao nhưng không làm tổn hại đến sự phát triển thể lực, trí lực, nhân cách của người chưa đủ 13 tuổi và phải có sự đồng ý của Sở Lao động - Thương binh và Xã hội theo quy định tại Điều 5 củ",
+      "required_claims": [],
+      "forbidden_claims": [],
+      "label_status": "pending_human_extraction",
+      "authority_review_status": "pending",
+      "reviewer": "",
+      "review_notes": "",
+      "benchmark_enabled": false
+    },
+    {
+      "id": "labor_candidate_064",
+      "question": "Bảo vệ bí mật kinh doanh, bí mật công nghệ được pháp luật lao động quy định như thế nào?",
+      "category": "wage_bonus",
+      "question_type": "numeric_or_deadline",
+      "difficulty": "medium",
+      "document_number": "10/2020/TT-BLĐTBXH",
+      "document_title": "Thông tư số 10/2020/TT-BLĐTBXH Quy định chi tiết và hướng dẫn thi hành một số điều, khoản sau đây của Bộ luật Lao động về nội dung của Hợp đồng lao động, hội đồng thương lượng tập thể và nghề, công việc có ảnh hưởng xấu tới chức năng sinh sản, nuôi con",
+      "retrieval_label_origin": "question_derived_from_cited_article",
+      "expected_status": "answerable",
+      "expected_article_codes": [
+        "20.2.TT.2.4"
+      ],
+      "expected_article_ids": [
+        "vn:10-2020-tt-bldtbxh:article:4"
+      ],
+      "evidence_chunk_ids": [
+        "05d1d813-78ec-5e17-af9d-b773c8e312c6"
+      ],
+      "evidence_excerpt": "1. Khi người lao động làm việc có liên quan trực tiếp đến bí mật kinh doanh, bí mật công nghệ theo quy định của pháp luật thì người sử dụng lao động có quyền thỏa thuận với người lao động về nội dung bảo vệ bí mật kinh doanh, bí mật công nghệ trong hợp đồng lao động hoặc bằng văn bản khác theo quy định của pháp luật. 2. Thỏa thuận về bảo vệ bí mật kinh doanh, bí mật công nghệ có thể gồm những nội dung chủ yếu sau: a) Danh mục bí mật kinh doanh, bí mật công nghệ; b) Phạm vi sử dụng bí mật kinh doanh, bí mật công nghệ; c) Thời hạn bảo vệ bí mật kinh doanh, bí mật công nghệ; d) Phương thức bảo vệ bí mật kinh doanh, bí mật công nghệ; đ) Quyền, nghĩa vụ, trách nhiệm của người lao động, người sử dụng lao động trong thời hạn bảo vệ bí mật kinh doanh, bí mật công nghệ; e) Xử lý vi phạm thỏa thuận bảo vệ bí mật kinh doanh, bí mật công nghệ. 3. Khi phát hiện người lao động vi phạm thỏa thuận bảo vệ bí mật kinh doanh, bí mật công nghệ thì người sử dụng lao động có quyền yêu cầu người lao động bồi thường theo thỏa thuận của hai bên. Trình tự, thủ tục xử lý bồi thường được thực hiện như sau: a) Trường hợp phát hiện người lao động có hành vi vi phạm trong thời hạn thực hiện hợp đồng lao động thì xử lý theo trình tự, thủ tục xử lý việc bồi thường thiệt hại quy định tại khoản 2 Điều 130 của Bộ luật Lao động; b) Trường hợp phát hiện người lao động có hành vi vi phạm sau khi chấm dứt hợp đồng lao động thì xử lý theo quy định của pháp luật dân sự và pháp luật khác có liên quan. 4. Đối với bí mật kinh doanh, bí mật công nghệ thuộc danh mục bí mật nhà nước thì thực hiện theo quy định của pháp l",
+      "required_claims": [],
+      "forbidden_claims": [],
+      "label_status": "pending_human_extraction",
+      "authority_review_status": "pending",
+      "reviewer": "",
+      "review_notes": "",
+      "benchmark_enabled": false
+    },
+    {
+      "id": "labor_candidate_065",
+      "question": "Đối với vận hành, bảo dưỡng đường ống và công trình khí, nghỉ trong giờ làm việc được quy định như thế nào?",
+      "category": "other_labor_rule",
+      "question_type": "direct_rule",
+      "difficulty": "easy",
+      "document_number": "12/2022/TT-BCT",
+      "document_title": "Thông tư số 12/2022/TT-BCT quy định về thời giờ làm việc, thời giờ nghỉ ngơi đối với người lao động làm công việc vận hành, bảo dưỡng, sửa chữa hệ thống đường ống phân phối khí và các công trình khí.",
+      "retrieval_label_origin": "question_derived_from_cited_article",
+      "expected_status": "answerable",
+      "expected_article_codes": [
+        "20.2.TT.6.6"
+      ],
+      "expected_article_ids": [
+        "vn:12-2022-tt-bct:article:6"
+      ],
+      "evidence_chunk_ids": [
+        "b8f05eea-22c9-5fe2-b190-15d9c7526ee1"
+      ],
+      "evidence_excerpt": "1. Nghỉ trong giờ làm việc tuân thủ quy định tại Điều 109 Bộ luật Lao động. 2. Thời gian chuyển tiếp giữa hai ca làm việc liền kề không quá 45 phút.",
+      "required_claims": [],
+      "forbidden_claims": [],
+      "label_status": "pending_human_extraction",
+      "authority_review_status": "pending",
+      "reviewer": "",
+      "review_notes": "",
+      "benchmark_enabled": false
+    }
+  ]
+}

@@ -71,7 +71,7 @@ class RequiredClaim(BaseModel):
     claim_id: str = Field(pattern=r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
     text: str = Field(min_length=1, max_length=2000)
     supported_by_article_codes: list[str] = Field(min_length=1)
-    supported_by_chunk_ids: list[str] = Field(default_factory=list)
+    supported_by_chunk_ids: list[str] = Field(min_length=1)
 
     @field_validator("text")
     @classmethod
@@ -113,6 +113,9 @@ class AnswerQualityQuestion(BaseModel):
     category: str = Field(min_length=1, max_length=100)
     question_type: str = Field(min_length=1, max_length=100)
     difficulty: str = Field(pattern=r"^(easy|medium|hard)$")
+    document_number: str = Field(default="", max_length=200)
+    document_title: str = Field(default="", max_length=1000)
+    retrieval_label_origin: str = Field(default="", max_length=200)
     expected_status: AnswerStatus
     expected_article_codes: list[str] = Field(default_factory=list)
     expected_article_ids: list[str] = Field(default_factory=list)
@@ -224,12 +227,19 @@ class AnswerQualityDataset(BaseModel):
     )
     source_corpus_release_id: str = Field(min_length=1)
     source_corpus_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    source_corpus_path: str = Field(min_length=1)
+    source_dataset_path: str = Field(min_length=1)
+    source_dataset_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
     questions: list[AnswerQualityQuestion] = Field(min_length=1)
 
-    @field_validator("source_corpus_release_id")
+    @field_validator(
+        "source_corpus_release_id",
+        "source_corpus_path",
+        "source_dataset_path",
+    )
     @classmethod
-    def normalize_release_id(cls, value: str) -> str:
-        return _non_blank(value, "source_corpus_release_id")
+    def normalize_provenance_text(cls, value: str, info: Any) -> str:
+        return _non_blank(value, info.field_name)
 
     @model_validator(mode="after")
     def validate_dataset_state(self) -> Self:
