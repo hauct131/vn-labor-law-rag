@@ -65,3 +65,6 @@ jobs:
 
       - name: Verify multi-LLM adjudication application is reproducible
         run: python -m evaluation.answer_quality.apply_adjudication --check
+
+      - name: Verify human review packet creation is reproducible
+        run: python -m evaluation.answer_quality.create_human_review_packet --output-dir /tmp/human-review-ci-check

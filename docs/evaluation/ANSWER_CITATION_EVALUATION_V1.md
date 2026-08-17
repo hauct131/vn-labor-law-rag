@@ -205,11 +205,44 @@ Apply it deterministically to the draft questions:
 The generated dataset has `dataset_status=multi_llm_reviewed`, keeps
 `benchmark_enabled=false` for every case, has no named human reviewer, and
 remains unlocked with authority review pending. Applying the artifact therefore
-does not turn model-produced labels into a golden benchmark.
-
 Before an answer-quality benchmark can run, a human reviewer must verify every
 claim against the bound canonical chunks, record their name and notes, and
 explicitly move each accepted case to `label_status=human_adjudicated`.
+
+## Human Review Workflow
+
+### 1. Create Human Review Packet
+
+Generate an independent review packet containing full canonical evidence chunks, required claims, forbidden claims, and markdown guide:
+
+```bash
+python3 -m evaluation.answer_quality.create_human_review_packet \
+  --output-dir "$HOME/Downloads/answer-quality-human-review"
+```
+
+### 2. Apply Human Review Decisions
+
+Apply human review decisions (accept/edit/reject) from a named human reviewer. Fail-closed validation ensures AI/model names are rejected and any rejected case prevents dataset generation:
+
+```bash
+python3 -m evaluation.answer_quality.apply_human_review \
+  --dataset data/evaluation/answer-quality-v1/multi_llm_reviewed_questions.json \
+  --review "$HOME/Downloads/answer-quality-human-review/human-review.json" \
+  --output data/evaluation/answer-quality-v1/human_adjudicated_questions.json
+```
+
+### 3. Lock Technical Golden Benchmark
+
+Lock a human-adjudicated dataset for technical benchmarking. Requires explicit `--confirm-lock` flag:
+
+```bash
+python3 -m evaluation.answer_quality.lock_human_adjudicated_dataset \
+  --dataset data/evaluation/answer-quality-v1/human_adjudicated_questions.json \
+  --output data/evaluation/answer-quality-v1/human_adjudicated_questions.json \
+  --confirm-lock
+```
+
+*Notice*: Locking produces a technical golden dataset pending authority review (`authority_review_status=pending`).
 
 ## Provider references
 
@@ -233,6 +266,4 @@ python3 -m venv .venv-evaluation
 
 ## Next stage
 
-The next stage adds reviewed out-of-scope, insufficient-evidence and
-false-premise candidates, then provides a human adjudication sheet. Legal
-labels remain pending until that adjudication is completed.
+The next stage provides a human adjudication sheet for out-of-scope, insufficient-evidence and false-premise cases. Legal authority review remains pending until explicit legal sign-off.
