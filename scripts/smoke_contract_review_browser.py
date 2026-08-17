@@ -52,6 +52,8 @@ def run(frontend_url: str, output: Path, screenshot: Path, headed: bool) -> None
     email = f"contract-browser-{suffix}@example.test"
     password = "MatKhauAnToan123"
     console_errors: list[str] = []
+    resource_401_console_errors: list[str] = []
+    expected_auth_probe_401s: list[str] = []
     page_errors: list[str] = []
     network_errors: list[str] = []
     steps: list[str] = []
@@ -62,12 +64,19 @@ def run(frontend_url: str, output: Path, screenshot: Path, headed: bool) -> None
             context = browser.new_context(locale="vi-VN")
             page = context.new_page()
 
-            page.on(
-                "console",
-                lambda message: console_errors.append(message.text)
-                if message.type == "error"
-                else None,
-            )
+            def record_console_error(message: object) -> None:
+                if getattr(message, "type", "") != "error":
+                    return
+                message_text = str(getattr(message, "text", ""))
+                if (
+                    message_text.startswith("Failed to load resource:")
+                    and "401 (Unauthorized)" in message_text
+                ):
+                    resource_401_console_errors.append(message_text)
+                    return
+                console_errors.append(message_text)
+
+            page.on("console", record_console_error)
             page.on("pageerror", lambda error: page_errors.append(str(error)))
 
             def record_bad_response(response: object) -> None:
@@ -76,6 +85,7 @@ def run(frontend_url: str, output: Path, screenshot: Path, headed: bool) -> None
                 if status < 400:
                     return
                 if status == 401 and url.endswith("/api/auth/me"):
+                    expected_auth_probe_401s.append(url)
                     return
                 network_errors.append(f"HTTP {status}: {url}")
 
@@ -159,6 +169,14 @@ def run(frontend_url: str, output: Path, screenshot: Path, headed: bool) -> None
             context.close()
             browser.close()
 
+        unexpected_console_401_count = max(
+            0,
+            len(resource_401_console_errors) - len(expected_auth_probe_401s),
+        )
+        if unexpected_console_401_count:
+            console_errors.extend(
+                resource_401_console_errors[-unexpected_console_401_count:],
+            )
         assert not console_errors, "Console errors: " + " | ".join(console_errors)
         assert not page_errors, "Page errors: " + " | ".join(page_errors)
         assert not network_errors, "Network errors: " + " | ".join(network_errors)
@@ -171,6 +189,7 @@ def run(frontend_url: str, output: Path, screenshot: Path, headed: bool) -> None
             "frontend_url": frontend_url,
             "samples": [str(DOCX_SAMPLE), str(PDF_SAMPLE)],
             "console_errors": console_errors,
+            "expected_auth_probe_401_count": len(expected_auth_probe_401s),
             "page_errors": page_errors,
             "network_errors": network_errors,
             "screenshot": str(screenshot),

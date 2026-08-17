@@ -89,6 +89,10 @@ def test_browser_verifier_checks_protected_route_after_logout() -> None:
     assert 'CONTRACT_ROUTE = "/contract-reviews"' in browser_verifier
     assert 'page.wait_for_url(contract_url, timeout=30_000)' in browser_verifier
     assert 'name="Cần đăng nhập để rà soát hợp đồng"' in browser_verifier
+    assert 'url.endswith("/api/auth/me")' in browser_verifier
+    assert '"401 (Unauthorized)" in message_text' in browser_verifier
+    assert "unexpected_console_401_count" in browser_verifier
+    assert "status == 401 and url.endswith" in browser_verifier
 
 
 def test_browser_resume_reuses_only_verified_non_product_gates() -> None:
