@@ -14,6 +14,11 @@ PYTHON_BIN="${PYTHON_BIN:-$ROOT/.venv/bin/python3}"
 NPM_CACHE_DIR="${NPM_CACHE_DIR:-$ARTIFACT_DIR/npm-cache}"
 NPM_LOG_DIR="${NPM_LOG_DIR:-$ARTIFACT_DIR/npm-logs}"
 COMPOSE=(docker compose -f docker-compose.yml -f docker-compose.dev.yml)
+RUNTIME_COLLECTION="labor_law_canonical_word_20260804_fdbec539"
+RUNTIME_ALIAS="labor_law_dev"
+RUNTIME_CHUNKS="data/releases/labor-law-canonical-word-20260804-164432-candidate/canonical_chunks.jsonl"
+RUNTIME_AUDIT="data/releases/labor-law-canonical-word-20260804-164432-candidate/e5_audit/summary.json"
+RUNTIME_CHUNKS_SHA256="fdbec539efbfb3f4aa3cb3962046321e3a402150d93516ef4256934972c70307"
 
 mkdir -p "$ARTIFACT_DIR"
 exec > >(tee "$REPORT") 2>&1
@@ -35,6 +40,21 @@ echo "Commit: $(git rev-parse HEAD)"
 echo "Branch: $(git branch --show-current)"
 echo "Python: $($PYTHON_BIN --version 2>&1)"
 echo "Artifacts: $ARTIFACT_DIR"
+
+if [[ ! -f .env ]]; then
+  cp .env.example .env
+fi
+PYTHONPATH="backend:${PYTHONPATH:-}" "$PYTHON_BIN" - <<'PY'
+from app.core.config import settings
+
+if not settings.openrouter_api_key.strip():
+    raise SystemExit(
+        "ERROR: OPENROUTER_API_KEY is empty in this worktree's .env.\n"
+        "Copy your configured .env from the original project, then rerun.\n"
+        "Example: cp /media/hao/Data/vn-labor-law-rag/.env .env"
+    )
+print("PASS: OpenRouter generation configuration is present")
+PY
 
 echo
 echo "===== 1. SOURCE INTEGRITY ====="
@@ -123,10 +143,7 @@ echo "===== 5. DOCKER COMPOSE AND APPLICATION E2E ====="
 command -v docker >/dev/null
 docker version
 docker compose version
-if [[ ! -f .env ]]; then
-  cp .env.example .env
-fi
-export COMPOSE_BAKE="${COMPOSE_BAKE:-false}"
+unset COMPOSE_BAKE
 "${COMPOSE[@]}" config --quiet
 
 # Remove only containers from this verification worktree. Named volumes are kept.
@@ -150,13 +167,15 @@ fi
 
 "${COMPOSE[@]}" up -d qdrant postgres
 
+"${COMPOSE[@]}" --profile tools run --rm runtime-assets
+
 PYTHONPATH=".:backend:${PYTHONPATH:-}" "$PYTHON_BIN" \
   -m backend.app.ingestion.index_qdrant \
-  --chunks data/releases/labor-law-canonical-word-20260804-164432-candidate/canonical_chunks.jsonl \
-  --audit-summary data/releases/labor-law-canonical-word-20260804-164432-candidate/e5_audit/summary.json \
-  --collection labor_law_dev \
+  --chunks "$RUNTIME_CHUNKS" \
+  --audit-summary "$RUNTIME_AUDIT" \
+  --collection "$RUNTIME_COLLECTION" \
   --expected-chunks 804 \
-  --expected-sha256 fdbec539efbfb3f4aa3cb3962046321e3a402150d93516ef4256934972c70307 \
+  --expected-sha256 "$RUNTIME_CHUNKS_SHA256" \
   --dense-model intfloat/multilingual-e5-large \
   --dense-vector-name dense \
   --dense-size 1024 \
@@ -167,11 +186,11 @@ PYTHONPATH=".:backend:${PYTHONPATH:-}" "$PYTHON_BIN" \
 
 PYTHONPATH=".:backend:${PYTHONPATH:-}" "$PYTHON_BIN" \
   -m backend.app.ingestion.index_qdrant \
-  --chunks data/releases/labor-law-canonical-word-20260804-164432-candidate/canonical_chunks.jsonl \
-  --audit-summary data/releases/labor-law-canonical-word-20260804-164432-candidate/e5_audit/summary.json \
-  --collection labor_law_dev \
+  --chunks "$RUNTIME_CHUNKS" \
+  --audit-summary "$RUNTIME_AUDIT" \
+  --collection "$RUNTIME_COLLECTION" \
   --expected-chunks 804 \
-  --expected-sha256 fdbec539efbfb3f4aa3cb3962046321e3a402150d93516ef4256934972c70307 \
+  --expected-sha256 "$RUNTIME_CHUNKS_SHA256" \
   --dense-model intfloat/multilingual-e5-large \
   --dense-vector-name dense \
   --dense-size 1024 \
@@ -179,6 +198,23 @@ PYTHONPATH=".:backend:${PYTHONPATH:-}" "$PYTHON_BIN" \
   --sparse-vector-name sparse \
   --verify-only \
   --summary-output "$ARTIFACT_DIR/qdrant-verify.json"
+
+PYTHONPATH=".:backend:${PYTHONPATH:-}" "$PYTHON_BIN" \
+  -m backend.app.ingestion.qdrant_alias \
+  --collection "$RUNTIME_COLLECTION" \
+  --alias "$RUNTIME_ALIAS" \
+  --expected-chunks 804 \
+  --expected-sha256 "$RUNTIME_CHUNKS_SHA256" \
+  --summary-output "$ARTIFACT_DIR/qdrant-alias.json"
+
+PYTHONPATH=".:backend:${PYTHONPATH:-}" "$PYTHON_BIN" \
+  -m backend.app.ingestion.qdrant_alias \
+  --collection "$RUNTIME_COLLECTION" \
+  --alias "$RUNTIME_ALIAS" \
+  --expected-chunks 804 \
+  --expected-sha256 "$RUNTIME_CHUNKS_SHA256" \
+  --verify-only \
+  --summary-output "$ARTIFACT_DIR/qdrant-alias-verify.json"
 
 PYTHON_BIN="$PYTHON_BIN" bash scripts/verify_contract_review_e2e.sh \
   "$ARTIFACT_DIR/contract-review-docker-e2e.json"

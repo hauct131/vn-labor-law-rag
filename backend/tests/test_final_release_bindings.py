@@ -58,3 +58,19 @@ def test_final_verifier_checks_locked_evidence_without_rerunning_test() -> None:
     assert "--split-role test" not in verifier
     assert "smoke_contract_review_browser.py" in verifier
     assert "sample_labor_contract.docx" not in verifier
+
+
+def test_final_verifier_prepares_real_runtime_dependencies() -> None:
+    verifier = (
+        PROJECT_ROOT / "scripts/verify_final_release.sh"
+    ).read_text(encoding="utf-8")
+
+    assert (
+        'RUNTIME_COLLECTION="labor_law_canonical_word_20260804_fdbec539"'
+        in verifier
+    )
+    assert 'RUNTIME_ALIAS="labor_law_dev"' in verifier
+    assert "--profile tools run --rm runtime-assets" in verifier
+    assert "-m backend.app.ingestion.qdrant_alias" in verifier
+    assert '--alias "$RUNTIME_ALIAS"' in verifier
+    assert "settings.openrouter_api_key.strip()" in verifier
