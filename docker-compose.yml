@@ -1,6 +1,6 @@
 services:
   qdrant:
-    image: qdrant/qdrant:latest
+    image: qdrant/qdrant:v1.19.0@sha256:057ee3a8da769fe7310dd3537b4dc7583bf87a95ce8ac43c0af5a46bc580d1fc
     ports:
       - "6333:6333"
       - "6334:6334"
@@ -8,7 +8,7 @@ services:
       - qdrant_data:/qdrant/storage
 
   postgres:
-    image: postgres:16-alpine
+    image: postgres:16.15-alpine@sha256:cf78e76683b9ca8c5733cbbdce6c9262b45b6767934dd0a95e671f9a0fc20685
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-labor_law_rag}
       POSTGRES_USER: ${POSTGRES_USER:-labor_law}
