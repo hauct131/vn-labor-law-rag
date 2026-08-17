@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 #
-# Validate, index, verify, and evaluate the unified 833-chunk candidate.
+# Legacy validator/indexer for the retired unified 833-chunk candidate.
+#
+# The active release is canonical Word 804. Use verify_final_release.sh.
 #
 # Safety properties:
 #   - resolves the repository relative to this file;
@@ -12,6 +14,13 @@
 #   - writes a timestamped log and keeps an interactive terminal open on error.
 
 set +e
+
+if [[ "${ALLOW_LEGACY_UNIFIED_833:-0}" != "1" ]]; then
+  echo "REFUSED: scripts/index_and_evaluate_unified.sh targets the retired 833-chunk candidate."
+  echo "Run: bash scripts/verify_final_release.sh"
+  echo "Set ALLOW_LEGACY_UNIFIED_833=1 only for explicit historical reproduction."
+  exit 2
+fi
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 REPO="$(cd -- "${SCRIPT_DIR}/.." && pwd)"

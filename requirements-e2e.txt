@@ -1,0 +1,2 @@
+# Browser-only dependency for scripts/smoke_contract_review_browser.py.
+playwright>=1.55,<2

@@ -431,6 +431,23 @@ docker compose \
   config
 ```
 
+### Xác minh kỹ thuật cuối cùng
+
+Cổng này kiểm tra checksum corpus 804, locked retrieval evidence, toàn bộ
+backend tests, frontend lint/build/audit, Qdrant index binding, Docker E2E,
+PostgreSQL restart và thao tác giao diện thật bằng Chromium:
+
+```bash
+.venv/bin/python -m pip install -r requirements-e2e.txt
+.venv/bin/playwright install chromium
+bash scripts/verify_final_release.sh
+```
+
+Kết quả được ghi vào một thư mục có timestamp trong `~/Downloads`. Cổng này
+không chạy lại locked test split và không tuning sau khi test đã được mở khóa.
+`FINAL VERIFICATION: PASS` chỉ là xác nhận kỹ thuật; authority review vẫn phải
+được thực hiện riêng.
+
 Chạy toàn bộ cổng kiểm tra và ghi báo cáo:
 
 ```bash

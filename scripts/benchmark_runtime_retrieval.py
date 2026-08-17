@@ -70,7 +70,9 @@ def _runtime_settings() -> Any:
         return SimpleNamespace(
             legal_chunks_path=os.environ.get(
                 "LEGAL_CHUNKS_PATH",
-                "data/releases/labor-law-2026-07-28-candidate/chunks.jsonl",
+                "data/releases/"
+                "labor-law-canonical-word-20260804-164432-candidate/"
+                "canonical_chunks.jsonl",
             ),
             qdrant_url=os.environ.get("QDRANT_URL", "http://localhost:6333"),
             qdrant_api_key=os.environ.get("QDRANT_API_KEY", ""),
@@ -840,7 +842,9 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--golden",
         type=Path,
-        default=Path("data/evaluation/splits/golden_v3_dev.json"),
+        default=Path(
+            "data/evaluation/splits/canonical_word_804/golden_v3_dev.json"
+        ),
     )
     parser.add_argument(
         "--chunks", type=Path, default=Path(runtime_settings.legal_chunks_path)
@@ -848,7 +852,9 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=Path("data/evaluation/runtime-benchmark"),
+        default=Path(
+            "data/evaluation/runtime-benchmark/canonical_word_804/verification"
+        ),
     )
     parser.add_argument(
         "--methods",

@@ -41,17 +41,18 @@ from backend.app.retrieval.vncorenlp_bm25 import load_segmenter
 LOGGER = logging.getLogger("retrieval_core_evaluation")
 
 DEFAULT_CHUNKS = Path(
-    "data/releases/labor-law-2026-07-27-candidate/chunks.jsonl"
+    "data/releases/labor-law-canonical-word-20260804-164432-candidate/"
+    "canonical_chunks.jsonl"
 )
 DEFAULT_QUESTIONS = Path(
     "data/evaluation/retrieval_smoke_questions.json"
 )
 DEFAULT_OUTPUT = Path("experiments/retrieval_core_smoke.json")
 DEFAULT_VNCORENLP_MODEL_DIR = Path("models/vncorenlp")
-DEFAULT_EXPECTED_CHUNKS = 833
+DEFAULT_EXPECTED_CHUNKS = 804
 DEFAULT_EXPECTED_SHA256 = (
-    "fd35bb1a94a3036f7977781de17bb1b49"
-    "b12c58be61fc74efac68dcf8a7a8c54"
+    "fdbec539efbfb3f4aa3cb3962046321e3"
+    "a402150d93516ef4256934972c70307"
 )
 
 

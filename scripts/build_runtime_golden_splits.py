@@ -352,7 +352,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=Path("data/evaluation/splits"),
+        default=Path("data/evaluation/splits/canonical_word_804"),
     )
     parser.add_argument(
         "--check",
