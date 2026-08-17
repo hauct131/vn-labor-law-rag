@@ -1,0 +1,1714 @@
+{
+  "schema_version": "answer-manual-adjudication-v1",
+  "adjudication_status": "multi_llm_adjudicated_candidate",
+  "authority_review_status": "pending",
+  "golden_locked": false,
+  "cases": [
+    {
+      "case_id": "labor_candidate_046",
+      "decision": "select_b",
+      "expected_status": "answerable",
+      "required_claims": [
+        {
+          "claim_id": "c1",
+          "text": "Người sử dụng lao động phải quy định cụ thể ca làm việc, thời giờ làm việc và thời giờ nghỉ ngơi của các công việc trong hầm lò tại nội quy lao động.",
+          "supported_by_article_codes": [
+            "20.2.TT.3.8"
+          ],
+          "supported_by_chunk_ids": [
+            "c04d9569-184f-5daa-9c59-dd53087c9995"
+          ]
+        },
+        {
+          "claim_id": "c2",
+          "text": "Người sử dụng lao động phải thông báo cho người lao động về các quy định ca làm việc, thời giờ làm việc và thời giờ nghỉ ngơi theo quy định của pháp luật.",
+          "supported_by_article_codes": [
+            "20.2.TT.3.8"
+          ],
+          "supported_by_chunk_ids": [
+            "c04d9569-184f-5daa-9c59-dd53087c9995"
+          ]
+        },
+        {
+          "claim_id": "c3",
+          "text": "Hằng năm, người sử dụng lao động phải báo cáo Bộ Công Thương về tình hình thực hiện các quy định tại Thông tư này trước ngày 15 tháng 01.",
+          "supported_by_article_codes": [
+            "20.2.TT.3.8"
+          ],
+          "supported_by_chunk_ids": [
+            "c04d9569-184f-5daa-9c59-dd53087c9995"
+          ]
+        },
+        {
+          "claim_id": "c4",
+          "text": "Người sử dụng lao động phải báo cáo đột xuất về tình hình thực hiện các quy định tại Thông tư này khi có yêu cầu của cơ quan có thẩm quyền.",
+          "supported_by_article_codes": [
+            "20.2.TT.3.8"
+          ],
+          "supported_by_chunk_ids": [
+            "c04d9569-184f-5daa-9c59-dd53087c9995"
+          ]
+        }
+      ],
+      "forbidden_claims": [
+        {
+          "claim_id": "f1",
+          "text": "Người sử dụng lao động chỉ phải báo cáo Bộ Công Thương khi có yêu cầu của cơ quan có thẩm quyền.",
+          "reason": "Bằng chứng quy định cả nghĩa vụ báo cáo định kỳ hằng năm trước ngày 15 tháng 01 và báo cáo đột xuất khi có yêu cầu."
+        }
+      ],
+      "disputed_points": [
+        {
+          "topic": "A gộp quy định+thông báo và gộp hai loại báo cáo; B tách bốn nghĩa vụ độc lập.",
+          "resolution": "Tách báo cáo định kỳ và đột xuất theo quy tắc ưu tiên; tách quy định và thông báo vì là nghĩa vụ độc lập."
+        }
+      ],
+      "adjudication_notes": "B tách đúng các nghĩa vụ độc lập, đặc biệt hai loại báo cáo; A gộp quá mức.",
+      "label_status": "multi_llm_candidate",
+      "needs_human_review": true,
+      "authority_review_status": "pending"
+    },
+    {
+      "case_id": "labor_candidate_047",
+      "decision": "select_a",
+      "expected_status": "answerable",
+      "required_claims": [
+        {
+          "claim_id": "c1",
+          "text": "Khi có nhu cầu sử dụng người chưa đủ 13 tuổi làm việc, người sử dụng lao động gửi trực tiếp hoặc qua đường bưu điện hoặc trực tuyến 01 bộ hồ sơ đối với từng người chưa đủ 13 tuổi làm việc đến Sở Lao động - Thương binh và Xã hội.",
+          "supported_by_article_codes": [
+            "20.2.TT.1.7"
+          ],
+          "supported_by_chunk_ids": [
+            "3b91bfb1-e6c6-52d1-ae05-3f4101ef5169"
+          ]
+        },
+        {
+          "claim_id": "c2",
+          "text": "Sở Lao động - Thương binh và Xã hội tiếp nhận hồ sơ đề nghị việc sử dụng người chưa đủ 13 tuổi làm việc khi có đủ các thành phần hồ sơ theo quy định.",
+          "supported_by_article_codes": [
+            "20.2.TT.1.7"
+          ],
+          "supported_by_chunk_ids": [
+            "3b91bfb1-e6c6-52d1-ae05-3f4101ef5169"
+          ]
+        },
+        {
+          "claim_id": "c3",
+          "text": "Trong thời hạn 10 ngày làm việc kể từ ngày nhận đủ hồ sơ, Sở Lao động - Thương binh và Xã hội phối hợp với cơ quan, tổ chức liên quan xác minh thông tin (nếu cần), thẩm định hồ sơ và trả lời bằng văn bản đồng ý sử dụng người chưa đủ 13 tuổi làm việc theo Mẫu số 04.",
+          "supported_by_article_codes": [
+            "20.2.TT.1.7"
+          ],
+          "supported_by_chunk_ids": [
+            "3b91bfb1-e6c6-52d1-ae05-3f4101ef5169"
+          ]
+        },
+        {
+          "claim_id": "c4",
+          "text": "Trường hợp không đồng ý việc sử dụng người chưa đủ 13 tuổi làm việc, Sở Lao động - Thương binh và Xã hội phải có văn bản trả lời nêu rõ lý do, gửi người sử dụng lao động.",
+          "supported_by_article_codes": [
+            "20.2.TT.1.7"
+          ],
+          "supported_by_chunk_ids": [
+            "3b91bfb1-e6c6-52d1-ae05-3f4101ef5169"
+          ]
+        }
+      ],
+      "forbidden_claims": [
+        {
+          "claim_id": "f1",
+          "text": "Thời hạn 10 ngày làm việc được tính kể từ ngày người sử dụng lao động nộp hồ sơ.",
+          "reason": "Chunk quy định thời hạn 10 ngày làm việc tính từ ngày Sở nhận đủ hồ sơ, không phải từ ngày nộp hồ sơ; hai mốc này có thể khác nhau nếu hồ sơ ban đầu chưa đủ."
+        }
+      ],
+      "disputed_points": [
+        {
+          "topic": "B tách quá nhiều tiểu bước nộp hồ sơ và xử lý 10 ngày; A gộp các bước xử lý chính trong thời hạn.",
+          "resolution": "Giữ mức chi tiết của A vì câu hỏi không yêu cầu tách từng cụm từ nộp hồ sơ hay từng hành động con trong 10 ngày."
+        }
+      ],
+      "adjudication_notes": "A đủ các bước chính và thời hạn; B tách quá mức không cần thiết.",
+      "label_status": "multi_llm_candidate",
+      "needs_human_review": true,
+      "authority_review_status": "pending"
+    },
+    {
+      "case_id": "labor_candidate_048",
+      "decision": "merge",
+      "expected_status": "answerable",
+      "required_claims": [
+        {
+          "claim_id": "c1",
+          "text": "Nội dung chủ yếu của hợp đồng lao động phải có thông tin về tên, địa chỉ của người sử dụng lao động và họ tên, chức danh của người giao kết hợp đồng lao động bên phía người sử dụng lao động.",
+          "supported_by_article_codes": [
+            "20.2.TT.2.3"
+          ],
+          "supported_by_chunk_ids": [
+            "719556b8-c973-51eb-a6cb-67baba9c6c78"
+          ]
+        },
+        {
+          "claim_id": "c2",
+          "text": "Nội dung chủ yếu của hợp đồng lao động phải có thông tin về họ tên, ngày tháng năm sinh, giới tính, nơi cư trú, số thẻ Căn cước công dân hoặc Chứng minh nhân dân hoặc hộ chiếu của người giao kết hợp đồng lao động bên phía người lao động và một số thông tin khác (như số giấy phép lao động đối với người nước ngoài, hoặc thông tin người đại diện theo pháp luật đối với người chưa đủ 15 tuổi).",
+          "supported_by_article_codes": [
+            "20.2.TT.2.3"
+          ],
+          "supported_by_chunk_ids": [
+            "be8377c0-ab3b-5b2c-9979-ceef1d9d5e0e"
+          ]
+        },
+        {
+          "claim_id": "c3",
+          "text": "Nội dung chủ yếu của hợp đồng lao động phải xác định công việc và địa điểm làm việc của người lao động.",
+          "supported_by_article_codes": [
+            "20.2.TT.2.3"
+          ],
+          "supported_by_chunk_ids": [
+            "355ce729-5229-50c7-a997-b1ebb3a2f99c"
+          ]
+        },
+        {
+          "claim_id": "c4",
+          "text": "Nội dung chủ yếu của hợp đồng lao động phải xác định thời hạn của hợp đồng lao động, gồm thời gian thực hiện, thời điểm bắt đầu và kết thúc (đối với hợp đồng xác định thời hạn) hoặc thời điểm bắt đầu (đối với hợp đồng không xác định thời hạn).",
+          "supported_by_article_codes": [
+            "20.2.TT.2.3"
+          ],
+          "supported_by_chunk_ids": [
+            "d9fe49ab-7230-57f4-96c0-fae707e5e448"
+          ]
+        },
+        {
+          "claim_id": "c5",
+          "text": "Nội dung chủ yếu của hợp đồng lao động phải xác định mức lương theo công việc hoặc chức danh và phụ cấp lương theo thỏa thuận của hai bên.",
+          "supported_by_article_codes": [
+            "20.2.TT.2.3"
+          ],
+          "supported_by_chunk_ids": [
+            "52b99d0e-cc32-5b2c-8ecb-aeaa748a0638"
+          ]
+        },
+        {
+          "claim_id": "c6",
+          "text": "Nội dung chủ yếu của hợp đồng lao động phải xác định các khoản bổ sung khác, hình thức trả lương và kỳ hạn trả lương theo thỏa thuận của hai bên.",
+          "supported_by_article_codes": [
+            "20.2.TT.2.3"
+          ],
+          "supported_by_chunk_ids": [
+            "23190da7-e444-5187-9af0-d7e20db2420d"
+          ]
+        },
+        {
+          "claim_id": "c7",
+          "text": "Nội dung chủ yếu của hợp đồng lao động phải xác định chế độ nâng bậc, nâng lương theo thỏa thuận của hai bên hoặc theo thỏa ước lao động tập thể, quy định của người sử dụng lao động.",
+          "supported_by_article_codes": [
+            "20.2.TT.2.3"
+          ],
+          "supported_by_chunk_ids": [
+            "062bea11-a1f6-53fa-93e5-458b02127e00"
+          ]
+        },
+        {
+          "claim_id": "c8",
+          "text": "Nội dung chủ yếu của hợp đồng lao động phải xác định thời giờ làm việc, thời giờ nghỉ ngơi theo thỏa thuận của hai bên hoặc theo nội quy lao động, thỏa ước lao động tập thể và quy định của pháp luật.",
+          "supported_by_article_codes": [
+            "20.2.TT.2.3"
+          ],
+          "supported_by_chunk_ids": [
+            "9b734884-f4c4-585d-8b7b-7d7dc6bb8a53"
+          ]
+        },
+        {
+          "claim_id": "c9",
+          "text": "Nội dung chủ yếu của hợp đồng lao động phải xác định trang bị bảo hộ lao động cho người lao động theo thỏa thuận của hai bên hoặc theo thỏa ước lao động tập thể hoặc quy định của người sử dụng lao động và pháp luật về an toàn, vệ sinh lao động.",
+          "supported_by_article_codes": [
+            "20.2.TT.2.3"
+          ],
+          "supported_by_chunk_ids": [
+            "e9278de8-62e5-5161-819d-0d23d089cfbc"
+          ]
+        },
+        {
+          "claim_id": "c10",
+          "text": "Nội dung chủ yếu của hợp đồng lao động phải xác định chế độ bảo hiểm xã hội, bảo hiểm y tế và bảo hiểm thất nghiệp theo quy định của pháp luật.",
+          "supported_by_article_codes": [
+            "20.2.TT.2.3"
+          ],
+          "supported_by_chunk_ids": [
+            "3a482c5f-3265-5478-9b4b-de5d59980d8a"
+          ]
+        },
+        {
+          "claim_id": "c11",
+          "text": "Nội dung chủ yếu của hợp đồng lao động phải xác định quyền, nghĩa vụ và lợi ích của người sử dụng lao động và người lao động trong việc đào tạo, bồi dưỡng, nâng cao trình độ, kỹ năng nghề.",
+          "supported_by_article_codes": [
+            "20.2.TT.2.3"
+          ],
+          "supported_by_chunk_ids": [
+            "94d21e89-1cba-5cae-9930-10098c313bc5"
+          ]
+        }
+      ],
+      "forbidden_claims": [
+        {
+          "claim_id": "f1",
+          "text": "Đối với hợp đồng lao động không xác định thời hạn, bắt buộc phải ghi cả thời điểm kết thúc thực hiện hợp đồng.",
+          "reason": "Bằng chứng chỉ yêu cầu ghi thời điểm bắt đầu đối với hợp đồng lao động không xác định thời hạn."
+        },
+        {
+          "claim_id": "f2",
+          "text": "Các chế độ và phúc lợi khác như thưởng, tiền ăn giữa ca và các khoản hỗ trợ phải được gộp vào phụ cấp lương hoặc khoản bổ sung khác.",
+          "reason": "Bằng chứng yêu cầu các chế độ và phúc lợi này được ghi thành mục riêng trong hợp đồng lao động."
+        }
+      ],
+      "disputed_points": [
+        {
+          "topic": "A giữ 11 nhóm nội dung chính; B tách 30 claim chi tiết tiểu mục.",
+          "resolution": "Merge giữ 11 nhóm chính của A; loại forbidden của A vì dùng suy đoán ngoài evidence; giữ hai forbidden của B vì được chunk hỗ trợ trực tiếp."
+        }
+      ],
+      "adjudication_notes": "Merge: required claims theo 11 nhóm chính của A; forbidden chỉ giữ hai claim của B được evidence hỗ trợ; loại bỏ forbidden về tính đầy đủ danh sách vì không có căn cứ trong chunk.",
+      "label_status": "multi_llm_candidate",
+      "needs_human_review": true,
+      "authority_review_status": "pending"
+    },
+    {
+      "case_id": "labor_candidate_049",
+      "decision": "select_b",
+      "expected_status": "answerable",
+      "required_claims": [
+        {
+          "claim_id": "c1",
+          "text": "Người sử dụng lao động phải quy định cụ thể ca làm việc và phiên làm việc của người lao động trong Nội quy lao động.",
+          "supported_by_article_codes": [
+            "20.2.TT.6.9"
+          ],
+          "supported_by_chunk_ids": [
+            "bf598857-dd22-57c6-8cfe-22f9e6b6bb3f"
+          ]
+        },
+        {
+          "claim_id": "c2",
+          "text": "Người sử dụng lao động phải thông báo cho người lao động về ca làm việc và phiên làm việc trước khi đến làm việc theo đúng quy định của pháp luật.",
+          "supported_by_article_codes": [
+            "20.2.TT.6.9"
+          ],
+          "supported_by_chunk_ids": [
+            "bf598857-dd22-57c6-8cfe-22f9e6b6bb3f"
+          ]
+        },
+        {
+          "claim_id": "c3",
+          "text": "Hằng năm, người sử dụng lao động phải báo cáo Bộ Công Thương về tình hình thực hiện Thông tư này trước ngày 15 tháng 01.",
+          "supported_by_article_codes": [
+            "20.2.TT.6.9"
+          ],
+          "supported_by_chunk_ids": [
+            "bf598857-dd22-57c6-8cfe-22f9e6b6bb3f"
+          ]
+        },
+        {
+          "claim_id": "c4",
+          "text": "Người sử dụng lao động phải báo cáo đột xuất về tình hình thực hiện Thông tư này khi có yêu cầu của cơ quan có thẩm quyền.",
+          "supported_by_article_codes": [
+            "20.2.TT.6.9"
+          ],
+          "supported_by_chunk_ids": [
+            "bf598857-dd22-57c6-8cfe-22f9e6b6bb3f"
+          ]
+        }
+      ],
+      "forbidden_claims": [
+        {
+          "claim_id": "f1",
+          "text": "Người sử dụng lao động chỉ cần thông báo ca làm việc và phiên làm việc sau khi người lao động đã đến làm việc.",
+          "reason": "Bằng chứng yêu cầu phải thông báo trước khi người lao động đến làm việc."
+        }
+      ],
+      "disputed_points": [
+        {
+          "topic": "A gộp quy định+thông báo và gộp hai loại báo cáo; B tách bốn nghĩa vụ.",
+          "resolution": "Tách báo cáo định kỳ và đột xuất; tách quy định và thông báo vì độc lập."
+        }
+      ],
+      "adjudication_notes": "B tách đúng nghĩa vụ độc lập theo quy tắc ưu tiên cho báo cáo định kỳ/đột xuất.",
+      "label_status": "multi_llm_candidate",
+      "needs_human_review": true,
+      "authority_review_status": "pending"
+    },
+    {
+      "case_id": "labor_candidate_050",
+      "decision": "select_b",
+      "expected_status": "answerable",
+      "required_claims": [
+        {
+          "claim_id": "c1",
+          "text": "Thủ tướng Chính phủ thực hiện nhiệm vụ, quyền hạn quy định chức năng, nhiệm vụ, cơ cấu tổ chức và hoạt động của Hội đồng tiền lương quốc gia theo khoản 3 Điều 92 của Bộ luật Lao động.",
+          "supported_by_article_codes": [
+            "NĐ128.7"
+          ],
+          "supported_by_chunk_ids": [
+            "7a5f53d2-aa2a-51ca-bbf8-2f4d46fa236a"
+          ]
+        },
+        {
+          "claim_id": "c2",
+          "text": "Bộ trưởng Bộ Nội vụ thực hiện nhiệm vụ thông báo cụ thể ngày nghỉ lễ, tết hằng năm theo khoản 3 Điều 112 của Bộ luật Lao động.",
+          "supported_by_article_codes": [
+            "NĐ128.7"
+          ],
+          "supported_by_chunk_ids": [
+            "7a5f53d2-aa2a-51ca-bbf8-2f4d46fa236a"
+          ]
+        },
+        {
+          "claim_id": "c3",
+          "text": "Việc thông báo cụ thể ngày nghỉ lễ, tết hằng năm nêu tại khoản 2 được áp dụng đối với cán bộ, công chức, viên chức và người lao động làm việc trong cơ quan hành chính, đơn vị sự nghiệp, tổ chức chính trị, tổ chức chính trị - xã hội.",
+          "supported_by_article_codes": [
+            "NĐ128.7"
+          ],
+          "supported_by_chunk_ids": [
+            "7a5f53d2-aa2a-51ca-bbf8-2f4d46fa236a"
+          ]
+        }
+      ],
+      "forbidden_claims": [
+        {
+          "claim_id": "f1",
+          "text": "Bộ trưởng Bộ Nội vụ có nhiệm vụ thông báo cụ thể ngày nghỉ lễ, tết hằng năm cho mọi người lao động làm việc theo hợp đồng lao động, không phụ thuộc nơi làm việc.",
+          "reason": "Bằng chứng giới hạn phạm vi áp dụng của nhiệm vụ thông báo này đối với cán bộ, công chức, viên chức và người lao động làm việc trong các cơ quan, đơn vị, tổ chức được liệt kê."
+        },
+        {
+          "claim_id": "f2",
+          "text": "Bộ trưởng Bộ Nội vụ thực hiện nhiệm vụ quy định chức năng, nhiệm vụ, cơ cấu tổ chức và hoạt động của Hội đồng tiền lương quốc gia.",
+          "reason": "Bằng chứng giao nhiệm vụ, quyền hạn này cho Thủ tướng Chính phủ."
+        }
+      ],
+      "disputed_points": [
+        {
+          "topic": "A gộp phạm vi áp dụng vào claim thông báo; B tách phạm vi thành claim riêng.",
+          "resolution": "Tách phạm vi vì là điều kiện áp dụng độc lập quan trọng."
+        }
+      ],
+      "adjudication_notes": "B tách rõ phạm vi áp dụng và có forbidden claim đầy đủ hơn; đủ evidence cho ba claim.",
+      "label_status": "multi_llm_candidate",
+      "needs_human_review": true,
+      "authority_review_status": "pending"
+    },
+    {
+      "case_id": "labor_candidate_051",
+      "decision": "select_b",
+      "expected_status": "answerable",
+      "required_claims": [
+        {
+          "claim_id": "c1",
+          "text": "Việc cử hòa giải viên lao động do Sở Nội vụ hoặc cơ quan chuyên môn thực hiện nhiệm vụ về lĩnh vực nội vụ thuộc Ủy ban nhân dân cấp xã thực hiện theo khoản 1 Điều 95 Nghị định số 145/2020/NĐ-CP.",
+          "supported_by_article_codes": [
+            "NĐ129.75"
+          ],
+          "supported_by_chunk_ids": [
+            "61f70170-f93d-5e79-b64f-860aae89ccbf"
+          ]
+        },
+        {
+          "claim_id": "c2",
+          "text": "Đơn yêu cầu giải quyết tranh chấp lao động, tranh chấp về hợp đồng đào tạo nghề hoặc yêu cầu hỗ trợ phát triển quan hệ lao động được gửi đến Sở Nội vụ, cơ quan chuyên môn thực hiện nhiệm vụ về lĩnh vực nội vụ thuộc Ủy ban nhân dân cấp xã hoặc hòa giải viên lao động.",
+          "supported_by_article_codes": [
+            "NĐ129.75"
+          ],
+          "supported_by_chunk_ids": [
+            "61f70170-f93d-5e79-b64f-860aae89ccbf"
+          ]
+        },
+        {
+          "claim_id": "c3",
+          "text": "Nếu hòa giải viên lao động trực tiếp nhận đơn yêu cầu từ đối tượng tranh chấp, trong thời hạn 12 giờ kể từ khi tiếp nhận đơn, hòa giải viên phải chuyển đơn cho Sở Nội vụ hoặc cơ quan chuyên môn thực hiện nhiệm vụ về lĩnh vực nội vụ thuộc Ủy ban nhân dân cấp xã đang quản lý hòa giải viên để phân loại xử lý.",
+          "supported_by_article_codes": [
+            "NĐ129.75"
+          ],
+          "supported_by_chunk_ids": [
+            "61f70170-f93d-5e79-b64f-860aae89ccbf"
+          ]
+        },
+        {
+          "claim_id": "c4",
+          "text": "Trong thời hạn 05 ngày làm việc kể từ ngày nhận được yêu cầu, Sở Nội vụ hoặc cơ quan chuyên môn thực hiện nhiệm vụ về lĩnh vực nội vụ thuộc Ủy ban nhân dân cấp xã có trách nhiệm phân loại yêu cầu.",
+          "supported_by_article_codes": [
+            "NĐ129.75"
+          ],
+          "supported_by_chunk_ids": [
+            "61f70170-f93d-5e79-b64f-860aae89ccbf"
+          ]
+        },
+        {
+          "claim_id": "c5",
+          "text": "Trong thời hạn 05 ngày làm việc kể từ ngày nhận được yêu cầu, Sở Nội vụ hoặc cơ quan chuyên môn thực hiện nhiệm vụ về lĩnh vực nội vụ thuộc Ủy ban nhân dân cấp xã phải có văn bản cử hòa giải viên lao động giải quyết theo quy định.",
+          "supported_by_article_codes": [
+            "NĐ129.75"
+          ],
+          "supported_by_chunk_ids": [
+            "61f70170-f93d-5e79-b64f-860aae89ccbf"
+          ]
+        },
+        {
+          "claim_id": "c6",
+          "text": "Trường hợp Sở Nội vụ hoặc cơ quan chuyên môn thực hiện nhiệm vụ về lĩnh vực nội vụ thuộc Ủy ban nhân dân cấp xã tiếp nhận đơn do hòa giải viên lao động chuyển theo điểm a khoản 2, trong thời hạn 12 giờ kể từ khi tiếp nhận đơn, cơ quan này phải ra văn bản cử hòa giải viên lao động theo quy định.",
+          "supported_by_article_codes": [
+            "NĐ129.75"
+          ],
+          "supported_by_chunk_ids": [
+            "61f70170-f93d-5e79-b64f-860aae89ccbf"
+          ]
+        },
+        {
+          "claim_id": "c7",
+          "text": "Sở Nội vụ hoặc cơ quan chuyên môn thực hiện nhiệm vụ về lĩnh vực nội vụ thuộc Ủy ban nhân dân cấp xã còn thực hiện nhiệm vụ theo khoản 3 Điều 95 Nghị định số 145/2020/NĐ-CP.",
+          "supported_by_article_codes": [
+            "NĐ129.75"
+          ],
+          "supported_by_chunk_ids": [
+            "61f70170-f93d-5e79-b64f-860aae89ccbf"
+          ]
+        }
+      ],
+      "forbidden_claims": [
+        {
+          "claim_id": "f1",
+          "text": "Hòa giải viên lao động trực tiếp nhận đơn có thể giữ đơn để tự giải quyết mà không cần chuyển cho cơ quan đang quản lý hòa giải viên.",
+          "reason": "Bằng chứng quy định hòa giải viên trực tiếp nhận đơn phải chuyển đơn trong thời hạn 12 giờ để phân loại xử lý."
+        },
+        {
+          "claim_id": "f2",
+          "text": "Mọi trường hợp cử hòa giải viên lao động đều có thời hạn xử lý 05 ngày làm việc.",
+          "reason": "Bằng chứng có trường hợp đặc biệt khi cơ quan tiếp nhận đơn do hòa giải viên chuyển thì phải ra văn bản cử hòa giải viên trong thời hạn 12 giờ."
+        }
+      ],
+      "disputed_points": [
+        {
+          "topic": "Cách tách thời hạn 12 giờ và 05 ngày làm việc cùng chủ thể thực hiện từng bước",
+          "resolution": "Evidence tách rõ thời hạn 12 giờ cho chuyển đơn và cho cử khi nhận từ hòa giải viên; thời hạn 05 ngày cho phân loại và cử trong trường hợp thông thường. B phản ánh đúng sự độc lập của các mốc."
+        }
+      ],
+      "adjudication_notes": "B tách đúng các mốc thời hạn độc lập và chủ thể theo evidence; A gộp một số bước. Giữ nguyên bộ claim của B.",
+      "label_status": "multi_llm_candidate",
+      "needs_human_review": true,
+      "authority_review_status": "pending"
+    },
+    {
+      "case_id": "labor_candidate_052",
+      "decision": "select_a",
+      "expected_status": "answerable",
+      "required_claims": [
+        {
+          "claim_id": "c1",
+          "text": "Người lao động thuộc các trường hợp quy định tại khoản 1 Điều này có thể nghỉ hưu ở tuổi thấp hơn nhưng không quá 05 tuổi so với tuổi nghỉ hưu quy định tại Điều 4 của Nghị định này tại thời điểm nghỉ hưu, trừ trường hợp pháp luật có quy định khác.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.2.5"
+          ],
+          "supported_by_chunk_ids": [
+            "b2af3abb-5a18-56ae-be71-fbebb9f41e54"
+          ]
+        },
+        {
+          "claim_id": "c2",
+          "text": "Người lao động có từ đủ 15 năm trở lên làm nghề, công việc nặng nhọc, độc hại, nguy hiểm hoặc đặc biệt nặng nhọc, độc hại, nguy hiểm thuộc danh mục do Bộ Lao động - Thương binh và Xã hội ban hành thuộc trường hợp được nghỉ hưu ở tuổi thấp hơn.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.2.5"
+          ],
+          "supported_by_chunk_ids": [
+            "b2af3abb-5a18-56ae-be71-fbebb9f41e54"
+          ]
+        },
+        {
+          "claim_id": "c3",
+          "text": "Người lao động có từ đủ 15 năm trở lên làm việc ở vùng có điều kiện kinh tế - xã hội đặc biệt khó khăn (bao gồm cả thời gian làm việc ở nơi có phụ cấp khu vực hệ số 0,7 trở lên trước ngày 01/01/2021) thuộc trường hợp được nghỉ hưu ở tuổi thấp hơn.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.2.5"
+          ],
+          "supported_by_chunk_ids": [
+            "b2af3abb-5a18-56ae-be71-fbebb9f41e54"
+          ]
+        },
+        {
+          "claim_id": "c4",
+          "text": "Người lao động bị suy giảm khả năng lao động từ 61% trở lên thuộc trường hợp được nghỉ hưu ở tuổi thấp hơn.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.2.5"
+          ],
+          "supported_by_chunk_ids": [
+            "b2af3abb-5a18-56ae-be71-fbebb9f41e54"
+          ]
+        },
+        {
+          "claim_id": "c5",
+          "text": "Người lao động có tổng thời gian làm nghề, công việc nặng nhọc độc hại nguy hiểm và thời gian làm việc ở vùng đặc biệt khó khăn từ đủ 15 năm trở lên cũng thuộc trường hợp được nghỉ hưu ở tuổi thấp hơn.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.2.5"
+          ],
+          "supported_by_chunk_ids": [
+            "b2af3abb-5a18-56ae-be71-fbebb9f41e54"
+          ]
+        },
+        {
+          "claim_id": "c6",
+          "text": "Tuổi nghỉ hưu thấp nhất của người lao động thuộc các trường hợp trên được thực hiện theo lộ trình tăng dần theo năm nghỉ hưu và khác nhau giữa lao động nam và lao động nữ, cho đến khi đạt 57 tuổi đối với lao động nam từ năm 2028 trở đi và 55 tuổi đối với lao động nữ từ năm 2035 trở đi.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.2.5"
+          ],
+          "supported_by_chunk_ids": [
+            "5b610cb8-92bd-5f52-9cd0-d2c66cba5f6a"
+          ]
+        }
+      ],
+      "forbidden_claims": [
+        {
+          "claim_id": "f1",
+          "text": "Tuổi nghỉ hưu thấp hơn có thể thấp hơn tuổi nghỉ hưu bình thường quá 05 tuổi trong mọi trường hợp.",
+          "reason": "Chunk quy định mức chênh lệch tối đa là 05 tuổi, trừ trường hợp pháp luật có quy định khác; không có căn cứ cho việc chênh lệch vượt quá mức này một cách phổ biến."
+        }
+      ],
+      "disputed_points": [],
+      "adjudication_notes": "Sao chép nguyên vẹn annotation của Annotator A; giữ decision select_a theo yêu cầu sửa.",
+      "label_status": "multi_llm_candidate",
+      "needs_human_review": true,
+      "authority_review_status": "pending"
+    },
+    {
+      "case_id": "labor_candidate_053",
+      "decision": "merge",
+      "expected_status": "answerable",
+      "required_claims": [
+        {
+          "claim_id": "c1",
+          "text": "Khi nhận người lao động giúp việc gia đình vào làm việc, người sử dụng lao động phải ký kết hợp đồng lao động bằng văn bản với người lao động.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.3.89"
+          ],
+          "supported_by_chunk_ids": [
+            "fca048c3-4124-576b-84b6-fb50c164e778"
+          ]
+        },
+        {
+          "claim_id": "c2",
+          "text": "Trước khi ký kết hợp đồng lao động, người lao động và người sử dụng lao động có nghĩa vụ cung cấp thông tin theo Điều 16 Bộ luật Lao động; người sử dụng lao động phải cung cấp rõ thông tin về phạm vi công việc, điều kiện ăn, ở và các thông tin cần thiết khác liên quan đến bảo đảm an toàn sức khỏe.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.3.89"
+          ],
+          "supported_by_chunk_ids": [
+            "fca048c3-4124-576b-84b6-fb50c164e778"
+          ]
+        },
+        {
+          "claim_id": "c3",
+          "text": "Nội dung hợp đồng lao động của người giúp việc gia đình phải bảo đảm các nội dung chủ yếu quy định tại khoản 1 Điều 21 Bộ luật Lao động, được thỏa thuận cụ thể theo Mẫu số 01/PLV.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.3.89"
+          ],
+          "supported_by_chunk_ids": [
+            "fca048c3-4124-576b-84b6-fb50c164e778"
+          ]
+        },
+        {
+          "claim_id": "c4",
+          "text": "Trong quá trình thực hiện hợp đồng, mỗi bên có quyền đơn phương chấm dứt hợp đồng lao động mà không cần lý do nhưng phải báo trước ít nhất 15 ngày, trừ các trường hợp không phải báo trước.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.3.89"
+          ],
+          "supported_by_chunk_ids": [
+            "eca5edfc-c9ec-520a-bdf7-c9fea3157d6a"
+          ]
+        },
+        {
+          "claim_id": "c5",
+          "text": "Người lao động được đơn phương chấm dứt hợp đồng mà không phải báo trước trong các trường hợp không được bố trí đúng công việc/địa điểm/điều kiện làm việc, không được trả đủ lương hoặc trả không đúng hạn, bị ngược đãi/đánh đập/nhục mạ/cưỡng bức lao động/quấy rối tình dục, lao động nữ mang thai phải nghỉ theo khoản 1 Điều 138 BLLĐ, đủ tuổi nghỉ hưu, hoặc người sử dụng lao động cung cấp thông tin không trung thực làm ảnh hưởng đến việc thực hiện hợp đồng.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.3.89"
+          ],
+          "supported_by_chunk_ids": [
+            "e2bb8871-4d8d-5a64-ac00-45de30088b42"
+          ]
+        },
+        {
+          "claim_id": "c6",
+          "text": "Người sử dụng lao động được đơn phương chấm dứt hợp đồng mà không phải báo trước khi người lao động không có mặt tại nơi làm việc sau thời hạn quy định tại Điều 31 BLLĐ hoặc tự ý bỏ việc không có lý do chính đáng từ 05 ngày làm việc liên tục trở lên.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.3.89"
+          ],
+          "supported_by_chunk_ids": [
+            "3178fa85-35a1-5895-92be-d3c239198632"
+          ]
+        },
+        {
+          "claim_id": "c7",
+          "text": "Khi đơn phương chấm dứt hợp đồng trái pháp luật, người lao động thực hiện nghĩa vụ theo Điều 40 và người sử dụng lao động theo Điều 41 BLLĐ; nếu người sử dụng lao động vi phạm thời hạn báo trước thì phải trả khoản tiền tương ứng với tiền lương trong những ngày không báo trước.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.3.89"
+          ],
+          "supported_by_chunk_ids": [
+            "922ba47e-66fe-582a-aea2-db3259618c9a"
+          ]
+        },
+        {
+          "claim_id": "c8",
+          "text": "Khi hợp đồng chấm dứt theo các khoản 1, 2, 3, 4, 6 và 7 Điều 34 BLLĐ và trường hợp đơn phương chấm dứt hợp lệ, người sử dụng lao động trả trợ cấp thôi việc theo Điều 46 BLLĐ và hai bên thanh toán đầy đủ các khoản tiền liên quan đến quyền lợi của mỗi bên.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.3.89"
+          ],
+          "supported_by_chunk_ids": [
+            "922ba47e-66fe-582a-aea2-db3259618c9a"
+          ]
+        },
+        {
+          "claim_id": "c9",
+          "text": "Mức lương theo công việc của người giúp việc gia đình (bao gồm cả chi phí ăn, ở nếu có) không được thấp hơn mức lương tối thiểu vùng; mức chi phí ăn, ở hằng tháng do hai bên thỏa thuận tối đa không quá 50% mức lương theo công việc ghi trong hợp đồng.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.3.89"
+          ],
+          "supported_by_chunk_ids": [
+            "234e8211-1436-57de-b13e-0931050f1ebe"
+          ]
+        },
+        {
+          "claim_id": "c10",
+          "text": "Vào ngày làm việc bình thường, người sử dụng lao động phải bảo đảm cho người lao động giúp việc gia đình được nghỉ ít nhất 8 giờ, trong đó có 6 giờ liên tục, trong 24 giờ liên tục; được nghỉ hằng tuần theo Điều 111 BLLĐ hoặc tính bình quân ít nhất 04 ngày/tháng nếu không bố trí được nghỉ hằng tuần.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.3.89"
+          ],
+          "supported_by_chunk_ids": [
+            "ca990485-578c-569f-b1d5-939f8878349c"
+          ]
+        },
+        {
+          "claim_id": "c11",
+          "text": "Người sử dụng lao động có trách nhiệm trả cùng lúc với kỳ trả lương một khoản tiền bằng mức đóng BHXH bắt buộc, BHYT thuộc trách nhiệm của người sử dụng lao động để người lao động chủ động tham gia; nếu giao kết nhiều hợp đồng thì trách nhiệm thực hiện theo từng hợp đồng.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.3.89"
+          ],
+          "supported_by_chunk_ids": [
+            "9ab06f13-749a-53e1-97ae-ec56862ce314"
+          ]
+        },
+        {
+          "claim_id": "c12",
+          "text": "Người sử dụng lao động có trách nhiệm hướng dẫn cách sử dụng máy, thiết bị, đồ dùng, biện pháp phòng chống cháy nổ liên quan đến công việc và trang bị phương tiện bảo vệ cá nhân; khi xảy ra tai nạn lao động, bệnh nghề nghiệp phải thực hiện trách nhiệm theo Điều 38, 39 Luật An toàn, vệ sinh lao động.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.3.89"
+          ],
+          "supported_by_chunk_ids": [
+            "72fbcc80-4f83-55f2-b7a5-9d60f639dabf"
+          ]
+        },
+        {
+          "claim_id": "c13",
+          "text": "Người lao động giúp việc gia đình có trách nhiệm chấp hành đúng hướng dẫn sử dụng máy, thiết bị, đồ dùng và phòng chống cháy nổ, bảo đảm yêu cầu vệ sinh môi trường của hộ gia đình, dân cư nơi cư trú.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.3.89"
+          ],
+          "supported_by_chunk_ids": [
+            "72fbcc80-4f83-55f2-b7a5-9d60f639dabf"
+          ]
+        },
+        {
+          "claim_id": "c14",
+          "text": "Hai bên xác định cụ thể hành vi, hình thức xử lý kỷ luật lao động, trách nhiệm vật chất theo khoản 2 Điều 118 và Điều 129 BLLĐ, ghi trong hợp đồng hoặc thỏa thuận khác; hình thức xử lý gồm khiển trách và sa thải; sa thải áp dụng khi vi phạm khoản 1, 2, 4 Điều 125 BLLĐ hoặc có hành vi ngược đãi, đánh đập, nhục mạ ảnh hưởng sức khỏe, nhân phẩm, danh dự đối với người sử dụng lao động hoặc thành viên hộ gia đình.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.3.89"
+          ],
+          "supported_by_chunk_ids": [
+            "d9a19cb6-5802-5837-af9f-6aaa4875c602"
+          ]
+        },
+        {
+          "claim_id": "c15",
+          "text": "Trường hợp người lao động giúp việc gia đình từ đủ 15 tuổi đến dưới 18 tuổi, khi xử lý kỷ luật lao động người sử dụng lao động phải thông báo đến người đại diện theo pháp luật của người lao động.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.3.89"
+          ],
+          "supported_by_chunk_ids": [
+            "d9a19cb6-5802-5837-af9f-6aaa4875c602"
+          ]
+        }
+      ],
+      "forbidden_claims": [
+        {
+          "claim_id": "f1",
+          "text": "Người sử dụng lao động có thể giao kết hợp đồng lao động miệng với người giúp việc gia đình.",
+          "reason": "Evidence yêu cầu ký kết bằng văn bản."
+        }
+      ],
+      "disputed_points": [
+        {
+          "topic": "Mức độ chi tiết hóa claim về giúp việc gia đình",
+          "resolution": "B tách quá vụn; A cũng dài. Merge nhóm các tiểu tiết cùng thuộc một quy tắc pháp lý độc lập (hợp đồng, chấm dứt, lương, nghỉ, BH, ATVSLĐ, kỷ luật) theo hướng dẫn batch."
+        }
+      ],
+      "adjudication_notes": "Câu hỏi rộng; cả A và B đều chi tiết hóa quá mức. Merge rút gọn thành các nhóm nghĩa vụ độc lập cần thiết. Case cần human review vì độ dài vẫn cao cho đánh giá RAG thông thường.",
+      "label_status": "multi_llm_candidate",
+      "needs_human_review": true,
+      "authority_review_status": "pending"
+    },
+    {
+      "case_id": "labor_candidate_054",
+      "decision": "merge",
+      "expected_status": "answerable",
+      "required_claims": [
+        {
+          "claim_id": "c1",
+          "text": "Hồ sơ đăng ký dự tuyển của người lao động Việt Nam phải có Phiếu đăng ký dự tuyển lao động theo Mẫu số 01/PLII Phụ lục II ban hành kèm theo Nghị định này.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.4.23"
+          ],
+          "supported_by_chunk_ids": [
+            "edb58bcd-79d7-53e1-bb4f-bc13092f3342"
+          ]
+        },
+        {
+          "claim_id": "c2",
+          "text": "Hồ sơ đăng ký dự tuyển phải có bản sao có chứng thực của một trong các giấy tờ: giấy khai sinh hoặc chứng minh nhân dân hoặc căn cước công dân.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.4.23"
+          ],
+          "supported_by_chunk_ids": [
+            "edb58bcd-79d7-53e1-bb4f-bc13092f3342"
+          ]
+        },
+        {
+          "claim_id": "c3",
+          "text": "Hồ sơ đăng ký dự tuyển phải có giấy chứng nhận sức khỏe hoặc giấy khám sức khỏe do cơ sở y tế có thẩm quyền cấp, có giá trị trong thời hạn 12 tháng tính đến thời điểm nộp hồ sơ.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.4.23"
+          ],
+          "supported_by_chunk_ids": [
+            "edb58bcd-79d7-53e1-bb4f-bc13092f3342"
+          ]
+        },
+        {
+          "claim_id": "c4",
+          "text": "Hồ sơ đăng ký dự tuyển phải có bản sao có chứng thực văn bằng, chứng chỉ về trình độ chuyên môn kỹ thuật, nghiệp vụ, ngoại ngữ liên quan đến công việc đăng ký dự tuyển; nếu là văn bằng, chứng chỉ của nước ngoài thì phải được hợp pháp hóa lãnh sự (trừ trường hợp được miễn theo điều ước quốc tế mà Việt Nam và nước ngoài liên quan là thành viên, theo nguyên tắc có đi có lại, hoặc theo quy định của pháp luật), dịch ra tiếng Việt và chứng thực theo quy định của pháp luật Việt Nam.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.4.23"
+          ],
+          "supported_by_chunk_ids": [
+            "edb58bcd-79d7-53e1-bb4f-bc13092f3342"
+          ]
+        }
+      ],
+      "forbidden_claims": [
+        {
+          "claim_id": "f1",
+          "text": "Giấy chứng nhận sức khỏe hoặc giấy khám sức khỏe quá 12 tháng tính đến thời điểm nộp hồ sơ vẫn được chấp nhận.",
+          "reason": "Evidence quy định giấy chứng nhận sức khỏe hoặc giấy khám sức khỏe phải có giá trị trong thời hạn 12 tháng tính đến thời điểm nộp hồ sơ."
+        },
+        {
+          "claim_id": "f2",
+          "text": "Mọi văn bằng, chứng chỉ do nước ngoài cấp đều bắt buộc phải hợp pháp hóa lãnh sự, không có trường hợp miễn.",
+          "reason": "Evidence quy định ngoại lệ miễn hợp pháp hóa lãnh sự theo điều ước quốc tế, nguyên tắc có đi có lại hoặc theo quy định của pháp luật."
+        },
+        {
+          "claim_id": "f3",
+          "text": "Văn bằng, chứng chỉ nước ngoài chỉ cần hợp pháp hóa lãnh sự mà không cần dịch ra tiếng Việt và chứng thực theo quy định của pháp luật Việt Nam.",
+          "reason": "Evidence yêu cầu văn bằng, chứng chỉ nước ngoài phải được hợp pháp hóa lãnh sự (trừ trường hợp miễn), đồng thời dịch ra tiếng Việt và chứng thực theo quy định của pháp luật Việt Nam."
+        }
+      ],
+      "disputed_points": [
+        {
+          "topic": "Đối tượng hồ sơ và mẫu phiếu",
+          "resolution": "Evidence và câu hỏi chỉ về hồ sơ đăng ký dự tuyển của người lao động Việt Nam với Mẫu số 01/PLII; loại bỏ hoàn toàn nội dung về lao động nước ngoài và Mẫu 01/PLI."
+        }
+      ],
+      "adjudication_notes": "Merge dựa trên bốn nhóm giấy tờ của Annotator A, khớp trực tiếp với canonical chunk; bổ sung ba forbidden claim về sai lệch thời hạn sức khỏe và yêu cầu đối với văn bằng nước ngoài.",
+      "label_status": "multi_llm_candidate",
+      "needs_human_review": true,
+      "authority_review_status": "pending"
+    },
+    {
+      "case_id": "labor_candidate_055",
+      "decision": "select_a",
+      "expected_status": "answerable",
+      "required_claims": [
+        {
+          "claim_id": "c1",
+          "text": "Nguyên tắc ủy quyền quản lý lao động tại khu công nghiệp, khu kinh tế phải bảo đảm hiệu lực, hiệu quả công tác quản lý nhà nước về lao động trong khu công nghiệp.",
+          "supported_by_article_codes": [
+            "20.2.TT.8.4"
+          ],
+          "supported_by_chunk_ids": [
+            "0729de37-93c0-59fe-a2e2-63e76ea0c56b"
+          ]
+        },
+        {
+          "claim_id": "c2",
+          "text": "Nguyên tắc ủy quyền quản lý lao động tại khu công nghiệp, khu kinh tế phải tạo điều kiện thuận lợi cho hoạt động sản xuất kinh doanh của doanh nghiệp trong khu công nghiệp.",
+          "supported_by_article_codes": [
+            "20.2.TT.8.4"
+          ],
+          "supported_by_chunk_ids": [
+            "0729de37-93c0-59fe-a2e2-63e76ea0c56b"
+          ]
+        },
+        {
+          "claim_id": "c3",
+          "text": "Nội dung ủy quyền do cơ quan ủy quyền và cơ quan được ủy quyền thống nhất và phải phù hợp với tình hình thực tế của địa phương và tổ chức bộ máy làm công tác lao động của Ban quản lý khu công nghiệp.",
+          "supported_by_article_codes": [
+            "20.2.TT.8.4"
+          ],
+          "supported_by_chunk_ids": [
+            "0729de37-93c0-59fe-a2e2-63e76ea0c56b"
+          ]
+        }
+      ],
+      "forbidden_claims": [],
+      "disputed_points": [],
+      "adjudication_notes": "A và B gần như tương đương về nội dung; A đủ và nguyên tử theo evidence. Giữ nguyên A.",
+      "label_status": "multi_llm_candidate",
+      "needs_human_review": true,
+      "authority_review_status": "pending"
+    },
+    {
+      "case_id": "labor_candidate_056",
+      "decision": "merge",
+      "expected_status": "answerable",
+      "required_claims": [
+        {
+          "claim_id": "c1",
+          "text": "Căn cứ kế hoạch sản xuất, kinh doanh, hằng năm người sử dụng lao động chủ động lựa chọn áp dụng chế độ thời giờ làm việc, thời giờ nghỉ ngơi bình thường theo Bộ luật Lao động hoặc chế độ theo Thông tư.",
+          "supported_by_article_codes": [
+            "20.2.TT.4.8"
+          ],
+          "supported_by_chunk_ids": [
+            "2dd8090c-1b52-510d-9a6f-001c066e032b"
+          ]
+        },
+        {
+          "claim_id": "c2",
+          "text": "Nếu lựa chọn chế độ theo Thông tư, người sử dụng lao động phải lập và điều chỉnh kế hoạch thời giờ làm việc, thời giờ nghỉ ngơi trong năm theo mẫu tại Phụ lục 1.",
+          "supported_by_article_codes": [
+            "20.2.TT.4.8"
+          ],
+          "supported_by_chunk_ids": [
+            "2dd8090c-1b52-510d-9a6f-001c066e032b"
+          ]
+        },
+        {
+          "claim_id": "c3",
+          "text": "Khi lập hoặc điều chỉnh kế hoạch, người sử dụng lao động phải tham khảo ý kiến của tổ chức đại diện người lao động tại cơ sở.",
+          "supported_by_article_codes": [
+            "20.2.TT.4.8"
+          ],
+          "supported_by_chunk_ids": [
+            "2dd8090c-1b52-510d-9a6f-001c066e032b"
+          ]
+        },
+        {
+          "claim_id": "c4",
+          "text": "Người sử dụng lao động phải thông báo kế hoạch hoặc kế hoạch điều chỉnh cho người lao động biết trước khi thực hiện ít nhất 30 ngày.",
+          "supported_by_article_codes": [
+            "20.2.TT.4.8"
+          ],
+          "supported_by_chunk_ids": [
+            "2dd8090c-1b52-510d-9a6f-001c066e032b"
+          ]
+        },
+        {
+          "claim_id": "c5",
+          "text": "Người sử dụng lao động phải thỏa thuận với người lao động khi làm thêm giờ theo Bộ luật Lao động.",
+          "supported_by_article_codes": [
+            "20.2.TT.4.8"
+          ],
+          "supported_by_chunk_ids": [
+            "2dd8090c-1b52-510d-9a6f-001c066e032b"
+          ]
+        },
+        {
+          "claim_id": "c6",
+          "text": "Người sử dụng lao động phải trả lương theo hợp đồng lao động và quy định pháp luật lao động về tiền lương.",
+          "supported_by_article_codes": [
+            "20.2.TT.4.8"
+          ],
+          "supported_by_chunk_ids": [
+            "2dd8090c-1b52-510d-9a6f-001c066e032b"
+          ]
+        },
+        {
+          "claim_id": "c7",
+          "text": "Người sử dụng lao động phải báo cáo định kỳ hằng năm cho Sở Lao động - Thương binh và Xã hội địa phương về việc thực hiện Thông tư trong báo cáo công tác an toàn, vệ sinh lao động.",
+          "supported_by_article_codes": [
+            "20.2.TT.4.8"
+          ],
+          "supported_by_chunk_ids": [
+            "2dd8090c-1b52-510d-9a6f-001c066e032b"
+          ]
+        }
+      ],
+      "forbidden_claims": [
+        {
+          "claim_id": "f1",
+          "text": "Người sử dụng lao động bắt buộc phải áp dụng chế độ theo Thông tư trong mọi trường hợp.",
+          "reason": "Bằng chứng cho phép hằng năm lựa chọn giữa chế độ bình thường theo Bộ luật Lao động và chế độ theo Thông tư căn cứ vào kế hoạch sản xuất, kinh doanh."
+        },
+        {
+          "claim_id": "f2",
+          "text": "Kế hoạch có thể được thông báo ngay trước ngày bắt đầu thực hiện, không cần bảo đảm mốc 30 ngày.",
+          "reason": "Bằng chứng yêu cầu phải thông báo trước khi thực hiện ít nhất 30 ngày."
+        },
+        {
+          "claim_id": "f3",
+          "text": "Khi lập hoặc điều chỉnh kế hoạch, người sử dụng lao động không cần tham khảo tổ chức đại diện người lao động tại cơ sở.",
+          "reason": "Bằng chứng quy định phải tham khảo ý kiến của tổ chức đại diện người lao động tại cơ sở."
+        }
+      ],
+      "disputed_points": [
+        {
+          "topic": "Mức độ tách các nghĩa vụ lập kế hoạch, tham khảo ý kiến, thông báo 30 ngày và thỏa thuận làm thêm giờ.",
+          "resolution": "Tách thành các claim độc lập theo cấu trúc điểm a, b của khoản 2; không tạo claim bắt buộc cho việc tham khảo ví dụ tại Phụ lục 2."
+        }
+      ],
+      "adjudication_notes": "Merge để tách đúng các nghĩa vụ độc lập từ evidence; giữ ba forbidden claims quan trọng phản ánh sai lệch về tính bắt buộc, mốc 30 ngày và nghĩa vụ tham khảo ý kiến.",
+      "label_status": "multi_llm_candidate",
+      "needs_human_review": true,
+      "authority_review_status": "pending"
+    },
+    {
+      "case_id": "labor_candidate_057",
+      "decision": "merge",
+      "expected_status": "answerable",
+      "required_claims": [
+        {
+          "claim_id": "c1",
+          "text": "Trong thời hạn 14 ngày làm việc kể từ ngày chấm dứt hợp đồng lao động, hai bên có trách nhiệm thanh toán đầy đủ các khoản tiền có liên quan đến quyền lợi của mỗi bên, trừ các trường hợp có thể kéo dài nhưng không được quá 30 ngày.",
+          "supported_by_article_codes": [
+            "20.2.LQ.48"
+          ],
+          "supported_by_chunk_ids": [
+            "d06103cf-d8ad-5921-8a60-db5468efcd87"
+          ]
+        },
+        {
+          "claim_id": "c2",
+          "text": "Thời hạn thanh toán có thể kéo dài nhưng không quá 30 ngày trong các trường hợp: người sử dụng lao động không phải là cá nhân chấm dứt hoạt động; người sử dụng lao động thay đổi cơ cấu, công nghệ hoặc vì lý do kinh tế; chia, tách, hợp nhất, sáp nhập, bán, cho thuê, chuyển đổi loại hình doanh nghiệp, chuyển nhượng quyền sở hữu hoặc quyền sử dụng tài sản của doanh nghiệp, hợp tác xã; do thiên tai, hỏa hoạn, địch họa hoặc dịch bệnh nguy hiểm.",
+          "supported_by_article_codes": [
+            "20.2.LQ.48"
+          ],
+          "supported_by_chunk_ids": [
+            "d06103cf-d8ad-5921-8a60-db5468efcd87"
+          ]
+        },
+        {
+          "claim_id": "c3",
+          "text": "Tiền lương, bảo hiểm xã hội, bảo hiểm y tế, bảo hiểm thất nghiệp, trợ cấp thôi việc và các quyền lợi khác của người lao động theo thỏa ước lao động tập thể, hợp đồng lao động được ưu tiên thanh toán trong trường hợp doanh nghiệp, hợp tác xã bị chấm dứt hoạt động, bị giải thể, phá sản.",
+          "supported_by_article_codes": [
+            "20.2.LQ.48"
+          ],
+          "supported_by_chunk_ids": [
+            "d06103cf-d8ad-5921-8a60-db5468efcd87"
+          ]
+        },
+        {
+          "claim_id": "c4",
+          "text": "Người sử dụng lao động có trách nhiệm hoàn thành thủ tục xác nhận thời gian đóng bảo hiểm xã hội, bảo hiểm thất nghiệp và trả lại cùng với bản chính giấy tờ khác nếu người sử dụng lao động đã giữ của người lao động.",
+          "supported_by_article_codes": [
+            "20.2.LQ.48"
+          ],
+          "supported_by_chunk_ids": [
+            "d06103cf-d8ad-5921-8a60-db5468efcd87"
+          ]
+        },
+        {
+          "claim_id": "c5",
+          "text": "Người sử dụng lao động có trách nhiệm cung cấp bản sao các tài liệu liên quan đến quá trình làm việc của người lao động nếu người lao động có yêu cầu; chi phí sao, gửi tài liệu do người sử dụng lao động trả.",
+          "supported_by_article_codes": [
+            "20.2.LQ.48"
+          ],
+          "supported_by_chunk_ids": [
+            "d06103cf-d8ad-5921-8a60-db5468efcd87"
+          ]
+        }
+      ],
+      "forbidden_claims": [
+        {
+          "claim_id": "f1",
+          "text": "Thời hạn thanh toán các khoản tiền liên quan đến quyền lợi của mỗi bên khi chấm dứt hợp đồng lao động luôn cố định là 14 ngày làm việc, không có ngoại lệ.",
+          "reason": "Canonical evidence quy định rõ các trường hợp được phép kéo dài nhưng không quá 30 ngày."
+        }
+      ],
+      "disputed_points": [
+        {
+          "topic": "Tách từng trường hợp kéo dài thời hạn thành claim riêng và tách nghĩa vụ xác nhận bảo hiểm thành nhiều claim.",
+          "resolution": "Nhóm bốn trường hợp kéo dài vào một claim có danh sách điều kiện; giữ hai nghĩa vụ của người sử dụng lao động thành hai claim độc lập theo cấu trúc khoản 3."
+        }
+      ],
+      "adjudication_notes": "Evidence đủ; merge để tránh over-split các trường hợp kéo dài đồng thời giữ tách biệt thời hạn 14 ngày, giới hạn 30 ngày, ưu tiên thanh toán và hai trách nhiệm riêng của người sử dụng lao động.",
+      "label_status": "multi_llm_candidate",
+      "needs_human_review": true,
+      "authority_review_status": "pending"
+    },
+    {
+      "case_id": "labor_candidate_058",
+      "decision": "select_a",
+      "expected_status": "answerable",
+      "required_claims": [
+        {
+          "claim_id": "c1",
+          "text": "Danh mục vùng có điều kiện kinh tế - xã hội đặc biệt khó khăn để làm căn cứ xác định các trường hợp có thể nghỉ hưu ở tuổi thấp hơn tuổi nghỉ hưu trong điều kiện lao động bình thường được ban hành kèm theo Thông tư này.",
+          "supported_by_article_codes": [
+            "20.2.TT.5.3"
+          ],
+          "supported_by_chunk_ids": [
+            "e747b06a-8c28-5140-9b45-c3524544d9da"
+          ]
+        }
+      ],
+      "forbidden_claims": [],
+      "disputed_points": [
+        {
+          "topic": "Tách thành hai claim về việc ban hành danh mục và mục đích sử dụng danh mục.",
+          "resolution": "Giữ một claim duy nhất phản ánh đúng phạm vi evidence; không liệt kê địa bàn cụ thể vì chunk không cung cấp."
+        }
+      ],
+      "adjudication_notes": "Canonical chunk chỉ quy định hình thức ban hành danh mục kèm theo Thông tư; A phản ánh đúng và đủ mà không mở rộng.",
+      "label_status": "multi_llm_candidate",
+      "needs_human_review": true,
+      "authority_review_status": "pending"
+    },
+    {
+      "case_id": "labor_candidate_059",
+      "decision": "select_a",
+      "expected_status": "answerable",
+      "required_claims": [
+        {
+          "claim_id": "c1",
+          "text": "Tổng số giờ làm việc tiêu chuẩn trong 1 năm của người lao động làm việc không thường xuyên được tính theo công thức SGLVN = (SNN - SNHN) x 12h / 2, trong đó SNN là số ngày trong năm và SNHN là số ngày nghỉ hàng năm của người lao động theo quy định của Bộ luật Lao động.",
+          "supported_by_article_codes": [
+            "20.2.TT.7.5"
+          ],
+          "supported_by_chunk_ids": [
+            "0f83b422-592b-5d5a-b226-09e701c3ceff"
+          ]
+        },
+        {
+          "claim_id": "c2",
+          "text": "Trường hợp người lao động chưa làm đủ 12 tháng trong năm, số ngày trong năm (SNN) và số ngày nghỉ hàng năm (SNHN) được tính tỷ lệ theo thời gian làm việc từ thời điểm người lao động bắt đầu làm việc cho người sử dụng lao động trong năm đó.",
+          "supported_by_article_codes": [
+            "20.2.TT.7.5"
+          ],
+          "supported_by_chunk_ids": [
+            "0f83b422-592b-5d5a-b226-09e701c3ceff"
+          ]
+        },
+        {
+          "claim_id": "c3",
+          "text": "Người lao động làm việc không thường xuyên tại các công trình dầu khí trên biển làm việc theo phiên và theo ca, trong đó ca làm việc không quá 12 giờ trong 01 ngày.",
+          "supported_by_article_codes": [
+            "20.2.TT.7.5"
+          ],
+          "supported_by_chunk_ids": [
+            "b24c5362-5aac-5455-85b4-916a1ee39d72"
+          ]
+        },
+        {
+          "claim_id": "c4",
+          "text": "Phiên làm việc của người lao động làm việc không thường xuyên tại các công trình dầu khí trên biển tối đa là 45 ngày.",
+          "supported_by_article_codes": [
+            "20.2.TT.7.5"
+          ],
+          "supported_by_chunk_ids": [
+            "b24c5362-5aac-5455-85b4-916a1ee39d72"
+          ]
+        },
+        {
+          "claim_id": "c5",
+          "text": "Người sử dụng lao động phải thỏa thuận bằng văn bản hoặc thống nhất với người lao động về ca làm việc và phiên làm việc trước khi cử người lao động làm việc không thường xuyên trên công trình dầu khí trên biển.",
+          "supported_by_article_codes": [
+            "20.2.TT.7.5"
+          ],
+          "supported_by_chunk_ids": [
+            "c20b5675-39c8-5e42-8af9-4b85189fe61d"
+          ]
+        },
+        {
+          "claim_id": "c6",
+          "text": "Trong thời gian không làm việc trên công trình dầu khí trên biển, người lao động làm việc không thường xuyên được bố trí nghỉ bù theo quy định tại khoản 4 Điều 8 hoặc thực hiện công việc trên đất liền theo quy định pháp luật về lao động.",
+          "supported_by_article_codes": [
+            "20.2.TT.7.5"
+          ],
+          "supported_by_chunk_ids": [
+            "ebc92ff0-743b-58fa-867d-4db674d181bf"
+          ]
+        },
+        {
+          "claim_id": "c7",
+          "text": "Tổng số giờ làm việc bình thường trong năm của người lao động làm việc không thường xuyên không được vượt quá thời giờ làm việc tiêu chuẩn trong 01 năm quy định tại khoản 1 Điều này.",
+          "supported_by_article_codes": [
+            "20.2.TT.7.5"
+          ],
+          "supported_by_chunk_ids": [
+            "d1b9e7b9-1c1a-50b4-8f98-5ad5e377df18"
+          ]
+        }
+      ],
+      "forbidden_claims": [],
+      "disputed_points": [
+        {
+          "topic": "Mức độ chi tiết hóa công thức và các giới hạn ca/phiên.",
+          "resolution": "Giữ nguyên công thức và biến số đúng như evidence; không biến ví dụ tính toán thành required claim."
+        }
+      ],
+      "adjudication_notes": "Năm chunk phủ đủ năm khoản; A giữ chính xác công thức, giải thích biến và các giới hạn độc lập mà không thêm nội dung ngoài evidence.",
+      "label_status": "multi_llm_candidate",
+      "needs_human_review": true,
+      "authority_review_status": "pending"
+    },
+    {
+      "case_id": "labor_candidate_060",
+      "decision": "select_a",
+      "expected_status": "answerable",
+      "required_claims": [
+        {
+          "claim_id": "c1",
+          "text": "Hồ sơ đề nghị gia hạn giấy xác nhận không thuộc diện cấp giấy phép lao động phải có văn bản của người sử dụng lao động đề nghị gia hạn giấy xác nhận theo Mẫu số 01 Phụ lục ban hành kèm theo Nghị định này.",
+          "supported_by_article_codes": [
+            "NĐ219.15"
+          ],
+          "supported_by_chunk_ids": [
+            "46077ec7-f72b-5f43-80ec-3a03b0fe09ef"
+          ]
+        },
+        {
+          "claim_id": "c2",
+          "text": "Hồ sơ phải có giấy khám sức khỏe do cơ sở khám bệnh, chữa bệnh có đủ điều kiện cấp, trừ trường hợp kết quả khám sức khỏe đã được kết nối, chia sẻ trên Hệ thống thông tin về quản lý hoạt động khám bệnh, chữa bệnh hoặc cơ sở dữ liệu quốc gia về y tế.",
+          "supported_by_article_codes": [
+            "NĐ219.15"
+          ],
+          "supported_by_chunk_ids": [
+            "46077ec7-f72b-5f43-80ec-3a03b0fe09ef"
+          ]
+        },
+        {
+          "claim_id": "c3",
+          "text": "Đối với giấy khám sức khỏe do cơ sở y tế có thẩm quyền của nước ngoài cấp, giấy này được sử dụng khi Việt Nam và quốc gia hoặc vùng lãnh thổ cấp giấy khám sức khỏe có điều ước hoặc thỏa thuận thừa nhận lẫn nhau, và thời hạn sử dụng của giấy khám sức khỏe đó không quá 12 tháng kể từ ngày được cấp.",
+          "supported_by_article_codes": [
+            "NĐ219.15"
+          ],
+          "supported_by_chunk_ids": [
+            "46077ec7-f72b-5f43-80ec-3a03b0fe09ef"
+          ]
+        },
+        {
+          "claim_id": "c4",
+          "text": "Hồ sơ phải có giấy xác nhận không thuộc diện cấp giấy phép lao động còn thời hạn đã được cấp.",
+          "supported_by_article_codes": [
+            "NĐ219.15"
+          ],
+          "supported_by_chunk_ids": [
+            "46077ec7-f72b-5f43-80ec-3a03b0fe09ef"
+          ]
+        },
+        {
+          "claim_id": "c5",
+          "text": "Hồ sơ phải có hộ chiếu còn thời hạn.",
+          "supported_by_article_codes": [
+            "NĐ219.15"
+          ],
+          "supported_by_chunk_ids": [
+            "46077ec7-f72b-5f43-80ec-3a03b0fe09ef"
+          ]
+        },
+        {
+          "claim_id": "c6",
+          "text": "Hồ sơ phải có giấy tờ chứng minh người lao động nước ngoài không thuộc diện cấp giấy phép lao động, là một trong các giấy tờ quy định tại điểm a, b khoản 5 Điều 8 Nghị định này, hoặc văn bản chứng minh là nhà quản lý, giám đốc điều hành, chuyên gia, lao động kỹ thuật theo Điều 19 Nghị định này kèm theo văn bản của người sử dụng lao động tại nước ngoài cử người lao động nước ngoài sang làm việc có thời hạn tại hiện diện thương mại trên lãnh thổ Việt Nam đối với trường hợp quy định tại điểm b khoản 13 Điều 7 Nghị định này.",
+          "supported_by_article_codes": [
+            "NĐ219.15"
+          ],
+          "supported_by_chunk_ids": [
+            "46077ec7-f72b-5f43-80ec-3a03b0fe09ef"
+          ]
+        }
+      ],
+      "forbidden_claims": [
+        {
+          "claim_id": "f1",
+          "text": "Giấy khám sức khỏe do cơ sở y tế nước ngoài cấp luôn được chấp nhận trong hồ sơ mà không cần điều kiện gì.",
+          "reason": "Chunk quy định điều kiện là phải có điều ước hoặc thỏa thuận thừa nhận lẫn nhau giữa Việt Nam và quốc gia/vùng lãnh thổ cấp giấy, và thời hạn không quá 12 tháng; không phải chấp nhận vô điều kiện."
+        }
+      ],
+      "disputed_points": [],
+      "adjudication_notes": "Giữ nguyên toàn bộ required claims và forbidden claim từ Annotator A vì khớp đầy đủ với canonical evidence.",
+      "label_status": "multi_llm_candidate",
+      "needs_human_review": true,
+      "authority_review_status": "pending"
+    },
+    {
+      "case_id": "labor_candidate_061",
+      "decision": "merge",
+      "expected_status": "answerable",
+      "required_claims": [
+        {
+          "claim_id": "c1",
+          "text": "Doanh nghiệp thực hiện sắp xếp lại phải tổ chức tuyên truyền, phổ biến chính sách lao động dôi dư đến người lao động trong doanh nghiệp trước và trong quá trình xây dựng phương án sử dụng lao động.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.6.9"
+          ],
+          "supported_by_chunk_ids": [
+            "6a1ea8ed-3e8a-5f0e-8b75-ea0e3591e2e2"
+          ]
+        },
+        {
+          "claim_id": "c2",
+          "text": "Doanh nghiệp phải xây dựng phương án sử dụng lao động theo quy định tại Điều 44 Bộ luật Lao động và quy trình tại Phụ lục I ban hành kèm theo Nghị định này.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.6.9"
+          ],
+          "supported_by_chunk_ids": [
+            "6a1ea8ed-3e8a-5f0e-8b75-ea0e3591e2e2"
+          ]
+        },
+        {
+          "claim_id": "c3",
+          "text": "Doanh nghiệp phải phối hợp với tổ chức đại diện người lao động tại cơ sở để lấy ý kiến về phương án sử dụng lao động.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.6.9"
+          ],
+          "supported_by_chunk_ids": [
+            "6a1ea8ed-3e8a-5f0e-8b75-ea0e3591e2e2"
+          ]
+        },
+        {
+          "claim_id": "c4",
+          "text": "Doanh nghiệp phải trình cơ quan đại diện chủ sở hữu phê duyệt phương án sử dụng lao động.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.6.9"
+          ],
+          "supported_by_chunk_ids": [
+            "6a1ea8ed-3e8a-5f0e-8b75-ea0e3591e2e2"
+          ]
+        },
+        {
+          "claim_id": "c5",
+          "text": "Doanh nghiệp phải công khai phương án sử dụng lao động cho người lao động biết trong thời hạn 15 ngày kể từ ngày phương án được phê duyệt.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.6.9"
+          ],
+          "supported_by_chunk_ids": [
+            "6a1ea8ed-3e8a-5f0e-8b75-ea0e3591e2e2"
+          ]
+        },
+        {
+          "claim_id": "c6",
+          "text": "Doanh nghiệp phải thực hiện chấm dứt hợp đồng lao động và thông báo bằng văn bản đối với người lao động quy định tại khoản 1 Điều 2 của Nghị định này.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.6.9"
+          ],
+          "supported_by_chunk_ids": [
+            "6a1ea8ed-3e8a-5f0e-8b75-ea0e3591e2e2"
+          ]
+        },
+        {
+          "claim_id": "c7",
+          "text": "Doanh nghiệp phải giải quyết chế độ cho người lao động dôi dư trong thời hạn 30 ngày kể từ ngày chấm dứt hợp đồng lao động.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.6.9"
+          ],
+          "supported_by_chunk_ids": [
+            "6a1ea8ed-3e8a-5f0e-8b75-ea0e3591e2e2"
+          ]
+        },
+        {
+          "claim_id": "c8",
+          "text": "Doanh nghiệp phải thanh toán, quyết toán kinh phí giải quyết chế độ cho người lao động dôi dư theo quy định của pháp luật.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.6.9"
+          ],
+          "supported_by_chunk_ids": [
+            "6a1ea8ed-3e8a-5f0e-8b75-ea0e3591e2e2"
+          ]
+        },
+        {
+          "claim_id": "c9",
+          "text": "Doanh nghiệp phải đề nghị cơ quan bảo hiểm xã hội tỉnh, thành phố trực thuộc Trung ương giải quyết chế độ cho người lao động dôi dư hưởng chính sách quy định tại khoản 1, khoản 2 và khoản 3 Điều 3 của Nghị định này.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.6.9"
+          ],
+          "supported_by_chunk_ids": [
+            "6a1ea8ed-3e8a-5f0e-8b75-ea0e3591e2e2"
+          ]
+        },
+        {
+          "claim_id": "c10",
+          "text": "Doanh nghiệp phải cung cấp hồ sơ liên quan đến việc giải quyết chế độ cho người lao động dôi dư theo quy định của cơ quan bảo hiểm xã hội.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.6.9"
+          ],
+          "supported_by_chunk_ids": [
+            "6a1ea8ed-3e8a-5f0e-8b75-ea0e3591e2e2"
+          ]
+        },
+        {
+          "claim_id": "c11",
+          "text": "Doanh nghiệp phải báo cáo cơ quan đại diện chủ sở hữu về tình hình giải quyết chế độ đối với người lao động dôi dư theo Mẫu số 12 Phụ lục II trong thời hạn 30 ngày kể từ ngày hoàn thành việc giải quyết chế độ.",
+          "supported_by_article_codes": [
+            "20.2.NĐ.6.9"
+          ],
+          "supported_by_chunk_ids": [
+            "6a1ea8ed-3e8a-5f0e-8b75-ea0e3591e2e2"
+          ]
+        }
+      ],
+      "forbidden_claims": [
+        {
+          "claim_id": "f1",
+          "text": "Doanh nghiệp có thể tự phê duyệt phương án sử dụng lao động mà không cần trình cơ quan đại diện chủ sở hữu.",
+          "reason": "Chunk quy định phải trình cơ quan đại diện chủ sở hữu phê duyệt."
+        },
+        {
+          "claim_id": "f2",
+          "text": "Doanh nghiệp không cần lấy ý kiến của tổ chức đại diện người lao động tại cơ sở về phương án sử dụng lao động.",
+          "reason": "Chunk yêu cầu phối hợp lấy ý kiến."
+        },
+        {
+          "claim_id": "f3",
+          "text": "Doanh nghiệp có thể giải quyết chế độ sau quá 30 ngày kể từ ngày chấm dứt hợp đồng lao động mà vẫn đáp ứng quy định.",
+          "reason": "Chunk quy định thời hạn 30 ngày kể từ ngày chấm dứt hợp đồng lao động."
+        }
+      ],
+      "disputed_points": [
+        {
+          "topic": "Mức độ tách claim về nghĩa vụ trong khoản 3, 4, 5",
+          "resolution": "Tách các nghĩa vụ độc lập có chủ thể, thời hạn hoặc kết quả khác nhau (lấy ý kiến, trình phê duyệt, công khai 15 ngày, chấm dứt-thông báo, giải quyết chế độ 30 ngày, thanh toán, đề nghị BHXH, cung cấp hồ sơ, báo cáo 30 ngày) theo evidence; không tách quá mức từng động từ phụ."
+        }
+      ],
+      "adjudication_notes": "Merge để giữ các nhóm nghĩa vụ độc lập và mốc 15 ngày, 30 ngày đúng evidence; A gộp quá nhiều, B tách thừa.",
+      "label_status": "multi_llm_candidate",
+      "needs_human_review": true,
+      "authority_review_status": "pending"
+    },
+    {
+      "case_id": "labor_candidate_062",
+      "decision": "merge",
+      "expected_status": "answerable",
+      "required_claims": [
+        {
+          "claim_id": "c1",
+          "text": "Thời gian làm thêm giờ đối với công việc trong hầm lò là khoảng thời gian làm việc ngoài ca làm việc quy định tại khoản 1 Điều 4 của Thông tư này.",
+          "supported_by_article_codes": [
+            "20.2.TT.3.5"
+          ],
+          "supported_by_chunk_ids": [
+            "c30e738d-5579-5405-9da5-f09be278692c"
+          ]
+        },
+        {
+          "claim_id": "c2",
+          "text": "Tổng số giờ của ca làm việc và số giờ làm thêm không được quá 12 giờ trong 01 ngày.",
+          "supported_by_article_codes": [
+            "20.2.TT.3.5"
+          ],
+          "supported_by_chunk_ids": [
+            "c30e738d-5579-5405-9da5-f09be278692c"
+          ]
+        },
+        {
+          "claim_id": "c3",
+          "text": "Số giờ làm thêm không được quá 300 giờ trong 01 năm.",
+          "supported_by_article_codes": [
+            "20.2.TT.3.5"
+          ],
+          "supported_by_chunk_ids": [
+            "c30e738d-5579-5405-9da5-f09be278692c"
+          ]
+        },
+        {
+          "claim_id": "c4",
+          "text": "Việc tổ chức làm thêm giờ phải được sự đồng ý của người lao động và phải tuân thủ quy định tại Điều 59 và Điều 62 Nghị định số 145/2020/NĐ-CP.",
+          "supported_by_article_codes": [
+            "20.2.TT.3.5"
+          ],
+          "supported_by_chunk_ids": [
+            "c30e738d-5579-5405-9da5-f09be278692c"
+          ]
+        },
+        {
+          "claim_id": "c5",
+          "text": "Việc tổ chức làm thêm giờ trong trường hợp đặc biệt phải tuân thủ quy định tại Điều 108 Bộ luật Lao động.",
+          "supported_by_article_codes": [
+            "20.2.TT.3.5"
+          ],
+          "supported_by_chunk_ids": [
+            "c30e738d-5579-5405-9da5-f09be278692c"
+          ]
+        }
+      ],
+      "forbidden_claims": [
+        {
+          "claim_id": "f1",
+          "text": "Riêng số giờ làm thêm có thể lên đến 12 giờ trong một ngày ngoài thời gian của ca làm việc.",
+          "reason": "Giới hạn 12 giờ áp dụng cho tổng số giờ của ca làm việc và số giờ làm thêm."
+        },
+        {
+          "claim_id": "f2",
+          "text": "Người sử dụng lao động có thể tổ chức làm thêm giờ mà không cần sự đồng ý của người lao động trong trường hợp thông thường.",
+          "reason": "Chunk yêu cầu phải có sự đồng ý của người lao động."
+        },
+        {
+          "claim_id": "f3",
+          "text": "Số giờ làm thêm có thể vượt quá 300 giờ trong một năm theo quy định chung tại chunk này.",
+          "reason": "Chunk giới hạn không quá 300 giờ trong 01 năm."
+        }
+      ],
+      "disputed_points": [
+        {
+          "topic": "Tách hay gộp yêu cầu đồng ý và tuân thủ Điều 59, 62",
+          "resolution": "Gộp thành một claim vì cùng một nghĩa vụ tổ chức làm thêm giờ; giữ claim riêng cho trường hợp đặc biệt theo Điều 108."
+        }
+      ],
+      "adjudication_notes": "Merge để giữ khái niệm, hai giới hạn độc lập, đồng ý kèm tuân thủ ND và trường hợp đặc biệt đúng evidence; không tách dẫn chiếu thành nhiều claim.",
+      "label_status": "multi_llm_candidate",
+      "needs_human_review": true,
+      "authority_review_status": "pending"
+    },
+    {
+      "case_id": "labor_candidate_063",
+      "decision": "merge",
+      "expected_status": "answerable",
+      "required_claims": [
+        {
+          "claim_id": "c1",
+          "text": "Người sử dụng lao động phải giao kết hợp đồng lao động bằng văn bản với người chưa đủ 15 tuổi và người đại diện theo pháp luật của người đó theo quy định tại Điều 4 của Thông tư này.",
+          "supported_by_article_codes": [
+            "20.2.TT.1.3"
+          ],
+          "supported_by_chunk_ids": [
+            "ff586d3c-2e7e-5d15-bd60-ebf81597bed7"
+          ]
+        },
+        {
+          "claim_id": "c2",
+          "text": "Người sử dụng lao động phải bố trí thời giờ làm việc của người chưa đủ 15 tuổi theo khoản 1 Điều 146 Bộ luật Lao động; nếu người chưa đủ 15 tuổi vừa làm việc vừa học tập hoặc có nhu cầu học tập thì việc bố trí phải bảo đảm không ảnh hưởng đến thời gian học tập.",
+          "supported_by_article_codes": [
+            "20.2.TT.1.3"
+          ],
+          "supported_by_chunk_ids": [
+            "ff586d3c-2e7e-5d15-bd60-ebf81597bed7"
+          ]
+        },
+        {
+          "claim_id": "c3",
+          "text": "Người sử dụng lao động phải bố trí các đợt nghỉ giải lao cho người chưa đủ 15 tuổi theo khoản 2 Điều 109 Bộ luật Lao động.",
+          "supported_by_article_codes": [
+            "20.2.TT.1.3"
+          ],
+          "supported_by_chunk_ids": [
+            "ff586d3c-2e7e-5d15-bd60-ebf81597bed7"
+          ]
+        },
+        {
+          "claim_id": "c4",
+          "text": "Người sử dụng lao động phải tuân thủ quy định về khám sức khỏe, khám phát hiện bệnh nghề nghiệp và bảo đảm điều kiện làm việc, an toàn, vệ sinh lao động theo điểm c, d khoản 1 Điều 145 Bộ luật Lao động và Luật An toàn, vệ sinh lao động.",
+          "supported_by_article_codes": [
+            "20.2.TT.1.3"
+          ],
+          "supported_by_chunk_ids": [
+            "ff586d3c-2e7e-5d15-bd60-ebf81597bed7"
+          ]
+        },
+        {
+          "claim_id": "c5",
+          "text": "Người từ đủ 13 tuổi đến chưa đủ 15 tuổi chỉ được tuyển dụng và sử dụng vào làm công việc nhẹ thuộc danh mục quy định tại Điều 8 của Thông tư này.",
+          "supported_by_article_codes": [
+            "20.2.TT.1.3"
+          ],
+          "supported_by_chunk_ids": [
+            "ff586d3c-2e7e-5d15-bd60-ebf81597bed7"
+          ]
+        },
+        {
+          "claim_id": "c6",
+          "text": "Nơi làm việc của người từ đủ 13 tuổi đến chưa đủ 15 tuổi không được thuộc các trường hợp quy định tại các điểm a, b, c, d khoản 2 Điều 147 Bộ luật Lao động và khoản 2 Điều 9 của Thông tư này.",
+          "supported_by_article_codes": [
+            "20.2.TT.1.3"
+          ],
+          "supported_by_chunk_ids": [
+            "ff586d3c-2e7e-5d15-bd60-ebf81597bed7"
+          ]
+        },
+        {
+          "claim_id": "c7",
+          "text": "Không được tuyển dụng và sử dụng người chưa đủ 13 tuổi làm việc, trừ các công việc nghệ thuật, thể dục, thể thao không làm tổn hại đến sự phát triển thể lực, trí lực, nhân cách và phải có sự đồng ý của Sở Lao động - Thương binh và Xã hội theo quy định tại Điều 5 của Thông tư này.",
+          "supported_by_article_codes": [
+            "20.2.TT.1.3"
+          ],
+          "supported_by_chunk_ids": [
+            "ff586d3c-2e7e-5d15-bd60-ebf81597bed7"
+          ]
+        }
+      ],
+      "forbidden_claims": [
+        {
+          "claim_id": "f1",
+          "text": "Có thể giao kết hợp đồng lao động với người chưa đủ 15 tuổi chỉ bằng lời nói nếu người đại diện theo pháp luật đồng ý.",
+          "reason": "Chunk yêu cầu hợp đồng bằng văn bản với người chưa đủ 15 tuổi và người đại diện."
+        },
+        {
+          "claim_id": "f2",
+          "text": "Người từ đủ 13 tuổi đến chưa đủ 15 tuổi có thể làm bất kỳ công việc nào nếu được người đại diện theo pháp luật đồng ý.",
+          "reason": "Chunk chỉ cho phép công việc nhẹ thuộc danh mục và nơi làm việc đáp ứng điều kiện."
+        },
+        {
+          "claim_id": "f3",
+          "text": "Người chưa đủ 13 tuổi có thể được tuyển dụng vào mọi công việc nhẹ.",
+          "reason": "Chunk quy định nguyên tắc không được sử dụng, ngoại lệ chỉ công việc nghệ thuật, thể dục, thể thao có điều kiện cụ thể."
+        },
+        {
+          "claim_id": "f4",
+          "text": "Khi người chưa đủ 15 tuổi vừa làm việc vừa học tập, người sử dụng lao động có thể bố trí thời gian làm việc ảnh hưởng đến thời gian học tập.",
+          "reason": "Chunk yêu cầu bố trí phải bảo đảm không ảnh hưởng đến thời gian học tập."
+        }
+      ],
+      "disputed_points": [
+        {
+          "topic": "Tách điều kiện học tập và dẫn chiếu nhiều điều luật",
+          "resolution": "Giữ điều kiện học tập gắn với bố trí thời giờ; không tách từng điều luật dẫn chiếu thành required claim riêng; giữ ngoại lệ người chưa đủ 13 tuổi đúng và hạn chế."
+        }
+      ],
+      "adjudication_notes": "Merge để giữ các nhóm điều kiện chính và ngoại lệ hạn chế đúng evidence; A thiếu chi tiết ngoại lệ, B tách thừa.",
+      "label_status": "multi_llm_candidate",
+      "needs_human_review": true,
+      "authority_review_status": "pending"
+    },
+    {
+      "case_id": "labor_candidate_064",
+      "decision": "merge",
+      "expected_status": "answerable",
+      "required_claims": [
+        {
+          "claim_id": "c1",
+          "text": "Khi người lao động làm việc có liên quan trực tiếp đến bí mật kinh doanh, bí mật công nghệ theo quy định của pháp luật, người sử dụng lao động có quyền thỏa thuận với người lao động về nội dung bảo vệ bí mật kinh doanh, bí mật công nghệ trong hợp đồng lao động hoặc bằng văn bản khác theo quy định của pháp luật.",
+          "supported_by_article_codes": [
+            "20.2.TT.2.4"
+          ],
+          "supported_by_chunk_ids": [
+            "05d1d813-78ec-5e17-af9d-b773c8e312c6"
+          ]
+        },
+        {
+          "claim_id": "c2",
+          "text": "Thỏa thuận về bảo vệ bí mật kinh doanh, bí mật công nghệ có thể gồm các nội dung chủ yếu: danh mục bí mật; phạm vi sử dụng; thời hạn bảo vệ; phương thức bảo vệ; quyền, nghĩa vụ, trách nhiệm của các bên trong thời hạn bảo vệ; và xử lý vi phạm thỏa thuận.",
+          "supported_by_article_codes": [
+            "20.2.TT.2.4"
+          ],
+          "supported_by_chunk_ids": [
+            "05d1d813-78ec-5e17-af9d-b773c8e312c6"
+          ]
+        },
+        {
+          "claim_id": "c3",
+          "text": "Khi phát hiện người lao động vi phạm thỏa thuận bảo vệ bí mật kinh doanh, bí mật công nghệ, người sử dụng lao động có quyền yêu cầu người lao động bồi thường theo thỏa thuận của hai bên.",
+          "supported_by_article_codes": [
+            "20.2.TT.2.4"
+          ],
+          "supported_by_chunk_ids": [
+            "05d1d813-78ec-5e17-af9d-b773c8e312c6"
+          ]
+        },
+        {
+          "claim_id": "c4",
+          "text": "Nếu phát hiện hành vi vi phạm trong thời hạn thực hiện hợp đồng lao động thì việc xử lý bồi thường được thực hiện theo trình tự, thủ tục xử lý bồi thường thiệt hại quy định tại khoản 2 Điều 130 của Bộ luật Lao động.",
+          "supported_by_article_codes": [
+            "20.2.TT.2.4"
+          ],
+          "supported_by_chunk_ids": [
+            "05d1d813-78ec-5e17-af9d-b773c8e312c6"
+          ]
+        },
+        {
+          "claim_id": "c5",
+          "text": "Nếu phát hiện hành vi vi phạm sau khi chấm dứt hợp đồng lao động thì việc xử lý được thực hiện theo quy định của pháp luật dân sự và pháp luật khác có liên quan.",
+          "supported_by_article_codes": [
+            "20.2.TT.2.4"
+          ],
+          "supported_by_chunk_ids": [
+            "05d1d813-78ec-5e17-af9d-b773c8e312c6"
+          ]
+        },
+        {
+          "claim_id": "c6",
+          "text": "Đối với bí mật kinh doanh, bí mật công nghệ thuộc danh mục bí mật nhà nước thì thực hiện theo quy định của pháp luật về bảo vệ bí mật nhà nước.",
+          "supported_by_article_codes": [
+            "20.2.TT.2.4"
+          ],
+          "supported_by_chunk_ids": [
+            "05d1d813-78ec-5e17-af9d-b773c8e312c6"
+          ]
+        }
+      ],
+      "forbidden_claims": [
+        {
+          "claim_id": "f1",
+          "text": "Người sử dụng lao động có thể đơn phương áp đặt thỏa thuận bảo vệ bí mật kinh doanh, bí mật công nghệ mà không cần thỏa thuận với người lao động.",
+          "reason": "Chunk quy định có quyền thỏa thuận, không quy định quyền đơn phương áp đặt."
+        },
+        {
+          "claim_id": "f2",
+          "text": "Tất cả sáu nội dung được liệt kê tại khoản 2 đều bắt buộc phải có trong mọi thỏa thuận bảo vệ bí mật kinh doanh, bí mật công nghệ.",
+          "reason": "Chunk dùng cách diễn đạt 'có thể gồm những nội dung chủ yếu'."
+        },
+        {
+          "claim_id": "f3",
+          "text": "Hành vi vi phạm được phát hiện sau khi hợp đồng lao động đã chấm dứt vẫn được xử lý theo trình tự bồi thường thiệt hại trong thời hạn thực hiện hợp đồng lao động.",
+          "reason": "Chunk quy định xử lý theo pháp luật dân sự và pháp luật khác có liên quan."
+        },
+        {
+          "claim_id": "f4",
+          "text": "Bí mật kinh doanh, bí mật công nghệ thuộc danh mục bí mật nhà nước chỉ được xử lý theo thỏa thuận giữa người sử dụng lao động và người lao động.",
+          "reason": "Chunk quy định phải thực hiện theo pháp luật về bảo vệ bí mật nhà nước."
+        }
+      ],
+      "disputed_points": [
+        {
+          "topic": "Tách từng nội dung có thể thỏa thuận thành required claim riêng",
+          "resolution": "Gộp danh sách nội dung có thể thỏa thuận vào một claim; giữ riêng các quy tắc xử lý vi phạm theo thời điểm phát hiện và trường hợp bí mật nhà nước."
+        }
+      ],
+      "adjudication_notes": "Merge để giữ điều kiện quyền thỏa thuận, hình thức, nhóm nội dung có thể, quyền bồi thường, hai cách xử lý và trường hợp bí mật nhà nước đúng evidence; không biến quyền thành nghĩa vụ bắt buộc.",
+      "label_status": "multi_llm_candidate",
+      "needs_human_review": true,
+      "authority_review_status": "pending"
+    },
+    {
+      "case_id": "labor_candidate_065",
+      "decision": "select_a",
+      "expected_status": "answerable",
+      "required_claims": [
+        {
+          "claim_id": "c1",
+          "text": "Đối với vận hành, bảo dưỡng, sửa chữa hệ thống đường ống phân phối khí và các công trình khí, việc nghỉ trong giờ làm việc tuân thủ quy định tại Điều 109 Bộ luật Lao động.",
+          "supported_by_article_codes": [
+            "20.2.TT.6.6"
+          ],
+          "supported_by_chunk_ids": [
+            "b8f05eea-22c9-5fe2-b190-15d9c7526ee1"
+          ]
+        },
+        {
+          "claim_id": "c2",
+          "text": "Thời gian chuyển tiếp giữa hai ca làm việc liền kề không được quá 45 phút.",
+          "supported_by_article_codes": [
+            "20.2.TT.6.6"
+          ],
+          "supported_by_chunk_ids": [
+            "b8f05eea-22c9-5fe2-b190-15d9c7526ee1"
+          ]
+        }
+      ],
+      "forbidden_claims": [],
+      "disputed_points": [
+        {
+          "topic": "Forbidden claims về vượt quá 45 phút và nội dung chi tiết Điều 109",
+          "resolution": "A không có forbidden; B thêm forbidden hợp lý nhưng không bắt buộc vì không ngăn sai lệch quan trọng ngoài evidence; giữ select_a vì required claims đủ và chính xác."
+        }
+      ],
+      "adjudication_notes": "Select_a vì required claims khớp chính xác hai quy tắc độc lập trong evidence; không thêm nội dung Điều 109 ngoài dẫn chiếu.",
+      "label_status": "multi_llm_candidate",
+      "needs_human_review": true,
+      "authority_review_status": "pending"
+    }
+  ]
+}

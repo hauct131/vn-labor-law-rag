@@ -179,6 +179,38 @@ claim sets produce `needs_human_adjudication`. Even exact model agreement is
 only `multi_llm_candidate`; authority review remains `pending` and
 `golden_locked` remains `false`.
 
+## Apply the reviewed multi-model candidate
+
+The external adjudication artifact is tracked at:
+
+```text
+data/evaluation/answer-quality-v1/adjudications/
+multi_llm_adjudicated_20.json
+```
+
+Apply it deterministically to the draft questions:
+
+```bash
+.venv-evaluation/bin/python -m \
+  evaluation.answer_quality.apply_adjudication
+
+.venv-evaluation/bin/python -m \
+  evaluation.answer_quality.apply_adjudication --check
+
+.venv-evaluation/bin/python -m \
+  evaluation.answer_quality.validate_dataset \
+  data/evaluation/answer-quality-v1/multi_llm_reviewed_questions.json
+```
+
+The generated dataset has `dataset_status=multi_llm_reviewed`, keeps
+`benchmark_enabled=false` for every case, has no named human reviewer, and
+remains unlocked with authority review pending. Applying the artifact therefore
+does not turn model-produced labels into a golden benchmark.
+
+Before an answer-quality benchmark can run, a human reviewer must verify every
+claim against the bound canonical chunks, record their name and notes, and
+explicitly move each accepted case to `label_status=human_adjudicated`.
+
 ## Provider references
 
 The adapter follows the current official OpenRouter contracts for

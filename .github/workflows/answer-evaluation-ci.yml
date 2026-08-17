@@ -62,3 +62,6 @@ jobs:
 
       - name: Verify migrated candidate is reproducible
         run: python -m evaluation.answer_quality.migrate_candidates --check
+
+      - name: Verify multi-LLM adjudication application is reproducible
+        run: python -m evaluation.answer_quality.apply_adjudication --check
