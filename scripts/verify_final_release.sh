@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
-""":"
-Full technical verification for canonical Word 804 plus application features.
-
-The locked retrieval test is never rerun. Its immutable evidence is verified
-by checksum and manifest binding instead.
-":"""
+# Full technical verification for canonical Word 804 plus application features.
+#
+# The locked retrieval test is never rerun. Its immutable evidence is verified
+# by checksum and manifest binding instead.
 
 set -Eeuo pipefail
 
@@ -130,6 +128,25 @@ if [[ ! -f .env ]]; then
 fi
 export COMPOSE_BAKE="${COMPOSE_BAKE:-false}"
 "${COMPOSE[@]}" config --quiet
+
+# Remove only containers from this verification worktree. Named volumes are kept.
+# This makes a retry safe after an interrupted or failed verification run.
+"${COMPOSE[@]}" down --remove-orphans
+
+port_conflict=0
+for port in 5432 6333 8000 5173; do
+  owners="$(docker ps --filter "publish=$port" --format '{{.Names}}' | paste -sd, -)"
+  if [[ -n "$owners" ]]; then
+    echo "ERROR: host port $port is already allocated by: $owners"
+    port_conflict=1
+  fi
+done
+if (( port_conflict )); then
+  echo "Stop the previous Compose stack, then rerun this script."
+  echo "Example: cd /media/hao/Data/vn-labor-law-rag && docker compose -f docker-compose.yml -f docker-compose.dev.yml down"
+  echo "Named volumes are preserved unless you explicitly add --volumes."
+  exit 4
+fi
 
 "${COMPOSE[@]}" up -d qdrant postgres
 
