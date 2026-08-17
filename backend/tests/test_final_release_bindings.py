@@ -70,6 +70,7 @@ def test_final_verifier_prepares_real_runtime_dependencies() -> None:
         in verifier
     )
     assert 'RUNTIME_ALIAS="labor_law_dev"' in verifier
+    assert "--profile tools build runtime-assets" in verifier
     assert "--profile tools run --rm runtime-assets" in verifier
     assert "-m backend.app.ingestion.qdrant_alias" in verifier
     assert '--alias "$RUNTIME_ALIAS"' in verifier

@@ -167,6 +167,7 @@ fi
 
 "${COMPOSE[@]}" up -d qdrant postgres
 
+"${COMPOSE[@]}" --profile tools build runtime-assets
 "${COMPOSE[@]}" --profile tools run --rm runtime-assets
 
 PYTHONPATH=".:backend:${PYTHONPATH:-}" "$PYTHON_BIN" \
