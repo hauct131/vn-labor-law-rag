@@ -1,3 +1,7 @@
+# Preserve immutable checksum-bound artifacts byte-for-byte on every OS.
+/data/releases/labor-law-canonical-word-20260804-164432-candidate/** -text
+/data/evaluation/splits/canonical_word_804/** -text
+/data/evaluation/runtime-benchmark/canonical_word_804/locked/** -text
 
-# Treat PDF evidence files as binary
+# Binary evidence files.
 *.pdf binary
