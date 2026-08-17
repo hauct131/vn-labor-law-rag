@@ -244,6 +244,26 @@ python3 -m evaluation.answer_quality.lock_human_adjudicated_dataset \
 
 *Notice*: Locking produces a technical golden dataset pending authority review (`authority_review_status=pending`).
 
+### 4. Provisional Multi-LLM Diagnostic Mode
+
+When human adjudication is pending, run a provisional runtime diagnostic against live API/Qdrant/PostgreSQL:
+
+```bash
+python3 -m evaluation.answer_quality.provisional_diagnostic \
+  --provisional-multi-llm-diagnostic \
+  --output-dir "$HOME/Downloads/answer-quality-provisional-diagnostic"
+```
+
+*Mandatory Metadata & Rules*:
+- `evaluation_mode`: `PROVISIONAL_MULTI_LLM_DIAGNOSTIC`
+- `benchmark_status`: `NOT_OFFICIAL`
+- `golden_locked`: `false`
+- `human_adjudication_status`: `pending`
+- `authority_review_status`: `pending`
+- `official_technical_gate_status`: `FAIL_CLOSED_OR_NOT_APPLICABLE`
+- Semantic claim metrics are marked `not_scoreable`.
+- Conclusion: `Provisional multi-LLM runtime diagnostic: COMPLETE. Official answer-quality benchmark: PENDING HUMAN ADJUDICATION. Authority review: PENDING.`
+
 ## Provider references
 
 The adapter follows the current official OpenRouter contracts for

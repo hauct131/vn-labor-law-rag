@@ -68,3 +68,6 @@ jobs:
 
       - name: Verify human review packet creation is reproducible
         run: python -m evaluation.answer_quality.create_human_review_packet --output-dir /tmp/human-review-ci-check
+
+      - name: Verify provisional diagnostic mode without flag fails closed
+        run: ! python -m evaluation.answer_quality.provisional_diagnostic
