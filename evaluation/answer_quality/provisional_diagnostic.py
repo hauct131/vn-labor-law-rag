@@ -202,7 +202,21 @@ def run_provisional_diagnostic(
         "gate_reason": "Dataset is not human-adjudicated and not locked. Official benchmark status: NOT_OFFICIAL.",
     }
 
+    conclusion_str = (
+        "Provisional multi-LLM runtime diagnostic: COMPLETE. "
+        "Official answer-quality benchmark: PENDING HUMAN ADJUDICATION. "
+        "Authority review: PENDING."
+    )
+
     report_json = {
+        "evaluation_mode": "PROVISIONAL_MULTI_LLM_DIAGNOSTIC",
+        "benchmark_status": "NOT_OFFICIAL",
+        "golden_locked": False,
+        "human_adjudication_status": "pending",
+        "authority_review_status": "pending",
+        "official_technical_gate_status": "FAIL_CLOSED_OR_NOT_APPLICABLE",
+        "gate_reason": "Dataset is not human-adjudicated and not locked. Official benchmark status: NOT_OFFICIAL.",
+        "final_conclusion": conclusion_str,
         "manifest": manifest_metadata,
         "summary_metrics": summary_metrics,
         "cases": results,
