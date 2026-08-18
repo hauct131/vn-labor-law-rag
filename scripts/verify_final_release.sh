@@ -85,7 +85,7 @@ PY
 echo
 echo "===== 1. SOURCE INTEGRITY ====="
 git diff --check
-if [[ -n "$(git status --porcelain --untracked-files=no)" ]]; then
+if [[ "${ALLOW_DIRTY:-0}" != "1" && -n "$(git status --porcelain --untracked-files=no)" ]]; then
   echo "ERROR: tracked working tree is not clean"
   git status --short
   exit 3

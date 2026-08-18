@@ -21,9 +21,17 @@ class GenerationConfigurationError(GenerationError):
 class GenerationProviderError(GenerationError):
     """Raised when OpenRouter or an upstream free provider fails."""
 
-    def __init__(self, message: str, *, status_code: int = 502) -> None:
+    def __init__(
+        self,
+        message: str,
+        *,
+        status_code: int = 502,
+        fallback_reason: str = "provider_http_error",
+    ) -> None:
         super().__init__(message)
         self.status_code = status_code
+        self.fallback_reason = fallback_reason
+
 
 
 class AsyncAnswerGenerator(Protocol):
@@ -35,8 +43,12 @@ class GenerationResult:
     answer: str
     model: str
     finish_reason: str | None = None
+    prompt_tokens: int | None = None
     completion_tokens: int | None = None
+    total_tokens: int | None = None
     reasoning_tokens: int | None = None
+    max_tokens_used: int | None = None
+    attempt: int = 1
 
 
 def _message_role(message: Any) -> str:
@@ -56,7 +68,8 @@ def _extract_answer(payload: Any) -> str:
         content = payload["choices"][0]["message"]["content"]
     except (KeyError, IndexError, TypeError) as exc:
         raise GenerationProviderError(
-            "OpenRouter trả về dữ liệu không có nội dung câu trả lời."
+            "OpenRouter trả về dữ liệu không có nội dung câu trả lời.",
+            fallback_reason="provider_invalid_response",
         ) from exc
 
     if isinstance(content, str):
@@ -70,7 +83,10 @@ def _extract_answer(payload: Any) -> str:
     else:
         answer = ""
     if not answer:
-        raise GenerationProviderError("OpenRouter trả về câu trả lời rỗng.")
+        raise GenerationProviderError(
+            "OpenRouter trả về câu trả lời rỗng.",
+            fallback_reason="provider_empty_content",
+        )
     return answer
 
 
@@ -82,13 +98,20 @@ def _optional_non_negative_int(value: Any) -> int | None:
     return None
 
 
-def _extract_generation_result(payload: Any, *, fallback_model: str) -> GenerationResult:
+def _extract_generation_result(
+    payload: Any,
+    *,
+    fallback_model: str,
+    max_tokens_used: int | None = None,
+    attempt: int = 1,
+) -> GenerationResult:
     """Validate a non-streaming completion before exposing it to the UI."""
     try:
         choice = payload["choices"][0]
     except (KeyError, IndexError, TypeError) as exc:
         raise GenerationProviderError(
-            "OpenRouter trả về dữ liệu không có lựa chọn câu trả lời."
+            "OpenRouter trả về dữ liệu không có lựa chọn câu trả lời.",
+            fallback_reason="provider_invalid_response",
         ) from exc
 
     finish_reason_value = choice.get("finish_reason")
@@ -100,11 +123,13 @@ def _extract_generation_result(payload: Any, *, fallback_model: str) -> Generati
     if finish_reason == "length":
         raise GenerationProviderError(
             "Câu trả lời bị dừng do hết giới hạn token. Hãy tăng "
-            "OPENROUTER_MAX_TOKENS hoặc giảm ngân sách reasoning."
+            "OPENROUTER_MAX_TOKENS hoặc giảm ngân sách reasoning.",
+            fallback_reason="provider_finish_reason_length",
         )
     if finish_reason == "content_filter":
         raise GenerationProviderError(
-            "Câu trả lời bị bộ lọc nội dung của nhà cung cấp dừng lại."
+            "Câu trả lời bị bộ lọc nội dung của nhà cung cấp dừng lại.",
+            fallback_reason="provider_invalid_response",
         )
     if finish_reason == "error" or choice.get("error"):
         error = choice.get("error")
@@ -112,7 +137,8 @@ def _extract_generation_result(payload: Any, *, fallback_model: str) -> Generati
         raise GenerationProviderError(
             str(message).strip()[:500]
             if isinstance(message, str) and message.strip()
-            else "Nhà cung cấp dừng khi đang sinh câu trả lời."
+            else "Nhà cung cấp dừng khi đang sinh câu trả lời.",
+            fallback_reason="provider_http_error",
         )
 
     usage = payload.get("usage") if isinstance(payload, dict) else None
@@ -126,12 +152,16 @@ def _extract_generation_result(payload: Any, *, fallback_model: str) -> Generati
         answer=_extract_answer(payload),
         model=str(used_model or fallback_model),
         finish_reason=finish_reason,
+        prompt_tokens=_optional_non_negative_int(usage.get("prompt_tokens")),
         completion_tokens=_optional_non_negative_int(
             usage.get("completion_tokens")
         ),
+        total_tokens=_optional_non_negative_int(usage.get("total_tokens")),
         reasoning_tokens=_optional_non_negative_int(
             completion_details.get("reasoning_tokens")
         ),
+        max_tokens_used=max_tokens_used,
+        attempt=attempt,
     )
 
 
@@ -216,26 +246,47 @@ class OpenRouterGenerationChain:
             headers["X-OpenRouter-Title"] = self.app_title
         return headers
 
-    async def _post(self, *, json: dict[str, Any]) -> Any:
+    async def _post(
+        self,
+        *,
+        json: dict[str, Any],
+        timeout_override: float | None = None,
+    ) -> Any:
+        timeout = (
+            float(timeout_override)
+            if timeout_override is not None and timeout_override > 0
+            else self.timeout_seconds
+        )
         if self.http_client is not None:
             return await self.http_client.post(
                 self.endpoint,
                 headers=self._headers(),
                 json=json,
-                timeout=self.timeout_seconds,
+                timeout=timeout,
             )
-        async with httpx.AsyncClient(timeout=self.timeout_seconds) as client:
+        async with httpx.AsyncClient(timeout=timeout) as client:
             return await client.post(
                 self.endpoint,
                 headers=self._headers(),
                 json=json,
             )
 
-    async def ainvoke(self, values: Mapping[str, str]) -> GenerationResult:
+    async def ainvoke(
+        self,
+        values: Mapping[str, str],
+        *,
+        max_tokens_override: int | None = None,
+        prompt_suffix: str | None = None,
+        timeout_seconds_override: float | None = None,
+        attempt: int = 1,
+    ) -> GenerationResult:
         question = str(values.get("question", "")).strip()
         context = str(values.get("context", "")).strip()
         if not question or not context:
             raise ValueError("question và context không được để trống")
+
+        if prompt_suffix:
+            question = f"{question}\n\n{prompt_suffix.strip()}"
 
         prompt_value = LEGAL_QA_PROMPT.invoke({
             "question": question,
@@ -248,11 +299,16 @@ class OpenRouterGenerationChain:
             }
             for message in prompt_value.to_messages()
         ]
+        effective_max_tokens = (
+            int(max_tokens_override)
+            if max_tokens_override is not None and max_tokens_override > 0
+            else self.max_tokens
+        )
         body = {
             "model": self.model,
             "messages": messages,
             "temperature": self.temperature,
-            "max_tokens": self.max_tokens,
+            "max_tokens": effective_max_tokens,
             "stream": False,
         }
         if self.reasoning_max_tokens > 0:
@@ -262,32 +318,53 @@ class OpenRouterGenerationChain:
             }
 
         try:
-            response = await self._post(json=body)
+            response = await self._post(
+                json=body,
+                timeout_override=timeout_seconds_override,
+            )
         except httpx.TimeoutException as exc:
             raise GenerationProviderError(
                 "OpenRouter phản hồi quá thời gian cho phép.",
                 status_code=504,
+                fallback_reason="provider_timeout",
             ) from exc
         except httpx.HTTPError as exc:
             raise GenerationProviderError(
-                "Không thể kết nối đến OpenRouter."
+                "Không thể kết nối đến OpenRouter.",
+                status_code=502,
+                fallback_reason="provider_http_error",
             ) from exc
 
         if response.status_code >= 400:
             status = int(response.status_code)
             public_status = status if status in {401, 402, 403, 429} else 502
+            if status == 429:
+                fb_reason = "provider_http_429"
+            elif status >= 500:
+                fb_reason = "provider_http_5xx"
+            else:
+                fb_reason = "provider_http_4xx"
             raise GenerationProviderError(
                 _safe_provider_message(response),
                 status_code=public_status,
+                fallback_reason=fb_reason,
             )
 
         try:
             payload = response.json()
         except (TypeError, ValueError) as exc:
             raise GenerationProviderError(
-                "OpenRouter trả về dữ liệu không hợp lệ."
+                "OpenRouter trả về dữ liệu không hợp lệ.",
+                status_code=502,
+                fallback_reason="provider_invalid_response",
             ) from exc
-        return _extract_generation_result(payload, fallback_model=self.model)
+
+        return _extract_generation_result(
+            payload,
+            fallback_model=self.model,
+            max_tokens_used=effective_max_tokens,
+            attempt=attempt,
+        )
 
 
 def create_generation_chain(

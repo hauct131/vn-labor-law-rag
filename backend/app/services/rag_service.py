@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 import asyncio
+import logging
 from concurrent.futures import ThreadPoolExecutor
 from functools import lru_cache
+
 from time import perf_counter
 from typing import Any, Callable, Mapping
 
@@ -135,6 +137,34 @@ def render_legal_context(sources: list[LegalSource]) -> str:
     return "\n\n".join(blocks)
 
 
+from ..retrieval.models import (
+    CandidatePoolRetriever,
+    LegalRetriever,
+    RetrievalHit,
+)
+
+logger = logging.getLogger(__name__)
+
+from ..core.config import settings
+
+RETRIEVAL_EXECUTOR = ThreadPoolExecutor(
+    max_workers=1,
+    thread_name_prefix="legal-retrieval",
+)
+
+RETRYABLE_FALLBACK_REASONS = {
+    "provider_timeout",
+    "provider_http_429",
+    "provider_http_5xx",
+    "provider_empty_content",
+    "provider_invalid_response",
+    "generation_parse_error",
+    "citation_parse_error",
+    "citation_guardrail_rejected",
+    "provider_finish_reason_length",
+}
+
+
 class RAGService:
     def __init__(
         self,
@@ -144,12 +174,14 @@ class RAGService:
         generator_factory: Callable[[], AsyncAnswerGenerator] = (
             create_generation_chain
         ),
-        top_k: int = 5,
+        top_k: int = 10,
+        candidate_k: int = 50,
     ) -> None:
         self.retriever_provider = retriever_provider
         self.generator = generator
         self.generator_factory = generator_factory
         self.top_k = top_k
+        self.candidate_k = candidate_k
 
     async def ask(
         self,
@@ -169,10 +201,17 @@ class RAGService:
 
         def retrieve() -> list[RetrievalHit]:
             retriever = self.retriever_provider(normalized_method)
+            if isinstance(retriever, CandidatePoolRetriever):
+                return retriever.retrieve_candidates(
+                    normalized_question,
+                    top_k=self.top_k,
+                    candidate_k=self.candidate_k,
+                )
             return retriever.retrieve(normalized_question, top_k=self.top_k)
 
         loop = asyncio.get_running_loop()
         hits = await loop.run_in_executor(_RETRIEVAL_EXECUTOR, retrieve)
+
         retrieval_ms = (perf_counter() - retrieval_started) * 1000
         sources = sanitize_sources([source_from_hit(hit) for hit in hits])
 
@@ -187,6 +226,7 @@ class RAGService:
                 total_ms=round(total_ms, 2),
                 model=None,
                 insufficient_evidence=True,
+                fallback_reason="retrieval_context_empty",
             )
 
         context = render_legal_context(sources)
@@ -195,49 +235,156 @@ class RAGService:
         if generator is None:
             generator = self.generator_factory()
             self.generator = generator
-        try:
-            result = await generator.ainvoke({
-                "question": normalized_question,
-                "context": context,
-            })
-        except GenerationProviderError:
-            generation_ms = (perf_counter() - generation_started) * 1000
-            total_ms = (perf_counter() - started) * 1000
-            return AskResponse(
-                answer=GENERATION_FAILED_ANSWER,
-                method=RetrievalMethod(normalized_method),
-                sources=[],
-                retrieval_ms=round(retrieval_ms, 2),
-                generation_ms=round(generation_ms, 2),
-                total_ms=round(total_ms, 2),
-                model=None,
-                insufficient_evidence=True,
-                generation_failed=True,
-            )
 
-        generation_ms = (perf_counter() - generation_started) * 1000
-        total_ms = (perf_counter() - started) * 1000
         source_map = {
             source.source_id: source
             for source in sources
             if source.source_id is not None
         }
-        try:
-            guarded = parse_and_validate_guarded_answer(
-                result.answer,
-                source_map,
-            )
-        except GuardrailValidationError:
+
+        max_attempts = 2
+        result = None
+        guarded = None
+        fallback_reason: str | None = None
+        total_deadline = started + 120.0
+        max_tokens_override: int | None = None
+        prompt_suffix: str | None = None
+        attempt_records: list[dict[str, Any]] = []
+
+        for attempt in range(1, max_attempts + 1):
+            remaining = total_deadline - perf_counter()
+            if remaining <= 0:
+                fallback_reason = "provider_timeout"
+                attempt_records.append({
+                    "attempt": attempt,
+                    "max_tokens": max_tokens_override or getattr(settings, "openrouter_max_tokens", 1200),
+                    "remaining_deadline_sec": round(remaining, 2),
+                    "fallback_reason": "provider_timeout",
+                    "success": False,
+                })
+                break
+            try:
+                values = {
+                    "question": normalized_question,
+                    "context": context,
+                }
+                invoke_kwargs: dict[str, Any] = {}
+                if attempt > 1:
+                    invoke_kwargs["attempt"] = attempt
+                    invoke_kwargs["timeout_seconds_override"] = remaining
+                if max_tokens_override is not None:
+                    invoke_kwargs["max_tokens_override"] = max_tokens_override
+                if prompt_suffix:
+                    invoke_kwargs["prompt_suffix"] = prompt_suffix
+
+                if invoke_kwargs:
+                    try:
+                        result = await generator.ainvoke(values, **invoke_kwargs)
+                    except TypeError:
+                        result = await generator.ainvoke(values)
+                else:
+                    result = await generator.ainvoke(values)
+
+                guarded = parse_and_validate_guarded_answer(
+                    result.answer,
+                    source_map,
+                )
+                fallback_reason = None
+                attempt_records.append({
+                    "attempt": attempt,
+                    "max_tokens": max_tokens_override or getattr(settings, "openrouter_max_tokens", 1200),
+                    "remaining_deadline_sec": round(remaining, 2),
+                    "finish_reason": getattr(result, "finish_reason", "stop"),
+                    "fallback_reason": None,
+                    "success": True,
+                })
+                break
+            except GenerationProviderError as exc:
+                reason = getattr(exc, "fallback_reason", "provider_http_5xx")
+                upstream_status = getattr(exc, "status_code", None)
+                fallback_reason = reason
+                remaining_time = total_deadline - perf_counter()
+                attempt_records.append({
+                    "attempt": attempt,
+                    "max_tokens": max_tokens_override or getattr(settings, "openrouter_max_tokens", 1200),
+                    "remaining_deadline_sec": round(remaining_time, 2),
+                    "upstream_status": upstream_status,
+                    "fallback_reason": reason,
+                    "success": False,
+                })
+                if attempt < max_attempts and reason in RETRYABLE_FALLBACK_REASONS and remaining_time > 0.5:
+                    if reason == "provider_finish_reason_length":
+                        max_tokens_override = getattr(settings, "openrouter_retry_max_tokens", 2000)
+                        prompt_suffix = (
+                            "Yêu cầu: Hãy trả lời ngắn gọn, cô đọng nhưng bảo toàn đầy đủ nghĩa vụ, điều kiện, thời hạn, ngoại lệ và trích dẫn pháp lý [S1], [S2]..."
+                        )
+                        logger.warning(
+                            "Generation attempt %d truncated by length; retrying attempt %d with max_tokens=%d (remaining_deadline=%.2fs)...",
+                            attempt,
+                            attempt + 1,
+                            max_tokens_override,
+                            remaining_time,
+                        )
+                    else:
+                        logger.warning(
+                            "Generation attempt %d failed (reason=%s, upstream_status=%s); retrying attempt %d (remaining_deadline=%.2fs)...",
+                            attempt,
+                            reason,
+                            upstream_status,
+                            attempt + 1,
+                            remaining_time,
+                        )
+                    sleep_duration = 2.5 if reason == "provider_http_429" else 0.5
+                    await asyncio.sleep(min(sleep_duration, max(0.1, remaining_time - 0.1)))
+                    continue
+                break
+            except GuardrailValidationError as exc:
+                reason = getattr(exc, "fallback_reason", "citation_guardrail_rejected")
+                fallback_reason = reason
+                remaining_time = total_deadline - perf_counter()
+                if attempt < max_attempts and reason in RETRYABLE_FALLBACK_REASONS and remaining_time > 0.5:
+                    logger.warning(
+                        "Generation attempt %d failed (reason=%s); retrying attempt %d (remaining_deadline=%.2fs)...",
+                        attempt,
+                        reason,
+                        attempt + 1,
+                        remaining_time,
+                    )
+                    await asyncio.sleep(min(0.5, max(0.1, remaining_time - 0.1)))
+                    continue
+                break
+
+
+        generation_ms = (perf_counter() - generation_started) * 1000
+        total_ms = (perf_counter() - started) * 1000
+
+        if guarded is None:
+            is_provider_fail = fallback_reason in {
+                "provider_timeout",
+                "provider_http_429",
+                "provider_http_5xx",
+                "provider_http_4xx",
+                "provider_http_error",
+                "provider_empty_content",
+                "provider_finish_reason_length",
+                "provider_invalid_response",
+            }
+
             return AskResponse(
-                answer=INSUFFICIENT_EVIDENCE_ANSWER,
+                answer=GENERATION_FAILED_ANSWER if is_provider_fail else INSUFFICIENT_EVIDENCE_ANSWER,
                 method=RetrievalMethod(normalized_method),
                 sources=[],
                 retrieval_ms=round(retrieval_ms, 2),
                 generation_ms=round(generation_ms, 2),
                 total_ms=round(total_ms, 2),
-                model=result.model,
+                model=result.model if result else None,
                 insufficient_evidence=True,
+                generation_failed=is_provider_fail,
+                fallback_reason=fallback_reason,
+                attempt=len(attempt_records) or 1,
+                attempt_records=attempt_records,
             )
+
 
         if guarded.status == AnswerStatus.OUT_OF_SCOPE:
             return AskResponse(
@@ -250,6 +397,9 @@ class RAGService:
                 model=result.model,
                 insufficient_evidence=True,
                 out_of_scope=True,
+                fallback_reason="scope_classifier_out_of_scope",
+                attempt=len(attempt_records) or 1,
+                attempt_records=attempt_records,
             )
 
         if guarded.status == AnswerStatus.INSUFFICIENT_EVIDENCE:
@@ -262,6 +412,9 @@ class RAGService:
                 total_ms=round(total_ms, 2),
                 model=result.model,
                 insufficient_evidence=True,
+                fallback_reason="insufficient_supported_claims",
+                attempt=len(attempt_records) or 1,
+                attempt_records=attempt_records,
             )
 
         cited_sources = [
@@ -276,11 +429,18 @@ class RAGService:
             generation_ms=round(generation_ms, 2),
             total_ms=round(total_ms, 2),
             model=result.model,
+            fallback_reason=None,
+            attempt=len(attempt_records) or 1,
+            attempt_records=attempt_records,
         )
+
 
 
 @lru_cache(maxsize=1)
 def get_rag_service() -> RAGService:
     from ..core.config import settings
 
-    return RAGService(top_k=settings.retrieval_top_k)
+    return RAGService(
+        top_k=settings.generation_context_k,
+        candidate_k=settings.retrieval_candidate_k,
+    )
