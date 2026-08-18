@@ -70,4 +70,10 @@ jobs:
         run: python -m evaluation.answer_quality.create_human_review_packet --output-dir /tmp/human-review-ci-check
 
       - name: Verify provisional diagnostic mode without flag fails closed
-        run: ! python -m evaluation.answer_quality.provisional_diagnostic
+
+        run: |
+          if python -m evaluation.answer_quality.provisional_diagnostic; then
+            echo "FAIL: diagnostic accepted execution without explicit flag"
+            exit 1
+          fi
+          echo "PASS: diagnostic fails closed without explicit flag"
