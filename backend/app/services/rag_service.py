@@ -142,6 +142,7 @@ from ..retrieval.models import (
     LegalRetriever,
     RetrievalHit,
 )
+from ..retrieval.hybrid_retriever import select_generation_context
 
 logger = logging.getLogger(__name__)
 
@@ -202,10 +203,14 @@ class RAGService:
         def retrieve() -> list[RetrievalHit]:
             retriever = self.retriever_provider(normalized_method)
             if isinstance(retriever, CandidatePoolRetriever):
-                return retriever.retrieve_candidates(
+                candidate_pool = retriever.retrieve_candidates(
                     normalized_question,
                     top_k=self.top_k,
                     candidate_k=self.candidate_k,
+                )
+                return select_generation_context(
+                    candidate_pool,
+                    generation_context_k=self.top_k,
                 )
             return retriever.retrieve(normalized_question, top_k=self.top_k)
 
