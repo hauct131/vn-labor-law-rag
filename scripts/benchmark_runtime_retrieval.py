@@ -229,16 +229,16 @@ def summarize_runs(
         },
     }
 
-    if 10 in k_values:
+    for k in k_values:
         single_rows = []
         multi_rows = []
         by_category: dict[str, list[dict[str, float]]] = {}
-        for run, row in zip(runs, aggregate[10], strict=True):
+        for run, row in zip(runs, aggregate[k], strict=True):
             expected = run.question.get("expected_article_codes", [])
             (single_rows if len(expected) <= 1 else multi_rows).append(row)
             category = str(run.question.get("category") or "unknown")
             by_category.setdefault(category, []).append(row)
-        summary["stratified_at_10"] = {
+        summary[f"stratified_at_{k}"] = {
             "single_article": _mean_metrics(single_rows),
             "multi_article": _mean_metrics(multi_rows),
             "by_category": {
@@ -556,19 +556,19 @@ def _write_markdown_summary(output_dir: Path) -> None:
             if not path.is_file():
                 continue
             report = json.loads(path.read_text(encoding="utf-8"))
-            at_10 = report["summary"]["metrics"].get("at_10")
-            if not at_10:
+            at_5 = report["summary"]["metrics"].get("at_5")
+            if not at_5:
                 continue
             latency = report["summary"]["latency_ms"]
-            multi = report["summary"].get("stratified_at_10", {}).get(
+            multi = report["summary"].get("stratified_at_5", {}).get(
                 "multi_article", {}
             )
             rows.append((
                 role,
                 method,
-                at_10["article_recall"],
-                at_10["all_article_hit"],
-                at_10["article_mrr"],
+                at_5["article_recall"],
+                at_5["all_article_hit"],
+                at_5["article_mrr"],
                 multi.get("article_recall", 0.0),
                 latency["p50"],
                 latency["p95"],
@@ -580,7 +580,7 @@ def _write_markdown_summary(output_dir: Path) -> None:
         "The benchmark uses the locked runtime split. Evidence metrics are "
         "reported in JSON but are not used for model selection.",
         "",
-        "| Split | Method | Article Recall@10 | All-Article Hit@10 | Article MRR@10 | Multi-Article Recall@10 | p50 ms | p95 ms |",
+        "| Split | Method | Article Recall@5 | All-Article Hit@5 | Article MRR@5 | Multi-Article Recall@5 | p50 ms | p95 ms |",
         "|---|---|---:|---:|---:|---:|---:|---:|",
     ]
     for row in rows:
@@ -591,8 +591,8 @@ def _write_markdown_summary(output_dir: Path) -> None:
     if not any(row[0] == "test" for row in rows):
         lines += [
             "",
-            "> Test has not been evaluated. Run it once only after selecting "
-            "the dev configuration.",
+            "> This artifact contains development-split comparison only. "
+            "The locked held-out test result is maintained separately.",
         ]
     path = output_dir / "benchmark_summary.md"
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -813,7 +813,9 @@ def run_evaluation(
 
     if "dense" in runs_by_method and "hybrid" in runs_by_method:
         comparison = _comparison(
-            runs_by_method["dense"], runs_by_method["hybrid"]
+            runs_by_method["dense"],
+            runs_by_method["hybrid"],
+            k=max(args.k),
         )
         reports["hybrid"]["dense_comparison"] = comparison
         _atomic_json(
