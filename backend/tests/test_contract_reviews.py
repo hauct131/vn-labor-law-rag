@@ -292,7 +292,7 @@ def test_contract_review_recognizes_any_fixed_term_up_to_36_months() -> None:
 
     draft = review_contract(
         """
-        HỢP ĐỒNG LAO ĐỘNG XÁC ĐỊNH THỜI HẠN 24 tháng
+        HỢP ĐỒNG LAO ĐỘNG XÁC ĐỊNH THỜI HẠN 6 tháng
         Thử việc 30 ngày.
         Tiền lương 12.000.000 đồng, trả vào ngày 05 hằng tháng.
         Thời giờ làm việc 8 giờ/ngày, 48 giờ/tuần.
@@ -303,7 +303,7 @@ def test_contract_review_recognizes_any_fixed_term_up_to_36_months() -> None:
     termination = next(item for item in draft.findings if item.category == "termination")
 
     assert termination.severity == "warning"
-    assert "24 tháng" in termination.analysis
+    assert "6 tháng" in termination.analysis
     assert "10 ngày" in termination.analysis
 
 
@@ -398,6 +398,7 @@ def test_contract_review_sources_are_unique_and_all_are_cited() -> None:
         "20.2.LQ.34",
         "20.2.LQ.35",
         "20.2.LQ.36",
+        "20.2.NĐ.3.7",
     }
 
     working_time = next(

@@ -448,7 +448,7 @@ def _analysis(
             number_pattern=r"\b(?P<value>\d{1,3})\s*thang\b",
             max_distance=120,
         )
-        fixed_term = contract_months is not None and 12 <= contract_months <= 36
+        fixed_term = contract_months is not None and 0 < contract_months <= 36
         if notice is not None and notice < 30 and fixed_term:
             return (
                 "warning",
@@ -531,7 +531,7 @@ def review_contract(text: str, method: RetrievalMethod) -> ReviewDraft:
         query = rule.query + (f" Nội dung hợp đồng: {excerpt[:500]}" if excerpt else "")
         sources = retriever.retrieve(
             query,
-            top_k=3,
+            top_k=len(rule.preferred_article_codes),
             preferred_article_codes=rule.preferred_article_codes,
         )
         severity, analysis, evidence_status = _analysis(

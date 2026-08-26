@@ -305,18 +305,18 @@ def create_hybrid_retriever(
         "candidate_k": getattr(
             settings_obj,
             "retrieval_candidate_k",
-            50,
+            30,
         ),
         "rrf_k": getattr(settings_obj, "hybrid_rrf_k", 60),
         "sparse_weight": getattr(
             settings_obj,
             "hybrid_sparse_weight",
-            1.0,
+            0.1,
         ),
         "dense_weight": getattr(
             settings_obj,
             "hybrid_dense_weight",
-            1.0,
+            0.9,
         ),
     }
     kwargs.update(overrides)

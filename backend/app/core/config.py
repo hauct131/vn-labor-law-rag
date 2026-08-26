@@ -80,7 +80,7 @@ class Settings(BaseSettings):
         "a402150d93516ef4256934972c70307"
     )
     retrieval_top_k: int = 5
-    retrieval_candidate_k: int = Field(default=50, ge=1, le=200)
+    retrieval_candidate_k: int = Field(default=30, ge=1, le=200)
     generation_context_k: int = Field(default=10, ge=1, le=50)
     hybrid_rrf_k: int = 60
     hybrid_sparse_weight: float = 0.1
