@@ -56,6 +56,7 @@ def _reset_schema_and_apply_migration(database_url: str) -> None:
     migrations = [
         (migrations_dir / "001_conversations_bookmarks.sql").read_text(encoding="utf-8"),
         (migrations_dir / "002_session_auth.sql").read_text(encoding="utf-8"),
+        (migrations_dir / "003_contract_reviews.sql").read_text(encoding="utf-8"),
     ]
 
     with psycopg.connect(_psycopg_url(database_url), autocommit=True) as connection:
@@ -206,3 +207,99 @@ def test_postgres_session_auth_roundtrip_and_revocation() -> None:
     finally:
         settings.password_pbkdf2_iterations = original_iterations
         engine.dispose()
+
+
+def test_postgres_contract_review_jsonb_and_user_cascade() -> None:
+    database_url = _database_url()
+    _reset_schema_and_apply_migration(database_url)
+    user_id = str(uuid4())
+    review_id = str(uuid4())
+    finding_id = str(uuid4())
+    source_id = str(uuid4())
+
+    with psycopg.connect(_psycopg_url(database_url), autocommit=True) as connection:
+        connection.execute("INSERT INTO app_users (id) VALUES (%s)", (user_id,))
+        connection.execute(
+            """
+            INSERT INTO contract_reviews (
+                id, user_id, original_filename, file_sha256, mime_type,
+                file_size_bytes, retrieval_method, status, summary,
+                extracted_character_count
+            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """,
+            (
+                review_id,
+                user_id,
+                "contract.docx",
+                "a" * 64,
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                1024,
+                "sparse",
+                "completed",
+                "Đã rà soát 4 nhóm điều khoản.",
+                1234,
+            ),
+        )
+        connection.execute(
+            """
+            INSERT INTO contract_review_findings (
+                id, review_id, position, category, title, severity,
+                contract_excerpt, analysis, recommendation, evidence_status
+            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """,
+            (
+                finding_id,
+                review_id,
+                1,
+                "salary",
+                "Tiền lương",
+                "info",
+                "Tiền lương 12.000.000 đồng.",
+                "Đối chiếu theo [S1].",
+                "Kiểm tra kỳ hạn trả lương.",
+                "supported",
+            ),
+        )
+        connection.execute(
+            """
+            INSERT INTO contract_review_sources (
+                id, finding_id, source_id, chunk_id, article_code,
+                point_labels, quoted_text, source_rank, component_ranks
+            ) VALUES (%s, %s, %s, %s, %s, %s::jsonb, %s, %s, %s::jsonb)
+            """,
+            (
+                source_id,
+                finding_id,
+                "S1",
+                "chunk-postgres-contract-90",
+                "20.2.LQ.90",
+                '["a", "b"]',
+                "Tiền lương là số tiền người sử dụng lao động trả.",
+                1,
+                '{"contract_lexical": 1}',
+            ),
+        )
+
+        point_labels, component_ranks = connection.execute(
+            "SELECT point_labels, component_ranks FROM contract_review_sources WHERE id = %s",
+            (source_id,),
+        ).fetchone()
+        assert point_labels == ["a", "b"]
+        assert component_ranks == {"contract_lexical": 1}
+
+        connection.execute("DELETE FROM app_users WHERE id = %s", (user_id,))
+        review_count = connection.execute(
+            "SELECT count(*) FROM contract_reviews WHERE id = %s",
+            (review_id,),
+        ).fetchone()[0]
+        finding_count = connection.execute(
+            "SELECT count(*) FROM contract_review_findings WHERE id = %s",
+            (finding_id,),
+        ).fetchone()[0]
+        source_count = connection.execute(
+            "SELECT count(*) FROM contract_review_sources WHERE id = %s",
+            (source_id,),
+        ).fetchone()[0]
+        assert review_count == 0
+        assert finding_count == 0
+        assert source_count == 0

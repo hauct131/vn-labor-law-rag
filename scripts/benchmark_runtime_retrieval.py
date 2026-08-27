@@ -70,7 +70,9 @@ def _runtime_settings() -> Any:
         return SimpleNamespace(
             legal_chunks_path=os.environ.get(
                 "LEGAL_CHUNKS_PATH",
-                "data/releases/labor-law-2026-07-28-candidate/chunks.jsonl",
+                "data/releases/"
+                "labor-law-canonical-word-20260804-164432-candidate/"
+                "canonical_chunks.jsonl",
             ),
             qdrant_url=os.environ.get("QDRANT_URL", "http://localhost:6333"),
             qdrant_api_key=os.environ.get("QDRANT_API_KEY", ""),
@@ -90,14 +92,14 @@ def _runtime_settings() -> Any:
             bm25_k=float(os.environ.get("BM25_K", "1.2")),
             bm25_b=float(os.environ.get("BM25_B", "0.75")),
             retrieval_candidate_k=int(
-                os.environ.get("RETRIEVAL_CANDIDATE_K", "20")
+                os.environ.get("RETRIEVAL_CANDIDATE_K", "30")
             ),
             hybrid_rrf_k=int(os.environ.get("HYBRID_RRF_K", "60")),
             hybrid_dense_weight=float(
-                os.environ.get("HYBRID_DENSE_WEIGHT", "1.0")
+                os.environ.get("HYBRID_DENSE_WEIGHT", "0.9")
             ),
             hybrid_sparse_weight=float(
-                os.environ.get("HYBRID_SPARSE_WEIGHT", "1.0")
+                os.environ.get("HYBRID_SPARSE_WEIGHT", "0.1")
             ),
         )
 
@@ -227,16 +229,16 @@ def summarize_runs(
         },
     }
 
-    if 10 in k_values:
+    for k in k_values:
         single_rows = []
         multi_rows = []
         by_category: dict[str, list[dict[str, float]]] = {}
-        for run, row in zip(runs, aggregate[10], strict=True):
+        for run, row in zip(runs, aggregate[k], strict=True):
             expected = run.question.get("expected_article_codes", [])
             (single_rows if len(expected) <= 1 else multi_rows).append(row)
             category = str(run.question.get("category") or "unknown")
             by_category.setdefault(category, []).append(row)
-        summary["stratified_at_10"] = {
+        summary[f"stratified_at_{k}"] = {
             "single_article": _mean_metrics(single_rows),
             "multi_article": _mean_metrics(multi_rows),
             "by_category": {
@@ -451,20 +453,24 @@ def _comparison(
     }
 
 
-def _selection_key(trial: Mapping[str, Any]) -> tuple[Any, ...]:
-    at_10 = trial["summary"]["metrics"]["at_10"]
+def _selection_key(
+    trial: Mapping[str, Any],
+    *,
+    selection_k: int,
+) -> tuple[Any, ...]:
+    metrics = trial["summary"]["metrics"][f"at_{selection_k}"]
     config = trial["config"]
     article_score = (
-        0.45 * at_10["all_article_hit"]
-        + 0.35 * at_10["article_recall"]
-        + 0.15 * at_10["article_mrr"]
-        + 0.05 * at_10["any_article_hit"]
+        0.45 * metrics["all_article_hit"]
+        + 0.35 * metrics["article_recall"]
+        + 0.15 * metrics["article_mrr"]
+        + 0.05 * metrics["any_article_hit"]
     )
     return (
         article_score,
-        at_10["all_article_hit"],
-        at_10["article_recall"],
-        at_10["article_mrr"],
+        metrics["all_article_hit"],
+        metrics["article_recall"],
+        metrics["article_mrr"],
         -config["candidate_k"],
         -config["rrf_k"],
         config["dense_weight"],
@@ -554,19 +560,19 @@ def _write_markdown_summary(output_dir: Path) -> None:
             if not path.is_file():
                 continue
             report = json.loads(path.read_text(encoding="utf-8"))
-            at_10 = report["summary"]["metrics"].get("at_10")
-            if not at_10:
+            at_5 = report["summary"]["metrics"].get("at_5")
+            if not at_5:
                 continue
             latency = report["summary"]["latency_ms"]
-            multi = report["summary"].get("stratified_at_10", {}).get(
+            multi = report["summary"].get("stratified_at_5", {}).get(
                 "multi_article", {}
             )
             rows.append((
                 role,
                 method,
-                at_10["article_recall"],
-                at_10["all_article_hit"],
-                at_10["article_mrr"],
+                at_5["article_recall"],
+                at_5["all_article_hit"],
+                at_5["article_mrr"],
                 multi.get("article_recall", 0.0),
                 latency["p50"],
                 latency["p95"],
@@ -578,7 +584,7 @@ def _write_markdown_summary(output_dir: Path) -> None:
         "The benchmark uses the locked runtime split. Evidence metrics are "
         "reported in JSON but are not used for model selection.",
         "",
-        "| Split | Method | Article Recall@10 | All-Article Hit@10 | Article MRR@10 | Multi-Article Recall@10 | p50 ms | p95 ms |",
+        "| Split | Method | Article Recall@5 | All-Article Hit@5 | Article MRR@5 | Multi-Article Recall@5 | p50 ms | p95 ms |",
         "|---|---|---:|---:|---:|---:|---:|---:|",
     ]
     for row in rows:
@@ -589,8 +595,8 @@ def _write_markdown_summary(output_dir: Path) -> None:
     if not any(row[0] == "test" for row in rows):
         lines += [
             "",
-            "> Test has not been evaluated. Run it once only after selecting "
-            "the dev configuration.",
+            "> This artifact contains development-split comparison only. "
+            "The locked held-out test result is maintained separately.",
         ]
     path = output_dir / "benchmark_summary.md"
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -605,8 +611,10 @@ def run_tuning(
 ) -> dict[str, Any]:
     if args.split_role != "dev":
         raise BenchmarkError("hybrid tuning is permitted only on the dev split")
-    if 10 not in args.k:
-        raise BenchmarkError("tuning requires --k to include 10")
+    if args.selection_k not in args.k:
+        raise BenchmarkError(
+            f"tuning requires --k to include selection_k={args.selection_k}"
+        )
     max_candidates = max(max(args.candidate_k_grid), max(args.k))
     sparse, dense = _create_components(
         args, chunks, corpus_sha256, top_k=max_candidates
@@ -645,12 +653,12 @@ def run_tuning(
                     "Quality-search upper bound from component retrieval at "
                     f"max candidate_k={max_candidates}; not used for selection."
                 )
-                at_10 = summary["metrics"]["at_10"]
+                selection_metrics = summary["metrics"][f"at_{args.selection_k}"]
                 article_score = (
-                    0.45 * at_10["all_article_hit"]
-                    + 0.35 * at_10["article_recall"]
-                    + 0.15 * at_10["article_mrr"]
-                    + 0.05 * at_10["any_article_hit"]
+                    0.45 * selection_metrics["all_article_hit"]
+                    + 0.35 * selection_metrics["article_recall"]
+                    + 0.15 * selection_metrics["article_mrr"]
+                    + 0.05 * selection_metrics["any_article_hit"]
                 )
                 trials.append({
                     "name": name,
@@ -659,7 +667,13 @@ def run_tuning(
                     "summary": summary,
                 })
 
-    trials.sort(key=_selection_key, reverse=True)
+    trials.sort(
+        key=lambda trial: _selection_key(
+            trial,
+            selection_k=args.selection_k,
+        ),
+        reverse=True,
+    )
     selected = trials[0]
 
     # Measure the final three methods at their real runtime limits. Trial
@@ -704,7 +718,9 @@ def run_tuning(
         k_values=args.k,
     )
     hybrid_report["dense_comparison"] = _comparison(
-        final_dense_runs, selected_runs
+        final_dense_runs,
+        selected_runs,
+        k=args.selection_k,
     )
     _atomic_json(args.output_dir / "dev_hybrid.json", hybrid_report)
 
@@ -713,20 +729,27 @@ def run_tuning(
         "status": "completed",
         "run_at": datetime.now(timezone.utc).isoformat(),
         "split_role": "dev",
+        "selection_k": args.selection_k,
         "selection_metric": (
-            "0.45*all_article_hit@10 + 0.35*article_recall@10 + "
-            "0.15*article_mrr@10 + 0.05*any_article_hit@10"
+            f"0.45*all_article_hit@{args.selection_k} + "
+            f"0.35*article_recall@{args.selection_k} + "
+            f"0.15*article_mrr@{args.selection_k} + "
+            f"0.05*any_article_hit@{args.selection_k}"
         ),
         "tie_breakers": [
-            "all_article_hit_at_10",
-            "article_recall_at_10",
-            "article_mrr_at_10",
+            f"all_article_hit_at_{args.selection_k}",
+            f"article_recall_at_{args.selection_k}",
+            f"article_mrr_at_{args.selection_k}",
             "lower_candidate_k",
             "lower_rrf_k",
         ],
         "selected_config": selected["config"],
         "selected_trial": selected,
-        "dense_comparison": _comparison(final_dense_runs, selected_runs),
+        "dense_comparison": _comparison(
+            final_dense_runs,
+            selected_runs,
+            k=args.selection_k,
+        ),
         "trials": trials,
         "base_config": base,
     }
@@ -811,7 +834,9 @@ def run_evaluation(
 
     if "dense" in runs_by_method and "hybrid" in runs_by_method:
         comparison = _comparison(
-            runs_by_method["dense"], runs_by_method["hybrid"]
+            runs_by_method["dense"],
+            runs_by_method["hybrid"],
+            k=max(args.k),
         )
         reports["hybrid"]["dense_comparison"] = comparison
         _atomic_json(
@@ -840,7 +865,9 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--golden",
         type=Path,
-        default=Path("data/evaluation/splits/golden_v3_dev.json"),
+        default=Path(
+            "data/evaluation/splits/canonical_word_804/golden_v3_dev.json"
+        ),
     )
     parser.add_argument(
         "--chunks", type=Path, default=Path(runtime_settings.legal_chunks_path)
@@ -848,7 +875,9 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=Path("data/evaluation/runtime-benchmark"),
+        default=Path(
+            "data/evaluation/runtime-benchmark/canonical_word_804/verification"
+        ),
     )
     parser.add_argument(
         "--methods",
@@ -857,6 +886,15 @@ def build_parser() -> argparse.ArgumentParser:
         default=("dense", "sparse", "hybrid"),
     )
     parser.add_argument("--k", type=int, nargs="+", default=(5, 10, 20))
+    parser.add_argument(
+        "--selection-k",
+        type=int,
+        default=5,
+        help=(
+            "DEV tuning operating point used for model selection. "
+            "The value must also be present in --k."
+        ),
+    )
     parser.add_argument("--qdrant-url", default=runtime_settings.qdrant_url)
     parser.add_argument("--qdrant-api-key", default=runtime_settings.qdrant_api_key)
     parser.add_argument("--collection", default=runtime_settings.qdrant_collection)

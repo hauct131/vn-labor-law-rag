@@ -115,7 +115,7 @@ jobs:
         run: npm run build
 
   postgres-integration:
-    name: PostgreSQL session/history integration
+    name: PostgreSQL session/history/contract integration
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
@@ -194,3 +194,10 @@ jobs:
             -f docker-compose.yml \
             -f docker-compose.dev.yml \
             config --services
+
+      - name: Build application containers
+        run: |
+          docker compose \
+            -f docker-compose.yml \
+            -f docker-compose.dev.yml \
+            build backend frontend

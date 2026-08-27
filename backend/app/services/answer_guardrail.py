@@ -51,6 +51,15 @@ class GuardedLegalAnswer(BaseModel):
 class GuardrailValidationError(ValueError):
     """Raised when model output cannot safely be exposed."""
 
+    def __init__(
+        self,
+        message: str,
+        *,
+        fallback_reason: str = "citation_guardrail_rejected",
+    ) -> None:
+        super().__init__(message)
+        self.fallback_reason = fallback_reason
+
 
 def extract_inline_citations(answer: str) -> set[str]:
     return {f"S{match}" for match in _CITATION_RE.findall(answer)}
@@ -69,7 +78,10 @@ def _extract_json_object(raw_output: str) -> str:
     start = text.find("{")
     end = text.rfind("}")
     if start < 0 or end < start:
-        raise GuardrailValidationError("model output does not contain JSON")
+        raise GuardrailValidationError(
+            "model output does not contain JSON",
+            fallback_reason="generation_parse_error",
+        )
     return text[start : end + 1]
 
 
@@ -79,12 +91,18 @@ def parse_guarded_answer(raw_output: str) -> GuardedLegalAnswer:
     try:
         payload = json.loads(_extract_json_object(raw_output))
     except (json.JSONDecodeError, TypeError) as exc:
-        raise GuardrailValidationError("model output is not valid JSON") from exc
+        raise GuardrailValidationError(
+            "model output is not valid JSON",
+            fallback_reason="generation_parse_error",
+        ) from exc
 
     try:
         return GuardedLegalAnswer.model_validate(payload)
     except ValidationError as exc:
-        raise GuardrailValidationError("model output violates answer schema") from exc
+        raise GuardrailValidationError(
+            "model output violates answer schema",
+            fallback_reason="generation_parse_error",
+        ) from exc
 
 
 def validate_guarded_answer(
@@ -100,23 +118,28 @@ def validate_guarded_answer(
     if output.status == AnswerStatus.ANSWERABLE:
         if not declared:
             raise GuardrailValidationError(
-                "answerable output must declare at least one citation"
+                "answerable output must declare at least one citation",
+                fallback_reason="insufficient_supported_claims",
             )
         if not declared.issubset(available):
             raise GuardrailValidationError(
-                "answerable output cites a source outside the provided context"
+                "answerable output cites a source outside the provided context",
+                fallback_reason="citation_guardrail_rejected",
             )
         if inline != declared:
             raise GuardrailValidationError(
-                "inline citations and cited_source_ids do not match"
+                "inline citations and cited_source_ids do not match",
+                fallback_reason="citation_parse_error",
             )
         return output
 
     if declared or inline:
         raise GuardrailValidationError(
-            "non-answerable output must not contain citations"
+            "non-answerable output must not contain citations",
+            fallback_reason="citation_guardrail_rejected",
         )
     return output
+
 
 
 def parse_and_validate_guarded_answer(

@@ -1,0 +1,2916 @@
+{
+  "schema_version": "runtime-retrieval-benchmark-v1",
+  "status": "completed",
+  "run_at": "2026-08-25T20:54:05.338182+00:00",
+  "split_role": "dev",
+  "method": "sparse",
+  "config": {
+    "golden": "data/evaluation/splits/canonical_word_804/golden_v3_dev.json",
+    "golden_split_version": "runtime-retrieval-v1",
+    "corpus": "data/releases/labor-law-canonical-word-20260804-164432-candidate/canonical_chunks.jsonl",
+    "corpus_sha256": "fdbec539efbfb3f4aa3cb3962046321e3a402150d93516ef4256934972c70307",
+    "qdrant_url": "http://localhost:6333",
+    "qdrant_api_key_configured": false,
+    "collection": "labor_law_dev",
+    "dense_model": "intfloat/multilingual-e5-large",
+    "dense_vector_name": "dense",
+    "dense_size": 1024,
+    "vncorenlp_model_dir": "models/vncorenlp",
+    "bm25_k": 1.2,
+    "bm25_b": 0.75,
+    "k_values": [
+      5
+    ],
+    "package_versions": {
+      "fastembed": "0.8.0",
+      "qdrant-client": "1.18.0",
+      "py-vncorenlp": "0.1.4"
+    },
+    "writes_qdrant": false,
+    "evidence_metrics_decision_role": "secondary_only"
+  },
+  "summary": {
+    "question_count": 31,
+    "metrics": {
+      "at_5": {
+        "any_article_hit": 1.0,
+        "all_article_hit": 0.580645,
+        "article_recall": 0.76586,
+        "article_mrr": 0.812903,
+        "any_evidence_hit": 1.0,
+        "all_evidence_hit": 0.483871,
+        "evidence_recall": 0.681987,
+        "evidence_mrr": 0.812903
+      }
+    },
+    "latency_ms": {
+      "mean": 1.811,
+      "p50": 1.729,
+      "p95": 2.66,
+      "min": 0.992,
+      "max": 3.217
+    },
+    "stratified_at_5": {
+      "single_article": {
+        "any_article_hit": 1.0,
+        "all_article_hit": 1.0,
+        "article_recall": 1.0,
+        "article_mrr": 0.880208,
+        "any_evidence_hit": 1.0,
+        "all_evidence_hit": 0.9375,
+        "evidence_recall": 0.984375,
+        "evidence_mrr": 0.880208
+      },
+      "multi_article": {
+        "any_article_hit": 1.0,
+        "all_article_hit": 0.133333,
+        "article_recall": 0.516111,
+        "article_mrr": 0.741111,
+        "any_evidence_hit": 1.0,
+        "all_evidence_hit": 0.0,
+        "evidence_recall": 0.359439,
+        "evidence_mrr": 0.741111
+      },
+      "by_category": {
+        "exact_legal_term": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 0.821429,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 0.821429
+        },
+        "multi_article": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.125,
+          "article_recall": 0.488542,
+          "article_mrr": 0.770833,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.313829,
+          "evidence_mrr": 0.770833
+        },
+        "natural_language": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.571429,
+          "article_recall": 0.761905,
+          "article_mrr": 0.778571,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.428571,
+          "evidence_recall": 0.64966,
+          "evidence_mrr": 0.778571
+        },
+        "single_scenario": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.666667,
+          "article_recall": 0.833333,
+          "article_mrr": 0.87037,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.555556,
+          "evidence_recall": 0.787037,
+          "evidence_mrr": 0.87037
+        }
+      }
+    }
+  },
+  "questions": [
+    {
+      "question_id": "r2ai_gold_004",
+      "category": "exact_legal_term",
+      "question": "Ai là người có thẩm quyền giao kết hợp đồng lao động bên phía người sử dụng lao động?",
+      "expected_article_codes": [
+        "20.2.LQ.18"
+      ],
+      "expected_evidence_chunk_ids": [
+        "66bb55e9-8b79-54a1-9a40-00289be4e062"
+      ],
+      "latency_ms": 2.142,
+      "metrics": {
+        "at_5": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 0.5,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 0.5
+        }
+      },
+      "retrieved": [
+        {
+          "rank": 1,
+          "score": 17.70145793,
+          "chunk_id": "be8377c0-ab3b-5b2c-9979-ceef1d9d5e0e",
+          "article_code": "20.2.TT.2.3",
+          "article_title": "Nội dung chủ yếu của hợp đồng lao động",
+          "clause_number": "2",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.TT.2.3 — Nội dung chủ yếu của hợp đồng lao động Khoản: 2 Điểm: a, b, c Nguồn: TT 2. Thông tin về họ tên, ngày tháng năm sinh, giới tính, nơi cư trú, số thẻ Căn cước công dân hoặc Chứng minh nhân dân hoặc hộ chiếu của người giao kết hợp đồng lao động bên phía người lao động và một số thông tin khác, gồm: a) Họ tên, ngày tháng năm sinh, giới tính, địa chỉ nơi cư trú, số điện thoại, địa chỉ"
+        },
+        {
+          "rank": 2,
+          "score": 17.48391406,
+          "chunk_id": "66bb55e9-8b79-54a1-9a40-00289be4e062",
+          "article_code": "20.2.LQ.18",
+          "article_title": "Thẩm quyền giao kết hợp đồng lao động",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.18 — Thẩm quyền giao kết hợp đồng lao động Nguồn: Văn bản hợp nhất 1. Người lao động trực tiếp giao kết hợp đồng lao động, trừ trường hợp quy định tại khoản 2 Điều này. 2. Đối với công việc theo mùa vụ, công việc nhất định có thời hạn dưới 12 tháng thì nhóm người lao động từ đủ 18 tuổi trở lên có thể ủy quyền cho một người lao động trong nhóm để giao kết hợp đồng lao động; trong trườn"
+        },
+        {
+          "rank": 3,
+          "score": 15.22685275,
+          "chunk_id": "719556b8-c973-51eb-a6cb-67baba9c6c78",
+          "article_code": "20.2.TT.2.3",
+          "article_title": "Nội dung chủ yếu của hợp đồng lao động",
+          "clause_number": "1",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.TT.2.3 — Nội dung chủ yếu của hợp đồng lao động Khoản: 1 Điểm: a, b, c Nguồn: TT Nội dung chủ yếu phải có của hợp đồng lao động theo khoản 1 Điều 21 của Bộ luật Lao động được quy định như sau: 1. Thông tin về tên, địa chỉ của người sử dụng lao động và họ tên, chức danh của người giao kết hợp đồng lao động bên phía người sử dụng lao động được quy định như sau: a) Tên của người sử dụng lao"
+        },
+        {
+          "rank": 4,
+          "score": 13.87332164,
+          "chunk_id": "3b8b6a1b-2df2-595c-ad68-68f3a9f4c52a",
+          "article_code": "20.2.LQ.21",
+          "article_title": "Nội dung hợp đồng lao động",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.21 — Nội dung hợp đồng lao động Nguồn: Văn bản hợp nhất 1. Hợp đồng lao động phải có những nội dung chủ yếu sau đây: a) Tên, địa chỉ của người sử dụng lao động và họ tên, chức danh của người giao kết hợp đồng lao động bên phía người sử dụng lao động; b) Họ tên, ngày tháng năm sinh, giới tính, nơi cư trú, số thẻ Căn cước công dân, Chứng minh nhân dân hoặc hộ chiếu của người giao kết hợ"
+        },
+        {
+          "rank": 5,
+          "score": 13.33577843,
+          "chunk_id": "fe355ec2-ec22-5b0c-b46c-13f514159f30",
+          "article_code": "20.2.NĐ.3.69",
+          "article_title": "Nội quy lao động",
+          "clause_number": "2",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.69 — Nội quy lao động Khoản: 2 Điểm: e, g, h, i Nguồn: NĐ 2. Nội dung nội quy lao động không được trái với pháp luật về lao động và quy định của pháp luật có liên quan. Nội quy lao động gồm những nội dung chủ yếu sau: e) Trường hợp được tạm thời chuyển người lao động làm việc khác so với hợp đồng lao động: quy định cụ thể các trường hợp do nhu cầu sản xuất, kinh doanh được tạm thời "
+        }
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_005",
+      "category": "exact_legal_term",
+      "question": "Thời giờ làm việc tối đa trong ngày và trong tuần đối với người lao động 16 tuổi là bao nhiêu?",
+      "expected_article_codes": [
+        "20.2.LQ.146"
+      ],
+      "expected_evidence_chunk_ids": [
+        "38620a4e-8bef-5ae1-8a57-5c05a82b693b"
+      ],
+      "latency_ms": 1.614,
+      "metrics": {
+        "at_5": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        }
+      },
+      "retrieved": [
+        {
+          "rank": 1,
+          "score": 18.74902871,
+          "chunk_id": "38620a4e-8bef-5ae1-8a57-5c05a82b693b",
+          "article_code": "20.2.LQ.146",
+          "article_title": "Thời giờ làm việc của người chưa thành niên",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.146 — Thời giờ làm việc của người chưa thành niên Nguồn: Văn bản hợp nhất 1. Thời giờ làm việc của người chưa đủ 15 tuổi không được quá 04 giờ trong 01 ngày và 20 giờ trong 01 tuần; không được làm thêm giờ, làm việc vào ban đêm. 2. Thời giờ làm việc của người từ đủ 15 tuổi đến chưa đủ 18 tuổi không được quá 08 giờ trong 01 ngày và 40 giờ trong 01 tuần. Người từ đủ 15 tuổi đến chưa đủ "
+        },
+        {
+          "rank": 2,
+          "score": 16.91075063,
+          "chunk_id": "bfed27a2-f5f8-5411-84e3-a0b90b06394c",
+          "article_code": "20.2.LQ.105",
+          "article_title": "Thời giờ làm việc bình thường",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.105 — Thời giờ làm việc bình thường Nguồn: Văn bản hợp nhất 1. Thời giờ làm việc bình thường không quá 08 giờ trong 01 ngày và không quá 48 giờ trong 01 tuần. 2. Người sử dụng lao động có quyền quy định thời giờ làm việc theo ngày hoặc tuần nhưng phải thông báo cho người lao động biết; trường hợp theo tuần thì thời giờ làm việc bình thường không quá 10 giờ trong 01 ngày và không quá 4"
+        },
+        {
+          "rank": 3,
+          "score": 16.62124393,
+          "chunk_id": "cc9ed97d-1407-59ca-a1f6-8c62937fa8dd",
+          "article_code": "20.2.TT.4.3",
+          "article_title": "Quỹ thời giờ làm việc tiêu chuẩn trong năm",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.TT.4.3 — Quỹ thời giờ làm việc tiêu chuẩn trong năm Nguồn: TT TQ = [TN - (Tt + Tp + TL)] x tn (giờ) Trong đó: - TQ: Quỹ thời giờ làm việc tiêu chuẩn trong năm của người lao động; - TN: Số ngày trong năm tính theo năm dương lịch là 365 ngày hoặc là 366 ngày nếu là năm nhuận; - Tt: Tổng số ngày nghỉ hằng tuần trong năm được xác định theo quy định tại Điều 111 của Bộ luật Lao động; - Tp: Số"
+        },
+        {
+          "rank": 4,
+          "score": 16.3901338,
+          "chunk_id": "ca990485-578c-569f-b1d5-939f8878349c",
+          "article_code": "20.2.NĐ.3.89",
+          "article_title": "Một số quy định riêng đối với lao động là người giúp việc gia đình",
+          "clause_number": "3",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.89 — Một số quy định riêng đối với lao động là người giúp việc gia đình Khoản: 3 Điểm: a, b Nguồn: NĐ 3. Thời giờ làm việc, thời giờ nghỉ ngơi thực hiện theo quy định tại Chương VII của Bộ luật Lao động và Chương VII Nghị định này, trong đó thời gian nghỉ ngơi trong ngày làm việc bình thường, ngày nghỉ hằng tuần được thực hiện như sau: a) Vào ngày làm việc bình thường, ngoài thời gi"
+        },
+        {
+          "rank": 5,
+          "score": 16.37331381,
+          "chunk_id": "09df41bf-2147-56ba-9a55-ae1944743bc8",
+          "article_code": "20.2.TT.7.4",
+          "article_title": "Thời giờ làm việc đối với người lao động làm việc thường xuyên",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.TT.7.4 — Thời giờ làm việc đối với người lao động làm việc thường xuyên Nguồn: TT Người lao động làm việc thường xuyên tại các công trình dầu khí trên biển theo phiên và theo ca làm việc, cụ thể như sau: a. Ca làm việc không quá 12 giờ trong 01 ngày; b. Phiên làm việc tối đa là 28 ngày."
+        }
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_006",
+      "category": "exact_legal_term",
+      "question": "Đối với giấy phép lao động được cấp theo thời hạn của hợp đồng lao động dự kiến ký kết, cần nộp hồ sơ xin gia hạn trước bao nhiêu ngày kể từ ngày hết hạn?",
+      "expected_article_codes": [
+        "NĐ219.28"
+      ],
+      "expected_evidence_chunk_ids": [
+        "393e0ead-2df6-5c15-910a-e0960351d67a"
+      ],
+      "latency_ms": 1.894,
+      "metrics": {
+        "at_5": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        }
+      },
+      "retrieved": [
+        {
+          "rank": 1,
+          "score": 36.31605015,
+          "chunk_id": "393e0ead-2df6-5c15-910a-e0960351d67a",
+          "article_code": "NĐ219.28",
+          "article_title": "Trình tự gia hạn giấy phép lao động",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều NĐ219.28 — Trình tự gia hạn giấy phép lao động Nguồn: NĐ 1. Trước ít nhất 10 ngày nhưng không quá 45 ngày trước khi hết hạn giấy phép lao động, người sử dụng lao động nộp hồ sơ đề nghị gia hạn giấy phép lao động trực tiếp hoặc thông qua dịch vụ bưu chính công ích hoặc qua thuê dịch vụ của doanh nghiệp, cá nhân hoặc qua uỷ quyền đến Trung tâm Phục vụ hành chính công tại địa phương nơi người la"
+        },
+        {
+          "rank": 2,
+          "score": 30.21935929,
+          "chunk_id": "44b94e74-37f5-56e0-98bd-c388bbe86714",
+          "article_code": "NĐ219.16",
+          "article_title": "Trình tự gia hạn giấy xác nhận không thuộc diện cấp giấy phép lao động",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều NĐ219.16 — Trình tự gia hạn giấy xác nhận không thuộc diện cấp giấy phép lao động Nguồn: NĐ 1. Trước ít nhất 10 ngày nhưng không quá 45 ngày trước khi hết hạn giấy xác nhận không thuộc diện cấp giấy phép lao động, người sử dụng lao động nộp hồ sơ đề nghị gia hạn giấy xác nhận không thuộc diện cấp giấy phép lao động trực tiếp hoặc thông qua dịch vụ bưu chính công ích hoặc qua thuê dịch vụ của "
+        },
+        {
+          "rank": 3,
+          "score": 26.600474,
+          "chunk_id": "56180f49-d804-5bbc-b5fc-ed9176ca7b63",
+          "article_code": "20.2.LQ.20",
+          "article_title": "Loại hợp đồng lao động",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.20 — Loại hợp đồng lao động Nguồn: Văn bản hợp nhất 1. Hợp đồng lao động phải được giao kết theo một trong các loại sau đây: a) Hợp đồng lao động không xác định thời hạn là hợp đồng mà trong đó hai bên không xác định thời hạn, thời điểm chấm dứt hiệu lực của hợp đồng; b) Hợp đồng lao động xác định thời hạn là hợp đồng mà trong đó hai bên xác định thời hạn, thời điểm chấm dứt hiệu lực "
+        },
+        {
+          "rank": 4,
+          "score": 26.39038007,
+          "chunk_id": "d55af14a-7299-51cb-b4dc-fca4c341cf92",
+          "article_code": "20.2.NĐ.3.26",
+          "article_title": "Gia hạn giấy phép",
+          "clause_number": "3",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.26 — Gia hạn giấy phép Khoản: 3 Điểm: a, b, c Nguồn: NĐ 3. Trình tự, thủ tục gia hạn giấy phép a) Doanh nghiệp gửi một bộ hồ sơ theo quy định tại khoản 2 Điều này đến Sở Lao động - Thương binh và Xã hội nơi doanh nghiệp đặt trụ sở chính để đề nghị gia hạn giấy phép. Sau khi kiểm tra đủ giấy tờ quy định tại khoản 2 Điều này, Sở Lao động - Thương binh và Xã hội cấp giấy biên nhận ghi "
+        },
+        {
+          "rank": 5,
+          "score": 25.47208122,
+          "chunk_id": "7b70a5cf-ba26-5e70-acf1-221d68341d4f",
+          "article_code": "20.2.LQ.83",
+          "article_title": "Thỏa ước lao động tập thể hết hạn",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.83 — Thỏa ước lao động tập thể hết hạn Nguồn: Văn bản hợp nhất Trong thời hạn 90 ngày trước ngày thỏa ước lao động tập thể hết hạn, các bên có thể thương lượng để kéo dài thời hạn của thỏa ước lao động tập thể hoặc ký kết thỏa ước lao động tập thể mới. Trường hợp các bên thỏa thuận kéo dài thời hạn của thỏa ước lao động tập thể thì phải lấy ý kiến theo quy định tại Điều 76 của Bộ luật"
+        }
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_007",
+      "category": "exact_legal_term",
+      "question": "Người lao động nước ngoài làm việc tại Việt Nam có được nghỉ ngày Tết cổ truyền của dân tộc họ không?",
+      "expected_article_codes": [
+        "20.2.LQ.112"
+      ],
+      "expected_evidence_chunk_ids": [
+        "a862043e-40bf-5684-8323-2439363bc0fa"
+      ],
+      "latency_ms": 1.779,
+      "metrics": {
+        "at_5": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        }
+      },
+      "retrieved": [
+        {
+          "rank": 1,
+          "score": 32.17219157,
+          "chunk_id": "a862043e-40bf-5684-8323-2439363bc0fa",
+          "article_code": "20.2.LQ.112",
+          "article_title": "Nghỉ lễ, tết",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.112 — Nghỉ lễ, tết Nguồn: Văn bản hợp nhất 1. Người lao động được nghỉ làm việc, hưởng nguyên lương trong những ngày lễ, tết sau đây: a) Tết Dương lịch: 01 ngày (ngày 01 tháng 01 dương lịch); b) Tết Âm lịch: 05 ngày; c) Ngày Chiến thắng: 01 ngày (ngày 30 tháng 4 dương lịch); d) Ngày Quốc tế lao động: 01 ngày (ngày 01 tháng 5 dương lịch); đ) Quốc khánh: 02 ngày (ngày 02 tháng 9 dương l"
+        },
+        {
+          "rank": 2,
+          "score": 16.44940962,
+          "chunk_id": "7af4d17f-6fbb-5f55-bba6-b7f647e9f275",
+          "article_code": "20.2.TT.7.10",
+          "article_title": "Nghỉ Lễ, Tết; Nghỉ việc riêng; Nghỉ không hưởng lương",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.TT.7.10 — Nghỉ Lễ, Tết; Nghỉ việc riêng; Nghỉ không hưởng lương Nguồn: TT 1. Người lao động được bố trí nghỉ Lễ, Tết; nghỉ việc riêng và nghỉ không hưởng lương theo quy định tại Điều 112 và Điều 115 Bộ luật Lao động. 2. Trường hợp ngày nghỉ Lễ, Tết trùng với phiên làm việc, người lao động được thanh toán tiền lương làm thêm giờ phù hợp với quy định của pháp luật."
+        },
+        {
+          "rank": 3,
+          "score": 15.08530747,
+          "chunk_id": "20134481-5a32-5895-b3cd-cab475f5ba39",
+          "article_code": "20.2.LQ.98",
+          "article_title": "Tiền lương làm thêm giờ, làm việc vào ban đêm",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.98 — Tiền lương làm thêm giờ, làm việc vào ban đêm Nguồn: Văn bản hợp nhất 1. Người lao động làm thêm giờ được trả lương tính theo đơn giá tiền lương hoặc tiền lương thực trả theo công việc đang làm như sau: a) Vào ngày thường, ít nhất bằng 150%; b) Vào ngày nghỉ hằng tuần, ít nhất bằng 200%; c) Vào ngày nghỉ lễ, tết, ngày nghỉ có hưởng lương, ít nhất bằng 300% chưa kể tiền lương ngày"
+        },
+        {
+          "rank": 4,
+          "score": 14.88790272,
+          "chunk_id": "63852c41-ab13-552a-9c66-cc28458c80cc",
+          "article_code": "20.2.NĐ.3.57",
+          "article_title": "Tiền lương làm thêm giờ vào ban đêm",
+          "clause_number": "2",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.57 — Tiền lương làm thêm giờ vào ban đêm Khoản: 2 Điểm: a, b, c Nguồn: NĐ 2. Đối với người lao động hưởng lương theo sản phẩm, tiền lương làm thêm giờ vào ban đêm được tính như sau: Tiền lương làm thêm giờ vào ban đêm = Đơn giá tiền lương sản phẩm của ngày làm việc bình thường x Mức ít nhất 150% hoặc 200% hoặc 300% + Đơn giá tiền lương sản phẩm của ngày làm việc bình thường x Mức ít"
+        },
+        {
+          "rank": 5,
+          "score": 14.44952422,
+          "chunk_id": "d01c1281-a17b-5055-93ef-fb119f2615e7",
+          "article_code": "NĐ219.9",
+          "article_title": "Trình tự, thủ tục cấp giấy xác nhận không thuộc diện cấp giấy phép lao động",
+          "clause_number": "4",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều NĐ219.9 — Trình tự, thủ tục cấp giấy xác nhận không thuộc diện cấp giấy phép lao động Khoản: 4 Nguồn: NĐ 4. Trường hợp quy định tại các khoản 4, 5, 6 và 8 Điều 154 của Bộ luật Lao động, quy định tại các khoản 2, 3, 5, 8, 10 và điểm a khoản 13 Điều 7 Nghị định này không phải làm thủ tục cấp giấy xác nhận không thuộc diện cấp giấy phép lao động nhưng phải thông báo với cơ quan có thẩm quyền cấp"
+        }
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_008",
+      "category": "exact_legal_term",
+      "question": "Sau bao nhiêu ngày kể từ khi cơ quan nhà nước có thẩm quyền nhận đủ hồ sơ đăng ký thì nội quy lao động bắt đầu có hiệu lực?",
+      "expected_article_codes": [
+        "20.2.LQ.121"
+      ],
+      "expected_evidence_chunk_ids": [
+        "599d15fa-90fc-5749-90d1-5e6965c7917d"
+      ],
+      "latency_ms": 1.646,
+      "metrics": {
+        "at_5": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        }
+      },
+      "retrieved": [
+        {
+          "rank": 1,
+          "score": 36.27418139,
+          "chunk_id": "599d15fa-90fc-5749-90d1-5e6965c7917d",
+          "article_code": "20.2.LQ.121",
+          "article_title": "Hiệu lực của nội quy lao động",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.121 — Hiệu lực của nội quy lao động Nguồn: Văn bản hợp nhất Nội quy lao động có hiệu lực sau 15 ngày kể từ ngày cơ quan nhà nước có thẩm quyền quy định tại Điều 119 của Bộ luật này nhận được đầy đủ hồ sơ đăng ký nội quy lao động. Trường hợp người sử dụng lao động sử dụng dưới 10 người lao động ban hành nội quy lao động bằng văn bản thì hiệu lực do người sử dụng lao động quyết định tro"
+        },
+        {
+          "rank": 2,
+          "score": 24.17012452,
+          "chunk_id": "7bbae293-e731-566e-b332-6a6719a6302b",
+          "article_code": "20.2.LQ.119",
+          "article_title": "Đăng ký nội quy lao động",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.119 — Đăng ký nội quy lao động Nguồn: Văn bản hợp nhất 1. Người sử dụng lao động sử dụng từ 10 người lao động trở lên phải đăng ký nội quy lao động tại cơ quan chuyên môn về lao động thuộc Ủy ban nhân dân cấp tỉnh nơi người sử dụng lao động đăng ký kinh doanh. 2. Trong thời hạn 10 ngày kể từ ngày ban hành nội quy lao động, người sử dụng lao động phải nộp hồ sơ đăng ký nội quy lao động"
+        },
+        {
+          "rank": 3,
+          "score": 21.27134026,
+          "chunk_id": "c0978805-114f-5fa2-ba91-14d05a377534",
+          "article_code": "NĐ219.22",
+          "article_title": "Trình tự cấp giấy phép lao động",
+          "clause_number": "3",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều NĐ219.22 — Trình tự cấp giấy phép lao động Khoản: 3 Nguồn: NĐ 3. Trong thời hạn 10 ngày làm việc, kể từ ngày nhận đủ hồ sơ đề nghị cấp giấy phép lao động, cơ quan có thẩm quyền xem xét chấp thuận nhu cầu và thực hiện cấp giấy phép lao động cho người lao động nước ngoài theo Mẫu số 04 Phụ lục ban hành kèm theo Nghị định này. Trường hợp không chấp thuận nhu cầu sử dụng người lao động nước ngoài"
+        },
+        {
+          "rank": 4,
+          "score": 21.03162822,
+          "chunk_id": "05dc4e29-f5d2-54ae-9277-56839993ab61",
+          "article_code": "NĐ219.9",
+          "article_title": "Trình tự, thủ tục cấp giấy xác nhận không thuộc diện cấp giấy phép lao động",
+          "clause_number": "3",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều NĐ219.9 — Trình tự, thủ tục cấp giấy xác nhận không thuộc diện cấp giấy phép lao động Khoản: 3 Nguồn: NĐ 3. Trong thời hạn 05 ngày làm việc, kể từ ngày nhận đủ hồ sơ đề nghị cấp giấy xác nhận không thuộc diện cấp giấy phép lao động, cơ quan có thẩm quyền cấp giấy xác nhận không thuộc diện cấp giấy phép lao động theo Mẫu số 02 Phụ lục ban hành kèm theo Nghị định này. Trường hợp không cấp giấy "
+        },
+        {
+          "rank": 5,
+          "score": 18.93155764,
+          "chunk_id": "d55af14a-7299-51cb-b4dc-fca4c341cf92",
+          "article_code": "20.2.NĐ.3.26",
+          "article_title": "Gia hạn giấy phép",
+          "clause_number": "3",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.26 — Gia hạn giấy phép Khoản: 3 Điểm: a, b, c Nguồn: NĐ 3. Trình tự, thủ tục gia hạn giấy phép a) Doanh nghiệp gửi một bộ hồ sơ theo quy định tại khoản 2 Điều này đến Sở Lao động - Thương binh và Xã hội nơi doanh nghiệp đặt trụ sở chính để đề nghị gia hạn giấy phép. Sau khi kiểm tra đủ giấy tờ quy định tại khoản 2 Điều này, Sở Lao động - Thương binh và Xã hội cấp giấy biên nhận ghi "
+        }
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_009",
+      "category": "exact_legal_term",
+      "question": "Trong hoạt động cho thuê lại lao động, đơn vị nào có trách nhiệm trả lương cho người lao động thuê lại?",
+      "expected_article_codes": [
+        "20.2.LQ.56"
+      ],
+      "expected_evidence_chunk_ids": [
+        "89117117-0107-59d0-9327-f982cf858137"
+      ],
+      "latency_ms": 1.443,
+      "metrics": {
+        "at_5": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 0.25,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 0.25
+        }
+      },
+      "retrieved": [
+        {
+          "rank": 1,
+          "score": 18.48699337,
+          "chunk_id": "8c254e83-3775-5189-93e9-4c8621c65786",
+          "article_code": "20.2.NĐ.8.3",
+          "article_title": "Mức lương tối thiểu",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.8.3 — Mức lương tối thiểu Nguồn: NĐ 1. Quy định mức lương tối thiểu tháng và mức lương tối thiểu giờ đối với người lao động làm việc cho người sử dụng lao động theo vùng như sau: Vùng Mức lương tối thiểu tháng (Đơn vị: đồng/tháng) Mức lương tối thiểu giờ (Đơn vị: đồng/giờ) Vùng I 5.310.000 25.500 Vùng II 4.730.000 22.700 Vùng III 4.140.000 20.000 Vùng IV 3.700.000 17.800 2. Danh mục đ"
+        },
+        {
+          "rank": 2,
+          "score": 16.61121463,
+          "chunk_id": "f319d5fb-aa18-5f1d-ae71-193a40273125",
+          "article_code": "20.2.LQ.58",
+          "article_title": "Quyền và nghĩa vụ của người lao động thuê lại",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.58 — Quyền và nghĩa vụ của người lao động thuê lại Nguồn: Văn bản hợp nhất Ngoài các quyền và nghĩa vụ theo quy định tại Điều 5 của Bộ luật này, người lao động thuê lại có các quyền và nghĩa vụ sau đây: 1. Thực hiện công việc theo hợp đồng lao động đã ký với doanh nghiệp hoạt động cho thuê lại lao động; 2. Chấp hành kỷ luật lao động, nội quy lao động; tuân theo sự quản lý, điều hành, "
+        },
+        {
+          "rank": 3,
+          "score": 16.11002478,
+          "chunk_id": "3e650b1c-f8fa-5a37-9353-6955edbba0ad",
+          "article_code": "20.2.LQ.100",
+          "article_title": "Trả lương thông qua người cai thầu",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.100 — Trả lương thông qua người cai thầu Nguồn: Văn bản hợp nhất 1. Nơi nào sử dụng người cai thầu hoặc người có vai trò trung gian tương tự thì người sử dụng lao động là chủ chính phải có danh sách và địa chỉ của những người này kèm theo danh sách những người lao động làm việc với họ và phải bảo đảm việc họ tuân thủ quy định của pháp luật về trả lương, an toàn, vệ sinh lao động. 2. T"
+        },
+        {
+          "rank": 4,
+          "score": 14.87497031,
+          "chunk_id": "89117117-0107-59d0-9327-f982cf858137",
+          "article_code": "20.2.LQ.56",
+          "article_title": "Quyền và nghĩa vụ của doanh nghiệp cho thuê lại lao động",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.56 — Quyền và nghĩa vụ của doanh nghiệp cho thuê lại lao động Nguồn: Văn bản hợp nhất Ngoài các quyền và nghĩa vụ quy định tại Điều 6 của Bộ luật này, doanh nghiệp cho thuê lại lao động có các quyền và nghĩa vụ sau đây: 1. Bảo đảm đưa người lao động có trình độ phù hợp với những yêu cầu của bên thuê lại lao động và nội dung của hợp đồng lao động đã ký với người lao động; 2. Thông báo "
+        },
+        {
+          "rank": 5,
+          "score": 14.60491154,
+          "chunk_id": "8e748016-82b5-5ae8-b3b8-59765dd91e96",
+          "article_code": "20.2.LQ.53",
+          "article_title": "Nguyên tắc hoạt động cho thuê lại lao động",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.53 — Nguyên tắc hoạt động cho thuê lại lao động Nguồn: Văn bản hợp nhất 1. Thời hạn cho thuê lại lao động đối với người lao động tối đa là 12 tháng. 2. Bên thuê lại lao động được sử dụng lao động thuê lại trong trường hợp sau đây: a) Đáp ứng tạm thời sự gia tăng đột ngột về nhu cầu sử dụng lao động trong khoảng thời gian nhất định; b) Thay thế người lao động trong thời gian nghỉ thai "
+        }
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_010",
+      "category": "exact_legal_term",
+      "question": "Người sử dụng lao động có được tự ý sửa đổi nội dung hợp đồng lao động không?",
+      "expected_article_codes": [
+        "20.2.LQ.33"
+      ],
+      "expected_evidence_chunk_ids": [
+        "7a525a6f-7240-5f48-9f35-c9c232f4fa2a"
+      ],
+      "latency_ms": 1.353,
+      "metrics": {
+        "at_5": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        }
+      },
+      "retrieved": [
+        {
+          "rank": 1,
+          "score": 13.38734328,
+          "chunk_id": "7a525a6f-7240-5f48-9f35-c9c232f4fa2a",
+          "article_code": "20.2.LQ.33",
+          "article_title": "Sửa đổi, bổ sung hợp đồng lao động",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.33 — Sửa đổi, bổ sung hợp đồng lao động Nguồn: Văn bản hợp nhất 1. Trong quá trình thực hiện hợp đồng lao động, nếu bên nào có yêu cầu sửa đổi, bổ sung nội dung hợp đồng lao động thì phải báo cho bên kia biết trước ít nhất 03 ngày làm việc về nội dung cần sửa đổi, bổ sung. 2. Trường hợp hai bên thỏa thuận được thì việc sửa đổi, bổ sung nội dung hợp đồng lao động được tiến hành bằng vi"
+        },
+        {
+          "rank": 2,
+          "score": 12.44539858,
+          "chunk_id": "3178fa85-35a1-5895-92be-d3c239198632",
+          "article_code": "20.2.NĐ.3.89",
+          "article_title": "Một số quy định riêng đối với lao động là người giúp việc gia đình",
+          "clause_number": "1",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.89 — Một số quy định riêng đối với lao động là người giúp việc gia đình Khoản: 1 Điểm: d Nguồn: NĐ [Ngữ cảnh khoản] 1. Quy định về hình thức hợp đồng lao động theo Điều 14 và khoản 1 Điều 162; [Ngữ cảnh điểm] d) Trong quá trình thực hiện hợp đồng lao động, mỗi bên có quyền đơn phương chấm dứt hợp đồng lao động mà không cần lý do nhưng phải báo trước ít nhất 15 ngày, trừ các trường h"
+        },
+        {
+          "rank": 3,
+          "score": 12.44075219,
+          "chunk_id": "55ab98bb-3099-5d94-a868-1f6453de08cf",
+          "article_code": "20.2.LQ.22",
+          "article_title": "Phụ lục hợp đồng lao động",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.22 — Phụ lục hợp đồng lao động Nguồn: Văn bản hợp nhất 1. Phụ lục hợp đồng lao động là bộ phận của hợp đồng lao động và có hiệu lực như hợp đồng lao động. 2. Phụ lục hợp đồng lao động quy định chi tiết, sửa đổi, bổ sung một số điều, khoản của hợp đồng lao động nhưng không được sửa đổi thời hạn của hợp đồng lao động. Trường hợp phụ lục hợp đồng lao động quy định chi tiết một số điều, k"
+        },
+        {
+          "rank": 4,
+          "score": 10.32183612,
+          "chunk_id": "3fee5db5-8587-5875-8df5-5209b185fa68",
+          "article_code": "20.2.NĐ.3.45",
+          "article_title": "Nội dung, hình thức người lao động được quyết định",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.45 — Nội dung, hình thức người lao động được quyết định Nguồn: NĐ 1. Người lao động được quyết định những nội dung sau: a) Giao kết, sửa đổi, bổ sung, chấm dứt hợp đồng lao động theo quy định của pháp luật; b) Gia nhập hoặc không gia nhập tổ chức đại diện người lao động tại cơ sở; c) Tham gia hoặc không tham gia đình công theo quy định của pháp luật; d) Biểu quyết nội dung thương lư"
+        },
+        {
+          "rank": 5,
+          "score": 10.24756322,
+          "chunk_id": "43aa49ce-1bc5-54b0-8428-83299123ffa0",
+          "article_code": "20.2.LQ.79",
+          "article_title": "Thực hiện thỏa ước lao động tập thể tại doanh nghiệp",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.79 — Thực hiện thỏa ước lao động tập thể tại doanh nghiệp Nguồn: Văn bản hợp nhất 1. Người sử dụng lao động, người lao động, bao gồm cả người lao động vào làm việc sau ngày thỏa ước lao động tập thể có hiệu lực, có nghĩa vụ thực hiện đầy đủ thỏa ước lao động tập thể đang có hiệu lực. 2. Trường hợp quyền, nghĩa vụ và lợi ích của các bên trong hợp đồng lao động đã giao kết trước ngày th"
+        }
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_011",
+      "category": "natural_language",
+      "question": "Trong trường hợp kết hôn nhiều lần, người lao động có được nghỉ hưởng nguyên lương cho mỗi lần kết hôn hay không?",
+      "expected_article_codes": [
+        "20.2.LQ.115"
+      ],
+      "expected_evidence_chunk_ids": [
+        "f446df4e-d3b6-5f2e-a871-5bb9a9a16187"
+      ],
+      "latency_ms": 1.484,
+      "metrics": {
+        "at_5": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        }
+      },
+      "retrieved": [
+        {
+          "rank": 1,
+          "score": 27.80275031,
+          "chunk_id": "f446df4e-d3b6-5f2e-a871-5bb9a9a16187",
+          "article_code": "20.2.LQ.115",
+          "article_title": "Nghỉ việc riêng, nghỉ không hưởng lương",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.115 — Nghỉ việc riêng, nghỉ không hưởng lương Nguồn: Văn bản hợp nhất 1. Người lao động được nghỉ việc riêng mà vẫn hưởng nguyên lương và phải thông báo với người sử dụng lao động trong trường hợp sau đây: a) Kết hôn: nghỉ 03 ngày; b) Con đẻ, con nuôi kết hôn: nghỉ 01 ngày; c) Cha đẻ, mẹ đẻ, cha nuôi, mẹ nuôi; cha đẻ, mẹ đẻ, cha nuôi, mẹ nuôi của vợ hoặc chồng; vợ hoặc chồng; con đẻ, "
+        },
+        {
+          "rank": 2,
+          "score": 20.9313985,
+          "chunk_id": "1af0c29c-f105-5eb9-a61b-9e9bef8ed853",
+          "article_code": "20.2.LQ.113",
+          "article_title": "Nghỉ hằng năm",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.113 — Nghỉ hằng năm Nguồn: Văn bản hợp nhất 1. Người lao động làm việc đủ 12 tháng cho một người sử dụng lao động thì được nghỉ hằng năm, hưởng nguyên lương theo hợp đồng lao động như sau: a) 12 ngày làm việc đối với người làm công việc trong điều kiện bình thường; b) 14 ngày làm việc đối với người lao động chưa thành niên, lao động là người khuyết tật, người làm nghề, công việc nặng "
+        },
+        {
+          "rank": 3,
+          "score": 19.60766689,
+          "chunk_id": "52a957f3-ea3c-557a-98ba-561a33455611",
+          "article_code": "20.2.NĐ.6.3",
+          "article_title": "Chính sách đối với người lao động dôi dư được tuyển dụng lần cuối cùng trước ngày 21 tháng 4 năm 1998 hoặc trước ngày 26 tháng 4 năm 2002",
+          "clause_number": "2",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.6.3 — Chính sách đối với người lao động dôi dư được tuyển dụng lần cuối cùng trước ngày 21 tháng 4 năm 1998 hoặc trước ngày 26 tháng 4 năm 2002 Khoản: 2 Điểm: a, b Nguồn: NĐ 2. Người lao động dôi dư có tuổi thấp hơn dưới 01 tuổi so với tuổi nghỉ hưu quy định tại khoản 2 Điều 169 Bộ luật Lao động và Điều 4 Nghị định số 135/2020/NĐ-CP, có đủ 20 năm đóng bảo hiểm xã hội bắt buộc trở lên "
+        },
+        {
+          "rank": 4,
+          "score": 19.33119268,
+          "chunk_id": "2fea9676-1539-5b17-8547-f60913d8b047",
+          "article_code": "20.2.NĐ.6.3",
+          "article_title": "Chính sách đối với người lao động dôi dư được tuyển dụng lần cuối cùng trước ngày 21 tháng 4 năm 1998 hoặc trước ngày 26 tháng 4 năm 2002",
+          "clause_number": "1",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.6.3 — Chính sách đối với người lao động dôi dư được tuyển dụng lần cuối cùng trước ngày 21 tháng 4 năm 1998 hoặc trước ngày 26 tháng 4 năm 2002 Khoản: 1 Điểm: a, b, c Nguồn: NĐ Người lao động dôi dư quy định tại điểm a và b khoản 1 Điều 2 Nghị định này được hưởng chính sách như sau: 1. Người lao động dôi dư có tuổi thấp hơn từ đủ 01 tuổi đến đủ 05 tuổi so với tuổi nghỉ hưu quy định tạ"
+        },
+        {
+          "rank": 5,
+          "score": 18.90962774,
+          "chunk_id": "20660aab-c214-5c1f-9473-82128a4e000c",
+          "article_code": "20.2.LQ.97",
+          "article_title": "Kỳ hạn trả lương",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.97 — Kỳ hạn trả lương Nguồn: Văn bản hợp nhất 1. Người lao động hưởng lương theo giờ, ngày, tuần thì được trả lương sau giờ, ngày, tuần làm việc hoặc được trả gộp do hai bên thỏa thuận nhưng không quá 15 ngày phải được trả gộp một lần. 2. Người lao động hưởng lương theo tháng được trả một tháng một lần hoặc nửa tháng một lần. Thời điểm trả lương do hai bên thỏa thuận và phải được ấn đ"
+        }
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_012",
+      "category": "natural_language",
+      "question": "Khi bố nuôi hoặc mẹ nuôi qua đời, người lao động có được nghỉ việc riêng 3 ngày mà vẫn hưởng nguyên lương không?",
+      "expected_article_codes": [
+        "20.2.LQ.115"
+      ],
+      "expected_evidence_chunk_ids": [
+        "f446df4e-d3b6-5f2e-a871-5bb9a9a16187"
+      ],
+      "latency_ms": 1.603,
+      "metrics": {
+        "at_5": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        }
+      },
+      "retrieved": [
+        {
+          "rank": 1,
+          "score": 46.72931089,
+          "chunk_id": "f446df4e-d3b6-5f2e-a871-5bb9a9a16187",
+          "article_code": "20.2.LQ.115",
+          "article_title": "Nghỉ việc riêng, nghỉ không hưởng lương",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.115 — Nghỉ việc riêng, nghỉ không hưởng lương Nguồn: Văn bản hợp nhất 1. Người lao động được nghỉ việc riêng mà vẫn hưởng nguyên lương và phải thông báo với người sử dụng lao động trong trường hợp sau đây: a) Kết hôn: nghỉ 03 ngày; b) Con đẻ, con nuôi kết hôn: nghỉ 01 ngày; c) Cha đẻ, mẹ đẻ, cha nuôi, mẹ nuôi; cha đẻ, mẹ đẻ, cha nuôi, mẹ nuôi của vợ hoặc chồng; vợ hoặc chồng; con đẻ, "
+        },
+        {
+          "rank": 2,
+          "score": 22.54517532,
+          "chunk_id": "d0d33541-efbf-5f7f-850f-8f7c8cd2e164",
+          "article_code": "20.2.LQ.139",
+          "article_title": "Nghỉ thai sản",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.139 — Nghỉ thai sản Nguồn: Văn bản hợp nhất 1.4 Lao động nữ được nghỉ thai sản trước và sau khi sinh con là 06 tháng; trường hợp sinh con thứ hai, lao động nữ được nghỉ thai sản trước và sau khi sinh con là 07 tháng; thời gian nghỉ trước khi sinh không quá 02 tháng. Trường hợp lao động nữ sinh đôi trở lên thì tính từ con thứ hai trở đi, cứ mỗi con, người mẹ được nghỉ thêm 01 tháng. 2."
+        },
+        {
+          "rank": 3,
+          "score": 21.86974034,
+          "chunk_id": "7af4d17f-6fbb-5f55-bba6-b7f647e9f275",
+          "article_code": "20.2.TT.7.10",
+          "article_title": "Nghỉ Lễ, Tết; Nghỉ việc riêng; Nghỉ không hưởng lương",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.TT.7.10 — Nghỉ Lễ, Tết; Nghỉ việc riêng; Nghỉ không hưởng lương Nguồn: TT 1. Người lao động được bố trí nghỉ Lễ, Tết; nghỉ việc riêng và nghỉ không hưởng lương theo quy định tại Điều 112 và Điều 115 Bộ luật Lao động. 2. Trường hợp ngày nghỉ Lễ, Tết trùng với phiên làm việc, người lao động được thanh toán tiền lương làm thêm giờ phù hợp với quy định của pháp luật."
+        },
+        {
+          "rank": 4,
+          "score": 21.26056895,
+          "chunk_id": "17e7eb8d-bde3-52de-af20-7aee0b84d1e2",
+          "article_code": "20.2.NĐ.3.65",
+          "article_title": "Thời gian được coi là thời gian làm việc để tính số ngày nghỉ hằng năm của người lao động",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.65 — Thời gian được coi là thời gian làm việc để tính số ngày nghỉ hằng năm của người lao động Nguồn: NĐ 1. Thời gian học nghề, tập nghề theo quy định tại Điều 61 của Bộ luật Lao động nếu sau khi hết thời gian học nghề, tập nghề mà người lao động làm việc cho người sử dụng lao động. 2. Thời gian thử việc nếu người lao động tiếp tục làm việc cho người sử dụng lao động sau khi hết thờ"
+        },
+        {
+          "rank": 5,
+          "score": 19.78853863,
+          "chunk_id": "06444bdd-be81-5f77-99f2-188891020052",
+          "article_code": "20.2.NĐ.3.67",
+          "article_title": "Tiền tàu xe, tiền lương trong thời gian đi đường, tiền lương ngày nghỉ hằng năm và các ngày nghỉ có hưởng lương khác",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.67 — Tiền tàu xe, tiền lương trong thời gian đi đường, tiền lương ngày nghỉ hằng năm và các ngày nghỉ có hưởng lương khác Nguồn: NĐ 1. Tiền tàu xe, tiền lương những ngày đi đường ngoài ngày nghỉ hằng năm theo khoản 6 Điều 113 của Bộ luật Lao động do hai bên thỏa thuận. 2. Tiền lương làm căn cứ trả cho người lao động những ngày nghỉ lễ, tết, nghỉ hằng năm, nghỉ việc riêng có hưởng lư"
+        }
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_015",
+      "category": "natural_language",
+      "question": "Doanh nghiệp có được phép trả lương cho người lao động bằng sản phẩm không?",
+      "expected_article_codes": [
+        "20.2.LQ.94",
+        "20.2.LQ.95",
+        "20.2.LQ.96"
+      ],
+      "expected_evidence_chunk_ids": [
+        "90609d1b-fad6-59a7-9486-25c4f110e22f",
+        "4b4bbace-3ff6-5867-b8f2-39fde050a966",
+        "19142e1d-00d9-5ec0-abf1-8309112ff2f4"
+      ],
+      "latency_ms": 1.437,
+      "metrics": {
+        "at_5": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.0,
+          "article_recall": 0.333333,
+          "article_mrr": 0.2,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.333333,
+          "evidence_mrr": 0.2
+        }
+      },
+      "retrieved": [
+        {
+          "rank": 1,
+          "score": 20.43164759,
+          "chunk_id": "ed739167-fcbf-5876-9af0-88154115cda4",
+          "article_code": "20.2.NĐ.3.54",
+          "article_title": "Hình thức trả lương",
+          "clause_number": "1",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.54 — Hình thức trả lương Khoản: 1 Điểm: a, b, c Nguồn: NĐ Hình thức trả lương theo Điều 96 của Bộ luật Lao động được quy định cụ thể như sau: 1. Căn cứ vào tính chất công việc và điều kiện sản xuất, kinh doanh, người sử dụng lao động và người lao động thỏa thuận trong hợp đồng lao động hình thức trả lương theo thời gian, theo sản phẩm và trả lương khoán như sau: a) Tiền lương theo t"
+        },
+        {
+          "rank": 2,
+          "score": 18.91176408,
+          "chunk_id": "2158915d-6cac-5559-8ba0-d8fc4b2380ef",
+          "article_code": "20.2.NĐ.8.4",
+          "article_title": "Áp dụng mức lương tối thiểu",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.8.4 — Áp dụng mức lương tối thiểu Nguồn: NĐ 1. Mức lương tối thiểu tháng là mức lương thấp nhất làm cơ sở để thỏa thuận và trả lương đối với người lao động áp dụng hình thức trả lương theo tháng, bảo đảm mức lương theo công việc hoặc chức danh của người lao động làm việc đủ thời giờ làm việc bình thường trong tháng và hoàn thành định mức lao động hoặc công việc đã thỏa thuận không đượ"
+        },
+        {
+          "rank": 3,
+          "score": 17.99628697,
+          "chunk_id": "b0b71a2d-a816-596e-a20b-f1ceb9fedc1a",
+          "article_code": "20.2.NĐ.3.55",
+          "article_title": "Tiền lương làm thêm giờ",
+          "clause_number": "2",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.55 — Tiền lương làm thêm giờ Khoản: 2 Nguồn: NĐ 2. Đối với người lao động hưởng lương theo sản phẩm, được trả lương làm thêm giờ khi làm việc ngoài thời giờ làm việc bình thường để làm thêm số lượng, khối lượng sản phẩm ngoài số lượng, khối lượng sản phẩm theo định mức lao động theo thỏa thuận với người sử dụng lao động và được tính theo công thức sau: Tiền lương làm thêm giờ = Đơn "
+        },
+        {
+          "rank": 4,
+          "score": 17.3033966,
+          "chunk_id": "20660aab-c214-5c1f-9473-82128a4e000c",
+          "article_code": "20.2.LQ.97",
+          "article_title": "Kỳ hạn trả lương",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.97 — Kỳ hạn trả lương Nguồn: Văn bản hợp nhất 1. Người lao động hưởng lương theo giờ, ngày, tuần thì được trả lương sau giờ, ngày, tuần làm việc hoặc được trả gộp do hai bên thỏa thuận nhưng không quá 15 ngày phải được trả gộp một lần. 2. Người lao động hưởng lương theo tháng được trả một tháng một lần hoặc nửa tháng một lần. Thời điểm trả lương do hai bên thỏa thuận và phải được ấn đ"
+        },
+        {
+          "rank": 5,
+          "score": 17.04067516,
+          "chunk_id": "19142e1d-00d9-5ec0-abf1-8309112ff2f4",
+          "article_code": "20.2.LQ.96",
+          "article_title": "Hình thức trả lương",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.96 — Hình thức trả lương Nguồn: Văn bản hợp nhất 1. Người sử dụng lao động và người lao động thỏa thuận về hình thức trả lương theo thời gian, sản phẩm hoặc khoán. 2. Lương được trả bằng tiền mặt hoặc trả qua tài khoản cá nhân của người lao động được mở tại ngân hàng. Trường hợp trả lương qua tài khoản cá nhân của người lao động được mở tại ngân hàng thì người sử dụng lao động phải tr"
+        }
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_016",
+      "category": "natural_language",
+      "question": "Người sử dụng lao động có được phép giữ lương của người lao động trong thời gian thử việc không?",
+      "expected_article_codes": [
+        "20.2.LQ.26",
+        "20.2.LQ.94"
+      ],
+      "expected_evidence_chunk_ids": [
+        "77c5022b-7ccf-54d2-a5af-cccfe8f5b990",
+        "90609d1b-fad6-59a7-9486-25c4f110e22f"
+      ],
+      "latency_ms": 1.698,
+      "metrics": {
+        "at_5": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.0,
+          "article_recall": 0.5,
+          "article_mrr": 0.25,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.5,
+          "evidence_mrr": 0.25
+        }
+      },
+      "retrieved": [
+        {
+          "rank": 1,
+          "score": 18.52452454,
+          "chunk_id": "96425739-7044-5e77-b890-8b5e43dbf589",
+          "article_code": "20.2.LQ.27",
+          "article_title": "Kết thúc thời gian thử việc",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.27 — Kết thúc thời gian thử việc Nguồn: Văn bản hợp nhất 1. Khi kết thúc thời gian thử việc, người sử dụng lao động phải thông báo kết quả thử việc cho người lao động. Trường hợp thử việc đạt yêu cầu thì người sử dụng lao động tiếp tục thực hiện hợp đồng lao động đã giao kết đối với trường hợp thỏa thuận thử việc trong hợp đồng lao động hoặc phải giao kết hợp đồng lao động đối với trư"
+        },
+        {
+          "rank": 2,
+          "score": 17.58555479,
+          "chunk_id": "17e7eb8d-bde3-52de-af20-7aee0b84d1e2",
+          "article_code": "20.2.NĐ.3.65",
+          "article_title": "Thời gian được coi là thời gian làm việc để tính số ngày nghỉ hằng năm của người lao động",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.65 — Thời gian được coi là thời gian làm việc để tính số ngày nghỉ hằng năm của người lao động Nguồn: NĐ 1. Thời gian học nghề, tập nghề theo quy định tại Điều 61 của Bộ luật Lao động nếu sau khi hết thời gian học nghề, tập nghề mà người lao động làm việc cho người sử dụng lao động. 2. Thời gian thử việc nếu người lao động tiếp tục làm việc cho người sử dụng lao động sau khi hết thờ"
+        },
+        {
+          "rank": 3,
+          "score": 17.18319132,
+          "chunk_id": "71864258-5a3a-5c94-8d6f-a6526097d670",
+          "article_code": "20.2.LQ.24",
+          "article_title": "Thử việc",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.24 — Thử việc Nguồn: Văn bản hợp nhất 1. Người sử dụng lao động và người lao động có thể thỏa thuận nội dung thử việc ghi trong hợp đồng lao động hoặc thỏa thuận về thử việc bằng việc giao kết hợp đồng thử việc. 2. Nội dung chủ yếu của hợp đồng thử việc gồm thời gian thử việc và nội dung quy định tại các điểm a, b, c, đ, g và h khoản 1 Điều 21 của Bộ luật này. 3. Không áp dụng thử việ"
+        },
+        {
+          "rank": 4,
+          "score": 17.06612671,
+          "chunk_id": "77c5022b-7ccf-54d2-a5af-cccfe8f5b990",
+          "article_code": "20.2.LQ.26",
+          "article_title": "Tiền lương thử việc",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.26 — Tiền lương thử việc Nguồn: Văn bản hợp nhất Tiền lương của người lao động trong thời gian thử việc do hai bên thỏa thuận nhưng ít nhất phải bằng 85% mức lương của công việc đó."
+        },
+        {
+          "rank": 5,
+          "score": 15.20752566,
+          "chunk_id": "df115ab2-5f58-5227-8bd1-1c94f476a58e",
+          "article_code": "20.2.LQ.25",
+          "article_title": "Thời gian thử việc",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.25 — Thời gian thử việc Nguồn: Văn bản hợp nhất Thời gian thử việc do hai bên thỏa thuận căn cứ vào tính chất và mức độ phức tạp của công việc nhưng chỉ được thử việc một lần đối với một công việc và bảo đảm điều kiện sau đây: 1. Không quá 180 ngày đối với công việc của người quản lý doanh nghiệp theo quy định của Luật Doanh nghiệp, Luật Quản lý, sử dụng vốn nhà nước đầu tư vào sản xu"
+        }
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_017",
+      "category": "natural_language",
+      "question": "Công ty có được phép sa thải người lao động đang nghỉ ốm theo chỉ định của bác sĩ không?",
+      "expected_article_codes": [
+        "20.2.LQ.36",
+        "20.2.LQ.37",
+        "20.2.LQ.122",
+        "20.2.LQ.125"
+      ],
+      "expected_evidence_chunk_ids": [
+        "25dd9a57-f47f-52d8-9bb0-e2456c6c250e",
+        "ac79208c-121a-559c-8666-94cb5b9f489d",
+        "093a31e3-748f-5187-9a8f-e7f5e0eb5fe9",
+        "f98cf3fe-3d8a-5d9d-b684-c77e43ff2f25",
+        "c17372aa-1a9e-507a-8978-beb4b96c7a1a",
+        "42963c0c-22e4-5f03-a66b-f107d2d6510e",
+        "bf0d029a-dc70-5b7a-bbb6-205f55b1d835"
+      ],
+      "latency_ms": 1.798,
+      "metrics": {
+        "at_5": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.0,
+          "article_recall": 0.5,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.285714,
+          "evidence_mrr": 1.0
+        }
+      },
+      "retrieved": [
+        {
+          "rank": 1,
+          "score": 17.66172331,
+          "chunk_id": "c17372aa-1a9e-507a-8978-beb4b96c7a1a",
+          "article_code": "20.2.LQ.37",
+          "article_title": "Trường hợp người sử dụng lao động không được thực hiện quyền đơn phương chấm dứt hợp đồng lao động",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.37 — Trường hợp người sử dụng lao động không được thực hiện quyền đơn phương chấm dứt hợp đồng lao động Nguồn: Văn bản hợp nhất 1. Người lao động ốm đau hoặc bị tai nạn, bệnh nghề nghiệp đang điều trị, điều dưỡng theo chỉ định của cơ sở khám bệnh, chữa bệnh có thẩm quyền, trừ trường hợp quy định tại điểm b khoản 1 Điều 36 của Bộ luật này. 2. Người lao động đang nghỉ hằng năm, nghỉ việ"
+        },
+        {
+          "rank": 2,
+          "score": 13.30035048,
+          "chunk_id": "bf0d029a-dc70-5b7a-bbb6-205f55b1d835",
+          "article_code": "20.2.LQ.125",
+          "article_title": "Áp dụng hình thức xử lý kỷ luật sa thải",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.125 — Áp dụng hình thức xử lý kỷ luật sa thải Nguồn: Văn bản hợp nhất Hình thức xử lý kỷ luật sa thải được người sử dụng lao động áp dụng trong trường hợp sau đây: 1. Người lao động có hành vi trộm cắp, tham ô, đánh bạc, cố ý gây thương tích, sử dụng ma tuý tại nơi làm việc; 2. Người lao động có hành vi tiết lộ bí mật kinh doanh, bí mật công nghệ, xâm phạm quyền sở hữu trí tuệ của ngư"
+        },
+        {
+          "rank": 3,
+          "score": 12.60102323,
+          "chunk_id": "a0c89986-2bde-57ae-92a0-b0c4e3a66e47",
+          "article_code": "NĐ219.2",
+          "article_title": "Đối tượng áp dụng",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều NĐ219.2 — Đối tượng áp dụng Nguồn: NĐ 1. Người lao động nước ngoài làm việc tại Việt Nam (sau đây viết tắt là người lao động nước ngoài) là công dân nước ngoài vào làm việc tại các vị trí công việc quy định tại Điều 3 Nghị định này, theo một trong các hình thức sau đây: a) Thực hiện hợp đồng lao động; b) Di chuyển trong nội bộ doanh nghiệp; c) Thực hiện các loại hợp đồng hoặc thỏa thuận về ki"
+        },
+        {
+          "rank": 4,
+          "score": 12.48185952,
+          "chunk_id": "80a0d1d0-7df3-5b1b-b1eb-0805e735e518",
+          "article_code": "20.2.LQ.138",
+          "article_title": "Quyền đơn phương chấm dứt, tạm hoãn hợp đồng lao động của lao động nữ mang thai",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.138 — Quyền đơn phương chấm dứt, tạm hoãn hợp đồng lao động của lao động nữ mang thai Nguồn: Văn bản hợp nhất 1. Lao động nữ mang thai nếu có xác nhận của cơ sở khám bệnh, chữa bệnh có thẩm quyền về việc tiếp tục làm việc sẽ ảnh hưởng xấu tới thai nhi thì có quyền đơn phương chấm dứt hợp đồng lao động hoặc tạm hoãn thực hiện hợp đồng lao động. Trường hợp đơn phương chấm dứt hợp đồng l"
+        },
+        {
+          "rank": 5,
+          "score": 11.12481159,
+          "chunk_id": "beeaf23f-a054-51c6-bcb6-eaa6a028c0e3",
+          "article_code": "20.2.LQ.137",
+          "article_title": "Bảo vệ thai sản",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.137 — Bảo vệ thai sản Nguồn: Văn bản hợp nhất 1. Người sử dụng lao động không được sử dụng người lao động làm việc ban đêm, làm thêm giờ và đi công tác xa trong trường hợp sau đây: a) Mang thai từ tháng thứ 07 hoặc từ tháng thứ 06 nếu làm việc ở vùng cao, vùng sâu, vùng xa, biên giới, hải đảo; b) Đang nuôi con dưới 12 tháng tuổi, trừ trường hợp được người lao động đồng ý. 2. Lao động "
+        }
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_018",
+      "category": "natural_language",
+      "question": "Lao động nữ mang thai đến tháng thứ 7 thì có được về sớm 30 phút mỗi ngày không?",
+      "expected_article_codes": [
+        "20.2.LQ.137",
+        "20.2.NĐ.3.80"
+      ],
+      "expected_evidence_chunk_ids": [
+        "beeaf23f-a054-51c6-bcb6-eaa6a028c0e3",
+        "4abf1dc7-6bcc-5b2c-87c4-89e72c184723",
+        "01259c67-4a72-572a-8a29-5f649b96b129",
+        "48900dd9-350c-5713-89ce-ff2b65b9b6f2",
+        "240ca392-e545-5680-ab4c-8e021ecae4ca",
+        "49bf1a3b-b126-51a1-a9c5-ace1fce6e771",
+        "2f1a9719-4a6d-5984-bfb8-6333c2796a9b"
+      ],
+      "latency_ms": 1.322,
+      "metrics": {
+        "at_5": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.428571,
+          "evidence_mrr": 1.0
+        }
+      },
+      "retrieved": [
+        {
+          "rank": 1,
+          "score": 37.89582413,
+          "chunk_id": "beeaf23f-a054-51c6-bcb6-eaa6a028c0e3",
+          "article_code": "20.2.LQ.137",
+          "article_title": "Bảo vệ thai sản",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.137 — Bảo vệ thai sản Nguồn: Văn bản hợp nhất 1. Người sử dụng lao động không được sử dụng người lao động làm việc ban đêm, làm thêm giờ và đi công tác xa trong trường hợp sau đây: a) Mang thai từ tháng thứ 07 hoặc từ tháng thứ 06 nếu làm việc ở vùng cao, vùng sâu, vùng xa, biên giới, hải đảo; b) Đang nuôi con dưới 12 tháng tuổi, trừ trường hợp được người lao động đồng ý. 2. Lao động "
+        },
+        {
+          "rank": 2,
+          "score": 33.07452194,
+          "chunk_id": "d0d33541-efbf-5f7f-850f-8f7c8cd2e164",
+          "article_code": "20.2.LQ.139",
+          "article_title": "Nghỉ thai sản",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.139 — Nghỉ thai sản Nguồn: Văn bản hợp nhất 1.4 Lao động nữ được nghỉ thai sản trước và sau khi sinh con là 06 tháng; trường hợp sinh con thứ hai, lao động nữ được nghỉ thai sản trước và sau khi sinh con là 07 tháng; thời gian nghỉ trước khi sinh không quá 02 tháng. Trường hợp lao động nữ sinh đôi trở lên thì tính từ con thứ hai trở đi, cứ mỗi con, người mẹ được nghỉ thêm 01 tháng. 2."
+        },
+        {
+          "rank": 3,
+          "score": 20.99652049,
+          "chunk_id": "48900dd9-350c-5713-89ce-ff2b65b9b6f2",
+          "article_code": "20.2.NĐ.3.80",
+          "article_title": "Chăm sóc sức khỏe đối với lao động nữ",
+          "clause_number": "3",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.80 — Chăm sóc sức khỏe đối với lao động nữ Khoản: 3 Điểm: a, b, c Nguồn: NĐ 3. Nghỉ trong thời gian hành kinh của lao động nữ: a) Lao động nữ trong thời gian hành kinh có quyền được nghỉ mỗi ngày 30 phút tính vào thời giờ làm việc và vẫn được hưởng đủ tiền lương theo hợp đồng lao động. Số ngày có thời gian nghỉ trong thời gian hành kinh do hai bên thỏa thuận phù hợp với điều kiện th"
+        },
+        {
+          "rank": 4,
+          "score": 19.26363205,
+          "chunk_id": "80a0d1d0-7df3-5b1b-b1eb-0805e735e518",
+          "article_code": "20.2.LQ.138",
+          "article_title": "Quyền đơn phương chấm dứt, tạm hoãn hợp đồng lao động của lao động nữ mang thai",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.138 — Quyền đơn phương chấm dứt, tạm hoãn hợp đồng lao động của lao động nữ mang thai Nguồn: Văn bản hợp nhất 1. Lao động nữ mang thai nếu có xác nhận của cơ sở khám bệnh, chữa bệnh có thẩm quyền về việc tiếp tục làm việc sẽ ảnh hưởng xấu tới thai nhi thì có quyền đơn phương chấm dứt hợp đồng lao động hoặc tạm hoãn thực hiện hợp đồng lao động. Trường hợp đơn phương chấm dứt hợp đồng l"
+        },
+        {
+          "rank": 5,
+          "score": 18.8303376,
+          "chunk_id": "240ca392-e545-5680-ab4c-8e021ecae4ca",
+          "article_code": "20.2.NĐ.3.80",
+          "article_title": "Chăm sóc sức khỏe đối với lao động nữ",
+          "clause_number": "4",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.80 — Chăm sóc sức khỏe đối với lao động nữ Khoản: 4 Điểm: a, b, c Nguồn: NĐ 4. Nghỉ trong thời gian nuôi con dưới 12 tháng tuổi: a) Lao động nữ trong thời gian nuôi con dưới 12 tháng tuổi có quyền được nghỉ mỗi ngày 60 phút trong thời gian làm việc để cho con bú, vắt, trữ sữa, nghỉ ngơi. Thời gian nghỉ vẫn được hưởng đủ tiền lương theo hợp đồng lao động; b) Trường hợp lao động nữ có"
+        }
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_019",
+      "category": "natural_language",
+      "question": "Khi ông hoặc bà mất, người lao động được nghỉ bao nhiêu ngày?",
+      "expected_article_codes": [
+        "20.2.LQ.115"
+      ],
+      "expected_evidence_chunk_ids": [
+        "f446df4e-d3b6-5f2e-a871-5bb9a9a16187"
+      ],
+      "latency_ms": 1.129,
+      "metrics": {
+        "at_5": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        }
+      },
+      "retrieved": [
+        {
+          "rank": 1,
+          "score": 25.98908772,
+          "chunk_id": "f446df4e-d3b6-5f2e-a871-5bb9a9a16187",
+          "article_code": "20.2.LQ.115",
+          "article_title": "Nghỉ việc riêng, nghỉ không hưởng lương",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.115 — Nghỉ việc riêng, nghỉ không hưởng lương Nguồn: Văn bản hợp nhất 1. Người lao động được nghỉ việc riêng mà vẫn hưởng nguyên lương và phải thông báo với người sử dụng lao động trong trường hợp sau đây: a) Kết hôn: nghỉ 03 ngày; b) Con đẻ, con nuôi kết hôn: nghỉ 01 ngày; c) Cha đẻ, mẹ đẻ, cha nuôi, mẹ nuôi; cha đẻ, mẹ đẻ, cha nuôi, mẹ nuôi của vợ hoặc chồng; vợ hoặc chồng; con đẻ, "
+        },
+        {
+          "rank": 2,
+          "score": 11.84714502,
+          "chunk_id": "1af0c29c-f105-5eb9-a61b-9e9bef8ed853",
+          "article_code": "20.2.LQ.113",
+          "article_title": "Nghỉ hằng năm",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.113 — Nghỉ hằng năm Nguồn: Văn bản hợp nhất 1. Người lao động làm việc đủ 12 tháng cho một người sử dụng lao động thì được nghỉ hằng năm, hưởng nguyên lương theo hợp đồng lao động như sau: a) 12 ngày làm việc đối với người làm công việc trong điều kiện bình thường; b) 14 ngày làm việc đối với người lao động chưa thành niên, lao động là người khuyết tật, người làm nghề, công việc nặng "
+        },
+        {
+          "rank": 3,
+          "score": 10.29783389,
+          "chunk_id": "06444bdd-be81-5f77-99f2-188891020052",
+          "article_code": "20.2.NĐ.3.67",
+          "article_title": "Tiền tàu xe, tiền lương trong thời gian đi đường, tiền lương ngày nghỉ hằng năm và các ngày nghỉ có hưởng lương khác",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.67 — Tiền tàu xe, tiền lương trong thời gian đi đường, tiền lương ngày nghỉ hằng năm và các ngày nghỉ có hưởng lương khác Nguồn: NĐ 1. Tiền tàu xe, tiền lương những ngày đi đường ngoài ngày nghỉ hằng năm theo khoản 6 Điều 113 của Bộ luật Lao động do hai bên thỏa thuận. 2. Tiền lương làm căn cứ trả cho người lao động những ngày nghỉ lễ, tết, nghỉ hằng năm, nghỉ việc riêng có hưởng lư"
+        },
+        {
+          "rank": 4,
+          "score": 9.96009938,
+          "chunk_id": "beeaf23f-a054-51c6-bcb6-eaa6a028c0e3",
+          "article_code": "20.2.LQ.137",
+          "article_title": "Bảo vệ thai sản",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.137 — Bảo vệ thai sản Nguồn: Văn bản hợp nhất 1. Người sử dụng lao động không được sử dụng người lao động làm việc ban đêm, làm thêm giờ và đi công tác xa trong trường hợp sau đây: a) Mang thai từ tháng thứ 07 hoặc từ tháng thứ 06 nếu làm việc ở vùng cao, vùng sâu, vùng xa, biên giới, hải đảo; b) Đang nuôi con dưới 12 tháng tuổi, trừ trường hợp được người lao động đồng ý. 2. Lao động "
+        },
+        {
+          "rank": 5,
+          "score": 9.94747098,
+          "chunk_id": "63852c41-ab13-552a-9c66-cc28458c80cc",
+          "article_code": "20.2.NĐ.3.57",
+          "article_title": "Tiền lương làm thêm giờ vào ban đêm",
+          "clause_number": "2",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.57 — Tiền lương làm thêm giờ vào ban đêm Khoản: 2 Điểm: a, b, c Nguồn: NĐ 2. Đối với người lao động hưởng lương theo sản phẩm, tiền lương làm thêm giờ vào ban đêm được tính như sau: Tiền lương làm thêm giờ vào ban đêm = Đơn giá tiền lương sản phẩm của ngày làm việc bình thường x Mức ít nhất 150% hoặc 200% hoặc 300% + Đơn giá tiền lương sản phẩm của ngày làm việc bình thường x Mức ít"
+        }
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_022",
+      "category": "single_scenario",
+      "question": "Trong trường hợp doanh nghiệp cho thuê lại không thanh toán quyền lợi cho người lao động, tiền ký quỹ được dùng cho những khoản nào và nếu không đủ thì ưu tiên thanh toán theo thứ tự nào?",
+      "expected_article_codes": [
+        "NQ66.18.PL-I.4.C.V",
+        "NQ66.18.PL-I.4.C.VIII"
+      ],
+      "expected_evidence_chunk_ids": [
+        "f295f903-7006-5d4f-afdc-fa52ccaad17b",
+        "33505a62-857e-54eb-b285-3a9fe68b53e2",
+        "3f014f7d-ce6b-5c4b-8169-30072649587f",
+        "039ef8b7-bf8e-5684-a624-6c353bd253da",
+        "5875dbc2-2f6b-5105-a699-8ccd625e19c9",
+        "e3621b4d-191d-5da1-a9e7-76f7f7c20fe2"
+      ],
+      "latency_ms": 2.1,
+      "metrics": {
+        "at_5": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.0,
+          "article_recall": 0.5,
+          "article_mrr": 0.5,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.333333,
+          "evidence_mrr": 0.5
+        }
+      },
+      "retrieved": [
+        {
+          "rank": 1,
+          "score": 42.31082817,
+          "chunk_id": "54608ffd-56f2-5021-accd-79ad92e93d22",
+          "article_code": "20.2.NĐ.3.19",
+          "article_title": "Trích tiền ký quỹ khi doanh nghiệp cho thuê lại không thực hiện nghĩa vụ đối với người lao động thuê lại",
+          "clause_number": "1",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.19 — Trích tiền ký quỹ khi doanh nghiệp cho thuê lại không thực hiện nghĩa vụ đối với người lao động thuê lại Khoản: 1 Điểm: c Nguồn: NĐ 1. Khi hết 60 ngày kể từ ngày đến hạn mà doanh nghiệp chưa thanh toán các chế độ, quyền lợi cho người lao động thuê lại tại khoản 2 Điều 15 Nghị định này thì Sở Lao động - Thương binh và Xã hội có văn bản yêu cầu doanh nghiệp cho thuê lại thanh toá"
+        },
+        {
+          "rank": 2,
+          "score": 39.58127863,
+          "chunk_id": "5875dbc2-2f6b-5105-a699-8ccd625e19c9",
+          "article_code": "NQ66.18.PL-I.4.C.VIII",
+          "article_title": "Phụ lục I.4, Mục 1, C.VIII — Trích tiền ký quỹ khi doanh nghiệp cho thuê lại lao động không thực hiện nghĩa vụ đối với người lao động thuê lại quy định tại Điều 19 Nghị định số 145/2020/NĐ-CP",
+          "clause_number": "1",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Đề mục: labor — Lao động, tiền lương Mục I.4/C/VIII — Lĩnh vực lao động, tiền lương Điều NQ66.18.PL-I.4.C.VIII — Phụ lục I.4, Mục 1, C.VIII — Trích tiền ký quỹ khi doanh nghiệp cho thuê lại lao động không thực hiện nghĩa vụ đối với người lao động thuê lại quy định tại Điều 19 Nghị định số 145/2020/NĐ-CP Khoản: 1 Điểm: c Nguồn: Phụ lục Nghị quyết [Ngữ cảnh khoản] 1. Khi hết 60 ngày kể từ ngày đến h"
+        },
+        {
+          "rank": 3,
+          "score": 36.12137781,
+          "chunk_id": "1033f34a-2d5f-5492-b9f9-de54fa877bb7",
+          "article_code": "20.2.NĐ.3.19",
+          "article_title": "Trích tiền ký quỹ khi doanh nghiệp cho thuê lại không thực hiện nghĩa vụ đối với người lao động thuê lại",
+          "clause_number": "1",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.19 — Trích tiền ký quỹ khi doanh nghiệp cho thuê lại không thực hiện nghĩa vụ đối với người lao động thuê lại Khoản: 1 Điểm: b Nguồn: NĐ 1. Khi hết 60 ngày kể từ ngày đến hạn mà doanh nghiệp chưa thanh toán các chế độ, quyền lợi cho người lao động thuê lại tại khoản 2 Điều 15 Nghị định này thì Sở Lao động - Thương binh và Xã hội có văn bản yêu cầu doanh nghiệp cho thuê lại thanh toá"
+        },
+        {
+          "rank": 4,
+          "score": 35.80558562,
+          "chunk_id": "7a086167-6490-588f-ab46-44d1b0c05a56",
+          "article_code": "20.2.NĐ.3.19",
+          "article_title": "Trích tiền ký quỹ khi doanh nghiệp cho thuê lại không thực hiện nghĩa vụ đối với người lao động thuê lại",
+          "clause_number": "1",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.19 — Trích tiền ký quỹ khi doanh nghiệp cho thuê lại không thực hiện nghĩa vụ đối với người lao động thuê lại Khoản: 1 Điểm: a Nguồn: NĐ 1. Khi hết 60 ngày kể từ ngày đến hạn mà doanh nghiệp chưa thanh toán các chế độ, quyền lợi cho người lao động thuê lại tại khoản 2 Điều 15 Nghị định này thì Sở Lao động - Thương binh và Xã hội có văn bản yêu cầu doanh nghiệp cho thuê lại thanh toá"
+        },
+        {
+          "rank": 5,
+          "score": 34.6854324,
+          "chunk_id": "039ef8b7-bf8e-5684-a624-6c353bd253da",
+          "article_code": "NQ66.18.PL-I.4.C.VIII",
+          "article_title": "Phụ lục I.4, Mục 1, C.VIII — Trích tiền ký quỹ khi doanh nghiệp cho thuê lại lao động không thực hiện nghĩa vụ đối với người lao động thuê lại quy định tại Điều 19 Nghị định số 145/2020/NĐ-CP",
+          "clause_number": "1",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Đề mục: labor — Lao động, tiền lương Mục I.4/C/VIII — Lĩnh vực lao động, tiền lương Điều NQ66.18.PL-I.4.C.VIII — Phụ lục I.4, Mục 1, C.VIII — Trích tiền ký quỹ khi doanh nghiệp cho thuê lại lao động không thực hiện nghĩa vụ đối với người lao động thuê lại quy định tại Điều 19 Nghị định số 145/2020/NĐ-CP Khoản: 1 Điểm: b Nguồn: Phụ lục Nghị quyết 1. Khi hết 60 ngày kể từ ngày đến hạn mà doanh nghiệ"
+        }
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_027",
+      "category": "single_scenario",
+      "question": "Khi giao kết hoặc chấm dứt hợp đồng lao động với người giúp việc gia đình, người sử dụng lao động phải thông báo cho UBND cấp xã trong thời hạn bao lâu?",
+      "expected_article_codes": [
+        "20.2.NĐ.3.90"
+      ],
+      "expected_evidence_chunk_ids": [
+        "151d1dfa-abde-5f9d-9786-3739d0d9c680"
+      ],
+      "latency_ms": 1.729,
+      "metrics": {
+        "at_5": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 0.333333,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 0.333333
+        }
+      },
+      "retrieved": [
+        {
+          "rank": 1,
+          "score": 27.77200123,
+          "chunk_id": "a4a6283b-6c75-5ce2-9ca7-047412033f9e",
+          "article_code": "20.2.LQ.162",
+          "article_title": "Hợp đồng lao động đối với lao động là người giúp việc gia đình",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.162 — Hợp đồng lao động đối với lao động là người giúp việc gia đình Nguồn: Văn bản hợp nhất 1. Người sử dụng lao động phải giao kết hợp đồng lao động bằng văn bản với lao động là người giúp việc gia đình. 2. Thời hạn của hợp đồng lao động đối với lao động là người giúp việc gia đình do hai bên thỏa thuận. Một bên có quyền đơn phương chấm dứt hợp đồng lao động bất kỳ khi nào nhưng phả"
+        },
+        {
+          "rank": 2,
+          "score": 26.77966277,
+          "chunk_id": "0e615471-ce53-507e-9a83-4fdd3ad12f09",
+          "article_code": "20.2.LQ.163",
+          "article_title": "Nghĩa vụ của người sử dụng lao động khi sử dụng lao động là người giúp việc gia đình",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.163 — Nghĩa vụ của người sử dụng lao động khi sử dụng lao động là người giúp việc gia đình Nguồn: Văn bản hợp nhất 1. Thực hiện đầy đủ thỏa thuận đã giao kết trong hợp đồng lao động. 2. Trả cho người giúp việc gia đình khoản tiền bảo hiểm xã hội, bảo hiểm y tế theo quy định của pháp luật để người lao động chủ động tham gia bảo hiểm xã hội, bảo hiểm y tế. 3. Tôn trọng danh dự, nhân phẩ"
+        },
+        {
+          "rank": 3,
+          "score": 23.07432607,
+          "chunk_id": "151d1dfa-abde-5f9d-9786-3739d0d9c680",
+          "article_code": "20.2.NĐ.3.90",
+          "article_title": "Nghĩa vụ của người sử dụng lao động, người lao động",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.90 — Nghĩa vụ của người sử dụng lao động, người lao động Nguồn: NĐ 1. Thực hiện các nghĩa vụ theo quy định tại các Điều 163, 164 và 165 của Bộ luật Lao động. 2. Người sử dụng lao động phải thông báo cho Ủy ban nhân dân xã, phường, thị trấn (sau đây gọi là Ủy ban nhân dân cấp xã) việc sử dụng lao động, chấm dứt sử dụng lao động tương ứng theo Mẫu số 02/PLV, Mẫu số 03/PLV Phụ lục V ba"
+        },
+        {
+          "rank": 4,
+          "score": 22.80695302,
+          "chunk_id": "c31c847a-9da0-52dd-b54f-89f3e05de45c",
+          "article_code": "20.2.LQ.164",
+          "article_title": "Nghĩa vụ của lao động là người giúp việc gia đình",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.164 — Nghĩa vụ của lao động là người giúp việc gia đình Nguồn: Văn bản hợp nhất 1. Thực hiện đầy đủ thỏa thuận đã giao kết trong hợp đồng lao động. 2. Phải bồi thường theo thỏa thuận hoặc theo quy định của pháp luật nếu làm hỏng, mất tài sản của người sử dụng lao động. 3. Thông báo kịp thời với người sử dụng lao động về khả năng, nguy cơ gây tai nạn, đe dọa an toàn, sức khỏe, tính mạn"
+        },
+        {
+          "rank": 5,
+          "score": 20.36068426,
+          "chunk_id": "96425739-7044-5e77-b890-8b5e43dbf589",
+          "article_code": "20.2.LQ.27",
+          "article_title": "Kết thúc thời gian thử việc",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.27 — Kết thúc thời gian thử việc Nguồn: Văn bản hợp nhất 1. Khi kết thúc thời gian thử việc, người sử dụng lao động phải thông báo kết quả thử việc cho người lao động. Trường hợp thử việc đạt yêu cầu thì người sử dụng lao động tiếp tục thực hiện hợp đồng lao động đã giao kết đối với trường hợp thỏa thuận thử việc trong hợp đồng lao động hoặc phải giao kết hợp đồng lao động đối với trư"
+        }
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_028",
+      "category": "single_scenario",
+      "question": "Khi hợp đồng lao động bị tuyên bố vô hiệu từng phần thì công ty và nhân viên phải làm gì để xử lý?",
+      "expected_article_codes": [
+        "20.2.NĐ.3.9"
+      ],
+      "expected_evidence_chunk_ids": [
+        "bae534df-500b-5fbd-bf7b-c010712e0bbd",
+        "7b405487-be52-5587-b08c-71ee48efa7db",
+        "c07d6cf7-6c3e-5fef-8531-f1570e42329d",
+        "395a595a-9db1-5d70-9d96-5bd60524cdb1"
+      ],
+      "latency_ms": 1.288,
+      "metrics": {
+        "at_5": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.75,
+          "evidence_mrr": 1.0
+        }
+      },
+      "retrieved": [
+        {
+          "rank": 1,
+          "score": 36.003906,
+          "chunk_id": "7b405487-be52-5587-b08c-71ee48efa7db",
+          "article_code": "20.2.NĐ.3.9",
+          "article_title": "Xử lý hợp đồng lao động vô hiệu từng phần",
+          "clause_number": "2",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.9 — Xử lý hợp đồng lao động vô hiệu từng phần Khoản: 2 Nguồn: NĐ 2. Quyền, nghĩa vụ và lợi ích của hai bên trong thời gian từ khi bắt đầu làm việc theo hợp đồng lao động bị tuyên bố vô hiệu từng phần đến khi hợp đồng lao động được sửa đổi, bổ sung thì được giải quyết theo thỏa ước lao động tập thể đang áp dụng, trường hợp không có thỏa ước lao động tập thể thì thực hiện theo quy địn"
+        },
+        {
+          "rank": 2,
+          "score": 35.4275446,
+          "chunk_id": "bae534df-500b-5fbd-bf7b-c010712e0bbd",
+          "article_code": "20.2.NĐ.3.9",
+          "article_title": "Xử lý hợp đồng lao động vô hiệu từng phần",
+          "clause_number": "1",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.9 — Xử lý hợp đồng lao động vô hiệu từng phần Khoản: 1 Nguồn: NĐ Việc xử lý hợp đồng lao động vô hiệu từng phần tại khoản 1 Điều 51 của Bộ luật Lao động được quy định như sau: 1. Khi hợp đồng lao động bị tuyên bố vô hiệu từng phần, người sử dụng lao động và người lao động tiến hành sửa đổi, bổ sung phần của hợp đồng lao động bị tuyên bố vô hiệu cho phù hợp với thỏa ước lao động tập "
+        },
+        {
+          "rank": 3,
+          "score": 34.7385379,
+          "chunk_id": "c07d6cf7-6c3e-5fef-8531-f1570e42329d",
+          "article_code": "20.2.NĐ.3.9",
+          "article_title": "Xử lý hợp đồng lao động vô hiệu từng phần",
+          "clause_number": "3",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.9 — Xử lý hợp đồng lao động vô hiệu từng phần Khoản: 3 Điểm: a, b, c, d Nguồn: NĐ 3. Trường hợp hai bên không thống nhất sửa đổi, bổ sung các nội dung đã bị tuyên bố vô hiệu thì: a) Thực hiện chấm dứt hợp đồng lao động; b) Quyền, nghĩa vụ, lợi ích của hai bên từ khi bắt đầu làm việc theo hợp đồng lao động bị tuyên bố vô hiệu từng phần đến khi chấm dứt hợp đồng lao động được thực hiệ"
+        },
+        {
+          "rank": 4,
+          "score": 34.46215261,
+          "chunk_id": "775e1bfc-762e-52ea-86d6-213ce1ec1783",
+          "article_code": "20.2.LQ.51",
+          "article_title": "Xử lý hợp đồng lao động vô hiệu",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.51 — Xử lý hợp đồng lao động vô hiệu Nguồn: Văn bản hợp nhất 1. Khi hợp đồng lao động bị tuyên bố vô hiệu từng phần thì xử lý như sau: a) Quyền, nghĩa vụ và lợi ích của hai bên được giải quyết theo thỏa ước lao động tập thể đang áp dụng; trường hợp không có thỏa ước lao động tập thể thì thực hiện theo quy định của pháp luật; b) Hai bên tiến hành sửa đổi, bổ sung phần của hợp đồng lao "
+        },
+        {
+          "rank": 5,
+          "score": 28.72528614,
+          "chunk_id": "79e8de1a-51bc-565e-921f-4058028c5309",
+          "article_code": "20.2.LQ.88",
+          "article_title": "Xử lý thỏa ước lao động tập thể vô hiệu",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.88 — Xử lý thỏa ước lao động tập thể vô hiệu Nguồn: Văn bản hợp nhất Khi thỏa ước lao động tập thể bị tuyên bố vô hiệu thì quyền, nghĩa vụ và lợi ích của các bên ghi trong thỏa ước lao động tập thể tương ứng với toàn bộ hoặc phần bị tuyên bố vô hiệu được giải quyết theo quy định của pháp luật và các thỏa thuận hợp pháp trong hợp đồng lao động."
+        }
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_029",
+      "category": "single_scenario",
+      "question": "Khi trả lương theo sản phẩm hoặc lương khoán, công ty cần đảm bảo mức lương quy đổi như thế nào để không vi phạm luật?",
+      "expected_article_codes": [
+        "20.2.NĐ.8.4"
+      ],
+      "expected_evidence_chunk_ids": [
+        "2158915d-6cac-5559-8ba0-d8fc4b2380ef"
+      ],
+      "latency_ms": 1.211,
+      "metrics": {
+        "at_5": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        }
+      },
+      "retrieved": [
+        {
+          "rank": 1,
+          "score": 38.8342177,
+          "chunk_id": "2158915d-6cac-5559-8ba0-d8fc4b2380ef",
+          "article_code": "20.2.NĐ.8.4",
+          "article_title": "Áp dụng mức lương tối thiểu",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.8.4 — Áp dụng mức lương tối thiểu Nguồn: NĐ 1. Mức lương tối thiểu tháng là mức lương thấp nhất làm cơ sở để thỏa thuận và trả lương đối với người lao động áp dụng hình thức trả lương theo tháng, bảo đảm mức lương theo công việc hoặc chức danh của người lao động làm việc đủ thời giờ làm việc bình thường trong tháng và hoàn thành định mức lao động hoặc công việc đã thỏa thuận không đượ"
+        },
+        {
+          "rank": 2,
+          "score": 27.63255786,
+          "chunk_id": "52b99d0e-cc32-5b2c-8ecb-aeaa748a0638",
+          "article_code": "20.2.TT.2.3",
+          "article_title": "Nội dung chủ yếu của hợp đồng lao động",
+          "clause_number": "5",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.TT.2.3 — Nội dung chủ yếu của hợp đồng lao động Khoản: 5 Điểm: a, b Nguồn: TT 5. Mức lương theo công việc hoặc chức danh, hình thức trả lương, kỳ hạn trả lương, phụ cấp lương và các khoản bổ sung khác được quy định như sau: a) Mức lương theo công việc hoặc chức danh: ghi mức lương tính theo thời gian của công việc hoặc chức danh theo thang lương, bảng lương do người sử dụng lao động xây "
+        },
+        {
+          "rank": 3,
+          "score": 21.64644622,
+          "chunk_id": "b0b71a2d-a816-596e-a20b-f1ceb9fedc1a",
+          "article_code": "20.2.NĐ.3.55",
+          "article_title": "Tiền lương làm thêm giờ",
+          "clause_number": "2",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.55 — Tiền lương làm thêm giờ Khoản: 2 Nguồn: NĐ 2. Đối với người lao động hưởng lương theo sản phẩm, được trả lương làm thêm giờ khi làm việc ngoài thời giờ làm việc bình thường để làm thêm số lượng, khối lượng sản phẩm ngoài số lượng, khối lượng sản phẩm theo định mức lao động theo thỏa thuận với người sử dụng lao động và được tính theo công thức sau: Tiền lương làm thêm giờ = Đơn "
+        },
+        {
+          "rank": 4,
+          "score": 20.28315416,
+          "chunk_id": "ed739167-fcbf-5876-9af0-88154115cda4",
+          "article_code": "20.2.NĐ.3.54",
+          "article_title": "Hình thức trả lương",
+          "clause_number": "1",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.54 — Hình thức trả lương Khoản: 1 Điểm: a, b, c Nguồn: NĐ Hình thức trả lương theo Điều 96 của Bộ luật Lao động được quy định cụ thể như sau: 1. Căn cứ vào tính chất công việc và điều kiện sản xuất, kinh doanh, người sử dụng lao động và người lao động thỏa thuận trong hợp đồng lao động hình thức trả lương theo thời gian, theo sản phẩm và trả lương khoán như sau: a) Tiền lương theo t"
+        },
+        {
+          "rank": 5,
+          "score": 17.10839916,
+          "chunk_id": "ee0af918-429d-582d-b44d-e5fbd83f792b",
+          "article_code": "20.2.NĐ.3.56",
+          "article_title": "Tiền lương làm việc vào ban đêm",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.56 — Tiền lương làm việc vào ban đêm Nguồn: NĐ Tiền lương làm việc vào ban đêm theo khoản 2 Điều 98 của Bộ luật Lao động, được tính theo công thức sau: 1. Đối với người lao động hưởng lương theo thời gian, tiền lương làm việc vào ban đêm được tính như sau: Tiền lương làm việc vào ban đêm = Tiền lương giờ thực trả của công việc đang làm vào ngày làm việc bình thường + Tiền lương giờ "
+        }
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_030",
+      "category": "single_scenario",
+      "question": "Công ty có chi nhánh hoạt động ở nhiều vùng khác nhau thì áp dụng mức lương tối thiểu như thế nào?",
+      "expected_article_codes": [
+        "20.2.NĐ.8.3"
+      ],
+      "expected_evidence_chunk_ids": [
+        "8c254e83-3775-5189-93e9-4c8621c65786"
+      ],
+      "latency_ms": 0.992,
+      "metrics": {
+        "at_5": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        }
+      },
+      "retrieved": [
+        {
+          "rank": 1,
+          "score": 43.93631531,
+          "chunk_id": "8c254e83-3775-5189-93e9-4c8621c65786",
+          "article_code": "20.2.NĐ.8.3",
+          "article_title": "Mức lương tối thiểu",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.8.3 — Mức lương tối thiểu Nguồn: NĐ 1. Quy định mức lương tối thiểu tháng và mức lương tối thiểu giờ đối với người lao động làm việc cho người sử dụng lao động theo vùng như sau: Vùng Mức lương tối thiểu tháng (Đơn vị: đồng/tháng) Mức lương tối thiểu giờ (Đơn vị: đồng/giờ) Vùng I 5.310.000 25.500 Vùng II 4.730.000 22.700 Vùng III 4.140.000 20.000 Vùng IV 3.700.000 17.800 2. Danh mục đ"
+        },
+        {
+          "rank": 2,
+          "score": 23.09705655,
+          "chunk_id": "33125160-94e8-5c2c-a4e9-7050b7a4550b",
+          "article_code": "20.2.NĐ.3.8",
+          "article_title": "Trợ cấp thôi việc, trợ cấp mất việc làm",
+          "clause_number": "5",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.8 — Trợ cấp thôi việc, trợ cấp mất việc làm Khoản: 5 Điểm: a, b Nguồn: NĐ 5. Tiền lương để tính trợ cấp thôi việc, trợ cấp mất việc làm được quy định như sau: a) Tiền lương để tính trợ cấp thôi việc, trợ cấp mất việc làm là tiền lương bình quân của 06 tháng liền kề theo hợp đồng lao động trước khi người lao động thôi việc, mất việc làm. b) Trường hợp người lao động làm việc cho ngườ"
+        },
+        {
+          "rank": 3,
+          "score": 22.02563925,
+          "chunk_id": "58f78389-6669-5811-acd9-93ac89023d18",
+          "article_code": "20.2.NĐ.3.50",
+          "article_title": "Nhiệm vụ của Hội đồng tiền lương quốc gia",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.50 — Nhiệm vụ của Hội đồng tiền lương quốc gia Nguồn: NĐ 1. Nghiên cứu, khảo sát, thu thập thông tin, phân tích và đánh giá tình hình tiền lương, mức sống tối thiểu của người lao động, sản xuất kinh doanh của doanh nghiệp, quan hệ cung cầu lao động, việc làm, thất nghiệp trong nền kinh tế và các yếu tố liên quan khác làm cơ sở xác định mức lương tối thiểu. 2. Xây dựng báo cáo về mức"
+        },
+        {
+          "rank": 4,
+          "score": 20.77706344,
+          "chunk_id": "612451b1-b831-5bbb-914d-6a04627f41fe",
+          "article_code": "20.2.NĐ.3.49",
+          "article_title": "Chức năng của Hội đồng tiền lương quốc gia",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.49 — Chức năng của Hội đồng tiền lương quốc gia Nguồn: NĐ Hội đồng tiền lương quốc gia do Thủ tướng Chính phủ quyết định thành lập theo quy định tại khoản 2 Điều 92 của Bộ luật Lao động để thực hiện chức năng tư vấn cho Chính phủ về: 1. Mức lương tối thiểu xác lập theo vùng (bao gồm mức lương tối thiểu theo tháng và mức lương tối thiểu theo giờ). 2. Chính sách tiền lương áp dụng đối"
+        },
+        {
+          "rank": 5,
+          "score": 19.32910686,
+          "chunk_id": "234e8211-1436-57de-b13e-0931050f1ebe",
+          "article_code": "20.2.NĐ.3.89",
+          "article_title": "Một số quy định riêng đối với lao động là người giúp việc gia đình",
+          "clause_number": "2",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.89 — Một số quy định riêng đối với lao động là người giúp việc gia đình Khoản: 2 Nguồn: NĐ 2. Người lao động và người sử dụng lao động thỏa thuận về tiền lương, thưởng và thực hiện trả lương, thưởng theo quy định tại Chương VI (trừ Điều 93) của Bộ luật Lao động, trong đó tiền lương của người lao động thỏa thuận trong hợp đồng lao động theo quy định tại khoản 1, khoản 2 Điều 90 của B"
+        }
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_031",
+      "category": "single_scenario",
+      "question": "Trong trường hợp nào công ty có quyền yêu cầu nhân viên làm thêm giờ mà không bị giới hạn số giờ và nhân viên không được từ chối?",
+      "expected_article_codes": [
+        "20.2.LQ.108"
+      ],
+      "expected_evidence_chunk_ids": [
+        "3df78b85-94a6-56c4-a7d6-217a598ce399"
+      ],
+      "latency_ms": 1.59,
+      "metrics": {
+        "at_5": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        }
+      },
+      "retrieved": [
+        {
+          "rank": 1,
+          "score": 39.16521547,
+          "chunk_id": "3df78b85-94a6-56c4-a7d6-217a598ce399",
+          "article_code": "20.2.LQ.108",
+          "article_title": "Làm thêm giờ trong trường hợp đặc biệt",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.108 — Làm thêm giờ trong trường hợp đặc biệt Nguồn: Văn bản hợp nhất Người sử dụng lao động có quyền yêu cầu người lao động làm thêm giờ vào bất kỳ ngày nào mà không bị giới hạn về số giờ làm thêm theo quy định tại Điều 107 của Bộ luật này và người lao động không được từ chối trong trường hợp sau đây: 1. Thực hiện lệnh động viên, huy động bảo đảm nhiệm vụ quốc phòng, an ninh theo quy "
+        },
+        {
+          "rank": 2,
+          "score": 24.74587462,
+          "chunk_id": "e154ed5d-2c06-55d5-849c-1440b5dfe0b5",
+          "article_code": "20.2.TT.4.6",
+          "article_title": "Giới hạn giờ làm việc tiêu chuẩn hằng ngày và giờ làm thêm",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.TT.4.6 — Giới hạn giờ làm việc tiêu chuẩn hằng ngày và giờ làm thêm Nguồn: TT 1. Tổng số giờ làm việc tiêu chuẩn và số giờ làm thêm trong một ngày không quá 12 giờ. 2. Giới hạn giờ làm việc tiêu chuẩn và giờ làm thêm theo tuần, tháng được quy định như sau: a) Tổng số giờ làm việc tiêu chuẩn và số giờ làm thêm trong một tuần không quá 72 giờ. b) Tổng số giờ làm thêm trong một tháng không "
+        },
+        {
+          "rank": 3,
+          "score": 23.84319695,
+          "chunk_id": "14ae9aa7-c541-5b37-9739-dbab5f8985c8",
+          "article_code": "20.2.NĐ.3.60",
+          "article_title": "Giới hạn số giờ làm thêm",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.60 — Giới hạn số giờ làm thêm Nguồn: NĐ 1. Tổng số giờ làm thêm không quá 50% số giờ làm việc bình thường trong 01 ngày khi làm thêm vào ngày làm việc bình thường, trừ trường hợp quy định tại khoản 2, khoản 3 Điều này. 2. Trường hợp áp dụng quy định thời giờ làm việc bình thường theo tuần thì tổng số giờ làm việc bình thường và số giờ làm thêm không quá 12 giờ trong 01 ngày. 3. Trườ"
+        },
+        {
+          "rank": 4,
+          "score": 21.3910333,
+          "chunk_id": "493dc833-06d3-56bd-b88b-76f0a61dd477",
+          "article_code": "20.2.LQ.107",
+          "article_title": "Làm thêm giờ",
+          "clause_number": "2",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.107 — Làm thêm giờ Khoản: 2 Điểm: a, b, c Nguồn: Văn bản hợp nhất 2. Người sử dụng lao động được sử dụng người lao động làm thêm giờ khi đáp ứng đầy đủ các yêu cầu sau đây: a) Phải được sự đồng ý của người lao động; b) Bảo đảm số giờ làm thêm của người lao động không quá 50% số giờ làm việc bình thường trong 01 ngày; trường hợp áp dụng quy định thời giờ làm việc bình thường theo tuần "
+        },
+        {
+          "rank": 5,
+          "score": 20.89427751,
+          "chunk_id": "206fd3fa-c94c-5c1f-8215-27a8cb9f2b7d",
+          "article_code": "20.2.NĐ.3.55",
+          "article_title": "Tiền lương làm thêm giờ",
+          "clause_number": "1",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.55 — Tiền lương làm thêm giờ Khoản: 1 Điểm: a Nguồn: NĐ 1. Đối với người lao động hưởng lương theo thời gian, được trả lương làm thêm giờ khi làm việc ngoài thời giờ làm việc bình thường do người sử dụng lao động quy định theo Điều 105 của Bộ luật Lao động và được tính theo công thức sau: Tiền lương làm thêm giờ = Tiền lương giờ thực trả của công việc đang làm vào ngày làm việc bình"
+        }
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_033",
+      "category": "single_scenario",
+      "question": "Trong thời hạn bao nhiêu ngày kể từ ngày ban hành nội quy lao động thì công ty phải nộp hồ sơ đăng ký?",
+      "expected_article_codes": [
+        "20.2.LQ.119"
+      ],
+      "expected_evidence_chunk_ids": [
+        "7bbae293-e731-566e-b332-6a6719a6302b"
+      ],
+      "latency_ms": 1.261,
+      "metrics": {
+        "at_5": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        }
+      },
+      "retrieved": [
+        {
+          "rank": 1,
+          "score": 30.33914521,
+          "chunk_id": "7bbae293-e731-566e-b332-6a6719a6302b",
+          "article_code": "20.2.LQ.119",
+          "article_title": "Đăng ký nội quy lao động",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.119 — Đăng ký nội quy lao động Nguồn: Văn bản hợp nhất 1. Người sử dụng lao động sử dụng từ 10 người lao động trở lên phải đăng ký nội quy lao động tại cơ quan chuyên môn về lao động thuộc Ủy ban nhân dân cấp tỉnh nơi người sử dụng lao động đăng ký kinh doanh. 2. Trong thời hạn 10 ngày kể từ ngày ban hành nội quy lao động, người sử dụng lao động phải nộp hồ sơ đăng ký nội quy lao động"
+        },
+        {
+          "rank": 2,
+          "score": 22.94278194,
+          "chunk_id": "599d15fa-90fc-5749-90d1-5e6965c7917d",
+          "article_code": "20.2.LQ.121",
+          "article_title": "Hiệu lực của nội quy lao động",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.121 — Hiệu lực của nội quy lao động Nguồn: Văn bản hợp nhất Nội quy lao động có hiệu lực sau 15 ngày kể từ ngày cơ quan nhà nước có thẩm quyền quy định tại Điều 119 của Bộ luật này nhận được đầy đủ hồ sơ đăng ký nội quy lao động. Trường hợp người sử dụng lao động sử dụng dưới 10 người lao động ban hành nội quy lao động bằng văn bản thì hiệu lực do người sử dụng lao động quyết định tro"
+        },
+        {
+          "rank": 3,
+          "score": 17.48283903,
+          "chunk_id": "edb58bcd-79d7-53e1-bb4f-bc13092f3342",
+          "article_code": "20.2.NĐ.4.23",
+          "article_title": "Hồ sơ đăng ký dự tuyển của người lao động Việt Nam",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.4.23 — Hồ sơ đăng ký dự tuyển của người lao động Việt Nam Nguồn: NĐ 1. Phiếu đăng ký dự tuyển lao động theo Mẫu số 01/PLII Phụ lục II ban hành kèm theo Nghị định này. 2. Bản sao có chứng thực của một trong các giấy tờ sau: giấy khai sinh hoặc chứng minh nhân dân hoặc căn cước công dân. 3. Giấy chứng nhận sức khỏe hoặc giấy khám sức khỏe của cơ sở y tế có thẩm quyền cấp có giá trị tron"
+        },
+        {
+          "rank": 4,
+          "score": 17.24429818,
+          "chunk_id": "c0978805-114f-5fa2-ba91-14d05a377534",
+          "article_code": "NĐ219.22",
+          "article_title": "Trình tự cấp giấy phép lao động",
+          "clause_number": "3",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều NĐ219.22 — Trình tự cấp giấy phép lao động Khoản: 3 Nguồn: NĐ 3. Trong thời hạn 10 ngày làm việc, kể từ ngày nhận đủ hồ sơ đề nghị cấp giấy phép lao động, cơ quan có thẩm quyền xem xét chấp thuận nhu cầu và thực hiện cấp giấy phép lao động cho người lao động nước ngoài theo Mẫu số 04 Phụ lục ban hành kèm theo Nghị định này. Trường hợp không chấp thuận nhu cầu sử dụng người lao động nước ngoài"
+        },
+        {
+          "rank": 5,
+          "score": 17.04671161,
+          "chunk_id": "05dc4e29-f5d2-54ae-9277-56839993ab61",
+          "article_code": "NĐ219.9",
+          "article_title": "Trình tự, thủ tục cấp giấy xác nhận không thuộc diện cấp giấy phép lao động",
+          "clause_number": "3",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều NĐ219.9 — Trình tự, thủ tục cấp giấy xác nhận không thuộc diện cấp giấy phép lao động Khoản: 3 Nguồn: NĐ 3. Trong thời hạn 05 ngày làm việc, kể từ ngày nhận đủ hồ sơ đề nghị cấp giấy xác nhận không thuộc diện cấp giấy phép lao động, cơ quan có thẩm quyền cấp giấy xác nhận không thuộc diện cấp giấy phép lao động theo Mẫu số 02 Phụ lục ban hành kèm theo Nghị định này. Trường hợp không cấp giấy "
+        }
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_034",
+      "category": "single_scenario",
+      "question": "Khi nhân viên làm việc không trọn thời gian hết thời hạn tạm hoãn hợp đồng lao động thì thời hạn quay lại làm việc là bao lâu và công ty phải sắp xếp công việc cho họ như thế nào?",
+      "expected_article_codes": [
+        "20.2.LQ.31",
+        "20.2.LQ.32"
+      ],
+      "expected_evidence_chunk_ids": [
+        "95f91be0-a805-5406-85ff-0aae2b0022d4",
+        "48fb511d-393b-5813-a82c-477131e2a966"
+      ],
+      "latency_ms": 1.888,
+      "metrics": {
+        "at_5": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.0,
+          "article_recall": 0.5,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.5,
+          "evidence_mrr": 1.0
+        }
+      },
+      "retrieved": [
+        {
+          "rank": 1,
+          "score": 29.97448134,
+          "chunk_id": "95f91be0-a805-5406-85ff-0aae2b0022d4",
+          "article_code": "20.2.LQ.31",
+          "article_title": "Nhận lại người lao động hết thời hạn tạm hoãn thực hiện hợp đồng lao động",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.31 — Nhận lại người lao động hết thời hạn tạm hoãn thực hiện hợp đồng lao động Nguồn: Văn bản hợp nhất Trong thời hạn 15 ngày kể từ ngày hết thời hạn tạm hoãn thực hiện hợp đồng lao động, người lao động phải có mặt tại nơi làm việc và người sử dụng lao động phải nhận người lao động trở lại làm công việc theo hợp đồng lao động đã giao kết nếu hợp đồng lao động còn thời hạn, trừ trường "
+        },
+        {
+          "rank": 2,
+          "score": 27.45186001,
+          "chunk_id": "20d81f9d-06e0-5c42-ab45-63a9adfa45c9",
+          "article_code": "20.2.LQ.128",
+          "article_title": "Tạm đình chỉ công việc",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.128 — Tạm đình chỉ công việc Nguồn: Văn bản hợp nhất 1. Người sử dụng lao động có quyền tạm đình chỉ công việc của người lao động khi vụ việc vi phạm có những tình tiết phức tạp nếu xét thấy để người lao động tiếp tục làm việc sẽ gây khó khăn cho việc xác minh. Việc tạm đình chỉ công việc của người lao động chỉ được thực hiện sau khi tham khảo ý kiến của tổ chức đại diện người lao độn"
+        },
+        {
+          "rank": 3,
+          "score": 26.80088227,
+          "chunk_id": "80a0d1d0-7df3-5b1b-b1eb-0805e735e518",
+          "article_code": "20.2.LQ.138",
+          "article_title": "Quyền đơn phương chấm dứt, tạm hoãn hợp đồng lao động của lao động nữ mang thai",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.138 — Quyền đơn phương chấm dứt, tạm hoãn hợp đồng lao động của lao động nữ mang thai Nguồn: Văn bản hợp nhất 1. Lao động nữ mang thai nếu có xác nhận của cơ sở khám bệnh, chữa bệnh có thẩm quyền về việc tiếp tục làm việc sẽ ảnh hưởng xấu tới thai nhi thì có quyền đơn phương chấm dứt hợp đồng lao động hoặc tạm hoãn thực hiện hợp đồng lao động. Trường hợp đơn phương chấm dứt hợp đồng l"
+        },
+        {
+          "rank": 4,
+          "score": 22.3495616,
+          "chunk_id": "4da14657-11b2-596b-ab83-4d13e7686087",
+          "article_code": "20.2.NĐ.3.7",
+          "article_title": "Thời hạn báo trước khi đơn phương chấm dứt hợp đồng lao động đối với một số ngành, nghề, công việc đặc thù",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.7 — Thời hạn báo trước khi đơn phương chấm dứt hợp đồng lao động đối với một số ngành, nghề, công việc đặc thù Nguồn: NĐ Ngành, nghề, công việc đặc thù và thời hạn báo trước khi đơn phương chấm dứt hợp đồng lao động quy định tại điểm d khoản 1 Điều 35 và điểm d khoản 2 Điều 36 của Bộ luật Lao động như sau: 1. Ngành, nghề, công việc đặc thù gồm: a) Thành viên tổ lái tàu bay; nhân viê"
+        },
+        {
+          "rank": 5,
+          "score": 22.20114492,
+          "chunk_id": "16ccfe28-10fb-5967-9463-9069796b514f",
+          "article_code": "20.2.LQ.30",
+          "article_title": "Tạm hoãn thực hiện hợp đồng lao động",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.30 — Tạm hoãn thực hiện hợp đồng lao động Nguồn: Văn bản hợp nhất 1. Các trường hợp tạm hoãn thực hiện hợp đồng lao động bao gồm: a) Người lao động thực hiện nghĩa vụ quân sự, nghĩa vụ tham gia Dân quân tự vệ; b) Người lao động bị tạm giữ, tạm giam theo quy định của pháp luật về tố tụng hình sự; c) Người lao động phải chấp hành quyết định áp dụng biện pháp đưa vào trường giáo dưỡng, c"
+        }
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_035",
+      "category": "single_scenario",
+      "question": "Khi công ty ký hợp đồng lao động với nhân viên từ đủ 15 đến dưới 18 tuổi, ai là người có thẩm quyền giao kết và công ty cần lưu ý không được yêu cầu điều kiện gì về tài sản bảo đảm?",
+      "expected_article_codes": [
+        "20.2.LQ.17",
+        "20.2.LQ.18"
+      ],
+      "expected_evidence_chunk_ids": [
+        "33b34c3d-789e-551c-9e7e-239c93aa97d0",
+        "66bb55e9-8b79-54a1-9a40-00289be4e062"
+      ],
+      "latency_ms": 3.217,
+      "metrics": {
+        "at_5": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.0,
+          "article_recall": 0.5,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.5,
+          "evidence_mrr": 1.0
+        }
+      },
+      "retrieved": [
+        {
+          "rank": 1,
+          "score": 31.58413254,
+          "chunk_id": "66bb55e9-8b79-54a1-9a40-00289be4e062",
+          "article_code": "20.2.LQ.18",
+          "article_title": "Thẩm quyền giao kết hợp đồng lao động",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.18 — Thẩm quyền giao kết hợp đồng lao động Nguồn: Văn bản hợp nhất 1. Người lao động trực tiếp giao kết hợp đồng lao động, trừ trường hợp quy định tại khoản 2 Điều này. 2. Đối với công việc theo mùa vụ, công việc nhất định có thời hạn dưới 12 tháng thì nhóm người lao động từ đủ 18 tuổi trở lên có thể ủy quyền cho một người lao động trong nhóm để giao kết hợp đồng lao động; trong trườn"
+        },
+        {
+          "rank": 2,
+          "score": 30.73073348,
+          "chunk_id": "21762c5d-f725-5d18-8e32-88299a7d2b02",
+          "article_code": "20.2.TT.1.4",
+          "article_title": "Giao kết hợp đồng lao động để sử dụng người chưa đủ 15 tuổi làm việc",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.TT.1.4 — Giao kết hợp đồng lao động để sử dụng người chưa đủ 15 tuổi làm việc Nguồn: TT 1. Người giao kết hợp đồng lao động bên phía người sử dụng lao động thực hiện theo quy định tại khoản 3 Điều 18 của Bộ luật Lao động và đáp ứng các điều kiện sau: a) Có phiếu lý lịch tư pháp được cấp không quá 06 tháng kể từ ngày cấp đến ngày giao kết hợp đồng lao động, trong đó không có án tích về hà"
+        },
+        {
+          "rank": 3,
+          "score": 29.77856945,
+          "chunk_id": "5f9fbf75-d1fe-541c-8080-486f2793b74a",
+          "article_code": "20.2.LQ.145",
+          "article_title": "Sử dụng người chưa đủ 15 tuổi làm việc",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.145 — Sử dụng người chưa đủ 15 tuổi làm việc Nguồn: Văn bản hợp nhất 1. Khi sử dụng người chưa đủ 15 tuổi làm việc, người sử dụng lao động phải tuân theo quy định sau đây: a) Phải giao kết hợp đồng lao động bằng văn bản với người chưa đủ 15 tuổi và người đại diện theo pháp luật của người đó; b) Bố trí giờ làm việc không ảnh hưởng đến thời gian học tập của người chưa đủ 15 tuổi; c) Phả"
+        },
+        {
+          "rank": 4,
+          "score": 28.66388081,
+          "chunk_id": "ff586d3c-2e7e-5d15-bd60-ebf81597bed7",
+          "article_code": "20.2.TT.1.3",
+          "article_title": "Điều kiện sử dụng người chưa đủ 15 tuổi làm việc",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.TT.1.3 — Điều kiện sử dụng người chưa đủ 15 tuổi làm việc Nguồn: TT Người sử dụng lao động phải tuân thủ Điều 145 của Bộ luật Lao động khi sử dụng người chưa đủ 15 tuổi làm việc, với các quy định cụ thể sau: 1. Giao kết hợp đồng lao động bằng văn bản với người chưa đủ 15 tuổi và người đại diện theo pháp luật của người đó theo quy định tại Điều 4 của Thông tư này. 2. Bố trí thời giờ làm v"
+        },
+        {
+          "rank": 5,
+          "score": 24.08460922,
+          "chunk_id": "b575e851-d714-5770-a341-722ac4a5a28f",
+          "article_code": "20.2.LQ.143",
+          "article_title": "Lao động chưa thành niên",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.143 — Lao động chưa thành niên Nguồn: Văn bản hợp nhất 1. Lao động chưa thành niên là người lao động chưa đủ 18 tuổi. 2. Người từ đủ 15 tuổi đến chưa đủ 18 tuổi không được làm công việc hoặc làm việc ở nơi làm việc quy định tại Điều 147 của Bộ luật này. 3. Người từ đủ 13 tuổi đến chưa đủ 15 tuổi chỉ được làm công việc nhẹ theo danh mục do Bộ trưởng Bộ Lao động – Thương binh và Xã hội "
+        }
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_036",
+      "category": "multi_article",
+      "question": "Công ty muốn thuê một nhóm lao động làm việc thời vụ dưới 1 tháng, cho phép một người đại diện ký hợp đồng thử việc và yêu cầu cả nhóm đặt cọc tiền bảo đảm thì cách làm này có đúng quy định không và cần điều chỉnh những điểm nào?",
+      "expected_article_codes": [
+        "20.2.LQ.17",
+        "20.2.LQ.18",
+        "20.2.LQ.24"
+      ],
+      "expected_evidence_chunk_ids": [
+        "33b34c3d-789e-551c-9e7e-239c93aa97d0",
+        "66bb55e9-8b79-54a1-9a40-00289be4e062",
+        "71864258-5a3a-5c94-8d6f-a6526097d670"
+      ],
+      "latency_ms": 2.458,
+      "metrics": {
+        "at_5": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.0,
+          "article_recall": 0.333333,
+          "article_mrr": 0.333333,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.333333,
+          "evidence_mrr": 0.333333
+        }
+      },
+      "retrieved": [
+        {
+          "rank": 1,
+          "score": 27.5011036,
+          "chunk_id": "86488093-7eef-59e0-be01-00bb86e69912",
+          "article_code": "20.2.LQ.41",
+          "article_title": "Nghĩa vụ của người sử dụng lao động khi đơn phương chấm dứt hợp đồng lao động trái pháp luật",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.41 — Nghĩa vụ của người sử dụng lao động khi đơn phương chấm dứt hợp đồng lao động trái pháp luật Nguồn: Văn bản hợp nhất 1. Phải nhận người lao động trở lại làm việc theo hợp đồng lao động đã giao kết; phải trả tiền lương, đóng bảo hiểm xã hội, bảo hiểm y tế, bảo hiểm thất nghiệp trong những ngày người lao động không được làm việc và phải trả thêm cho người lao động một khoản tiền ít"
+        },
+        {
+          "rank": 2,
+          "score": 25.98193151,
+          "chunk_id": "96425739-7044-5e77-b890-8b5e43dbf589",
+          "article_code": "20.2.LQ.27",
+          "article_title": "Kết thúc thời gian thử việc",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.27 — Kết thúc thời gian thử việc Nguồn: Văn bản hợp nhất 1. Khi kết thúc thời gian thử việc, người sử dụng lao động phải thông báo kết quả thử việc cho người lao động. Trường hợp thử việc đạt yêu cầu thì người sử dụng lao động tiếp tục thực hiện hợp đồng lao động đã giao kết đối với trường hợp thỏa thuận thử việc trong hợp đồng lao động hoặc phải giao kết hợp đồng lao động đối với trư"
+        },
+        {
+          "rank": 3,
+          "score": 24.84728604,
+          "chunk_id": "71864258-5a3a-5c94-8d6f-a6526097d670",
+          "article_code": "20.2.LQ.24",
+          "article_title": "Thử việc",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.24 — Thử việc Nguồn: Văn bản hợp nhất 1. Người sử dụng lao động và người lao động có thể thỏa thuận nội dung thử việc ghi trong hợp đồng lao động hoặc thỏa thuận về thử việc bằng việc giao kết hợp đồng thử việc. 2. Nội dung chủ yếu của hợp đồng thử việc gồm thời gian thử việc và nội dung quy định tại các điểm a, b, c, đ, g và h khoản 1 Điều 21 của Bộ luật này. 3. Không áp dụng thử việ"
+        },
+        {
+          "rank": 4,
+          "score": 23.41926486,
+          "chunk_id": "df115ab2-5f58-5227-8bd1-1c94f476a58e",
+          "article_code": "20.2.LQ.25",
+          "article_title": "Thời gian thử việc",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.25 — Thời gian thử việc Nguồn: Văn bản hợp nhất Thời gian thử việc do hai bên thỏa thuận căn cứ vào tính chất và mức độ phức tạp của công việc nhưng chỉ được thử việc một lần đối với một công việc và bảo đảm điều kiện sau đây: 1. Không quá 180 ngày đối với công việc của người quản lý doanh nghiệp theo quy định của Luật Doanh nghiệp, Luật Quản lý, sử dụng vốn nhà nước đầu tư vào sản xu"
+        },
+        {
+          "rank": 5,
+          "score": 22.87151797,
+          "chunk_id": "98627151-f7bf-5b38-809b-bede82b5ff9a",
+          "article_code": "20.2.TT.4.7",
+          "article_title": "Thời giờ nghỉ ngơi",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.TT.4.7 — Thời giờ nghỉ ngơi Nguồn: TT 1. Hằng tuần, người lao động được nghỉ ít nhất một ngày (24 giờ liên tục). Trong những tháng thời vụ hoặc phải gấp rút gia công hàng xuất khẩu theo đơn đặt hàng, nếu không thực hiện được nghỉ hằng tuần thì phải bảo đảm hằng tháng có ít nhất 04 ngày nghỉ cho người lao động. 2. Việc nghỉ trong giờ làm việc, nghỉ chuyển ca đối với từng người lao động th"
+        }
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_037",
+      "category": "multi_article",
+      "question": "Trong trường hợp hợp đồng lao động bị tuyên bố vô hiệu toàn bộ dẫn đến doanh nghiệp cho thuê lại không đủ khả năng bồi thường cho người lao động, công ty cần xử lý hợp đồng và sử dụng tiền ký quỹ theo cơ chế nào?",
+      "expected_article_codes": [
+        "20.2.LQ.51",
+        "20.2.NĐ.3.10",
+        "20.2.NĐ.3.11",
+        "NQ66.18.PL-I.4.C.V",
+        "NQ66.18.PL-I.4.C.VII",
+        "NQ66.18.PL-I.4.C.VIII"
+      ],
+      "expected_evidence_chunk_ids": [
+        "775e1bfc-762e-52ea-86d6-213ce1ec1783",
+        "94b16cc3-d79e-5fa6-bf3c-6a1d7da2b883",
+        "6ce39945-08b5-5190-b2a0-053ba6c8fc12",
+        "1b592ba9-af3e-5f4e-be1a-8d8d7eacf374",
+        "a92ddc35-e5bb-56b1-95a6-2b957e5f393a",
+        "99fbb0af-0c7b-569d-8f85-4cfbbac77413",
+        "f295f903-7006-5d4f-afdc-fa52ccaad17b",
+        "3c10863f-3df5-531d-96a8-3cfb565083d1",
+        "a3371ba4-6253-52e4-a40c-d5f9a25773e5",
+        "2667daf3-2edf-5a70-94d2-87b6b5e058b4",
+        "9892325a-a1d4-5b65-84b8-2a5ed60938ef",
+        "b14bf70f-d0ef-520e-a890-2dfe911166f5",
+        "66350587-68b8-5693-8a2f-40b841c7f500",
+        "19239861-4f5f-539f-9def-a2a443f194f8",
+        "33505a62-857e-54eb-b285-3a9fe68b53e2",
+        "3f014f7d-ce6b-5c4b-8169-30072649587f",
+        "039ef8b7-bf8e-5684-a624-6c353bd253da",
+        "5875dbc2-2f6b-5105-a699-8ccd625e19c9",
+        "e3621b4d-191d-5da1-a9e7-76f7f7c20fe2"
+      ],
+      "latency_ms": 2.215,
+      "metrics": {
+        "at_5": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.0,
+          "article_recall": 0.5,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.210526,
+          "evidence_mrr": 1.0
+        }
+      },
+      "retrieved": [
+        {
+          "rank": 1,
+          "score": 33.68385047,
+          "chunk_id": "99fbb0af-0c7b-569d-8f85-4cfbbac77413",
+          "article_code": "20.2.NĐ.3.11",
+          "article_title": "Xử lý hợp đồng lao động vô hiệu toàn bộ do toàn bộ nội dung của hợp đồng lao động vi phạm pháp luật hoặc công việc đã giao kết trong hợp đồng lao động là công việc mà pháp luật cấm",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.11 — Xử lý hợp đồng lao động vô hiệu toàn bộ do toàn bộ nội dung của hợp đồng lao động vi phạm pháp luật hoặc công việc đã giao kết trong hợp đồng lao động là công việc mà pháp luật cấm Nguồn: NĐ 1. Khi hợp đồng lao động bị tuyên bố vô hiệu toàn bộ, người lao động và người sử dụng lao động giao kết hợp đồng lao động mới theo đúng quy định của pháp luật. 2. Quyền, nghĩa vụ và lợi ích"
+        },
+        {
+          "rank": 2,
+          "score": 33.44043389,
+          "chunk_id": "8c4551d7-153d-5ea5-8c9d-9ae9f2f8df5d",
+          "article_code": "20.2.NĐ.3.18",
+          "article_title": "Rút tiền ký quỹ",
+          "clause_number": "1",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.18 — Rút tiền ký quỹ Khoản: 1 Điểm: a, b, c, d, đ Nguồn: NĐ 1. Chủ tịch Ủy ban nhân dân cấp tỉnh nơi doanh nghiệp cho thuê lại đặt trụ sở chính đồng ý để doanh nghiệp cho thuê lại rút tiền ký quỹ khi doanh nghiệp thuộc một trong các trường hợp sau: a) Doanh nghiệp cho thuê lại gặp khó khăn, không đủ nguồn tài chính để thanh toán đủ tiền lương, bảo hiểm xã hội, bảo hiểm y tế, bảo hiể"
+        },
+        {
+          "rank": 3,
+          "score": 32.58944015,
+          "chunk_id": "1b592ba9-af3e-5f4e-be1a-8d8d7eacf374",
+          "article_code": "20.2.NĐ.3.10",
+          "article_title": "Xử lý hợp đồng lao động vô hiệu toàn bộ do người giao kết không đúng thẩm quyền hoặc vi phạm nguyên tắc giao kết hợp đồng lao động",
+          "clause_number": "3",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.10 — Xử lý hợp đồng lao động vô hiệu toàn bộ do người giao kết không đúng thẩm quyền hoặc vi phạm nguyên tắc giao kết hợp đồng lao động Khoản: 3 Điểm: a, b, c Nguồn: NĐ 3. Trường hợp không ký lại hợp đồng lao động bị tuyên bố vô hiệu toàn bộ thì: a) Thực hiện chấm dứt hợp đồng lao động; b) Quyền, nghĩa vụ, lợi ích của người lao động kể từ khi bắt đầu làm việc theo hợp đồng lao động "
+        },
+        {
+          "rank": 4,
+          "score": 31.17773848,
+          "chunk_id": "3c10863f-3df5-531d-96a8-3cfb565083d1",
+          "article_code": "NQ66.18.PL-I.4.C.VII",
+          "article_title": "Phụ lục I.4, Mục 1, C.VII — Rút tiền ký quỹ quy định tại Điều 18 Nghị định số 145/2020/NĐ-CP",
+          "clause_number": "1",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Đề mục: labor — Lao động, tiền lương Mục I.4/C/VII — Lĩnh vực lao động, tiền lương Điều NQ66.18.PL-I.4.C.VII — Phụ lục I.4, Mục 1, C.VII — Rút tiền ký quỹ quy định tại Điều 18 Nghị định số 145/2020/NĐ-CP Khoản: 1 Điểm: a, b, c Nguồn: Phụ lục Nghị quyết VII. Rút tiền ký quỹ quy định tại Điều 18 Nghị định số 145/2020/NĐ-CP Trường hợp rút tiền ký quỹ theo quy định tại điểm C.VII.1.a và C.VII.1.b Mục "
+        },
+        {
+          "rank": 5,
+          "score": 30.82310561,
+          "chunk_id": "94b16cc3-d79e-5fa6-bf3c-6a1d7da2b883",
+          "article_code": "20.2.NĐ.3.10",
+          "article_title": "Xử lý hợp đồng lao động vô hiệu toàn bộ do người giao kết không đúng thẩm quyền hoặc vi phạm nguyên tắc giao kết hợp đồng lao động",
+          "clause_number": "1",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.10 — Xử lý hợp đồng lao động vô hiệu toàn bộ do người giao kết không đúng thẩm quyền hoặc vi phạm nguyên tắc giao kết hợp đồng lao động Khoản: 1 Nguồn: NĐ 1. Khi hợp đồng lao động bị tuyên bố vô hiệu toàn bộ, người lao động và người sử dụng lao động ký lại hợp đồng lao động theo đúng quy định của pháp luật."
+        }
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_038",
+      "category": "multi_article",
+      "question": "Một nhân viên nữ mang thai có xác nhận của bệnh viện về việc tiếp tục làm việc sẽ ảnh hưởng xấu tới thai nhi nên muốn tạm hoãn hợp đồng, đồng thời cô ấy phản ánh công ty không cho nghỉ 30 phút mỗi ngày trong thời gian hành kinh thì công ty phải xử lý yêu cầu tạm hoãn này thế nào và rủi ro pháp lý đối với việc không cho nghỉ hành kinh là gì?",
+      "expected_article_codes": [
+        "20.2.LQ.137",
+        "20.2.LQ.138",
+        "20.2.NĐ.3.80"
+      ],
+      "expected_evidence_chunk_ids": [
+        "beeaf23f-a054-51c6-bcb6-eaa6a028c0e3",
+        "80a0d1d0-7df3-5b1b-b1eb-0805e735e518",
+        "4abf1dc7-6bcc-5b2c-87c4-89e72c184723",
+        "01259c67-4a72-572a-8a29-5f649b96b129",
+        "48900dd9-350c-5713-89ce-ff2b65b9b6f2",
+        "240ca392-e545-5680-ab4c-8e021ecae4ca",
+        "49bf1a3b-b126-51a1-a9c5-ace1fce6e771",
+        "2f1a9719-4a6d-5984-bfb8-6333c2796a9b"
+      ],
+      "latency_ms": 2.687,
+      "metrics": {
+        "at_5": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.375,
+          "evidence_mrr": 1.0
+        }
+      },
+      "retrieved": [
+        {
+          "rank": 1,
+          "score": 83.98423966,
+          "chunk_id": "80a0d1d0-7df3-5b1b-b1eb-0805e735e518",
+          "article_code": "20.2.LQ.138",
+          "article_title": "Quyền đơn phương chấm dứt, tạm hoãn hợp đồng lao động của lao động nữ mang thai",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.138 — Quyền đơn phương chấm dứt, tạm hoãn hợp đồng lao động của lao động nữ mang thai Nguồn: Văn bản hợp nhất 1. Lao động nữ mang thai nếu có xác nhận của cơ sở khám bệnh, chữa bệnh có thẩm quyền về việc tiếp tục làm việc sẽ ảnh hưởng xấu tới thai nhi thì có quyền đơn phương chấm dứt hợp đồng lao động hoặc tạm hoãn thực hiện hợp đồng lao động. Trường hợp đơn phương chấm dứt hợp đồng l"
+        },
+        {
+          "rank": 2,
+          "score": 52.83898688,
+          "chunk_id": "beeaf23f-a054-51c6-bcb6-eaa6a028c0e3",
+          "article_code": "20.2.LQ.137",
+          "article_title": "Bảo vệ thai sản",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.137 — Bảo vệ thai sản Nguồn: Văn bản hợp nhất 1. Người sử dụng lao động không được sử dụng người lao động làm việc ban đêm, làm thêm giờ và đi công tác xa trong trường hợp sau đây: a) Mang thai từ tháng thứ 07 hoặc từ tháng thứ 06 nếu làm việc ở vùng cao, vùng sâu, vùng xa, biên giới, hải đảo; b) Đang nuôi con dưới 12 tháng tuổi, trừ trường hợp được người lao động đồng ý. 2. Lao động "
+        },
+        {
+          "rank": 3,
+          "score": 42.27020709,
+          "chunk_id": "48900dd9-350c-5713-89ce-ff2b65b9b6f2",
+          "article_code": "20.2.NĐ.3.80",
+          "article_title": "Chăm sóc sức khỏe đối với lao động nữ",
+          "clause_number": "3",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.80 — Chăm sóc sức khỏe đối với lao động nữ Khoản: 3 Điểm: a, b, c Nguồn: NĐ 3. Nghỉ trong thời gian hành kinh của lao động nữ: a) Lao động nữ trong thời gian hành kinh có quyền được nghỉ mỗi ngày 30 phút tính vào thời giờ làm việc và vẫn được hưởng đủ tiền lương theo hợp đồng lao động. Số ngày có thời gian nghỉ trong thời gian hành kinh do hai bên thỏa thuận phù hợp với điều kiện th"
+        },
+        {
+          "rank": 4,
+          "score": 39.80311528,
+          "chunk_id": "16ccfe28-10fb-5967-9463-9069796b514f",
+          "article_code": "20.2.LQ.30",
+          "article_title": "Tạm hoãn thực hiện hợp đồng lao động",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.30 — Tạm hoãn thực hiện hợp đồng lao động Nguồn: Văn bản hợp nhất 1. Các trường hợp tạm hoãn thực hiện hợp đồng lao động bao gồm: a) Người lao động thực hiện nghĩa vụ quân sự, nghĩa vụ tham gia Dân quân tự vệ; b) Người lao động bị tạm giữ, tạm giam theo quy định của pháp luật về tố tụng hình sự; c) Người lao động phải chấp hành quyết định áp dụng biện pháp đưa vào trường giáo dưỡng, c"
+        },
+        {
+          "rank": 5,
+          "score": 38.73989404,
+          "chunk_id": "d0d33541-efbf-5f7f-850f-8f7c8cd2e164",
+          "article_code": "20.2.LQ.139",
+          "article_title": "Nghỉ thai sản",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.139 — Nghỉ thai sản Nguồn: Văn bản hợp nhất 1.4 Lao động nữ được nghỉ thai sản trước và sau khi sinh con là 06 tháng; trường hợp sinh con thứ hai, lao động nữ được nghỉ thai sản trước và sau khi sinh con là 07 tháng; thời gian nghỉ trước khi sinh không quá 02 tháng. Trường hợp lao động nữ sinh đôi trở lên thì tính từ con thứ hai trở đi, cứ mỗi con, người mẹ được nghỉ thêm 01 tháng. 2."
+        }
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_040",
+      "category": "multi_article",
+      "question": "Công ty có nhân viên làm việc không trọn thời gian vừa hết thời hạn tạm hoãn hợp đồng nhưng hiện đang nuôi con dưới 12 tháng tuổi thì công ty phải xử lý việc nhận lại và quyền đơn phương chấm dứt hợp đồng với nhân viên này như thế nào?",
+      "expected_article_codes": [
+        "20.2.LQ.31",
+        "20.2.LQ.32",
+        "20.2.LQ.37",
+        "20.2.LQ.137"
+      ],
+      "expected_evidence_chunk_ids": [
+        "95f91be0-a805-5406-85ff-0aae2b0022d4",
+        "48fb511d-393b-5813-a82c-477131e2a966",
+        "c17372aa-1a9e-507a-8978-beb4b96c7a1a",
+        "beeaf23f-a054-51c6-bcb6-eaa6a028c0e3"
+      ],
+      "latency_ms": 1.861,
+      "metrics": {
+        "at_5": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.0,
+          "article_recall": 0.5,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.5,
+          "evidence_mrr": 1.0
+        }
+      },
+      "retrieved": [
+        {
+          "rank": 1,
+          "score": 45.26990887,
+          "chunk_id": "beeaf23f-a054-51c6-bcb6-eaa6a028c0e3",
+          "article_code": "20.2.LQ.137",
+          "article_title": "Bảo vệ thai sản",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.137 — Bảo vệ thai sản Nguồn: Văn bản hợp nhất 1. Người sử dụng lao động không được sử dụng người lao động làm việc ban đêm, làm thêm giờ và đi công tác xa trong trường hợp sau đây: a) Mang thai từ tháng thứ 07 hoặc từ tháng thứ 06 nếu làm việc ở vùng cao, vùng sâu, vùng xa, biên giới, hải đảo; b) Đang nuôi con dưới 12 tháng tuổi, trừ trường hợp được người lao động đồng ý. 2. Lao động "
+        },
+        {
+          "rank": 2,
+          "score": 41.84189207,
+          "chunk_id": "80a0d1d0-7df3-5b1b-b1eb-0805e735e518",
+          "article_code": "20.2.LQ.138",
+          "article_title": "Quyền đơn phương chấm dứt, tạm hoãn hợp đồng lao động của lao động nữ mang thai",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.138 — Quyền đơn phương chấm dứt, tạm hoãn hợp đồng lao động của lao động nữ mang thai Nguồn: Văn bản hợp nhất 1. Lao động nữ mang thai nếu có xác nhận của cơ sở khám bệnh, chữa bệnh có thẩm quyền về việc tiếp tục làm việc sẽ ảnh hưởng xấu tới thai nhi thì có quyền đơn phương chấm dứt hợp đồng lao động hoặc tạm hoãn thực hiện hợp đồng lao động. Trường hợp đơn phương chấm dứt hợp đồng l"
+        },
+        {
+          "rank": 3,
+          "score": 35.76863249,
+          "chunk_id": "4da14657-11b2-596b-ab83-4d13e7686087",
+          "article_code": "20.2.NĐ.3.7",
+          "article_title": "Thời hạn báo trước khi đơn phương chấm dứt hợp đồng lao động đối với một số ngành, nghề, công việc đặc thù",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.7 — Thời hạn báo trước khi đơn phương chấm dứt hợp đồng lao động đối với một số ngành, nghề, công việc đặc thù Nguồn: NĐ Ngành, nghề, công việc đặc thù và thời hạn báo trước khi đơn phương chấm dứt hợp đồng lao động quy định tại điểm d khoản 1 Điều 35 và điểm d khoản 2 Điều 36 của Bộ luật Lao động như sau: 1. Ngành, nghề, công việc đặc thù gồm: a) Thành viên tổ lái tàu bay; nhân viê"
+        },
+        {
+          "rank": 4,
+          "score": 35.32746401,
+          "chunk_id": "c17372aa-1a9e-507a-8978-beb4b96c7a1a",
+          "article_code": "20.2.LQ.37",
+          "article_title": "Trường hợp người sử dụng lao động không được thực hiện quyền đơn phương chấm dứt hợp đồng lao động",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.37 — Trường hợp người sử dụng lao động không được thực hiện quyền đơn phương chấm dứt hợp đồng lao động Nguồn: Văn bản hợp nhất 1. Người lao động ốm đau hoặc bị tai nạn, bệnh nghề nghiệp đang điều trị, điều dưỡng theo chỉ định của cơ sở khám bệnh, chữa bệnh có thẩm quyền, trừ trường hợp quy định tại điểm b khoản 1 Điều 36 của Bộ luật này. 2. Người lao động đang nghỉ hằng năm, nghỉ việ"
+        },
+        {
+          "rank": 5,
+          "score": 35.10384359,
+          "chunk_id": "42963c0c-22e4-5f03-a66b-f107d2d6510e",
+          "article_code": "20.2.LQ.122",
+          "article_title": "Nguyên tắc, trình tự, thủ tục xử lý kỷ luật lao động",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.122 — Nguyên tắc, trình tự, thủ tục xử lý kỷ luật lao động Nguồn: Văn bản hợp nhất 1. Việc xử lý kỷ luật lao động được quy định như sau: a) Người sử dụng lao động phải chứng minh được lỗi của người lao động; b) Phải có sự tham gia của tổ chức đại diện người lao động tại cơ sở mà người lao động đang bị xử lý kỷ luật là thành viên; c) Người lao động phải có mặt và có quyền tự bào chữa, "
+        }
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_042",
+      "category": "multi_article",
+      "question": "Công ty đang tái cơ cấu tổ chức dẫn đến nhiều người mất việc, đối với những nhân viên đang tạm hoãn hợp đồng hoặc đang làm việc không trọn thời gian thì công ty phải xử lý việc nhận lại và cho thôi việc như thế nào để đúng luật?",
+      "expected_article_codes": [
+        "20.2.LQ.31",
+        "20.2.LQ.32",
+        "20.2.LQ.42",
+        "20.2.LQ.44",
+        "20.2.LQ.47"
+      ],
+      "expected_evidence_chunk_ids": [
+        "95f91be0-a805-5406-85ff-0aae2b0022d4",
+        "48fb511d-393b-5813-a82c-477131e2a966",
+        "1f975c88-a8e6-5aca-b073-4e320fb93eee",
+        "965d441b-130d-58db-a34d-97aec12c9ccb",
+        "822babc1-f355-57d2-a9fd-24ad0fecf307"
+      ],
+      "latency_ms": 2.03,
+      "metrics": {
+        "at_5": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.0,
+          "article_recall": 0.2,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.2,
+          "evidence_mrr": 1.0
+        }
+      },
+      "retrieved": [
+        {
+          "rank": 1,
+          "score": 33.94496264,
+          "chunk_id": "1f975c88-a8e6-5aca-b073-4e320fb93eee",
+          "article_code": "20.2.LQ.42",
+          "article_title": "Nghĩa vụ của người sử dụng lao động trong trường hợp thay đổi cơ cấu, công nghệ hoặc vì lý do kinh tế",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.42 — Nghĩa vụ của người sử dụng lao động trong trường hợp thay đổi cơ cấu, công nghệ hoặc vì lý do kinh tế Nguồn: Văn bản hợp nhất 1. Những trường hợp sau đây được coi là thay đổi cơ cấu, công nghệ: a) Thay đổi cơ cấu tổ chức, tổ chức lại lao động; b) Thay đổi quy trình, công nghệ, máy móc, thiết bị sản xuất, kinh doanh gắn với ngành, nghề sản xuất, kinh doanh của người sử dụng lao độ"
+        },
+        {
+          "rank": 2,
+          "score": 31.04198731,
+          "chunk_id": "20d81f9d-06e0-5c42-ab45-63a9adfa45c9",
+          "article_code": "20.2.LQ.128",
+          "article_title": "Tạm đình chỉ công việc",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.128 — Tạm đình chỉ công việc Nguồn: Văn bản hợp nhất 1. Người sử dụng lao động có quyền tạm đình chỉ công việc của người lao động khi vụ việc vi phạm có những tình tiết phức tạp nếu xét thấy để người lao động tiếp tục làm việc sẽ gây khó khăn cho việc xác minh. Việc tạm đình chỉ công việc của người lao động chỉ được thực hiện sau khi tham khảo ý kiến của tổ chức đại diện người lao độn"
+        },
+        {
+          "rank": 3,
+          "score": 29.87759357,
+          "chunk_id": "80a0d1d0-7df3-5b1b-b1eb-0805e735e518",
+          "article_code": "20.2.LQ.138",
+          "article_title": "Quyền đơn phương chấm dứt, tạm hoãn hợp đồng lao động của lao động nữ mang thai",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.138 — Quyền đơn phương chấm dứt, tạm hoãn hợp đồng lao động của lao động nữ mang thai Nguồn: Văn bản hợp nhất 1. Lao động nữ mang thai nếu có xác nhận của cơ sở khám bệnh, chữa bệnh có thẩm quyền về việc tiếp tục làm việc sẽ ảnh hưởng xấu tới thai nhi thì có quyền đơn phương chấm dứt hợp đồng lao động hoặc tạm hoãn thực hiện hợp đồng lao động. Trường hợp đơn phương chấm dứt hợp đồng l"
+        },
+        {
+          "rank": 4,
+          "score": 28.51912622,
+          "chunk_id": "42963c0c-22e4-5f03-a66b-f107d2d6510e",
+          "article_code": "20.2.LQ.122",
+          "article_title": "Nguyên tắc, trình tự, thủ tục xử lý kỷ luật lao động",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.122 — Nguyên tắc, trình tự, thủ tục xử lý kỷ luật lao động Nguồn: Văn bản hợp nhất 1. Việc xử lý kỷ luật lao động được quy định như sau: a) Người sử dụng lao động phải chứng minh được lỗi của người lao động; b) Phải có sự tham gia của tổ chức đại diện người lao động tại cơ sở mà người lao động đang bị xử lý kỷ luật là thành viên; c) Người lao động phải có mặt và có quyền tự bào chữa, "
+        },
+        {
+          "rank": 5,
+          "score": 26.67944658,
+          "chunk_id": "16ccfe28-10fb-5967-9463-9069796b514f",
+          "article_code": "20.2.LQ.30",
+          "article_title": "Tạm hoãn thực hiện hợp đồng lao động",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.30 — Tạm hoãn thực hiện hợp đồng lao động Nguồn: Văn bản hợp nhất 1. Các trường hợp tạm hoãn thực hiện hợp đồng lao động bao gồm: a) Người lao động thực hiện nghĩa vụ quân sự, nghĩa vụ tham gia Dân quân tự vệ; b) Người lao động bị tạm giữ, tạm giam theo quy định của pháp luật về tố tụng hình sự; c) Người lao động phải chấp hành quyết định áp dụng biện pháp đưa vào trường giáo dưỡng, c"
+        }
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_043",
+      "category": "multi_article",
+      "question": "Trong trường hợp hợp đồng lao động bị tuyên bố vô hiệu toàn bộ, công ty cần xử lý việc ký lại hợp đồng như thế nào, cách tính lương cho những ngày nghỉ lễ tết của nhân viên trong giai đoạn này ra sao và tiêu chuẩn thiết lập phòng vắt sữa mẹ tại nơi làm việc cho lao động nữ là gì?",
+      "expected_article_codes": [
+        "20.2.NĐ.3.10",
+        "20.2.NĐ.3.11",
+        "20.2.LQ.112",
+        "20.2.NĐ.3.67",
+        "20.2.NĐ.3.76",
+        "20.2.NĐ.3.80"
+      ],
+      "expected_evidence_chunk_ids": [
+        "94b16cc3-d79e-5fa6-bf3c-6a1d7da2b883",
+        "6ce39945-08b5-5190-b2a0-053ba6c8fc12",
+        "1b592ba9-af3e-5f4e-be1a-8d8d7eacf374",
+        "a92ddc35-e5bb-56b1-95a6-2b957e5f393a",
+        "99fbb0af-0c7b-569d-8f85-4cfbbac77413",
+        "a862043e-40bf-5684-8323-2439363bc0fa",
+        "06444bdd-be81-5f77-99f2-188891020052",
+        "a5122f59-ecc7-5c77-a36b-70dd53ac28ac",
+        "4abf1dc7-6bcc-5b2c-87c4-89e72c184723",
+        "01259c67-4a72-572a-8a29-5f649b96b129",
+        "48900dd9-350c-5713-89ce-ff2b65b9b6f2",
+        "240ca392-e545-5680-ab4c-8e021ecae4ca",
+        "49bf1a3b-b126-51a1-a9c5-ace1fce6e771",
+        "2f1a9719-4a6d-5984-bfb8-6333c2796a9b"
+      ],
+      "latency_ms": 2.632,
+      "metrics": {
+        "at_5": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.0,
+          "article_recall": 0.666667,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.285714,
+          "evidence_mrr": 1.0
+        }
+      },
+      "retrieved": [
+        {
+          "rank": 1,
+          "score": 39.8057053,
+          "chunk_id": "49bf1a3b-b126-51a1-a9c5-ace1fce6e771",
+          "article_code": "20.2.NĐ.3.80",
+          "article_title": "Chăm sóc sức khỏe đối với lao động nữ",
+          "clause_number": "5",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.80 — Chăm sóc sức khỏe đối với lao động nữ Khoản: 5 Nguồn: NĐ 5. Khuyến khích người sử dụng lao động lắp đặt phòng vắt, trữ sữa mẹ phù hợp với điều kiện thực tế tại nơi làm việc, nhu cầu của lao động nữ và khả năng của người sử dụng lao động. Trường hợp người sử dụng lao động sử dụng từ 1.000 người lao động nữ trở lên thì phải lắp đặt phòng vắt, trữ sữa mẹ tại nơi làm việc."
+        },
+        {
+          "rank": 2,
+          "score": 36.97700854,
+          "chunk_id": "a5122f59-ecc7-5c77-a36b-70dd53ac28ac",
+          "article_code": "20.2.NĐ.3.76",
+          "article_title": "Phòng vắt, trữ sữa mẹ",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.76 — Phòng vắt, trữ sữa mẹ Nguồn: NĐ Phòng vắt, trữ sữa mẹ là một không gian riêng tư, không phải buồng tắm hay buồng vệ sinh; có nguồn điện, nước, bàn, ghế, tủ lạnh bảo đảm vệ sinh, quạt hoặc điều hòa; bố trí ở vị trí thuận tiện sử dụng, được che chắn khỏi sự xâm phạm, tầm nhìn của đồng nghiệp và công cộng để lao động nữ có thể cho con bú hoặc vắt, trữ sữa."
+        },
+        {
+          "rank": 3,
+          "score": 36.18903048,
+          "chunk_id": "99fbb0af-0c7b-569d-8f85-4cfbbac77413",
+          "article_code": "20.2.NĐ.3.11",
+          "article_title": "Xử lý hợp đồng lao động vô hiệu toàn bộ do toàn bộ nội dung của hợp đồng lao động vi phạm pháp luật hoặc công việc đã giao kết trong hợp đồng lao động là công việc mà pháp luật cấm",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.11 — Xử lý hợp đồng lao động vô hiệu toàn bộ do toàn bộ nội dung của hợp đồng lao động vi phạm pháp luật hoặc công việc đã giao kết trong hợp đồng lao động là công việc mà pháp luật cấm Nguồn: NĐ 1. Khi hợp đồng lao động bị tuyên bố vô hiệu toàn bộ, người lao động và người sử dụng lao động giao kết hợp đồng lao động mới theo đúng quy định của pháp luật. 2. Quyền, nghĩa vụ và lợi ích"
+        },
+        {
+          "rank": 4,
+          "score": 36.04401847,
+          "chunk_id": "1b592ba9-af3e-5f4e-be1a-8d8d7eacf374",
+          "article_code": "20.2.NĐ.3.10",
+          "article_title": "Xử lý hợp đồng lao động vô hiệu toàn bộ do người giao kết không đúng thẩm quyền hoặc vi phạm nguyên tắc giao kết hợp đồng lao động",
+          "clause_number": "3",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.10 — Xử lý hợp đồng lao động vô hiệu toàn bộ do người giao kết không đúng thẩm quyền hoặc vi phạm nguyên tắc giao kết hợp đồng lao động Khoản: 3 Điểm: a, b, c Nguồn: NĐ 3. Trường hợp không ký lại hợp đồng lao động bị tuyên bố vô hiệu toàn bộ thì: a) Thực hiện chấm dứt hợp đồng lao động; b) Quyền, nghĩa vụ, lợi ích của người lao động kể từ khi bắt đầu làm việc theo hợp đồng lao động "
+        },
+        {
+          "rank": 5,
+          "score": 35.0388565,
+          "chunk_id": "775e1bfc-762e-52ea-86d6-213ce1ec1783",
+          "article_code": "20.2.LQ.51",
+          "article_title": "Xử lý hợp đồng lao động vô hiệu",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.51 — Xử lý hợp đồng lao động vô hiệu Nguồn: Văn bản hợp nhất 1. Khi hợp đồng lao động bị tuyên bố vô hiệu từng phần thì xử lý như sau: a) Quyền, nghĩa vụ và lợi ích của hai bên được giải quyết theo thỏa ước lao động tập thể đang áp dụng; trường hợp không có thỏa ước lao động tập thể thì thực hiện theo quy định của pháp luật; b) Hai bên tiến hành sửa đổi, bổ sung phần của hợp đồng lao "
+        }
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_044",
+      "category": "multi_article",
+      "question": "Công ty đang thực hiện sáp nhập và ảnh hưởng đến nhiều nhân sự, trong đó có một nhân viên đang tạm hoãn hợp đồng và một nhân viên làm việc không trọn thời gian, thì công ty phải xử lý phương án sử dụng lao động và quyền lợi cho hai nhóm này như thế nào?",
+      "expected_article_codes": [
+        "20.2.LQ.30",
+        "20.2.LQ.31",
+        "20.2.LQ.32",
+        "20.2.LQ.43",
+        "20.2.LQ.44",
+        "20.2.LQ.47"
+      ],
+      "expected_evidence_chunk_ids": [
+        "16ccfe28-10fb-5967-9463-9069796b514f",
+        "95f91be0-a805-5406-85ff-0aae2b0022d4",
+        "48fb511d-393b-5813-a82c-477131e2a966",
+        "75fb37df-0043-5627-87d5-36c7077decdf",
+        "965d441b-130d-58db-a34d-97aec12c9ccb",
+        "822babc1-f355-57d2-a9fd-24ad0fecf307"
+      ],
+      "latency_ms": 2.296,
+      "metrics": {
+        "at_5": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.0,
+          "article_recall": 0.333333,
+          "article_mrr": 0.5,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.333333,
+          "evidence_mrr": 0.5
+        }
+      },
+      "retrieved": [
+        {
+          "rank": 1,
+          "score": 36.36905195,
+          "chunk_id": "80a0d1d0-7df3-5b1b-b1eb-0805e735e518",
+          "article_code": "20.2.LQ.138",
+          "article_title": "Quyền đơn phương chấm dứt, tạm hoãn hợp đồng lao động của lao động nữ mang thai",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.138 — Quyền đơn phương chấm dứt, tạm hoãn hợp đồng lao động của lao động nữ mang thai Nguồn: Văn bản hợp nhất 1. Lao động nữ mang thai nếu có xác nhận của cơ sở khám bệnh, chữa bệnh có thẩm quyền về việc tiếp tục làm việc sẽ ảnh hưởng xấu tới thai nhi thì có quyền đơn phương chấm dứt hợp đồng lao động hoặc tạm hoãn thực hiện hợp đồng lao động. Trường hợp đơn phương chấm dứt hợp đồng l"
+        },
+        {
+          "rank": 2,
+          "score": 30.11658904,
+          "chunk_id": "16ccfe28-10fb-5967-9463-9069796b514f",
+          "article_code": "20.2.LQ.30",
+          "article_title": "Tạm hoãn thực hiện hợp đồng lao động",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.30 — Tạm hoãn thực hiện hợp đồng lao động Nguồn: Văn bản hợp nhất 1. Các trường hợp tạm hoãn thực hiện hợp đồng lao động bao gồm: a) Người lao động thực hiện nghĩa vụ quân sự, nghĩa vụ tham gia Dân quân tự vệ; b) Người lao động bị tạm giữ, tạm giam theo quy định của pháp luật về tố tụng hình sự; c) Người lao động phải chấp hành quyết định áp dụng biện pháp đưa vào trường giáo dưỡng, c"
+        },
+        {
+          "rank": 3,
+          "score": 26.99708271,
+          "chunk_id": "4d6b0e20-ae7d-53a2-928f-ade1e1a706fe",
+          "article_code": "20.2.NĐ.6.1",
+          "article_title": "Phạm vi điều chỉnh",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.6.1 — Phạm vi điều chỉnh Nguồn: NĐ Nghị định này quy định chính sách đối với người lao động dôi dư trong công ty trách nhiệm hữu hạn một thành viên do Nhà nước nắm giữ 100% vốn điều lệ (gồm: công ty mẹ của tập đoàn kinh tế nhà nước; công ty mẹ của tổng công ty nhà nước; công ty mẹ trong nhóm công ty mẹ - công ty con; công ty độc lập) khi thực hiện chuyển đổi sở hữu, sắp xếp lại theo p"
+        },
+        {
+          "rank": 4,
+          "score": 26.63381172,
+          "chunk_id": "041c7488-9585-55ed-a925-548b7be5446c",
+          "article_code": "20.2.NĐ.6.13",
+          "article_title": "Áp dụng quy định của Nghị định đối với các đối tượng khác",
+          "clause_number": "4",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.6.13 — Áp dụng quy định của Nghị định đối với các đối tượng khác Khoản: 4 Nguồn: NĐ 4. Đối với công ty trách nhiệm hữu hạn một thành viên do công ty mẹ của tập đoàn kinh tế nhà nước, công ty mẹ của tổng công ty nhà nước, công ty mẹ trong nhóm công ty mẹ - công ty con quy định tại Điều 1 Nghị định này nắm giữ 100% vốn điều lệ (doanh nghiệp cấp II), khi thực hiện sắp xếp lại theo phương"
+        },
+        {
+          "rank": 5,
+          "score": 26.47336119,
+          "chunk_id": "75fb37df-0043-5627-87d5-36c7077decdf",
+          "article_code": "20.2.LQ.43",
+          "article_title": "Nghĩa vụ của người sử dụng lao động khi chia, tách, hợp nhất, sáp nhập; bán, cho thuê, chuyển đổi loại hình doanh nghiệp; chuyển nhượng quyền sở hữu, quyền sử dụng tài sản của doanh nghiệp, hợp tác xã",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.43 — Nghĩa vụ của người sử dụng lao động khi chia, tách, hợp nhất, sáp nhập; bán, cho thuê, chuyển đổi loại hình doanh nghiệp; chuyển nhượng quyền sở hữu, quyền sử dụng tài sản của doanh nghiệp, hợp tác xã Nguồn: Văn bản hợp nhất 1. Trong trường hợp chia, tách, hợp nhất, sáp nhập; bán, cho thuê, chuyển đổi loại hình doanh nghiệp; chuyển nhượng quyền sở hữu, quyền sử dụng tài sản của d"
+        }
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_045",
+      "category": "multi_article",
+      "question": "Công ty vận hành hệ thống đường ống phân phối khí ký hợp đồng lao động sai thẩm quyền dẫn đến bị tuyên bố vô hiệu toàn bộ, vậy việc xử lý hợp đồng này, cách tính lương cho những ngày nghỉ lễ tết và quyền lợi về thời giờ làm việc đặc thù của nhân viên sẽ được thực hiện như thế nào?",
+      "expected_article_codes": [
+        "20.2.NĐ.3.10",
+        "20.2.LQ.112",
+        "20.2.NĐ.3.67",
+        "20.2.TT.6.2",
+        "20.2.TT.6.4",
+        "20.2.TT.6.5",
+        "20.2.TT.6.7",
+        "20.2.TT.6.8"
+      ],
+      "expected_evidence_chunk_ids": [
+        "94b16cc3-d79e-5fa6-bf3c-6a1d7da2b883",
+        "6ce39945-08b5-5190-b2a0-053ba6c8fc12",
+        "1b592ba9-af3e-5f4e-be1a-8d8d7eacf374",
+        "a92ddc35-e5bb-56b1-95a6-2b957e5f393a",
+        "a862043e-40bf-5684-8323-2439363bc0fa",
+        "06444bdd-be81-5f77-99f2-188891020052",
+        "795c5663-ca36-55f3-958b-d684a04c20d9",
+        "4b4799ee-8097-5a33-a1ce-7ee7368624b3",
+        "b6188185-ee94-55e9-bcbd-2947f7c3eee7",
+        "7721a7b8-e95a-5d7e-9c93-053b01312d15",
+        "701c8082-dc37-5935-bd95-f8f5645c794c"
+      ],
+      "latency_ms": 2.356,
+      "metrics": {
+        "at_5": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.0,
+          "article_recall": 0.375,
+          "article_mrr": 0.333333,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.272727,
+          "evidence_mrr": 0.333333
+        }
+      },
+      "retrieved": [
+        {
+          "rank": 1,
+          "score": 44.05332544,
+          "chunk_id": "0a2d16e2-8881-56ff-a553-41b3deec122b",
+          "article_code": "20.2.TT.6.1",
+          "article_title": "Phạm vi điều chỉnh",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.TT.6.1 — Phạm vi điều chỉnh Nguồn: TT Thông tư này quy định về thời giờ làm việc, thời giờ nghỉ ngơi đối với người lao động làm công việc vận hành, bảo dưỡng, sửa chữa hệ thống đường ống phân phối khí và các công trình khí."
+        },
+        {
+          "rank": 2,
+          "score": 42.31851496,
+          "chunk_id": "775e1bfc-762e-52ea-86d6-213ce1ec1783",
+          "article_code": "20.2.LQ.51",
+          "article_title": "Xử lý hợp đồng lao động vô hiệu",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.LQ.51 — Xử lý hợp đồng lao động vô hiệu Nguồn: Văn bản hợp nhất 1. Khi hợp đồng lao động bị tuyên bố vô hiệu từng phần thì xử lý như sau: a) Quyền, nghĩa vụ và lợi ích của hai bên được giải quyết theo thỏa ước lao động tập thể đang áp dụng; trường hợp không có thỏa ước lao động tập thể thì thực hiện theo quy định của pháp luật; b) Hai bên tiến hành sửa đổi, bổ sung phần của hợp đồng lao "
+        },
+        {
+          "rank": 3,
+          "score": 40.51581631,
+          "chunk_id": "4b4799ee-8097-5a33-a1ce-7ee7368624b3",
+          "article_code": "20.2.TT.6.4",
+          "article_title": "Thời giờ làm việc",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.TT.6.4 — Thời giờ làm việc Nguồn: TT Người lao động làm công việc vận hành, bảo dưỡng, sửa chữa hệ thống đường ống phân phối khí và các công trình khí làm việc theo ca và phiên làm việc, cụ thể như sau: 1. Ca làm việc không quá 12 giờ trong 01 ngày. 2. Phiên làm việc tối đa là 07 ngày."
+        },
+        {
+          "rank": 4,
+          "score": 39.00563519,
+          "chunk_id": "795c5663-ca36-55f3-958b-d684a04c20d9",
+          "article_code": "20.2.TT.6.2",
+          "article_title": "Đối tượng áp dụng",
+          "clause_number": null,
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.TT.6.2 — Đối tượng áp dụng Nguồn: TT 1. Đối tượng áp dụng: a. Người sử dụng lao động là tổ chức, cá nhân sử dụng lao động hoạt động trong các lĩnh vực: quản lý, vận hành, bảo dưỡng, sửa chữa hệ thống đường ống phân phối khí và các công trình dầu khí trên đất liền; b. Người lao động làm công việc vận hành, bảo dưỡng, sửa chữa hệ thống đường ống phân phối khí và các công trình khí tại các "
+        },
+        {
+          "rank": 5,
+          "score": 37.98842096,
+          "chunk_id": "1b592ba9-af3e-5f4e-be1a-8d8d7eacf374",
+          "article_code": "20.2.NĐ.3.10",
+          "article_title": "Xử lý hợp đồng lao động vô hiệu toàn bộ do người giao kết không đúng thẩm quyền hoặc vi phạm nguyên tắc giao kết hợp đồng lao động",
+          "clause_number": "3",
+          "retrieval_origin": "sparse_vncorenlp_bm25",
+          "component_ranks": {},
+          "component_scores": {},
+          "content_preview": "Điều 20.2.NĐ.3.10 — Xử lý hợp đồng lao động vô hiệu toàn bộ do người giao kết không đúng thẩm quyền hoặc vi phạm nguyên tắc giao kết hợp đồng lao động Khoản: 3 Điểm: a, b, c Nguồn: NĐ 3. Trường hợp không ký lại hợp đồng lao động bị tuyên bố vô hiệu toàn bộ thì: a) Thực hiện chấm dứt hợp đồng lao động; b) Quyền, nghĩa vụ, lợi ích của người lao động kể từ khi bắt đầu làm việc theo hợp đồng lao động "
+        }
+      ]
+    }
+  ]
+}

@@ -13,7 +13,7 @@ import pytest
 # Helpers
 # ---------------------------------------------------------------------------
 
-CORPUS_PATH = Path("data/processed/articles_raw.json")
+CORPUS_PATH = Path("data/legacy/phapdien/processed/articles_raw.json")
 
 
 def _simple_corpus() -> dict:
@@ -102,7 +102,7 @@ def test_build_parser_defaults():
     from scripts.build_chunks import build_parser
 
     args = build_parser().parse_args([])
-    assert args.input == "data/processed/articles_raw.json"
+    assert args.input == "data/legacy/phapdien/processed/articles_raw.json"
     assert args.output == "data/processed/legal_chunks.jsonl"
     assert args.summary_output == "data/processed/chunking_summary.json"
     assert args.target_tokens == 500

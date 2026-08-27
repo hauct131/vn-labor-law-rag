@@ -70,6 +70,7 @@ def initialize_database() -> None:
 
     # Import models here so their metadata is registered before create_all.
     from app.models import conversation as _conversation_models  # noqa: F401
+    from app.models import contract_review as _contract_review_models  # noqa: F401
     from app.db.migrations import apply_session_auth_compatibility
 
     engine = get_engine()

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -27,6 +28,17 @@ def test_resolve_project_path_is_independent_of_cwd(monkeypatch, tmp_path) -> No
     resolved = project_paths.resolve_project_path("data/example.json")
 
     assert resolved == (project_root / "data/example.json").resolve()
+
+
+def test_explicit_project_root_supports_container_layout(monkeypatch, tmp_path) -> None:
+    container_root = tmp_path / "app"
+    container_root.mkdir()
+    monkeypatch.setenv("APP_PROJECT_ROOT", str(container_root))
+
+    assert project_paths._configured_project_root() == container_root.resolve()
+
+    monkeypatch.delenv("APP_PROJECT_ROOT")
+    assert "APP_PROJECT_ROOT" not in os.environ
 
 
 def test_runtime_consumers_resolve_relative_paths_from_project_root(

@@ -1,4 +1,5 @@
 from enum import StrEnum
+from typing import Any
 from uuid import UUID
 
 from pydantic import BaseModel, Field
@@ -8,6 +9,24 @@ class RetrievalMethod(StrEnum):
     SPARSE = "sparse"
     DENSE = "dense"
     HYBRID = "hybrid"
+
+
+class FallbackReason(StrEnum):
+    RETRIEVAL_CONTEXT_EMPTY = "retrieval_context_empty"
+    SCOPE_CLASSIFIER_OUT_OF_SCOPE = "scope_classifier_out_of_scope"
+    PROVIDER_TIMEOUT = "provider_timeout"
+    PROVIDER_HTTP_429 = "provider_http_429"
+    PROVIDER_HTTP_5XX = "provider_http_5xx"
+    PROVIDER_HTTP_4XX = "provider_http_4xx"
+    PROVIDER_EMPTY_CONTENT = "provider_empty_content"
+    PROVIDER_FINISH_REASON_LENGTH = "provider_finish_reason_length"
+    PROVIDER_INVALID_RESPONSE = "provider_invalid_response"
+    GENERATION_PARSE_ERROR = "generation_parse_error"
+    CITATION_PARSE_ERROR = "citation_parse_error"
+    CITATION_GUARDRAIL_REJECTED = "citation_guardrail_rejected"
+    INSUFFICIENT_SUPPORTED_CLAIMS = "insufficient_supported_claims"
+    UNKNOWN = "unknown"
+
 
 
 class AskRequest(BaseModel):
@@ -52,3 +71,6 @@ class AskResponse(BaseModel):
     conversation_id: str | None = None
     user_message_id: str | None = None
     assistant_message_id: str | None = None
+    fallback_reason: str | None = None
+    attempt: int = 1
+    attempt_records: list[dict[str, Any]] = Field(default_factory=list)

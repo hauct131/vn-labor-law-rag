@@ -30,9 +30,10 @@ def test_parser_uses_disposable_collection():
     assert args.collection == "labor_law_model_probe"
     assert args.collection != "labor_law"
     assert str(args.chunks) == (
-        "data/releases/labor-law-2026-07-28-candidate/chunks.jsonl"
+        "data/releases/labor-law-canonical-word-20260804-164432-candidate/"
+        "canonical_chunks.jsonl"
     )
-    assert args.expected_chunks == 833
+    assert args.expected_chunks == 804
     assert args.dense_model == "intfloat/multilingual-e5-large"
     assert args.dense_size == 1024
     assert args.dense_max_tokens == 512

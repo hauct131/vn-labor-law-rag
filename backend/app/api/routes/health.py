@@ -150,6 +150,31 @@ def release_gate_dependency(
     return report
 
 
+def authorized_corpus_dependency() -> dict[str, Any]:
+    """Validate only the immutable corpus and its authority approval.
+
+    Contract review retrieves directly from the bound canonical JSONL file, so
+    it must fail closed on corpus approval without depending on Qdrant or the
+    question-answering runtime that it does not use.
+    """
+    return evaluate_release_gate()
+
+
+def require_authorized_corpus(
+    report: dict[str, Any] = Depends(authorized_corpus_dependency),
+) -> None:
+    """Block corpus-backed legal analysis when the release is not approved."""
+    if report["status"] != "ready":
+        raise HTTPException(
+            status_code=503,
+            detail={
+                "code": "release_not_ready",
+                "release_id": report.get("release_id"),
+                "errors": report.get("errors", []),
+            },
+        )
+
+
 def require_authorized_release(
     report: dict[str, Any] = Depends(release_gate_dependency),
 ) -> None:

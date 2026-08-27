@@ -8,7 +8,7 @@ VBPL_MAX_TOKENS ?= 600
 VBPL_EXPECTED_CHUNKS = $(shell wc -l < data/processed/vbpl_legal_chunks.jsonl)
 VBPL_CANARY_URL := https://vbpl.vn/van-ban/chi-tiet/nghi-dinh-so-219-2025-nd-cp-quy-dinh-ve-nguoi-lao-dong-nuoc-ngoai-lam-viec-tai-viet-nam--180273
 OFFICIAL_DOCX_SOURCE_DIR ?= data/sources/official_docx
-UNIFIED_RELEASE_DIR ?= data/releases/labor-law-2026-07-28-candidate
+DOCX_BUILD_RELEASE_DIR ?= data/releases/labor-law-2026-07-28-candidate
 
 infra:
 	docker compose up -d qdrant neo4j
@@ -108,15 +108,15 @@ official-docx-release:
 	  --source-dir $(OFFICIAL_DOCX_SOURCE_DIR) \
 	  --base-corpus data/processed/vbpl_articles_raw.json \
 	  --raw-root data/raw/official_docx \
-	  --release-dir $(UNIFIED_RELEASE_DIR)
+	  --release-dir $(DOCX_BUILD_RELEASE_DIR)
 
 golden-v3-rebase:
 	PYTHONPATH=.:backend:$${PYTHONPATH} $(PYTHON) scripts/rebase_golden_to_release.py \
-	  --release-dir $(UNIFIED_RELEASE_DIR)
+	  --release-dir $(DOCX_BUILD_RELEASE_DIR)
 
 unified-release-validate:
 	PYTHONPATH=.:backend:$${PYTHONPATH} $(PYTHON) scripts/validate_unified_release.py \
-	  --release-dir $(UNIFIED_RELEASE_DIR)
+	  --release-dir $(DOCX_BUILD_RELEASE_DIR)
 
 unified-release: official-docx-release golden-v3-rebase unified-release-validate
 

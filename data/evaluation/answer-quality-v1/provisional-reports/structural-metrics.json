@@ -1,0 +1,16 @@
+{
+  "total_cases": 20,
+  "runtime_success_rate": 1.0,
+  "http_runtime_errors": 0,
+  "answer_non_empty_rate": 1.0,
+  "avg_citation_precision": 0.0,
+  "avg_citation_completeness": 0.0,
+  "avg_citation_id_validity": 1.0,
+  "avg_inline_declared_match": 1.0,
+  "avg_retrieval_ms": 15.0,
+  "avg_generation_ms": 1200.0,
+  "avg_total_ms": 1215.0,
+  "required_claim_recall": "not_scoreable",
+  "forbidden_claim_violations": "not_scoreable",
+  "unsupported_material_claims": "not_scoreable"
+}

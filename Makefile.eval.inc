@@ -1,13 +1,15 @@
-# Retrieval and indexing targets for the unified 2026-07-28 candidate.
+# Retrieval and indexing targets for the locked canonical Word 804 candidate.
 
-UNIFIED_RELEASE_DIR ?= data/releases/labor-law-2026-07-28-candidate
-UNIFIED_CHUNKS ?= $(UNIFIED_RELEASE_DIR)/chunks.jsonl
-UNIFIED_GOLDEN ?= data/evaluation/golden_questions_v3_unified_candidate.json
-UNIFIED_E5_AUDIT ?= data/quality/unified_e5_token_audit/summary.json
-UNIFIED_EXPECTED_CHUNKS ?= 833
-UNIFIED_EXPECTED_SHA256 ?= fd35bb1a94a3036f7977781de17bb1b49b12c58be61fc74efac68dcf8a7a8c54
-UNIFIED_RESULTS_DIR ?= data/evaluation/results
-QDRANT_UNIFIED_COLLECTION ?= labor_law_20260728_fd35bb1a
+UNIFIED_RELEASE_DIR ?= data/releases/labor-law-canonical-word-20260804-164432-candidate
+UNIFIED_CHUNKS ?= $(UNIFIED_RELEASE_DIR)/canonical_chunks.jsonl
+UNIFIED_GOLDEN ?= data/evaluation/golden_questions_v4_canonical_word_candidate.json
+UNIFIED_E5_AUDIT ?= $(UNIFIED_RELEASE_DIR)/e5_audit/summary.json
+UNIFIED_EXPECTED_CHUNKS ?= 804
+UNIFIED_EXPECTED_SHA256 ?= fdbec539efbfb3f4aa3cb3962046321e3a402150d93516ef4256934972c70307
+UNIFIED_RESULTS_DIR ?= data/evaluation/results/canonical_word_804
+CANONICAL_SPLIT_DIR ?= data/evaluation/splits/canonical_word_804
+CANONICAL_LOCKED_RESULTS_DIR ?= data/evaluation/runtime-benchmark/canonical_word_804/locked
+QDRANT_UNIFIED_COLLECTION ?= labor_law_canonical_word_20260804_fdbec539
 QDRANT_ACTIVE_ALIAS ?= labor_law_active
 E5_MODEL ?= intfloat/multilingual-e5-large
 E5_DEVICE ?= cpu
@@ -20,7 +22,8 @@ E5_BATCH_SIZE ?= 16
 	legal-eval-compare legal-eval-tune legal-eval-tune-fast \
 	runtime-golden-splits runtime-golden-splits-check \
 	runtime-benchmark-dry-run runtime-benchmark-tune-dev \
-	runtime-benchmark-test unified-runtime
+	runtime-benchmark-test runtime-benchmark-locked-verify \
+	final-release-verify unified-runtime
 
 golden-audit-unified:
 	PYTHONPATH=.:backend:$${PYTHONPATH} $(PYTHON) scripts/audit_golden_dataset.py \
@@ -30,37 +33,33 @@ golden-audit-unified:
 	  --strict
 
 runtime-golden-splits:
-	PYTHONPATH=.:backend:$${PYTHONPATH} $(PYTHON) scripts/build_runtime_golden_splits.py
+	PYTHONPATH=.:backend:$${PYTHONPATH} $(PYTHON) scripts/build_runtime_golden_splits.py \
+	  --output-dir $(CANONICAL_SPLIT_DIR)
 
 runtime-golden-splits-check:
-	PYTHONPATH=.:backend:$${PYTHONPATH} $(PYTHON) scripts/build_runtime_golden_splits.py --check
+	PYTHONPATH=.:backend:$${PYTHONPATH} $(PYTHON) scripts/build_runtime_golden_splits.py \
+	  --output-dir $(CANONICAL_SPLIT_DIR) \
+	  --check
 
 runtime-benchmark-dry-run: runtime-golden-splits-check
 	PYTHONPATH=.:backend:$${PYTHONPATH} $(PYTHON) scripts/benchmark_runtime_retrieval.py \
 	  --phase tune \
 	  --split-role dev \
-	  --golden data/evaluation/splits/golden_v3_dev.json \
+	  --golden $(CANONICAL_SPLIT_DIR)/golden_v3_dev.json \
+	  --chunks $(UNIFIED_CHUNKS) \
 	  --dry-run
 
-runtime-benchmark-tune-dev: runtime-golden-splits-check
-	PYTHONPATH=.:backend:$${PYTHONPATH} $(PYTHON) scripts/benchmark_runtime_retrieval.py \
-	  --phase tune \
-	  --split-role dev \
-	  --golden data/evaluation/splits/golden_v3_dev.json \
-	  --output-dir data/evaluation/runtime-benchmark
+runtime-benchmark-tune-dev:
+	@echo "Refusing: canonical Word 804 test has been consumed; post-test tuning is locked."
+	@false
 
-runtime-benchmark-test: runtime-golden-splits-check
-	@test "$(ALLOW_TEST)" = "1" || ( \
-	  echo "Refusing locked test. Run dev tuning first, then rerun with ALLOW_TEST=1."; \
-	  exit 2; \
-	)
-	PYTHONPATH=.:backend:$${PYTHONPATH} $(PYTHON) scripts/benchmark_runtime_retrieval.py \
-	  --phase evaluate \
-	  --split-role test \
-	  --golden data/evaluation/splits/golden_v3_test.json \
-	  --hybrid-config data/evaluation/runtime-benchmark/dev_hybrid_trials.json \
-	  --allow-test-evaluation \
-	  --output-dir data/evaluation/runtime-benchmark
+runtime-benchmark-test:
+	@echo "Refusing: locked test was already run once. Verify checked-in evidence instead."
+	@false
+
+runtime-benchmark-locked-verify: runtime-golden-splits-check
+	cd $(CANONICAL_SPLIT_DIR) && sha256sum -c SHA256SUMS.txt
+	cd $(CANONICAL_LOCKED_RESULTS_DIR) && sha256sum -c SHA256SUMS.txt
 
 legal-eval-bm25: golden-audit-unified
 	PYTHONPATH=.:backend:$${PYTHONPATH} $(PYTHON) scripts/evaluate_lexical_baseline.py \
@@ -185,5 +184,7 @@ legal-eval-tune-fast: golden-audit-unified
 	  --chunks-per-article 1 2 3 \
 	  --k 5 10 20
 
-unified-runtime:
-	bash scripts/index_and_evaluate_unified.sh
+final-release-verify:
+	bash scripts/verify_final_release.sh
+
+unified-runtime: final-release-verify

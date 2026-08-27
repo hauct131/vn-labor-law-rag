@@ -1,0 +1,2490 @@
+{
+  "schema_version": "contract-review-k-sensitivity-v1",
+  "experiment": {
+    "k_min": 1,
+    "k_max": 20,
+    "k_values": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ],
+    "retrieval_method": "contract_canonical_lexical_v1",
+    "ground_truth_role": "preferred_article_codes; technical preferred-source coverage only, not independent legal accuracy"
+  },
+  "best_fixed_k_by_f1": 4,
+  "best_fixed_f1": 0.9375,
+  "max_preferred_recall": 1.0,
+  "recall_saturation_k": 5,
+  "dynamic_k": {
+    "policy": "len(rule.preferred_article_codes)",
+    "preferred_precision": 1.0,
+    "preferred_recall": 1.0,
+    "f1": 1.0,
+    "sources_per_review": 16,
+    "categories": {
+      "probation": {
+        "k": 3,
+        "retrieved_article_codes": [
+          "20.2.LQ.26",
+          "20.2.LQ.25",
+          "20.2.LQ.27"
+        ],
+        "relevant_count": 3,
+        "expected_count": 3
+      },
+      "salary": {
+        "k": 5,
+        "retrieved_article_codes": [
+          "20.2.LQ.90",
+          "20.2.LQ.95",
+          "20.2.LQ.94",
+          "20.2.LQ.96",
+          "20.2.LQ.97"
+        ],
+        "relevant_count": 5,
+        "expected_count": 5
+      },
+      "working_time": {
+        "k": 4,
+        "retrieved_article_codes": [
+          "20.2.LQ.105",
+          "20.2.LQ.107",
+          "20.2.LQ.109",
+          "20.2.LQ.111"
+        ],
+        "relevant_count": 4,
+        "expected_count": 4
+      },
+      "termination": {
+        "k": 4,
+        "retrieved_article_codes": [
+          "20.2.LQ.35",
+          "20.2.LQ.36",
+          "20.2.LQ.34",
+          "20.2.NĐ.3.7"
+        ],
+        "relevant_count": 4,
+        "expected_count": 4
+      }
+    }
+  },
+  "results": [
+    {
+      "k": 1,
+      "preferred_precision": 1.0,
+      "preferred_recall": 0.25,
+      "f1": 0.4,
+      "relevant_sources": 4,
+      "noise_sources": 0,
+      "noise_rate": 0.0,
+      "sources_per_review": 4,
+      "avg_sources_per_finding": 1.0,
+      "categories": {
+        "probation": {
+          "expected_article_codes": [
+            "20.2.LQ.25",
+            "20.2.LQ.26",
+            "20.2.LQ.27"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.26"
+          ],
+          "expected_count": 3,
+          "returned_count": 1,
+          "relevant_count": 1,
+          "precision": 1.0,
+          "recall": 0.333333,
+          "f1": 0.5
+        },
+        "salary": {
+          "expected_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.94",
+            "20.2.LQ.95",
+            "20.2.LQ.96",
+            "20.2.LQ.97"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.90"
+          ],
+          "expected_count": 5,
+          "returned_count": 1,
+          "relevant_count": 1,
+          "precision": 1.0,
+          "recall": 0.2,
+          "f1": 0.333333
+        },
+        "working_time": {
+          "expected_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.105"
+          ],
+          "expected_count": 4,
+          "returned_count": 1,
+          "relevant_count": 1,
+          "precision": 1.0,
+          "recall": 0.25,
+          "f1": 0.4
+        },
+        "termination": {
+          "expected_article_codes": [
+            "20.2.LQ.34",
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.NĐ.3.7"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.35"
+          ],
+          "expected_count": 4,
+          "returned_count": 1,
+          "relevant_count": 1,
+          "precision": 1.0,
+          "recall": 0.25,
+          "f1": 0.4
+        }
+      },
+      "marginal_recall_gain": 0.25
+    },
+    {
+      "k": 2,
+      "preferred_precision": 1.0,
+      "preferred_recall": 0.5,
+      "f1": 0.666667,
+      "relevant_sources": 8,
+      "noise_sources": 0,
+      "noise_rate": 0.0,
+      "sources_per_review": 8,
+      "avg_sources_per_finding": 2.0,
+      "categories": {
+        "probation": {
+          "expected_article_codes": [
+            "20.2.LQ.25",
+            "20.2.LQ.26",
+            "20.2.LQ.27"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.26",
+            "20.2.LQ.25"
+          ],
+          "expected_count": 3,
+          "returned_count": 2,
+          "relevant_count": 2,
+          "precision": 1.0,
+          "recall": 0.666667,
+          "f1": 0.8
+        },
+        "salary": {
+          "expected_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.94",
+            "20.2.LQ.95",
+            "20.2.LQ.96",
+            "20.2.LQ.97"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.95"
+          ],
+          "expected_count": 5,
+          "returned_count": 2,
+          "relevant_count": 2,
+          "precision": 1.0,
+          "recall": 0.4,
+          "f1": 0.571429
+        },
+        "working_time": {
+          "expected_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107"
+          ],
+          "expected_count": 4,
+          "returned_count": 2,
+          "relevant_count": 2,
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.666667
+        },
+        "termination": {
+          "expected_article_codes": [
+            "20.2.LQ.34",
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.NĐ.3.7"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.35",
+            "20.2.LQ.36"
+          ],
+          "expected_count": 4,
+          "returned_count": 2,
+          "relevant_count": 2,
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.666667
+        }
+      },
+      "marginal_recall_gain": 0.25
+    },
+    {
+      "k": 3,
+      "preferred_precision": 1.0,
+      "preferred_recall": 0.75,
+      "f1": 0.857143,
+      "relevant_sources": 12,
+      "noise_sources": 0,
+      "noise_rate": 0.0,
+      "sources_per_review": 12,
+      "avg_sources_per_finding": 3.0,
+      "categories": {
+        "probation": {
+          "expected_article_codes": [
+            "20.2.LQ.25",
+            "20.2.LQ.26",
+            "20.2.LQ.27"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.26",
+            "20.2.LQ.25",
+            "20.2.LQ.27"
+          ],
+          "expected_count": 3,
+          "returned_count": 3,
+          "relevant_count": 3,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "salary": {
+          "expected_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.94",
+            "20.2.LQ.95",
+            "20.2.LQ.96",
+            "20.2.LQ.97"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.95",
+            "20.2.LQ.94"
+          ],
+          "expected_count": 5,
+          "returned_count": 3,
+          "relevant_count": 3,
+          "precision": 1.0,
+          "recall": 0.6,
+          "f1": 0.75
+        },
+        "working_time": {
+          "expected_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109"
+          ],
+          "expected_count": 4,
+          "returned_count": 3,
+          "relevant_count": 3,
+          "precision": 1.0,
+          "recall": 0.75,
+          "f1": 0.857143
+        },
+        "termination": {
+          "expected_article_codes": [
+            "20.2.LQ.34",
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.NĐ.3.7"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.LQ.34"
+          ],
+          "expected_count": 4,
+          "returned_count": 3,
+          "relevant_count": 3,
+          "precision": 1.0,
+          "recall": 0.75,
+          "f1": 0.857143
+        }
+      },
+      "marginal_recall_gain": 0.25
+    },
+    {
+      "k": 4,
+      "preferred_precision": 0.9375,
+      "preferred_recall": 0.9375,
+      "f1": 0.9375,
+      "relevant_sources": 15,
+      "noise_sources": 1,
+      "noise_rate": 0.0625,
+      "sources_per_review": 16,
+      "avg_sources_per_finding": 4.0,
+      "categories": {
+        "probation": {
+          "expected_article_codes": [
+            "20.2.LQ.25",
+            "20.2.LQ.26",
+            "20.2.LQ.27"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.26",
+            "20.2.LQ.25",
+            "20.2.LQ.27",
+            "20.2.TT.2.3"
+          ],
+          "expected_count": 3,
+          "returned_count": 4,
+          "relevant_count": 3,
+          "precision": 0.75,
+          "recall": 1.0,
+          "f1": 0.857143
+        },
+        "salary": {
+          "expected_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.94",
+            "20.2.LQ.95",
+            "20.2.LQ.96",
+            "20.2.LQ.97"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.95",
+            "20.2.LQ.94",
+            "20.2.LQ.96"
+          ],
+          "expected_count": 5,
+          "returned_count": 4,
+          "relevant_count": 4,
+          "precision": 1.0,
+          "recall": 0.8,
+          "f1": 0.888889
+        },
+        "working_time": {
+          "expected_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111"
+          ],
+          "expected_count": 4,
+          "returned_count": 4,
+          "relevant_count": 4,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "termination": {
+          "expected_article_codes": [
+            "20.2.LQ.34",
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.NĐ.3.7"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.LQ.34",
+            "20.2.NĐ.3.7"
+          ],
+          "expected_count": 4,
+          "returned_count": 4,
+          "relevant_count": 4,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "marginal_recall_gain": 0.1875
+    },
+    {
+      "k": 5,
+      "preferred_precision": 0.8,
+      "preferred_recall": 1.0,
+      "f1": 0.888889,
+      "relevant_sources": 16,
+      "noise_sources": 4,
+      "noise_rate": 0.2,
+      "sources_per_review": 20,
+      "avg_sources_per_finding": 5.0,
+      "categories": {
+        "probation": {
+          "expected_article_codes": [
+            "20.2.LQ.25",
+            "20.2.LQ.26",
+            "20.2.LQ.27"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.26",
+            "20.2.LQ.25",
+            "20.2.LQ.27",
+            "20.2.TT.2.3",
+            "20.2.NĐ.3.54"
+          ],
+          "expected_count": 3,
+          "returned_count": 5,
+          "relevant_count": 3,
+          "precision": 0.6,
+          "recall": 1.0,
+          "f1": 0.75
+        },
+        "salary": {
+          "expected_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.94",
+            "20.2.LQ.95",
+            "20.2.LQ.96",
+            "20.2.LQ.97"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.95",
+            "20.2.LQ.94",
+            "20.2.LQ.96",
+            "20.2.LQ.97"
+          ],
+          "expected_count": 5,
+          "returned_count": 5,
+          "relevant_count": 5,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "working_time": {
+          "expected_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111",
+            "20.2.NĐ.3.60"
+          ],
+          "expected_count": 4,
+          "returned_count": 5,
+          "relevant_count": 4,
+          "precision": 0.8,
+          "recall": 1.0,
+          "f1": 0.888889
+        },
+        "termination": {
+          "expected_article_codes": [
+            "20.2.LQ.34",
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.NĐ.3.7"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.LQ.34",
+            "20.2.NĐ.3.7",
+            "20.2.NĐ.3.89"
+          ],
+          "expected_count": 4,
+          "returned_count": 5,
+          "relevant_count": 4,
+          "precision": 0.8,
+          "recall": 1.0,
+          "f1": 0.888889
+        }
+      },
+      "marginal_recall_gain": 0.0625
+    },
+    {
+      "k": 6,
+      "preferred_precision": 0.666667,
+      "preferred_recall": 1.0,
+      "f1": 0.8,
+      "relevant_sources": 16,
+      "noise_sources": 8,
+      "noise_rate": 0.333333,
+      "sources_per_review": 24,
+      "avg_sources_per_finding": 6.0,
+      "categories": {
+        "probation": {
+          "expected_article_codes": [
+            "20.2.LQ.25",
+            "20.2.LQ.26",
+            "20.2.LQ.27"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.26",
+            "20.2.LQ.25",
+            "20.2.LQ.27",
+            "20.2.TT.2.3",
+            "20.2.NĐ.3.54",
+            "20.2.NĐ.3.55"
+          ],
+          "expected_count": 3,
+          "returned_count": 6,
+          "relevant_count": 3,
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.666667
+        },
+        "salary": {
+          "expected_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.94",
+            "20.2.LQ.95",
+            "20.2.LQ.96",
+            "20.2.LQ.97"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.95",
+            "20.2.LQ.94",
+            "20.2.LQ.96",
+            "20.2.LQ.97",
+            "20.2.NĐ.3.54"
+          ],
+          "expected_count": 5,
+          "returned_count": 6,
+          "relevant_count": 5,
+          "precision": 0.833333,
+          "recall": 1.0,
+          "f1": 0.909091
+        },
+        "working_time": {
+          "expected_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111",
+            "20.2.NĐ.3.60",
+            "20.2.NĐ.3.89"
+          ],
+          "expected_count": 4,
+          "returned_count": 6,
+          "relevant_count": 4,
+          "precision": 0.666667,
+          "recall": 1.0,
+          "f1": 0.8
+        },
+        "termination": {
+          "expected_article_codes": [
+            "20.2.LQ.34",
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.NĐ.3.7"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.LQ.34",
+            "20.2.NĐ.3.7",
+            "20.2.NĐ.3.89",
+            "20.2.LQ.38"
+          ],
+          "expected_count": 4,
+          "returned_count": 6,
+          "relevant_count": 4,
+          "precision": 0.666667,
+          "recall": 1.0,
+          "f1": 0.8
+        }
+      },
+      "marginal_recall_gain": 0.0
+    },
+    {
+      "k": 7,
+      "preferred_precision": 0.571429,
+      "preferred_recall": 1.0,
+      "f1": 0.727273,
+      "relevant_sources": 16,
+      "noise_sources": 12,
+      "noise_rate": 0.428571,
+      "sources_per_review": 28,
+      "avg_sources_per_finding": 7.0,
+      "categories": {
+        "probation": {
+          "expected_article_codes": [
+            "20.2.LQ.25",
+            "20.2.LQ.26",
+            "20.2.LQ.27"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.26",
+            "20.2.LQ.25",
+            "20.2.LQ.27",
+            "20.2.TT.2.3",
+            "20.2.NĐ.3.54",
+            "20.2.NĐ.3.55",
+            "20.2.LQ.137"
+          ],
+          "expected_count": 3,
+          "returned_count": 7,
+          "relevant_count": 3,
+          "precision": 0.428571,
+          "recall": 1.0,
+          "f1": 0.6
+        },
+        "salary": {
+          "expected_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.94",
+            "20.2.LQ.95",
+            "20.2.LQ.96",
+            "20.2.LQ.97"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.95",
+            "20.2.LQ.94",
+            "20.2.LQ.96",
+            "20.2.LQ.97",
+            "20.2.NĐ.3.54",
+            "20.2.NĐ.8.4"
+          ],
+          "expected_count": 5,
+          "returned_count": 7,
+          "relevant_count": 5,
+          "precision": 0.714286,
+          "recall": 1.0,
+          "f1": 0.833333
+        },
+        "working_time": {
+          "expected_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111",
+            "20.2.NĐ.3.60",
+            "20.2.NĐ.3.89",
+            "20.2.TT.4.6"
+          ],
+          "expected_count": 4,
+          "returned_count": 7,
+          "relevant_count": 4,
+          "precision": 0.571429,
+          "recall": 1.0,
+          "f1": 0.727273
+        },
+        "termination": {
+          "expected_article_codes": [
+            "20.2.LQ.34",
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.NĐ.3.7"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.LQ.34",
+            "20.2.NĐ.3.7",
+            "20.2.NĐ.3.89",
+            "20.2.LQ.38",
+            "20.2.LQ.40"
+          ],
+          "expected_count": 4,
+          "returned_count": 7,
+          "relevant_count": 4,
+          "precision": 0.571429,
+          "recall": 1.0,
+          "f1": 0.727273
+        }
+      },
+      "marginal_recall_gain": 0.0
+    },
+    {
+      "k": 8,
+      "preferred_precision": 0.5,
+      "preferred_recall": 1.0,
+      "f1": 0.666667,
+      "relevant_sources": 16,
+      "noise_sources": 16,
+      "noise_rate": 0.5,
+      "sources_per_review": 32,
+      "avg_sources_per_finding": 8.0,
+      "categories": {
+        "probation": {
+          "expected_article_codes": [
+            "20.2.LQ.25",
+            "20.2.LQ.26",
+            "20.2.LQ.27"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.26",
+            "20.2.LQ.25",
+            "20.2.LQ.27",
+            "20.2.TT.2.3",
+            "20.2.NĐ.3.54",
+            "20.2.NĐ.3.55",
+            "20.2.LQ.137",
+            "20.2.NĐ.3.56"
+          ],
+          "expected_count": 3,
+          "returned_count": 8,
+          "relevant_count": 3,
+          "precision": 0.375,
+          "recall": 1.0,
+          "f1": 0.545455
+        },
+        "salary": {
+          "expected_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.94",
+            "20.2.LQ.95",
+            "20.2.LQ.96",
+            "20.2.LQ.97"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.95",
+            "20.2.LQ.94",
+            "20.2.LQ.96",
+            "20.2.LQ.97",
+            "20.2.NĐ.3.54",
+            "20.2.NĐ.8.4",
+            "20.2.TT.2.3"
+          ],
+          "expected_count": 5,
+          "returned_count": 8,
+          "relevant_count": 5,
+          "precision": 0.625,
+          "recall": 1.0,
+          "f1": 0.769231
+        },
+        "working_time": {
+          "expected_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111",
+            "20.2.NĐ.3.60",
+            "20.2.NĐ.3.89",
+            "20.2.TT.4.6",
+            "20.2.NĐ.3.55"
+          ],
+          "expected_count": 4,
+          "returned_count": 8,
+          "relevant_count": 4,
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.666667
+        },
+        "termination": {
+          "expected_article_codes": [
+            "20.2.LQ.34",
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.NĐ.3.7"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.LQ.34",
+            "20.2.NĐ.3.7",
+            "20.2.NĐ.3.89",
+            "20.2.LQ.38",
+            "20.2.LQ.40",
+            "20.2.TT.8.6"
+          ],
+          "expected_count": 4,
+          "returned_count": 8,
+          "relevant_count": 4,
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.666667
+        }
+      },
+      "marginal_recall_gain": 0.0
+    },
+    {
+      "k": 9,
+      "preferred_precision": 0.444444,
+      "preferred_recall": 1.0,
+      "f1": 0.615385,
+      "relevant_sources": 16,
+      "noise_sources": 20,
+      "noise_rate": 0.555556,
+      "sources_per_review": 36,
+      "avg_sources_per_finding": 9.0,
+      "categories": {
+        "probation": {
+          "expected_article_codes": [
+            "20.2.LQ.25",
+            "20.2.LQ.26",
+            "20.2.LQ.27"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.26",
+            "20.2.LQ.25",
+            "20.2.LQ.27",
+            "20.2.TT.2.3",
+            "20.2.NĐ.3.54",
+            "20.2.NĐ.3.55",
+            "20.2.LQ.137",
+            "20.2.NĐ.3.56",
+            "20.2.LQ.29"
+          ],
+          "expected_count": 3,
+          "returned_count": 9,
+          "relevant_count": 3,
+          "precision": 0.333333,
+          "recall": 1.0,
+          "f1": 0.5
+        },
+        "salary": {
+          "expected_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.94",
+            "20.2.LQ.95",
+            "20.2.LQ.96",
+            "20.2.LQ.97"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.95",
+            "20.2.LQ.94",
+            "20.2.LQ.96",
+            "20.2.LQ.97",
+            "20.2.NĐ.3.54",
+            "20.2.NĐ.8.4",
+            "20.2.TT.2.3",
+            "20.2.NĐ.3.55"
+          ],
+          "expected_count": 5,
+          "returned_count": 9,
+          "relevant_count": 5,
+          "precision": 0.555556,
+          "recall": 1.0,
+          "f1": 0.714286
+        },
+        "working_time": {
+          "expected_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111",
+            "20.2.NĐ.3.60",
+            "20.2.NĐ.3.89",
+            "20.2.TT.4.6",
+            "20.2.NĐ.3.55",
+            "20.2.NĐ.3.57"
+          ],
+          "expected_count": 4,
+          "returned_count": 9,
+          "relevant_count": 4,
+          "precision": 0.444444,
+          "recall": 1.0,
+          "f1": 0.615385
+        },
+        "termination": {
+          "expected_article_codes": [
+            "20.2.LQ.34",
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.NĐ.3.7"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.LQ.34",
+            "20.2.NĐ.3.7",
+            "20.2.NĐ.3.89",
+            "20.2.LQ.38",
+            "20.2.LQ.40",
+            "20.2.TT.8.6",
+            "20.2.LQ.41"
+          ],
+          "expected_count": 4,
+          "returned_count": 9,
+          "relevant_count": 4,
+          "precision": 0.444444,
+          "recall": 1.0,
+          "f1": 0.615385
+        }
+      },
+      "marginal_recall_gain": 0.0
+    },
+    {
+      "k": 10,
+      "preferred_precision": 0.4,
+      "preferred_recall": 1.0,
+      "f1": 0.571429,
+      "relevant_sources": 16,
+      "noise_sources": 24,
+      "noise_rate": 0.6,
+      "sources_per_review": 40,
+      "avg_sources_per_finding": 10.0,
+      "categories": {
+        "probation": {
+          "expected_article_codes": [
+            "20.2.LQ.25",
+            "20.2.LQ.26",
+            "20.2.LQ.27"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.26",
+            "20.2.LQ.25",
+            "20.2.LQ.27",
+            "20.2.TT.2.3",
+            "20.2.NĐ.3.54",
+            "20.2.NĐ.3.55",
+            "20.2.LQ.137",
+            "20.2.NĐ.3.56",
+            "20.2.LQ.29",
+            "20.2.NĐ.3.69"
+          ],
+          "expected_count": 3,
+          "returned_count": 10,
+          "relevant_count": 3,
+          "precision": 0.3,
+          "recall": 1.0,
+          "f1": 0.461538
+        },
+        "salary": {
+          "expected_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.94",
+            "20.2.LQ.95",
+            "20.2.LQ.96",
+            "20.2.LQ.97"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.95",
+            "20.2.LQ.94",
+            "20.2.LQ.96",
+            "20.2.LQ.97",
+            "20.2.NĐ.3.54",
+            "20.2.NĐ.8.4",
+            "20.2.TT.2.3",
+            "20.2.NĐ.3.55",
+            "20.2.NĐ.3.57"
+          ],
+          "expected_count": 5,
+          "returned_count": 10,
+          "relevant_count": 5,
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.666667
+        },
+        "working_time": {
+          "expected_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111",
+            "20.2.NĐ.3.60",
+            "20.2.NĐ.3.89",
+            "20.2.TT.4.6",
+            "20.2.NĐ.3.55",
+            "20.2.NĐ.3.57",
+            "20.2.LQ.146"
+          ],
+          "expected_count": 4,
+          "returned_count": 10,
+          "relevant_count": 4,
+          "precision": 0.4,
+          "recall": 1.0,
+          "f1": 0.571429
+        },
+        "termination": {
+          "expected_article_codes": [
+            "20.2.LQ.34",
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.NĐ.3.7"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.LQ.34",
+            "20.2.NĐ.3.7",
+            "20.2.NĐ.3.89",
+            "20.2.LQ.38",
+            "20.2.LQ.40",
+            "20.2.TT.8.6",
+            "20.2.LQ.41",
+            "20.2.LQ.162"
+          ],
+          "expected_count": 4,
+          "returned_count": 10,
+          "relevant_count": 4,
+          "precision": 0.4,
+          "recall": 1.0,
+          "f1": 0.571429
+        }
+      },
+      "marginal_recall_gain": 0.0
+    },
+    {
+      "k": 11,
+      "preferred_precision": 0.363636,
+      "preferred_recall": 1.0,
+      "f1": 0.533333,
+      "relevant_sources": 16,
+      "noise_sources": 28,
+      "noise_rate": 0.636364,
+      "sources_per_review": 44,
+      "avg_sources_per_finding": 11.0,
+      "categories": {
+        "probation": {
+          "expected_article_codes": [
+            "20.2.LQ.25",
+            "20.2.LQ.26",
+            "20.2.LQ.27"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.26",
+            "20.2.LQ.25",
+            "20.2.LQ.27",
+            "20.2.TT.2.3",
+            "20.2.NĐ.3.54",
+            "20.2.NĐ.3.55",
+            "20.2.LQ.137",
+            "20.2.NĐ.3.56",
+            "20.2.LQ.29",
+            "20.2.NĐ.3.69",
+            "20.2.LQ.24"
+          ],
+          "expected_count": 3,
+          "returned_count": 11,
+          "relevant_count": 3,
+          "precision": 0.272727,
+          "recall": 1.0,
+          "f1": 0.428571
+        },
+        "salary": {
+          "expected_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.94",
+            "20.2.LQ.95",
+            "20.2.LQ.96",
+            "20.2.LQ.97"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.95",
+            "20.2.LQ.94",
+            "20.2.LQ.96",
+            "20.2.LQ.97",
+            "20.2.NĐ.3.54",
+            "20.2.NĐ.8.4",
+            "20.2.TT.2.3",
+            "20.2.NĐ.3.55",
+            "20.2.NĐ.3.57",
+            "20.2.LQ.98"
+          ],
+          "expected_count": 5,
+          "returned_count": 11,
+          "relevant_count": 5,
+          "precision": 0.454545,
+          "recall": 1.0,
+          "f1": 0.625
+        },
+        "working_time": {
+          "expected_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111",
+            "20.2.NĐ.3.60",
+            "20.2.NĐ.3.89",
+            "20.2.TT.4.6",
+            "20.2.NĐ.3.55",
+            "20.2.NĐ.3.57",
+            "20.2.LQ.146",
+            "20.2.NĐ.3.69"
+          ],
+          "expected_count": 4,
+          "returned_count": 11,
+          "relevant_count": 4,
+          "precision": 0.363636,
+          "recall": 1.0,
+          "f1": 0.533333
+        },
+        "termination": {
+          "expected_article_codes": [
+            "20.2.LQ.34",
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.NĐ.3.7"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.LQ.34",
+            "20.2.NĐ.3.7",
+            "20.2.NĐ.3.89",
+            "20.2.LQ.38",
+            "20.2.LQ.40",
+            "20.2.TT.8.6",
+            "20.2.LQ.41",
+            "20.2.LQ.162",
+            "20.2.LQ.138"
+          ],
+          "expected_count": 4,
+          "returned_count": 11,
+          "relevant_count": 4,
+          "precision": 0.363636,
+          "recall": 1.0,
+          "f1": 0.533333
+        }
+      },
+      "marginal_recall_gain": 0.0
+    },
+    {
+      "k": 12,
+      "preferred_precision": 0.333333,
+      "preferred_recall": 1.0,
+      "f1": 0.5,
+      "relevant_sources": 16,
+      "noise_sources": 32,
+      "noise_rate": 0.666667,
+      "sources_per_review": 48,
+      "avg_sources_per_finding": 12.0,
+      "categories": {
+        "probation": {
+          "expected_article_codes": [
+            "20.2.LQ.25",
+            "20.2.LQ.26",
+            "20.2.LQ.27"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.26",
+            "20.2.LQ.25",
+            "20.2.LQ.27",
+            "20.2.TT.2.3",
+            "20.2.NĐ.3.54",
+            "20.2.NĐ.3.55",
+            "20.2.LQ.137",
+            "20.2.NĐ.3.56",
+            "20.2.LQ.29",
+            "20.2.NĐ.3.69",
+            "20.2.LQ.24",
+            "20.2.NĐ.3.65"
+          ],
+          "expected_count": 3,
+          "returned_count": 12,
+          "relevant_count": 3,
+          "precision": 0.25,
+          "recall": 1.0,
+          "f1": 0.4
+        },
+        "salary": {
+          "expected_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.94",
+            "20.2.LQ.95",
+            "20.2.LQ.96",
+            "20.2.LQ.97"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.95",
+            "20.2.LQ.94",
+            "20.2.LQ.96",
+            "20.2.LQ.97",
+            "20.2.NĐ.3.54",
+            "20.2.NĐ.8.4",
+            "20.2.TT.2.3",
+            "20.2.NĐ.3.55",
+            "20.2.NĐ.3.57",
+            "20.2.LQ.98",
+            "20.2.LQ.47"
+          ],
+          "expected_count": 5,
+          "returned_count": 12,
+          "relevant_count": 5,
+          "precision": 0.416667,
+          "recall": 1.0,
+          "f1": 0.588235
+        },
+        "working_time": {
+          "expected_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111",
+            "20.2.NĐ.3.60",
+            "20.2.NĐ.3.89",
+            "20.2.TT.4.6",
+            "20.2.NĐ.3.55",
+            "20.2.NĐ.3.57",
+            "20.2.LQ.146",
+            "20.2.NĐ.3.69",
+            "20.2.TT.7.8"
+          ],
+          "expected_count": 4,
+          "returned_count": 12,
+          "relevant_count": 4,
+          "precision": 0.333333,
+          "recall": 1.0,
+          "f1": 0.5
+        },
+        "termination": {
+          "expected_article_codes": [
+            "20.2.LQ.34",
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.NĐ.3.7"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.LQ.34",
+            "20.2.NĐ.3.7",
+            "20.2.NĐ.3.89",
+            "20.2.LQ.38",
+            "20.2.LQ.40",
+            "20.2.TT.8.6",
+            "20.2.LQ.41",
+            "20.2.LQ.162",
+            "20.2.LQ.138",
+            "20.2.NĐ.3.90"
+          ],
+          "expected_count": 4,
+          "returned_count": 12,
+          "relevant_count": 4,
+          "precision": 0.333333,
+          "recall": 1.0,
+          "f1": 0.5
+        }
+      },
+      "marginal_recall_gain": 0.0
+    },
+    {
+      "k": 13,
+      "preferred_precision": 0.307692,
+      "preferred_recall": 1.0,
+      "f1": 0.470588,
+      "relevant_sources": 16,
+      "noise_sources": 36,
+      "noise_rate": 0.692308,
+      "sources_per_review": 52,
+      "avg_sources_per_finding": 13.0,
+      "categories": {
+        "probation": {
+          "expected_article_codes": [
+            "20.2.LQ.25",
+            "20.2.LQ.26",
+            "20.2.LQ.27"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.26",
+            "20.2.LQ.25",
+            "20.2.LQ.27",
+            "20.2.TT.2.3",
+            "20.2.NĐ.3.54",
+            "20.2.NĐ.3.55",
+            "20.2.LQ.137",
+            "20.2.NĐ.3.56",
+            "20.2.LQ.29",
+            "20.2.NĐ.3.69",
+            "20.2.LQ.24",
+            "20.2.NĐ.3.65",
+            "20.2.NĐ.3.57"
+          ],
+          "expected_count": 3,
+          "returned_count": 13,
+          "relevant_count": 3,
+          "precision": 0.230769,
+          "recall": 1.0,
+          "f1": 0.375
+        },
+        "salary": {
+          "expected_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.94",
+            "20.2.LQ.95",
+            "20.2.LQ.96",
+            "20.2.LQ.97"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.95",
+            "20.2.LQ.94",
+            "20.2.LQ.96",
+            "20.2.LQ.97",
+            "20.2.NĐ.3.54",
+            "20.2.NĐ.8.4",
+            "20.2.TT.2.3",
+            "20.2.NĐ.3.55",
+            "20.2.NĐ.3.57",
+            "20.2.LQ.98",
+            "20.2.LQ.47",
+            "20.2.LQ.162"
+          ],
+          "expected_count": 5,
+          "returned_count": 13,
+          "relevant_count": 5,
+          "precision": 0.384615,
+          "recall": 1.0,
+          "f1": 0.555556
+        },
+        "working_time": {
+          "expected_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111",
+            "20.2.NĐ.3.60",
+            "20.2.NĐ.3.89",
+            "20.2.TT.4.6",
+            "20.2.NĐ.3.55",
+            "20.2.NĐ.3.57",
+            "20.2.LQ.146",
+            "20.2.NĐ.3.69",
+            "20.2.TT.7.8",
+            "20.2.TT.4.7"
+          ],
+          "expected_count": 4,
+          "returned_count": 13,
+          "relevant_count": 4,
+          "precision": 0.307692,
+          "recall": 1.0,
+          "f1": 0.470588
+        },
+        "termination": {
+          "expected_article_codes": [
+            "20.2.LQ.34",
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.NĐ.3.7"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.LQ.34",
+            "20.2.NĐ.3.7",
+            "20.2.NĐ.3.89",
+            "20.2.LQ.38",
+            "20.2.LQ.40",
+            "20.2.TT.8.6",
+            "20.2.LQ.41",
+            "20.2.LQ.162",
+            "20.2.LQ.138",
+            "20.2.NĐ.3.90",
+            "20.2.LQ.20"
+          ],
+          "expected_count": 4,
+          "returned_count": 13,
+          "relevant_count": 4,
+          "precision": 0.307692,
+          "recall": 1.0,
+          "f1": 0.470588
+        }
+      },
+      "marginal_recall_gain": 0.0
+    },
+    {
+      "k": 14,
+      "preferred_precision": 0.285714,
+      "preferred_recall": 1.0,
+      "f1": 0.444444,
+      "relevant_sources": 16,
+      "noise_sources": 40,
+      "noise_rate": 0.714286,
+      "sources_per_review": 56,
+      "avg_sources_per_finding": 14.0,
+      "categories": {
+        "probation": {
+          "expected_article_codes": [
+            "20.2.LQ.25",
+            "20.2.LQ.26",
+            "20.2.LQ.27"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.26",
+            "20.2.LQ.25",
+            "20.2.LQ.27",
+            "20.2.TT.2.3",
+            "20.2.NĐ.3.54",
+            "20.2.NĐ.3.55",
+            "20.2.LQ.137",
+            "20.2.NĐ.3.56",
+            "20.2.LQ.29",
+            "20.2.NĐ.3.69",
+            "20.2.LQ.24",
+            "20.2.NĐ.3.65",
+            "20.2.NĐ.3.57",
+            "20.2.NĐ.3.103"
+          ],
+          "expected_count": 3,
+          "returned_count": 14,
+          "relevant_count": 3,
+          "precision": 0.214286,
+          "recall": 1.0,
+          "f1": 0.352941
+        },
+        "salary": {
+          "expected_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.94",
+            "20.2.LQ.95",
+            "20.2.LQ.96",
+            "20.2.LQ.97"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.95",
+            "20.2.LQ.94",
+            "20.2.LQ.96",
+            "20.2.LQ.97",
+            "20.2.NĐ.3.54",
+            "20.2.NĐ.8.4",
+            "20.2.TT.2.3",
+            "20.2.NĐ.3.55",
+            "20.2.NĐ.3.57",
+            "20.2.LQ.98",
+            "20.2.LQ.47",
+            "20.2.LQ.162",
+            "NQ66.18.PL-I.4.C.V"
+          ],
+          "expected_count": 5,
+          "returned_count": 14,
+          "relevant_count": 5,
+          "precision": 0.357143,
+          "recall": 1.0,
+          "f1": 0.526316
+        },
+        "working_time": {
+          "expected_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111",
+            "20.2.NĐ.3.60",
+            "20.2.NĐ.3.89",
+            "20.2.TT.4.6",
+            "20.2.NĐ.3.55",
+            "20.2.NĐ.3.57",
+            "20.2.LQ.146",
+            "20.2.NĐ.3.69",
+            "20.2.TT.7.8",
+            "20.2.TT.4.7",
+            "20.2.TT.3.5"
+          ],
+          "expected_count": 4,
+          "returned_count": 14,
+          "relevant_count": 4,
+          "precision": 0.285714,
+          "recall": 1.0,
+          "f1": 0.444444
+        },
+        "termination": {
+          "expected_article_codes": [
+            "20.2.LQ.34",
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.NĐ.3.7"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.LQ.34",
+            "20.2.NĐ.3.7",
+            "20.2.NĐ.3.89",
+            "20.2.LQ.38",
+            "20.2.LQ.40",
+            "20.2.TT.8.6",
+            "20.2.LQ.41",
+            "20.2.LQ.162",
+            "20.2.LQ.138",
+            "20.2.NĐ.3.90",
+            "20.2.LQ.20",
+            "20.2.LQ.44"
+          ],
+          "expected_count": 4,
+          "returned_count": 14,
+          "relevant_count": 4,
+          "precision": 0.285714,
+          "recall": 1.0,
+          "f1": 0.444444
+        }
+      },
+      "marginal_recall_gain": 0.0
+    },
+    {
+      "k": 15,
+      "preferred_precision": 0.266667,
+      "preferred_recall": 1.0,
+      "f1": 0.421053,
+      "relevant_sources": 16,
+      "noise_sources": 44,
+      "noise_rate": 0.733333,
+      "sources_per_review": 60,
+      "avg_sources_per_finding": 15.0,
+      "categories": {
+        "probation": {
+          "expected_article_codes": [
+            "20.2.LQ.25",
+            "20.2.LQ.26",
+            "20.2.LQ.27"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.26",
+            "20.2.LQ.25",
+            "20.2.LQ.27",
+            "20.2.TT.2.3",
+            "20.2.NĐ.3.54",
+            "20.2.NĐ.3.55",
+            "20.2.LQ.137",
+            "20.2.NĐ.3.56",
+            "20.2.LQ.29",
+            "20.2.NĐ.3.69",
+            "20.2.LQ.24",
+            "20.2.NĐ.3.65",
+            "20.2.NĐ.3.57",
+            "20.2.NĐ.3.103",
+            "20.2.LQ.93"
+          ],
+          "expected_count": 3,
+          "returned_count": 15,
+          "relevant_count": 3,
+          "precision": 0.2,
+          "recall": 1.0,
+          "f1": 0.333333
+        },
+        "salary": {
+          "expected_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.94",
+            "20.2.LQ.95",
+            "20.2.LQ.96",
+            "20.2.LQ.97"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.95",
+            "20.2.LQ.94",
+            "20.2.LQ.96",
+            "20.2.LQ.97",
+            "20.2.NĐ.3.54",
+            "20.2.NĐ.8.4",
+            "20.2.TT.2.3",
+            "20.2.NĐ.3.55",
+            "20.2.NĐ.3.57",
+            "20.2.LQ.98",
+            "20.2.LQ.47",
+            "20.2.LQ.162",
+            "NQ66.18.PL-I.4.C.V",
+            "20.2.NĐ.3.56"
+          ],
+          "expected_count": 5,
+          "returned_count": 15,
+          "relevant_count": 5,
+          "precision": 0.333333,
+          "recall": 1.0,
+          "f1": 0.5
+        },
+        "working_time": {
+          "expected_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111",
+            "20.2.NĐ.3.60",
+            "20.2.NĐ.3.89",
+            "20.2.TT.4.6",
+            "20.2.NĐ.3.55",
+            "20.2.NĐ.3.57",
+            "20.2.LQ.146",
+            "20.2.NĐ.3.69",
+            "20.2.TT.7.8",
+            "20.2.TT.4.7",
+            "20.2.TT.3.5",
+            "20.2.TT.7.7"
+          ],
+          "expected_count": 4,
+          "returned_count": 15,
+          "relevant_count": 4,
+          "precision": 0.266667,
+          "recall": 1.0,
+          "f1": 0.421053
+        },
+        "termination": {
+          "expected_article_codes": [
+            "20.2.LQ.34",
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.NĐ.3.7"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.LQ.34",
+            "20.2.NĐ.3.7",
+            "20.2.NĐ.3.89",
+            "20.2.LQ.38",
+            "20.2.LQ.40",
+            "20.2.TT.8.6",
+            "20.2.LQ.41",
+            "20.2.LQ.162",
+            "20.2.LQ.138",
+            "20.2.NĐ.3.90",
+            "20.2.LQ.20",
+            "20.2.LQ.44",
+            "20.2.LQ.39"
+          ],
+          "expected_count": 4,
+          "returned_count": 15,
+          "relevant_count": 4,
+          "precision": 0.266667,
+          "recall": 1.0,
+          "f1": 0.421053
+        }
+      },
+      "marginal_recall_gain": 0.0
+    },
+    {
+      "k": 16,
+      "preferred_precision": 0.25,
+      "preferred_recall": 1.0,
+      "f1": 0.4,
+      "relevant_sources": 16,
+      "noise_sources": 48,
+      "noise_rate": 0.75,
+      "sources_per_review": 64,
+      "avg_sources_per_finding": 16.0,
+      "categories": {
+        "probation": {
+          "expected_article_codes": [
+            "20.2.LQ.25",
+            "20.2.LQ.26",
+            "20.2.LQ.27"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.26",
+            "20.2.LQ.25",
+            "20.2.LQ.27",
+            "20.2.TT.2.3",
+            "20.2.NĐ.3.54",
+            "20.2.NĐ.3.55",
+            "20.2.LQ.137",
+            "20.2.NĐ.3.56",
+            "20.2.LQ.29",
+            "20.2.NĐ.3.69",
+            "20.2.LQ.24",
+            "20.2.NĐ.3.65",
+            "20.2.NĐ.3.57",
+            "20.2.NĐ.3.103",
+            "20.2.LQ.93",
+            "20.2.NĐ.3.80"
+          ],
+          "expected_count": 3,
+          "returned_count": 16,
+          "relevant_count": 3,
+          "precision": 0.1875,
+          "recall": 1.0,
+          "f1": 0.315789
+        },
+        "salary": {
+          "expected_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.94",
+            "20.2.LQ.95",
+            "20.2.LQ.96",
+            "20.2.LQ.97"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.95",
+            "20.2.LQ.94",
+            "20.2.LQ.96",
+            "20.2.LQ.97",
+            "20.2.NĐ.3.54",
+            "20.2.NĐ.8.4",
+            "20.2.TT.2.3",
+            "20.2.NĐ.3.55",
+            "20.2.NĐ.3.57",
+            "20.2.LQ.98",
+            "20.2.LQ.47",
+            "20.2.LQ.162",
+            "NQ66.18.PL-I.4.C.V",
+            "20.2.NĐ.3.56",
+            "NQ66.18.PL-I.4.C.VII"
+          ],
+          "expected_count": 5,
+          "returned_count": 16,
+          "relevant_count": 5,
+          "precision": 0.3125,
+          "recall": 1.0,
+          "f1": 0.47619
+        },
+        "working_time": {
+          "expected_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111",
+            "20.2.NĐ.3.60",
+            "20.2.NĐ.3.89",
+            "20.2.TT.4.6",
+            "20.2.NĐ.3.55",
+            "20.2.NĐ.3.57",
+            "20.2.LQ.146",
+            "20.2.NĐ.3.69",
+            "20.2.TT.7.8",
+            "20.2.TT.4.7",
+            "20.2.TT.3.5",
+            "20.2.TT.7.7",
+            "20.2.TT.6.5"
+          ],
+          "expected_count": 4,
+          "returned_count": 16,
+          "relevant_count": 4,
+          "precision": 0.25,
+          "recall": 1.0,
+          "f1": 0.4
+        },
+        "termination": {
+          "expected_article_codes": [
+            "20.2.LQ.34",
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.NĐ.3.7"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.LQ.34",
+            "20.2.NĐ.3.7",
+            "20.2.NĐ.3.89",
+            "20.2.LQ.38",
+            "20.2.LQ.40",
+            "20.2.TT.8.6",
+            "20.2.LQ.41",
+            "20.2.LQ.162",
+            "20.2.LQ.138",
+            "20.2.NĐ.3.90",
+            "20.2.LQ.20",
+            "20.2.LQ.44",
+            "20.2.LQ.39",
+            "20.2.LQ.45"
+          ],
+          "expected_count": 4,
+          "returned_count": 16,
+          "relevant_count": 4,
+          "precision": 0.25,
+          "recall": 1.0,
+          "f1": 0.4
+        }
+      },
+      "marginal_recall_gain": 0.0
+    },
+    {
+      "k": 17,
+      "preferred_precision": 0.235294,
+      "preferred_recall": 1.0,
+      "f1": 0.380952,
+      "relevant_sources": 16,
+      "noise_sources": 52,
+      "noise_rate": 0.764706,
+      "sources_per_review": 68,
+      "avg_sources_per_finding": 17.0,
+      "categories": {
+        "probation": {
+          "expected_article_codes": [
+            "20.2.LQ.25",
+            "20.2.LQ.26",
+            "20.2.LQ.27"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.26",
+            "20.2.LQ.25",
+            "20.2.LQ.27",
+            "20.2.TT.2.3",
+            "20.2.NĐ.3.54",
+            "20.2.NĐ.3.55",
+            "20.2.LQ.137",
+            "20.2.NĐ.3.56",
+            "20.2.LQ.29",
+            "20.2.NĐ.3.69",
+            "20.2.LQ.24",
+            "20.2.NĐ.3.65",
+            "20.2.NĐ.3.57",
+            "20.2.NĐ.3.103",
+            "20.2.LQ.93",
+            "20.2.NĐ.3.80",
+            "NQ66.18.PL-I.4.C.VII"
+          ],
+          "expected_count": 3,
+          "returned_count": 17,
+          "relevant_count": 3,
+          "precision": 0.176471,
+          "recall": 1.0,
+          "f1": 0.3
+        },
+        "salary": {
+          "expected_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.94",
+            "20.2.LQ.95",
+            "20.2.LQ.96",
+            "20.2.LQ.97"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.95",
+            "20.2.LQ.94",
+            "20.2.LQ.96",
+            "20.2.LQ.97",
+            "20.2.NĐ.3.54",
+            "20.2.NĐ.8.4",
+            "20.2.TT.2.3",
+            "20.2.NĐ.3.55",
+            "20.2.NĐ.3.57",
+            "20.2.LQ.98",
+            "20.2.LQ.47",
+            "20.2.LQ.162",
+            "NQ66.18.PL-I.4.C.V",
+            "20.2.NĐ.3.56",
+            "NQ66.18.PL-I.4.C.VII",
+            "20.2.NĐ.8.3"
+          ],
+          "expected_count": 5,
+          "returned_count": 17,
+          "relevant_count": 5,
+          "precision": 0.294118,
+          "recall": 1.0,
+          "f1": 0.454545
+        },
+        "working_time": {
+          "expected_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111",
+            "20.2.NĐ.3.60",
+            "20.2.NĐ.3.89",
+            "20.2.TT.4.6",
+            "20.2.NĐ.3.55",
+            "20.2.NĐ.3.57",
+            "20.2.LQ.146",
+            "20.2.NĐ.3.69",
+            "20.2.TT.7.8",
+            "20.2.TT.4.7",
+            "20.2.TT.3.5",
+            "20.2.TT.7.7",
+            "20.2.TT.6.5",
+            "20.2.NĐ.8.4"
+          ],
+          "expected_count": 4,
+          "returned_count": 17,
+          "relevant_count": 4,
+          "precision": 0.235294,
+          "recall": 1.0,
+          "f1": 0.380952
+        },
+        "termination": {
+          "expected_article_codes": [
+            "20.2.LQ.34",
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.NĐ.3.7"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.LQ.34",
+            "20.2.NĐ.3.7",
+            "20.2.NĐ.3.89",
+            "20.2.LQ.38",
+            "20.2.LQ.40",
+            "20.2.TT.8.6",
+            "20.2.LQ.41",
+            "20.2.LQ.162",
+            "20.2.LQ.138",
+            "20.2.NĐ.3.90",
+            "20.2.LQ.20",
+            "20.2.LQ.44",
+            "20.2.LQ.39",
+            "20.2.LQ.45",
+            "20.2.LQ.219"
+          ],
+          "expected_count": 4,
+          "returned_count": 17,
+          "relevant_count": 4,
+          "precision": 0.235294,
+          "recall": 1.0,
+          "f1": 0.380952
+        }
+      },
+      "marginal_recall_gain": 0.0
+    },
+    {
+      "k": 18,
+      "preferred_precision": 0.222222,
+      "preferred_recall": 1.0,
+      "f1": 0.363636,
+      "relevant_sources": 16,
+      "noise_sources": 56,
+      "noise_rate": 0.777778,
+      "sources_per_review": 72,
+      "avg_sources_per_finding": 18.0,
+      "categories": {
+        "probation": {
+          "expected_article_codes": [
+            "20.2.LQ.25",
+            "20.2.LQ.26",
+            "20.2.LQ.27"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.26",
+            "20.2.LQ.25",
+            "20.2.LQ.27",
+            "20.2.TT.2.3",
+            "20.2.NĐ.3.54",
+            "20.2.NĐ.3.55",
+            "20.2.LQ.137",
+            "20.2.NĐ.3.56",
+            "20.2.LQ.29",
+            "20.2.NĐ.3.69",
+            "20.2.LQ.24",
+            "20.2.NĐ.3.65",
+            "20.2.NĐ.3.57",
+            "20.2.NĐ.3.103",
+            "20.2.LQ.93",
+            "20.2.NĐ.3.80",
+            "NQ66.18.PL-I.4.C.VII",
+            "20.2.LQ.113"
+          ],
+          "expected_count": 3,
+          "returned_count": 18,
+          "relevant_count": 3,
+          "precision": 0.166667,
+          "recall": 1.0,
+          "f1": 0.285714
+        },
+        "salary": {
+          "expected_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.94",
+            "20.2.LQ.95",
+            "20.2.LQ.96",
+            "20.2.LQ.97"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.95",
+            "20.2.LQ.94",
+            "20.2.LQ.96",
+            "20.2.LQ.97",
+            "20.2.NĐ.3.54",
+            "20.2.NĐ.8.4",
+            "20.2.TT.2.3",
+            "20.2.NĐ.3.55",
+            "20.2.NĐ.3.57",
+            "20.2.LQ.98",
+            "20.2.LQ.47",
+            "20.2.LQ.162",
+            "NQ66.18.PL-I.4.C.V",
+            "20.2.NĐ.3.56",
+            "NQ66.18.PL-I.4.C.VII",
+            "20.2.NĐ.8.3",
+            "20.2.NĐ.3.67"
+          ],
+          "expected_count": 5,
+          "returned_count": 18,
+          "relevant_count": 5,
+          "precision": 0.277778,
+          "recall": 1.0,
+          "f1": 0.434783
+        },
+        "working_time": {
+          "expected_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111",
+            "20.2.NĐ.3.60",
+            "20.2.NĐ.3.89",
+            "20.2.TT.4.6",
+            "20.2.NĐ.3.55",
+            "20.2.NĐ.3.57",
+            "20.2.LQ.146",
+            "20.2.NĐ.3.69",
+            "20.2.TT.7.8",
+            "20.2.TT.4.7",
+            "20.2.TT.3.5",
+            "20.2.TT.7.7",
+            "20.2.TT.6.5",
+            "20.2.NĐ.8.4",
+            "20.2.LQ.98"
+          ],
+          "expected_count": 4,
+          "returned_count": 18,
+          "relevant_count": 4,
+          "precision": 0.222222,
+          "recall": 1.0,
+          "f1": 0.363636
+        },
+        "termination": {
+          "expected_article_codes": [
+            "20.2.LQ.34",
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.NĐ.3.7"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.LQ.34",
+            "20.2.NĐ.3.7",
+            "20.2.NĐ.3.89",
+            "20.2.LQ.38",
+            "20.2.LQ.40",
+            "20.2.TT.8.6",
+            "20.2.LQ.41",
+            "20.2.LQ.162",
+            "20.2.LQ.138",
+            "20.2.NĐ.3.90",
+            "20.2.LQ.20",
+            "20.2.LQ.44",
+            "20.2.LQ.39",
+            "20.2.LQ.45",
+            "20.2.LQ.219",
+            "20.2.LQ.163"
+          ],
+          "expected_count": 4,
+          "returned_count": 18,
+          "relevant_count": 4,
+          "precision": 0.222222,
+          "recall": 1.0,
+          "f1": 0.363636
+        }
+      },
+      "marginal_recall_gain": 0.0
+    },
+    {
+      "k": 19,
+      "preferred_precision": 0.210526,
+      "preferred_recall": 1.0,
+      "f1": 0.347826,
+      "relevant_sources": 16,
+      "noise_sources": 60,
+      "noise_rate": 0.789474,
+      "sources_per_review": 76,
+      "avg_sources_per_finding": 19.0,
+      "categories": {
+        "probation": {
+          "expected_article_codes": [
+            "20.2.LQ.25",
+            "20.2.LQ.26",
+            "20.2.LQ.27"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.26",
+            "20.2.LQ.25",
+            "20.2.LQ.27",
+            "20.2.TT.2.3",
+            "20.2.NĐ.3.54",
+            "20.2.NĐ.3.55",
+            "20.2.LQ.137",
+            "20.2.NĐ.3.56",
+            "20.2.LQ.29",
+            "20.2.NĐ.3.69",
+            "20.2.LQ.24",
+            "20.2.NĐ.3.65",
+            "20.2.NĐ.3.57",
+            "20.2.NĐ.3.103",
+            "20.2.LQ.93",
+            "20.2.NĐ.3.80",
+            "NQ66.18.PL-I.4.C.VII",
+            "20.2.LQ.113",
+            "20.2.LQ.98"
+          ],
+          "expected_count": 3,
+          "returned_count": 19,
+          "relevant_count": 3,
+          "precision": 0.157895,
+          "recall": 1.0,
+          "f1": 0.272727
+        },
+        "salary": {
+          "expected_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.94",
+            "20.2.LQ.95",
+            "20.2.LQ.96",
+            "20.2.LQ.97"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.95",
+            "20.2.LQ.94",
+            "20.2.LQ.96",
+            "20.2.LQ.97",
+            "20.2.NĐ.3.54",
+            "20.2.NĐ.8.4",
+            "20.2.TT.2.3",
+            "20.2.NĐ.3.55",
+            "20.2.NĐ.3.57",
+            "20.2.LQ.98",
+            "20.2.LQ.47",
+            "20.2.LQ.162",
+            "NQ66.18.PL-I.4.C.V",
+            "20.2.NĐ.3.56",
+            "NQ66.18.PL-I.4.C.VII",
+            "20.2.NĐ.8.3",
+            "20.2.NĐ.3.67",
+            "20.2.LQ.102"
+          ],
+          "expected_count": 5,
+          "returned_count": 19,
+          "relevant_count": 5,
+          "precision": 0.263158,
+          "recall": 1.0,
+          "f1": 0.416667
+        },
+        "working_time": {
+          "expected_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111",
+            "20.2.NĐ.3.60",
+            "20.2.NĐ.3.89",
+            "20.2.TT.4.6",
+            "20.2.NĐ.3.55",
+            "20.2.NĐ.3.57",
+            "20.2.LQ.146",
+            "20.2.NĐ.3.69",
+            "20.2.TT.7.8",
+            "20.2.TT.4.7",
+            "20.2.TT.3.5",
+            "20.2.TT.7.7",
+            "20.2.TT.6.5",
+            "20.2.NĐ.8.4",
+            "20.2.LQ.98",
+            "20.2.TT.7.6"
+          ],
+          "expected_count": 4,
+          "returned_count": 19,
+          "relevant_count": 4,
+          "precision": 0.210526,
+          "recall": 1.0,
+          "f1": 0.347826
+        },
+        "termination": {
+          "expected_article_codes": [
+            "20.2.LQ.34",
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.NĐ.3.7"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.LQ.34",
+            "20.2.NĐ.3.7",
+            "20.2.NĐ.3.89",
+            "20.2.LQ.38",
+            "20.2.LQ.40",
+            "20.2.TT.8.6",
+            "20.2.LQ.41",
+            "20.2.LQ.162",
+            "20.2.LQ.138",
+            "20.2.NĐ.3.90",
+            "20.2.LQ.20",
+            "20.2.LQ.44",
+            "20.2.LQ.39",
+            "20.2.LQ.45",
+            "20.2.LQ.219",
+            "20.2.LQ.163",
+            "20.2.LQ.188"
+          ],
+          "expected_count": 4,
+          "returned_count": 19,
+          "relevant_count": 4,
+          "precision": 0.210526,
+          "recall": 1.0,
+          "f1": 0.347826
+        }
+      },
+      "marginal_recall_gain": 0.0
+    },
+    {
+      "k": 20,
+      "preferred_precision": 0.2,
+      "preferred_recall": 1.0,
+      "f1": 0.333333,
+      "relevant_sources": 16,
+      "noise_sources": 64,
+      "noise_rate": 0.8,
+      "sources_per_review": 80,
+      "avg_sources_per_finding": 20.0,
+      "categories": {
+        "probation": {
+          "expected_article_codes": [
+            "20.2.LQ.25",
+            "20.2.LQ.26",
+            "20.2.LQ.27"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.26",
+            "20.2.LQ.25",
+            "20.2.LQ.27",
+            "20.2.TT.2.3",
+            "20.2.NĐ.3.54",
+            "20.2.NĐ.3.55",
+            "20.2.LQ.137",
+            "20.2.NĐ.3.56",
+            "20.2.LQ.29",
+            "20.2.NĐ.3.69",
+            "20.2.LQ.24",
+            "20.2.NĐ.3.65",
+            "20.2.NĐ.3.57",
+            "20.2.NĐ.3.103",
+            "20.2.LQ.93",
+            "20.2.NĐ.3.80",
+            "NQ66.18.PL-I.4.C.VII",
+            "20.2.LQ.113",
+            "20.2.LQ.98",
+            "20.2.NĐ.3.8"
+          ],
+          "expected_count": 3,
+          "returned_count": 20,
+          "relevant_count": 3,
+          "precision": 0.15,
+          "recall": 1.0,
+          "f1": 0.26087
+        },
+        "salary": {
+          "expected_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.94",
+            "20.2.LQ.95",
+            "20.2.LQ.96",
+            "20.2.LQ.97"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.90",
+            "20.2.LQ.95",
+            "20.2.LQ.94",
+            "20.2.LQ.96",
+            "20.2.LQ.97",
+            "20.2.NĐ.3.54",
+            "20.2.NĐ.8.4",
+            "20.2.TT.2.3",
+            "20.2.NĐ.3.55",
+            "20.2.NĐ.3.57",
+            "20.2.LQ.98",
+            "20.2.LQ.47",
+            "20.2.LQ.162",
+            "NQ66.18.PL-I.4.C.V",
+            "20.2.NĐ.3.56",
+            "NQ66.18.PL-I.4.C.VII",
+            "20.2.NĐ.8.3",
+            "20.2.NĐ.3.67",
+            "20.2.LQ.102",
+            "20.2.LQ.41"
+          ],
+          "expected_count": 5,
+          "returned_count": 20,
+          "relevant_count": 5,
+          "precision": 0.25,
+          "recall": 1.0,
+          "f1": 0.4
+        },
+        "working_time": {
+          "expected_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.105",
+            "20.2.LQ.107",
+            "20.2.LQ.109",
+            "20.2.LQ.111",
+            "20.2.NĐ.3.60",
+            "20.2.NĐ.3.89",
+            "20.2.TT.4.6",
+            "20.2.NĐ.3.55",
+            "20.2.NĐ.3.57",
+            "20.2.LQ.146",
+            "20.2.NĐ.3.69",
+            "20.2.TT.7.8",
+            "20.2.TT.4.7",
+            "20.2.TT.3.5",
+            "20.2.TT.7.7",
+            "20.2.TT.6.5",
+            "20.2.NĐ.8.4",
+            "20.2.LQ.98",
+            "20.2.TT.7.6",
+            "20.2.LQ.67"
+          ],
+          "expected_count": 4,
+          "returned_count": 20,
+          "relevant_count": 4,
+          "precision": 0.2,
+          "recall": 1.0,
+          "f1": 0.333333
+        },
+        "termination": {
+          "expected_article_codes": [
+            "20.2.LQ.34",
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.NĐ.3.7"
+          ],
+          "retrieved_article_codes": [
+            "20.2.LQ.35",
+            "20.2.LQ.36",
+            "20.2.LQ.34",
+            "20.2.NĐ.3.7",
+            "20.2.NĐ.3.89",
+            "20.2.LQ.38",
+            "20.2.LQ.40",
+            "20.2.TT.8.6",
+            "20.2.LQ.41",
+            "20.2.LQ.162",
+            "20.2.LQ.138",
+            "20.2.NĐ.3.90",
+            "20.2.LQ.20",
+            "20.2.LQ.44",
+            "20.2.LQ.39",
+            "20.2.LQ.45",
+            "20.2.LQ.219",
+            "20.2.LQ.163",
+            "20.2.LQ.188",
+            "20.2.NĐ.6.9"
+          ],
+          "expected_count": 4,
+          "returned_count": 20,
+          "relevant_count": 4,
+          "precision": 0.2,
+          "recall": 1.0,
+          "f1": 0.333333
+        }
+      },
+      "marginal_recall_gain": 0.0
+    }
+  ]
+}

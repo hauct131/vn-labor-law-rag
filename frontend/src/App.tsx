@@ -37,6 +37,7 @@ import {
   sessionFetch,
 } from './features/auth/authApi'
 import type { AuthResult, AuthUser } from './features/auth/authTypes'
+import { ContractReviewPage } from './features/contracts/ContractReviewPage'
 
 const methods: Array<{
   value: RetrievalMethod
@@ -96,7 +97,7 @@ function TopNav({
   onOpenAuth,
   onLogout,
 }: {
-  activeTab: 'qa' | 'library' | 'source' | 'saved'
+  activeTab: 'qa' | 'library' | 'source' | 'saved' | 'contracts'
   badgeText?: string
   showBackLink?: boolean
 } & NavAuthProps) {
@@ -133,6 +134,13 @@ function TopNav({
             onClick={() => navigateTo('/library')}
           >
             Thư viện
+          </button>
+          <button
+            type="button"
+            className={`nav-tab ${activeTab === 'contracts' ? 'active' : ''}`}
+            onClick={() => navigateTo('/contract-reviews')}
+          >
+            Rà soát hợp đồng
           </button>
           <button
             type="button"
@@ -910,6 +918,7 @@ type Route =
   | { type: 'library-list' }
   | { type: 'library-detail'; documentId: string }
   | { type: 'saved' }
+  | { type: 'contracts' }
 
 function parseRoute(pathname: string): Route {
   const sourceMatch = pathname.match(/^\/sources\/([^/]+)\/?$/)
@@ -932,6 +941,10 @@ function parseRoute(pathname: string): Route {
 
   if (pathname === '/saved' || pathname.startsWith('/saved/')) {
     return { type: 'saved' }
+  }
+
+  if (pathname === '/contract-reviews' || pathname.startsWith('/contract-reviews/')) {
+    return { type: 'contracts' }
   }
 
   if (pathname === '/library' || pathname.startsWith('/library/')) {
@@ -1065,6 +1078,17 @@ function App() {
         <footer>
           <p>Công cụ hỗ trợ tra cứu học thuật, không thay thế tư vấn pháp lý chuyên môn.</p>
         </footer>
+      </div>
+    )
+  } else if (route.type === 'contracts') {
+    page = (
+      <div className="app-shell">
+        <TopNav activeTab="contracts" {...navAuth} />
+        <ContractReviewPage
+          key={authUser?.id ?? 'anonymous'}
+          isAuthenticated={Boolean(authUser)}
+          onLogin={navAuth.onOpenAuth}
+        />
       </div>
     )
   } else if (route.type === 'library-list') {

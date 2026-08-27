@@ -1,0 +1,79 @@
+name: Answer Evaluation CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "evaluation/**"
+      - "data/evaluation/answer-quality-v1/**"
+      - "docs/evaluation/ANSWER_CITATION_EVALUATION_V1.md"
+      - ".github/workflows/answer-evaluation-ci.yml"
+  pull_request:
+    paths:
+      - "evaluation/**"
+      - "data/evaluation/answer-quality-v1/**"
+      - "docs/evaluation/ANSWER_CITATION_EVALUATION_V1.md"
+      - ".github/workflows/answer-evaluation-ci.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: answer-evaluation-ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  deterministic-evaluation:
+    name: Offline schema, rubric and metrics
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    env:
+      PIP_DISABLE_PIP_VERSION_CHECK: "1"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: |
+            evaluation/requirements.txt
+            evaluation/requirements-lock.txt
+
+      - name: Install isolated evaluation dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install \
+            -r evaluation/requirements.txt \
+            -c evaluation/requirements-lock.txt
+          python -m pip check
+
+      - name: Compile offline evaluator
+        run: python -m compileall -q evaluation
+
+      - name: Run offline evaluator tests
+        run: python -m pytest -q evaluation/tests
+
+      - name: Verify migrated candidate is reproducible
+        run: python -m evaluation.answer_quality.migrate_candidates --check
+
+      - name: Verify multi-LLM adjudication application is reproducible
+        run: python -m evaluation.answer_quality.apply_adjudication --check
+
+      - name: Verify human review packet creation is reproducible
+        run: python -m evaluation.answer_quality.create_human_review_packet --output-dir /tmp/human-review-ci-check
+
+      - name: Verify provisional diagnostic mode without flag fails closed
+
+        run: |
+          if python -m evaluation.answer_quality.provisional_diagnostic; then
+            echo "FAIL: diagnostic accepted execution without explicit flag"
+            exit 1
+          fi
+          echo "PASS: diagnostic fails closed without explicit flag"

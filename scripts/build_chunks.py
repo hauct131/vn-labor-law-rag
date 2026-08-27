@@ -54,9 +54,12 @@ def build_parser() -> argparse.ArgumentParser:
     )
     p.add_argument(
         "--input",
-        default="data/processed/articles_raw.json",
+        default="data/legacy/phapdien/processed/articles_raw.json",
         metavar="PATH",
-        help="Path to canonical corpus JSON (default: data/processed/articles_raw.json)",
+        help=(
+            "Path to legacy Pháp điển corpus JSON "
+            "(default: data/legacy/phapdien/processed/articles_raw.json)"
+        ),
     )
     p.add_argument(
         "--output",
