@@ -1,7 +1,7 @@
 from functools import lru_cache
 from typing import Literal
 
-from pydantic import Field
+from pydantic import Field, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -80,12 +80,25 @@ class Settings(BaseSettings):
         "a402150d93516ef4256934972c70307"
     )
     retrieval_top_k: int = 5
-    retrieval_candidate_k: int = 30
+    retrieval_candidate_k: int = Field(default=30, ge=1, le=200)
+    generation_context_k: int = Field(default=10, ge=1, le=50)
     hybrid_rrf_k: int = 60
     hybrid_sparse_weight: float = 0.1
     hybrid_dense_weight: float = 0.9
     bm25_k: float = 1.2
     bm25_b: float = 0.75
+
+    @model_validator(mode="after")
+    def validate_retrieval_and_llm_settings(self) -> "Settings":
+        if self.retrieval_candidate_k < self.generation_context_k:
+            raise ValueError(
+                "retrieval_candidate_k must be greater than or equal to generation_context_k"
+            )
+        if self.openrouter_retry_max_tokens < self.openrouter_max_tokens:
+            raise ValueError(
+                "openrouter_retry_max_tokens must be greater than or equal to openrouter_max_tokens"
+            )
+        return self
 
     # Neo4j
     neo4j_uri: str = "bolt://localhost:7687"
@@ -104,6 +117,7 @@ class Settings(BaseSettings):
     # Completion budget includes any reasoning tokens used by reasoning models.
     # Keep enough room for a complete, cited Vietnamese answer.
     openrouter_max_tokens: int = 1200
+    openrouter_retry_max_tokens: int = Field(default=2000, ge=1200, le=4096)
     # A value of 0 disables the explicit reasoning override. For models such as
     # Nemotron 3 Ultra, a small budget prevents hidden reasoning from consuming
     # nearly the entire completion budget.

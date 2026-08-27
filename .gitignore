@@ -59,6 +59,8 @@ data/evaluation/*
 !data/evaluation/*.md
 !data/evaluation/splits/
 !data/evaluation/splits/*.json
+!data/evaluation/answer-quality-v1/
+!data/evaluation/answer-quality-v1/*.json
 !data/evaluation/runtime-benchmark/
 data/evaluation/runtime-benchmark/*
 !data/evaluation/runtime-benchmark/*.json

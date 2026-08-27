@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from .contract_review_reranker import get_contract_review_reranker
+
 import hashlib
 import json
 import math
@@ -76,7 +78,20 @@ CATEGORIES = (
         "working_time",
         "Thời giờ làm việc và nghỉ ngơi",
         "quy định thời giờ làm việc bình thường nghỉ giữa giờ nghỉ hằng tuần làm thêm giờ",
-        ("thời giờ làm việc", "giờ làm việc", "nghỉ giữa giờ", "nghỉ hằng tuần", "làm thêm"),
+        (
+            "thời giờ làm việc",
+            "giờ làm việc",
+            "nghỉ giữa giờ",
+            "nghỉ hằng tuần",
+            "làm thêm",
+            "làm việc theo tuần",
+            "giờ mỗi ngày",
+            "giờ mỗi tuần",
+            "làm việc theo ca",
+            "ca làm việc",
+            "nghỉ chuyển ca",
+            "chuyển sang ca",
+        ),
         ("20.2.LQ.105", "20.2.LQ.107", "20.2.LQ.109", "20.2.LQ.111"),
         "Kiểm tra lịch làm việc, thời gian nghỉ và cơ chế làm thêm với thực tế bố trí lao động.",
     ),
@@ -124,6 +139,7 @@ class CanonicalEvidenceRetriever:
         query: str,
         top_k: int = 3,
         preferred_article_codes: tuple[str, ...] = (),
+        dedupe_articles: bool = True,
     ) -> list[LegalSource]:
         query_terms = Counter(_tokens(query))
         scored: list[tuple[float, float, int]] = []
@@ -143,8 +159,7 @@ class CanonicalEvidenceRetriever:
             article_code = str(self.chunks[index].get("article_code") or "")
             ranking_score = raw_score
             if article_code in preferred_article_codes:
-                priority = preferred_article_codes.index(article_code)
-                ranking_score += 1000.0 - priority * 10.0
+                ranking_score += 16.0
             if ranking_score > 0:
                 scored.append((ranking_score, raw_score, index))
         scored.sort(key=lambda item: (-item[0], str(self.chunks[item[2]]["chunk_id"])))
@@ -156,9 +171,10 @@ class CanonicalEvidenceRetriever:
                 payload.get("article_code") or payload.get("codification_code") or ""
             )
             deduplication_key = article_code or str(payload["chunk_id"])
-            if deduplication_key in seen_articles:
+            if (dedupe_articles and deduplication_key in seen_articles):
                 continue
-            seen_articles.add(deduplication_key)
+            if dedupe_articles:
+                seen_articles.add(deduplication_key)
             rank = len(result) + 1
             citation = build_citation_metadata(payload)
             result.append(LegalSource(
@@ -448,7 +464,7 @@ def _analysis(
             number_pattern=r"\b(?P<value>\d{1,3})\s*thang\b",
             max_distance=120,
         )
-        fixed_term = contract_months is not None and 12 <= contract_months <= 36
+        fixed_term = contract_months is not None and 0 < contract_months <= 36
         if notice is not None and notice < 30 and fixed_term:
             return (
                 "warning",
@@ -522,6 +538,25 @@ def build_review_summary(findings: list[FindingDraft]) -> str:
     )
 
 
+# CONTRACT_REVIEW_CROSS_ENCODER_V2_OBSERVABILITY:
+# Materialize final rerank metadata without changing article/chunk selection.
+def _finalize_reranked_sources(items: list[Any]) -> list[LegalSource]:
+    sources: list[LegalSource] = []
+    for final_rank, item in enumerate(items, start=1):
+        source = item.source
+        component_ranks = dict(source.component_ranks or {})
+        update: dict[str, Any] = {
+            "source_id": f"S{final_rank}",
+            "rank": final_rank,
+            "component_ranks": component_ranks,
+        }
+        if item.reranker_score is not None:
+            update["score"] = round(float(item.reranker_score), 6)
+            update["retrieval_origin"] = "contract_cross_encoder_v2"
+            component_ranks["contract_cross_encoder"] = final_rank
+        sources.append(source.model_copy(update=update))
+    return sources
+
 def review_contract(text: str, method: RetrievalMethod) -> ReviewDraft:
     paragraphs = _paragraphs(text)
     retriever = evidence_retriever()
@@ -529,11 +564,30 @@ def review_contract(text: str, method: RetrievalMethod) -> ReviewDraft:
     for rule in CATEGORIES:
         excerpt = _excerpt_for(rule, paragraphs)
         query = rule.query + (f" Nội dung hợp đồng: {excerpt[:500]}" if excerpt else "")
-        sources = retriever.retrieve(
-            query,
-            top_k=3,
-            preferred_article_codes=rule.preferred_article_codes,
-        )
+        # CONTRACT_REVIEW_CROSS_ENCODER_V2: preserve V1 by default; when enabled,
+        # retrieve a wider non-deduplicated lexical candidate pool, rerank every
+        # evidence chunk, then deduplicate by article so the best chunk wins.
+        reranker = get_contract_review_reranker()
+        if reranker.enabled:
+            candidates = retriever.retrieve(
+                query,
+                top_k=reranker.config.candidate_k,
+                preferred_article_codes=rule.preferred_article_codes,
+                dedupe_articles=False,
+            )
+            sources = _finalize_reranked_sources(
+                reranker.rerank_with_scores(
+                    query=excerpt.strip() or query,
+                    candidates=candidates,
+                    top_k=4,
+                )
+            )
+        else:
+            sources = retriever.retrieve(
+                query,
+                top_k=4,
+                preferred_article_codes=rule.preferred_article_codes,
+            )
         severity, analysis, evidence_status = _analysis(
             rule, excerpt, sources, text
         )

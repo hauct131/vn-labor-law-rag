@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field, replace
-from typing import Any, Mapping, Protocol
+from typing import Any, Mapping, Protocol, runtime_checkable
 
 
 class RetrievalError(RuntimeError):
@@ -29,6 +29,20 @@ class LegalRetriever(Protocol):
     ) -> list["RetrievalHit"]: ...
 
 
+@runtime_checkable
+class CandidatePoolRetriever(Protocol):
+    """Retriever supporting separate candidate pool retrieval."""
+
+    def retrieve_candidates(
+        self,
+        query: str,
+        *,
+        top_k: int,
+        candidate_k: int,
+    ) -> list["RetrievalHit"]: ...
+
+
+
 @dataclass(frozen=True, slots=True)
 class RetrievalHit:
     """One ranked legal chunk returned by a retrieval component."""
@@ -41,6 +55,10 @@ class RetrievalHit:
     payload: Mapping[str, Any] = field(default_factory=dict)
     component_scores: Mapping[str, float] = field(default_factory=dict)
     component_ranks: Mapping[str, int] = field(default_factory=dict)
+    selection_score: float | None = None
+    cluster_key: str | None = None
+    cluster_boost: float | None = None
+    selection_reason: str | None = None
 
     def reranked(
         self,
@@ -50,6 +68,10 @@ class RetrievalHit:
         retrieval_origin: str | None = None,
         component_scores: Mapping[str, float] | None = None,
         component_ranks: Mapping[str, int] | None = None,
+        selection_score: float | None = None,
+        cluster_key: str | None = None,
+        cluster_boost: float | None = None,
+        selection_reason: str | None = None,
     ) -> "RetrievalHit":
         """Return a copy carrying a new rank and optional fusion metadata."""
         return replace(
@@ -70,6 +92,26 @@ class RetrievalHit:
                 self.component_ranks
                 if component_ranks is None
                 else dict(component_ranks)
+            ),
+            selection_score=(
+                self.selection_score
+                if selection_score is None
+                else float(selection_score)
+            ),
+            cluster_key=(
+                self.cluster_key
+                if cluster_key is None
+                else str(cluster_key)
+            ),
+            cluster_boost=(
+                self.cluster_boost
+                if cluster_boost is None
+                else float(cluster_boost)
+            ),
+            selection_reason=(
+                self.selection_reason
+                if selection_reason is None
+                else str(selection_reason)
             ),
         )
 

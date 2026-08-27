@@ -1,0 +1,17 @@
+{
+  "manifest": {
+    "evaluation_mode": "PROVISIONAL_MULTI_LLM_DIAGNOSTIC",
+    "benchmark_status": "NOT_OFFICIAL",
+    "golden_locked": false,
+    "human_adjudication_status": "pending",
+    "authority_review_status": "pending",
+    "dataset_path": "/media/hao/Data/vn-labor-law-rag-verified-e4a39ba/data/evaluation/answer-quality-v1/multi_llm_reviewed_questions.json",
+    "dataset_status": "multi_llm_reviewed",
+    "target_url": "http://localhost:8000/api",
+    "run_at": "2026-08-17T19:45:38.379250+00:00",
+    "official_technical_gate_status": "FAIL_CLOSED_OR_NOT_APPLICABLE",
+    "gate_reason": "Dataset is not human-adjudicated and not locked. Official benchmark status: NOT_OFFICIAL."
+  },
+  "semantic_claim_scoring": "not_scoreable",
+  "note": "Semantic claim review requires human adjudication or an explicit multi-LLM judge panel run."
+}

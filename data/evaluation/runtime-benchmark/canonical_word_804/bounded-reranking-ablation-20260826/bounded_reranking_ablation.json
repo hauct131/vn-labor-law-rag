@@ -1,0 +1,3192 @@
+{
+  "schema_version": "bounded-reranking-ablation-v1",
+  "status": "completed",
+  "run_at": "2026-08-26T07:42:14.043765+00:00",
+  "split_role": "dev",
+  "question_count": 31,
+  "config": {
+    "golden": "/media/hao/Data/vn-labor-law-rag-verified-e4a39ba/data/evaluation/splits/canonical_word_804/golden_v3_dev.json",
+    "collection": "labor_law_dev",
+    "candidate_k": 30,
+    "generation_context_k": 10,
+    "rrf_k": 60,
+    "dense_weight": 0.9,
+    "sparse_weight": 0.1
+  },
+  "variants": {
+    "raw": "Weighted-RRF candidate pool top generation_context_k",
+    "bounded": "Preserve fused top-5; bounded metadata reranking for remaining generation-context slots"
+  },
+  "checks": {
+    "top5_preservation_violations": 0,
+    "changed_context_count": 27,
+    "unchanged_context_count": 4
+  },
+  "summary": {
+    "raw": {
+      "any_article_hit": 1.0,
+      "all_article_hit": 0.741935,
+      "article_recall": 0.872043,
+      "article_mrr": 0.922043,
+      "any_evidence_hit": 1.0,
+      "all_evidence_hit": 0.645161,
+      "evidence_recall": 0.823028,
+      "evidence_mrr": 0.922043,
+      "unique_articles": 8.548387,
+      "unique_documents": 3.419355,
+      "duplicate_article_rate": 0.145161,
+      "max_document_concentration": 0.593548
+    },
+    "bounded": {
+      "any_article_hit": 1.0,
+      "all_article_hit": 0.741935,
+      "article_recall": 0.887903,
+      "article_mrr": 0.922043,
+      "any_evidence_hit": 1.0,
+      "all_evidence_hit": 0.645161,
+      "evidence_recall": 0.840093,
+      "evidence_mrr": 0.922043,
+      "unique_articles": 8.419355,
+      "unique_documents": 2.774194,
+      "duplicate_article_rate": 0.158065,
+      "max_document_concentration": 0.687097
+    },
+    "delta_bounded_minus_raw": {
+      "any_article_hit": 0.0,
+      "all_article_hit": 0.0,
+      "article_recall": 0.01586,
+      "article_mrr": 0.0,
+      "any_evidence_hit": 0.0,
+      "all_evidence_hit": 0.0,
+      "evidence_recall": 0.017065,
+      "evidence_mrr": 0.0,
+      "unique_articles": -0.129032,
+      "unique_documents": -0.645161,
+      "duplicate_article_rate": 0.012904,
+      "max_document_concentration": 0.093549
+    }
+  },
+  "article_recall_changes": {
+    "improved_count": 3,
+    "regressed_count": 0,
+    "improved": [
+      {
+        "question_id": "r2ai_gold_042",
+        "delta": 0.2
+      },
+      {
+        "question_id": "r2ai_gold_044",
+        "delta": 0.166667
+      },
+      {
+        "question_id": "r2ai_gold_045",
+        "delta": 0.125
+      }
+    ],
+    "regressed": []
+  },
+  "questions": [
+    {
+      "question_id": "r2ai_gold_004",
+      "category": "exact_legal_term",
+      "question": "Ai là người có thẩm quyền giao kết hợp đồng lao động bên phía người sử dụng lao động?",
+      "expected_article_codes": [
+        "20.2.LQ.18"
+      ],
+      "raw": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 9.0,
+          "unique_documents": 4.0,
+          "duplicate_article_rate": 0.09999999999999998,
+          "max_document_concentration": 0.5
+        },
+        "article_codes": [
+          "20.2.LQ.18",
+          "20.2.NĐ.3.10",
+          "20.2.TT.1.4",
+          "20.2.LQ.162",
+          "20.2.NĐ.3.10",
+          "20.2.LQ.13",
+          "20.2.TT.2.3",
+          "20.2.LQ.14",
+          "20.2.NĐ.3.45",
+          "20.2.LQ.36"
+        ],
+        "chunk_ids": [
+          "66bb55e9-8b79-54a1-9a40-00289be4e062",
+          "a92ddc35-e5bb-56b1-95a6-2b957e5f393a",
+          "21762c5d-f725-5d18-8e32-88299a7d2b02",
+          "a4a6283b-6c75-5ce2-9ca7-047412033f9e",
+          "94b16cc3-d79e-5fa6-bf3c-6a1d7da2b883",
+          "caeb1ae6-24e0-574f-b9b7-05f6ec011654",
+          "719556b8-c973-51eb-a6cb-67baba9c6c78",
+          "d7eeff8b-46f3-56f8-81ef-f3e79cb6efe0",
+          "3fee5db5-8587-5875-8df5-5209b185fa68",
+          "ac79208c-121a-559c-8666-94cb5b9f489d"
+        ]
+      },
+      "bounded": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 9.0,
+          "unique_documents": 3.0,
+          "duplicate_article_rate": 0.09999999999999998,
+          "max_document_concentration": 0.7
+        },
+        "article_codes": [
+          "20.2.LQ.18",
+          "20.2.NĐ.3.10",
+          "20.2.TT.1.4",
+          "20.2.LQ.162",
+          "20.2.NĐ.3.10",
+          "20.2.LQ.13",
+          "20.2.LQ.14",
+          "20.2.LQ.36",
+          "20.2.LQ.76",
+          "20.2.LQ.17"
+        ],
+        "chunk_ids": [
+          "66bb55e9-8b79-54a1-9a40-00289be4e062",
+          "a92ddc35-e5bb-56b1-95a6-2b957e5f393a",
+          "21762c5d-f725-5d18-8e32-88299a7d2b02",
+          "a4a6283b-6c75-5ce2-9ca7-047412033f9e",
+          "94b16cc3-d79e-5fa6-bf3c-6a1d7da2b883",
+          "caeb1ae6-24e0-574f-b9b7-05f6ec011654",
+          "d7eeff8b-46f3-56f8-81ef-f3e79cb6efe0",
+          "ac79208c-121a-559c-8666-94cb5b9f489d",
+          "554f6b66-2def-531b-854c-ceaa72c62696",
+          "33b34c3d-789e-551c-9e7e-239c93aa97d0"
+        ]
+      },
+      "changed": true,
+      "entered_chunk_ids": [
+        "554f6b66-2def-531b-854c-ceaa72c62696",
+        "33b34c3d-789e-551c-9e7e-239c93aa97d0"
+      ],
+      "dropped_chunk_ids": [
+        "719556b8-c973-51eb-a6cb-67baba9c6c78",
+        "3fee5db5-8587-5875-8df5-5209b185fa68"
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_005",
+      "category": "exact_legal_term",
+      "question": "Thời giờ làm việc tối đa trong ngày và trong tuần đối với người lao động 16 tuổi là bao nhiêu?",
+      "expected_article_codes": [
+        "20.2.LQ.146"
+      ],
+      "raw": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 10.0,
+          "unique_documents": 7.0,
+          "duplicate_article_rate": 0.0,
+          "max_document_concentration": 0.2
+        },
+        "article_codes": [
+          "20.2.LQ.146",
+          "20.2.TT.4.6",
+          "20.2.LQ.105",
+          "20.2.TT.6.4",
+          "20.2.TT.7.4",
+          "20.2.TT.7.5",
+          "20.2.TT.3.4",
+          "20.2.NĐ.3.89",
+          "20.2.NĐ.3.60",
+          "20.2.TT.1.1"
+        ],
+        "chunk_ids": [
+          "38620a4e-8bef-5ae1-8a57-5c05a82b693b",
+          "e154ed5d-2c06-55d5-849c-1440b5dfe0b5",
+          "bfed27a2-f5f8-5411-84e3-a0b90b06394c",
+          "4b4799ee-8097-5a33-a1ce-7ee7368624b3",
+          "09df41bf-2147-56ba-9a55-ae1944743bc8",
+          "b24c5362-5aac-5455-85b4-916a1ee39d72",
+          "d4987395-bc47-5637-a607-41203321db23",
+          "ca990485-578c-569f-b1d5-939f8878349c",
+          "14ae9aa7-c541-5b37-9739-dbab5f8985c8",
+          "efc67d14-6872-54c1-bbd4-df62664b459f"
+        ]
+      },
+      "bounded": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 10.0,
+          "unique_documents": 6.0,
+          "duplicate_article_rate": 0.0,
+          "max_document_concentration": 0.3
+        },
+        "article_codes": [
+          "20.2.LQ.146",
+          "20.2.TT.4.6",
+          "20.2.LQ.105",
+          "20.2.TT.6.4",
+          "20.2.TT.7.4",
+          "20.2.TT.7.5",
+          "20.2.NĐ.3.89",
+          "20.2.TT.3.4",
+          "20.2.NĐ.3.60",
+          "20.2.LQ.147"
+        ],
+        "chunk_ids": [
+          "38620a4e-8bef-5ae1-8a57-5c05a82b693b",
+          "e154ed5d-2c06-55d5-849c-1440b5dfe0b5",
+          "bfed27a2-f5f8-5411-84e3-a0b90b06394c",
+          "4b4799ee-8097-5a33-a1ce-7ee7368624b3",
+          "09df41bf-2147-56ba-9a55-ae1944743bc8",
+          "b24c5362-5aac-5455-85b4-916a1ee39d72",
+          "ca990485-578c-569f-b1d5-939f8878349c",
+          "d4987395-bc47-5637-a607-41203321db23",
+          "14ae9aa7-c541-5b37-9739-dbab5f8985c8",
+          "1ea0792d-0507-5802-8538-0b4b6953f08c"
+        ]
+      },
+      "changed": true,
+      "entered_chunk_ids": [
+        "1ea0792d-0507-5802-8538-0b4b6953f08c"
+      ],
+      "dropped_chunk_ids": [
+        "efc67d14-6872-54c1-bbd4-df62664b459f"
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_006",
+      "category": "exact_legal_term",
+      "question": "Đối với giấy phép lao động được cấp theo thời hạn của hợp đồng lao động dự kiến ký kết, cần nộp hồ sơ xin gia hạn trước bao nhiêu ngày kể từ ngày hết hạn?",
+      "expected_article_codes": [
+        "NĐ219.28"
+      ],
+      "raw": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 8.0,
+          "unique_documents": 2.0,
+          "duplicate_article_rate": 0.19999999999999996,
+          "max_document_concentration": 0.8
+        },
+        "article_codes": [
+          "NĐ219.28",
+          "NĐ219.16",
+          "NĐ219.22",
+          "20.2.NĐ.3.26",
+          "NĐ219.27",
+          "NĐ219.22",
+          "NĐ219.15",
+          "NĐ219.21",
+          "NĐ219.20",
+          "20.2.NĐ.3.26"
+        ],
+        "chunk_ids": [
+          "393e0ead-2df6-5c15-910a-e0960351d67a",
+          "44b94e74-37f5-56e0-98bd-c388bbe86714",
+          "32141a0d-7bd9-595e-aa01-13cc9a28fa6d",
+          "d55af14a-7299-51cb-b4dc-fca4c341cf92",
+          "b2e3bddc-ea48-50aa-bbf7-c7fad5aed598",
+          "09508e9f-94ad-5065-9bbc-9e8f9772b999",
+          "46077ec7-f72b-5f43-80ec-3a03b0fe09ef",
+          "33bcf0a3-0b3b-5a6f-aa03-2ebd987f1159",
+          "7924c57c-df92-5319-905e-bf696b0dcd22",
+          "d3ac4a5e-dbdc-5e72-a7aa-d4b6b3df26a4"
+        ]
+      },
+      "bounded": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 9.0,
+          "unique_documents": 2.0,
+          "duplicate_article_rate": 0.09999999999999998,
+          "max_document_concentration": 0.9
+        },
+        "article_codes": [
+          "NĐ219.28",
+          "NĐ219.16",
+          "NĐ219.22",
+          "20.2.NĐ.3.26",
+          "NĐ219.27",
+          "NĐ219.22",
+          "NĐ219.15",
+          "NĐ219.21",
+          "NĐ219.20",
+          "NĐ219.29"
+        ],
+        "chunk_ids": [
+          "393e0ead-2df6-5c15-910a-e0960351d67a",
+          "44b94e74-37f5-56e0-98bd-c388bbe86714",
+          "32141a0d-7bd9-595e-aa01-13cc9a28fa6d",
+          "d55af14a-7299-51cb-b4dc-fca4c341cf92",
+          "b2e3bddc-ea48-50aa-bbf7-c7fad5aed598",
+          "09508e9f-94ad-5065-9bbc-9e8f9772b999",
+          "46077ec7-f72b-5f43-80ec-3a03b0fe09ef",
+          "33bcf0a3-0b3b-5a6f-aa03-2ebd987f1159",
+          "7924c57c-df92-5319-905e-bf696b0dcd22",
+          "12154b0c-0be2-5989-9c86-b7177c42e1b4"
+        ]
+      },
+      "changed": true,
+      "entered_chunk_ids": [
+        "12154b0c-0be2-5989-9c86-b7177c42e1b4"
+      ],
+      "dropped_chunk_ids": [
+        "d3ac4a5e-dbdc-5e72-a7aa-d4b6b3df26a4"
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_007",
+      "category": "exact_legal_term",
+      "question": "Người lao động nước ngoài làm việc tại Việt Nam có được nghỉ ngày Tết cổ truyền của dân tộc họ không?",
+      "expected_article_codes": [
+        "20.2.LQ.112"
+      ],
+      "raw": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 9.0,
+          "unique_documents": 7.0,
+          "duplicate_article_rate": 0.09999999999999998,
+          "max_document_concentration": 0.3
+        },
+        "article_codes": [
+          "20.2.LQ.112",
+          "20.2.TT.7.10",
+          "20.2.TT.6.7",
+          "20.2.TT.7.8",
+          "20.2.TT.3.7",
+          "20.2.TT.4.7",
+          "NĐ219.7",
+          "20.2.TT.7.9",
+          "20.2.NĐ.4.26",
+          "NĐ219.7"
+        ],
+        "chunk_ids": [
+          "a862043e-40bf-5684-8323-2439363bc0fa",
+          "7af4d17f-6fbb-5f55-bba6-b7f647e9f275",
+          "7721a7b8-e95a-5d7e-9c93-053b01312d15",
+          "784520b1-1be0-5147-8c14-bc69dcf1364c",
+          "05a1a0d3-491e-5bd8-a1b8-3873ee360747",
+          "98627151-f7bf-5b38-809b-bede82b5ff9a",
+          "d1f031a4-89bc-5190-8a77-a5c9cae7301f",
+          "974f3cbf-2534-5c8e-a23a-01d59e827464",
+          "eade5b8a-3ca8-5c2b-a04b-b3ce3fd41783",
+          "c6a3b694-aa55-5000-a7bd-2430480312bb"
+        ]
+      },
+      "bounded": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 8.0,
+          "unique_documents": 6.0,
+          "duplicate_article_rate": 0.19999999999999996,
+          "max_document_concentration": 0.3
+        },
+        "article_codes": [
+          "20.2.LQ.112",
+          "20.2.TT.7.10",
+          "20.2.TT.6.7",
+          "20.2.TT.7.8",
+          "20.2.TT.3.7",
+          "20.2.TT.7.9",
+          "NĐ219.7",
+          "20.2.TT.4.7",
+          "NĐ219.7",
+          "NĐ219.7"
+        ],
+        "chunk_ids": [
+          "a862043e-40bf-5684-8323-2439363bc0fa",
+          "7af4d17f-6fbb-5f55-bba6-b7f647e9f275",
+          "7721a7b8-e95a-5d7e-9c93-053b01312d15",
+          "784520b1-1be0-5147-8c14-bc69dcf1364c",
+          "05a1a0d3-491e-5bd8-a1b8-3873ee360747",
+          "974f3cbf-2534-5c8e-a23a-01d59e827464",
+          "d1f031a4-89bc-5190-8a77-a5c9cae7301f",
+          "98627151-f7bf-5b38-809b-bede82b5ff9a",
+          "c6a3b694-aa55-5000-a7bd-2430480312bb",
+          "56893454-7f9f-5ae8-8130-beee9ef45de3"
+        ]
+      },
+      "changed": true,
+      "entered_chunk_ids": [
+        "56893454-7f9f-5ae8-8130-beee9ef45de3"
+      ],
+      "dropped_chunk_ids": [
+        "eade5b8a-3ca8-5c2b-a04b-b3ce3fd41783"
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_008",
+      "category": "exact_legal_term",
+      "question": "Sau bao nhiêu ngày kể từ khi cơ quan nhà nước có thẩm quyền nhận đủ hồ sơ đăng ký thì nội quy lao động bắt đầu có hiệu lực?",
+      "expected_article_codes": [
+        "20.2.LQ.121"
+      ],
+      "raw": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 10.0,
+          "unique_documents": 5.0,
+          "duplicate_article_rate": 0.0,
+          "max_document_concentration": 0.4
+        },
+        "article_codes": [
+          "20.2.LQ.121",
+          "20.2.LQ.119",
+          "NĐ129.73",
+          "20.2.NĐ.3.114",
+          "NĐ129.67",
+          "20.2.NĐ.4.24",
+          "20.2.LQ.120",
+          "20.2.LQ.78",
+          "20.2.NĐ.3.25",
+          "NĐ219.22"
+        ],
+        "chunk_ids": [
+          "599d15fa-90fc-5749-90d1-5e6965c7917d",
+          "7bbae293-e731-566e-b332-6a6719a6302b",
+          "ba1a4134-462e-5e18-80dd-58040f33a844",
+          "67ce2609-c76a-5ac7-a809-43c838ebca22",
+          "beacd3b0-ae3c-5d00-9cf8-c07ac1ae9b1e",
+          "619715bb-8743-51c1-9179-ec201f69fbc1",
+          "75f59392-d9ab-587d-ac0f-c89f09bef790",
+          "324a4afe-fb11-5802-9187-dcbc1a8d3890",
+          "ccfe9afa-ffc2-59ba-b815-1e84c2705047",
+          "c0978805-114f-5fa2-ba91-14d05a377534"
+        ]
+      },
+      "bounded": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 10.0,
+          "unique_documents": 3.0,
+          "duplicate_article_rate": 0.0,
+          "max_document_concentration": 0.6
+        },
+        "article_codes": [
+          "20.2.LQ.121",
+          "20.2.LQ.119",
+          "NĐ129.73",
+          "20.2.NĐ.3.114",
+          "NĐ129.67",
+          "20.2.LQ.120",
+          "20.2.LQ.78",
+          "20.2.LQ.77",
+          "20.2.LQ.23",
+          "20.2.NĐ.3.25"
+        ],
+        "chunk_ids": [
+          "599d15fa-90fc-5749-90d1-5e6965c7917d",
+          "7bbae293-e731-566e-b332-6a6719a6302b",
+          "ba1a4134-462e-5e18-80dd-58040f33a844",
+          "67ce2609-c76a-5ac7-a809-43c838ebca22",
+          "beacd3b0-ae3c-5d00-9cf8-c07ac1ae9b1e",
+          "75f59392-d9ab-587d-ac0f-c89f09bef790",
+          "324a4afe-fb11-5802-9187-dcbc1a8d3890",
+          "7613c6ff-d731-5fd1-bd54-8ffed97a9995",
+          "8a7a44a5-8ea8-5089-9ea1-cc2a45a56862",
+          "ccfe9afa-ffc2-59ba-b815-1e84c2705047"
+        ]
+      },
+      "changed": true,
+      "entered_chunk_ids": [
+        "7613c6ff-d731-5fd1-bd54-8ffed97a9995",
+        "8a7a44a5-8ea8-5089-9ea1-cc2a45a56862"
+      ],
+      "dropped_chunk_ids": [
+        "619715bb-8743-51c1-9179-ec201f69fbc1",
+        "c0978805-114f-5fa2-ba91-14d05a377534"
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_009",
+      "category": "exact_legal_term",
+      "question": "Trong hoạt động cho thuê lại lao động, đơn vị nào có trách nhiệm trả lương cho người lao động thuê lại?",
+      "expected_article_codes": [
+        "20.2.LQ.56"
+      ],
+      "raw": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 0.3333333333333333,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 0.3333333333333333
+        },
+        "diversity": {
+          "unique_articles": 7.0,
+          "unique_documents": 3.0,
+          "duplicate_article_rate": 0.30000000000000004,
+          "max_document_concentration": 0.7
+        },
+        "article_codes": [
+          "20.2.LQ.58",
+          "NQ66.18.PL-I.4.C.III",
+          "20.2.LQ.56",
+          "NQ66.18.PL-I.4.C.VIII",
+          "NQ66.18.PL-I.4.C.VIII",
+          "NQ66.18.PL-I.4.C.VIII",
+          "NQ66.18.PL-I.4.C.V",
+          "NQ66.18.PL-I.4.C.VIII",
+          "20.2.NĐ.3.19",
+          "NQ66.18.PL-I.4.C.IX"
+        ],
+        "chunk_ids": [
+          "f319d5fb-aa18-5f1d-ae71-193a40273125",
+          "96377f43-717e-5f9d-b8d6-f61bcf054f20",
+          "89117117-0107-59d0-9327-f982cf858137",
+          "e3621b4d-191d-5da1-a9e7-76f7f7c20fe2",
+          "5875dbc2-2f6b-5105-a699-8ccd625e19c9",
+          "039ef8b7-bf8e-5684-a624-6c353bd253da",
+          "f295f903-7006-5d4f-afdc-fa52ccaad17b",
+          "3f014f7d-ce6b-5c4b-8169-30072649587f",
+          "e27ca77d-47d3-5912-a332-a6e50f1e268d",
+          "164e6645-63ae-5952-a89b-a69542fc5b83"
+        ]
+      },
+      "bounded": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 0.3333333333333333,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 0.3333333333333333
+        },
+        "diversity": {
+          "unique_articles": 7.0,
+          "unique_documents": 2.0,
+          "duplicate_article_rate": 0.30000000000000004,
+          "max_document_concentration": 0.8
+        },
+        "article_codes": [
+          "20.2.LQ.58",
+          "NQ66.18.PL-I.4.C.III",
+          "20.2.LQ.56",
+          "NQ66.18.PL-I.4.C.VIII",
+          "NQ66.18.PL-I.4.C.VIII",
+          "NQ66.18.PL-I.4.C.VIII",
+          "NQ66.18.PL-I.4.C.V",
+          "NQ66.18.PL-I.4.C.VIII",
+          "NQ66.18.PL-I.4.C.IX",
+          "NQ66.18.PL-I.4.C.VII"
+        ],
+        "chunk_ids": [
+          "f319d5fb-aa18-5f1d-ae71-193a40273125",
+          "96377f43-717e-5f9d-b8d6-f61bcf054f20",
+          "89117117-0107-59d0-9327-f982cf858137",
+          "e3621b4d-191d-5da1-a9e7-76f7f7c20fe2",
+          "5875dbc2-2f6b-5105-a699-8ccd625e19c9",
+          "039ef8b7-bf8e-5684-a624-6c353bd253da",
+          "f295f903-7006-5d4f-afdc-fa52ccaad17b",
+          "3f014f7d-ce6b-5c4b-8169-30072649587f",
+          "164e6645-63ae-5952-a89b-a69542fc5b83",
+          "3c10863f-3df5-531d-96a8-3cfb565083d1"
+        ]
+      },
+      "changed": true,
+      "entered_chunk_ids": [
+        "3c10863f-3df5-531d-96a8-3cfb565083d1"
+      ],
+      "dropped_chunk_ids": [
+        "e27ca77d-47d3-5912-a332-a6e50f1e268d"
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_010",
+      "category": "exact_legal_term",
+      "question": "Người sử dụng lao động có được tự ý sửa đổi nội dung hợp đồng lao động không?",
+      "expected_article_codes": [
+        "20.2.LQ.33"
+      ],
+      "raw": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 8.0,
+          "unique_documents": 2.0,
+          "duplicate_article_rate": 0.19999999999999996,
+          "max_document_concentration": 0.7
+        },
+        "article_codes": [
+          "20.2.LQ.33",
+          "20.2.LQ.82",
+          "20.2.LQ.36",
+          "20.2.NĐ.3.5",
+          "20.2.NĐ.3.45",
+          "20.2.LQ.36",
+          "20.2.NĐ.3.9",
+          "20.2.LQ.22",
+          "20.2.LQ.36",
+          "20.2.LQ.17"
+        ],
+        "chunk_ids": [
+          "7a525a6f-7240-5f48-9f35-c9c232f4fa2a",
+          "bbc02301-3fc7-5775-a95a-46c4f16dc647",
+          "25dd9a57-f47f-52d8-9bb0-e2456c6c250e",
+          "7d24bc1f-bdc7-5865-a693-886da21c46c2",
+          "3fee5db5-8587-5875-8df5-5209b185fa68",
+          "ac79208c-121a-559c-8666-94cb5b9f489d",
+          "bae534df-500b-5fbd-bf7b-c010712e0bbd",
+          "55ab98bb-3099-5d94-a868-1f6453de08cf",
+          "f98cf3fe-3d8a-5d9d-b684-c77e43ff2f25",
+          "33b34c3d-789e-551c-9e7e-239c93aa97d0"
+        ]
+      },
+      "bounded": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 8.0,
+          "unique_documents": 2.0,
+          "duplicate_article_rate": 0.19999999999999996,
+          "max_document_concentration": 0.8
+        },
+        "article_codes": [
+          "20.2.LQ.33",
+          "20.2.LQ.82",
+          "20.2.LQ.36",
+          "20.2.NĐ.3.5",
+          "20.2.NĐ.3.45",
+          "20.2.LQ.36",
+          "20.2.LQ.22",
+          "20.2.LQ.36",
+          "20.2.LQ.17",
+          "20.2.LQ.37"
+        ],
+        "chunk_ids": [
+          "7a525a6f-7240-5f48-9f35-c9c232f4fa2a",
+          "bbc02301-3fc7-5775-a95a-46c4f16dc647",
+          "25dd9a57-f47f-52d8-9bb0-e2456c6c250e",
+          "7d24bc1f-bdc7-5865-a693-886da21c46c2",
+          "3fee5db5-8587-5875-8df5-5209b185fa68",
+          "ac79208c-121a-559c-8666-94cb5b9f489d",
+          "55ab98bb-3099-5d94-a868-1f6453de08cf",
+          "f98cf3fe-3d8a-5d9d-b684-c77e43ff2f25",
+          "33b34c3d-789e-551c-9e7e-239c93aa97d0",
+          "c17372aa-1a9e-507a-8978-beb4b96c7a1a"
+        ]
+      },
+      "changed": true,
+      "entered_chunk_ids": [
+        "c17372aa-1a9e-507a-8978-beb4b96c7a1a"
+      ],
+      "dropped_chunk_ids": [
+        "bae534df-500b-5fbd-bf7b-c010712e0bbd"
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_011",
+      "category": "natural_language",
+      "question": "Trong trường hợp kết hôn nhiều lần, người lao động có được nghỉ hưởng nguyên lương cho mỗi lần kết hôn hay không?",
+      "expected_article_codes": [
+        "20.2.LQ.115"
+      ],
+      "raw": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 10.0,
+          "unique_documents": 2.0,
+          "duplicate_article_rate": 0.0,
+          "max_document_concentration": 0.9
+        },
+        "article_codes": [
+          "20.2.LQ.115",
+          "20.2.LQ.113",
+          "20.2.LQ.112",
+          "20.2.LQ.139",
+          "20.2.NĐ.3.58",
+          "20.2.LQ.37",
+          "20.2.LQ.137",
+          "20.2.LQ.168",
+          "20.2.LQ.101",
+          "20.2.LQ.97"
+        ],
+        "chunk_ids": [
+          "f446df4e-d3b6-5f2e-a871-5bb9a9a16187",
+          "1af0c29c-f105-5eb9-a61b-9e9bef8ed853",
+          "a862043e-40bf-5684-8323-2439363bc0fa",
+          "d0d33541-efbf-5f7f-850f-8f7c8cd2e164",
+          "4900d3b5-efca-55f6-af30-50d045e7e378",
+          "c17372aa-1a9e-507a-8978-beb4b96c7a1a",
+          "beeaf23f-a054-51c6-bcb6-eaa6a028c0e3",
+          "3458c3f4-ed2e-58e7-97ac-c0f579173525",
+          "440f6ac2-d937-50af-909c-25ba03e8c767",
+          "20660aab-c214-5c1f-9473-82128a4e000c"
+        ]
+      },
+      "bounded": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 10.0,
+          "unique_documents": 2.0,
+          "duplicate_article_rate": 0.0,
+          "max_document_concentration": 0.9
+        },
+        "article_codes": [
+          "20.2.LQ.115",
+          "20.2.LQ.113",
+          "20.2.LQ.112",
+          "20.2.LQ.139",
+          "20.2.NĐ.3.58",
+          "20.2.LQ.37",
+          "20.2.LQ.137",
+          "20.2.LQ.168",
+          "20.2.LQ.101",
+          "20.2.LQ.97"
+        ],
+        "chunk_ids": [
+          "f446df4e-d3b6-5f2e-a871-5bb9a9a16187",
+          "1af0c29c-f105-5eb9-a61b-9e9bef8ed853",
+          "a862043e-40bf-5684-8323-2439363bc0fa",
+          "d0d33541-efbf-5f7f-850f-8f7c8cd2e164",
+          "4900d3b5-efca-55f6-af30-50d045e7e378",
+          "c17372aa-1a9e-507a-8978-beb4b96c7a1a",
+          "beeaf23f-a054-51c6-bcb6-eaa6a028c0e3",
+          "3458c3f4-ed2e-58e7-97ac-c0f579173525",
+          "440f6ac2-d937-50af-909c-25ba03e8c767",
+          "20660aab-c214-5c1f-9473-82128a4e000c"
+        ]
+      },
+      "changed": false,
+      "entered_chunk_ids": [],
+      "dropped_chunk_ids": []
+    },
+    {
+      "question_id": "r2ai_gold_012",
+      "category": "natural_language",
+      "question": "Khi bố nuôi hoặc mẹ nuôi qua đời, người lao động có được nghỉ việc riêng 3 ngày mà vẫn hưởng nguyên lương không?",
+      "expected_article_codes": [
+        "20.2.LQ.115"
+      ],
+      "raw": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 7.0,
+          "unique_documents": 4.0,
+          "duplicate_article_rate": 0.30000000000000004,
+          "max_document_concentration": 0.6
+        },
+        "article_codes": [
+          "20.2.LQ.115",
+          "20.2.NĐ.3.80",
+          "20.2.TT.3.7",
+          "20.2.NĐ.3.67",
+          "20.2.LQ.112",
+          "20.2.NĐ.3.89",
+          "20.2.TT.7.10",
+          "20.2.NĐ.3.89",
+          "20.2.NĐ.3.80",
+          "20.2.NĐ.3.89"
+        ],
+        "chunk_ids": [
+          "f446df4e-d3b6-5f2e-a871-5bb9a9a16187",
+          "240ca392-e545-5680-ab4c-8e021ecae4ca",
+          "05a1a0d3-491e-5bd8-a1b8-3873ee360747",
+          "06444bdd-be81-5f77-99f2-188891020052",
+          "a862043e-40bf-5684-8323-2439363bc0fa",
+          "234e8211-1436-57de-b13e-0931050f1ebe",
+          "7af4d17f-6fbb-5f55-bba6-b7f647e9f275",
+          "ca990485-578c-569f-b1d5-939f8878349c",
+          "2f1a9719-4a6d-5984-bfb8-6333c2796a9b",
+          "e2bb8871-4d8d-5a64-ac00-45de30088b42"
+        ]
+      },
+      "bounded": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 6.0,
+          "unique_documents": 3.0,
+          "duplicate_article_rate": 0.4,
+          "max_document_concentration": 0.7
+        },
+        "article_codes": [
+          "20.2.LQ.115",
+          "20.2.NĐ.3.80",
+          "20.2.TT.3.7",
+          "20.2.NĐ.3.67",
+          "20.2.LQ.112",
+          "20.2.NĐ.3.89",
+          "20.2.NĐ.3.89",
+          "20.2.NĐ.3.80",
+          "20.2.NĐ.3.89",
+          "20.2.NĐ.3.89"
+        ],
+        "chunk_ids": [
+          "f446df4e-d3b6-5f2e-a871-5bb9a9a16187",
+          "240ca392-e545-5680-ab4c-8e021ecae4ca",
+          "05a1a0d3-491e-5bd8-a1b8-3873ee360747",
+          "06444bdd-be81-5f77-99f2-188891020052",
+          "a862043e-40bf-5684-8323-2439363bc0fa",
+          "234e8211-1436-57de-b13e-0931050f1ebe",
+          "ca990485-578c-569f-b1d5-939f8878349c",
+          "2f1a9719-4a6d-5984-bfb8-6333c2796a9b",
+          "e2bb8871-4d8d-5a64-ac00-45de30088b42",
+          "3178fa85-35a1-5895-92be-d3c239198632"
+        ]
+      },
+      "changed": true,
+      "entered_chunk_ids": [
+        "3178fa85-35a1-5895-92be-d3c239198632"
+      ],
+      "dropped_chunk_ids": [
+        "7af4d17f-6fbb-5f55-bba6-b7f647e9f275"
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_015",
+      "category": "natural_language",
+      "question": "Doanh nghiệp có được phép trả lương cho người lao động bằng sản phẩm không?",
+      "expected_article_codes": [
+        "20.2.LQ.94",
+        "20.2.LQ.95",
+        "20.2.LQ.96"
+      ],
+      "raw": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 9.0,
+          "unique_documents": 3.0,
+          "duplicate_article_rate": 0.09999999999999998,
+          "max_document_concentration": 0.6
+        },
+        "article_codes": [
+          "20.2.LQ.96",
+          "20.2.NĐ.3.54",
+          "20.2.NĐ.3.54",
+          "20.2.LQ.94",
+          "20.2.LQ.97",
+          "20.2.LQ.95",
+          "20.2.LQ.100",
+          "20.2.LQ.90",
+          "20.2.NĐ.3.55",
+          "20.2.TT.2.3"
+        ],
+        "chunk_ids": [
+          "19142e1d-00d9-5ec0-abf1-8309112ff2f4",
+          "ed739167-fcbf-5876-9af0-88154115cda4",
+          "6db8cc9c-4d62-5bdf-b80c-2c4dd6fe1069",
+          "90609d1b-fad6-59a7-9486-25c4f110e22f",
+          "20660aab-c214-5c1f-9473-82128a4e000c",
+          "4b4bbace-3ff6-5867-b8f2-39fde050a966",
+          "3e650b1c-f8fa-5a37-9353-6955edbba0ad",
+          "2ba95a0b-ec8d-5a51-9cb6-b4c85440d0cc",
+          "b0b71a2d-a816-596e-a20b-f1ceb9fedc1a",
+          "52b99d0e-cc32-5b2c-8ecb-aeaa748a0638"
+        ]
+      },
+      "bounded": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 9.0,
+          "unique_documents": 2.0,
+          "duplicate_article_rate": 0.09999999999999998,
+          "max_document_concentration": 0.7
+        },
+        "article_codes": [
+          "20.2.LQ.96",
+          "20.2.NĐ.3.54",
+          "20.2.NĐ.3.54",
+          "20.2.LQ.94",
+          "20.2.LQ.97",
+          "20.2.LQ.95",
+          "20.2.LQ.100",
+          "20.2.LQ.90",
+          "20.2.LQ.104",
+          "20.2.NĐ.3.55"
+        ],
+        "chunk_ids": [
+          "19142e1d-00d9-5ec0-abf1-8309112ff2f4",
+          "ed739167-fcbf-5876-9af0-88154115cda4",
+          "6db8cc9c-4d62-5bdf-b80c-2c4dd6fe1069",
+          "90609d1b-fad6-59a7-9486-25c4f110e22f",
+          "20660aab-c214-5c1f-9473-82128a4e000c",
+          "4b4bbace-3ff6-5867-b8f2-39fde050a966",
+          "3e650b1c-f8fa-5a37-9353-6955edbba0ad",
+          "2ba95a0b-ec8d-5a51-9cb6-b4c85440d0cc",
+          "9d1d07fc-3aeb-5d69-862e-f9c7af78e8e0",
+          "b0b71a2d-a816-596e-a20b-f1ceb9fedc1a"
+        ]
+      },
+      "changed": true,
+      "entered_chunk_ids": [
+        "9d1d07fc-3aeb-5d69-862e-f9c7af78e8e0"
+      ],
+      "dropped_chunk_ids": [
+        "52b99d0e-cc32-5b2c-8ecb-aeaa748a0638"
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_016",
+      "category": "natural_language",
+      "question": "Người sử dụng lao động có được phép giữ lương của người lao động trong thời gian thử việc không?",
+      "expected_article_codes": [
+        "20.2.LQ.26",
+        "20.2.LQ.94"
+      ],
+      "raw": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.0,
+          "article_recall": 0.5,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.5,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 10.0,
+          "unique_documents": 2.0,
+          "duplicate_article_rate": 0.0,
+          "max_document_concentration": 0.9
+        },
+        "article_codes": [
+          "20.2.LQ.26",
+          "20.2.LQ.27",
+          "20.2.LQ.24",
+          "20.2.LQ.99",
+          "20.2.LQ.25",
+          "20.2.LQ.128",
+          "20.2.LQ.101",
+          "20.2.LQ.34",
+          "20.2.NĐ.3.89",
+          "20.2.LQ.46"
+        ],
+        "chunk_ids": [
+          "77c5022b-7ccf-54d2-a5af-cccfe8f5b990",
+          "96425739-7044-5e77-b890-8b5e43dbf589",
+          "71864258-5a3a-5c94-8d6f-a6526097d670",
+          "356fc804-0bc0-5129-959e-0f058e54a505",
+          "df115ab2-5f58-5227-8bd1-1c94f476a58e",
+          "20d81f9d-06e0-5c42-ab45-63a9adfa45c9",
+          "440f6ac2-d937-50af-909c-25ba03e8c767",
+          "b8df3189-9dc0-575a-97a2-102b4ebab788",
+          "234e8211-1436-57de-b13e-0931050f1ebe",
+          "b154365a-f790-5988-aa1a-15e76271323f"
+        ]
+      },
+      "bounded": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.0,
+          "article_recall": 0.5,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.5,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 10.0,
+          "unique_documents": 1.0,
+          "duplicate_article_rate": 0.0,
+          "max_document_concentration": 1.0
+        },
+        "article_codes": [
+          "20.2.LQ.26",
+          "20.2.LQ.27",
+          "20.2.LQ.24",
+          "20.2.LQ.99",
+          "20.2.LQ.25",
+          "20.2.LQ.128",
+          "20.2.LQ.101",
+          "20.2.LQ.34",
+          "20.2.LQ.46",
+          "20.2.LQ.17"
+        ],
+        "chunk_ids": [
+          "77c5022b-7ccf-54d2-a5af-cccfe8f5b990",
+          "96425739-7044-5e77-b890-8b5e43dbf589",
+          "71864258-5a3a-5c94-8d6f-a6526097d670",
+          "356fc804-0bc0-5129-959e-0f058e54a505",
+          "df115ab2-5f58-5227-8bd1-1c94f476a58e",
+          "20d81f9d-06e0-5c42-ab45-63a9adfa45c9",
+          "440f6ac2-d937-50af-909c-25ba03e8c767",
+          "b8df3189-9dc0-575a-97a2-102b4ebab788",
+          "b154365a-f790-5988-aa1a-15e76271323f",
+          "33b34c3d-789e-551c-9e7e-239c93aa97d0"
+        ]
+      },
+      "changed": true,
+      "entered_chunk_ids": [
+        "33b34c3d-789e-551c-9e7e-239c93aa97d0"
+      ],
+      "dropped_chunk_ids": [
+        "234e8211-1436-57de-b13e-0931050f1ebe"
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_017",
+      "category": "natural_language",
+      "question": "Công ty có được phép sa thải người lao động đang nghỉ ốm theo chỉ định của bác sĩ không?",
+      "expected_article_codes": [
+        "20.2.LQ.36",
+        "20.2.LQ.37",
+        "20.2.LQ.122",
+        "20.2.LQ.125"
+      ],
+      "raw": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.0,
+          "article_recall": 0.75,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.42857142857142855,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 10.0,
+          "unique_documents": 2.0,
+          "duplicate_article_rate": 0.0,
+          "max_document_concentration": 0.9
+        },
+        "article_codes": [
+          "20.2.LQ.37",
+          "20.2.LQ.125",
+          "20.2.NĐ.3.80",
+          "20.2.LQ.138",
+          "20.2.LQ.36",
+          "20.2.LQ.141",
+          "20.2.LQ.137",
+          "20.2.LQ.34",
+          "20.2.LQ.29",
+          "20.2.LQ.35"
+        ],
+        "chunk_ids": [
+          "c17372aa-1a9e-507a-8978-beb4b96c7a1a",
+          "bf0d029a-dc70-5b7a-bbb6-205f55b1d835",
+          "01259c67-4a72-572a-8a29-5f649b96b129",
+          "80a0d1d0-7df3-5b1b-b1eb-0805e735e518",
+          "25dd9a57-f47f-52d8-9bb0-e2456c6c250e",
+          "bb60260d-8cb2-55f0-86f3-7190d9531d5a",
+          "beeaf23f-a054-51c6-bcb6-eaa6a028c0e3",
+          "6ea9b0d8-cff7-5c19-80d7-42955e823e92",
+          "6190d27c-96e8-5f0e-807a-f4d4833d7cef",
+          "30e47943-f89a-57e7-8ff1-7d93d86b23ed"
+        ]
+      },
+      "bounded": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.0,
+          "article_recall": 0.75,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.42857142857142855,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 10.0,
+          "unique_documents": 2.0,
+          "duplicate_article_rate": 0.0,
+          "max_document_concentration": 0.9
+        },
+        "article_codes": [
+          "20.2.LQ.37",
+          "20.2.LQ.125",
+          "20.2.NĐ.3.80",
+          "20.2.LQ.138",
+          "20.2.LQ.36",
+          "20.2.LQ.141",
+          "20.2.LQ.137",
+          "20.2.LQ.34",
+          "20.2.LQ.29",
+          "20.2.LQ.35"
+        ],
+        "chunk_ids": [
+          "c17372aa-1a9e-507a-8978-beb4b96c7a1a",
+          "bf0d029a-dc70-5b7a-bbb6-205f55b1d835",
+          "01259c67-4a72-572a-8a29-5f649b96b129",
+          "80a0d1d0-7df3-5b1b-b1eb-0805e735e518",
+          "25dd9a57-f47f-52d8-9bb0-e2456c6c250e",
+          "bb60260d-8cb2-55f0-86f3-7190d9531d5a",
+          "beeaf23f-a054-51c6-bcb6-eaa6a028c0e3",
+          "6ea9b0d8-cff7-5c19-80d7-42955e823e92",
+          "6190d27c-96e8-5f0e-807a-f4d4833d7cef",
+          "30e47943-f89a-57e7-8ff1-7d93d86b23ed"
+        ]
+      },
+      "changed": false,
+      "entered_chunk_ids": [],
+      "dropped_chunk_ids": []
+    },
+    {
+      "question_id": "r2ai_gold_018",
+      "category": "natural_language",
+      "question": "Lao động nữ mang thai đến tháng thứ 7 thì có được về sớm 30 phút mỗi ngày không?",
+      "expected_article_codes": [
+        "20.2.LQ.137",
+        "20.2.NĐ.3.80"
+      ],
+      "raw": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.5714285714285714,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 8.0,
+          "unique_documents": 3.0,
+          "duplicate_article_rate": 0.19999999999999996,
+          "max_document_concentration": 0.5
+        },
+        "article_codes": [
+          "20.2.LQ.137",
+          "20.2.LQ.139",
+          "20.2.NĐ.3.80",
+          "20.2.NĐ.3.80",
+          "20.2.NĐ.3.80",
+          "20.2.LQ.138",
+          "20.2.LQ.37",
+          "20.2.LQ.30",
+          "20.2.TT.4.7",
+          "20.2.NĐ.3.89"
+        ],
+        "chunk_ids": [
+          "beeaf23f-a054-51c6-bcb6-eaa6a028c0e3",
+          "d0d33541-efbf-5f7f-850f-8f7c8cd2e164",
+          "48900dd9-350c-5713-89ce-ff2b65b9b6f2",
+          "01259c67-4a72-572a-8a29-5f649b96b129",
+          "240ca392-e545-5680-ab4c-8e021ecae4ca",
+          "80a0d1d0-7df3-5b1b-b1eb-0805e735e518",
+          "c17372aa-1a9e-507a-8978-beb4b96c7a1a",
+          "16ccfe28-10fb-5967-9463-9069796b514f",
+          "98627151-f7bf-5b38-809b-bede82b5ff9a",
+          "e2bb8871-4d8d-5a64-ac00-45de30088b42"
+        ]
+      },
+      "bounded": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.5714285714285714,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 8.0,
+          "unique_documents": 2.0,
+          "duplicate_article_rate": 0.19999999999999996,
+          "max_document_concentration": 0.7
+        },
+        "article_codes": [
+          "20.2.LQ.137",
+          "20.2.LQ.139",
+          "20.2.NĐ.3.80",
+          "20.2.NĐ.3.80",
+          "20.2.NĐ.3.80",
+          "20.2.LQ.138",
+          "20.2.LQ.37",
+          "20.2.LQ.30",
+          "20.2.LQ.141",
+          "20.2.LQ.35"
+        ],
+        "chunk_ids": [
+          "beeaf23f-a054-51c6-bcb6-eaa6a028c0e3",
+          "d0d33541-efbf-5f7f-850f-8f7c8cd2e164",
+          "48900dd9-350c-5713-89ce-ff2b65b9b6f2",
+          "01259c67-4a72-572a-8a29-5f649b96b129",
+          "240ca392-e545-5680-ab4c-8e021ecae4ca",
+          "80a0d1d0-7df3-5b1b-b1eb-0805e735e518",
+          "c17372aa-1a9e-507a-8978-beb4b96c7a1a",
+          "16ccfe28-10fb-5967-9463-9069796b514f",
+          "bb60260d-8cb2-55f0-86f3-7190d9531d5a",
+          "30e47943-f89a-57e7-8ff1-7d93d86b23ed"
+        ]
+      },
+      "changed": true,
+      "entered_chunk_ids": [
+        "bb60260d-8cb2-55f0-86f3-7190d9531d5a",
+        "30e47943-f89a-57e7-8ff1-7d93d86b23ed"
+      ],
+      "dropped_chunk_ids": [
+        "98627151-f7bf-5b38-809b-bede82b5ff9a",
+        "e2bb8871-4d8d-5a64-ac00-45de30088b42"
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_019",
+      "category": "natural_language",
+      "question": "Khi ông hoặc bà mất, người lao động được nghỉ bao nhiêu ngày?",
+      "expected_article_codes": [
+        "20.2.LQ.115"
+      ],
+      "raw": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 9.0,
+          "unique_documents": 4.0,
+          "duplicate_article_rate": 0.09999999999999998,
+          "max_document_concentration": 0.5
+        },
+        "article_codes": [
+          "20.2.LQ.115",
+          "20.2.LQ.112",
+          "20.2.TT.4.7",
+          "20.2.LQ.139",
+          "20.2.LQ.113",
+          "20.2.TT.7.8",
+          "20.2.NĐ.3.89",
+          "20.2.NĐ.3.80",
+          "20.2.LQ.111",
+          "20.2.NĐ.3.80"
+        ],
+        "chunk_ids": [
+          "f446df4e-d3b6-5f2e-a871-5bb9a9a16187",
+          "a862043e-40bf-5684-8323-2439363bc0fa",
+          "98627151-f7bf-5b38-809b-bede82b5ff9a",
+          "d0d33541-efbf-5f7f-850f-8f7c8cd2e164",
+          "1af0c29c-f105-5eb9-a61b-9e9bef8ed853",
+          "784520b1-1be0-5147-8c14-bc69dcf1364c",
+          "ca990485-578c-569f-b1d5-939f8878349c",
+          "240ca392-e545-5680-ab4c-8e021ecae4ca",
+          "87d09f90-aa84-50f5-94f6-04292bc2db1c",
+          "2f1a9719-4a6d-5984-bfb8-6333c2796a9b"
+        ]
+      },
+      "bounded": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 10.0,
+          "unique_documents": 3.0,
+          "duplicate_article_rate": 0.0,
+          "max_document_concentration": 0.7
+        },
+        "article_codes": [
+          "20.2.LQ.115",
+          "20.2.LQ.112",
+          "20.2.TT.4.7",
+          "20.2.LQ.139",
+          "20.2.LQ.113",
+          "20.2.LQ.111",
+          "20.2.NĐ.3.89",
+          "20.2.LQ.114",
+          "20.2.NĐ.3.80",
+          "20.2.LQ.137"
+        ],
+        "chunk_ids": [
+          "f446df4e-d3b6-5f2e-a871-5bb9a9a16187",
+          "a862043e-40bf-5684-8323-2439363bc0fa",
+          "98627151-f7bf-5b38-809b-bede82b5ff9a",
+          "d0d33541-efbf-5f7f-850f-8f7c8cd2e164",
+          "1af0c29c-f105-5eb9-a61b-9e9bef8ed853",
+          "87d09f90-aa84-50f5-94f6-04292bc2db1c",
+          "ca990485-578c-569f-b1d5-939f8878349c",
+          "880d7eba-c56d-5934-bec9-46c394b2bf4c",
+          "240ca392-e545-5680-ab4c-8e021ecae4ca",
+          "beeaf23f-a054-51c6-bcb6-eaa6a028c0e3"
+        ]
+      },
+      "changed": true,
+      "entered_chunk_ids": [
+        "880d7eba-c56d-5934-bec9-46c394b2bf4c",
+        "beeaf23f-a054-51c6-bcb6-eaa6a028c0e3"
+      ],
+      "dropped_chunk_ids": [
+        "784520b1-1be0-5147-8c14-bc69dcf1364c",
+        "2f1a9719-4a6d-5984-bfb8-6333c2796a9b"
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_022",
+      "category": "single_scenario",
+      "question": "Trong trường hợp doanh nghiệp cho thuê lại không thanh toán quyền lợi cho người lao động, tiền ký quỹ được dùng cho những khoản nào và nếu không đủ thì ưu tiên thanh toán theo thứ tự nào?",
+      "expected_article_codes": [
+        "NQ66.18.PL-I.4.C.V",
+        "NQ66.18.PL-I.4.C.VIII"
+      ],
+      "raw": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.8333333333333334,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 4.0,
+          "unique_documents": 2.0,
+          "duplicate_article_rate": 0.6,
+          "max_document_concentration": 0.5
+        },
+        "article_codes": [
+          "NQ66.18.PL-I.4.C.VIII",
+          "20.2.NĐ.3.19",
+          "20.2.NĐ.3.19",
+          "20.2.NĐ.3.19",
+          "NQ66.18.PL-I.4.C.VIII",
+          "NQ66.18.PL-I.4.C.V",
+          "20.2.NĐ.3.15",
+          "NQ66.18.PL-I.4.C.VIII",
+          "NQ66.18.PL-I.4.C.VIII",
+          "20.2.NĐ.3.19"
+        ],
+        "chunk_ids": [
+          "039ef8b7-bf8e-5684-a624-6c353bd253da",
+          "1033f34a-2d5f-5492-b9f9-de54fa877bb7",
+          "7a086167-6490-588f-ab46-44d1b0c05a56",
+          "54608ffd-56f2-5021-accd-79ad92e93d22",
+          "5875dbc2-2f6b-5105-a699-8ccd625e19c9",
+          "f295f903-7006-5d4f-afdc-fa52ccaad17b",
+          "4f56c038-c6e7-5739-afd0-54a2a45fa57e",
+          "33505a62-857e-54eb-b285-3a9fe68b53e2",
+          "3f014f7d-ce6b-5c4b-8169-30072649587f",
+          "e27ca77d-47d3-5912-a332-a6e50f1e268d"
+        ]
+      },
+      "bounded": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.8333333333333334,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 4.0,
+          "unique_documents": 2.0,
+          "duplicate_article_rate": 0.6,
+          "max_document_concentration": 0.5
+        },
+        "article_codes": [
+          "NQ66.18.PL-I.4.C.VIII",
+          "20.2.NĐ.3.19",
+          "20.2.NĐ.3.19",
+          "20.2.NĐ.3.19",
+          "NQ66.18.PL-I.4.C.VIII",
+          "NQ66.18.PL-I.4.C.V",
+          "20.2.NĐ.3.15",
+          "NQ66.18.PL-I.4.C.VIII",
+          "NQ66.18.PL-I.4.C.VIII",
+          "20.2.NĐ.3.19"
+        ],
+        "chunk_ids": [
+          "039ef8b7-bf8e-5684-a624-6c353bd253da",
+          "1033f34a-2d5f-5492-b9f9-de54fa877bb7",
+          "7a086167-6490-588f-ab46-44d1b0c05a56",
+          "54608ffd-56f2-5021-accd-79ad92e93d22",
+          "5875dbc2-2f6b-5105-a699-8ccd625e19c9",
+          "f295f903-7006-5d4f-afdc-fa52ccaad17b",
+          "4f56c038-c6e7-5739-afd0-54a2a45fa57e",
+          "33505a62-857e-54eb-b285-3a9fe68b53e2",
+          "3f014f7d-ce6b-5c4b-8169-30072649587f",
+          "e27ca77d-47d3-5912-a332-a6e50f1e268d"
+        ]
+      },
+      "changed": false,
+      "entered_chunk_ids": [],
+      "dropped_chunk_ids": []
+    },
+    {
+      "question_id": "r2ai_gold_027",
+      "category": "single_scenario",
+      "question": "Khi giao kết hoặc chấm dứt hợp đồng lao động với người giúp việc gia đình, người sử dụng lao động phải thông báo cho UBND cấp xã trong thời hạn bao lâu?",
+      "expected_article_codes": [
+        "20.2.NĐ.3.90"
+      ],
+      "raw": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 0.5,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 0.5
+        },
+        "diversity": {
+          "unique_articles": 6.0,
+          "unique_documents": 2.0,
+          "duplicate_article_rate": 0.4,
+          "max_document_concentration": 0.6
+        },
+        "article_codes": [
+          "20.2.LQ.162",
+          "20.2.NĐ.3.90",
+          "20.2.NĐ.3.89",
+          "20.2.NĐ.3.89",
+          "20.2.NĐ.3.89",
+          "20.2.NĐ.3.89",
+          "20.2.LQ.163",
+          "20.2.NĐ.3.89",
+          "20.2.LQ.164",
+          "20.2.LQ.45"
+        ],
+        "chunk_ids": [
+          "a4a6283b-6c75-5ce2-9ca7-047412033f9e",
+          "151d1dfa-abde-5f9d-9786-3739d0d9c680",
+          "eca5edfc-c9ec-520a-bdf7-c9fea3157d6a",
+          "3178fa85-35a1-5895-92be-d3c239198632",
+          "fca048c3-4124-576b-84b6-fb50c164e778",
+          "922ba47e-66fe-582a-aea2-db3259618c9a",
+          "0e615471-ce53-507e-9a83-4fdd3ad12f09",
+          "e2bb8871-4d8d-5a64-ac00-45de30088b42",
+          "c31c847a-9da0-52dd-b54f-89f3e05de45c",
+          "d26422ea-0604-599b-bbd6-fe09eff53dc4"
+        ]
+      },
+      "bounded": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 0.5,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 0.5
+        },
+        "diversity": {
+          "unique_articles": 6.0,
+          "unique_documents": 2.0,
+          "duplicate_article_rate": 0.4,
+          "max_document_concentration": 0.6
+        },
+        "article_codes": [
+          "20.2.LQ.162",
+          "20.2.NĐ.3.90",
+          "20.2.NĐ.3.89",
+          "20.2.NĐ.3.89",
+          "20.2.NĐ.3.89",
+          "20.2.NĐ.3.89",
+          "20.2.NĐ.3.89",
+          "20.2.LQ.163",
+          "20.2.LQ.164",
+          "20.2.LQ.45"
+        ],
+        "chunk_ids": [
+          "a4a6283b-6c75-5ce2-9ca7-047412033f9e",
+          "151d1dfa-abde-5f9d-9786-3739d0d9c680",
+          "eca5edfc-c9ec-520a-bdf7-c9fea3157d6a",
+          "3178fa85-35a1-5895-92be-d3c239198632",
+          "fca048c3-4124-576b-84b6-fb50c164e778",
+          "922ba47e-66fe-582a-aea2-db3259618c9a",
+          "e2bb8871-4d8d-5a64-ac00-45de30088b42",
+          "0e615471-ce53-507e-9a83-4fdd3ad12f09",
+          "c31c847a-9da0-52dd-b54f-89f3e05de45c",
+          "d26422ea-0604-599b-bbd6-fe09eff53dc4"
+        ]
+      },
+      "changed": true,
+      "entered_chunk_ids": [],
+      "dropped_chunk_ids": []
+    },
+    {
+      "question_id": "r2ai_gold_028",
+      "category": "single_scenario",
+      "question": "Khi hợp đồng lao động bị tuyên bố vô hiệu từng phần thì công ty và nhân viên phải làm gì để xử lý?",
+      "expected_article_codes": [
+        "20.2.NĐ.3.9"
+      ],
+      "raw": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 5.0,
+          "unique_documents": 2.0,
+          "duplicate_article_rate": 0.5,
+          "max_document_concentration": 0.8
+        },
+        "article_codes": [
+          "20.2.NĐ.3.9",
+          "20.2.NĐ.3.9",
+          "20.2.LQ.51",
+          "20.2.NĐ.3.9",
+          "20.2.NĐ.3.9",
+          "20.2.NĐ.3.10",
+          "20.2.NĐ.3.10",
+          "20.2.LQ.88",
+          "20.2.NĐ.3.10",
+          "20.2.NĐ.3.11"
+        ],
+        "chunk_ids": [
+          "bae534df-500b-5fbd-bf7b-c010712e0bbd",
+          "c07d6cf7-6c3e-5fef-8531-f1570e42329d",
+          "775e1bfc-762e-52ea-86d6-213ce1ec1783",
+          "7b405487-be52-5587-b08c-71ee48efa7db",
+          "395a595a-9db1-5d70-9d96-5bd60524cdb1",
+          "1b592ba9-af3e-5f4e-be1a-8d8d7eacf374",
+          "94b16cc3-d79e-5fa6-bf3c-6a1d7da2b883",
+          "79e8de1a-51bc-565e-921f-4058028c5309",
+          "6ce39945-08b5-5190-b2a0-053ba6c8fc12",
+          "99fbb0af-0c7b-569d-8f85-4cfbbac77413"
+        ]
+      },
+      "bounded": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 4.0,
+          "unique_documents": 2.0,
+          "duplicate_article_rate": 0.6,
+          "max_document_concentration": 0.9
+        },
+        "article_codes": [
+          "20.2.NĐ.3.9",
+          "20.2.NĐ.3.9",
+          "20.2.LQ.51",
+          "20.2.NĐ.3.9",
+          "20.2.NĐ.3.9",
+          "20.2.NĐ.3.10",
+          "20.2.NĐ.3.10",
+          "20.2.NĐ.3.10",
+          "20.2.NĐ.3.11",
+          "20.2.NĐ.3.10"
+        ],
+        "chunk_ids": [
+          "bae534df-500b-5fbd-bf7b-c010712e0bbd",
+          "c07d6cf7-6c3e-5fef-8531-f1570e42329d",
+          "775e1bfc-762e-52ea-86d6-213ce1ec1783",
+          "7b405487-be52-5587-b08c-71ee48efa7db",
+          "395a595a-9db1-5d70-9d96-5bd60524cdb1",
+          "1b592ba9-af3e-5f4e-be1a-8d8d7eacf374",
+          "94b16cc3-d79e-5fa6-bf3c-6a1d7da2b883",
+          "6ce39945-08b5-5190-b2a0-053ba6c8fc12",
+          "99fbb0af-0c7b-569d-8f85-4cfbbac77413",
+          "a92ddc35-e5bb-56b1-95a6-2b957e5f393a"
+        ]
+      },
+      "changed": true,
+      "entered_chunk_ids": [
+        "a92ddc35-e5bb-56b1-95a6-2b957e5f393a"
+      ],
+      "dropped_chunk_ids": [
+        "79e8de1a-51bc-565e-921f-4058028c5309"
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_029",
+      "category": "single_scenario",
+      "question": "Khi trả lương theo sản phẩm hoặc lương khoán, công ty cần đảm bảo mức lương quy đổi như thế nào để không vi phạm luật?",
+      "expected_article_codes": [
+        "20.2.NĐ.8.4"
+      ],
+      "raw": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 0.25,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 0.25
+        },
+        "diversity": {
+          "unique_articles": 10.0,
+          "unique_documents": 4.0,
+          "duplicate_article_rate": 0.0,
+          "max_document_concentration": 0.4
+        },
+        "article_codes": [
+          "20.2.NĐ.3.54",
+          "20.2.TT.2.3",
+          "20.2.LQ.96",
+          "20.2.NĐ.8.4",
+          "20.2.NĐ.8.5",
+          "20.2.LQ.97",
+          "20.2.LQ.42",
+          "20.2.NĐ.3.89",
+          "20.2.LQ.100",
+          "20.2.NĐ.3.55"
+        ],
+        "chunk_ids": [
+          "ed739167-fcbf-5876-9af0-88154115cda4",
+          "52b99d0e-cc32-5b2c-8ecb-aeaa748a0638",
+          "19142e1d-00d9-5ec0-abf1-8309112ff2f4",
+          "2158915d-6cac-5559-8ba0-d8fc4b2380ef",
+          "8f060e71-da1d-58da-a202-f9b254b1aa20",
+          "20660aab-c214-5c1f-9473-82128a4e000c",
+          "1f975c88-a8e6-5aca-b073-4e320fb93eee",
+          "234e8211-1436-57de-b13e-0931050f1ebe",
+          "3e650b1c-f8fa-5a37-9353-6955edbba0ad",
+          "b0b71a2d-a816-596e-a20b-f1ceb9fedc1a"
+        ]
+      },
+      "bounded": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 0.25,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 0.25
+        },
+        "diversity": {
+          "unique_articles": 10.0,
+          "unique_documents": 4.0,
+          "duplicate_article_rate": 0.0,
+          "max_document_concentration": 0.4
+        },
+        "article_codes": [
+          "20.2.NĐ.3.54",
+          "20.2.TT.2.3",
+          "20.2.LQ.96",
+          "20.2.NĐ.8.4",
+          "20.2.NĐ.8.5",
+          "20.2.LQ.97",
+          "20.2.LQ.42",
+          "20.2.LQ.100",
+          "20.2.NĐ.3.89",
+          "20.2.NĐ.3.55"
+        ],
+        "chunk_ids": [
+          "ed739167-fcbf-5876-9af0-88154115cda4",
+          "52b99d0e-cc32-5b2c-8ecb-aeaa748a0638",
+          "19142e1d-00d9-5ec0-abf1-8309112ff2f4",
+          "2158915d-6cac-5559-8ba0-d8fc4b2380ef",
+          "8f060e71-da1d-58da-a202-f9b254b1aa20",
+          "20660aab-c214-5c1f-9473-82128a4e000c",
+          "1f975c88-a8e6-5aca-b073-4e320fb93eee",
+          "3e650b1c-f8fa-5a37-9353-6955edbba0ad",
+          "234e8211-1436-57de-b13e-0931050f1ebe",
+          "b0b71a2d-a816-596e-a20b-f1ceb9fedc1a"
+        ]
+      },
+      "changed": true,
+      "entered_chunk_ids": [],
+      "dropped_chunk_ids": []
+    },
+    {
+      "question_id": "r2ai_gold_030",
+      "category": "single_scenario",
+      "question": "Công ty có chi nhánh hoạt động ở nhiều vùng khác nhau thì áp dụng mức lương tối thiểu như thế nào?",
+      "expected_article_codes": [
+        "20.2.NĐ.8.3"
+      ],
+      "raw": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 10.0,
+          "unique_documents": 5.0,
+          "duplicate_article_rate": 0.0,
+          "max_document_concentration": 0.5
+        },
+        "article_codes": [
+          "20.2.NĐ.8.3",
+          "20.2.LQ.91",
+          "20.2.NĐ.8.4",
+          "20.2.NĐ.8.5",
+          "20.2.NĐ.8.1",
+          "20.2.NĐ.3.89",
+          "20.2.NĐ.8.2",
+          "20.2.NĐ.3.50",
+          "20.2.NĐ.6.13",
+          "NQ66.18.PL-I.4.C.V"
+        ],
+        "chunk_ids": [
+          "8c254e83-3775-5189-93e9-4c8621c65786",
+          "d8ffe368-aa86-562f-bc6e-94f1ca0509d3",
+          "2158915d-6cac-5559-8ba0-d8fc4b2380ef",
+          "9a0d6ce3-4ef4-5449-92f4-061e7ffa9bf4",
+          "f65a6b5b-3363-5c79-b5cd-9e792b3abf40",
+          "234e8211-1436-57de-b13e-0931050f1ebe",
+          "0d03de3c-9d42-5a75-91ff-47ee7885c14a",
+          "58f78389-6669-5811-acd9-93ac89023d18",
+          "041c7488-9585-55ed-a925-548b7be5446c",
+          "f295f903-7006-5d4f-afdc-fa52ccaad17b"
+        ]
+      },
+      "bounded": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 9.0,
+          "unique_documents": 4.0,
+          "duplicate_article_rate": 0.09999999999999998,
+          "max_document_concentration": 0.6
+        },
+        "article_codes": [
+          "20.2.NĐ.8.3",
+          "20.2.LQ.91",
+          "20.2.NĐ.8.4",
+          "20.2.NĐ.8.5",
+          "20.2.NĐ.8.1",
+          "20.2.NĐ.8.2",
+          "20.2.NĐ.3.89",
+          "20.2.NĐ.8.5",
+          "20.2.NĐ.3.50",
+          "20.2.NĐ.6.13"
+        ],
+        "chunk_ids": [
+          "8c254e83-3775-5189-93e9-4c8621c65786",
+          "d8ffe368-aa86-562f-bc6e-94f1ca0509d3",
+          "2158915d-6cac-5559-8ba0-d8fc4b2380ef",
+          "9a0d6ce3-4ef4-5449-92f4-061e7ffa9bf4",
+          "f65a6b5b-3363-5c79-b5cd-9e792b3abf40",
+          "0d03de3c-9d42-5a75-91ff-47ee7885c14a",
+          "234e8211-1436-57de-b13e-0931050f1ebe",
+          "76ee7840-5725-566b-8c14-29547f7d3bf8",
+          "58f78389-6669-5811-acd9-93ac89023d18",
+          "041c7488-9585-55ed-a925-548b7be5446c"
+        ]
+      },
+      "changed": true,
+      "entered_chunk_ids": [
+        "76ee7840-5725-566b-8c14-29547f7d3bf8"
+      ],
+      "dropped_chunk_ids": [
+        "f295f903-7006-5d4f-afdc-fa52ccaad17b"
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_031",
+      "category": "single_scenario",
+      "question": "Trong trường hợp nào công ty có quyền yêu cầu nhân viên làm thêm giờ mà không bị giới hạn số giờ và nhân viên không được từ chối?",
+      "expected_article_codes": [
+        "20.2.LQ.108"
+      ],
+      "raw": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 9.0,
+          "unique_documents": 6.0,
+          "duplicate_article_rate": 0.09999999999999998,
+          "max_document_concentration": 0.4
+        },
+        "article_codes": [
+          "20.2.LQ.108",
+          "20.2.TT.6.5",
+          "20.2.LQ.107",
+          "20.2.TT.3.5",
+          "20.2.LQ.107",
+          "20.2.TT.7.6",
+          "20.2.NĐ.3.60",
+          "20.2.NĐ.3.61",
+          "20.2.TT.4.6",
+          "20.2.LQ.137"
+        ],
+        "chunk_ids": [
+          "3df78b85-94a6-56c4-a7d6-217a598ce399",
+          "b6188185-ee94-55e9-bcbd-2947f7c3eee7",
+          "493dc833-06d3-56bd-b88b-76f0a61dd477",
+          "c30e738d-5579-5405-9da5-f09be278692c",
+          "c0e2f211-b725-5fbe-a92c-e409933dff9b",
+          "b64f134d-c560-5c1c-be56-530089b4513f",
+          "14ae9aa7-c541-5b37-9739-dbab5f8985c8",
+          "a2dd38f7-31e6-5882-ab0e-cf45e43c9c9c",
+          "e154ed5d-2c06-55d5-849c-1440b5dfe0b5",
+          "beeaf23f-a054-51c6-bcb6-eaa6a028c0e3"
+        ]
+      },
+      "bounded": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 8.0,
+          "unique_documents": 5.0,
+          "duplicate_article_rate": 0.19999999999999996,
+          "max_document_concentration": 0.5
+        },
+        "article_codes": [
+          "20.2.LQ.108",
+          "20.2.TT.6.5",
+          "20.2.LQ.107",
+          "20.2.TT.3.5",
+          "20.2.LQ.107",
+          "20.2.LQ.137",
+          "20.2.NĐ.3.60",
+          "20.2.NĐ.3.61",
+          "20.2.LQ.107",
+          "20.2.TT.7.6"
+        ],
+        "chunk_ids": [
+          "3df78b85-94a6-56c4-a7d6-217a598ce399",
+          "b6188185-ee94-55e9-bcbd-2947f7c3eee7",
+          "493dc833-06d3-56bd-b88b-76f0a61dd477",
+          "c30e738d-5579-5405-9da5-f09be278692c",
+          "c0e2f211-b725-5fbe-a92c-e409933dff9b",
+          "beeaf23f-a054-51c6-bcb6-eaa6a028c0e3",
+          "14ae9aa7-c541-5b37-9739-dbab5f8985c8",
+          "a2dd38f7-31e6-5882-ab0e-cf45e43c9c9c",
+          "566780f2-5223-51ea-8b99-e0398301bdbf",
+          "b64f134d-c560-5c1c-be56-530089b4513f"
+        ]
+      },
+      "changed": true,
+      "entered_chunk_ids": [
+        "566780f2-5223-51ea-8b99-e0398301bdbf"
+      ],
+      "dropped_chunk_ids": [
+        "e154ed5d-2c06-55d5-849c-1440b5dfe0b5"
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_033",
+      "category": "single_scenario",
+      "question": "Trong thời hạn bao nhiêu ngày kể từ ngày ban hành nội quy lao động thì công ty phải nộp hồ sơ đăng ký?",
+      "expected_article_codes": [
+        "20.2.LQ.119"
+      ],
+      "raw": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 10.0,
+          "unique_documents": 5.0,
+          "duplicate_article_rate": 0.0,
+          "max_document_concentration": 0.4
+        },
+        "article_codes": [
+          "20.2.LQ.119",
+          "20.2.LQ.121",
+          "20.2.LQ.120",
+          "20.2.NĐ.3.69",
+          "NĐ129.67",
+          "NĐ219.9",
+          "20.2.LQ.77",
+          "20.2.NĐ.3.3",
+          "20.2.NĐ.4.24",
+          "NĐ129.69"
+        ],
+        "chunk_ids": [
+          "7bbae293-e731-566e-b332-6a6719a6302b",
+          "599d15fa-90fc-5749-90d1-5e6965c7917d",
+          "75f59392-d9ab-587d-ac0f-c89f09bef790",
+          "df8dbcfb-9292-5d94-a9f3-ee6fe4a404f5",
+          "beacd3b0-ae3c-5d00-9cf8-c07ac1ae9b1e",
+          "d01c1281-a17b-5055-93ef-fb119f2615e7",
+          "7613c6ff-d731-5fd1-bd54-8ffed97a9995",
+          "7d11b4d9-a104-5832-8f42-41d468a4e782",
+          "619715bb-8743-51c1-9179-ec201f69fbc1",
+          "705e1892-ade4-52e8-b9ae-49754cea472e"
+        ]
+      },
+      "bounded": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 10.0,
+          "unique_documents": 4.0,
+          "duplicate_article_rate": 0.0,
+          "max_document_concentration": 0.5
+        },
+        "article_codes": [
+          "20.2.LQ.119",
+          "20.2.LQ.121",
+          "20.2.LQ.120",
+          "20.2.NĐ.3.69",
+          "NĐ129.67",
+          "20.2.LQ.77",
+          "20.2.NĐ.3.3",
+          "20.2.LQ.118",
+          "NĐ219.9",
+          "NĐ129.69"
+        ],
+        "chunk_ids": [
+          "7bbae293-e731-566e-b332-6a6719a6302b",
+          "599d15fa-90fc-5749-90d1-5e6965c7917d",
+          "75f59392-d9ab-587d-ac0f-c89f09bef790",
+          "df8dbcfb-9292-5d94-a9f3-ee6fe4a404f5",
+          "beacd3b0-ae3c-5d00-9cf8-c07ac1ae9b1e",
+          "7613c6ff-d731-5fd1-bd54-8ffed97a9995",
+          "7d11b4d9-a104-5832-8f42-41d468a4e782",
+          "e387ba25-2843-5d1e-a984-11aa3f2dad3d",
+          "d01c1281-a17b-5055-93ef-fb119f2615e7",
+          "705e1892-ade4-52e8-b9ae-49754cea472e"
+        ]
+      },
+      "changed": true,
+      "entered_chunk_ids": [
+        "e387ba25-2843-5d1e-a984-11aa3f2dad3d"
+      ],
+      "dropped_chunk_ids": [
+        "619715bb-8743-51c1-9179-ec201f69fbc1"
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_034",
+      "category": "single_scenario",
+      "question": "Khi nhân viên làm việc không trọn thời gian hết thời hạn tạm hoãn hợp đồng lao động thì thời hạn quay lại làm việc là bao lâu và công ty phải sắp xếp công việc cho họ như thế nào?",
+      "expected_article_codes": [
+        "20.2.LQ.31",
+        "20.2.LQ.32"
+      ],
+      "raw": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 10.0,
+          "unique_documents": 4.0,
+          "duplicate_article_rate": 0.0,
+          "max_document_concentration": 0.6
+        },
+        "article_codes": [
+          "20.2.LQ.31",
+          "20.2.LQ.128",
+          "20.2.LQ.30",
+          "20.2.LQ.32",
+          "20.2.NĐ.6.9",
+          "20.2.NĐ.3.29",
+          "20.2.NĐ.6.2",
+          "20.2.TT.4.2",
+          "20.2.LQ.206",
+          "20.2.LQ.29"
+        ],
+        "chunk_ids": [
+          "95f91be0-a805-5406-85ff-0aae2b0022d4",
+          "20d81f9d-06e0-5c42-ab45-63a9adfa45c9",
+          "16ccfe28-10fb-5967-9463-9069796b514f",
+          "48fb511d-393b-5813-a82c-477131e2a966",
+          "6a1ea8ed-3e8a-5f0e-8b75-ea0e3591e2e2",
+          "cf9b8866-07fe-535a-b244-6817ffe351f9",
+          "da0748b0-5266-5612-a962-62e3598c9c44",
+          "da72aa84-7fde-56ea-a083-612ce0421975",
+          "e072b167-b6ae-5cbb-932f-be6e4d2ba1d1",
+          "6190d27c-96e8-5f0e-807a-f4d4833d7cef"
+        ]
+      },
+      "bounded": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 10.0,
+          "unique_documents": 2.0,
+          "duplicate_article_rate": 0.0,
+          "max_document_concentration": 0.9
+        },
+        "article_codes": [
+          "20.2.LQ.31",
+          "20.2.LQ.128",
+          "20.2.LQ.30",
+          "20.2.LQ.32",
+          "20.2.NĐ.6.9",
+          "20.2.LQ.206",
+          "20.2.LQ.29",
+          "20.2.LQ.44",
+          "20.2.LQ.211",
+          "20.2.LQ.36"
+        ],
+        "chunk_ids": [
+          "95f91be0-a805-5406-85ff-0aae2b0022d4",
+          "20d81f9d-06e0-5c42-ab45-63a9adfa45c9",
+          "16ccfe28-10fb-5967-9463-9069796b514f",
+          "48fb511d-393b-5813-a82c-477131e2a966",
+          "6a1ea8ed-3e8a-5f0e-8b75-ea0e3591e2e2",
+          "e072b167-b6ae-5cbb-932f-be6e4d2ba1d1",
+          "6190d27c-96e8-5f0e-807a-f4d4833d7cef",
+          "965d441b-130d-58db-a34d-97aec12c9ccb",
+          "735b874f-9fcc-5aba-b387-875927424268",
+          "25dd9a57-f47f-52d8-9bb0-e2456c6c250e"
+        ]
+      },
+      "changed": true,
+      "entered_chunk_ids": [
+        "965d441b-130d-58db-a34d-97aec12c9ccb",
+        "735b874f-9fcc-5aba-b387-875927424268",
+        "25dd9a57-f47f-52d8-9bb0-e2456c6c250e"
+      ],
+      "dropped_chunk_ids": [
+        "cf9b8866-07fe-535a-b244-6817ffe351f9",
+        "da0748b0-5266-5612-a962-62e3598c9c44",
+        "da72aa84-7fde-56ea-a083-612ce0421975"
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_035",
+      "category": "single_scenario",
+      "question": "Khi công ty ký hợp đồng lao động với nhân viên từ đủ 15 đến dưới 18 tuổi, ai là người có thẩm quyền giao kết và công ty cần lưu ý không được yêu cầu điều kiện gì về tài sản bảo đảm?",
+      "expected_article_codes": [
+        "20.2.LQ.17",
+        "20.2.LQ.18"
+      ],
+      "raw": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 0.5,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 0.5
+        },
+        "diversity": {
+          "unique_articles": 10.0,
+          "unique_documents": 3.0,
+          "duplicate_article_rate": 0.0,
+          "max_document_concentration": 0.6
+        },
+        "article_codes": [
+          "20.2.TT.1.4",
+          "20.2.LQ.18",
+          "20.2.TT.1.3",
+          "20.2.LQ.145",
+          "20.2.LQ.17",
+          "20.2.LQ.147",
+          "20.2.TT.1.5",
+          "20.2.LQ.16",
+          "20.2.TT.2.3",
+          "20.2.LQ.24"
+        ],
+        "chunk_ids": [
+          "21762c5d-f725-5d18-8e32-88299a7d2b02",
+          "66bb55e9-8b79-54a1-9a40-00289be4e062",
+          "ff586d3c-2e7e-5d15-bd60-ebf81597bed7",
+          "5f9fbf75-d1fe-541c-8080-486f2793b74a",
+          "33b34c3d-789e-551c-9e7e-239c93aa97d0",
+          "1ea0792d-0507-5802-8538-0b4b6953f08c",
+          "15de9759-8cf2-5a45-906d-76f8017125e2",
+          "5b3116f0-111d-549f-a092-5063a5d61e9b",
+          "be8377c0-ab3b-5b2c-9979-ceef1d9d5e0e",
+          "71864258-5a3a-5c94-8d6f-a6526097d670"
+        ]
+      },
+      "bounded": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 0.5,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 0.5
+        },
+        "diversity": {
+          "unique_articles": 10.0,
+          "unique_documents": 2.0,
+          "duplicate_article_rate": 0.0,
+          "max_document_concentration": 0.7
+        },
+        "article_codes": [
+          "20.2.TT.1.4",
+          "20.2.LQ.18",
+          "20.2.TT.1.3",
+          "20.2.LQ.145",
+          "20.2.LQ.17",
+          "20.2.LQ.147",
+          "20.2.LQ.16",
+          "20.2.LQ.24",
+          "20.2.TT.1.5",
+          "20.2.LQ.14"
+        ],
+        "chunk_ids": [
+          "21762c5d-f725-5d18-8e32-88299a7d2b02",
+          "66bb55e9-8b79-54a1-9a40-00289be4e062",
+          "ff586d3c-2e7e-5d15-bd60-ebf81597bed7",
+          "5f9fbf75-d1fe-541c-8080-486f2793b74a",
+          "33b34c3d-789e-551c-9e7e-239c93aa97d0",
+          "1ea0792d-0507-5802-8538-0b4b6953f08c",
+          "5b3116f0-111d-549f-a092-5063a5d61e9b",
+          "71864258-5a3a-5c94-8d6f-a6526097d670",
+          "15de9759-8cf2-5a45-906d-76f8017125e2",
+          "d7eeff8b-46f3-56f8-81ef-f3e79cb6efe0"
+        ]
+      },
+      "changed": true,
+      "entered_chunk_ids": [
+        "d7eeff8b-46f3-56f8-81ef-f3e79cb6efe0"
+      ],
+      "dropped_chunk_ids": [
+        "be8377c0-ab3b-5b2c-9979-ceef1d9d5e0e"
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_036",
+      "category": "multi_article",
+      "question": "Công ty muốn thuê một nhóm lao động làm việc thời vụ dưới 1 tháng, cho phép một người đại diện ký hợp đồng thử việc và yêu cầu cả nhóm đặt cọc tiền bảo đảm thì cách làm này có đúng quy định không và cần điều chỉnh những điểm nào?",
+      "expected_article_codes": [
+        "20.2.LQ.17",
+        "20.2.LQ.18",
+        "20.2.LQ.24"
+      ],
+      "raw": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.0,
+          "article_recall": 0.6666666666666666,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.6666666666666666,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 10.0,
+          "unique_documents": 5.0,
+          "duplicate_article_rate": 0.0,
+          "max_document_concentration": 0.4
+        },
+        "article_codes": [
+          "20.2.LQ.24",
+          "20.2.LQ.18",
+          "20.2.LQ.100",
+          "20.2.LQ.55",
+          "20.2.TT.1.3",
+          "20.2.TT.1.4",
+          "NQ66.18.PL-I.4.C.V",
+          "20.2.TT.1.5",
+          "20.2.NĐ.3.21",
+          "20.2.NĐ.6.2"
+        ],
+        "chunk_ids": [
+          "71864258-5a3a-5c94-8d6f-a6526097d670",
+          "66bb55e9-8b79-54a1-9a40-00289be4e062",
+          "3e650b1c-f8fa-5a37-9353-6955edbba0ad",
+          "88e8657c-e4d5-5a23-96b1-a4b8f1eb57f4",
+          "ff586d3c-2e7e-5d15-bd60-ebf81597bed7",
+          "21762c5d-f725-5d18-8e32-88299a7d2b02",
+          "f295f903-7006-5d4f-afdc-fa52ccaad17b",
+          "15de9759-8cf2-5a45-906d-76f8017125e2",
+          "84d8d468-e4e1-5987-8157-77ea1cca147e",
+          "da0748b0-5266-5612-a962-62e3598c9c44"
+        ]
+      },
+      "bounded": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.0,
+          "article_recall": 0.6666666666666666,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.6666666666666666,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 10.0,
+          "unique_documents": 4.0,
+          "duplicate_article_rate": 0.0,
+          "max_document_concentration": 0.4
+        },
+        "article_codes": [
+          "20.2.LQ.24",
+          "20.2.LQ.18",
+          "20.2.LQ.100",
+          "20.2.LQ.55",
+          "20.2.TT.1.3",
+          "20.2.TT.1.4",
+          "20.2.TT.1.5",
+          "NQ66.18.PL-I.4.C.V",
+          "20.2.TT.1.7",
+          "20.2.NĐ.3.21"
+        ],
+        "chunk_ids": [
+          "71864258-5a3a-5c94-8d6f-a6526097d670",
+          "66bb55e9-8b79-54a1-9a40-00289be4e062",
+          "3e650b1c-f8fa-5a37-9353-6955edbba0ad",
+          "88e8657c-e4d5-5a23-96b1-a4b8f1eb57f4",
+          "ff586d3c-2e7e-5d15-bd60-ebf81597bed7",
+          "21762c5d-f725-5d18-8e32-88299a7d2b02",
+          "15de9759-8cf2-5a45-906d-76f8017125e2",
+          "f295f903-7006-5d4f-afdc-fa52ccaad17b",
+          "3b91bfb1-e6c6-52d1-ae05-3f4101ef5169",
+          "84d8d468-e4e1-5987-8157-77ea1cca147e"
+        ]
+      },
+      "changed": true,
+      "entered_chunk_ids": [
+        "3b91bfb1-e6c6-52d1-ae05-3f4101ef5169"
+      ],
+      "dropped_chunk_ids": [
+        "da0748b0-5266-5612-a962-62e3598c9c44"
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_037",
+      "category": "multi_article",
+      "question": "Trong trường hợp hợp đồng lao động bị tuyên bố vô hiệu toàn bộ dẫn đến doanh nghiệp cho thuê lại không đủ khả năng bồi thường cho người lao động, công ty cần xử lý hợp đồng và sử dụng tiền ký quỹ theo cơ chế nào?",
+      "expected_article_codes": [
+        "20.2.LQ.51",
+        "20.2.NĐ.3.10",
+        "20.2.NĐ.3.11",
+        "NQ66.18.PL-I.4.C.V",
+        "NQ66.18.PL-I.4.C.VII",
+        "NQ66.18.PL-I.4.C.VIII"
+      ],
+      "raw": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.0,
+          "article_recall": 0.5,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.21052631578947367,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 6.0,
+          "unique_documents": 3.0,
+          "duplicate_article_rate": 0.4,
+          "max_document_concentration": 0.8
+        },
+        "article_codes": [
+          "20.2.NĐ.3.10",
+          "20.2.NĐ.3.10",
+          "20.2.NĐ.3.19",
+          "20.2.LQ.51",
+          "NQ66.18.PL-I.4.C.VIII",
+          "20.2.NĐ.3.19",
+          "20.2.NĐ.3.19",
+          "20.2.NĐ.3.15",
+          "20.2.NĐ.3.18",
+          "20.2.NĐ.3.19"
+        ],
+        "chunk_ids": [
+          "94b16cc3-d79e-5fa6-bf3c-6a1d7da2b883",
+          "1b592ba9-af3e-5f4e-be1a-8d8d7eacf374",
+          "1033f34a-2d5f-5492-b9f9-de54fa877bb7",
+          "775e1bfc-762e-52ea-86d6-213ce1ec1783",
+          "039ef8b7-bf8e-5684-a624-6c353bd253da",
+          "7a086167-6490-588f-ab46-44d1b0c05a56",
+          "54608ffd-56f2-5021-accd-79ad92e93d22",
+          "4f56c038-c6e7-5739-afd0-54a2a45fa57e",
+          "8c4551d7-153d-5ea5-8c9d-9ae9f2f8df5d",
+          "e27ca77d-47d3-5912-a332-a6e50f1e268d"
+        ]
+      },
+      "bounded": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.0,
+          "article_recall": 0.5,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.21052631578947367,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 6.0,
+          "unique_documents": 3.0,
+          "duplicate_article_rate": 0.4,
+          "max_document_concentration": 0.8
+        },
+        "article_codes": [
+          "20.2.NĐ.3.10",
+          "20.2.NĐ.3.10",
+          "20.2.NĐ.3.19",
+          "20.2.LQ.51",
+          "NQ66.18.PL-I.4.C.VIII",
+          "20.2.NĐ.3.19",
+          "20.2.NĐ.3.19",
+          "20.2.NĐ.3.15",
+          "20.2.NĐ.3.18",
+          "20.2.NĐ.3.19"
+        ],
+        "chunk_ids": [
+          "94b16cc3-d79e-5fa6-bf3c-6a1d7da2b883",
+          "1b592ba9-af3e-5f4e-be1a-8d8d7eacf374",
+          "1033f34a-2d5f-5492-b9f9-de54fa877bb7",
+          "775e1bfc-762e-52ea-86d6-213ce1ec1783",
+          "039ef8b7-bf8e-5684-a624-6c353bd253da",
+          "7a086167-6490-588f-ab46-44d1b0c05a56",
+          "54608ffd-56f2-5021-accd-79ad92e93d22",
+          "4f56c038-c6e7-5739-afd0-54a2a45fa57e",
+          "8c4551d7-153d-5ea5-8c9d-9ae9f2f8df5d",
+          "e27ca77d-47d3-5912-a332-a6e50f1e268d"
+        ]
+      },
+      "changed": false,
+      "entered_chunk_ids": [],
+      "dropped_chunk_ids": []
+    },
+    {
+      "question_id": "r2ai_gold_038",
+      "category": "multi_article",
+      "question": "Một nhân viên nữ mang thai có xác nhận của bệnh viện về việc tiếp tục làm việc sẽ ảnh hưởng xấu tới thai nhi nên muốn tạm hoãn hợp đồng, đồng thời cô ấy phản ánh công ty không cho nghỉ 30 phút mỗi ngày trong thời gian hành kinh thì công ty phải xử lý yêu cầu tạm hoãn này thế nào và rủi ro pháp lý đối với việc không cho nghỉ hành kinh là gì?",
+      "expected_article_codes": [
+        "20.2.LQ.137",
+        "20.2.LQ.138",
+        "20.2.NĐ.3.80"
+      ],
+      "raw": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.625,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 8.0,
+          "unique_documents": 3.0,
+          "duplicate_article_rate": 0.19999999999999996,
+          "max_document_concentration": 0.5
+        },
+        "article_codes": [
+          "20.2.LQ.138",
+          "20.2.NĐ.3.80",
+          "20.2.LQ.30",
+          "20.2.LQ.137",
+          "20.2.LQ.139",
+          "20.2.NĐ.3.80",
+          "20.2.NĐ.3.80",
+          "20.2.TT.2.11",
+          "20.2.NĐ.3.109",
+          "20.2.NĐ.3.89"
+        ],
+        "chunk_ids": [
+          "80a0d1d0-7df3-5b1b-b1eb-0805e735e518",
+          "48900dd9-350c-5713-89ce-ff2b65b9b6f2",
+          "16ccfe28-10fb-5967-9463-9069796b514f",
+          "beeaf23f-a054-51c6-bcb6-eaa6a028c0e3",
+          "d0d33541-efbf-5f7f-850f-8f7c8cd2e164",
+          "01259c67-4a72-572a-8a29-5f649b96b129",
+          "240ca392-e545-5680-ab4c-8e021ecae4ca",
+          "e433a487-f9a9-50c6-ab05-7d82e1b4bab0",
+          "0d8587dc-21ca-5cdf-8d97-30ad82dea127",
+          "e2bb8871-4d8d-5a64-ac00-45de30088b42"
+        ]
+      },
+      "bounded": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.625,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 8.0,
+          "unique_documents": 2.0,
+          "duplicate_article_rate": 0.19999999999999996,
+          "max_document_concentration": 0.5
+        },
+        "article_codes": [
+          "20.2.LQ.138",
+          "20.2.NĐ.3.80",
+          "20.2.LQ.30",
+          "20.2.LQ.137",
+          "20.2.LQ.139",
+          "20.2.NĐ.3.80",
+          "20.2.NĐ.3.80",
+          "20.2.NĐ.3.109",
+          "20.2.NĐ.3.89",
+          "20.2.LQ.37"
+        ],
+        "chunk_ids": [
+          "80a0d1d0-7df3-5b1b-b1eb-0805e735e518",
+          "48900dd9-350c-5713-89ce-ff2b65b9b6f2",
+          "16ccfe28-10fb-5967-9463-9069796b514f",
+          "beeaf23f-a054-51c6-bcb6-eaa6a028c0e3",
+          "d0d33541-efbf-5f7f-850f-8f7c8cd2e164",
+          "01259c67-4a72-572a-8a29-5f649b96b129",
+          "240ca392-e545-5680-ab4c-8e021ecae4ca",
+          "0d8587dc-21ca-5cdf-8d97-30ad82dea127",
+          "e2bb8871-4d8d-5a64-ac00-45de30088b42",
+          "c17372aa-1a9e-507a-8978-beb4b96c7a1a"
+        ]
+      },
+      "changed": true,
+      "entered_chunk_ids": [
+        "c17372aa-1a9e-507a-8978-beb4b96c7a1a"
+      ],
+      "dropped_chunk_ids": [
+        "e433a487-f9a9-50c6-ab05-7d82e1b4bab0"
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_040",
+      "category": "multi_article",
+      "question": "Công ty có nhân viên làm việc không trọn thời gian vừa hết thời hạn tạm hoãn hợp đồng nhưng hiện đang nuôi con dưới 12 tháng tuổi thì công ty phải xử lý việc nhận lại và quyền đơn phương chấm dứt hợp đồng với nhân viên này như thế nào?",
+      "expected_article_codes": [
+        "20.2.LQ.31",
+        "20.2.LQ.32",
+        "20.2.LQ.37",
+        "20.2.LQ.137"
+      ],
+      "raw": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 10.0,
+          "unique_documents": 2.0,
+          "duplicate_article_rate": 0.0,
+          "max_document_concentration": 0.9
+        },
+        "article_codes": [
+          "20.2.LQ.137",
+          "20.2.LQ.31",
+          "20.2.LQ.138",
+          "20.2.LQ.30",
+          "20.2.LQ.128",
+          "20.2.NĐ.3.80",
+          "20.2.LQ.36",
+          "20.2.LQ.37",
+          "20.2.LQ.32",
+          "20.2.LQ.41"
+        ],
+        "chunk_ids": [
+          "beeaf23f-a054-51c6-bcb6-eaa6a028c0e3",
+          "95f91be0-a805-5406-85ff-0aae2b0022d4",
+          "80a0d1d0-7df3-5b1b-b1eb-0805e735e518",
+          "16ccfe28-10fb-5967-9463-9069796b514f",
+          "20d81f9d-06e0-5c42-ab45-63a9adfa45c9",
+          "240ca392-e545-5680-ab4c-8e021ecae4ca",
+          "25dd9a57-f47f-52d8-9bb0-e2456c6c250e",
+          "c17372aa-1a9e-507a-8978-beb4b96c7a1a",
+          "48fb511d-393b-5813-a82c-477131e2a966",
+          "86488093-7eef-59e0-be01-00bb86e69912"
+        ]
+      },
+      "bounded": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 1.0,
+          "article_recall": 1.0,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 1.0,
+          "evidence_recall": 1.0,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 10.0,
+          "unique_documents": 1.0,
+          "duplicate_article_rate": 0.0,
+          "max_document_concentration": 1.0
+        },
+        "article_codes": [
+          "20.2.LQ.137",
+          "20.2.LQ.31",
+          "20.2.LQ.138",
+          "20.2.LQ.30",
+          "20.2.LQ.128",
+          "20.2.LQ.36",
+          "20.2.LQ.37",
+          "20.2.LQ.32",
+          "20.2.LQ.41",
+          "20.2.LQ.35"
+        ],
+        "chunk_ids": [
+          "beeaf23f-a054-51c6-bcb6-eaa6a028c0e3",
+          "95f91be0-a805-5406-85ff-0aae2b0022d4",
+          "80a0d1d0-7df3-5b1b-b1eb-0805e735e518",
+          "16ccfe28-10fb-5967-9463-9069796b514f",
+          "20d81f9d-06e0-5c42-ab45-63a9adfa45c9",
+          "25dd9a57-f47f-52d8-9bb0-e2456c6c250e",
+          "c17372aa-1a9e-507a-8978-beb4b96c7a1a",
+          "48fb511d-393b-5813-a82c-477131e2a966",
+          "86488093-7eef-59e0-be01-00bb86e69912",
+          "30e47943-f89a-57e7-8ff1-7d93d86b23ed"
+        ]
+      },
+      "changed": true,
+      "entered_chunk_ids": [
+        "30e47943-f89a-57e7-8ff1-7d93d86b23ed"
+      ],
+      "dropped_chunk_ids": [
+        "240ca392-e545-5680-ab4c-8e021ecae4ca"
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_042",
+      "category": "multi_article",
+      "question": "Công ty đang tái cơ cấu tổ chức dẫn đến nhiều người mất việc, đối với những nhân viên đang tạm hoãn hợp đồng hoặc đang làm việc không trọn thời gian thì công ty phải xử lý việc nhận lại và cho thôi việc như thế nào để đúng luật?",
+      "expected_article_codes": [
+        "20.2.LQ.31",
+        "20.2.LQ.32",
+        "20.2.LQ.42",
+        "20.2.LQ.44",
+        "20.2.LQ.47"
+      ],
+      "raw": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.0,
+          "article_recall": 0.2,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.2,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 10.0,
+          "unique_documents": 3.0,
+          "duplicate_article_rate": 0.0,
+          "max_document_concentration": 0.4
+        },
+        "article_codes": [
+          "20.2.LQ.31",
+          "20.2.LQ.30",
+          "20.2.LQ.41",
+          "20.2.NĐ.3.10",
+          "20.2.NĐ.6.10",
+          "20.2.NĐ.6.9",
+          "20.2.NĐ.6.2",
+          "20.2.LQ.128",
+          "20.2.NĐ.3.29",
+          "20.2.NĐ.3.8"
+        ],
+        "chunk_ids": [
+          "95f91be0-a805-5406-85ff-0aae2b0022d4",
+          "16ccfe28-10fb-5967-9463-9069796b514f",
+          "86488093-7eef-59e0-be01-00bb86e69912",
+          "1b592ba9-af3e-5f4e-be1a-8d8d7eacf374",
+          "3fbedeb2-2c89-5de0-8196-06908dc97f51",
+          "6a1ea8ed-3e8a-5f0e-8b75-ea0e3591e2e2",
+          "da0748b0-5266-5612-a962-62e3598c9c44",
+          "20d81f9d-06e0-5c42-ab45-63a9adfa45c9",
+          "cf9b8866-07fe-535a-b244-6817ffe351f9",
+          "7be30046-ca25-5375-b5be-959f7316abf2"
+        ]
+      },
+      "bounded": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.0,
+          "article_recall": 0.4,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.4,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 10.0,
+          "unique_documents": 3.0,
+          "duplicate_article_rate": 0.0,
+          "max_document_concentration": 0.5
+        },
+        "article_codes": [
+          "20.2.LQ.31",
+          "20.2.LQ.30",
+          "20.2.LQ.41",
+          "20.2.NĐ.3.10",
+          "20.2.NĐ.6.10",
+          "20.2.LQ.128",
+          "20.2.NĐ.6.9",
+          "20.2.LQ.42",
+          "20.2.NĐ.6.2",
+          "20.2.NĐ.3.29"
+        ],
+        "chunk_ids": [
+          "95f91be0-a805-5406-85ff-0aae2b0022d4",
+          "16ccfe28-10fb-5967-9463-9069796b514f",
+          "86488093-7eef-59e0-be01-00bb86e69912",
+          "1b592ba9-af3e-5f4e-be1a-8d8d7eacf374",
+          "3fbedeb2-2c89-5de0-8196-06908dc97f51",
+          "20d81f9d-06e0-5c42-ab45-63a9adfa45c9",
+          "6a1ea8ed-3e8a-5f0e-8b75-ea0e3591e2e2",
+          "1f975c88-a8e6-5aca-b073-4e320fb93eee",
+          "da0748b0-5266-5612-a962-62e3598c9c44",
+          "cf9b8866-07fe-535a-b244-6817ffe351f9"
+        ]
+      },
+      "changed": true,
+      "entered_chunk_ids": [
+        "1f975c88-a8e6-5aca-b073-4e320fb93eee"
+      ],
+      "dropped_chunk_ids": [
+        "7be30046-ca25-5375-b5be-959f7316abf2"
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_043",
+      "category": "multi_article",
+      "question": "Trong trường hợp hợp đồng lao động bị tuyên bố vô hiệu toàn bộ, công ty cần xử lý việc ký lại hợp đồng như thế nào, cách tính lương cho những ngày nghỉ lễ tết của nhân viên trong giai đoạn này ra sao và tiêu chuẩn thiết lập phòng vắt sữa mẹ tại nơi làm việc cho lao động nữ là gì?",
+      "expected_article_codes": [
+        "20.2.NĐ.3.10",
+        "20.2.NĐ.3.11",
+        "20.2.LQ.112",
+        "20.2.NĐ.3.67",
+        "20.2.NĐ.3.76",
+        "20.2.NĐ.3.80"
+      ],
+      "raw": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.0,
+          "article_recall": 0.5,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.35714285714285715,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 7.0,
+          "unique_documents": 2.0,
+          "duplicate_article_rate": 0.30000000000000004,
+          "max_document_concentration": 0.7
+        },
+        "article_codes": [
+          "20.2.NĐ.3.10",
+          "20.2.NĐ.3.10",
+          "20.2.NĐ.3.10",
+          "20.2.NĐ.3.11",
+          "20.2.NĐ.3.80",
+          "20.2.NĐ.3.9",
+          "20.2.LQ.137",
+          "20.2.LQ.51",
+          "20.2.NĐ.3.9",
+          "20.2.LQ.88"
+        ],
+        "chunk_ids": [
+          "1b592ba9-af3e-5f4e-be1a-8d8d7eacf374",
+          "94b16cc3-d79e-5fa6-bf3c-6a1d7da2b883",
+          "6ce39945-08b5-5190-b2a0-053ba6c8fc12",
+          "99fbb0af-0c7b-569d-8f85-4cfbbac77413",
+          "49bf1a3b-b126-51a1-a9c5-ace1fce6e771",
+          "7b405487-be52-5587-b08c-71ee48efa7db",
+          "beeaf23f-a054-51c6-bcb6-eaa6a028c0e3",
+          "775e1bfc-762e-52ea-86d6-213ce1ec1783",
+          "c07d6cf7-6c3e-5fef-8531-f1570e42329d",
+          "79e8de1a-51bc-565e-921f-4058028c5309"
+        ]
+      },
+      "bounded": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.0,
+          "article_recall": 0.5,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.42857142857142855,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 6.0,
+          "unique_documents": 2.0,
+          "duplicate_article_rate": 0.4,
+          "max_document_concentration": 0.8
+        },
+        "article_codes": [
+          "20.2.NĐ.3.10",
+          "20.2.NĐ.3.10",
+          "20.2.NĐ.3.10",
+          "20.2.NĐ.3.11",
+          "20.2.NĐ.3.80",
+          "20.2.NĐ.3.9",
+          "20.2.NĐ.3.9",
+          "20.2.NĐ.3.80",
+          "20.2.LQ.137",
+          "20.2.LQ.51"
+        ],
+        "chunk_ids": [
+          "1b592ba9-af3e-5f4e-be1a-8d8d7eacf374",
+          "94b16cc3-d79e-5fa6-bf3c-6a1d7da2b883",
+          "6ce39945-08b5-5190-b2a0-053ba6c8fc12",
+          "99fbb0af-0c7b-569d-8f85-4cfbbac77413",
+          "49bf1a3b-b126-51a1-a9c5-ace1fce6e771",
+          "7b405487-be52-5587-b08c-71ee48efa7db",
+          "c07d6cf7-6c3e-5fef-8531-f1570e42329d",
+          "2f1a9719-4a6d-5984-bfb8-6333c2796a9b",
+          "beeaf23f-a054-51c6-bcb6-eaa6a028c0e3",
+          "775e1bfc-762e-52ea-86d6-213ce1ec1783"
+        ]
+      },
+      "changed": true,
+      "entered_chunk_ids": [
+        "2f1a9719-4a6d-5984-bfb8-6333c2796a9b"
+      ],
+      "dropped_chunk_ids": [
+        "79e8de1a-51bc-565e-921f-4058028c5309"
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_044",
+      "category": "multi_article",
+      "question": "Công ty đang thực hiện sáp nhập và ảnh hưởng đến nhiều nhân sự, trong đó có một nhân viên đang tạm hoãn hợp đồng và một nhân viên làm việc không trọn thời gian, thì công ty phải xử lý phương án sử dụng lao động và quyền lợi cho hai nhóm này như thế nào?",
+      "expected_article_codes": [
+        "20.2.LQ.30",
+        "20.2.LQ.31",
+        "20.2.LQ.32",
+        "20.2.LQ.43",
+        "20.2.LQ.44",
+        "20.2.LQ.47"
+      ],
+      "raw": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.0,
+          "article_recall": 0.6666666666666666,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.6666666666666666,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 10.0,
+          "unique_documents": 2.0,
+          "duplicate_article_rate": 0.0,
+          "max_document_concentration": 0.7
+        },
+        "article_codes": [
+          "20.2.LQ.43",
+          "20.2.LQ.30",
+          "20.2.LQ.80",
+          "20.2.LQ.32",
+          "20.2.LQ.44",
+          "20.2.LQ.138",
+          "20.2.NĐ.6.13",
+          "20.2.LQ.128",
+          "20.2.NĐ.6.2",
+          "20.2.NĐ.6.1"
+        ],
+        "chunk_ids": [
+          "75fb37df-0043-5627-87d5-36c7077decdf",
+          "16ccfe28-10fb-5967-9463-9069796b514f",
+          "a9715e15-bf2d-5bc9-9d8a-c210fa19bbc3",
+          "48fb511d-393b-5813-a82c-477131e2a966",
+          "965d441b-130d-58db-a34d-97aec12c9ccb",
+          "80a0d1d0-7df3-5b1b-b1eb-0805e735e518",
+          "98f6beba-f595-552a-b403-7a54873c4c99",
+          "20d81f9d-06e0-5c42-ab45-63a9adfa45c9",
+          "da0748b0-5266-5612-a962-62e3598c9c44",
+          "4d6b0e20-ae7d-53a2-928f-ade1e1a706fe"
+        ]
+      },
+      "bounded": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.0,
+          "article_recall": 0.8333333333333334,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.8333333333333334,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 10.0,
+          "unique_documents": 2.0,
+          "duplicate_article_rate": 0.0,
+          "max_document_concentration": 0.9
+        },
+        "article_codes": [
+          "20.2.LQ.43",
+          "20.2.LQ.30",
+          "20.2.LQ.80",
+          "20.2.LQ.32",
+          "20.2.LQ.44",
+          "20.2.LQ.138",
+          "20.2.LQ.128",
+          "20.2.LQ.81",
+          "20.2.NĐ.6.13",
+          "20.2.LQ.31"
+        ],
+        "chunk_ids": [
+          "75fb37df-0043-5627-87d5-36c7077decdf",
+          "16ccfe28-10fb-5967-9463-9069796b514f",
+          "a9715e15-bf2d-5bc9-9d8a-c210fa19bbc3",
+          "48fb511d-393b-5813-a82c-477131e2a966",
+          "965d441b-130d-58db-a34d-97aec12c9ccb",
+          "80a0d1d0-7df3-5b1b-b1eb-0805e735e518",
+          "20d81f9d-06e0-5c42-ab45-63a9adfa45c9",
+          "b8f57592-682a-5b7a-b0eb-505b94cb56a8",
+          "98f6beba-f595-552a-b403-7a54873c4c99",
+          "95f91be0-a805-5406-85ff-0aae2b0022d4"
+        ]
+      },
+      "changed": true,
+      "entered_chunk_ids": [
+        "b8f57592-682a-5b7a-b0eb-505b94cb56a8",
+        "95f91be0-a805-5406-85ff-0aae2b0022d4"
+      ],
+      "dropped_chunk_ids": [
+        "da0748b0-5266-5612-a962-62e3598c9c44",
+        "4d6b0e20-ae7d-53a2-928f-ade1e1a706fe"
+      ]
+    },
+    {
+      "question_id": "r2ai_gold_045",
+      "category": "multi_article",
+      "question": "Công ty vận hành hệ thống đường ống phân phối khí ký hợp đồng lao động sai thẩm quyền dẫn đến bị tuyên bố vô hiệu toàn bộ, vậy việc xử lý hợp đồng này, cách tính lương cho những ngày nghỉ lễ tết và quyền lợi về thời giờ làm việc đặc thù của nhân viên sẽ được thực hiện như thế nào?",
+      "expected_article_codes": [
+        "20.2.NĐ.3.10",
+        "20.2.LQ.112",
+        "20.2.NĐ.3.67",
+        "20.2.TT.6.2",
+        "20.2.TT.6.4",
+        "20.2.TT.6.5",
+        "20.2.TT.6.7",
+        "20.2.TT.6.8"
+      ],
+      "raw": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.0,
+          "article_recall": 0.25,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.45454545454545453,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 6.0,
+          "unique_documents": 3.0,
+          "duplicate_article_rate": 0.4,
+          "max_document_concentration": 0.7
+        },
+        "article_codes": [
+          "20.2.NĐ.3.10",
+          "20.2.NĐ.3.10",
+          "20.2.NĐ.3.9",
+          "20.2.NĐ.3.10",
+          "20.2.TT.6.2",
+          "20.2.LQ.88",
+          "20.2.NĐ.3.9",
+          "20.2.NĐ.3.10",
+          "20.2.NĐ.3.11",
+          "20.2.LQ.51"
+        ],
+        "chunk_ids": [
+          "1b592ba9-af3e-5f4e-be1a-8d8d7eacf374",
+          "6ce39945-08b5-5190-b2a0-053ba6c8fc12",
+          "c07d6cf7-6c3e-5fef-8531-f1570e42329d",
+          "a92ddc35-e5bb-56b1-95a6-2b957e5f393a",
+          "795c5663-ca36-55f3-958b-d684a04c20d9",
+          "79e8de1a-51bc-565e-921f-4058028c5309",
+          "7b405487-be52-5587-b08c-71ee48efa7db",
+          "94b16cc3-d79e-5fa6-bf3c-6a1d7da2b883",
+          "99fbb0af-0c7b-569d-8f85-4cfbbac77413",
+          "775e1bfc-762e-52ea-86d6-213ce1ec1783"
+        ]
+      },
+      "bounded": {
+        "metrics": {
+          "any_article_hit": 1.0,
+          "all_article_hit": 0.0,
+          "article_recall": 0.375,
+          "article_mrr": 1.0,
+          "any_evidence_hit": 1.0,
+          "all_evidence_hit": 0.0,
+          "evidence_recall": 0.5454545454545454,
+          "evidence_mrr": 1.0
+        },
+        "diversity": {
+          "unique_articles": 6.0,
+          "unique_documents": 3.0,
+          "duplicate_article_rate": 0.4,
+          "max_document_concentration": 0.8
+        },
+        "article_codes": [
+          "20.2.NĐ.3.10",
+          "20.2.NĐ.3.10",
+          "20.2.NĐ.3.9",
+          "20.2.NĐ.3.10",
+          "20.2.TT.6.2",
+          "20.2.NĐ.3.9",
+          "20.2.NĐ.3.10",
+          "20.2.NĐ.3.11",
+          "20.2.NĐ.3.67",
+          "20.2.LQ.88"
+        ],
+        "chunk_ids": [
+          "1b592ba9-af3e-5f4e-be1a-8d8d7eacf374",
+          "6ce39945-08b5-5190-b2a0-053ba6c8fc12",
+          "c07d6cf7-6c3e-5fef-8531-f1570e42329d",
+          "a92ddc35-e5bb-56b1-95a6-2b957e5f393a",
+          "795c5663-ca36-55f3-958b-d684a04c20d9",
+          "7b405487-be52-5587-b08c-71ee48efa7db",
+          "94b16cc3-d79e-5fa6-bf3c-6a1d7da2b883",
+          "99fbb0af-0c7b-569d-8f85-4cfbbac77413",
+          "06444bdd-be81-5f77-99f2-188891020052",
+          "79e8de1a-51bc-565e-921f-4058028c5309"
+        ]
+      },
+      "changed": true,
+      "entered_chunk_ids": [
+        "06444bdd-be81-5f77-99f2-188891020052"
+      ],
+      "dropped_chunk_ids": [
+        "775e1bfc-762e-52ea-86d6-213ce1ec1783"
+      ]
+    }
+  ]
+}

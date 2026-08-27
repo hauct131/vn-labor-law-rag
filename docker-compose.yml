@@ -47,6 +47,8 @@ services:
       RETRIEVAL_CORPUS_SHA256: fdbec539efbfb3f4aa3cb3962046321e3a402150d93516ef4256934972c70307
       RETRIEVAL_TOP_K: "5"
       RETRIEVAL_CANDIDATE_K: "30"
+      GENERATION_CONTEXT_K: "10"
+      OPENROUTER_RETRY_MAX_TOKENS: "2000"
       HYBRID_RRF_K: "60"
       HYBRID_DENSE_WEIGHT: "0.9"
       HYBRID_SPARSE_WEIGHT: "0.1"
@@ -63,6 +65,9 @@ services:
       - ./data:/app/data:ro
       - "${VNCORENLP_HOST_DIR:-./models/vncorenlp}:/app/models/vncorenlp:ro"
       - fastembed_cache:/root/.cache/fastembed
+
+
+
 
   runtime-assets:
     profiles:
