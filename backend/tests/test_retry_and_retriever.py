@@ -66,6 +66,20 @@ def test_bounded_reranking_preserves_top5_and_caps_boost():
         assert boost is not None and boost <= 1.25
 
 
+def test_bounded_reranking_boost_parameters():
+    """Verify selected defaults and reject invalid bounded-boost parameters."""
+    assert select_generation_context.__kwdefaults__ == {
+        "boost_step": 0.025,
+        "boost_cap": 1.25,
+    }
+
+    with pytest.raises(ValueError, match="boost_step"):
+        select_generation_context([], generation_context_k=10, boost_step=-0.001)
+
+    with pytest.raises(ValueError, match="boost_cap"):
+        select_generation_context([], generation_context_k=10, boost_cap=0.99)
+
+
 def test_rag_service_length_retry():
     """Verify RAGService retries on provider_finish_reason_length with higher max_tokens."""
     async def _run():

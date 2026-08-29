@@ -198,6 +198,8 @@ def main() -> None:
     parser.add_argument("--rrf-k", type=int, default=60)
     parser.add_argument("--dense-weight", type=float, default=0.9)
     parser.add_argument("--sparse-weight", type=float, default=0.1)
+    parser.add_argument("--boost-step", type=float, default=0.025)
+    parser.add_argument("--boost-cap", type=float, default=1.25)
     args = parser.parse_args()
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
@@ -245,6 +247,8 @@ def main() -> None:
         selected = select_generation_context(
             pool,
             generation_context_k=args.context_k,
+            boost_step=args.boost_step,
+            boost_cap=args.boost_cap,
         )
 
         raw_ids = [hit.chunk_id for hit in raw]
@@ -339,6 +343,8 @@ def main() -> None:
             "rrf_k": args.rrf_k,
             "dense_weight": args.dense_weight,
             "sparse_weight": args.sparse_weight,
+            "boost_step": args.boost_step,
+            "boost_cap": args.boost_cap,
         },
         "variants": {
             "raw": "Weighted-RRF candidate pool top generation_context_k",

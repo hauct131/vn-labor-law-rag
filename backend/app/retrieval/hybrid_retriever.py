@@ -102,13 +102,20 @@ def select_generation_context(
     hits: Sequence[RetrievalHit],
     *,
     generation_context_k: int,
+    boost_step: float = 0.025,
+    boost_cap: float = 1.25,
 ) -> list[RetrievalHit]:
     """Select the top generation_context_k hits from the fused candidate pool using bounded metadata reranking.
 
     Rule 3: Preserve fused ranks 1..5 exactly. Only slots 6..10 may be reranked.
-    Rule 4: Bounded boost: cluster_boost = min(1.0 + 0.05 * consensus_units, 1.25).
+    Rule 4: Bounded boost: cluster_boost = min(1.0 + 0.025 * consensus_units, 1.25).
             selection_score = rrf_score * cluster_boost.
     """
+    if boost_step < 0:
+        raise ValueError("boost_step must be greater than or equal to 0")
+    if boost_cap < 1.0:
+        raise ValueError("boost_cap must be greater than or equal to 1.0")
+
     if not hits:
         return []
     limit = max(1, generation_context_k)
@@ -160,8 +167,10 @@ def select_generation_context(
             continue
         doc_key = get_stable_document_key(hit.payload)
         consensus_units = doc_counts.get(doc_key, 0)
-        # Mandatory Rule 4: cluster_boost = min(1.0 + 0.05 * consensus_units, 1.25)
-        cluster_boost = min(1.0 + 0.05 * consensus_units, 1.25)
+        cluster_boost = min(
+            1.0 + boost_step * consensus_units,
+            boost_cap,
+        )
         selection_score = float(hit.score) * cluster_boost
         remaining_candidates.append(
             (selection_score, fused_rank, hit.chunk_id, hit, doc_key, cluster_boost)

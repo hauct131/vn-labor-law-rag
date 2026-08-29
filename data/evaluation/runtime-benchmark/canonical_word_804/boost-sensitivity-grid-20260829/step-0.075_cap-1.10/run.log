@@ -1,0 +1,51 @@
+2026-08-30 00:07:51 INFO  WordSegmenter:24 - Loading Word Segmentation model
+/media/hao/Data/vn-labor-law-rag-verified-e4a39ba/backend/app/retrieval/dense_component.py:127: UserWarning: The model intfloat/multilingual-e5-large now uses mean pooling instead of CLS embedding. In order to preserve the previous behaviour, consider either pinning fastembed version to 0.5.1 or using `add_custom_model` functionality.
+  self._embedding_model = TextEmbedding(**kwargs)
+{
+  "raw": {
+    "any_article_hit": 1.0,
+    "all_article_hit": 0.741935,
+    "article_recall": 0.872043,
+    "article_mrr": 0.922043,
+    "any_evidence_hit": 1.0,
+    "all_evidence_hit": 0.645161,
+    "evidence_recall": 0.823028,
+    "evidence_mrr": 0.922043,
+    "unique_articles": 8.548387,
+    "unique_documents": 3.419355,
+    "duplicate_article_rate": 0.145161,
+    "max_document_concentration": 0.593548
+  },
+  "bounded": {
+    "any_article_hit": 1.0,
+    "all_article_hit": 0.741935,
+    "article_recall": 0.872043,
+    "article_mrr": 0.922043,
+    "any_evidence_hit": 1.0,
+    "all_evidence_hit": 0.645161,
+    "evidence_recall": 0.823028,
+    "evidence_mrr": 0.922043,
+    "unique_articles": 8.548387,
+    "unique_documents": 3.290323,
+    "duplicate_article_rate": 0.145161,
+    "max_document_concentration": 0.596774
+  },
+  "delta": {
+    "any_article_hit": 0.0,
+    "all_article_hit": 0.0,
+    "article_recall": 0.0,
+    "article_mrr": 0.0,
+    "any_evidence_hit": 0.0,
+    "all_evidence_hit": 0.0,
+    "evidence_recall": 0.0,
+    "evidence_mrr": 0.0,
+    "unique_articles": 0.0,
+    "unique_documents": -0.129032,
+    "duplicate_article_rate": 0.0,
+    "max_document_concentration": 0.003226
+  },
+  "changed_context_count": 12,
+  "top5_preservation_violations": 0,
+  "article_recall_improved": 0,
+  "article_recall_regressed": 0
+}
