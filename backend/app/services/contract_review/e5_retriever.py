@@ -176,6 +176,19 @@ class E5ClauseRetriever:
                 _to_vector(vector)
             )
 
+    def prepare_queries(
+        self,
+        categories: Iterable[str],
+    ) -> None:
+        """
+        Precompute/cache fixed category query embeddings.
+
+        Useful when measuring warm online retrieval separately
+        from query-embedding preparation.
+        """
+        for category in categories:
+            self._query_vector(category)
+
     def _query_vector(
         self,
         category: str,
