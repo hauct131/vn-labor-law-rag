@@ -223,7 +223,7 @@ def _paragraphs(text: str) -> list[str]:
 
 
 def _is_negated_probation_mention(plain: str) -> bool:
-    """Reject labels that only say a probation clause does not exist."""
+    """Return whether the contract explicitly states that probation is not applied."""
     patterns = (
         r"\bkhong\s+co\s+(?:dieu\s+khoan|thoa\s+thuan)\s+thu\s+viec\b",
         r"\bkhong\s+ap\s+dung(?:\s+(?:che\s+do|dieu\s+khoan))?\s+thu\s+viec\b",
@@ -231,6 +231,15 @@ def _is_negated_probation_mention(plain: str) -> bool:
         r"\bkhong\s+(?:phai\s+)?thu\s+viec\b",
     )
     return any(re.search(pattern, plain) for pattern in patterns)
+
+
+def _is_contract_section_heading(value: str) -> bool:
+    plain = _ascii(value)
+    return (
+        bool(re.match(r"^dieu\s+\d+[.:]", plain))
+        and len(re.findall(r"\d+", plain)) == 1
+        and len(value) < 120
+    )
 
 
 def _excerpt_for(rule: CategoryRule, paragraphs: list[str]) -> str:
@@ -241,8 +250,6 @@ def _excerpt_for(rule: CategoryRule, paragraphs: list[str]) -> str:
         term_hits = sum(1 for term in rule.terms if _ascii(term) in plain)
         if term_hits == 0:
             continue
-        if rule.key == "probation" and _is_negated_probation_mention(plain):
-            continue
         if rule.key == "salary" and "thu viec" in plain:
             continue
         score = term_hits * 4
@@ -252,7 +259,7 @@ def _excerpt_for(rule: CategoryRule, paragraphs: list[str]) -> str:
         if rule.key == "salary":
             if re.search(r"\d[\d. ,]{3,}\s*(?:dong|vnd)\b", plain):
                 score += 8
-            if re.search(r"\btra\b.{0,40}\bngay\b|\bngay\b.{0,40}\btra\b", plain):
+            if _has_pay_date(paragraph):
                 score += 4
         if re.search(r"\d", paragraph):
             score += 2
@@ -264,21 +271,49 @@ def _excerpt_for(rule: CategoryRule, paragraphs: list[str]) -> str:
         return ""
     scored.sort(key=lambda item: (-item[0], item[1]))
     index = scored[0][1]
-    parts = [paragraphs[index]]
-    plain_heading = _ascii(paragraphs[index])
-    is_article_heading = (
-        bool(re.match(r"^dieu\s+\d+[.:]", plain_heading))
-        and len(re.findall(r"\d+", plain_heading)) == 1
-        and len(paragraphs[index]) < 120
-    )
-    if is_article_heading and index + 1 < len(paragraphs):
-        parts.append(paragraphs[index + 1])
+
+    # Include the complete numbered contract section so DOCX table rows and
+    # sibling paragraphs remain available to the deterministic detectors.
+    section_start: int | None = None
+    for candidate_index in range(index, -1, -1):
+        candidate = paragraphs[candidate_index]
+        if not _is_contract_section_heading(candidate):
+            continue
+        heading_plain = _ascii(candidate)
+        if any(_ascii(term) in heading_plain for term in rule.terms):
+            section_start = candidate_index
+        break
+
+    if section_start is None:
+        return paragraphs[index][:1600]
+
+    parts: list[str] = []
+    for candidate_index in range(section_start, len(paragraphs)):
+        candidate = paragraphs[candidate_index]
+        if candidate_index > section_start and _is_contract_section_heading(candidate):
+            break
+        parts.append(candidate)
+        if len("\n".join(parts)) >= 1600:
+            break
     return "\n".join(parts)[:1600]
 
 
 def _plain_text(value: str) -> str:
     """Normalize accents and whitespace while preserving semantic distance."""
     return re.sub(r"\s+", " ", _ascii(value)).strip()
+
+
+def _has_pay_date(value: str) -> bool:
+    plain = _plain_text(value)
+    payment_phrase = r"(?:tra(?:\s+luong)?|thanh\s+toan|chi\s+tra)"
+    day_of_month = r"(?:0?[1-9]|[12]\d|3[01])"
+    return bool(
+        re.search(
+            rf"\b{payment_phrase}\b.{{0,100}}\bngay\s+{day_of_month}\b"
+            rf"|\bngay\s+{day_of_month}\b.{{0,100}}\b{payment_phrase}\b",
+            plain,
+        )
+    )
 
 
 def _unit_numbers(patterns: tuple[str, ...], value: str) -> list[int]:
@@ -347,16 +382,108 @@ def _analysis(
 
     plain_excerpt = _ascii(excerpt)
     if rule.key == "probation":
+        if _is_negated_probation_mention(plain_excerpt):
+            return (
+                "info",
+                f"Hợp đồng xác nhận không áp dụng thử việc. Không phát hiện thời hạn "
+                f"hoặc mức lương thử việc cần đối chiếu theo {markers}.",
+                "supported",
+            )
+
+        plain_full_text = _plain_text(full_text)
+        enterprise_manager = any(
+            marker in plain_full_text
+            for marker in (
+                "nguoi quan ly doanh nghiep",
+                "tong giam doc",
+                "giam doc doanh nghiep",
+            )
+        )
         value = _number_near_anchors(
             excerpt,
             anchors=("thu viec", "thoi gian thu"),
             number_pattern=r"\b(?P<value>\d{1,3})\s*ngay\b",
         )
-        if value is None:
+        months = _number_near_anchors(
+            excerpt,
+            anchors=("thu viec", "thoi gian thu"),
+            number_pattern=r"\b(?P<value>\d{1,2})\s*thang\b",
+        )
+        salary_percent = _number_near_anchors(
+            excerpt,
+            anchors=("luong thu viec", "luong trong thoi gian thu viec", "muc luong"),
+            number_pattern=r"\b(?P<value>\d{1,3})\s*(?:%|phan\s+tram\b)",
+            max_distance=120,
+        )
+        duration_warning = (
+            (value is not None and value > 60)
+            or (months is not None and months >= 3)
+        ) and not enterprise_manager
+        if salary_percent is not None and salary_percent < 85:
+            duration_text = (
+                f"thời gian thử việc {value} ngày và "
+                if value is not None
+                else f"thời gian thử việc {months} tháng và "
+                if months is not None
+                else ""
+            )
+            duration_note = (
+                " Thời lượng thử việc cũng có dấu hiệu vượt giới hạn thường áp dụng "
+                "cho vị trí không phải người quản lý doanh nghiệp."
+                if duration_warning
+                else ""
+            )
+            return (
+                "warning",
+                f"Điều khoản ghi {duration_text}mức lương thử việc bằng {salary_percent}% "
+                f"lương theo công việc, thấp hơn mức 85% cần đối chiếu."
+                f"{duration_note} Cần ưu tiên kiểm tra theo {markers}.",
+                "supported",
+            )
+        if value is None and months is None:
             return (
                 "attention",
                 f"Hợp đồng có điều khoản thử việc nhưng chưa thể xác định chắc chắn thời lượng. "
                 f"Cần đối chiếu nhóm công việc và mức lương thử việc với {markers}.",
+                "supported",
+            )
+        if value is None and months is not None:
+            requires_degree = any(
+                marker in plain_full_text
+                for marker in (
+                    "tot nghiep dai hoc",
+                    "trinh do dai hoc",
+                    "trinh do cao dang",
+                    "tu cao dang tro len",
+                )
+            )
+            if months > 6:
+                return (
+                    "warning",
+                    f"Điều khoản ghi thời gian thử việc {months} tháng, dài hơn ngưỡng tối đa "
+                    f"thường áp dụng kể cả với người quản lý doanh nghiệp. Cần ưu tiên kiểm tra theo {markers}.",
+                    "supported",
+                )
+            if months >= 3 and requires_degree and not enterprise_manager:
+                return (
+                    "warning",
+                    f"Điều khoản ghi thời gian thử việc {months} tháng cho vị trí yêu cầu trình độ "
+                    f"cao đẳng hoặc đại học. Thời lượng này có dấu hiệu vượt giới hạn 60 ngày và "
+                    f"cần ưu tiên kiểm tra theo {markers}.",
+                    "supported",
+                )
+            if months >= 3 and not enterprise_manager:
+                return (
+                    "warning",
+                    f"Điều khoản ghi thời gian thử việc {months} tháng cho vị trí không được xác định "
+                    f"là người quản lý doanh nghiệp. Thời lượng này có dấu hiệu vượt giới hạn thường áp dụng "
+                    f"và cần ưu tiên kiểm tra theo {markers}.",
+                    "supported",
+                )
+            return (
+                "info",
+                f"Điều khoản ghi thời gian thử việc {months} tháng. Cần xác định nhóm công việc cụ thể "
+                f"và đối chiếu mức lương thử việc theo {markers}.",
                 "supported",
             )
         if value > 180:
@@ -367,11 +494,19 @@ def _analysis(
                 "supported",
             )
         if value > 60:
+            if not enterprise_manager:
+                return (
+                    "warning",
+                    f"Điều khoản ghi thời gian thử việc {value} ngày cho vị trí không được xác định "
+                    f"là người quản lý doanh nghiệp. Thời lượng này có dấu hiệu vượt giới hạn 60 ngày "
+                    f"và cần ưu tiên kiểm tra theo {markers}.",
+                    "supported",
+                )
             return (
-                "attention",
+                "info",
                 f"Điều khoản ghi thời gian thử việc {value} ngày. Mức này dài hơn giới hạn 60 ngày "
-                f"thường áp dụng cho công việc cần trình độ chuyên môn, kỹ thuật từ cao đẳng trở lên, "
-                f"nhưng có thể có ngoại lệ đối với người quản lý doanh nghiệp. Cần xác định đúng chức danh theo {markers}.",
+                f"thường áp dụng cho công việc chuyên môn nhưng hợp đồng xác định vị trí quản lý doanh nghiệp; "
+                f"cần kiểm tra điều kiện áp dụng theo {markers}.",
                 "supported",
             )
         return (
@@ -386,6 +521,7 @@ def _analysis(
             (
                 r"\b(?P<value>\d{1,2})\s*(?:gio|h)\s*(?:/|moi|mot)?\s*ngay\b",
                 r"\b(?:moi|mot)\s+ngay[^.;]{0,40}?\b(?P<value>\d{1,2})\s*(?:gio|h)\b",
+                r"\b(?:lam\s+viec\s+theo\s+)?ca\s+(?P<value>\d{1,2})\s*(?:gio|h)\b",
             ),
             excerpt,
         )
@@ -396,13 +532,25 @@ def _analysis(
             ),
             excerpt,
         )
+        workday_values = _unit_numbers(
+            (
+                r"\b(?P<value>\d{1,2})\s*ngay\s*(?:/|moi|mot|trong)?\s*tuan\b",
+                r"\b(?P<value>\d{1,2})\s*ngay\s+trong\s+tuan\b",
+            ),
+            excerpt,
+        )
         daily = daily_values[0] if daily_values else None
         explicit_weekly = weekly_values[0] if weekly_values else None
+        workdays = workday_values[0] if workday_values else None
         five_days = "thu hai den thu sau" in plain_excerpt
         weekly = (
             explicit_weekly
             if explicit_weekly is not None
-            else daily * 5 if daily is not None and five_days else None
+            else daily * workdays
+            if daily is not None and workdays is not None
+            else daily * 5
+            if daily is not None and five_days
+            else None
         )
         schedule = []
         if daily is not None:
@@ -419,6 +567,24 @@ def _analysis(
                 "nghi hang tuan",
             )
         )
+        incomplete_schedule = daily is None and weekly is None and any(
+            marker in plain_excerpt
+            for marker in (
+                "lich lam viec cu the se duoc bo tri",
+                "thoi gio lam viec se duoc bo sung",
+                "lich lam viec se duoc bo sung",
+                "thong nhat lich lam viec sau",
+                "chua xac dinh lich lam viec",
+            )
+        )
+        if incomplete_schedule:
+            return (
+                "attention",
+                f"Hợp đồng mới dẫn chiếu việc bố trí lịch làm việc trong tương lai, chưa thể hiện "
+                f"số giờ hoặc lịch làm việc cụ thể. Cần hoàn thiện thời giờ làm việc, thời gian nghỉ "
+                f"và cơ chế làm thêm để đối chiếu theo {markers}.",
+                "supported",
+            )
         if (daily is not None and daily > 10) or (weekly is not None and weekly > 48):
             return (
                 "warning",
@@ -455,7 +621,7 @@ def _analysis(
     if rule.key == "termination":
         notice = _number_near_anchors(
             excerpt,
-            anchors=("bao truoc", "thoi han bao truoc"),
+            anchors=("bao truoc", "thoi han bao truoc", "thong bao"),
             number_pattern=r"\b(?P<value>\d{1,3})\s*ngay\b",
         )
         contract_months = _number_near_anchors(
@@ -465,6 +631,55 @@ def _analysis(
             max_distance=120,
         )
         fixed_term = contract_months is not None and 0 < contract_months <= 36
+        employer_unilateral = any(
+            marker in plain_excerpt
+            for marker in (
+                "ben a co quyen cham dut",
+                "cong ty co quyen cham dut",
+                "nguoi su dung lao dong co quyen cham dut",
+            )
+        )
+        broad_employer_reason = any(
+            marker in plain_excerpt
+            for marker in (
+                "xet thay",
+                "khong con phu hop",
+                "dinh huong kinh doanh",
+                "co cau khach hang",
+                "nhu cau van hanh",
+            )
+        )
+        incomplete_clause = any(
+            marker in plain_excerpt
+            for marker in (
+                "bo sung noi dung ve cac truong hop cham dut",
+                "noi dung cham dut se duoc bo sung",
+                "thoi han bao truoc se duoc bo sung",
+                "thong nhat dieu khoan cham dut sau",
+            )
+        )
+        if incomplete_clause:
+            return (
+                "attention",
+                f"Hợp đồng mới ghi nhận nội dung chấm dứt và thời hạn báo trước sẽ được bổ sung, "
+                f"chưa thể hiện căn cứ, chủ thể và thời hạn cụ thể. Cần hoàn thiện điều khoản theo {markers}.",
+                "supported",
+            )
+        if employer_unilateral and (
+            broad_employer_reason or (notice is not None and notice < 30)
+        ):
+            notice_text = (
+                f" và thời hạn báo trước {notice} ngày"
+                if notice is not None
+                else ""
+            )
+            return (
+                "warning",
+                f"Điều khoản trao cho Bên A quyền chấm dứt hợp đồng theo căn cứ rộng"
+                f"{notice_text}. Nội dung này có dấu hiệu chưa phân định đúng căn cứ và thời hạn "
+                f"đơn phương chấm dứt của người sử dụng lao động, cần ưu tiên kiểm tra theo {markers}.",
+                "supported",
+            )
         if notice is not None and notice < 30 and fixed_term:
             return (
                 "warning",
@@ -479,22 +694,25 @@ def _analysis(
             if notice is not None
             else ""
         )
+        shared_clause = any(
+            marker in plain_excerpt
+            for marker in ("hai ben", "moi ben", "cac ben")
+        )
+        clause_description = (
+            "Điều khoản chấm dứt đang quy định chung cho cả hai bên. "
+            if shared_clause
+            else "Điều khoản chấm dứt chưa thể hiện đầy đủ căn cứ và thời hạn áp dụng cho từng chủ thể. "
+        )
         return (
             "attention",
-            f"{notice_text}Điều khoản chấm dứt đang quy định chung cho cả hai bên. "
-            f"Cần tách rõ chủ thể, căn cứ "
+            f"{notice_text}{clause_description}Cần tách rõ chủ thể, căn cứ "
             f"chấm dứt và thời hạn báo trước tương ứng theo {markers}.",
             "supported",
         )
 
     if rule.key == "salary":
         has_amount = bool(re.search(r"\d[\d. ,]{3,}\s*(?:dong|vnd)", plain_excerpt))
-        has_pay_date = bool(
-            re.search(
-                r"\btra\b.{0,40}\bngay\b|\bngay\b.{0,40}\btra\b",
-                plain_excerpt,
-            )
-        )
+        has_pay_date = _has_pay_date(excerpt)
         if has_amount and has_pay_date:
             return (
                 "info",
@@ -591,13 +809,23 @@ def review_contract(text: str, method: RetrievalMethod) -> ReviewDraft:
         severity, analysis, evidence_status = _analysis(
             rule, excerpt, sources, text
         )
+        recommendation = rule.recommendation
+        if (
+            rule.key == "probation"
+            and excerpt
+            and _is_negated_probation_mention(_ascii(excerpt))
+        ):
+            recommendation = (
+                "Không cần bổ sung thời hạn hoặc mức lương thử việc nếu hai bên xác nhận "
+                "không áp dụng thử việc."
+            )
         findings.append(FindingDraft(
             category=rule.key,
             title=rule.title,
             severity=severity,
             contract_excerpt=excerpt or "Chưa tìm thấy điều khoản liên quan trong nội dung được trích xuất.",
             analysis=analysis,
-            recommendation=rule.recommendation,
+            recommendation=recommendation,
             evidence_status=evidence_status,
             sources=sources,
         ))

@@ -111,7 +111,7 @@ def test_contract_review_real_docx_and_user_isolation(app_client: TestClient) ->
         assert any(marker in finding["analysis"] for marker in markers)
 
     findings = {item["category"]: item for item in body["findings"]}
-    assert findings["probation"]["severity"] == "attention"
+    assert findings["probation"]["severity"] == "warning"
     assert "75 ngày" in findings["probation"]["contract_excerpt"]
     assert "20.2.LQ.26" in {source["article_code"] for source in findings["probation"]["sources"]}
     assert findings["salary"]["severity"] == "info"
@@ -127,8 +127,8 @@ def test_contract_review_real_docx_and_user_isolation(app_client: TestClient) ->
     assert listing.status_code == 200
     assert listing.json()["total"] == 1
     assert listing.json()["items"][0]["id"] == review_id
-    assert listing.json()["items"][0]["attention_count"] == 2
-    assert listing.json()["items"][0]["warning_count"] == 1
+    assert listing.json()["items"][0]["attention_count"] == 1
+    assert listing.json()["items"][0]["warning_count"] == 2
     assert listing.json()["items"][0]["missing_count"] == 0
 
     detail = app_client.get(f"/api/contract-reviews/{review_id}")
@@ -334,7 +334,7 @@ def test_contract_review_does_not_invent_categories_from_unrelated_numbers() -> 
         "Hai bên không thỏa thuận về thử việc",
     ),
 )
-def test_contract_review_does_not_treat_negated_probation_as_a_clause(
+def test_contract_review_treats_negated_probation_as_an_explicit_clause(
     negative_label: str,
 ) -> None:
     from app.schemas.ask import RetrievalMethod
@@ -357,17 +357,180 @@ def test_contract_review_does_not_treat_negated_probation_as_a_clause(
         finding for finding in draft.findings if finding.category == "probation"
     )
 
-    assert probation.severity == "attention"
-    assert probation.contract_excerpt == (
-        "Chưa tìm thấy điều khoản liên quan trong nội dung được trích xuất."
-    )
-    assert probation.analysis.startswith(
-        "Chưa tìm thấy điều khoản thể hiện rõ nội dung thử việc."
-    )
-    assert "Hợp đồng có điều khoản thử việc" not in probation.analysis
+    assert probation.severity == "info"
+    assert negative_label in probation.contract_excerpt
+    assert probation.evidence_status == "supported"
+    assert probation.analysis.startswith("Hợp đồng xác nhận không áp dụng thử việc.")
+    assert probation.recommendation.startswith("Không cần bổ sung thời hạn")
     assert "Có 1 nhóm cần kiểm tra" in draft.summary
     assert "0 nhóm cần ưu tiên kiểm tra" in draft.summary
-    assert "1 nhóm chưa tìm thấy" in draft.summary
+    assert "0 nhóm chưa tìm thấy" in draft.summary
+
+
+def test_contract_review_reads_salary_rows_from_a_docx_style_table_section() -> None:
+    from app.schemas.ask import RetrievalMethod
+    from app.services.contract_review_service import review_contract
+
+    draft = review_contract(
+        """
+        Điều 4. Tiền lương, phụ cấp và phương thức thanh toán
+        Nội dung | Thỏa thuận
+        Lương theo công việc | 18.500.000 đồng/tháng
+        Phụ cấp điện thoại | 500.000 đồng/tháng
+        Hình thức trả | Chuyển khoản vào ngày 05 của tháng kế tiếp
+        Điều 5. Thời giờ làm việc và nghỉ ngơi
+        Thời giờ làm việc bình thường là 08 giờ/ngày, 05 ngày/tuần.
+        """,
+        RetrievalMethod.SPARSE,
+    )
+    salary = next(item for item in draft.findings if item.category == "salary")
+
+    assert salary.severity == "info"
+    assert "18.500.000 đồng/tháng" in salary.contract_excerpt
+    assert "ngày 05 của tháng kế tiếp" in salary.contract_excerpt
+    assert "Hợp đồng đã thể hiện mức lương và thời điểm trả lương" in salary.analysis
+
+
+def test_contract_review_recognizes_payment_and_rest_in_sibling_paragraphs() -> None:
+    from app.schemas.ask import RetrievalMethod
+    from app.services.contract_review_service import review_contract
+
+    draft = review_contract(
+        """
+        Hợp đồng có thời hạn 24 tháng. Hai bên xác nhận không áp dụng thử việc.
+        Điều 3. Tiền lương và thanh toán
+        Lương theo công việc là 15.200.000 đồng/tháng. Tiền lương được thanh toán đầy đủ,
+        trực tiếp qua tài khoản ngân hàng vào ngày 05 của tháng kế tiếp.
+        Điều 4. Thời giờ làm việc và nghỉ ngơi
+        Thời giờ làm việc: 08 giờ/ngày, 05 ngày/tuần, từ thứ Hai đến thứ Sáu;
+        buổi sáng 08:00-12:00, buổi chiều 13:00-17:00.
+        Người lao động được nghỉ hằng tuần vào thứ Bảy và Chủ nhật.
+        Điều 5. Chấm dứt hợp đồng
+        Việc chấm dứt hợp đồng được thực hiện theo pháp luật lao động hiện hành.
+        """,
+        RetrievalMethod.SPARSE,
+    )
+    findings = {item.category: item for item in draft.findings}
+
+    assert findings["probation"].severity == "info"
+    assert findings["salary"].severity == "info"
+    assert findings["working_time"].severity == "info"
+    assert "nghỉ hằng tuần" in findings["working_time"].contract_excerpt
+    assert "cũng có nội dung về thời gian nghỉ" in findings["working_time"].analysis
+
+
+def test_contract_review_flags_three_month_probation_for_degree_role() -> None:
+    from app.schemas.ask import RetrievalMethod
+    from app.services.contract_review_service import review_contract
+
+    draft = review_contract(
+        """
+        Điều 1. Công việc
+        Vị trí Chuyên viên phân tích dữ liệu yêu cầu tốt nghiệp đại học.
+        Điều 2. Thử việc
+        Người lao động thực hiện thời gian thử việc 03 tháng.
+        Điều 3. Tiền lương
+        Lương theo công việc là 18.500.000 đồng/tháng, trả vào ngày 05 hằng tháng.
+        """,
+        RetrievalMethod.SPARSE,
+    )
+    probation = next(item for item in draft.findings if item.category == "probation")
+
+    assert probation.severity == "warning"
+    assert "3 tháng" in probation.analysis
+    assert "vượt giới hạn 60 ngày" in probation.analysis
+
+
+def test_contract_review_flags_unfinished_draft_sections() -> None:
+    from app.schemas.ask import RetrievalMethod
+    from app.services.contract_review_service import review_contract
+
+    draft = review_contract(
+        """
+        DỰ THẢO HỢP ĐỒNG LAO ĐỘNG
+        Điều 2. Thử việc
+        Thống nhất thông tin về thử việc (nếu áp dụng).
+        Điều 3. Tiền lương
+        Mức lương dự kiến 11.000.000 đồng/tháng. Kỳ hạn trả lương và phương thức
+        thanh toán sẽ được bổ sung khi hai bên hoàn thiện phụ lục.
+        Điều 4. Thời giờ làm việc và nghỉ ngơi
+        Lịch làm việc cụ thể sẽ được bố trí theo nhóm kinh doanh và kế hoạch thị trường.
+        Các nguyên tắc nghỉ hằng tuần và làm thêm thực hiện theo nội quy Công ty.
+        Điều 5. Chấm dứt hợp đồng
+        Bổ sung nội dung về các trường hợp chấm dứt hợp đồng và thời hạn báo trước.
+        """,
+        RetrievalMethod.SPARSE,
+    )
+    findings = {item.category: item for item in draft.findings}
+
+    assert all(item.severity == "attention" for item in findings.values())
+    assert "chưa thể hiện số giờ hoặc lịch làm việc cụ thể" in findings["working_time"].analysis
+    assert "sẽ được bổ sung" in findings["termination"].analysis
+    assert "Có 4 nhóm cần kiểm tra" in draft.summary
+    assert "0 nhóm cần ưu tiên kiểm tra" in draft.summary
+
+
+def test_contract_review_prioritizes_broad_employer_termination_clause() -> None:
+    from app.schemas.ask import RetrievalMethod
+    from app.services.contract_review_service import review_contract
+
+    draft = review_contract(
+        """
+        Hợp đồng lao động xác định thời hạn 24 tháng.
+        Điều 3. Tiền lương
+        Lương theo công việc 24.000.000 đồng/tháng, thanh toán ngày 05 hằng tháng.
+        Điều 4. Thời giờ làm việc
+        Thời giờ làm việc bình thường 08 giờ/ngày, 05 ngày/tuần.
+        Điều 6. Chấm dứt hợp đồng trước thời hạn
+        Khi Ban điều hành xét thấy vị trí không còn phù hợp với định hướng kinh doanh
+        hoặc cơ cấu khách hàng, Bên A có quyền chấm dứt hợp đồng sau khi thông báo
+        cho Bên B trước 05 ngày làm việc.
+        """,
+        RetrievalMethod.SPARSE,
+    )
+    termination = next(
+        item for item in draft.findings if item.category == "termination"
+    )
+
+    assert termination.severity == "warning"
+    assert "Bên A" in termination.analysis
+    assert "5 ngày" in termination.analysis
+    assert "căn cứ rộng" in termination.analysis
+
+
+def test_contract_review_prioritizes_warehouse_contract_risks() -> None:
+    from app.schemas.ask import RetrievalMethod
+    from app.services.contract_review_service import review_contract
+
+    draft = review_contract(
+        """
+        HỢP ĐỒNG LAO ĐỘNG NHÂN VIÊN VẬN HÀNH KHO
+        Điều 2. Thử việc
+        Bên B thử việc trong thời hạn 90 ngày. Mức lương trong thời gian thử việc
+        bằng 70% mức lương theo công việc.
+        Điều 4. Tiền lương
+        Lương theo công việc 12.800.000 đồng/tháng, trả ngày 07 hằng tháng.
+        Điều 5. Thời giờ làm việc
+        Bên B làm việc theo ca 12 giờ, từ 06:00 đến 18:00 hoặc từ 18:00 đến 06:00
+        ngày hôm sau, 06 ngày trong tuần.
+        Điều 8. Chấm dứt hợp đồng
+        Bên A có quyền chấm dứt hợp đồng khi xét thấy việc bố trí Bên B không còn
+        phù hợp với nhu cầu vận hành của kho và thông báo trước 05 ngày làm việc.
+        """,
+        RetrievalMethod.SPARSE,
+    )
+    findings = {item.category: item for item in draft.findings}
+
+    assert findings["probation"].severity == "warning"
+    assert "70%" in findings["probation"].analysis
+    assert "85%" in findings["probation"].analysis
+    assert findings["working_time"].severity == "warning"
+    assert "12 giờ/ngày" in findings["working_time"].analysis
+    assert "72 giờ/tuần" in findings["working_time"].analysis
+    assert findings["termination"].severity == "warning"
+    assert "5 ngày" in findings["termination"].analysis
+    assert "Có 0 nhóm cần kiểm tra" in draft.summary
+    assert "3 nhóm cần ưu tiên kiểm tra" in draft.summary
 
 
 def test_contract_review_sources_are_unique_and_all_are_cited() -> None:
