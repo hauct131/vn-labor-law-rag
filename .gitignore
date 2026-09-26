@@ -7,6 +7,9 @@ application.db
 .pytest_cache/
 .venv/
 venv/
+.env
+.env.*
+!.env.example
 
 frontend/node_modules/
 frontend/dist/
