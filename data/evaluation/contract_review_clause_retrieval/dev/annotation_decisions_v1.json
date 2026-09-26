@@ -1,0 +1,300 @@
+{
+  "schema_version": "contract-clause-annotation-decisions-v1",
+  "status": "draft_audited_10_of_10",
+  "audited_document_count": 10,
+  "annotation_semantics": "Only positive judgments are stored; omitted section-category judgments are relevance 0.",
+  "frozen_inputs": {
+    "guideline_sha256": "e86979e2d9756cef82d0383a011d72872e583a7ff1039037eb1919b6cc29b2c4",
+    "sections_sha256": "bd2937c63c339dc60d360f00d270c07e692e6a51606c48abf655fe74b2be6a63"
+  },
+  "documents": {
+    "Du_thao_HDLD_Nhan_vien_Kinh_doanh": {
+      "probation": {
+        "7": {
+          "relevance": 3,
+          "reason": "Section trực tiếp xác nhận thông tin thử việc còn phải được thống nhất nếu áp dụng."
+        }
+      },
+      "salary": {
+        "3": {
+          "relevance": 3,
+          "reason": "Section chính chứa mức lương cơ bản, hoa hồng, phụ cấp, kỳ hạn trả lương, phương thức thanh toán và khấu trừ."
+        },
+        "7": {
+          "relevance": 2,
+          "reason": "Section bổ sung xác nhận kỳ hạn, hình thức trả lương và chính sách hoa hồng vẫn cần hoàn thiện."
+        }
+      },
+      "working_time": {
+        "4": {
+          "relevance": 3,
+          "reason": "Section chính chứa lịch làm việc, nghỉ hằng tuần và làm thêm giờ."
+        },
+        "7": {
+          "relevance": 2,
+          "reason": "Section bổ sung xác nhận lịch làm việc, thời gian nghỉ và cơ chế làm thêm giờ vẫn cần hoàn thiện."
+        }
+      },
+      "termination": {
+        "7": {
+          "relevance": 3,
+          "reason": "Section trực tiếp nói cần bổ sung các trường hợp chấm dứt hợp đồng và thời hạn báo trước."
+        }
+      }
+    },
+    "HDLD_Chuyen_vien_Ke_toan": {
+      "probation": {
+        "2": {
+          "relevance": 3,
+          "reason": "Section trực tiếp xác nhận hợp đồng không áp dụng thử việc."
+        }
+      },
+      "salary": {
+        "3": {
+          "relevance": 3,
+          "reason": "Section chính quy định lương theo công việc, phụ cấp, ngày trả, phương thức thanh toán và việc điều chỉnh lương."
+        },
+        "7": {
+          "relevance": 2,
+          "reason": "Section chứa nghĩa vụ thực chất của người sử dụng lao động phải thanh toán lương đúng hạn."
+        }
+      },
+      "working_time": {
+        "4": {
+          "relevance": 3,
+          "reason": "Section chính quy định giờ làm việc, số ngày làm việc, lịch làm việc, làm thêm và nghỉ hằng tuần."
+        }
+      },
+      "termination": {
+        "8": {
+          "relevance": 3,
+          "reason": "Section chính quy định chấm dứt hợp đồng, đơn phương chấm dứt, thời hạn báo trước, bàn giao và các nghĩa vụ khi chấm dứt."
+        }
+      }
+    },
+    "HDLD_Chuyen_vien_Ke_toan_Tuan_thu": {
+      "probation": {
+        "3": {
+          "relevance": 3,
+          "reason": "Section trực tiếp quy định trường hợp áp dụng thử việc và nêu thời hạn, nội dung công việc và mức lương thử việc sẽ được ghi nhận bằng thỏa thuận riêng."
+        }
+      },
+      "salary": {
+        "3": {
+          "relevance": 1,
+          "reason": "Section có nhắc mức lương thử việc nhưng nội dung này thuộc chủ yếu vào nhóm probation."
+        },
+        "4": {
+          "relevance": 3,
+          "reason": "Section chính quy định mức lương theo công việc, ngày trả lương, phương thức trả và các khoản bổ sung."
+        }
+      },
+      "working_time": {
+        "5": {
+          "relevance": 3,
+          "reason": "Section chính quy định giờ làm việc, số ngày làm việc, làm thêm, nghỉ giữa ca và nghỉ hằng tuần."
+        }
+      },
+      "termination": {
+        "8": {
+          "relevance": 3,
+          "reason": "Section chính quy định quyền chấm dứt hợp đồng, thời hạn báo trước, bàn giao và thanh toán khi chấm dứt."
+        }
+      }
+    },
+    "HDLD_Chuyen_vien_Marketing": {
+      "probation": {
+        "2": {
+          "relevance": 3,
+          "reason": "Section chính quy định thời gian thử việc 45 ngày và mức lương trong thời gian thử việc."
+        }
+      },
+      "salary": {
+        "2": {
+          "relevance": 2,
+          "reason": "Section chứa thông tin thực chất về mức lương theo công việc sau thử việc là 13.000.000 đồng/tháng, nhưng không phải section tiền lương chính."
+        },
+        "3": {
+          "relevance": 3,
+          "reason": "Section chính quy định mức lương theo công việc, phụ cấp và ngày trả lương."
+        }
+      },
+      "working_time": {
+        "4": {
+          "relevance": 3,
+          "reason": "Section chính quy định thời giờ làm việc thông thường và việc làm thêm giờ."
+        }
+      },
+      "termination": {
+        "7": {
+          "relevance": 3,
+          "reason": "Section chính quy định chấm dứt hợp đồng, căn cứ, trình tự và thời hạn báo trước."
+        }
+      }
+    },
+    "HDLD_Chuyen_vien_Mua_hang": {
+      "probation": {},
+      "salary": {
+        "3": {
+          "relevance": 3,
+          "reason": "Section chính quy định mức lương theo công việc, phụ cấp, kỳ trả lương, phương thức trả lương và điều kiện lùi thời điểm trả lương."
+        }
+      },
+      "working_time": {
+        "4": {
+          "relevance": 3,
+          "reason": "Section chính quy định số giờ làm việc mỗi ngày, số ngày làm việc mỗi tuần, thời gian nghỉ giữa ngày và nghỉ hằng tuần."
+        }
+      },
+      "termination": {
+        "7": {
+          "relevance": 3,
+          "reason": "Section chính quy định việc chấm dứt hợp đồng và thời hạn báo trước."
+        }
+      }
+    },
+    "HDLD_Chuyen_vien_Phan_tich_Du_lieu": {
+      "probation": {
+        "2": {
+          "relevance": 3,
+          "reason": "Section chính quy định thời gian thử việc 03 tháng, phạm vi công việc trong thời gian thử việc và cách đánh giá kết quả thử việc."
+        }
+      },
+      "salary": {
+        "4": {
+          "relevance": 3,
+          "reason": "Section chính quy định lương theo công việc, phụ cấp, hình thức trả lương, ngày thanh toán và thưởng."
+        }
+      },
+      "working_time": {
+        "5": {
+          "relevance": 3,
+          "reason": "Section chính quy định giờ làm việc, lịch làm việc, nghỉ trưa và việc làm thêm giờ."
+        }
+      },
+      "termination": {
+        "7": {
+          "relevance": 1,
+          "reason": "Section chỉ nhắc chấm dứt hợp đồng như bối cảnh của nghĩa vụ hoàn trả tài sản."
+        },
+        "8": {
+          "relevance": 3,
+          "reason": "Section chính quy định chấm dứt hợp đồng, đơn phương chấm dứt và thời hạn báo trước."
+        }
+      }
+    },
+    "HDLD_Chuyen_vien_Quan_tri_he_thong": {
+      "probation": {},
+      "salary": {
+        "3": {
+          "relevance": 3,
+          "reason": "Section chính quy định mức lương theo công việc, phương thức thanh toán và ngày trả lương."
+        }
+      },
+      "working_time": {
+        "4": {
+          "relevance": 3,
+          "reason": "Section chính quy định thời giờ làm việc thông thường và việc trực hệ thống ngoài giờ."
+        }
+      },
+      "termination": {
+        "6": {
+          "relevance": 3,
+          "reason": "Section trực tiếp quy định hợp đồng chấm dứt khi hết thời hạn và các nghĩa vụ bàn giao, thanh toán liên quan."
+        },
+        "7": {
+          "relevance": 3,
+          "reason": "Section trực tiếp quy định chấm dứt hợp đồng trước thời hạn, căn cứ, trình tự và thời hạn báo trước."
+        }
+      }
+    },
+    "HDLD_Nhan_vien_Dieu_phoi_Ca": {
+      "probation": {},
+      "salary": {
+        "3": {
+          "relevance": 3,
+          "reason": "Section chính quy định mức lương theo công việc, phụ cấp trách nhiệm ca, phương thức và ngày trả lương."
+        }
+      },
+      "working_time": {
+        "4": {
+          "relevance": 3,
+          "reason": "Section chính quy định các ca A, B, C, khung giờ từng ca, lịch luân phiên và khoảng nghỉ giữa hai ca."
+        }
+      },
+      "termination": {
+        "6": {
+          "relevance": 1,
+          "reason": "Section chỉ nhắc chấm dứt hợp đồng như bối cảnh của nghĩa vụ hoàn trả thiết bị."
+        },
+        "7": {
+          "relevance": 3,
+          "reason": "Section chính quy định chấm dứt hợp đồng, thời hạn báo trước và các nghĩa vụ khi chấm dứt."
+        }
+      }
+    },
+    "HDLD_Nhan_vien_Van_hanh_Kho": {
+      "probation": {
+        "2": {
+          "relevance": 3,
+          "reason": "Section chính quy định thời hạn thử việc 90 ngày, công việc trong thời gian thử việc, việc đánh giá và mức lương thử việc."
+        },
+        "3": {
+          "relevance": 2,
+          "reason": "Section chứa thông tin bổ sung về kết quả thử việc: sau thời gian thử việc, nếu đạt yêu cầu thì hợp đồng tiếp tục được thực hiện."
+        }
+      },
+      "salary": {
+        "2": {
+          "relevance": 1,
+          "reason": "Section có quy định mức lương thử việc bằng 70% mức lương theo công việc nhưng nội dung này thuộc chủ yếu vào nhóm probation."
+        },
+        "4": {
+          "relevance": 3,
+          "reason": "Section chính quy định lương theo công việc, phụ cấp ca, phụ cấp ăn giữa ca và kỳ trả lương."
+        }
+      },
+      "working_time": {
+        "5": {
+          "relevance": 3,
+          "reason": "Section chính quy định ca làm việc 12 giờ, khung giờ từng ca, số ngày làm việc mỗi tuần và việc điều chỉnh lịch."
+        },
+        "6": {
+          "relevance": 2,
+          "reason": "Section chứa thông tin bổ sung thực chất về nghỉ giữa ca và nghỉ hằng tuần theo lịch phân ca."
+        }
+      },
+      "termination": {
+        "3": {
+          "relevance": 1,
+          "reason": "Section có nhắc chấm dứt trước hạn như một ngoại lệ và dẫn chiếu đến thỏa thuận trong hợp đồng hoặc pháp luật, nhưng không chứa điều kiện chấm dứt chính."
+        },
+        "8": {
+          "relevance": 3,
+          "reason": "Section chính quy định chấm dứt trước thời hạn, lý do chấm dứt, thời hạn thông báo và nghĩa vụ bàn giao."
+        }
+      }
+    },
+    "HDLD_Truong_nhom_Kinh_doanh": {
+      "probation": {},
+      "salary": {
+        "3": {
+          "relevance": 3,
+          "reason": "Section chính quy định mức lương theo công việc, ngày thanh toán và thưởng kinh doanh."
+        }
+      },
+      "working_time": {
+        "4": {
+          "relevance": 3,
+          "reason": "Section chính quy định số giờ làm việc mỗi ngày, số ngày làm việc mỗi tuần và việc sắp xếp lịch làm việc."
+        }
+      },
+      "termination": {
+        "6": {
+          "relevance": 3,
+          "reason": "Section chính quy định trường hợp chấm dứt hợp đồng trước thời hạn, lý do, thời hạn thông báo và nghĩa vụ bàn giao."
+        }
+      }
+    }
+  }
+}

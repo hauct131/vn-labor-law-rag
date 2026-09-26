@@ -1,0 +1,1 @@
+3473aaaf5a1c314025d758cab070f1fb725cff47532fbd4c32e1945864c33694  data/evaluation/contract_review_clause_retrieval/dev/qrels_gold_v1.json

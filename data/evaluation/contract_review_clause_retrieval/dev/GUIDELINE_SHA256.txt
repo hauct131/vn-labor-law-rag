@@ -1,0 +1,1 @@
+e86979e2d9756cef82d0383a011d72872e583a7ff1039037eb1919b6cc29b2c4  data/evaluation/contract_review_clause_retrieval/ANNOTATION_GUIDELINE.md

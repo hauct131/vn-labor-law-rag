@@ -1,0 +1,2717 @@
+{
+  "schema_version": "contract-clause-annotation-source-v1",
+  "status": "unreviewed",
+  "documents": [
+    {
+      "document_id": "Du_thao_HDLD_Nhan_vien_Kinh_doanh",
+      "file": "Du_thao_HDLD_Nhan_vien_Kinh_doanh.docx",
+      "sha256": "f35421aad432bc0eeaf49fb70d46bb634a8996687c51cf954fb13ad4a189e527",
+      "block_count": 42,
+      "section_count": 9,
+      "source_blocks": [
+        {
+          "block_index": 0,
+          "kind": "table_row",
+          "text": "CÔNG TY CỔ PHẦN THƯƠNG MẠI BẮC NAM | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM Độc lập - Tự do - Hạnh phúc --------------------"
+        },
+        {
+          "block_index": 1,
+          "kind": "paragraph",
+          "text": "DỰ THẢO HỢP ĐỒNG LAO ĐỘNG"
+        },
+        {
+          "block_index": 2,
+          "kind": "paragraph",
+          "text": "Số: D-19/2026/HĐLĐ-BN"
+        },
+        {
+          "block_index": 3,
+          "kind": "paragraph",
+          "text": "Bản dự thảo nội bộ - chờ hoàn thiện thông tin"
+        },
+        {
+          "block_index": 4,
+          "kind": "paragraph",
+          "text": "Căn cứ: Bộ luật Lao động và các văn bản hướng dẫn thi hành có liên quan; nhu cầu sử dụng lao động của doanh nghiệp và sự tự nguyện thỏa thuận của các bên."
+        },
+        {
+          "block_index": 5,
+          "kind": "paragraph",
+          "text": "Hôm nay, các bên thống nhất giao kết hợp đồng lao động với các nội dung sau:"
+        },
+        {
+          "block_index": 6,
+          "kind": "table_row",
+          "text": "BÊN SỬ DỤNG LAO ĐỘNG (BÊN A) | BÊN SỬ DỤNG LAO ĐỘNG (BÊN A)"
+        },
+        {
+          "block_index": 7,
+          "kind": "table_row",
+          "text": "Tên doanh nghiệp | Công ty Cổ phần Thương mại Bắc Nam"
+        },
+        {
+          "block_index": 8,
+          "kind": "table_row",
+          "text": "Mã số doanh nghiệp | 0316 804 251"
+        },
+        {
+          "block_index": 9,
+          "kind": "table_row",
+          "text": "Địa chỉ trụ sở | 42B Phan Xích Long, Phường Cầu Kiệu, TP. Hồ Chí Minh"
+        },
+        {
+          "block_index": 10,
+          "kind": "table_row",
+          "text": "Người đại diện | Ông Nguyễn Hữu Phúc"
+        },
+        {
+          "block_index": 11,
+          "kind": "table_row",
+          "text": "Chức vụ | Giám đốc Kinh doanh"
+        },
+        {
+          "block_index": 12,
+          "kind": "table_row",
+          "text": "NGƯỜI LAO ĐỘNG (BÊN B) | NGƯỜI LAO ĐỘNG (BÊN B)"
+        },
+        {
+          "block_index": 13,
+          "kind": "table_row",
+          "text": "Họ và tên | Lê Gia Bảo"
+        },
+        {
+          "block_index": 14,
+          "kind": "table_row",
+          "text": "Ngày sinh | 05/02/2000"
+        },
+        {
+          "block_index": 15,
+          "kind": "table_row",
+          "text": "CCCD | 079200006931"
+        },
+        {
+          "block_index": 16,
+          "kind": "table_row",
+          "text": "Địa chỉ liên hệ | 68 Nguyễn Văn Đậu, Phường Bình Lợi Trung, TP. Hồ Chí Minh"
+        },
+        {
+          "block_index": 17,
+          "kind": "table_row",
+          "text": "Số điện thoại | 0908 227 614"
+        },
+        {
+          "block_index": 18,
+          "kind": "paragraph",
+          "text": "Điều 1. Vị trí và phạm vi công việc"
+        },
+        {
+          "block_index": 19,
+          "kind": "paragraph",
+          "text": "Chức danh dự kiến: Nhân viên Kinh doanh kênh doanh nghiệp. Bên B phụ trách tìm kiếm khách hàng, chăm sóc tài khoản được giao, chuẩn bị báo giá và phối hợp bộ phận vận hành trong quá trình thực hiện đơn hàng."
+        },
+        {
+          "block_index": 20,
+          "kind": "paragraph",
+          "text": "Khu vực phụ trách chính: TP. Hồ Chí Minh và các tỉnh lân cận theo kế hoạch kinh doanh từng thời kỳ."
+        },
+        {
+          "block_index": 21,
+          "kind": "paragraph",
+          "text": "Điều 2. Thời hạn hợp đồng"
+        },
+        {
+          "block_index": 22,
+          "kind": "paragraph",
+          "text": "Hai bên dự kiến ký hợp đồng lao động xác định thời hạn 12 tháng. Ngày bắt đầu làm việc chính thức sẽ được xác nhận tại thời điểm hoàn thiện hồ sơ tiếp nhận."
+        },
+        {
+          "block_index": 23,
+          "kind": "paragraph",
+          "text": "Điều 3. Tiền lương và thu nhập"
+        },
+        {
+          "block_index": 24,
+          "kind": "paragraph",
+          "text": "Mức lương cơ bản dự kiến: 11.000.000 đồng/tháng. Cơ chế hoa hồng và phụ cấp công tác thực hiện theo chính sách kinh doanh được ban hành riêng."
+        },
+        {
+          "block_index": 25,
+          "kind": "paragraph",
+          "text": "Kỳ hạn trả lương, phương thức thanh toán và các khoản khấu trừ (nếu có) sẽ được bổ sung khi hai bên hoàn thiện phụ lục thông tin nhân sự."
+        },
+        {
+          "block_index": 26,
+          "kind": "paragraph",
+          "text": "Điều 4. Thời giờ làm việc và nghỉ ngơi"
+        },
+        {
+          "block_index": 27,
+          "kind": "paragraph",
+          "text": "Lịch làm việc cụ thể sẽ được bố trí theo nhóm kinh doanh và kế hoạch thị trường. Các nguyên tắc về nghỉ hằng tuần, nghỉ phép và làm thêm giờ thực hiện theo nội quy Công ty và pháp luật lao động."
+        },
+        {
+          "block_index": 28,
+          "kind": "paragraph",
+          "text": "Điều 5. Công cụ làm việc và chi phí"
+        },
+        {
+          "block_index": 29,
+          "kind": "paragraph",
+          "text": "Bên A dự kiến cấp tài khoản CRM, email doanh nghiệp và các công cụ cần thiết. Việc thanh toán chi phí công tác phải có phê duyệt và chứng từ phù hợp."
+        },
+        {
+          "block_index": 30,
+          "kind": "paragraph",
+          "text": "Điều 6. Bảo mật thông tin"
+        },
+        {
+          "block_index": 31,
+          "kind": "paragraph",
+          "text": "Bên B có trách nhiệm bảo mật thông tin khách hàng, báo giá, dữ liệu bán hàng và kế hoạch kinh doanh mà mình tiếp cận trong thời gian làm việc."
+        },
+        {
+          "block_index": 32,
+          "kind": "paragraph",
+          "text": "Điều 7. Nội dung cần hoàn thiện trước khi ký chính thức"
+        },
+        {
+          "block_index": 33,
+          "kind": "paragraph",
+          "text": "Xác nhận ngày bắt đầu làm việc và thời hạn hợp đồng chính thức."
+        },
+        {
+          "block_index": 34,
+          "kind": "paragraph",
+          "text": "Thống nhất thông tin về thử việc (nếu áp dụng)."
+        },
+        {
+          "block_index": 35,
+          "kind": "paragraph",
+          "text": "Bổ sung kỳ hạn, hình thức trả lương và chính sách hoa hồng áp dụng."
+        },
+        {
+          "block_index": 36,
+          "kind": "paragraph",
+          "text": "Xác nhận lịch làm việc, thời gian nghỉ và cơ chế làm thêm giờ."
+        },
+        {
+          "block_index": 37,
+          "kind": "paragraph",
+          "text": "Bổ sung nội dung về các trường hợp chấm dứt hợp đồng và thời hạn báo trước."
+        },
+        {
+          "block_index": 38,
+          "kind": "paragraph",
+          "text": "Điều 8. Điều khoản dự thảo"
+        },
+        {
+          "block_index": 39,
+          "kind": "paragraph",
+          "text": "Tài liệu này được sử dụng để các bên rà soát nội dung trước khi ký bản chính thức. Các nội dung chưa hoàn thiện chỉ có giá trị tham khảo cho quá trình thương lượng."
+        },
+        {
+          "block_index": 40,
+          "kind": "paragraph",
+          "text": "Hợp đồng được lập thành 02 bản có giá trị như nhau, mỗi bên giữ 01 bản để thực hiện."
+        },
+        {
+          "block_index": 41,
+          "kind": "table_row",
+          "text": "ĐẠI DIỆN BÊN A (Ký, ghi rõ họ tên, chức vụ và đóng dấu) NGUYỄN HỮU PHÚC | NGƯỜI LAO ĐỘNG (Ký và ghi rõ họ tên) LÊ GIA BẢO"
+        }
+      ],
+      "sections": [
+        {
+          "section_index": 0,
+          "section_id": "Du_thao_HDLD_Nhan_vien_Kinh_doanh:section:0",
+          "heading": null,
+          "text": "CÔNG TY CỔ PHẦN THƯƠNG MẠI BẮC NAM | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM Độc lập - Tự do - Hạnh phúc --------------------\nDỰ THẢO HỢP ĐỒNG LAO ĐỘNG\nSố: D-19/2026/HĐLĐ-BN\nBản dự thảo nội bộ - chờ hoàn thiện thông tin\nCăn cứ: Bộ luật Lao động và các văn bản hướng dẫn thi hành có liên quan; nhu cầu sử dụng lao động của doanh nghiệp và sự tự nguyện thỏa thuận của các bên.\nHôm nay, các bên thống nhất giao kết hợp đồng lao động với các nội dung sau:\nBÊN SỬ DỤNG LAO ĐỘNG (BÊN A) | BÊN SỬ DỤNG LAO ĐỘNG (BÊN A)\nTên doanh nghiệp | Công ty Cổ phần Thương mại Bắc Nam\nMã số doanh nghiệp | 0316 804 251\nĐịa chỉ trụ sở | 42B Phan Xích Long, Phường Cầu Kiệu, TP. Hồ Chí Minh\nNgười đại diện | Ông Nguyễn Hữu Phúc\nChức vụ | Giám đốc Kinh doanh\nNGƯỜI LAO ĐỘNG (BÊN B) | NGƯỜI LAO ĐỘNG (BÊN B)\nHọ và tên | Lê Gia Bảo\nNgày sinh | 05/02/2000\nCCCD | 079200006931\nĐịa chỉ liên hệ | 68 Nguyễn Văn Đậu, Phường Bình Lợi Trung, TP. Hồ Chí Minh\nSố điện thoại | 0908 227 614"
+        },
+        {
+          "section_index": 1,
+          "section_id": "Du_thao_HDLD_Nhan_vien_Kinh_doanh:section:1",
+          "heading": "Điều 1. Vị trí và phạm vi công việc",
+          "text": "Điều 1. Vị trí và phạm vi công việc\nChức danh dự kiến: Nhân viên Kinh doanh kênh doanh nghiệp. Bên B phụ trách tìm kiếm khách hàng, chăm sóc tài khoản được giao, chuẩn bị báo giá và phối hợp bộ phận vận hành trong quá trình thực hiện đơn hàng.\nKhu vực phụ trách chính: TP. Hồ Chí Minh và các tỉnh lân cận theo kế hoạch kinh doanh từng thời kỳ."
+        },
+        {
+          "section_index": 2,
+          "section_id": "Du_thao_HDLD_Nhan_vien_Kinh_doanh:section:2",
+          "heading": "Điều 2. Thời hạn hợp đồng",
+          "text": "Điều 2. Thời hạn hợp đồng\nHai bên dự kiến ký hợp đồng lao động xác định thời hạn 12 tháng. Ngày bắt đầu làm việc chính thức sẽ được xác nhận tại thời điểm hoàn thiện hồ sơ tiếp nhận."
+        },
+        {
+          "section_index": 3,
+          "section_id": "Du_thao_HDLD_Nhan_vien_Kinh_doanh:section:3",
+          "heading": "Điều 3. Tiền lương và thu nhập",
+          "text": "Điều 3. Tiền lương và thu nhập\nMức lương cơ bản dự kiến: 11.000.000 đồng/tháng. Cơ chế hoa hồng và phụ cấp công tác thực hiện theo chính sách kinh doanh được ban hành riêng.\nKỳ hạn trả lương, phương thức thanh toán và các khoản khấu trừ (nếu có) sẽ được bổ sung khi hai bên hoàn thiện phụ lục thông tin nhân sự."
+        },
+        {
+          "section_index": 4,
+          "section_id": "Du_thao_HDLD_Nhan_vien_Kinh_doanh:section:4",
+          "heading": "Điều 4. Thời giờ làm việc và nghỉ ngơi",
+          "text": "Điều 4. Thời giờ làm việc và nghỉ ngơi\nLịch làm việc cụ thể sẽ được bố trí theo nhóm kinh doanh và kế hoạch thị trường. Các nguyên tắc về nghỉ hằng tuần, nghỉ phép và làm thêm giờ thực hiện theo nội quy Công ty và pháp luật lao động."
+        },
+        {
+          "section_index": 5,
+          "section_id": "Du_thao_HDLD_Nhan_vien_Kinh_doanh:section:5",
+          "heading": "Điều 5. Công cụ làm việc và chi phí",
+          "text": "Điều 5. Công cụ làm việc và chi phí\nBên A dự kiến cấp tài khoản CRM, email doanh nghiệp và các công cụ cần thiết. Việc thanh toán chi phí công tác phải có phê duyệt và chứng từ phù hợp."
+        },
+        {
+          "section_index": 6,
+          "section_id": "Du_thao_HDLD_Nhan_vien_Kinh_doanh:section:6",
+          "heading": "Điều 6. Bảo mật thông tin",
+          "text": "Điều 6. Bảo mật thông tin\nBên B có trách nhiệm bảo mật thông tin khách hàng, báo giá, dữ liệu bán hàng và kế hoạch kinh doanh mà mình tiếp cận trong thời gian làm việc."
+        },
+        {
+          "section_index": 7,
+          "section_id": "Du_thao_HDLD_Nhan_vien_Kinh_doanh:section:7",
+          "heading": "Điều 7. Nội dung cần hoàn thiện trước khi ký chính thức",
+          "text": "Điều 7. Nội dung cần hoàn thiện trước khi ký chính thức\nXác nhận ngày bắt đầu làm việc và thời hạn hợp đồng chính thức.\nThống nhất thông tin về thử việc (nếu áp dụng).\nBổ sung kỳ hạn, hình thức trả lương và chính sách hoa hồng áp dụng.\nXác nhận lịch làm việc, thời gian nghỉ và cơ chế làm thêm giờ.\nBổ sung nội dung về các trường hợp chấm dứt hợp đồng và thời hạn báo trước."
+        },
+        {
+          "section_index": 8,
+          "section_id": "Du_thao_HDLD_Nhan_vien_Kinh_doanh:section:8",
+          "heading": "Điều 8. Điều khoản dự thảo",
+          "text": "Điều 8. Điều khoản dự thảo\nTài liệu này được sử dụng để các bên rà soát nội dung trước khi ký bản chính thức. Các nội dung chưa hoàn thiện chỉ có giá trị tham khảo cho quá trình thương lượng.\nHợp đồng được lập thành 02 bản có giá trị như nhau, mỗi bên giữ 01 bản để thực hiện.\nĐẠI DIỆN BÊN A (Ký, ghi rõ họ tên, chức vụ và đóng dấu) NGUYỄN HỮU PHÚC | NGƯỜI LAO ĐỘNG (Ký và ghi rõ họ tên) LÊ GIA BẢO"
+        }
+      ]
+    },
+    {
+      "document_id": "HDLD_Chuyen_vien_Ke_toan",
+      "file": "HDLD_Chuyen_vien_Ke_toan.docx",
+      "sha256": "acaebad2e07e60d0ba5fba8a47c42b09158031b8e8183809a8d4c1e0d1b83f2a",
+      "block_count": 41,
+      "section_count": 10,
+      "source_blocks": [
+        {
+          "block_index": 0,
+          "kind": "table_row",
+          "text": "CÔNG TY TNHH DỊCH VỤ TÀI CHÍNH NAM VIỆT | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM Độc lập - Tự do - Hạnh phúc --------------------"
+        },
+        {
+          "block_index": 1,
+          "kind": "paragraph",
+          "text": "HỢP ĐỒNG LAO ĐỘNG"
+        },
+        {
+          "block_index": 2,
+          "kind": "paragraph",
+          "text": "Số: 08/2026/HĐLĐ-NV"
+        },
+        {
+          "block_index": 3,
+          "kind": "paragraph",
+          "text": "Căn cứ: Bộ luật Lao động và các văn bản hướng dẫn thi hành có liên quan; nhu cầu sử dụng lao động của doanh nghiệp và sự tự nguyện thỏa thuận của các bên."
+        },
+        {
+          "block_index": 4,
+          "kind": "paragraph",
+          "text": "Hôm nay, các bên thống nhất giao kết hợp đồng lao động với các nội dung sau:"
+        },
+        {
+          "block_index": 5,
+          "kind": "table_row",
+          "text": "BÊN SỬ DỤNG LAO ĐỘNG (BÊN A) | BÊN SỬ DỤNG LAO ĐỘNG (BÊN A)"
+        },
+        {
+          "block_index": 6,
+          "kind": "table_row",
+          "text": "Tên doanh nghiệp | Công ty TNHH Dịch vụ Tài chính Nam Việt"
+        },
+        {
+          "block_index": 7,
+          "kind": "table_row",
+          "text": "Mã số doanh nghiệp | 0318 104 663"
+        },
+        {
+          "block_index": 8,
+          "kind": "table_row",
+          "text": "Địa chỉ trụ sở | 85 Nguyễn Đình Chiểu, Phường Xuân Hòa, TP. Hồ Chí Minh"
+        },
+        {
+          "block_index": 9,
+          "kind": "table_row",
+          "text": "Người đại diện | Bà Võ Thanh Huyền"
+        },
+        {
+          "block_index": 10,
+          "kind": "table_row",
+          "text": "Chức vụ | Giám đốc"
+        },
+        {
+          "block_index": 11,
+          "kind": "table_row",
+          "text": "NGƯỜI LAO ĐỘNG (BÊN B) | NGƯỜI LAO ĐỘNG (BÊN B)"
+        },
+        {
+          "block_index": 12,
+          "kind": "table_row",
+          "text": "Họ và tên | Trần Thu Hà"
+        },
+        {
+          "block_index": 13,
+          "kind": "table_row",
+          "text": "Ngày sinh | 22/07/1998"
+        },
+        {
+          "block_index": 14,
+          "kind": "table_row",
+          "text": "CCCD | 079198009742"
+        },
+        {
+          "block_index": 15,
+          "kind": "table_row",
+          "text": "Địa chỉ liên hệ | 20A Trần Quang Diệu, Phường Nhiêu Lộc, TP. Hồ Chí Minh"
+        },
+        {
+          "block_index": 16,
+          "kind": "table_row",
+          "text": "Số điện thoại | 0938 771 425"
+        },
+        {
+          "block_index": 17,
+          "kind": "paragraph",
+          "text": "Điều 1. Công việc"
+        },
+        {
+          "block_index": 18,
+          "kind": "paragraph",
+          "text": "Chức danh: Chuyên viên Kế toán. Bên B thực hiện hạch toán nghiệp vụ, đối chiếu công nợ, lập báo cáo nội bộ, phối hợp chuẩn bị hồ sơ thuế và các công việc chuyên môn theo sự phân công hợp lý của Kế toán trưởng."
+        },
+        {
+          "block_index": 19,
+          "kind": "paragraph",
+          "text": "Điều 2. Thời hạn và ngày bắt đầu làm việc"
+        },
+        {
+          "block_index": 20,
+          "kind": "paragraph",
+          "text": "Hợp đồng có thời hạn 24 tháng từ ngày 15/09/2026 đến hết ngày 14/09/2028. Hai bên xác nhận không áp dụng thử việc đối với hợp đồng này."
+        },
+        {
+          "block_index": 21,
+          "kind": "paragraph",
+          "text": "Điều 3. Tiền lương và thanh toán"
+        },
+        {
+          "block_index": 22,
+          "kind": "paragraph",
+          "text": "Lương theo công việc là 15.200.000 đồng/tháng. Phụ cấp ăn trưa là 600.000 đồng/tháng theo ngày làm việc thực tế. Tiền lương được thanh toán đầy đủ, trực tiếp qua tài khoản ngân hàng vào ngày 05 của tháng kế tiếp."
+        },
+        {
+          "block_index": 23,
+          "kind": "paragraph",
+          "text": "Việc điều chỉnh lương căn cứ kết quả công việc, tình hình kinh doanh và được hai bên thống nhất bằng văn bản hoặc phụ lục hợp đồng."
+        },
+        {
+          "block_index": 24,
+          "kind": "paragraph",
+          "text": "Điều 4. Thời giờ làm việc và nghỉ ngơi"
+        },
+        {
+          "block_index": 25,
+          "kind": "paragraph",
+          "text": "Thời giờ làm việc: 08 giờ/ngày, 05 ngày/tuần, từ thứ Hai đến thứ Sáu; buổi sáng 08:00-12:00, buổi chiều 13:00-17:00."
+        },
+        {
+          "block_index": 26,
+          "kind": "paragraph",
+          "text": "Làm thêm giờ chỉ được bố trí khi có nhu cầu phát sinh, đáp ứng điều kiện pháp luật và có sự đồng ý của người lao động trong trường hợp pháp luật yêu cầu. Người lao động được nghỉ hằng tuần vào thứ Bảy và Chủ nhật."
+        },
+        {
+          "block_index": 27,
+          "kind": "paragraph",
+          "text": "Điều 5. Nghỉ phép và chế độ bảo hiểm"
+        },
+        {
+          "block_index": 28,
+          "kind": "paragraph",
+          "text": "Bên B được nghỉ hằng năm theo thời gian làm việc thực tế; nghỉ lễ, tết và nghỉ việc riêng theo quy định. Bên A thực hiện đầy đủ nghĩa vụ tham gia BHXH, BHYT và BHTN."
+        },
+        {
+          "block_index": 29,
+          "kind": "paragraph",
+          "text": "Điều 6. Quyền và nghĩa vụ của người lao động"
+        },
+        {
+          "block_index": 30,
+          "kind": "paragraph",
+          "text": "Bên B có trách nhiệm hoàn thành công việc, bảo mật dữ liệu tài chính - kế toán, tuân thủ quy trình lưu trữ chứng từ và sử dụng đúng mục đích các tài sản, tài khoản hệ thống được cấp."
+        },
+        {
+          "block_index": 31,
+          "kind": "paragraph",
+          "text": "Điều 7. Quyền và nghĩa vụ của người sử dụng lao động"
+        },
+        {
+          "block_index": 32,
+          "kind": "paragraph",
+          "text": "Bên A bố trí việc làm theo thỏa thuận, bảo đảm điều kiện làm việc cần thiết, thanh toán lương đúng hạn và thực hiện các chế độ đối với Bên B theo hợp đồng và quy định pháp luật."
+        },
+        {
+          "block_index": 33,
+          "kind": "paragraph",
+          "text": "Điều 8. Chấm dứt hợp đồng"
+        },
+        {
+          "block_index": 34,
+          "kind": "paragraph",
+          "text": "Việc chấm dứt hợp đồng lao động, quyền đơn phương chấm dứt của mỗi bên và thời hạn báo trước được thực hiện đúng căn cứ, điều kiện và thời hạn theo pháp luật lao động hiện hành."
+        },
+        {
+          "block_index": 35,
+          "kind": "paragraph",
+          "text": "Khi chấm dứt hợp đồng, hai bên phối hợp bàn giao công việc, hồ sơ, tài sản và thực hiện các nghĩa vụ tài chính còn lại theo quy định."
+        },
+        {
+          "block_index": 36,
+          "kind": "paragraph",
+          "text": "Điều 9. Giải quyết tranh chấp và điều khoản chung"
+        },
+        {
+          "block_index": 37,
+          "kind": "paragraph",
+          "text": "Trường hợp phát sinh vướng mắc, hai bên ưu tiên trao đổi và hòa giải trên tinh thần hợp tác. Nếu không giải quyết được, tranh chấp được xử lý theo trình tự pháp luật."
+        },
+        {
+          "block_index": 38,
+          "kind": "paragraph",
+          "text": "Hợp đồng và các phụ lục hợp lệ là toàn bộ thỏa thuận giữa hai bên về quan hệ lao động."
+        },
+        {
+          "block_index": 39,
+          "kind": "paragraph",
+          "text": "Hợp đồng được lập thành 02 bản có giá trị như nhau, mỗi bên giữ 01 bản để thực hiện."
+        },
+        {
+          "block_index": 40,
+          "kind": "table_row",
+          "text": "ĐẠI DIỆN BÊN A (Ký, ghi rõ họ tên, chức vụ và đóng dấu) VÕ THANH HUYỀN | NGƯỜI LAO ĐỘNG (Ký và ghi rõ họ tên) TRẦN THU HÀ"
+        }
+      ],
+      "sections": [
+        {
+          "section_index": 0,
+          "section_id": "HDLD_Chuyen_vien_Ke_toan:section:0",
+          "heading": null,
+          "text": "CÔNG TY TNHH DỊCH VỤ TÀI CHÍNH NAM VIỆT | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM Độc lập - Tự do - Hạnh phúc --------------------\nHỢP ĐỒNG LAO ĐỘNG\nSố: 08/2026/HĐLĐ-NV\nCăn cứ: Bộ luật Lao động và các văn bản hướng dẫn thi hành có liên quan; nhu cầu sử dụng lao động của doanh nghiệp và sự tự nguyện thỏa thuận của các bên.\nHôm nay, các bên thống nhất giao kết hợp đồng lao động với các nội dung sau:\nBÊN SỬ DỤNG LAO ĐỘNG (BÊN A) | BÊN SỬ DỤNG LAO ĐỘNG (BÊN A)\nTên doanh nghiệp | Công ty TNHH Dịch vụ Tài chính Nam Việt\nMã số doanh nghiệp | 0318 104 663\nĐịa chỉ trụ sở | 85 Nguyễn Đình Chiểu, Phường Xuân Hòa, TP. Hồ Chí Minh\nNgười đại diện | Bà Võ Thanh Huyền\nChức vụ | Giám đốc\nNGƯỜI LAO ĐỘNG (BÊN B) | NGƯỜI LAO ĐỘNG (BÊN B)\nHọ và tên | Trần Thu Hà\nNgày sinh | 22/07/1998\nCCCD | 079198009742\nĐịa chỉ liên hệ | 20A Trần Quang Diệu, Phường Nhiêu Lộc, TP. Hồ Chí Minh\nSố điện thoại | 0938 771 425"
+        },
+        {
+          "section_index": 1,
+          "section_id": "HDLD_Chuyen_vien_Ke_toan:section:1",
+          "heading": "Điều 1. Công việc",
+          "text": "Điều 1. Công việc\nChức danh: Chuyên viên Kế toán. Bên B thực hiện hạch toán nghiệp vụ, đối chiếu công nợ, lập báo cáo nội bộ, phối hợp chuẩn bị hồ sơ thuế và các công việc chuyên môn theo sự phân công hợp lý của Kế toán trưởng."
+        },
+        {
+          "section_index": 2,
+          "section_id": "HDLD_Chuyen_vien_Ke_toan:section:2",
+          "heading": "Điều 2. Thời hạn và ngày bắt đầu làm việc",
+          "text": "Điều 2. Thời hạn và ngày bắt đầu làm việc\nHợp đồng có thời hạn 24 tháng từ ngày 15/09/2026 đến hết ngày 14/09/2028. Hai bên xác nhận không áp dụng thử việc đối với hợp đồng này."
+        },
+        {
+          "section_index": 3,
+          "section_id": "HDLD_Chuyen_vien_Ke_toan:section:3",
+          "heading": "Điều 3. Tiền lương và thanh toán",
+          "text": "Điều 3. Tiền lương và thanh toán\nLương theo công việc là 15.200.000 đồng/tháng. Phụ cấp ăn trưa là 600.000 đồng/tháng theo ngày làm việc thực tế. Tiền lương được thanh toán đầy đủ, trực tiếp qua tài khoản ngân hàng vào ngày 05 của tháng kế tiếp.\nViệc điều chỉnh lương căn cứ kết quả công việc, tình hình kinh doanh và được hai bên thống nhất bằng văn bản hoặc phụ lục hợp đồng."
+        },
+        {
+          "section_index": 4,
+          "section_id": "HDLD_Chuyen_vien_Ke_toan:section:4",
+          "heading": "Điều 4. Thời giờ làm việc và nghỉ ngơi",
+          "text": "Điều 4. Thời giờ làm việc và nghỉ ngơi\nThời giờ làm việc: 08 giờ/ngày, 05 ngày/tuần, từ thứ Hai đến thứ Sáu; buổi sáng 08:00-12:00, buổi chiều 13:00-17:00.\nLàm thêm giờ chỉ được bố trí khi có nhu cầu phát sinh, đáp ứng điều kiện pháp luật và có sự đồng ý của người lao động trong trường hợp pháp luật yêu cầu. Người lao động được nghỉ hằng tuần vào thứ Bảy và Chủ nhật."
+        },
+        {
+          "section_index": 5,
+          "section_id": "HDLD_Chuyen_vien_Ke_toan:section:5",
+          "heading": "Điều 5. Nghỉ phép và chế độ bảo hiểm",
+          "text": "Điều 5. Nghỉ phép và chế độ bảo hiểm\nBên B được nghỉ hằng năm theo thời gian làm việc thực tế; nghỉ lễ, tết và nghỉ việc riêng theo quy định. Bên A thực hiện đầy đủ nghĩa vụ tham gia BHXH, BHYT và BHTN."
+        },
+        {
+          "section_index": 6,
+          "section_id": "HDLD_Chuyen_vien_Ke_toan:section:6",
+          "heading": "Điều 6. Quyền và nghĩa vụ của người lao động",
+          "text": "Điều 6. Quyền và nghĩa vụ của người lao động\nBên B có trách nhiệm hoàn thành công việc, bảo mật dữ liệu tài chính - kế toán, tuân thủ quy trình lưu trữ chứng từ và sử dụng đúng mục đích các tài sản, tài khoản hệ thống được cấp."
+        },
+        {
+          "section_index": 7,
+          "section_id": "HDLD_Chuyen_vien_Ke_toan:section:7",
+          "heading": "Điều 7. Quyền và nghĩa vụ của người sử dụng lao động",
+          "text": "Điều 7. Quyền và nghĩa vụ của người sử dụng lao động\nBên A bố trí việc làm theo thỏa thuận, bảo đảm điều kiện làm việc cần thiết, thanh toán lương đúng hạn và thực hiện các chế độ đối với Bên B theo hợp đồng và quy định pháp luật."
+        },
+        {
+          "section_index": 8,
+          "section_id": "HDLD_Chuyen_vien_Ke_toan:section:8",
+          "heading": "Điều 8. Chấm dứt hợp đồng",
+          "text": "Điều 8. Chấm dứt hợp đồng\nViệc chấm dứt hợp đồng lao động, quyền đơn phương chấm dứt của mỗi bên và thời hạn báo trước được thực hiện đúng căn cứ, điều kiện và thời hạn theo pháp luật lao động hiện hành.\nKhi chấm dứt hợp đồng, hai bên phối hợp bàn giao công việc, hồ sơ, tài sản và thực hiện các nghĩa vụ tài chính còn lại theo quy định."
+        },
+        {
+          "section_index": 9,
+          "section_id": "HDLD_Chuyen_vien_Ke_toan:section:9",
+          "heading": "Điều 9. Giải quyết tranh chấp và điều khoản chung",
+          "text": "Điều 9. Giải quyết tranh chấp và điều khoản chung\nTrường hợp phát sinh vướng mắc, hai bên ưu tiên trao đổi và hòa giải trên tinh thần hợp tác. Nếu không giải quyết được, tranh chấp được xử lý theo trình tự pháp luật.\nHợp đồng và các phụ lục hợp lệ là toàn bộ thỏa thuận giữa hai bên về quan hệ lao động.\nHợp đồng được lập thành 02 bản có giá trị như nhau, mỗi bên giữ 01 bản để thực hiện.\nĐẠI DIỆN BÊN A (Ký, ghi rõ họ tên, chức vụ và đóng dấu) VÕ THANH HUYỀN | NGƯỜI LAO ĐỘNG (Ký và ghi rõ họ tên) TRẦN THU HÀ"
+        }
+      ]
+    },
+    {
+      "document_id": "HDLD_Chuyen_vien_Ke_toan_Tuan_thu",
+      "file": "HDLD_Chuyen_vien_Ke_toan_Tuan_thu.docx",
+      "sha256": "821b9e888ffd48ddc62153b29508022004663f1c79e071a3a6beca12c0cb6f97",
+      "block_count": 39,
+      "section_count": 10,
+      "source_blocks": [
+        {
+          "block_index": 0,
+          "kind": "table_row",
+          "text": "CÔNG TY TNHH DỊCH VỤ KẾ TOÁN AN THÀNH | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM"
+        },
+        {
+          "block_index": 1,
+          "kind": "table_row",
+          "text": "Số: 57/2026/HĐLĐ-AT | Độc lập - Tự do - Hạnh phúc"
+        },
+        {
+          "block_index": 2,
+          "kind": "paragraph",
+          "text": "HỢP ĐỒNG LAO ĐỘNG"
+        },
+        {
+          "block_index": 3,
+          "kind": "paragraph",
+          "text": "(TP. Hồ Chí Minh, ngày 20 tháng 8 năm 2026)"
+        },
+        {
+          "block_index": 4,
+          "kind": "paragraph",
+          "text": "BÊN SỬ DỤNG LAO ĐỘNG (BÊN A)"
+        },
+        {
+          "block_index": 5,
+          "kind": "table_row",
+          "text": "Đơn vị | Công ty TNHH Dịch vụ Kế toán An Thành"
+        },
+        {
+          "block_index": 6,
+          "kind": "table_row",
+          "text": "Đại diện | Vũ Thanh Thảo - Giám đốc"
+        },
+        {
+          "block_index": 7,
+          "kind": "table_row",
+          "text": "Địa chỉ | 91 Cách Mạng Tháng Tám, Phường Bàn Cờ, TP. Hồ Chí Minh"
+        },
+        {
+          "block_index": 8,
+          "kind": "table_row",
+          "text": "Điện thoại | 028 7300 6688"
+        },
+        {
+          "block_index": 9,
+          "kind": "paragraph",
+          "text": "NGƯỜI LAO ĐỘNG (BÊN B)"
+        },
+        {
+          "block_index": 10,
+          "kind": "table_row",
+          "text": "Họ và tên | Trương Khánh Linh"
+        },
+        {
+          "block_index": 11,
+          "kind": "table_row",
+          "text": "Ngày sinh | 12/09/1999"
+        },
+        {
+          "block_index": 12,
+          "kind": "table_row",
+          "text": "CCCD | 079199004318"
+        },
+        {
+          "block_index": 13,
+          "kind": "table_row",
+          "text": "Địa chỉ | Phường Gia Định, TP. Hồ Chí Minh"
+        },
+        {
+          "block_index": 14,
+          "kind": "paragraph",
+          "text": "Hai bên thỏa thuận ký kết hợp đồng lao động với các điều khoản sau:"
+        },
+        {
+          "block_index": 15,
+          "kind": "paragraph",
+          "text": "Điều 1. Công việc và nơi làm việc"
+        },
+        {
+          "block_index": 16,
+          "kind": "paragraph",
+          "text": "1. Chức danh: Chuyên viên Kế toán tổng hợp."
+        },
+        {
+          "block_index": 17,
+          "kind": "paragraph",
+          "text": "2. Nhiệm vụ: hạch toán nghiệp vụ, đối chiếu công nợ, lập báo cáo nội bộ và hỗ trợ hồ sơ thuế theo phân công."
+        },
+        {
+          "block_index": 18,
+          "kind": "paragraph",
+          "text": "3. Nơi làm việc: trụ sở Công ty tại TP. Hồ Chí Minh."
+        },
+        {
+          "block_index": 19,
+          "kind": "paragraph",
+          "text": "Điều 2. Thời hạn hợp đồng"
+        },
+        {
+          "block_index": 20,
+          "kind": "paragraph",
+          "text": "Hợp đồng xác định thời hạn 24 tháng, từ ngày 01/09/2026 đến hết ngày 31/08/2028."
+        },
+        {
+          "block_index": 21,
+          "kind": "paragraph",
+          "text": "Điều 3. Thử việc"
+        },
+        {
+          "block_index": 22,
+          "kind": "paragraph",
+          "text": "Nếu hai bên thực hiện thử việc, thời hạn, nội dung công việc và mức lương thử việc được ghi nhận bằng thỏa thuận riêng và tuân thủ giới hạn pháp luật áp dụng."
+        },
+        {
+          "block_index": 23,
+          "kind": "paragraph",
+          "text": "Điều 4. Tiền lương và phương thức trả"
+        },
+        {
+          "block_index": 24,
+          "kind": "paragraph",
+          "text": "1. Mức lương theo công việc: 15.500.000 đồng/tháng."
+        },
+        {
+          "block_index": 25,
+          "kind": "paragraph",
+          "text": "2. Lương được trả đầy đủ bằng chuyển khoản vào ngày 05 của tháng kế tiếp."
+        },
+        {
+          "block_index": 26,
+          "kind": "paragraph",
+          "text": "3. Phụ cấp hoặc khoản bổ sung khác, nếu phát sinh, được thể hiện riêng theo quy chế của Công ty và thỏa thuận hợp pháp giữa hai bên."
+        },
+        {
+          "block_index": 27,
+          "kind": "paragraph",
+          "text": "Điều 5. Thời giờ làm việc và nghỉ ngơi"
+        },
+        {
+          "block_index": 28,
+          "kind": "paragraph",
+          "text": "Thời giờ làm việc thông thường: 08 giờ/ngày, 05 ngày/tuần, từ thứ Hai đến thứ Sáu. Làm thêm giờ chỉ thực hiện trong phạm vi và theo điều kiện pháp luật; thời gian nghỉ giữa ca, nghỉ hằng tuần và nghỉ lễ được bố trí theo quy định."
+        },
+        {
+          "block_index": 29,
+          "kind": "paragraph",
+          "text": "Điều 6. Bảo hiểm và nghỉ phép"
+        },
+        {
+          "block_index": 30,
+          "kind": "paragraph",
+          "text": "Công ty và người lao động thực hiện các nghĩa vụ về bảo hiểm bắt buộc, nghỉ hằng năm, nghỉ lễ và các chế độ khác theo quy định."
+        },
+        {
+          "block_index": 31,
+          "kind": "paragraph",
+          "text": "Điều 7. Bảo mật và trách nhiệm nghề nghiệp"
+        },
+        {
+          "block_index": 32,
+          "kind": "paragraph",
+          "text": "Người lao động bảo mật dữ liệu kế toán, hồ sơ khách hàng và thông tin nội bộ; đồng thời tuân thủ quy trình kiểm soát chứng từ của Công ty."
+        },
+        {
+          "block_index": 33,
+          "kind": "paragraph",
+          "text": "Điều 8. Chấm dứt hợp đồng"
+        },
+        {
+          "block_index": 34,
+          "kind": "paragraph",
+          "text": "Mỗi bên chỉ thực hiện quyền chấm dứt hợp đồng trên căn cứ và với thời hạn báo trước tương ứng theo pháp luật lao động. Các bên thực hiện đầy đủ nghĩa vụ bàn giao và thanh toán khi hợp đồng chấm dứt."
+        },
+        {
+          "block_index": 35,
+          "kind": "paragraph",
+          "text": "Điều 9. Điều khoản chung"
+        },
+        {
+          "block_index": 36,
+          "kind": "paragraph",
+          "text": "Hợp đồng được lập thành 02 bản có giá trị như nhau và có hiệu lực kể từ ngày 01/09/2026."
+        },
+        {
+          "block_index": 37,
+          "kind": "table_row",
+          "text": "ĐẠI DIỆN BÊN A | NGƯỜI LAO ĐỘNG"
+        },
+        {
+          "block_index": 38,
+          "kind": "table_row",
+          "text": "(Ký, ghi rõ họ tên) Vũ Thanh Thảo | (Ký, ghi rõ họ tên) Trương Khánh Linh"
+        }
+      ],
+      "sections": [
+        {
+          "section_index": 0,
+          "section_id": "HDLD_Chuyen_vien_Ke_toan_Tuan_thu:section:0",
+          "heading": null,
+          "text": "CÔNG TY TNHH DỊCH VỤ KẾ TOÁN AN THÀNH | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nSố: 57/2026/HĐLĐ-AT | Độc lập - Tự do - Hạnh phúc\nHỢP ĐỒNG LAO ĐỘNG\n(TP. Hồ Chí Minh, ngày 20 tháng 8 năm 2026)\nBÊN SỬ DỤNG LAO ĐỘNG (BÊN A)\nĐơn vị | Công ty TNHH Dịch vụ Kế toán An Thành\nĐại diện | Vũ Thanh Thảo - Giám đốc\nĐịa chỉ | 91 Cách Mạng Tháng Tám, Phường Bàn Cờ, TP. Hồ Chí Minh\nĐiện thoại | 028 7300 6688\nNGƯỜI LAO ĐỘNG (BÊN B)\nHọ và tên | Trương Khánh Linh\nNgày sinh | 12/09/1999\nCCCD | 079199004318\nĐịa chỉ | Phường Gia Định, TP. Hồ Chí Minh\nHai bên thỏa thuận ký kết hợp đồng lao động với các điều khoản sau:"
+        },
+        {
+          "section_index": 1,
+          "section_id": "HDLD_Chuyen_vien_Ke_toan_Tuan_thu:section:1",
+          "heading": "Điều 1. Công việc và nơi làm việc",
+          "text": "Điều 1. Công việc và nơi làm việc\n1. Chức danh: Chuyên viên Kế toán tổng hợp.\n2. Nhiệm vụ: hạch toán nghiệp vụ, đối chiếu công nợ, lập báo cáo nội bộ và hỗ trợ hồ sơ thuế theo phân công.\n3. Nơi làm việc: trụ sở Công ty tại TP. Hồ Chí Minh."
+        },
+        {
+          "section_index": 2,
+          "section_id": "HDLD_Chuyen_vien_Ke_toan_Tuan_thu:section:2",
+          "heading": "Điều 2. Thời hạn hợp đồng",
+          "text": "Điều 2. Thời hạn hợp đồng\nHợp đồng xác định thời hạn 24 tháng, từ ngày 01/09/2026 đến hết ngày 31/08/2028."
+        },
+        {
+          "section_index": 3,
+          "section_id": "HDLD_Chuyen_vien_Ke_toan_Tuan_thu:section:3",
+          "heading": "Điều 3. Thử việc",
+          "text": "Điều 3. Thử việc\nNếu hai bên thực hiện thử việc, thời hạn, nội dung công việc và mức lương thử việc được ghi nhận bằng thỏa thuận riêng và tuân thủ giới hạn pháp luật áp dụng."
+        },
+        {
+          "section_index": 4,
+          "section_id": "HDLD_Chuyen_vien_Ke_toan_Tuan_thu:section:4",
+          "heading": "Điều 4. Tiền lương và phương thức trả",
+          "text": "Điều 4. Tiền lương và phương thức trả\n1. Mức lương theo công việc: 15.500.000 đồng/tháng.\n2. Lương được trả đầy đủ bằng chuyển khoản vào ngày 05 của tháng kế tiếp.\n3. Phụ cấp hoặc khoản bổ sung khác, nếu phát sinh, được thể hiện riêng theo quy chế của Công ty và thỏa thuận hợp pháp giữa hai bên."
+        },
+        {
+          "section_index": 5,
+          "section_id": "HDLD_Chuyen_vien_Ke_toan_Tuan_thu:section:5",
+          "heading": "Điều 5. Thời giờ làm việc và nghỉ ngơi",
+          "text": "Điều 5. Thời giờ làm việc và nghỉ ngơi\nThời giờ làm việc thông thường: 08 giờ/ngày, 05 ngày/tuần, từ thứ Hai đến thứ Sáu. Làm thêm giờ chỉ thực hiện trong phạm vi và theo điều kiện pháp luật; thời gian nghỉ giữa ca, nghỉ hằng tuần và nghỉ lễ được bố trí theo quy định."
+        },
+        {
+          "section_index": 6,
+          "section_id": "HDLD_Chuyen_vien_Ke_toan_Tuan_thu:section:6",
+          "heading": "Điều 6. Bảo hiểm và nghỉ phép",
+          "text": "Điều 6. Bảo hiểm và nghỉ phép\nCông ty và người lao động thực hiện các nghĩa vụ về bảo hiểm bắt buộc, nghỉ hằng năm, nghỉ lễ và các chế độ khác theo quy định."
+        },
+        {
+          "section_index": 7,
+          "section_id": "HDLD_Chuyen_vien_Ke_toan_Tuan_thu:section:7",
+          "heading": "Điều 7. Bảo mật và trách nhiệm nghề nghiệp",
+          "text": "Điều 7. Bảo mật và trách nhiệm nghề nghiệp\nNgười lao động bảo mật dữ liệu kế toán, hồ sơ khách hàng và thông tin nội bộ; đồng thời tuân thủ quy trình kiểm soát chứng từ của Công ty."
+        },
+        {
+          "section_index": 8,
+          "section_id": "HDLD_Chuyen_vien_Ke_toan_Tuan_thu:section:8",
+          "heading": "Điều 8. Chấm dứt hợp đồng",
+          "text": "Điều 8. Chấm dứt hợp đồng\nMỗi bên chỉ thực hiện quyền chấm dứt hợp đồng trên căn cứ và với thời hạn báo trước tương ứng theo pháp luật lao động. Các bên thực hiện đầy đủ nghĩa vụ bàn giao và thanh toán khi hợp đồng chấm dứt."
+        },
+        {
+          "section_index": 9,
+          "section_id": "HDLD_Chuyen_vien_Ke_toan_Tuan_thu:section:9",
+          "heading": "Điều 9. Điều khoản chung",
+          "text": "Điều 9. Điều khoản chung\nHợp đồng được lập thành 02 bản có giá trị như nhau và có hiệu lực kể từ ngày 01/09/2026.\nĐẠI DIỆN BÊN A | NGƯỜI LAO ĐỘNG\n(Ký, ghi rõ họ tên) Vũ Thanh Thảo | (Ký, ghi rõ họ tên) Trương Khánh Linh"
+        }
+      ]
+    },
+    {
+      "document_id": "HDLD_Chuyen_vien_Marketing",
+      "file": "HDLD_Chuyen_vien_Marketing.docx",
+      "sha256": "377a9cdddead78e063ce5d5414898d5544df3149f27236cf6c38d9a3cd69cfac",
+      "block_count": 39,
+      "section_count": 9,
+      "source_blocks": [
+        {
+          "block_index": 0,
+          "kind": "table_row",
+          "text": "CÔNG TY TNHH TRUYỀN THÔNG BLUEPEAK | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM"
+        },
+        {
+          "block_index": 1,
+          "kind": "table_row",
+          "text": "Số: 18/2026/HĐLĐ-BP | Độc lập - Tự do - Hạnh phúc"
+        },
+        {
+          "block_index": 2,
+          "kind": "paragraph",
+          "text": "HỢP ĐỒNG LAO ĐỘNG"
+        },
+        {
+          "block_index": 3,
+          "kind": "paragraph",
+          "text": "(TP. Hồ Chí Minh, ngày 20 tháng 8 năm 2026)"
+        },
+        {
+          "block_index": 4,
+          "kind": "paragraph",
+          "text": "BÊN SỬ DỤNG LAO ĐỘNG (BÊN A)"
+        },
+        {
+          "block_index": 5,
+          "kind": "table_row",
+          "text": "Đơn vị | Công ty TNHH Truyền thông BluePeak"
+        },
+        {
+          "block_index": 6,
+          "kind": "table_row",
+          "text": "Đại diện | Lê Thu Hà - Giám đốc Nhân sự"
+        },
+        {
+          "block_index": 7,
+          "kind": "table_row",
+          "text": "Địa chỉ | 58 Nguyễn Văn Mai, Phường Tân Định, TP. Hồ Chí Minh"
+        },
+        {
+          "block_index": 8,
+          "kind": "table_row",
+          "text": "Điện thoại | 028 7300 6688"
+        },
+        {
+          "block_index": 9,
+          "kind": "paragraph",
+          "text": "NGƯỜI LAO ĐỘNG (BÊN B)"
+        },
+        {
+          "block_index": 10,
+          "kind": "table_row",
+          "text": "Họ và tên | Phạm Gia Hân"
+        },
+        {
+          "block_index": 11,
+          "kind": "table_row",
+          "text": "Ngày sinh | 07/02/2001"
+        },
+        {
+          "block_index": 12,
+          "kind": "table_row",
+          "text": "CCCD | 079201003615"
+        },
+        {
+          "block_index": 13,
+          "kind": "table_row",
+          "text": "Địa chỉ | Phường Bảy Hiền, TP. Hồ Chí Minh"
+        },
+        {
+          "block_index": 14,
+          "kind": "paragraph",
+          "text": "Hai bên thỏa thuận ký kết hợp đồng lao động với các điều khoản sau:"
+        },
+        {
+          "block_index": 15,
+          "kind": "paragraph",
+          "text": "Điều 1. Vị trí và nhiệm vụ"
+        },
+        {
+          "block_index": 16,
+          "kind": "paragraph",
+          "text": "1. Chức danh: Chuyên viên Marketing nội dung."
+        },
+        {
+          "block_index": 17,
+          "kind": "paragraph",
+          "text": "2. Công việc chính: lập kế hoạch nội dung, phối hợp chiến dịch truyền thông và theo dõi hiệu quả trên các kênh số."
+        },
+        {
+          "block_index": 18,
+          "kind": "paragraph",
+          "text": "3. Địa điểm làm việc: văn phòng Công ty và các địa điểm triển khai chiến dịch theo phân công."
+        },
+        {
+          "block_index": 19,
+          "kind": "paragraph",
+          "text": "Điều 2. Thời hạn và giai đoạn thử việc"
+        },
+        {
+          "block_index": 20,
+          "kind": "paragraph",
+          "text": "1. Hợp đồng có thời hạn 18 tháng kể từ ngày 01/09/2026."
+        },
+        {
+          "block_index": 21,
+          "kind": "paragraph",
+          "text": "2. Hai bên thống nhất áp dụng thời gian thử việc 45 ngày đầu tiên kể từ ngày người lao động bắt đầu làm việc."
+        },
+        {
+          "block_index": 22,
+          "kind": "paragraph",
+          "text": "3. Trong thời gian thử việc, người lao động hưởng 70% mức lương theo công việc, tương đương 9.100.000 đồng/tháng; mức lương theo công việc sau thử việc là 13.000.000 đồng/tháng."
+        },
+        {
+          "block_index": 23,
+          "kind": "paragraph",
+          "text": "Điều 3. Tiền lương, phụ cấp và kỳ trả"
+        },
+        {
+          "block_index": 24,
+          "kind": "paragraph",
+          "text": "1. Sau thời gian thử việc, mức lương theo công việc là 13.000.000 đồng/tháng."
+        },
+        {
+          "block_index": 25,
+          "kind": "paragraph",
+          "text": "2. Phụ cấp điện thoại: 500.000 đồng/tháng."
+        },
+        {
+          "block_index": 26,
+          "kind": "paragraph",
+          "text": "3. Lương được chuyển khoản vào ngày 05 hằng tháng."
+        },
+        {
+          "block_index": 27,
+          "kind": "paragraph",
+          "text": "Điều 4. Thời giờ làm việc"
+        },
+        {
+          "block_index": 28,
+          "kind": "paragraph",
+          "text": "Thời giờ làm việc thông thường là 08 giờ/ngày, từ thứ Hai đến thứ Sáu; làm thêm giờ chỉ thực hiện khi có nhu cầu và theo trình tự áp dụng của pháp luật."
+        },
+        {
+          "block_index": 29,
+          "kind": "paragraph",
+          "text": "Điều 5. Nghỉ phép và phúc lợi"
+        },
+        {
+          "block_index": 30,
+          "kind": "paragraph",
+          "text": "Người lao động được nghỉ phép, nghỉ lễ và hưởng phúc lợi theo quy chế của Công ty và quy định pháp luật."
+        },
+        {
+          "block_index": 31,
+          "kind": "paragraph",
+          "text": "Điều 6. Bảo mật thông tin"
+        },
+        {
+          "block_index": 32,
+          "kind": "paragraph",
+          "text": "Nội dung chiến dịch, dữ liệu khách hàng, dữ liệu hiệu quả quảng cáo và tài liệu nội bộ thuộc phạm vi bảo mật."
+        },
+        {
+          "block_index": 33,
+          "kind": "paragraph",
+          "text": "Điều 7. Chấm dứt và bàn giao"
+        },
+        {
+          "block_index": 34,
+          "kind": "paragraph",
+          "text": "Mỗi bên thực hiện quyền chấm dứt hợp đồng theo căn cứ, trình tự và thời hạn báo trước tương ứng theo pháp luật lao động."
+        },
+        {
+          "block_index": 35,
+          "kind": "paragraph",
+          "text": "Điều 8. Hiệu lực"
+        },
+        {
+          "block_index": 36,
+          "kind": "paragraph",
+          "text": "Hợp đồng có hiệu lực kể từ ngày 01/09/2026 và được lập thành 02 bản có giá trị như nhau."
+        },
+        {
+          "block_index": 37,
+          "kind": "table_row",
+          "text": "ĐẠI DIỆN BÊN A | NGƯỜI LAO ĐỘNG"
+        },
+        {
+          "block_index": 38,
+          "kind": "table_row",
+          "text": "(Ký, ghi rõ họ tên) Lê Thu Hà | (Ký, ghi rõ họ tên) Phạm Gia Hân"
+        }
+      ],
+      "sections": [
+        {
+          "section_index": 0,
+          "section_id": "HDLD_Chuyen_vien_Marketing:section:0",
+          "heading": null,
+          "text": "CÔNG TY TNHH TRUYỀN THÔNG BLUEPEAK | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nSố: 18/2026/HĐLĐ-BP | Độc lập - Tự do - Hạnh phúc\nHỢP ĐỒNG LAO ĐỘNG\n(TP. Hồ Chí Minh, ngày 20 tháng 8 năm 2026)\nBÊN SỬ DỤNG LAO ĐỘNG (BÊN A)\nĐơn vị | Công ty TNHH Truyền thông BluePeak\nĐại diện | Lê Thu Hà - Giám đốc Nhân sự\nĐịa chỉ | 58 Nguyễn Văn Mai, Phường Tân Định, TP. Hồ Chí Minh\nĐiện thoại | 028 7300 6688\nNGƯỜI LAO ĐỘNG (BÊN B)\nHọ và tên | Phạm Gia Hân\nNgày sinh | 07/02/2001\nCCCD | 079201003615\nĐịa chỉ | Phường Bảy Hiền, TP. Hồ Chí Minh\nHai bên thỏa thuận ký kết hợp đồng lao động với các điều khoản sau:"
+        },
+        {
+          "section_index": 1,
+          "section_id": "HDLD_Chuyen_vien_Marketing:section:1",
+          "heading": "Điều 1. Vị trí và nhiệm vụ",
+          "text": "Điều 1. Vị trí và nhiệm vụ\n1. Chức danh: Chuyên viên Marketing nội dung.\n2. Công việc chính: lập kế hoạch nội dung, phối hợp chiến dịch truyền thông và theo dõi hiệu quả trên các kênh số.\n3. Địa điểm làm việc: văn phòng Công ty và các địa điểm triển khai chiến dịch theo phân công."
+        },
+        {
+          "section_index": 2,
+          "section_id": "HDLD_Chuyen_vien_Marketing:section:2",
+          "heading": "Điều 2. Thời hạn và giai đoạn thử việc",
+          "text": "Điều 2. Thời hạn và giai đoạn thử việc\n1. Hợp đồng có thời hạn 18 tháng kể từ ngày 01/09/2026.\n2. Hai bên thống nhất áp dụng thời gian thử việc 45 ngày đầu tiên kể từ ngày người lao động bắt đầu làm việc.\n3. Trong thời gian thử việc, người lao động hưởng 70% mức lương theo công việc, tương đương 9.100.000 đồng/tháng; mức lương theo công việc sau thử việc là 13.000.000 đồng/tháng."
+        },
+        {
+          "section_index": 3,
+          "section_id": "HDLD_Chuyen_vien_Marketing:section:3",
+          "heading": "Điều 3. Tiền lương, phụ cấp và kỳ trả",
+          "text": "Điều 3. Tiền lương, phụ cấp và kỳ trả\n1. Sau thời gian thử việc, mức lương theo công việc là 13.000.000 đồng/tháng.\n2. Phụ cấp điện thoại: 500.000 đồng/tháng.\n3. Lương được chuyển khoản vào ngày 05 hằng tháng."
+        },
+        {
+          "section_index": 4,
+          "section_id": "HDLD_Chuyen_vien_Marketing:section:4",
+          "heading": "Điều 4. Thời giờ làm việc",
+          "text": "Điều 4. Thời giờ làm việc\nThời giờ làm việc thông thường là 08 giờ/ngày, từ thứ Hai đến thứ Sáu; làm thêm giờ chỉ thực hiện khi có nhu cầu và theo trình tự áp dụng của pháp luật."
+        },
+        {
+          "section_index": 5,
+          "section_id": "HDLD_Chuyen_vien_Marketing:section:5",
+          "heading": "Điều 5. Nghỉ phép và phúc lợi",
+          "text": "Điều 5. Nghỉ phép và phúc lợi\nNgười lao động được nghỉ phép, nghỉ lễ và hưởng phúc lợi theo quy chế của Công ty và quy định pháp luật."
+        },
+        {
+          "section_index": 6,
+          "section_id": "HDLD_Chuyen_vien_Marketing:section:6",
+          "heading": "Điều 6. Bảo mật thông tin",
+          "text": "Điều 6. Bảo mật thông tin\nNội dung chiến dịch, dữ liệu khách hàng, dữ liệu hiệu quả quảng cáo và tài liệu nội bộ thuộc phạm vi bảo mật."
+        },
+        {
+          "section_index": 7,
+          "section_id": "HDLD_Chuyen_vien_Marketing:section:7",
+          "heading": "Điều 7. Chấm dứt và bàn giao",
+          "text": "Điều 7. Chấm dứt và bàn giao\nMỗi bên thực hiện quyền chấm dứt hợp đồng theo căn cứ, trình tự và thời hạn báo trước tương ứng theo pháp luật lao động."
+        },
+        {
+          "section_index": 8,
+          "section_id": "HDLD_Chuyen_vien_Marketing:section:8",
+          "heading": "Điều 8. Hiệu lực",
+          "text": "Điều 8. Hiệu lực\nHợp đồng có hiệu lực kể từ ngày 01/09/2026 và được lập thành 02 bản có giá trị như nhau.\nĐẠI DIỆN BÊN A | NGƯỜI LAO ĐỘNG\n(Ký, ghi rõ họ tên) Lê Thu Hà | (Ký, ghi rõ họ tên) Phạm Gia Hân"
+        }
+      ]
+    },
+    {
+      "document_id": "HDLD_Chuyen_vien_Mua_hang",
+      "file": "HDLD_Chuyen_vien_Mua_hang.docx",
+      "sha256": "59e7c6aa35013e5c8f2483ce39836f750baf6d965d3467688129cd0f158d03b2",
+      "block_count": 36,
+      "section_count": 9,
+      "source_blocks": [
+        {
+          "block_index": 0,
+          "kind": "table_row",
+          "text": "CÔNG TY CỔ PHẦN THIẾT BỊ MINH TÍN | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM"
+        },
+        {
+          "block_index": 1,
+          "kind": "table_row",
+          "text": "Số: 31/2026/HĐLĐ-MT | Độc lập - Tự do - Hạnh phúc"
+        },
+        {
+          "block_index": 2,
+          "kind": "paragraph",
+          "text": "HỢP ĐỒNG LAO ĐỘNG"
+        },
+        {
+          "block_index": 3,
+          "kind": "paragraph",
+          "text": "(TP. Hồ Chí Minh, ngày 20 tháng 8 năm 2026)"
+        },
+        {
+          "block_index": 4,
+          "kind": "paragraph",
+          "text": "BÊN SỬ DỤNG LAO ĐỘNG (BÊN A)"
+        },
+        {
+          "block_index": 5,
+          "kind": "table_row",
+          "text": "Đơn vị | Công ty Cổ phần Thiết bị Minh Tín"
+        },
+        {
+          "block_index": 6,
+          "kind": "table_row",
+          "text": "Đại diện | Nguyễn Duy Thành - Tổng Giám đốc"
+        },
+        {
+          "block_index": 7,
+          "kind": "table_row",
+          "text": "Địa chỉ | 230 Lý Thường Kiệt, Phường Diên Hồng, TP. Hồ Chí Minh"
+        },
+        {
+          "block_index": 8,
+          "kind": "table_row",
+          "text": "Điện thoại | 028 7300 6688"
+        },
+        {
+          "block_index": 9,
+          "kind": "paragraph",
+          "text": "NGƯỜI LAO ĐỘNG (BÊN B)"
+        },
+        {
+          "block_index": 10,
+          "kind": "table_row",
+          "text": "Họ và tên | Đỗ Minh Anh"
+        },
+        {
+          "block_index": 11,
+          "kind": "table_row",
+          "text": "Ngày sinh | 25/05/1997"
+        },
+        {
+          "block_index": 12,
+          "kind": "table_row",
+          "text": "CCCD | 079197008214"
+        },
+        {
+          "block_index": 13,
+          "kind": "table_row",
+          "text": "Địa chỉ | Phường Phú Thọ, TP. Hồ Chí Minh"
+        },
+        {
+          "block_index": 14,
+          "kind": "paragraph",
+          "text": "Hai bên thỏa thuận ký kết hợp đồng lao động với các điều khoản sau:"
+        },
+        {
+          "block_index": 15,
+          "kind": "paragraph",
+          "text": "Điều 1. Công việc"
+        },
+        {
+          "block_index": 16,
+          "kind": "paragraph",
+          "text": "Chức danh: Chuyên viên Mua hàng. Người lao động thực hiện tìm kiếm nhà cung cấp, theo dõi tiến độ đặt hàng, hồ sơ mua sắm và phối hợp nghiệm thu vật tư."
+        },
+        {
+          "block_index": 17,
+          "kind": "paragraph",
+          "text": "Điều 2. Thời hạn và địa điểm"
+        },
+        {
+          "block_index": 18,
+          "kind": "paragraph",
+          "text": "Hợp đồng có thời hạn 36 tháng kể từ ngày 01/09/2026. Địa điểm làm việc tại trụ sở Công ty và các kho hàng có liên quan đến nhiệm vụ mua sắm."
+        },
+        {
+          "block_index": 19,
+          "kind": "paragraph",
+          "text": "Điều 3. Tiền lương và thanh toán"
+        },
+        {
+          "block_index": 20,
+          "kind": "paragraph",
+          "text": "1. Mức lương theo công việc: 17.200.000 đồng/tháng."
+        },
+        {
+          "block_index": 21,
+          "kind": "paragraph",
+          "text": "2. Phụ cấp ăn trưa: 900.000 đồng/tháng."
+        },
+        {
+          "block_index": 22,
+          "kind": "paragraph",
+          "text": "3. Kỳ trả lương thông thường là ngày 05 hằng tháng qua tài khoản ngân hàng."
+        },
+        {
+          "block_index": 23,
+          "kind": "paragraph",
+          "text": "4. Trong trường hợp Công ty phải cân đối dòng tiền do khách hàng chậm thanh toán hoặc doanh thu chưa đạt kế hoạch, Công ty được quyền lùi thời điểm trả lương nhưng không quá 45 ngày kể từ ngày trả lương thông thường và không phải thanh toán thêm khoản bồi hoàn hoặc tiền lãi."
+        },
+        {
+          "block_index": 24,
+          "kind": "paragraph",
+          "text": "Điều 4. Thời giờ làm việc và nghỉ ngơi"
+        },
+        {
+          "block_index": 25,
+          "kind": "paragraph",
+          "text": "Thời giờ làm việc: 08 giờ/ngày, 05 ngày/tuần. Thời gian nghỉ giữa ngày và nghỉ hằng tuần được bố trí theo lịch làm việc của đơn vị."
+        },
+        {
+          "block_index": 26,
+          "kind": "paragraph",
+          "text": "Điều 5. Trang thiết bị và chi phí công tác"
+        },
+        {
+          "block_index": 27,
+          "kind": "paragraph",
+          "text": "Công ty cung cấp máy tính làm việc và thanh toán chi phí công tác hợp lệ theo quy chế tài chính nội bộ."
+        },
+        {
+          "block_index": 28,
+          "kind": "paragraph",
+          "text": "Điều 6. Bảo mật"
+        },
+        {
+          "block_index": 29,
+          "kind": "paragraph",
+          "text": "Người lao động không được tiết lộ báo giá, điều kiện thương mại, danh sách nhà cung cấp và tài liệu nội bộ cho bên thứ ba khi chưa được phép."
+        },
+        {
+          "block_index": 30,
+          "kind": "paragraph",
+          "text": "Điều 7. Chấm dứt hợp đồng"
+        },
+        {
+          "block_index": 31,
+          "kind": "paragraph",
+          "text": "Việc chấm dứt hợp đồng được thực hiện theo căn cứ và thời hạn báo trước do pháp luật lao động quy định."
+        },
+        {
+          "block_index": 32,
+          "kind": "paragraph",
+          "text": "Điều 8. Điều khoản cuối cùng"
+        },
+        {
+          "block_index": 33,
+          "kind": "paragraph",
+          "text": "Các nội dung chưa được quy định trong hợp đồng này được thực hiện theo quy chế hợp pháp của Công ty và pháp luật có liên quan."
+        },
+        {
+          "block_index": 34,
+          "kind": "table_row",
+          "text": "ĐẠI DIỆN BÊN A | NGƯỜI LAO ĐỘNG"
+        },
+        {
+          "block_index": 35,
+          "kind": "table_row",
+          "text": "(Ký, ghi rõ họ tên) Nguyễn Duy Thành | (Ký, ghi rõ họ tên) Đỗ Minh Anh"
+        }
+      ],
+      "sections": [
+        {
+          "section_index": 0,
+          "section_id": "HDLD_Chuyen_vien_Mua_hang:section:0",
+          "heading": null,
+          "text": "CÔNG TY CỔ PHẦN THIẾT BỊ MINH TÍN | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nSố: 31/2026/HĐLĐ-MT | Độc lập - Tự do - Hạnh phúc\nHỢP ĐỒNG LAO ĐỘNG\n(TP. Hồ Chí Minh, ngày 20 tháng 8 năm 2026)\nBÊN SỬ DỤNG LAO ĐỘNG (BÊN A)\nĐơn vị | Công ty Cổ phần Thiết bị Minh Tín\nĐại diện | Nguyễn Duy Thành - Tổng Giám đốc\nĐịa chỉ | 230 Lý Thường Kiệt, Phường Diên Hồng, TP. Hồ Chí Minh\nĐiện thoại | 028 7300 6688\nNGƯỜI LAO ĐỘNG (BÊN B)\nHọ và tên | Đỗ Minh Anh\nNgày sinh | 25/05/1997\nCCCD | 079197008214\nĐịa chỉ | Phường Phú Thọ, TP. Hồ Chí Minh\nHai bên thỏa thuận ký kết hợp đồng lao động với các điều khoản sau:"
+        },
+        {
+          "section_index": 1,
+          "section_id": "HDLD_Chuyen_vien_Mua_hang:section:1",
+          "heading": "Điều 1. Công việc",
+          "text": "Điều 1. Công việc\nChức danh: Chuyên viên Mua hàng. Người lao động thực hiện tìm kiếm nhà cung cấp, theo dõi tiến độ đặt hàng, hồ sơ mua sắm và phối hợp nghiệm thu vật tư."
+        },
+        {
+          "section_index": 2,
+          "section_id": "HDLD_Chuyen_vien_Mua_hang:section:2",
+          "heading": "Điều 2. Thời hạn và địa điểm",
+          "text": "Điều 2. Thời hạn và địa điểm\nHợp đồng có thời hạn 36 tháng kể từ ngày 01/09/2026. Địa điểm làm việc tại trụ sở Công ty và các kho hàng có liên quan đến nhiệm vụ mua sắm."
+        },
+        {
+          "section_index": 3,
+          "section_id": "HDLD_Chuyen_vien_Mua_hang:section:3",
+          "heading": "Điều 3. Tiền lương và thanh toán",
+          "text": "Điều 3. Tiền lương và thanh toán\n1. Mức lương theo công việc: 17.200.000 đồng/tháng.\n2. Phụ cấp ăn trưa: 900.000 đồng/tháng.\n3. Kỳ trả lương thông thường là ngày 05 hằng tháng qua tài khoản ngân hàng.\n4. Trong trường hợp Công ty phải cân đối dòng tiền do khách hàng chậm thanh toán hoặc doanh thu chưa đạt kế hoạch, Công ty được quyền lùi thời điểm trả lương nhưng không quá 45 ngày kể từ ngày trả lương thông thường và không phải thanh toán thêm khoản bồi hoàn hoặc tiền lãi."
+        },
+        {
+          "section_index": 4,
+          "section_id": "HDLD_Chuyen_vien_Mua_hang:section:4",
+          "heading": "Điều 4. Thời giờ làm việc và nghỉ ngơi",
+          "text": "Điều 4. Thời giờ làm việc và nghỉ ngơi\nThời giờ làm việc: 08 giờ/ngày, 05 ngày/tuần. Thời gian nghỉ giữa ngày và nghỉ hằng tuần được bố trí theo lịch làm việc của đơn vị."
+        },
+        {
+          "section_index": 5,
+          "section_id": "HDLD_Chuyen_vien_Mua_hang:section:5",
+          "heading": "Điều 5. Trang thiết bị và chi phí công tác",
+          "text": "Điều 5. Trang thiết bị và chi phí công tác\nCông ty cung cấp máy tính làm việc và thanh toán chi phí công tác hợp lệ theo quy chế tài chính nội bộ."
+        },
+        {
+          "section_index": 6,
+          "section_id": "HDLD_Chuyen_vien_Mua_hang:section:6",
+          "heading": "Điều 6. Bảo mật",
+          "text": "Điều 6. Bảo mật\nNgười lao động không được tiết lộ báo giá, điều kiện thương mại, danh sách nhà cung cấp và tài liệu nội bộ cho bên thứ ba khi chưa được phép."
+        },
+        {
+          "section_index": 7,
+          "section_id": "HDLD_Chuyen_vien_Mua_hang:section:7",
+          "heading": "Điều 7. Chấm dứt hợp đồng",
+          "text": "Điều 7. Chấm dứt hợp đồng\nViệc chấm dứt hợp đồng được thực hiện theo căn cứ và thời hạn báo trước do pháp luật lao động quy định."
+        },
+        {
+          "section_index": 8,
+          "section_id": "HDLD_Chuyen_vien_Mua_hang:section:8",
+          "heading": "Điều 8. Điều khoản cuối cùng",
+          "text": "Điều 8. Điều khoản cuối cùng\nCác nội dung chưa được quy định trong hợp đồng này được thực hiện theo quy chế hợp pháp của Công ty và pháp luật có liên quan.\nĐẠI DIỆN BÊN A | NGƯỜI LAO ĐỘNG\n(Ký, ghi rõ họ tên) Nguyễn Duy Thành | (Ký, ghi rõ họ tên) Đỗ Minh Anh"
+        }
+      ]
+    },
+    {
+      "document_id": "HDLD_Chuyen_vien_Phan_tich_Du_lieu",
+      "file": "HDLD_Chuyen_vien_Phan_tich_Du_lieu.docx",
+      "sha256": "f8078a818c5682a422ac5bb424415b6ddc3cc786cc1d5d1285eabfaba5ddd096",
+      "block_count": 46,
+      "section_count": 10,
+      "source_blocks": [
+        {
+          "block_index": 0,
+          "kind": "table_row",
+          "text": "CÔNG TY TNHH CÔNG NGHỆ MINH HÀ | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM Độc lập - Tự do - Hạnh phúc --------------------"
+        },
+        {
+          "block_index": 1,
+          "kind": "paragraph",
+          "text": "HỢP ĐỒNG LAO ĐỘNG"
+        },
+        {
+          "block_index": 2,
+          "kind": "paragraph",
+          "text": "Số: 12/2026/HĐLĐ-MH"
+        },
+        {
+          "block_index": 3,
+          "kind": "paragraph",
+          "text": "Căn cứ: Bộ luật Lao động và các văn bản hướng dẫn thi hành có liên quan; nhu cầu sử dụng lao động của doanh nghiệp và sự tự nguyện thỏa thuận của các bên."
+        },
+        {
+          "block_index": 4,
+          "kind": "paragraph",
+          "text": "Hôm nay, các bên thống nhất giao kết hợp đồng lao động với các nội dung sau:"
+        },
+        {
+          "block_index": 5,
+          "kind": "table_row",
+          "text": "BÊN SỬ DỤNG LAO ĐỘNG (BÊN A) | BÊN SỬ DỤNG LAO ĐỘNG (BÊN A)"
+        },
+        {
+          "block_index": 6,
+          "kind": "table_row",
+          "text": "Tên doanh nghiệp | Công ty TNHH Công nghệ Minh Hà"
+        },
+        {
+          "block_index": 7,
+          "kind": "table_row",
+          "text": "Mã số doanh nghiệp | 0319 842 716"
+        },
+        {
+          "block_index": 8,
+          "kind": "table_row",
+          "text": "Địa chỉ trụ sở | Tầng 6, 126 Nguyễn Thị Minh Khai, Phường Xuân Hòa, TP. Hồ Chí Minh"
+        },
+        {
+          "block_index": 9,
+          "kind": "table_row",
+          "text": "Người đại diện | Bà Trần Ngọc An"
+        },
+        {
+          "block_index": 10,
+          "kind": "table_row",
+          "text": "Chức vụ | Giám đốc Điều hành"
+        },
+        {
+          "block_index": 11,
+          "kind": "table_row",
+          "text": "NGƯỜI LAO ĐỘNG (BÊN B) | NGƯỜI LAO ĐỘNG (BÊN B)"
+        },
+        {
+          "block_index": 12,
+          "kind": "table_row",
+          "text": "Họ và tên | Nguyễn Minh Khôi"
+        },
+        {
+          "block_index": 13,
+          "kind": "table_row",
+          "text": "Ngày sinh | 14/03/1999"
+        },
+        {
+          "block_index": 14,
+          "kind": "table_row",
+          "text": "CCCD | 079099003214"
+        },
+        {
+          "block_index": 15,
+          "kind": "table_row",
+          "text": "Địa chỉ liên hệ | 45 Đường số 6, Phường Bình Trưng, TP. Hồ Chí Minh"
+        },
+        {
+          "block_index": 16,
+          "kind": "table_row",
+          "text": "Số điện thoại | 0903 418 726"
+        },
+        {
+          "block_index": 17,
+          "kind": "paragraph",
+          "text": "Điều 1. Công việc và địa điểm làm việc"
+        },
+        {
+          "block_index": 18,
+          "kind": "paragraph",
+          "text": "Chức danh: Chuyên viên Phân tích dữ liệu, thuộc Phòng Dữ liệu và Tối ưu vận hành."
+        },
+        {
+          "block_index": 19,
+          "kind": "paragraph",
+          "text": "Công việc bao gồm xây dựng báo cáo quản trị, xử lý dữ liệu nghiệp vụ, phối hợp cùng các đơn vị xây dựng chỉ số vận hành và hỗ trợ các dự án phân tích theo phân công."
+        },
+        {
+          "block_index": 20,
+          "kind": "paragraph",
+          "text": "Vị trí yêu cầu tốt nghiệp đại học chuyên ngành Công nghệ thông tin, Khoa học dữ liệu, Toán - Tin hoặc chuyên ngành tương đương."
+        },
+        {
+          "block_index": 21,
+          "kind": "paragraph",
+          "text": "Địa điểm làm việc chính tại trụ sở Công ty; người lao động có thể làm việc từ xa tối đa 02 ngày/tuần theo kế hoạch của bộ phận."
+        },
+        {
+          "block_index": 22,
+          "kind": "paragraph",
+          "text": "Điều 2. Thử việc"
+        },
+        {
+          "block_index": 23,
+          "kind": "paragraph",
+          "text": "Trước khi thực hiện chính thức công việc theo hợp đồng này, Bên B thực hiện thời gian thử việc 03 tháng, từ ngày 01/09/2026 đến hết ngày 30/11/2026."
+        },
+        {
+          "block_index": 24,
+          "kind": "paragraph",
+          "text": "Trong thời gian thử việc, Bên B thực hiện cùng phạm vi công việc nêu tại Điều 1 và được hướng dẫn bởi Trưởng nhóm Phân tích dữ liệu. Kết quả thử việc được đánh giá trên chất lượng báo cáo, tiến độ và khả năng phối hợp."
+        },
+        {
+          "block_index": 25,
+          "kind": "paragraph",
+          "text": "Điều 3. Thời hạn hợp đồng"
+        },
+        {
+          "block_index": 26,
+          "kind": "paragraph",
+          "text": "Hợp đồng có thời hạn 24 tháng kể từ ngày 01/12/2026 đến hết ngày 30/11/2028. Trước ngày hết hạn, hai bên trao đổi về nhu cầu tiếp tục hợp tác theo quy định pháp luật."
+        },
+        {
+          "block_index": 27,
+          "kind": "paragraph",
+          "text": "Điều 4. Tiền lương, phụ cấp và phương thức thanh toán"
+        },
+        {
+          "block_index": 28,
+          "kind": "table_row",
+          "text": "Nội dung | Thỏa thuận"
+        },
+        {
+          "block_index": 29,
+          "kind": "table_row",
+          "text": "Lương theo công việc | 18.500.000 đồng/tháng"
+        },
+        {
+          "block_index": 30,
+          "kind": "table_row",
+          "text": "Phụ cấp điện thoại | 500.000 đồng/tháng"
+        },
+        {
+          "block_index": 31,
+          "kind": "table_row",
+          "text": "Hình thức trả | Chuyển khoản vào ngày 05 của tháng kế tiếp"
+        },
+        {
+          "block_index": 32,
+          "kind": "table_row",
+          "text": "Thưởng hiệu quả | Theo quy chế thưởng của Công ty và kết quả công việc"
+        },
+        {
+          "block_index": 33,
+          "kind": "paragraph",
+          "text": "Điều 5. Thời giờ làm việc và nghỉ ngơi"
+        },
+        {
+          "block_index": 34,
+          "kind": "paragraph",
+          "text": "Thời giờ làm việc bình thường là 08 giờ/ngày, từ thứ Hai đến thứ Sáu. Khung giờ làm việc tiêu chuẩn từ 08:30 đến 17:30, nghỉ trưa 01 giờ."
+        },
+        {
+          "block_index": 35,
+          "kind": "paragraph",
+          "text": "Việc làm thêm giờ chỉ thực hiện khi có nhu cầu thực tế, theo phê duyệt của quản lý và trên cơ sở tuân thủ các điều kiện, giới hạn của pháp luật lao động."
+        },
+        {
+          "block_index": 36,
+          "kind": "paragraph",
+          "text": "Điều 6. Bảo hiểm và phúc lợi"
+        },
+        {
+          "block_index": 37,
+          "kind": "paragraph",
+          "text": "Bên A thực hiện việc tham gia bảo hiểm xã hội, bảo hiểm y tế, bảo hiểm thất nghiệp và các chế độ khác theo quy định pháp luật. Bên B được hưởng 12 ngày nghỉ phép năm và các ngày nghỉ lễ, tết theo quy định."
+        },
+        {
+          "block_index": 38,
+          "kind": "paragraph",
+          "text": "Điều 7. Bảo mật, tài sản và dữ liệu"
+        },
+        {
+          "block_index": 39,
+          "kind": "paragraph",
+          "text": "Bên B có trách nhiệm bảo mật thông tin khách hàng, dữ liệu nội bộ, mô hình phân tích và các tài liệu nghiệp vụ được tiếp cận trong quá trình làm việc; hoàn trả đầy đủ tài sản khi chấm dứt hợp đồng."
+        },
+        {
+          "block_index": 40,
+          "kind": "paragraph",
+          "text": "Điều 8. Chấm dứt hợp đồng"
+        },
+        {
+          "block_index": 41,
+          "kind": "paragraph",
+          "text": "Việc chấm dứt hợp đồng, đơn phương chấm dứt, thời hạn báo trước và trách nhiệm của mỗi bên được thực hiện theo quy định pháp luật lao động hiện hành."
+        },
+        {
+          "block_index": 42,
+          "kind": "paragraph",
+          "text": "Điều 9. Điều khoản chung"
+        },
+        {
+          "block_index": 43,
+          "kind": "paragraph",
+          "text": "Các nội dung chưa được quy định tại hợp đồng này thực hiện theo nội quy lao động, quy chế nội bộ hợp pháp của Công ty và pháp luật lao động. Mọi sửa đổi, bổ sung phải được lập thành văn bản."
+        },
+        {
+          "block_index": 44,
+          "kind": "paragraph",
+          "text": "Hợp đồng được lập thành 02 bản có giá trị như nhau, mỗi bên giữ 01 bản để thực hiện."
+        },
+        {
+          "block_index": 45,
+          "kind": "table_row",
+          "text": "ĐẠI DIỆN BÊN A (Ký, ghi rõ họ tên, chức vụ và đóng dấu) TRẦN NGỌC AN | NGƯỜI LAO ĐỘNG (Ký và ghi rõ họ tên) NGUYỄN MINH KHÔI"
+        }
+      ],
+      "sections": [
+        {
+          "section_index": 0,
+          "section_id": "HDLD_Chuyen_vien_Phan_tich_Du_lieu:section:0",
+          "heading": null,
+          "text": "CÔNG TY TNHH CÔNG NGHỆ MINH HÀ | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM Độc lập - Tự do - Hạnh phúc --------------------\nHỢP ĐỒNG LAO ĐỘNG\nSố: 12/2026/HĐLĐ-MH\nCăn cứ: Bộ luật Lao động và các văn bản hướng dẫn thi hành có liên quan; nhu cầu sử dụng lao động của doanh nghiệp và sự tự nguyện thỏa thuận của các bên.\nHôm nay, các bên thống nhất giao kết hợp đồng lao động với các nội dung sau:\nBÊN SỬ DỤNG LAO ĐỘNG (BÊN A) | BÊN SỬ DỤNG LAO ĐỘNG (BÊN A)\nTên doanh nghiệp | Công ty TNHH Công nghệ Minh Hà\nMã số doanh nghiệp | 0319 842 716\nĐịa chỉ trụ sở | Tầng 6, 126 Nguyễn Thị Minh Khai, Phường Xuân Hòa, TP. Hồ Chí Minh\nNgười đại diện | Bà Trần Ngọc An\nChức vụ | Giám đốc Điều hành\nNGƯỜI LAO ĐỘNG (BÊN B) | NGƯỜI LAO ĐỘNG (BÊN B)\nHọ và tên | Nguyễn Minh Khôi\nNgày sinh | 14/03/1999\nCCCD | 079099003214\nĐịa chỉ liên hệ | 45 Đường số 6, Phường Bình Trưng, TP. Hồ Chí Minh\nSố điện thoại | 0903 418 726"
+        },
+        {
+          "section_index": 1,
+          "section_id": "HDLD_Chuyen_vien_Phan_tich_Du_lieu:section:1",
+          "heading": "Điều 1. Công việc và địa điểm làm việc",
+          "text": "Điều 1. Công việc và địa điểm làm việc\nChức danh: Chuyên viên Phân tích dữ liệu, thuộc Phòng Dữ liệu và Tối ưu vận hành.\nCông việc bao gồm xây dựng báo cáo quản trị, xử lý dữ liệu nghiệp vụ, phối hợp cùng các đơn vị xây dựng chỉ số vận hành và hỗ trợ các dự án phân tích theo phân công.\nVị trí yêu cầu tốt nghiệp đại học chuyên ngành Công nghệ thông tin, Khoa học dữ liệu, Toán - Tin hoặc chuyên ngành tương đương.\nĐịa điểm làm việc chính tại trụ sở Công ty; người lao động có thể làm việc từ xa tối đa 02 ngày/tuần theo kế hoạch của bộ phận."
+        },
+        {
+          "section_index": 2,
+          "section_id": "HDLD_Chuyen_vien_Phan_tich_Du_lieu:section:2",
+          "heading": "Điều 2. Thử việc",
+          "text": "Điều 2. Thử việc\nTrước khi thực hiện chính thức công việc theo hợp đồng này, Bên B thực hiện thời gian thử việc 03 tháng, từ ngày 01/09/2026 đến hết ngày 30/11/2026.\nTrong thời gian thử việc, Bên B thực hiện cùng phạm vi công việc nêu tại Điều 1 và được hướng dẫn bởi Trưởng nhóm Phân tích dữ liệu. Kết quả thử việc được đánh giá trên chất lượng báo cáo, tiến độ và khả năng phối hợp."
+        },
+        {
+          "section_index": 3,
+          "section_id": "HDLD_Chuyen_vien_Phan_tich_Du_lieu:section:3",
+          "heading": "Điều 3. Thời hạn hợp đồng",
+          "text": "Điều 3. Thời hạn hợp đồng\nHợp đồng có thời hạn 24 tháng kể từ ngày 01/12/2026 đến hết ngày 30/11/2028. Trước ngày hết hạn, hai bên trao đổi về nhu cầu tiếp tục hợp tác theo quy định pháp luật."
+        },
+        {
+          "section_index": 4,
+          "section_id": "HDLD_Chuyen_vien_Phan_tich_Du_lieu:section:4",
+          "heading": "Điều 4. Tiền lương, phụ cấp và phương thức thanh toán",
+          "text": "Điều 4. Tiền lương, phụ cấp và phương thức thanh toán\nNội dung | Thỏa thuận\nLương theo công việc | 18.500.000 đồng/tháng\nPhụ cấp điện thoại | 500.000 đồng/tháng\nHình thức trả | Chuyển khoản vào ngày 05 của tháng kế tiếp\nThưởng hiệu quả | Theo quy chế thưởng của Công ty và kết quả công việc"
+        },
+        {
+          "section_index": 5,
+          "section_id": "HDLD_Chuyen_vien_Phan_tich_Du_lieu:section:5",
+          "heading": "Điều 5. Thời giờ làm việc và nghỉ ngơi",
+          "text": "Điều 5. Thời giờ làm việc và nghỉ ngơi\nThời giờ làm việc bình thường là 08 giờ/ngày, từ thứ Hai đến thứ Sáu. Khung giờ làm việc tiêu chuẩn từ 08:30 đến 17:30, nghỉ trưa 01 giờ.\nViệc làm thêm giờ chỉ thực hiện khi có nhu cầu thực tế, theo phê duyệt của quản lý và trên cơ sở tuân thủ các điều kiện, giới hạn của pháp luật lao động."
+        },
+        {
+          "section_index": 6,
+          "section_id": "HDLD_Chuyen_vien_Phan_tich_Du_lieu:section:6",
+          "heading": "Điều 6. Bảo hiểm và phúc lợi",
+          "text": "Điều 6. Bảo hiểm và phúc lợi\nBên A thực hiện việc tham gia bảo hiểm xã hội, bảo hiểm y tế, bảo hiểm thất nghiệp và các chế độ khác theo quy định pháp luật. Bên B được hưởng 12 ngày nghỉ phép năm và các ngày nghỉ lễ, tết theo quy định."
+        },
+        {
+          "section_index": 7,
+          "section_id": "HDLD_Chuyen_vien_Phan_tich_Du_lieu:section:7",
+          "heading": "Điều 7. Bảo mật, tài sản và dữ liệu",
+          "text": "Điều 7. Bảo mật, tài sản và dữ liệu\nBên B có trách nhiệm bảo mật thông tin khách hàng, dữ liệu nội bộ, mô hình phân tích và các tài liệu nghiệp vụ được tiếp cận trong quá trình làm việc; hoàn trả đầy đủ tài sản khi chấm dứt hợp đồng."
+        },
+        {
+          "section_index": 8,
+          "section_id": "HDLD_Chuyen_vien_Phan_tich_Du_lieu:section:8",
+          "heading": "Điều 8. Chấm dứt hợp đồng",
+          "text": "Điều 8. Chấm dứt hợp đồng\nViệc chấm dứt hợp đồng, đơn phương chấm dứt, thời hạn báo trước và trách nhiệm của mỗi bên được thực hiện theo quy định pháp luật lao động hiện hành."
+        },
+        {
+          "section_index": 9,
+          "section_id": "HDLD_Chuyen_vien_Phan_tich_Du_lieu:section:9",
+          "heading": "Điều 9. Điều khoản chung",
+          "text": "Điều 9. Điều khoản chung\nCác nội dung chưa được quy định tại hợp đồng này thực hiện theo nội quy lao động, quy chế nội bộ hợp pháp của Công ty và pháp luật lao động. Mọi sửa đổi, bổ sung phải được lập thành văn bản.\nHợp đồng được lập thành 02 bản có giá trị như nhau, mỗi bên giữ 01 bản để thực hiện.\nĐẠI DIỆN BÊN A (Ký, ghi rõ họ tên, chức vụ và đóng dấu) TRẦN NGỌC AN | NGƯỜI LAO ĐỘNG (Ký và ghi rõ họ tên) NGUYỄN MINH KHÔI"
+        }
+      ]
+    },
+    {
+      "document_id": "HDLD_Chuyen_vien_Quan_tri_he_thong",
+      "file": "HDLD_Chuyen_vien_Quan_tri_he_thong.docx",
+      "sha256": "797efd61060975b92a6d64f56e410429b14bc1eaec5d5f7c458385f5028e24d7",
+      "block_count": 33,
+      "section_count": 9,
+      "source_blocks": [
+        {
+          "block_index": 0,
+          "kind": "table_row",
+          "text": "CÔNG TY CỔ PHẦN PHẦN MỀM SAO VIỆT | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM"
+        },
+        {
+          "block_index": 1,
+          "kind": "table_row",
+          "text": "Số: 09/2026/HĐLĐ-SV | Độc lập - Tự do - Hạnh phúc"
+        },
+        {
+          "block_index": 2,
+          "kind": "paragraph",
+          "text": "HỢP ĐỒNG LAO ĐỘNG"
+        },
+        {
+          "block_index": 3,
+          "kind": "paragraph",
+          "text": "(TP. Hồ Chí Minh, ngày 20 tháng 8 năm 2026)"
+        },
+        {
+          "block_index": 4,
+          "kind": "paragraph",
+          "text": "BÊN SỬ DỤNG LAO ĐỘNG (BÊN A)"
+        },
+        {
+          "block_index": 5,
+          "kind": "table_row",
+          "text": "Đơn vị | Công ty Cổ phần Phần mềm Sao Việt"
+        },
+        {
+          "block_index": 6,
+          "kind": "table_row",
+          "text": "Đại diện | Hoàng Thanh Bình - Giám đốc Điều hành"
+        },
+        {
+          "block_index": 7,
+          "kind": "table_row",
+          "text": "Địa chỉ | 36 Nguyễn Gia Trí, Phường Thạnh Mỹ Tây, TP. Hồ Chí Minh"
+        },
+        {
+          "block_index": 8,
+          "kind": "table_row",
+          "text": "Điện thoại | 028 7300 6688"
+        },
+        {
+          "block_index": 9,
+          "kind": "paragraph",
+          "text": "NGƯỜI LAO ĐỘNG (BÊN B)"
+        },
+        {
+          "block_index": 10,
+          "kind": "table_row",
+          "text": "Họ và tên | Lương Tuấn Kiệt"
+        },
+        {
+          "block_index": 11,
+          "kind": "table_row",
+          "text": "Ngày sinh | 03/03/1996"
+        },
+        {
+          "block_index": 12,
+          "kind": "table_row",
+          "text": "CCCD | 079196005941"
+        },
+        {
+          "block_index": 13,
+          "kind": "table_row",
+          "text": "Địa chỉ | Phường Bình Thạnh, TP. Hồ Chí Minh"
+        },
+        {
+          "block_index": 14,
+          "kind": "paragraph",
+          "text": "Hai bên thỏa thuận ký kết hợp đồng lao động với các điều khoản sau:"
+        },
+        {
+          "block_index": 15,
+          "kind": "paragraph",
+          "text": "Điều 1. Chức danh và nhiệm vụ"
+        },
+        {
+          "block_index": 16,
+          "kind": "paragraph",
+          "text": "Chức danh: Chuyên viên Quản trị hệ thống. Người lao động vận hành hạ tầng nội bộ, quản lý tài khoản hệ thống và phối hợp xử lý sự cố kỹ thuật."
+        },
+        {
+          "block_index": 17,
+          "kind": "paragraph",
+          "text": "Điều 2. Thời hạn hợp đồng"
+        },
+        {
+          "block_index": 18,
+          "kind": "paragraph",
+          "text": "Hợp đồng có thời hạn 12 tháng, từ ngày 01/09/2026 đến hết ngày 31/08/2027."
+        },
+        {
+          "block_index": 19,
+          "kind": "paragraph",
+          "text": "Điều 3. Tiền lương"
+        },
+        {
+          "block_index": 20,
+          "kind": "paragraph",
+          "text": "Mức lương theo công việc là 18.500.000 đồng/tháng, thanh toán qua tài khoản ngân hàng vào ngày 05 hằng tháng."
+        },
+        {
+          "block_index": 21,
+          "kind": "paragraph",
+          "text": "Điều 4. Thời giờ làm việc"
+        },
+        {
+          "block_index": 22,
+          "kind": "paragraph",
+          "text": "Thời giờ làm việc thông thường là 08 giờ/ngày, từ thứ Hai đến thứ Sáu. Trực hệ thống ngoài giờ được bố trí theo kế hoạch và thực hiện theo quy định áp dụng."
+        },
+        {
+          "block_index": 23,
+          "kind": "paragraph",
+          "text": "Điều 5. Bảo mật và an toàn thông tin"
+        },
+        {
+          "block_index": 24,
+          "kind": "paragraph",
+          "text": "Người lao động tuân thủ chính sách an toàn thông tin, không chia sẻ thông tin đăng nhập hoặc dữ liệu hệ thống cho người không có thẩm quyền."
+        },
+        {
+          "block_index": 25,
+          "kind": "paragraph",
+          "text": "Điều 6. Kết thúc thời hạn hợp đồng"
+        },
+        {
+          "block_index": 26,
+          "kind": "paragraph",
+          "text": "Hợp đồng chấm dứt khi hết thời hạn nêu tại Điều 2, trừ trường hợp hai bên có thỏa thuận ký kết hợp đồng mới hoặc pháp luật có quy định khác. Hai bên phối hợp hoàn tất bàn giao công việc, tài sản và các khoản thanh toán còn lại."
+        },
+        {
+          "block_index": 27,
+          "kind": "paragraph",
+          "text": "Điều 7. Chấm dứt trước thời hạn"
+        },
+        {
+          "block_index": 28,
+          "kind": "paragraph",
+          "text": "Trường hợp một bên chấm dứt hợp đồng trước thời hạn, quyền và nghĩa vụ của các bên được thực hiện theo căn cứ, trình tự và thời hạn báo trước tương ứng theo pháp luật lao động."
+        },
+        {
+          "block_index": 29,
+          "kind": "paragraph",
+          "text": "Điều 8. Điều khoản chung"
+        },
+        {
+          "block_index": 30,
+          "kind": "paragraph",
+          "text": "Hợp đồng có hiệu lực kể từ ngày ký và được lập thành 02 bản có giá trị như nhau."
+        },
+        {
+          "block_index": 31,
+          "kind": "table_row",
+          "text": "ĐẠI DIỆN BÊN A | NGƯỜI LAO ĐỘNG"
+        },
+        {
+          "block_index": 32,
+          "kind": "table_row",
+          "text": "(Ký, ghi rõ họ tên) Hoàng Thanh Bình | (Ký, ghi rõ họ tên) Lương Tuấn Kiệt"
+        }
+      ],
+      "sections": [
+        {
+          "section_index": 0,
+          "section_id": "HDLD_Chuyen_vien_Quan_tri_he_thong:section:0",
+          "heading": null,
+          "text": "CÔNG TY CỔ PHẦN PHẦN MỀM SAO VIỆT | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nSố: 09/2026/HĐLĐ-SV | Độc lập - Tự do - Hạnh phúc\nHỢP ĐỒNG LAO ĐỘNG\n(TP. Hồ Chí Minh, ngày 20 tháng 8 năm 2026)\nBÊN SỬ DỤNG LAO ĐỘNG (BÊN A)\nĐơn vị | Công ty Cổ phần Phần mềm Sao Việt\nĐại diện | Hoàng Thanh Bình - Giám đốc Điều hành\nĐịa chỉ | 36 Nguyễn Gia Trí, Phường Thạnh Mỹ Tây, TP. Hồ Chí Minh\nĐiện thoại | 028 7300 6688\nNGƯỜI LAO ĐỘNG (BÊN B)\nHọ và tên | Lương Tuấn Kiệt\nNgày sinh | 03/03/1996\nCCCD | 079196005941\nĐịa chỉ | Phường Bình Thạnh, TP. Hồ Chí Minh\nHai bên thỏa thuận ký kết hợp đồng lao động với các điều khoản sau:"
+        },
+        {
+          "section_index": 1,
+          "section_id": "HDLD_Chuyen_vien_Quan_tri_he_thong:section:1",
+          "heading": "Điều 1. Chức danh và nhiệm vụ",
+          "text": "Điều 1. Chức danh và nhiệm vụ\nChức danh: Chuyên viên Quản trị hệ thống. Người lao động vận hành hạ tầng nội bộ, quản lý tài khoản hệ thống và phối hợp xử lý sự cố kỹ thuật."
+        },
+        {
+          "section_index": 2,
+          "section_id": "HDLD_Chuyen_vien_Quan_tri_he_thong:section:2",
+          "heading": "Điều 2. Thời hạn hợp đồng",
+          "text": "Điều 2. Thời hạn hợp đồng\nHợp đồng có thời hạn 12 tháng, từ ngày 01/09/2026 đến hết ngày 31/08/2027."
+        },
+        {
+          "section_index": 3,
+          "section_id": "HDLD_Chuyen_vien_Quan_tri_he_thong:section:3",
+          "heading": "Điều 3. Tiền lương",
+          "text": "Điều 3. Tiền lương\nMức lương theo công việc là 18.500.000 đồng/tháng, thanh toán qua tài khoản ngân hàng vào ngày 05 hằng tháng."
+        },
+        {
+          "section_index": 4,
+          "section_id": "HDLD_Chuyen_vien_Quan_tri_he_thong:section:4",
+          "heading": "Điều 4. Thời giờ làm việc",
+          "text": "Điều 4. Thời giờ làm việc\nThời giờ làm việc thông thường là 08 giờ/ngày, từ thứ Hai đến thứ Sáu. Trực hệ thống ngoài giờ được bố trí theo kế hoạch và thực hiện theo quy định áp dụng."
+        },
+        {
+          "section_index": 5,
+          "section_id": "HDLD_Chuyen_vien_Quan_tri_he_thong:section:5",
+          "heading": "Điều 5. Bảo mật và an toàn thông tin",
+          "text": "Điều 5. Bảo mật và an toàn thông tin\nNgười lao động tuân thủ chính sách an toàn thông tin, không chia sẻ thông tin đăng nhập hoặc dữ liệu hệ thống cho người không có thẩm quyền."
+        },
+        {
+          "section_index": 6,
+          "section_id": "HDLD_Chuyen_vien_Quan_tri_he_thong:section:6",
+          "heading": "Điều 6. Kết thúc thời hạn hợp đồng",
+          "text": "Điều 6. Kết thúc thời hạn hợp đồng\nHợp đồng chấm dứt khi hết thời hạn nêu tại Điều 2, trừ trường hợp hai bên có thỏa thuận ký kết hợp đồng mới hoặc pháp luật có quy định khác. Hai bên phối hợp hoàn tất bàn giao công việc, tài sản và các khoản thanh toán còn lại."
+        },
+        {
+          "section_index": 7,
+          "section_id": "HDLD_Chuyen_vien_Quan_tri_he_thong:section:7",
+          "heading": "Điều 7. Chấm dứt trước thời hạn",
+          "text": "Điều 7. Chấm dứt trước thời hạn\nTrường hợp một bên chấm dứt hợp đồng trước thời hạn, quyền và nghĩa vụ của các bên được thực hiện theo căn cứ, trình tự và thời hạn báo trước tương ứng theo pháp luật lao động."
+        },
+        {
+          "section_index": 8,
+          "section_id": "HDLD_Chuyen_vien_Quan_tri_he_thong:section:8",
+          "heading": "Điều 8. Điều khoản chung",
+          "text": "Điều 8. Điều khoản chung\nHợp đồng có hiệu lực kể từ ngày ký và được lập thành 02 bản có giá trị như nhau.\nĐẠI DIỆN BÊN A | NGƯỜI LAO ĐỘNG\n(Ký, ghi rõ họ tên) Hoàng Thanh Bình | (Ký, ghi rõ họ tên) Lương Tuấn Kiệt"
+        }
+      ]
+    },
+    {
+      "document_id": "HDLD_Nhan_vien_Dieu_phoi_Ca",
+      "file": "HDLD_Nhan_vien_Dieu_phoi_Ca.docx",
+      "sha256": "72c7d027e354e3839e63c0367f5cb80823fd052952c0cf9852f22b3ea9a8aa00",
+      "block_count": 44,
+      "section_count": 9,
+      "source_blocks": [
+        {
+          "block_index": 0,
+          "kind": "table_row",
+          "text": "CÔNG TY CỔ PHẦN VẬN TẢI NAM PHƯƠNG | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM"
+        },
+        {
+          "block_index": 1,
+          "kind": "table_row",
+          "text": "Số: 42/2026/HĐLĐ-NP | Độc lập - Tự do - Hạnh phúc"
+        },
+        {
+          "block_index": 2,
+          "kind": "paragraph",
+          "text": "HỢP ĐỒNG LAO ĐỘNG"
+        },
+        {
+          "block_index": 3,
+          "kind": "paragraph",
+          "text": "(TP. Hồ Chí Minh, ngày 20 tháng 8 năm 2026)"
+        },
+        {
+          "block_index": 4,
+          "kind": "paragraph",
+          "text": "BÊN SỬ DỤNG LAO ĐỘNG (BÊN A)"
+        },
+        {
+          "block_index": 5,
+          "kind": "table_row",
+          "text": "Đơn vị | Công ty Cổ phần Vận tải Nam Phương"
+        },
+        {
+          "block_index": 6,
+          "kind": "table_row",
+          "text": "Đại diện | Trần Quốc Minh - Giám đốc vận hành"
+        },
+        {
+          "block_index": 7,
+          "kind": "table_row",
+          "text": "Địa chỉ | 118 Đường số 7, Khu đô thị An Phú, TP. Thủ Đức, TP. Hồ Chí Minh"
+        },
+        {
+          "block_index": 8,
+          "kind": "table_row",
+          "text": "Điện thoại | 028 7300 6688"
+        },
+        {
+          "block_index": 9,
+          "kind": "paragraph",
+          "text": "NGƯỜI LAO ĐỘNG (BÊN B)"
+        },
+        {
+          "block_index": 10,
+          "kind": "table_row",
+          "text": "Họ và tên | Nguyễn Hoàng Đức"
+        },
+        {
+          "block_index": 11,
+          "kind": "table_row",
+          "text": "Ngày sinh | 18/11/1998"
+        },
+        {
+          "block_index": 12,
+          "kind": "table_row",
+          "text": "CCCD | 079098001742"
+        },
+        {
+          "block_index": 13,
+          "kind": "table_row",
+          "text": "Địa chỉ | Phường Linh Trung, TP. Thủ Đức, TP. Hồ Chí Minh"
+        },
+        {
+          "block_index": 14,
+          "kind": "paragraph",
+          "text": "Hai bên thỏa thuận ký kết hợp đồng lao động với các điều khoản sau:"
+        },
+        {
+          "block_index": 15,
+          "kind": "paragraph",
+          "text": "Điều 1. Công việc và địa điểm làm việc"
+        },
+        {
+          "block_index": 16,
+          "kind": "paragraph",
+          "text": "1. Chức danh: Nhân viên điều phối ca vận tải."
+        },
+        {
+          "block_index": 17,
+          "kind": "paragraph",
+          "text": "2. Bộ phận: Trung tâm Điều hành."
+        },
+        {
+          "block_index": 18,
+          "kind": "paragraph",
+          "text": "3. Địa điểm làm việc chính: kho trung chuyển và văn phòng điều phối của Công ty tại TP. Hồ Chí Minh."
+        },
+        {
+          "block_index": 19,
+          "kind": "paragraph",
+          "text": "4. Người lao động thực hiện việc bàn giao ca, theo dõi lệnh điều xe và phối hợp xử lý phát sinh trong phạm vi nhiệm vụ được giao."
+        },
+        {
+          "block_index": 20,
+          "kind": "paragraph",
+          "text": "Điều 2. Thời hạn hợp đồng"
+        },
+        {
+          "block_index": 21,
+          "kind": "paragraph",
+          "text": "Hợp đồng có thời hạn 24 tháng, kể từ ngày 01/09/2026 đến hết ngày 31/08/2028."
+        },
+        {
+          "block_index": 22,
+          "kind": "paragraph",
+          "text": "Điều 3. Tiền lương và phương thức trả lương"
+        },
+        {
+          "block_index": 23,
+          "kind": "paragraph",
+          "text": "1. Mức lương theo công việc: 14.800.000 đồng/tháng."
+        },
+        {
+          "block_index": 24,
+          "kind": "paragraph",
+          "text": "2. Phụ cấp trách nhiệm ca: 900.000 đồng/tháng."
+        },
+        {
+          "block_index": 25,
+          "kind": "paragraph",
+          "text": "3. Tiền lương được thanh toán qua tài khoản ngân hàng vào ngày 05 của tháng kế tiếp."
+        },
+        {
+          "block_index": 26,
+          "kind": "paragraph",
+          "text": "Điều 4. Tổ chức ca làm việc"
+        },
+        {
+          "block_index": 27,
+          "kind": "table_row",
+          "text": "Ca | Khung giờ | Ghi chú bàn giao"
+        },
+        {
+          "block_index": 28,
+          "kind": "table_row",
+          "text": "Ca A | 06:00 - 14:00 | Bàn giao trực tiếp tại phòng điều hành."
+        },
+        {
+          "block_index": 29,
+          "kind": "table_row",
+          "text": "Ca B | 14:00 - 22:00 | Bàn giao trực tiếp tại phòng điều hành."
+        },
+        {
+          "block_index": 30,
+          "kind": "table_row",
+          "text": "Ca C | 22:00 - 06:00 | Áp dụng khi có kế hoạch tăng cường vận hành."
+        },
+        {
+          "block_index": 31,
+          "kind": "paragraph",
+          "text": "Theo kế hoạch luân phiên, người lao động có thể kết thúc Ca B lúc 22:00 và nhận Ca A lúc 06:00 sáng hôm sau."
+        },
+        {
+          "block_index": 32,
+          "kind": "paragraph",
+          "text": "Khoảng nghỉ giữa hai ca trong trường hợp nêu trên được bố trí tối thiểu 08 giờ."
+        },
+        {
+          "block_index": 33,
+          "kind": "paragraph",
+          "text": "Lịch ca cụ thể được Trưởng Trung tâm Điều hành công bố theo tuần."
+        },
+        {
+          "block_index": 34,
+          "kind": "paragraph",
+          "text": "Điều 5. Nghỉ phép và chế độ bảo hiểm"
+        },
+        {
+          "block_index": 35,
+          "kind": "paragraph",
+          "text": "Người lao động được nghỉ hằng năm, nghỉ lễ và tham gia các chế độ bảo hiểm bắt buộc theo quy định hiện hành."
+        },
+        {
+          "block_index": 36,
+          "kind": "paragraph",
+          "text": "Điều 6. Bảo mật và tài sản"
+        },
+        {
+          "block_index": 37,
+          "kind": "paragraph",
+          "text": "Người lao động có trách nhiệm bảo mật thông tin lịch trình, dữ liệu khách hàng và hoàn trả đầy đủ thiết bị do Công ty bàn giao khi chấm dứt hợp đồng."
+        },
+        {
+          "block_index": 38,
+          "kind": "paragraph",
+          "text": "Điều 7. Chấm dứt hợp đồng"
+        },
+        {
+          "block_index": 39,
+          "kind": "paragraph",
+          "text": "Việc chấm dứt hợp đồng, thời hạn báo trước và các nghĩa vụ khi chấm dứt được thực hiện theo quy định pháp luật lao động hiện hành."
+        },
+        {
+          "block_index": 40,
+          "kind": "paragraph",
+          "text": "Điều 8. Điều khoản chung"
+        },
+        {
+          "block_index": 41,
+          "kind": "paragraph",
+          "text": "Hợp đồng được lập thành 02 bản có giá trị như nhau; mỗi bên giữ 01 bản để thực hiện."
+        },
+        {
+          "block_index": 42,
+          "kind": "table_row",
+          "text": "ĐẠI DIỆN BÊN A | NGƯỜI LAO ĐỘNG"
+        },
+        {
+          "block_index": 43,
+          "kind": "table_row",
+          "text": "(Ký, ghi rõ họ tên) Trần Quốc Minh | (Ký, ghi rõ họ tên) Nguyễn Hoàng Đức"
+        }
+      ],
+      "sections": [
+        {
+          "section_index": 0,
+          "section_id": "HDLD_Nhan_vien_Dieu_phoi_Ca:section:0",
+          "heading": null,
+          "text": "CÔNG TY CỔ PHẦN VẬN TẢI NAM PHƯƠNG | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nSố: 42/2026/HĐLĐ-NP | Độc lập - Tự do - Hạnh phúc\nHỢP ĐỒNG LAO ĐỘNG\n(TP. Hồ Chí Minh, ngày 20 tháng 8 năm 2026)\nBÊN SỬ DỤNG LAO ĐỘNG (BÊN A)\nĐơn vị | Công ty Cổ phần Vận tải Nam Phương\nĐại diện | Trần Quốc Minh - Giám đốc vận hành\nĐịa chỉ | 118 Đường số 7, Khu đô thị An Phú, TP. Thủ Đức, TP. Hồ Chí Minh\nĐiện thoại | 028 7300 6688\nNGƯỜI LAO ĐỘNG (BÊN B)\nHọ và tên | Nguyễn Hoàng Đức\nNgày sinh | 18/11/1998\nCCCD | 079098001742\nĐịa chỉ | Phường Linh Trung, TP. Thủ Đức, TP. Hồ Chí Minh\nHai bên thỏa thuận ký kết hợp đồng lao động với các điều khoản sau:"
+        },
+        {
+          "section_index": 1,
+          "section_id": "HDLD_Nhan_vien_Dieu_phoi_Ca:section:1",
+          "heading": "Điều 1. Công việc và địa điểm làm việc",
+          "text": "Điều 1. Công việc và địa điểm làm việc\n1. Chức danh: Nhân viên điều phối ca vận tải.\n2. Bộ phận: Trung tâm Điều hành.\n3. Địa điểm làm việc chính: kho trung chuyển và văn phòng điều phối của Công ty tại TP. Hồ Chí Minh.\n4. Người lao động thực hiện việc bàn giao ca, theo dõi lệnh điều xe và phối hợp xử lý phát sinh trong phạm vi nhiệm vụ được giao."
+        },
+        {
+          "section_index": 2,
+          "section_id": "HDLD_Nhan_vien_Dieu_phoi_Ca:section:2",
+          "heading": "Điều 2. Thời hạn hợp đồng",
+          "text": "Điều 2. Thời hạn hợp đồng\nHợp đồng có thời hạn 24 tháng, kể từ ngày 01/09/2026 đến hết ngày 31/08/2028."
+        },
+        {
+          "section_index": 3,
+          "section_id": "HDLD_Nhan_vien_Dieu_phoi_Ca:section:3",
+          "heading": "Điều 3. Tiền lương và phương thức trả lương",
+          "text": "Điều 3. Tiền lương và phương thức trả lương\n1. Mức lương theo công việc: 14.800.000 đồng/tháng.\n2. Phụ cấp trách nhiệm ca: 900.000 đồng/tháng.\n3. Tiền lương được thanh toán qua tài khoản ngân hàng vào ngày 05 của tháng kế tiếp."
+        },
+        {
+          "section_index": 4,
+          "section_id": "HDLD_Nhan_vien_Dieu_phoi_Ca:section:4",
+          "heading": "Điều 4. Tổ chức ca làm việc",
+          "text": "Điều 4. Tổ chức ca làm việc\nCa | Khung giờ | Ghi chú bàn giao\nCa A | 06:00 - 14:00 | Bàn giao trực tiếp tại phòng điều hành.\nCa B | 14:00 - 22:00 | Bàn giao trực tiếp tại phòng điều hành.\nCa C | 22:00 - 06:00 | Áp dụng khi có kế hoạch tăng cường vận hành.\nTheo kế hoạch luân phiên, người lao động có thể kết thúc Ca B lúc 22:00 và nhận Ca A lúc 06:00 sáng hôm sau.\nKhoảng nghỉ giữa hai ca trong trường hợp nêu trên được bố trí tối thiểu 08 giờ.\nLịch ca cụ thể được Trưởng Trung tâm Điều hành công bố theo tuần."
+        },
+        {
+          "section_index": 5,
+          "section_id": "HDLD_Nhan_vien_Dieu_phoi_Ca:section:5",
+          "heading": "Điều 5. Nghỉ phép và chế độ bảo hiểm",
+          "text": "Điều 5. Nghỉ phép và chế độ bảo hiểm\nNgười lao động được nghỉ hằng năm, nghỉ lễ và tham gia các chế độ bảo hiểm bắt buộc theo quy định hiện hành."
+        },
+        {
+          "section_index": 6,
+          "section_id": "HDLD_Nhan_vien_Dieu_phoi_Ca:section:6",
+          "heading": "Điều 6. Bảo mật và tài sản",
+          "text": "Điều 6. Bảo mật và tài sản\nNgười lao động có trách nhiệm bảo mật thông tin lịch trình, dữ liệu khách hàng và hoàn trả đầy đủ thiết bị do Công ty bàn giao khi chấm dứt hợp đồng."
+        },
+        {
+          "section_index": 7,
+          "section_id": "HDLD_Nhan_vien_Dieu_phoi_Ca:section:7",
+          "heading": "Điều 7. Chấm dứt hợp đồng",
+          "text": "Điều 7. Chấm dứt hợp đồng\nViệc chấm dứt hợp đồng, thời hạn báo trước và các nghĩa vụ khi chấm dứt được thực hiện theo quy định pháp luật lao động hiện hành."
+        },
+        {
+          "section_index": 8,
+          "section_id": "HDLD_Nhan_vien_Dieu_phoi_Ca:section:8",
+          "heading": "Điều 8. Điều khoản chung",
+          "text": "Điều 8. Điều khoản chung\nHợp đồng được lập thành 02 bản có giá trị như nhau; mỗi bên giữ 01 bản để thực hiện.\nĐẠI DIỆN BÊN A | NGƯỜI LAO ĐỘNG\n(Ký, ghi rõ họ tên) Trần Quốc Minh | (Ký, ghi rõ họ tên) Nguyễn Hoàng Đức"
+        }
+      ]
+    },
+    {
+      "document_id": "HDLD_Nhan_vien_Van_hanh_Kho",
+      "file": "HDLD_Nhan_vien_Van_hanh_Kho.docx",
+      "sha256": "2f05e21dec7cc7baaba2b087a89ecb925bb38a83a0b58bb17ccf85e37e77e54f",
+      "block_count": 47,
+      "section_count": 11,
+      "source_blocks": [
+        {
+          "block_index": 0,
+          "kind": "table_row",
+          "text": "CÔNG TY CỔ PHẦN LOGISTICS AN PHÚ | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM Độc lập - Tự do - Hạnh phúc --------------------"
+        },
+        {
+          "block_index": 1,
+          "kind": "paragraph",
+          "text": "HỢP ĐỒNG LAO ĐỘNG"
+        },
+        {
+          "block_index": 2,
+          "kind": "paragraph",
+          "text": "Số: 36/2026/HĐLĐ-AP"
+        },
+        {
+          "block_index": 3,
+          "kind": "paragraph",
+          "text": "Căn cứ: Bộ luật Lao động và các văn bản hướng dẫn thi hành có liên quan; nhu cầu sử dụng lao động của doanh nghiệp và sự tự nguyện thỏa thuận của các bên."
+        },
+        {
+          "block_index": 4,
+          "kind": "paragraph",
+          "text": "Hôm nay, các bên thống nhất giao kết hợp đồng lao động với các nội dung sau:"
+        },
+        {
+          "block_index": 5,
+          "kind": "table_row",
+          "text": "BÊN SỬ DỤNG LAO ĐỘNG (BÊN A) | BÊN SỬ DỤNG LAO ĐỘNG (BÊN A)"
+        },
+        {
+          "block_index": 6,
+          "kind": "table_row",
+          "text": "Tên doanh nghiệp | Công ty Cổ phần Logistics An Phú"
+        },
+        {
+          "block_index": 7,
+          "kind": "table_row",
+          "text": "Mã số doanh nghiệp | 0317 556 902"
+        },
+        {
+          "block_index": 8,
+          "kind": "table_row",
+          "text": "Địa chỉ trụ sở | 28 Đường số 8, Khu công nghiệp Tân Tạo, Phường Tân Tạo, TP. Hồ Chí Minh"
+        },
+        {
+          "block_index": 9,
+          "kind": "table_row",
+          "text": "Người đại diện | Ông Lê Hoàng Duy"
+        },
+        {
+          "block_index": 10,
+          "kind": "table_row",
+          "text": "Chức vụ | Giám đốc Khối Vận hành"
+        },
+        {
+          "block_index": 11,
+          "kind": "table_row",
+          "text": "NGƯỜI LAO ĐỘNG (BÊN B) | NGƯỜI LAO ĐỘNG (BÊN B)"
+        },
+        {
+          "block_index": 12,
+          "kind": "table_row",
+          "text": "Họ và tên | Phạm Quốc Hưng"
+        },
+        {
+          "block_index": 13,
+          "kind": "table_row",
+          "text": "Ngày sinh | 08/11/1996"
+        },
+        {
+          "block_index": 14,
+          "kind": "table_row",
+          "text": "CCCD | 079096014585"
+        },
+        {
+          "block_index": 15,
+          "kind": "table_row",
+          "text": "Địa chỉ liên hệ | 112 Lê Trọng Tấn, Phường Tây Thạnh, TP. Hồ Chí Minh"
+        },
+        {
+          "block_index": 16,
+          "kind": "table_row",
+          "text": "Số điện thoại | 0918 335 204"
+        },
+        {
+          "block_index": 17,
+          "kind": "paragraph",
+          "text": "Điều 1. Công việc, bộ phận và nơi làm việc"
+        },
+        {
+          "block_index": 18,
+          "kind": "paragraph",
+          "text": "Chức danh: Nhân viên Vận hành kho, thuộc Trung tâm Phân phối Tân Tạo. Bên B thực hiện tiếp nhận, phân loại, sắp xếp, bàn giao hàng hóa; cập nhật dữ liệu xuất nhập kho; phối hợp kiểm kê định kỳ và các nhiệm vụ vận hành liên quan."
+        },
+        {
+          "block_index": 19,
+          "kind": "paragraph",
+          "text": "Địa điểm làm việc chính tại Trung tâm Phân phối Tân Tạo và các kho vệ tinh trong phạm vi TP. Hồ Chí Minh khi có kế hoạch điều phối."
+        },
+        {
+          "block_index": 20,
+          "kind": "paragraph",
+          "text": "Điều 2. Thử việc và đánh giá ban đầu"
+        },
+        {
+          "block_index": 21,
+          "kind": "paragraph",
+          "text": "Bên B thử việc trong thời hạn 90 ngày kể từ ngày 01/09/2026. Trong thời gian này, Bên B được bố trí công việc đầy đủ theo mô tả vị trí và chịu sự đánh giá trực tiếp của Quản lý kho."
+        },
+        {
+          "block_index": 22,
+          "kind": "paragraph",
+          "text": "Mức lương trong thời gian thử việc bằng 70% mức lương theo công việc nêu tại Điều 4 của hợp đồng."
+        },
+        {
+          "block_index": 23,
+          "kind": "paragraph",
+          "text": "Điều 3. Thời hạn hợp đồng"
+        },
+        {
+          "block_index": 24,
+          "kind": "paragraph",
+          "text": "Sau thời gian thử việc, nếu đạt yêu cầu, hợp đồng được thực hiện đến hết ngày 31/08/2028, trừ trường hợp chấm dứt trước hạn theo thỏa thuận tại hợp đồng này hoặc theo quy định pháp luật."
+        },
+        {
+          "block_index": 25,
+          "kind": "paragraph",
+          "text": "Điều 4. Tiền lương và các khoản hỗ trợ"
+        },
+        {
+          "block_index": 26,
+          "kind": "table_row",
+          "text": "Nội dung | Thỏa thuận"
+        },
+        {
+          "block_index": 27,
+          "kind": "table_row",
+          "text": "Lương theo công việc | 12.800.000 đồng/tháng"
+        },
+        {
+          "block_index": 28,
+          "kind": "table_row",
+          "text": "Phụ cấp ca | 700.000 đồng/tháng khi bố trí đủ ca"
+        },
+        {
+          "block_index": 29,
+          "kind": "table_row",
+          "text": "Phụ cấp ăn giữa ca | 35.000 đồng/ngày làm việc thực tế"
+        },
+        {
+          "block_index": 30,
+          "kind": "table_row",
+          "text": "Kỳ trả lương | Ngày 07 hằng tháng qua tài khoản ngân hàng"
+        },
+        {
+          "block_index": 31,
+          "kind": "paragraph",
+          "text": "Điều 5. Thời giờ làm việc"
+        },
+        {
+          "block_index": 32,
+          "kind": "paragraph",
+          "text": "Do đặc thù vận hành kho, Bên B làm việc theo ca 12 giờ, từ 06:00 đến 18:00 hoặc từ 18:00 đến 06:00 ngày hôm sau, 06 ngày trong tuần theo lịch do Quản lý kho công bố trước."
+        },
+        {
+          "block_index": 33,
+          "kind": "paragraph",
+          "text": "Thời gian bàn giao ca, kiểm đếm cuối ca và xử lý hàng tồn được tính trong ca làm việc. Trường hợp phát sinh cao điểm, Bên A bố trí điều chỉnh lịch theo nhu cầu vận hành."
+        },
+        {
+          "block_index": 34,
+          "kind": "paragraph",
+          "text": "Điều 6. Nghỉ ngơi và nghỉ phép"
+        },
+        {
+          "block_index": 35,
+          "kind": "paragraph",
+          "text": "Người lao động được nghỉ giữa ca theo lịch vận hành của kho; nghỉ hằng tuần theo lịch phân ca. Nghỉ phép năm, nghỉ lễ, tết và các chế độ nghỉ khác thực hiện theo quy định pháp luật và quy chế Công ty."
+        },
+        {
+          "block_index": 36,
+          "kind": "paragraph",
+          "text": "Điều 7. An toàn lao động và tài sản"
+        },
+        {
+          "block_index": 37,
+          "kind": "paragraph",
+          "text": "Bên B phải tuân thủ quy trình an toàn kho, sử dụng đúng phương tiện bảo hộ, thiết bị nâng hạ và các công cụ được bàn giao. Mọi sự cố phải được báo cáo ngay cho quản lý trực tiếp."
+        },
+        {
+          "block_index": 38,
+          "kind": "paragraph",
+          "text": "Điều 8. Chấm dứt hợp đồng"
+        },
+        {
+          "block_index": 39,
+          "kind": "paragraph",
+          "text": "Ngoài các trường hợp theo pháp luật, Bên A có quyền chấm dứt hợp đồng trước thời hạn khi xét thấy việc tiếp tục bố trí Bên B không còn phù hợp với nhu cầu vận hành của kho; Công ty thông báo cho Bên B trước 05 ngày làm việc."
+        },
+        {
+          "block_index": 40,
+          "kind": "paragraph",
+          "text": "Bên B có trách nhiệm hoàn tất bàn giao hàng hóa, chứng từ, tài sản và công cụ được giao trước ngày nghỉ việc."
+        },
+        {
+          "block_index": 41,
+          "kind": "paragraph",
+          "text": "Điều 9. Kỷ luật và trách nhiệm vật chất"
+        },
+        {
+          "block_index": 42,
+          "kind": "paragraph",
+          "text": "Các hành vi vi phạm nội quy, quy trình an toàn, quản lý hàng hóa hoặc gây thiệt hại được xem xét theo nội quy lao động, quy định trách nhiệm vật chất và pháp luật có liên quan."
+        },
+        {
+          "block_index": 43,
+          "kind": "paragraph",
+          "text": "Điều 10. Điều khoản thi hành"
+        },
+        {
+          "block_index": 44,
+          "kind": "paragraph",
+          "text": "Hai bên đã đọc, hiểu và thống nhất nội dung hợp đồng. Các phụ lục được ký hợp lệ là bộ phận không tách rời của hợp đồng này."
+        },
+        {
+          "block_index": 45,
+          "kind": "paragraph",
+          "text": "Hợp đồng được lập thành 02 bản có giá trị như nhau, mỗi bên giữ 01 bản để thực hiện."
+        },
+        {
+          "block_index": 46,
+          "kind": "table_row",
+          "text": "ĐẠI DIỆN BÊN A (Ký, ghi rõ họ tên, chức vụ và đóng dấu) LÊ HOÀNG DUY | NGƯỜI LAO ĐỘNG (Ký và ghi rõ họ tên) PHẠM QUỐC HƯNG"
+        }
+      ],
+      "sections": [
+        {
+          "section_index": 0,
+          "section_id": "HDLD_Nhan_vien_Van_hanh_Kho:section:0",
+          "heading": null,
+          "text": "CÔNG TY CỔ PHẦN LOGISTICS AN PHÚ | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM Độc lập - Tự do - Hạnh phúc --------------------\nHỢP ĐỒNG LAO ĐỘNG\nSố: 36/2026/HĐLĐ-AP\nCăn cứ: Bộ luật Lao động và các văn bản hướng dẫn thi hành có liên quan; nhu cầu sử dụng lao động của doanh nghiệp và sự tự nguyện thỏa thuận của các bên.\nHôm nay, các bên thống nhất giao kết hợp đồng lao động với các nội dung sau:\nBÊN SỬ DỤNG LAO ĐỘNG (BÊN A) | BÊN SỬ DỤNG LAO ĐỘNG (BÊN A)\nTên doanh nghiệp | Công ty Cổ phần Logistics An Phú\nMã số doanh nghiệp | 0317 556 902\nĐịa chỉ trụ sở | 28 Đường số 8, Khu công nghiệp Tân Tạo, Phường Tân Tạo, TP. Hồ Chí Minh\nNgười đại diện | Ông Lê Hoàng Duy\nChức vụ | Giám đốc Khối Vận hành\nNGƯỜI LAO ĐỘNG (BÊN B) | NGƯỜI LAO ĐỘNG (BÊN B)\nHọ và tên | Phạm Quốc Hưng\nNgày sinh | 08/11/1996\nCCCD | 079096014585\nĐịa chỉ liên hệ | 112 Lê Trọng Tấn, Phường Tây Thạnh, TP. Hồ Chí Minh\nSố điện thoại | 0918 335 204"
+        },
+        {
+          "section_index": 1,
+          "section_id": "HDLD_Nhan_vien_Van_hanh_Kho:section:1",
+          "heading": "Điều 1. Công việc, bộ phận và nơi làm việc",
+          "text": "Điều 1. Công việc, bộ phận và nơi làm việc\nChức danh: Nhân viên Vận hành kho, thuộc Trung tâm Phân phối Tân Tạo. Bên B thực hiện tiếp nhận, phân loại, sắp xếp, bàn giao hàng hóa; cập nhật dữ liệu xuất nhập kho; phối hợp kiểm kê định kỳ và các nhiệm vụ vận hành liên quan.\nĐịa điểm làm việc chính tại Trung tâm Phân phối Tân Tạo và các kho vệ tinh trong phạm vi TP. Hồ Chí Minh khi có kế hoạch điều phối."
+        },
+        {
+          "section_index": 2,
+          "section_id": "HDLD_Nhan_vien_Van_hanh_Kho:section:2",
+          "heading": "Điều 2. Thử việc và đánh giá ban đầu",
+          "text": "Điều 2. Thử việc và đánh giá ban đầu\nBên B thử việc trong thời hạn 90 ngày kể từ ngày 01/09/2026. Trong thời gian này, Bên B được bố trí công việc đầy đủ theo mô tả vị trí và chịu sự đánh giá trực tiếp của Quản lý kho.\nMức lương trong thời gian thử việc bằng 70% mức lương theo công việc nêu tại Điều 4 của hợp đồng."
+        },
+        {
+          "section_index": 3,
+          "section_id": "HDLD_Nhan_vien_Van_hanh_Kho:section:3",
+          "heading": "Điều 3. Thời hạn hợp đồng",
+          "text": "Điều 3. Thời hạn hợp đồng\nSau thời gian thử việc, nếu đạt yêu cầu, hợp đồng được thực hiện đến hết ngày 31/08/2028, trừ trường hợp chấm dứt trước hạn theo thỏa thuận tại hợp đồng này hoặc theo quy định pháp luật."
+        },
+        {
+          "section_index": 4,
+          "section_id": "HDLD_Nhan_vien_Van_hanh_Kho:section:4",
+          "heading": "Điều 4. Tiền lương và các khoản hỗ trợ",
+          "text": "Điều 4. Tiền lương và các khoản hỗ trợ\nNội dung | Thỏa thuận\nLương theo công việc | 12.800.000 đồng/tháng\nPhụ cấp ca | 700.000 đồng/tháng khi bố trí đủ ca\nPhụ cấp ăn giữa ca | 35.000 đồng/ngày làm việc thực tế\nKỳ trả lương | Ngày 07 hằng tháng qua tài khoản ngân hàng"
+        },
+        {
+          "section_index": 5,
+          "section_id": "HDLD_Nhan_vien_Van_hanh_Kho:section:5",
+          "heading": "Điều 5. Thời giờ làm việc",
+          "text": "Điều 5. Thời giờ làm việc\nDo đặc thù vận hành kho, Bên B làm việc theo ca 12 giờ, từ 06:00 đến 18:00 hoặc từ 18:00 đến 06:00 ngày hôm sau, 06 ngày trong tuần theo lịch do Quản lý kho công bố trước.\nThời gian bàn giao ca, kiểm đếm cuối ca và xử lý hàng tồn được tính trong ca làm việc. Trường hợp phát sinh cao điểm, Bên A bố trí điều chỉnh lịch theo nhu cầu vận hành."
+        },
+        {
+          "section_index": 6,
+          "section_id": "HDLD_Nhan_vien_Van_hanh_Kho:section:6",
+          "heading": "Điều 6. Nghỉ ngơi và nghỉ phép",
+          "text": "Điều 6. Nghỉ ngơi và nghỉ phép\nNgười lao động được nghỉ giữa ca theo lịch vận hành của kho; nghỉ hằng tuần theo lịch phân ca. Nghỉ phép năm, nghỉ lễ, tết và các chế độ nghỉ khác thực hiện theo quy định pháp luật và quy chế Công ty."
+        },
+        {
+          "section_index": 7,
+          "section_id": "HDLD_Nhan_vien_Van_hanh_Kho:section:7",
+          "heading": "Điều 7. An toàn lao động và tài sản",
+          "text": "Điều 7. An toàn lao động và tài sản\nBên B phải tuân thủ quy trình an toàn kho, sử dụng đúng phương tiện bảo hộ, thiết bị nâng hạ và các công cụ được bàn giao. Mọi sự cố phải được báo cáo ngay cho quản lý trực tiếp."
+        },
+        {
+          "section_index": 8,
+          "section_id": "HDLD_Nhan_vien_Van_hanh_Kho:section:8",
+          "heading": "Điều 8. Chấm dứt hợp đồng",
+          "text": "Điều 8. Chấm dứt hợp đồng\nNgoài các trường hợp theo pháp luật, Bên A có quyền chấm dứt hợp đồng trước thời hạn khi xét thấy việc tiếp tục bố trí Bên B không còn phù hợp với nhu cầu vận hành của kho; Công ty thông báo cho Bên B trước 05 ngày làm việc.\nBên B có trách nhiệm hoàn tất bàn giao hàng hóa, chứng từ, tài sản và công cụ được giao trước ngày nghỉ việc."
+        },
+        {
+          "section_index": 9,
+          "section_id": "HDLD_Nhan_vien_Van_hanh_Kho:section:9",
+          "heading": "Điều 9. Kỷ luật và trách nhiệm vật chất",
+          "text": "Điều 9. Kỷ luật và trách nhiệm vật chất\nCác hành vi vi phạm nội quy, quy trình an toàn, quản lý hàng hóa hoặc gây thiệt hại được xem xét theo nội quy lao động, quy định trách nhiệm vật chất và pháp luật có liên quan."
+        },
+        {
+          "section_index": 10,
+          "section_id": "HDLD_Nhan_vien_Van_hanh_Kho:section:10",
+          "heading": "Điều 10. Điều khoản thi hành",
+          "text": "Điều 10. Điều khoản thi hành\nHai bên đã đọc, hiểu và thống nhất nội dung hợp đồng. Các phụ lục được ký hợp lệ là bộ phận không tách rời của hợp đồng này.\nHợp đồng được lập thành 02 bản có giá trị như nhau, mỗi bên giữ 01 bản để thực hiện.\nĐẠI DIỆN BÊN A (Ký, ghi rõ họ tên, chức vụ và đóng dấu) LÊ HOÀNG DUY | NGƯỜI LAO ĐỘNG (Ký và ghi rõ họ tên) PHẠM QUỐC HƯNG"
+        }
+      ]
+    },
+    {
+      "document_id": "HDLD_Truong_nhom_Kinh_doanh",
+      "file": "HDLD_Truong_nhom_Kinh_doanh.docx",
+      "sha256": "9256f6dd915711aee6e13a31ef32890e1c97c46033b6e083434dd4f2a82914bc",
+      "block_count": 38,
+      "section_count": 10,
+      "source_blocks": [
+        {
+          "block_index": 0,
+          "kind": "table_row",
+          "text": "CÔNG TY TNHH GIẢI PHÁP BÁN HÀNG ĐÔNG PHƯƠNG | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM Độc lập - Tự do - Hạnh phúc --------------------"
+        },
+        {
+          "block_index": 1,
+          "kind": "paragraph",
+          "text": "HỢP ĐỒNG LAO ĐỘNG"
+        },
+        {
+          "block_index": 2,
+          "kind": "paragraph",
+          "text": "Số: 27/2026/HĐLĐ-DP"
+        },
+        {
+          "block_index": 3,
+          "kind": "paragraph",
+          "text": "Căn cứ: Bộ luật Lao động và các văn bản hướng dẫn thi hành có liên quan; nhu cầu sử dụng lao động của doanh nghiệp và sự tự nguyện thỏa thuận của các bên."
+        },
+        {
+          "block_index": 4,
+          "kind": "paragraph",
+          "text": "Hôm nay, các bên thống nhất giao kết hợp đồng lao động với các nội dung sau:"
+        },
+        {
+          "block_index": 5,
+          "kind": "table_row",
+          "text": "BÊN SỬ DỤNG LAO ĐỘNG (BÊN A) | BÊN SỬ DỤNG LAO ĐỘNG (BÊN A)"
+        },
+        {
+          "block_index": 6,
+          "kind": "table_row",
+          "text": "Tên doanh nghiệp | Công ty TNHH Giải pháp Bán hàng Đông Phương"
+        },
+        {
+          "block_index": 7,
+          "kind": "table_row",
+          "text": "Mã số doanh nghiệp | 0315 993 870"
+        },
+        {
+          "block_index": 8,
+          "kind": "table_row",
+          "text": "Địa chỉ trụ sở | 17 Nguyễn Cơ Thạch, Phường An Khánh, TP. Hồ Chí Minh"
+        },
+        {
+          "block_index": 9,
+          "kind": "table_row",
+          "text": "Người đại diện | Ông Phan Minh Quân"
+        },
+        {
+          "block_index": 10,
+          "kind": "table_row",
+          "text": "Chức vụ | Tổng Giám đốc"
+        },
+        {
+          "block_index": 11,
+          "kind": "table_row",
+          "text": "NGƯỜI LAO ĐỘNG (BÊN B) | NGƯỜI LAO ĐỘNG (BÊN B)"
+        },
+        {
+          "block_index": 12,
+          "kind": "table_row",
+          "text": "Họ và tên | Đỗ Anh Tuấn"
+        },
+        {
+          "block_index": 13,
+          "kind": "table_row",
+          "text": "Ngày sinh | 17/10/1994"
+        },
+        {
+          "block_index": 14,
+          "kind": "table_row",
+          "text": "CCCD | 079094018642"
+        },
+        {
+          "block_index": 15,
+          "kind": "table_row",
+          "text": "Địa chỉ liên hệ | 91 Ung Văn Khiêm, Phường Thạnh Mỹ Tây, TP. Hồ Chí Minh"
+        },
+        {
+          "block_index": 16,
+          "kind": "table_row",
+          "text": "Số điện thoại | 0932 640 118"
+        },
+        {
+          "block_index": 17,
+          "kind": "paragraph",
+          "text": "Điều 1. Chức danh và nhiệm vụ"
+        },
+        {
+          "block_index": 18,
+          "kind": "paragraph",
+          "text": "Chức danh: Trưởng nhóm Kinh doanh doanh nghiệp. Bên B quản lý nhóm từ 5-8 nhân sự, xây dựng kế hoạch doanh số, hỗ trợ đàm phán khách hàng và báo cáo kết quả hằng tháng cho Giám đốc Kinh doanh."
+        },
+        {
+          "block_index": 19,
+          "kind": "paragraph",
+          "text": "Điều 2. Thời hạn hợp đồng"
+        },
+        {
+          "block_index": 20,
+          "kind": "paragraph",
+          "text": "Hợp đồng có thời hạn 24 tháng kể từ ngày 01/10/2026 đến hết ngày 30/09/2028."
+        },
+        {
+          "block_index": 21,
+          "kind": "paragraph",
+          "text": "Điều 3. Tiền lương và thưởng"
+        },
+        {
+          "block_index": 22,
+          "kind": "paragraph",
+          "text": "Lương theo công việc là 24.000.000 đồng/tháng, thanh toán vào ngày 05 của tháng kế tiếp. Thưởng kinh doanh được xác định theo kết quả của nhóm và chính sách từng thời kỳ."
+        },
+        {
+          "block_index": 23,
+          "kind": "paragraph",
+          "text": "Điều 4. Thời giờ làm việc"
+        },
+        {
+          "block_index": 24,
+          "kind": "paragraph",
+          "text": "Thời giờ làm việc bình thường 08 giờ/ngày, 05 ngày/tuần. Bên B chủ động sắp xếp lịch gặp khách hàng trong phạm vi kế hoạch công việc và bảo đảm các yêu cầu về thời gian làm việc, nghỉ ngơi theo pháp luật."
+        },
+        {
+          "block_index": 25,
+          "kind": "paragraph",
+          "text": "Điều 5. Đánh giá hiệu quả công việc"
+        },
+        {
+          "block_index": 26,
+          "kind": "paragraph",
+          "text": "Kết quả được đánh giá theo doanh số, tỷ lệ duy trì khách hàng, chất lượng quản lý nhóm và mức độ tuân thủ quy trình. Mục tiêu cụ thể được giao theo quý và có thể điều chỉnh theo thị trường."
+        },
+        {
+          "block_index": 27,
+          "kind": "paragraph",
+          "text": "Điều 6. Chấm dứt hợp đồng trước thời hạn"
+        },
+        {
+          "block_index": 28,
+          "kind": "paragraph",
+          "text": "Trường hợp Ban điều hành xét thấy việc tiếp tục bố trí Bên B ở vị trí hiện tại không còn phù hợp với định hướng kinh doanh hoặc cơ cấu khách hàng của Công ty, Bên A có quyền chấm dứt hợp đồng trước thời hạn sau khi thông báo cho Bên B trước 05 ngày làm việc."
+        },
+        {
+          "block_index": 29,
+          "kind": "paragraph",
+          "text": "Bên B có trách nhiệm bàn giao khách hàng, hồ sơ kinh doanh, tài khoản hệ thống và tài sản được giao trước ngày chấm dứt."
+        },
+        {
+          "block_index": 30,
+          "kind": "paragraph",
+          "text": "Điều 7. Bảo mật và không sử dụng dữ liệu trái phép"
+        },
+        {
+          "block_index": 31,
+          "kind": "paragraph",
+          "text": "Bên B không được sao chép, chuyển giao hoặc sử dụng danh sách khách hàng, dữ liệu giá, chính sách chiết khấu và thông tin nội bộ cho mục đích ngoài công việc."
+        },
+        {
+          "block_index": 32,
+          "kind": "paragraph",
+          "text": "Điều 8. Bảo hiểm, nghỉ phép và chế độ khác"
+        },
+        {
+          "block_index": 33,
+          "kind": "paragraph",
+          "text": "Bên A tham gia bảo hiểm bắt buộc và thực hiện chế độ nghỉ phép, nghỉ lễ, tết theo quy định. Các phúc lợi bổ sung được thực hiện theo chính sách của Công ty."
+        },
+        {
+          "block_index": 34,
+          "kind": "paragraph",
+          "text": "Điều 9. Điều khoản chung"
+        },
+        {
+          "block_index": 35,
+          "kind": "paragraph",
+          "text": "Các nội dung chưa quy định trong hợp đồng này được thực hiện theo pháp luật lao động và quy chế nội bộ hợp pháp của Công ty. Hai bên có thể sửa đổi, bổ sung hợp đồng bằng văn bản."
+        },
+        {
+          "block_index": 36,
+          "kind": "paragraph",
+          "text": "Hợp đồng được lập thành 02 bản có giá trị như nhau, mỗi bên giữ 01 bản để thực hiện."
+        },
+        {
+          "block_index": 37,
+          "kind": "table_row",
+          "text": "ĐẠI DIỆN BÊN A (Ký, ghi rõ họ tên, chức vụ và đóng dấu) PHAN MINH QUÂN | NGƯỜI LAO ĐỘNG (Ký và ghi rõ họ tên) ĐỖ ANH TUẤN"
+        }
+      ],
+      "sections": [
+        {
+          "section_index": 0,
+          "section_id": "HDLD_Truong_nhom_Kinh_doanh:section:0",
+          "heading": null,
+          "text": "CÔNG TY TNHH GIẢI PHÁP BÁN HÀNG ĐÔNG PHƯƠNG | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM Độc lập - Tự do - Hạnh phúc --------------------\nHỢP ĐỒNG LAO ĐỘNG\nSố: 27/2026/HĐLĐ-DP\nCăn cứ: Bộ luật Lao động và các văn bản hướng dẫn thi hành có liên quan; nhu cầu sử dụng lao động của doanh nghiệp và sự tự nguyện thỏa thuận của các bên.\nHôm nay, các bên thống nhất giao kết hợp đồng lao động với các nội dung sau:\nBÊN SỬ DỤNG LAO ĐỘNG (BÊN A) | BÊN SỬ DỤNG LAO ĐỘNG (BÊN A)\nTên doanh nghiệp | Công ty TNHH Giải pháp Bán hàng Đông Phương\nMã số doanh nghiệp | 0315 993 870\nĐịa chỉ trụ sở | 17 Nguyễn Cơ Thạch, Phường An Khánh, TP. Hồ Chí Minh\nNgười đại diện | Ông Phan Minh Quân\nChức vụ | Tổng Giám đốc\nNGƯỜI LAO ĐỘNG (BÊN B) | NGƯỜI LAO ĐỘNG (BÊN B)\nHọ và tên | Đỗ Anh Tuấn\nNgày sinh | 17/10/1994\nCCCD | 079094018642\nĐịa chỉ liên hệ | 91 Ung Văn Khiêm, Phường Thạnh Mỹ Tây, TP. Hồ Chí Minh\nSố điện thoại | 0932 640 118"
+        },
+        {
+          "section_index": 1,
+          "section_id": "HDLD_Truong_nhom_Kinh_doanh:section:1",
+          "heading": "Điều 1. Chức danh và nhiệm vụ",
+          "text": "Điều 1. Chức danh và nhiệm vụ\nChức danh: Trưởng nhóm Kinh doanh doanh nghiệp. Bên B quản lý nhóm từ 5-8 nhân sự, xây dựng kế hoạch doanh số, hỗ trợ đàm phán khách hàng và báo cáo kết quả hằng tháng cho Giám đốc Kinh doanh."
+        },
+        {
+          "section_index": 2,
+          "section_id": "HDLD_Truong_nhom_Kinh_doanh:section:2",
+          "heading": "Điều 2. Thời hạn hợp đồng",
+          "text": "Điều 2. Thời hạn hợp đồng\nHợp đồng có thời hạn 24 tháng kể từ ngày 01/10/2026 đến hết ngày 30/09/2028."
+        },
+        {
+          "section_index": 3,
+          "section_id": "HDLD_Truong_nhom_Kinh_doanh:section:3",
+          "heading": "Điều 3. Tiền lương và thưởng",
+          "text": "Điều 3. Tiền lương và thưởng\nLương theo công việc là 24.000.000 đồng/tháng, thanh toán vào ngày 05 của tháng kế tiếp. Thưởng kinh doanh được xác định theo kết quả của nhóm và chính sách từng thời kỳ."
+        },
+        {
+          "section_index": 4,
+          "section_id": "HDLD_Truong_nhom_Kinh_doanh:section:4",
+          "heading": "Điều 4. Thời giờ làm việc",
+          "text": "Điều 4. Thời giờ làm việc\nThời giờ làm việc bình thường 08 giờ/ngày, 05 ngày/tuần. Bên B chủ động sắp xếp lịch gặp khách hàng trong phạm vi kế hoạch công việc và bảo đảm các yêu cầu về thời gian làm việc, nghỉ ngơi theo pháp luật."
+        },
+        {
+          "section_index": 5,
+          "section_id": "HDLD_Truong_nhom_Kinh_doanh:section:5",
+          "heading": "Điều 5. Đánh giá hiệu quả công việc",
+          "text": "Điều 5. Đánh giá hiệu quả công việc\nKết quả được đánh giá theo doanh số, tỷ lệ duy trì khách hàng, chất lượng quản lý nhóm và mức độ tuân thủ quy trình. Mục tiêu cụ thể được giao theo quý và có thể điều chỉnh theo thị trường."
+        },
+        {
+          "section_index": 6,
+          "section_id": "HDLD_Truong_nhom_Kinh_doanh:section:6",
+          "heading": "Điều 6. Chấm dứt hợp đồng trước thời hạn",
+          "text": "Điều 6. Chấm dứt hợp đồng trước thời hạn\nTrường hợp Ban điều hành xét thấy việc tiếp tục bố trí Bên B ở vị trí hiện tại không còn phù hợp với định hướng kinh doanh hoặc cơ cấu khách hàng của Công ty, Bên A có quyền chấm dứt hợp đồng trước thời hạn sau khi thông báo cho Bên B trước 05 ngày làm việc.\nBên B có trách nhiệm bàn giao khách hàng, hồ sơ kinh doanh, tài khoản hệ thống và tài sản được giao trước ngày chấm dứt."
+        },
+        {
+          "section_index": 7,
+          "section_id": "HDLD_Truong_nhom_Kinh_doanh:section:7",
+          "heading": "Điều 7. Bảo mật và không sử dụng dữ liệu trái phép",
+          "text": "Điều 7. Bảo mật và không sử dụng dữ liệu trái phép\nBên B không được sao chép, chuyển giao hoặc sử dụng danh sách khách hàng, dữ liệu giá, chính sách chiết khấu và thông tin nội bộ cho mục đích ngoài công việc."
+        },
+        {
+          "section_index": 8,
+          "section_id": "HDLD_Truong_nhom_Kinh_doanh:section:8",
+          "heading": "Điều 8. Bảo hiểm, nghỉ phép và chế độ khác",
+          "text": "Điều 8. Bảo hiểm, nghỉ phép và chế độ khác\nBên A tham gia bảo hiểm bắt buộc và thực hiện chế độ nghỉ phép, nghỉ lễ, tết theo quy định. Các phúc lợi bổ sung được thực hiện theo chính sách của Công ty."
+        },
+        {
+          "section_index": 9,
+          "section_id": "HDLD_Truong_nhom_Kinh_doanh:section:9",
+          "heading": "Điều 9. Điều khoản chung",
+          "text": "Điều 9. Điều khoản chung\nCác nội dung chưa quy định trong hợp đồng này được thực hiện theo pháp luật lao động và quy chế nội bộ hợp pháp của Công ty. Hai bên có thể sửa đổi, bổ sung hợp đồng bằng văn bản.\nHợp đồng được lập thành 02 bản có giá trị như nhau, mỗi bên giữ 01 bản để thực hiện.\nĐẠI DIỆN BÊN A (Ký, ghi rõ họ tên, chức vụ và đóng dấu) PHAN MINH QUÂN | NGƯỜI LAO ĐỘNG (Ký và ghi rõ họ tên) ĐỖ ANH TUẤN"
+        }
+      ]
+    }
+  ]
+}

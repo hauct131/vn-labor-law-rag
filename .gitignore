@@ -55,6 +55,9 @@ data/processed/*
 
 # Evaluation datasets
 data/evaluation/*
+# Contract clause retrieval benchmark
+!data/evaluation/contract_review_clause_retrieval/
+!data/evaluation/contract_review_clause_retrieval/**
 !data/evaluation/.gitkeep
 !data/evaluation/*.json
 !data/evaluation/*.jsonl
