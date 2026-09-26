@@ -68,6 +68,7 @@ data/evaluation/*
 data/evaluation/runtime-benchmark/*
 !data/evaluation/runtime-benchmark/*.json
 !data/evaluation/runtime-benchmark/*.md
+data/evaluation/answer-quality-v1/runtime-runs/
 
 # Reproducibility manifests
 data/manifests/*
