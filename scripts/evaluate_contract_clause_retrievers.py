@@ -14,6 +14,9 @@ from app.services.contract_review.bm25_retriever import (
 from app.services.contract_review.e5_retriever import (
     E5ClauseRetriever,
 )
+from app.services.contract_review.hybrid_retriever import (
+    HybridClauseRetriever,
+)
 from app.services.contract_review.models import (
     ContractBlock,
     ContractSection,
@@ -612,6 +615,15 @@ def main() -> None:
 
         "e5_dense":
             e5,
+
+        "hybrid_rrf":
+            HybridClauseRetriever(
+                bm25=BM25ClauseRetriever(),
+                e5=e5,
+                rrf_k=60,
+                bm25_weight=1.0,
+                e5_weight=1.0,
+            ),
     }
 
     results: dict[str, Any] = {}
