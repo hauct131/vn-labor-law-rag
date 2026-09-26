@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import argparse
 import hashlib
 import json
 import re
@@ -132,7 +133,7 @@ def build_document_record(path: Path) -> dict:
     }
 
 
-def write_markdown(documents: list[dict]) -> None:
+def write_markdown(documents: list[dict], output_md: Path) -> None:
     lines = [
         "# Contract sections for manual annotation",
         "",
@@ -182,21 +183,72 @@ def write_markdown(documents: list[dict]) -> None:
                 ]
             )
 
-    OUTPUT_MD.write_text(
+    output_md.write_text(
         "\n".join(lines) + "\n",
         encoding="utf-8",
     )
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description=(
+            "Export DOCX contracts into canonical ContractSection "
+            "records for manual annotation."
+        )
+    )
+
+    parser.add_argument(
+        "--input-dir",
+        type=Path,
+        default=CONTRACTS_DIR,
+        help=(
+            "Directory containing source DOCX contracts. "
+            f"Default: {CONTRACTS_DIR}"
+        ),
+    )
+
+    parser.add_argument(
+        "--output-dir",
+        type=Path,
+        default=DEV_DIR,
+        help=(
+            "Directory receiving sections_for_annotation.json/.md. "
+            f"Default: {DEV_DIR}"
+        ),
+    )
+
+    return parser.parse_args()
+
+
 def main() -> None:
+    args = parse_args()
+
+    input_dir = args.input_dir.resolve()
+    output_dir = args.output_dir.resolve()
+
+    output_dir.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
+    output_json = (
+        output_dir
+        / "sections_for_annotation.json"
+    )
+
+    output_md = (
+        output_dir
+        / "sections_for_annotation.md"
+    )
+
     paths = sorted(
-        CONTRACTS_DIR.glob("*.docx"),
+        input_dir.glob("*.docx"),
         key=lambda path: path.name.casefold(),
     )
 
     if not paths:
         raise RuntimeError(
-            f"No DOCX contracts found in {CONTRACTS_DIR}"
+            f"No DOCX contracts found in {input_dir}"
         )
 
     documents = []
@@ -220,7 +272,7 @@ def main() -> None:
             documents,
     }
 
-    OUTPUT_JSON.write_text(
+    output_json.write_text(
         json.dumps(
             output,
             ensure_ascii=False,
@@ -230,12 +282,15 @@ def main() -> None:
         encoding="utf-8",
     )
 
-    write_markdown(documents)
+    write_markdown(
+        documents,
+        output_md,
+    )
 
     print()
     print(f"Documents: {len(documents)}")
-    print(f"JSON: {OUTPUT_JSON}")
-    print(f"Review: {OUTPUT_MD}")
+    print(f"JSON: {output_json}")
+    print(f"Review: {output_md}")
 
 
 if __name__ == "__main__":
