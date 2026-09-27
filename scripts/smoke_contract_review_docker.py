@@ -92,7 +92,7 @@ def validate_review(review: dict[str, object]) -> None:
         assert markers and markers.issubset(ids)
 
     by_category = {item["category"]: item for item in findings}
-    assert by_category["probation"]["severity"] == "attention"
+    assert by_category["probation"]["severity"] == "warning"
     assert "75 ngày" in by_category["probation"]["contract_excerpt"]
     assert by_category["salary"]["severity"] == "info"
     assert "12.000.000 đồng" in by_category["salary"]["contract_excerpt"]
