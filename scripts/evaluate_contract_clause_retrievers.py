@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 import math
@@ -26,18 +27,23 @@ from app.services.contract_review.rule_retriever import (
 )
 
 
-ROOT = Path(
-    "data/evaluation/contract_review_clause_retrieval/dev"
-)
-
-SECTIONS_PATH = ROOT / "sections_for_annotation.json"
-QRELS_PATH = ROOT / "qrels_gold_v1.json"
-
-SECTIONS_SHA_PATH = ROOT / "SECTIONS_SHA256.txt"
-QRELS_SHA_PATH = ROOT / "QRELS_GOLD_V1_SHA256.txt"
-
-RESULTS_DIR = ROOT / "results"
-RESULTS_PATH = RESULTS_DIR / "retrieval_baselines_v1.json"
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description=(
+            "Evaluate contract clause retrievers against "
+            "a frozen benchmark directory."
+        )
+    )
+    parser.add_argument(
+        "--root",
+        type=Path,
+        required=True,
+        help=(
+            "Benchmark directory containing sections_for_annotation.json, "
+            "qrels_gold_v1.json, and their SHA-256 files."
+        ),
+    )
+    return parser.parse_args()
 
 
 def sha256(path: Path) -> str:
@@ -480,24 +486,35 @@ def evaluate_system(
 
 
 def main() -> None:
+    args = parse_args()
+    root = args.root.resolve()
+
+    sections_path = root / "sections_for_annotation.json"
+    qrels_path = root / "qrels_gold_v1.json"
+    sections_sha_path = root / "SECTIONS_SHA256.txt"
+    qrels_sha_path = root / "QRELS_GOLD_V1_SHA256.txt"
+    results_dir = root / "results"
+    results_path = results_dir / "retrieval_baselines_v1.json"
+    benchmark_name = f"{root.name}_gold_v1"
+
     sections_sha = verify_frozen(
-        SECTIONS_PATH,
-        SECTIONS_SHA_PATH,
+        sections_path,
+        sections_sha_path,
     )
 
     qrels_sha = verify_frozen(
-        QRELS_PATH,
-        QRELS_SHA_PATH,
+        qrels_path,
+        qrels_sha_path,
     )
 
     sections_data = json.loads(
-        SECTIONS_PATH.read_text(
+        sections_path.read_text(
             encoding="utf-8"
         )
     )
 
     qrels = json.loads(
-        QRELS_PATH.read_text(
+        qrels_path.read_text(
             encoding="utf-8"
         )
     )
@@ -644,7 +661,7 @@ def main() -> None:
             "contract-clause-retrieval-results-v1",
 
         "benchmark":
-            "dev_gold_v1",
+            benchmark_name,
 
         "frozen_inputs": {
             "sections_sha256":
@@ -660,12 +677,12 @@ def main() -> None:
             results,
     }
 
-    RESULTS_DIR.mkdir(
+    results_dir.mkdir(
         parents=True,
         exist_ok=True,
     )
 
-    RESULTS_PATH.write_text(
+    results_path.write_text(
         json.dumps(
             output,
             ensure_ascii=False,
@@ -795,7 +812,7 @@ def main() -> None:
 
     print()
     print(
-        f"Saved: {RESULTS_PATH}"
+        f"Saved: {results_path}"
     )
 
 

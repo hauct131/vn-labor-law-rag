@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 import re
@@ -17,19 +18,24 @@ from app.services.contract_review_service import (
 )
 
 
-ROOT = Path(
-    "data/evaluation/contract_review_clause_retrieval/dev"
-)
-
-CONTRACTS_DIR = ROOT / "contracts"
-SECTIONS_PATH = ROOT / "sections_for_annotation.json"
-QRELS_PATH = ROOT / "qrels_gold_v1.json"
-
-SECTIONS_SHA_PATH = ROOT / "SECTIONS_SHA256.txt"
-QRELS_SHA_PATH = ROOT / "QRELS_GOLD_V1_SHA256.txt"
-
-RESULTS_DIR = ROOT / "results"
-RESULTS_PATH = RESULTS_DIR / "legacy_v1.json"
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description=(
+            "Evaluate Legacy V1 clause retrieval against "
+            "a frozen benchmark directory."
+        )
+    )
+    parser.add_argument(
+        "--root",
+        type=Path,
+        required=True,
+        help=(
+            "Benchmark directory containing contracts/, "
+            "sections_for_annotation.json, qrels_gold_v1.json, "
+            "and their SHA-256 files."
+        ),
+    )
+    return parser.parse_args()
 
 
 def sha256(path: Path) -> str:
@@ -222,22 +228,34 @@ def percentile(
 
 
 def main() -> None:
+    args = parse_args()
+    root = args.root.resolve()
+
+    contracts_dir = root / "contracts"
+    sections_path = root / "sections_for_annotation.json"
+    qrels_path = root / "qrels_gold_v1.json"
+    sections_sha_path = root / "SECTIONS_SHA256.txt"
+    qrels_sha_path = root / "QRELS_GOLD_V1_SHA256.txt"
+    results_dir = root / "results"
+    results_path = results_dir / "legacy_v1.json"
+    benchmark_name = f"{root.name}_gold_v1"
+
     sections_sha = verify_frozen_file(
-        SECTIONS_PATH,
-        SECTIONS_SHA_PATH,
+        sections_path,
+        sections_sha_path,
     )
 
     qrels_sha = verify_frozen_file(
-        QRELS_PATH,
-        QRELS_SHA_PATH,
+        qrels_path,
+        qrels_sha_path,
     )
 
     sections_data = json.loads(
-        SECTIONS_PATH.read_text(encoding="utf-8")
+        sections_path.read_text(encoding="utf-8")
     )
 
     qrels = json.loads(
-        QRELS_PATH.read_text(encoding="utf-8")
+        qrels_path.read_text(encoding="utf-8")
     )
 
     sections_by_document = {
@@ -273,7 +291,7 @@ def main() -> None:
         document_files[query["document_id"]] = query["file"]
 
     for document_id, filename in document_files.items():
-        path = CONTRACTS_DIR / Path(filename).name
+        path = contracts_dir / Path(filename).name
 
         if not path.exists():
             raise FileNotFoundError(path)
@@ -371,9 +389,10 @@ def main() -> None:
             }
         )
 
-    if len(results) != 40:
+    if len(results) != len(qrels["queries"]):
         raise RuntimeError(
-            f"Expected 40 queries, got {len(results)}"
+            "Evaluation result count does not match qrels: "
+            f"{len(results)} != {len(qrels['queries'])}"
         )
 
     positive_queries = [
@@ -509,7 +528,7 @@ def main() -> None:
         "schema_version": (
             "contract-clause-retrieval-result-v1"
         ),
-        "benchmark": "dev_gold_v1",
+        "benchmark": benchmark_name,
         "frozen_inputs": {
             "sections_sha256": sections_sha,
             "qrels_sha256": qrels_sha,
@@ -518,12 +537,12 @@ def main() -> None:
         "queries": results,
     }
 
-    RESULTS_DIR.mkdir(
+    results_dir.mkdir(
         parents=True,
         exist_ok=True,
     )
 
-    RESULTS_PATH.write_text(
+    results_path.write_text(
         json.dumps(
             output,
             ensure_ascii=False,
@@ -635,7 +654,7 @@ def main() -> None:
         )
 
     print()
-    print(f"Saved: {RESULTS_PATH}")
+    print(f"Saved: {results_path}")
 
 
 if __name__ == "__main__":
