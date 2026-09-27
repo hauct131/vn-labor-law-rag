@@ -1,0 +1,4549 @@
+{
+  "schema_version": "contract-clause-qrels-v1",
+  "status": "gold_v1_human_reviewed",
+  "relevance_scale": {
+    "0": "not_relevant",
+    "1": "related_mention",
+    "2": "relevant_secondary",
+    "3": "primary"
+  },
+  "frozen_inputs": {
+    "guideline_sha256": "e86979e2d9756cef82d0383a011d72872e583a7ff1039037eb1919b6cc29b2c4",
+    "sections_sha256": "7d2d75c2f86046c7ab717de2d0dc70fcc36ff3ce1a55bb7d8f2ff13b79a7eb58"
+  },
+  "query_count": 64,
+  "queries": [
+    {
+      "query_id": "H01_Backend_Developer:probation",
+      "document_id": "H01_Backend_Developer",
+      "file": "H01_Backend_Developer.docx",
+      "category": "probation",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H01_Backend_Developer:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H01_Backend_Developer:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc và địa điểm làm việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H01_Backend_Developer:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thử việc",
+          "relevance": 3,
+          "reason": "Section trực tiếp quy định thử việc 60 ngày, công việc trong thời gian thử việc và đánh giá kết quả cuối kỳ."
+        },
+        {
+          "section_id": "H01_Backend_Developer:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Thời hạn hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H01_Backend_Developer:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Tiền lương",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H01_Backend_Developer:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Thời giờ làm việc và nghỉ ngơi",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H01_Backend_Developer:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Bảo hiểm và nghỉ phép",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H01_Backend_Developer:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Bảo mật",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H01_Backend_Developer:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Chấm dứt hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H01_Backend_Developer:salary",
+      "document_id": "H01_Backend_Developer",
+      "file": "H01_Backend_Developer.docx",
+      "category": "salary",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H01_Backend_Developer:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H01_Backend_Developer:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc và địa điểm làm việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H01_Backend_Developer:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thử việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H01_Backend_Developer:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Thời hạn hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H01_Backend_Developer:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Tiền lương",
+          "relevance": 3,
+          "reason": "Section chính quy định mức lương theo công việc, phụ cấp, ngày trả lương và phương thức chuyển khoản."
+        },
+        {
+          "section_id": "H01_Backend_Developer:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Thời giờ làm việc và nghỉ ngơi",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H01_Backend_Developer:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Bảo hiểm và nghỉ phép",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H01_Backend_Developer:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Bảo mật",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H01_Backend_Developer:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Chấm dứt hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H01_Backend_Developer:working_time",
+      "document_id": "H01_Backend_Developer",
+      "file": "H01_Backend_Developer.docx",
+      "category": "working_time",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H01_Backend_Developer:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H01_Backend_Developer:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc và địa điểm làm việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H01_Backend_Developer:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thử việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H01_Backend_Developer:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Thời hạn hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H01_Backend_Developer:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Tiền lương",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H01_Backend_Developer:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Thời giờ làm việc và nghỉ ngơi",
+          "relevance": 3,
+          "reason": "Section chính quy định 08 giờ/ngày, 05 ngày/tuần, khung giờ làm việc, nghỉ trưa và nghỉ hằng tuần."
+        },
+        {
+          "section_id": "H01_Backend_Developer:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Bảo hiểm và nghỉ phép",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H01_Backend_Developer:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Bảo mật",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H01_Backend_Developer:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Chấm dứt hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H01_Backend_Developer:termination",
+      "document_id": "H01_Backend_Developer",
+      "file": "H01_Backend_Developer.docx",
+      "category": "termination",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H01_Backend_Developer:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H01_Backend_Developer:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc và địa điểm làm việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H01_Backend_Developer:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thử việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H01_Backend_Developer:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Thời hạn hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H01_Backend_Developer:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Tiền lương",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H01_Backend_Developer:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Thời giờ làm việc và nghỉ ngơi",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H01_Backend_Developer:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Bảo hiểm và nghỉ phép",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H01_Backend_Developer:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Bảo mật",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H01_Backend_Developer:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Chấm dứt hợp đồng",
+          "relevance": 3,
+          "reason": "Section chính quy định chấm dứt hợp đồng, thời hạn báo trước và nghĩa vụ bàn giao."
+        }
+      ]
+    },
+    {
+      "query_id": "H02_UI_UX_Designer:probation",
+      "document_id": "H02_UI_UX_Designer",
+      "file": "H02_UI_UX_Designer.docx",
+      "category": "probation",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H02_UI_UX_Designer:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H02_UI_UX_Designer:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Phạm vi công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H02_UI_UX_Designer:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Giai đoạn ban đầu",
+          "relevance": 3,
+          "reason": "Dù không dùng từ “thử việc”, section mô tả 60 ngày đầu, đánh giá cuối giai đoạn và quyết định tiếp tục thực hiện hợp đồng; đây là nội dung probation trực tiếp theo guideline."
+        },
+        {
+          "section_id": "H02_UI_UX_Designer:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Thời hạn",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H02_UI_UX_Designer:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Quyền lợi",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H02_UI_UX_Designer:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Tổ chức công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H02_UI_UX_Designer:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Sở hữu trí tuệ",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H02_UI_UX_Designer:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Khi quan hệ lao động kết thúc",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H02_UI_UX_Designer:salary",
+      "document_id": "H02_UI_UX_Designer",
+      "file": "H02_UI_UX_Designer.docx",
+      "category": "salary",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H02_UI_UX_Designer:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H02_UI_UX_Designer:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Phạm vi công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H02_UI_UX_Designer:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Giai đoạn ban đầu",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H02_UI_UX_Designer:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Thời hạn",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H02_UI_UX_Designer:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Quyền lợi",
+          "relevance": 3,
+          "reason": "Section chính quy định khoản thanh toán cố định hàng tháng, hỗ trợ thiết bị và ngày/phương thức chuyển khoản."
+        },
+        {
+          "section_id": "H02_UI_UX_Designer:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Tổ chức công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H02_UI_UX_Designer:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Sở hữu trí tuệ",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H02_UI_UX_Designer:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Khi quan hệ lao động kết thúc",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H02_UI_UX_Designer:working_time",
+      "document_id": "H02_UI_UX_Designer",
+      "file": "H02_UI_UX_Designer.docx",
+      "category": "working_time",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H02_UI_UX_Designer:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H02_UI_UX_Designer:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Phạm vi công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H02_UI_UX_Designer:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Giai đoạn ban đầu",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H02_UI_UX_Designer:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Thời hạn",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H02_UI_UX_Designer:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Quyền lợi",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H02_UI_UX_Designer:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Tổ chức công việc",
+          "relevance": 3,
+          "reason": "Section chính quy định giờ làm 09:00–18:00 từ thứ Hai đến thứ Sáu và thời gian nghỉ trưa."
+        },
+        {
+          "section_id": "H02_UI_UX_Designer:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Sở hữu trí tuệ",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H02_UI_UX_Designer:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Khi quan hệ lao động kết thúc",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H02_UI_UX_Designer:termination",
+      "document_id": "H02_UI_UX_Designer",
+      "file": "H02_UI_UX_Designer.docx",
+      "category": "termination",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H02_UI_UX_Designer:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H02_UI_UX_Designer:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Phạm vi công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H02_UI_UX_Designer:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Giai đoạn ban đầu",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H02_UI_UX_Designer:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Thời hạn",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H02_UI_UX_Designer:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Quyền lợi",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H02_UI_UX_Designer:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Tổ chức công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H02_UI_UX_Designer:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Sở hữu trí tuệ",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H02_UI_UX_Designer:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Khi quan hệ lao động kết thúc",
+          "relevance": 3,
+          "reason": "Section chính quy định kết thúc quan hệ lao động trước thời hạn, thời gian thông báo và nghĩa vụ bàn giao."
+        }
+      ]
+    },
+    {
+      "query_id": "H03_Network_Engineer:probation",
+      "document_id": "H03_Network_Engineer",
+      "file": "H03_Network_Engineer.docx",
+      "category": "probation",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H03_Network_Engineer:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H03_Network_Engineer:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H03_Network_Engineer:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thử việc",
+          "relevance": 3,
+          "reason": "Section trực tiếp quy định thời gian thử việc 60 ngày và đánh giá kết quả."
+        },
+        {
+          "section_id": "H03_Network_Engineer:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Tiền lương",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H03_Network_Engineer:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Thời giờ làm việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H03_Network_Engineer:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Lịch trực hệ thống",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H03_Network_Engineer:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Nghỉ phép và bảo hiểm",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H03_Network_Engineer:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Thiết bị",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H03_Network_Engineer:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Chấm dứt hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H03_Network_Engineer:salary",
+      "document_id": "H03_Network_Engineer",
+      "file": "H03_Network_Engineer.docx",
+      "category": "salary",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H03_Network_Engineer:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H03_Network_Engineer:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H03_Network_Engineer:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thử việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H03_Network_Engineer:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Tiền lương",
+          "relevance": 3,
+          "reason": "Section chính quy định mức lương, phụ cấp trực và ngày thanh toán."
+        },
+        {
+          "section_id": "H03_Network_Engineer:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Thời giờ làm việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H03_Network_Engineer:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Lịch trực hệ thống",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H03_Network_Engineer:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Nghỉ phép và bảo hiểm",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H03_Network_Engineer:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Thiết bị",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H03_Network_Engineer:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Chấm dứt hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H03_Network_Engineer:working_time",
+      "document_id": "H03_Network_Engineer",
+      "file": "H03_Network_Engineer.docx",
+      "category": "working_time",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H03_Network_Engineer:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H03_Network_Engineer:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H03_Network_Engineer:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thử việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H03_Network_Engineer:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Tiền lương",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H03_Network_Engineer:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Thời giờ làm việc",
+          "relevance": 3,
+          "reason": "Section chính quy định thời giờ làm việc bình thường 08 giờ/ngày, 05 ngày/tuần và khung giờ hành chính."
+        },
+        {
+          "section_id": "H03_Network_Engineer:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Lịch trực hệ thống",
+          "relevance": 2,
+          "reason": "Section bổ sung lịch trực theo ca, khung giờ từng ca và khoảng nghỉ tối thiểu trước ca tiếp theo."
+        },
+        {
+          "section_id": "H03_Network_Engineer:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Nghỉ phép và bảo hiểm",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H03_Network_Engineer:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Thiết bị",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H03_Network_Engineer:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Chấm dứt hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H03_Network_Engineer:termination",
+      "document_id": "H03_Network_Engineer",
+      "file": "H03_Network_Engineer.docx",
+      "category": "termination",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H03_Network_Engineer:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H03_Network_Engineer:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H03_Network_Engineer:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thử việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H03_Network_Engineer:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Tiền lương",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H03_Network_Engineer:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Thời giờ làm việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H03_Network_Engineer:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Lịch trực hệ thống",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H03_Network_Engineer:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Nghỉ phép và bảo hiểm",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H03_Network_Engineer:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Thiết bị",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H03_Network_Engineer:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Chấm dứt hợp đồng",
+          "relevance": 3,
+          "reason": "Section chính quy định chấm dứt hợp đồng, thời hạn báo trước và bàn giao thiết bị/tài liệu."
+        }
+      ]
+    },
+    {
+      "query_id": "H04_Customer_Support:probation",
+      "document_id": "H04_Customer_Support",
+      "file": "H04_Customer_Support.docx",
+      "category": "probation",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H04_Customer_Support:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H04_Customer_Support:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H04_Customer_Support:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Giai đoạn làm quen công việc",
+          "relevance": 3,
+          "reason": "Section mô tả 30 ngày đầu, đánh giá khả năng xử lý yêu cầu và dùng kết quả để quyết định tiếp tục bố trí; nội dung trực tiếp tương đương probation theo guideline."
+        },
+        {
+          "section_id": "H04_Customer_Support:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Thu nhập",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H04_Customer_Support:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Lịch phục vụ khách hàng",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H04_Customer_Support:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Thiết bị",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H04_Customer_Support:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Bảo mật",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H04_Customer_Support:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Kết thúc hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H04_Customer_Support:salary",
+      "document_id": "H04_Customer_Support",
+      "file": "H04_Customer_Support.docx",
+      "category": "salary",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H04_Customer_Support:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H04_Customer_Support:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H04_Customer_Support:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Giai đoạn làm quen công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H04_Customer_Support:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Thu nhập",
+          "relevance": 3,
+          "reason": "Section chính quy định khoản thu nhập cố định, hỗ trợ điện thoại và ngày chuyển tiền."
+        },
+        {
+          "section_id": "H04_Customer_Support:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Lịch phục vụ khách hàng",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H04_Customer_Support:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Thiết bị",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H04_Customer_Support:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Bảo mật",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H04_Customer_Support:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Kết thúc hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H04_Customer_Support:working_time",
+      "document_id": "H04_Customer_Support",
+      "file": "H04_Customer_Support.docx",
+      "category": "working_time",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H04_Customer_Support:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H04_Customer_Support:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H04_Customer_Support:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Giai đoạn làm quen công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H04_Customer_Support:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Thu nhập",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H04_Customer_Support:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Lịch phục vụ khách hàng",
+          "relevance": 3,
+          "reason": "Section chính quy định hai ca làm việc, khung giờ, luân phiên ca và nghỉ giữa ca."
+        },
+        {
+          "section_id": "H04_Customer_Support:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Thiết bị",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H04_Customer_Support:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Bảo mật",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H04_Customer_Support:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Kết thúc hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H04_Customer_Support:termination",
+      "document_id": "H04_Customer_Support",
+      "file": "H04_Customer_Support.docx",
+      "category": "termination",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H04_Customer_Support:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H04_Customer_Support:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H04_Customer_Support:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Giai đoạn làm quen công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H04_Customer_Support:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Thu nhập",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H04_Customer_Support:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Lịch phục vụ khách hàng",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H04_Customer_Support:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Thiết bị",
+          "relevance": 1,
+          "reason": "Section chỉ nhắc hoàn trả thiết bị khi hợp đồng chấm dứt, không chứa căn cứ hay thời hạn thông báo; đây là related mention."
+        },
+        {
+          "section_id": "H04_Customer_Support:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Bảo mật",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H04_Customer_Support:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Kết thúc hợp đồng",
+          "relevance": 3,
+          "reason": "Section chính quy định căn cứ kết thúc hợp đồng, thời gian thông báo và bàn giao hồ sơ."
+        }
+      ]
+    },
+    {
+      "query_id": "H05_Warehouse_Supervisor:probation",
+      "document_id": "H05_Warehouse_Supervisor",
+      "file": "H05_Warehouse_Supervisor.docx",
+      "category": "probation",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Trách nhiệm",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thử việc",
+          "relevance": 3,
+          "reason": "Section trực tiếp quy định thử việc 45 ngày và đánh giá năng lực."
+        },
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Chế độ",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Tổ chức vận hành kho",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Nghỉ và chuyển ca",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. An toàn lao động",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Nghĩa vụ quản lý",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Chấm dứt",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H05_Warehouse_Supervisor:salary",
+      "document_id": "H05_Warehouse_Supervisor",
+      "file": "H05_Warehouse_Supervisor.docx",
+      "category": "salary",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Trách nhiệm",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thử việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Chế độ",
+          "relevance": 3,
+          "reason": "Section chính chứa bảng lương theo công việc, phụ cấp trách nhiệm, phụ cấp ca và ngày/phương thức thanh toán."
+        },
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Tổ chức vận hành kho",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Nghỉ và chuyển ca",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. An toàn lao động",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Nghĩa vụ quản lý",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Chấm dứt",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H05_Warehouse_Supervisor:working_time",
+      "document_id": "H05_Warehouse_Supervisor",
+      "file": "H05_Warehouse_Supervisor.docx",
+      "category": "working_time",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Trách nhiệm",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thử việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Chế độ",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Tổ chức vận hành kho",
+          "relevance": 3,
+          "reason": "Section chính quy định ca 12 giờ, lịch ca theo tuần và số ngày làm việc trong tuần."
+        },
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Nghỉ và chuyển ca",
+          "relevance": 2,
+          "reason": "Section bổ sung nghỉ giữa ca, thời gian nghỉ tối thiểu giữa hai ca và nghỉ hằng tuần."
+        },
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. An toàn lao động",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Nghĩa vụ quản lý",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Chấm dứt",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H05_Warehouse_Supervisor:termination",
+      "document_id": "H05_Warehouse_Supervisor",
+      "file": "H05_Warehouse_Supervisor.docx",
+      "category": "termination",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Trách nhiệm",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thử việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Chế độ",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Tổ chức vận hành kho",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Nghỉ và chuyển ca",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. An toàn lao động",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Nghĩa vụ quản lý",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H05_Warehouse_Supervisor:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Chấm dứt",
+          "relevance": 3,
+          "reason": "Section chính quy định chấm dứt, thời hạn báo trước và bàn giao kho."
+        }
+      ]
+    },
+    {
+      "query_id": "H06_Security_Analyst:probation",
+      "document_id": "H06_Security_Analyst",
+      "file": "H06_Security_Analyst.docx",
+      "category": "probation",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H06_Security_Analyst:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H06_Security_Analyst:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Nhiệm vụ",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H06_Security_Analyst:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thời gian đánh giá ban đầu",
+          "relevance": 3,
+          "reason": "Section mô tả 60 ngày đầu, đánh giá kỹ năng cuối giai đoạn và điều kiện tiếp tục vị trí; nội dung probation trực tiếp dù heading không dùng từ “thử việc”."
+        },
+        {
+          "section_id": "H06_Security_Analyst:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Thu nhập",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H06_Security_Analyst:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Lịch công tác",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H06_Security_Analyst:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Quản lý tài khoản và thiết bị",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H06_Security_Analyst:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Điều khoản áp dụng",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H06_Security_Analyst:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Bảo mật",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H06_Security_Analyst:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Quyền kết thúc quan hệ lao động",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H06_Security_Analyst:salary",
+      "document_id": "H06_Security_Analyst",
+      "file": "H06_Security_Analyst.docx",
+      "category": "salary",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H06_Security_Analyst:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H06_Security_Analyst:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Nhiệm vụ",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H06_Security_Analyst:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thời gian đánh giá ban đầu",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H06_Security_Analyst:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Thu nhập",
+          "relevance": 3,
+          "reason": "Section chính quy định khoản thu nhập cố định hàng tháng và ngày/phương thức thanh toán."
+        },
+        {
+          "section_id": "H06_Security_Analyst:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Lịch công tác",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H06_Security_Analyst:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Quản lý tài khoản và thiết bị",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H06_Security_Analyst:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Điều khoản áp dụng",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H06_Security_Analyst:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Bảo mật",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H06_Security_Analyst:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Quyền kết thúc quan hệ lao động",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H06_Security_Analyst:working_time",
+      "document_id": "H06_Security_Analyst",
+      "file": "H06_Security_Analyst.docx",
+      "category": "working_time",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H06_Security_Analyst:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H06_Security_Analyst:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Nhiệm vụ",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H06_Security_Analyst:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thời gian đánh giá ban đầu",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H06_Security_Analyst:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Thu nhập",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H06_Security_Analyst:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Lịch công tác",
+          "relevance": 3,
+          "reason": "Section chính quy định 08 giờ/ngày, các ngày làm việc và khung giờ 09:00–18:00."
+        },
+        {
+          "section_id": "H06_Security_Analyst:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Quản lý tài khoản và thiết bị",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H06_Security_Analyst:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Điều khoản áp dụng",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H06_Security_Analyst:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Bảo mật",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H06_Security_Analyst:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Quyền kết thúc quan hệ lao động",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H06_Security_Analyst:termination",
+      "document_id": "H06_Security_Analyst",
+      "file": "H06_Security_Analyst.docx",
+      "category": "termination",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H06_Security_Analyst:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H06_Security_Analyst:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Nhiệm vụ",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H06_Security_Analyst:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thời gian đánh giá ban đầu",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H06_Security_Analyst:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Thu nhập",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H06_Security_Analyst:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Lịch công tác",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H06_Security_Analyst:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Quản lý tài khoản và thiết bị",
+          "relevance": 1,
+          "reason": "Section chỉ quy định thu hồi tài khoản và thiết bị khi quan hệ lao động kết thúc; đây là nghĩa vụ liên quan nhưng không phải bằng chứng chính."
+        },
+        {
+          "section_id": "H06_Security_Analyst:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Điều khoản áp dụng",
+          "relevance": 1,
+          "reason": "Section chỉ cross-reference việc kết thúc hợp đồng sang Điều 8, không có nội dung substantive."
+        },
+        {
+          "section_id": "H06_Security_Analyst:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Bảo mật",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H06_Security_Analyst:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Quyền kết thúc quan hệ lao động",
+          "relevance": 3,
+          "reason": "Section chính quy định quyền kết thúc quan hệ lao động, thời gian thông báo và nghĩa vụ bàn giao."
+        }
+      ]
+    },
+    {
+      "query_id": "H07_HR_Specialist:probation",
+      "document_id": "H07_HR_Specialist",
+      "file": "H07_HR_Specialist.docx",
+      "category": "probation",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H07_HR_Specialist:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H07_HR_Specialist:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H07_HR_Specialist:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thử việc",
+          "relevance": 3,
+          "reason": "Section chính quy định thời gian thử việc, công việc thử việc và mức lương thử việc."
+        },
+        {
+          "section_id": "H07_HR_Specialist:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Đánh giá sau thử việc",
+          "relevance": 2,
+          "reason": "Section bổ sung tiêu chí đánh giá, thời điểm thông báo kết quả và việc chuyển sang chế độ chính thức sau thử việc."
+        },
+        {
+          "section_id": "H07_HR_Specialist:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Tiền lương",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H07_HR_Specialist:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Thời giờ làm việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H07_HR_Specialist:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Nghỉ phép",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H07_HR_Specialist:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Nghĩa vụ khi kết thúc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H07_HR_Specialist:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Chấm dứt hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H07_HR_Specialist:salary",
+      "document_id": "H07_HR_Specialist",
+      "file": "H07_HR_Specialist.docx",
+      "category": "salary",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H07_HR_Specialist:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H07_HR_Specialist:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H07_HR_Specialist:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thử việc",
+          "relevance": 1,
+          "reason": "Section chỉ nêu mức lương thử việc bằng 90% mức lương vị trí; theo guideline probation salary thuộc chủ yếu về probation và thường chỉ relevance 1 cho salary."
+        },
+        {
+          "section_id": "H07_HR_Specialist:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Đánh giá sau thử việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H07_HR_Specialist:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Tiền lương",
+          "relevance": 3,
+          "reason": "Section chính quy định mức lương theo công việc và ngày thanh toán."
+        },
+        {
+          "section_id": "H07_HR_Specialist:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Thời giờ làm việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H07_HR_Specialist:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Nghỉ phép",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H07_HR_Specialist:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Nghĩa vụ khi kết thúc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H07_HR_Specialist:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Chấm dứt hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H07_HR_Specialist:working_time",
+      "document_id": "H07_HR_Specialist",
+      "file": "H07_HR_Specialist.docx",
+      "category": "working_time",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H07_HR_Specialist:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H07_HR_Specialist:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H07_HR_Specialist:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thử việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H07_HR_Specialist:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Đánh giá sau thử việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H07_HR_Specialist:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Tiền lương",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H07_HR_Specialist:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Thời giờ làm việc",
+          "relevance": 3,
+          "reason": "Section chính quy định 08 giờ/ngày, 05 ngày/tuần và khung giờ 08:30–17:30."
+        },
+        {
+          "section_id": "H07_HR_Specialist:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Nghỉ phép",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H07_HR_Specialist:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Nghĩa vụ khi kết thúc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H07_HR_Specialist:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Chấm dứt hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H07_HR_Specialist:termination",
+      "document_id": "H07_HR_Specialist",
+      "file": "H07_HR_Specialist.docx",
+      "category": "termination",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H07_HR_Specialist:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H07_HR_Specialist:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H07_HR_Specialist:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thử việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H07_HR_Specialist:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Đánh giá sau thử việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H07_HR_Specialist:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Tiền lương",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H07_HR_Specialist:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Thời giờ làm việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H07_HR_Specialist:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Nghỉ phép",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H07_HR_Specialist:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Nghĩa vụ khi kết thúc",
+          "relevance": 1,
+          "reason": "Section chỉ nêu nghĩa vụ bàn giao khi chấm dứt và cross-reference sang Điều 8."
+        },
+        {
+          "section_id": "H07_HR_Specialist:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Chấm dứt hợp đồng",
+          "relevance": 3,
+          "reason": "Section chính quy định các trường hợp chấm dứt và thời hạn báo trước."
+        }
+      ]
+    },
+    {
+      "query_id": "H08_Sales_Executive:probation",
+      "document_id": "H08_Sales_Executive",
+      "file": "H08_Sales_Executive.docx",
+      "category": "probation",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H08_Sales_Executive:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H08_Sales_Executive:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H08_Sales_Executive:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Giai đoạn thử việc",
+          "relevance": 3,
+          "reason": "Section trực tiếp quy định giai đoạn thử việc 45 ngày và đánh giá kết quả."
+        },
+        {
+          "section_id": "H08_Sales_Executive:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Quyền lợi",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H08_Sales_Executive:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Tổ chức công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H08_Sales_Executive:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Chỉ tiêu kinh doanh",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H08_Sales_Executive:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Tài sản",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H08_Sales_Executive:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Kết thúc hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H08_Sales_Executive:salary",
+      "document_id": "H08_Sales_Executive",
+      "file": "H08_Sales_Executive.docx",
+      "category": "salary",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H08_Sales_Executive:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H08_Sales_Executive:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H08_Sales_Executive:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Giai đoạn thử việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H08_Sales_Executive:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Quyền lợi",
+          "relevance": 3,
+          "reason": "Section chính chứa bảng khoản cố định, phụ cấp, hoa hồng và ngày thanh toán."
+        },
+        {
+          "section_id": "H08_Sales_Executive:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Tổ chức công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H08_Sales_Executive:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Chỉ tiêu kinh doanh",
+          "relevance": 2,
+          "reason": "Section bổ sung quy định chỉ tiêu không làm thay đổi mức lương cố định nếu không có thỏa thuận khác; đây là thông tin thực chất về điều chỉnh lương nhưng không phải section chính."
+        },
+        {
+          "section_id": "H08_Sales_Executive:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Tài sản",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H08_Sales_Executive:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Kết thúc hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H08_Sales_Executive:working_time",
+      "document_id": "H08_Sales_Executive",
+      "file": "H08_Sales_Executive.docx",
+      "category": "working_time",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H08_Sales_Executive:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H08_Sales_Executive:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H08_Sales_Executive:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Giai đoạn thử việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H08_Sales_Executive:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Quyền lợi",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H08_Sales_Executive:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Tổ chức công việc",
+          "relevance": 3,
+          "reason": "Section chính quy định 08 giờ/ngày, 05 ngày/tuần và cách bố trí lịch gặp khách hàng."
+        },
+        {
+          "section_id": "H08_Sales_Executive:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Chỉ tiêu kinh doanh",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H08_Sales_Executive:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Tài sản",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H08_Sales_Executive:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Kết thúc hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H08_Sales_Executive:termination",
+      "document_id": "H08_Sales_Executive",
+      "file": "H08_Sales_Executive.docx",
+      "category": "termination",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H08_Sales_Executive:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H08_Sales_Executive:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H08_Sales_Executive:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Giai đoạn thử việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H08_Sales_Executive:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Quyền lợi",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H08_Sales_Executive:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Tổ chức công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H08_Sales_Executive:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Chỉ tiêu kinh doanh",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H08_Sales_Executive:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Tài sản",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H08_Sales_Executive:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Kết thúc hợp đồng",
+          "relevance": 3,
+          "reason": "Section chính quy định căn cứ/trình tự kết thúc hợp đồng và thời hạn thông báo."
+        }
+      ]
+    },
+    {
+      "query_id": "H09_DevOps_Engineer:probation",
+      "document_id": "H09_DevOps_Engineer",
+      "file": "H09_DevOps_Engineer.docx",
+      "category": "probation",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H09_DevOps_Engineer:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H09_DevOps_Engineer:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H09_DevOps_Engineer:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Giai đoạn đầu",
+          "relevance": 3,
+          "reason": "Section mô tả hai tháng đầu, đánh giá của quản lý và dùng kết quả để quyết định tiếp tục bố trí; nội dung trực tiếp tương đương probation."
+        },
+        {
+          "section_id": "H09_DevOps_Engineer:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Chế độ",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H09_DevOps_Engineer:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Lịch làm việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H09_DevOps_Engineer:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Trực ngoài giờ",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H09_DevOps_Engineer:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Bảo mật và quyền truy cập",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H09_DevOps_Engineer:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Điều khoản khác",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H09_DevOps_Engineer:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Bảo hiểm",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H09_DevOps_Engineer:salary",
+      "document_id": "H09_DevOps_Engineer",
+      "file": "H09_DevOps_Engineer.docx",
+      "category": "salary",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H09_DevOps_Engineer:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H09_DevOps_Engineer:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H09_DevOps_Engineer:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Giai đoạn đầu",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H09_DevOps_Engineer:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Chế độ",
+          "relevance": 3,
+          "reason": "Section chính quy định khoản trả cố định hàng tháng và ngày/phương thức chuyển khoản."
+        },
+        {
+          "section_id": "H09_DevOps_Engineer:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Lịch làm việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H09_DevOps_Engineer:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Trực ngoài giờ",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H09_DevOps_Engineer:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Bảo mật và quyền truy cập",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H09_DevOps_Engineer:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Điều khoản khác",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H09_DevOps_Engineer:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Bảo hiểm",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H09_DevOps_Engineer:working_time",
+      "document_id": "H09_DevOps_Engineer",
+      "file": "H09_DevOps_Engineer.docx",
+      "category": "working_time",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H09_DevOps_Engineer:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H09_DevOps_Engineer:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H09_DevOps_Engineer:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Giai đoạn đầu",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H09_DevOps_Engineer:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Chế độ",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H09_DevOps_Engineer:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Lịch làm việc",
+          "relevance": 3,
+          "reason": "Section chính quy định lịch làm việc 09:00–18:00, 05 ngày/tuần."
+        },
+        {
+          "section_id": "H09_DevOps_Engineer:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Trực ngoài giờ",
+          "relevance": 2,
+          "reason": "Section bổ sung lịch on-call luân phiên và khoảng nghỉ sau ca trực đêm."
+        },
+        {
+          "section_id": "H09_DevOps_Engineer:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Bảo mật và quyền truy cập",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H09_DevOps_Engineer:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Điều khoản khác",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H09_DevOps_Engineer:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Bảo hiểm",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H09_DevOps_Engineer:termination",
+      "document_id": "H09_DevOps_Engineer",
+      "file": "H09_DevOps_Engineer.docx",
+      "category": "termination",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H09_DevOps_Engineer:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H09_DevOps_Engineer:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H09_DevOps_Engineer:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Giai đoạn đầu",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H09_DevOps_Engineer:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Chế độ",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H09_DevOps_Engineer:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Lịch làm việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H09_DevOps_Engineer:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Trực ngoài giờ",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H09_DevOps_Engineer:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Bảo mật và quyền truy cập",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H09_DevOps_Engineer:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Điều khoản khác",
+          "relevance": 3,
+          "reason": "Section chính quy định kết thúc quan hệ lao động trước thời hạn, thời gian thông báo và nghĩa vụ bàn giao."
+        },
+        {
+          "section_id": "H09_DevOps_Engineer:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Bảo hiểm",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H10_Office_Administrator:probation",
+      "document_id": "H10_Office_Administrator",
+      "file": "H10_Office_Administrator.docx",
+      "category": "probation",
+      "has_relevant": false,
+      "has_primary": false,
+      "judgments": [
+        {
+          "section_id": "H10_Office_Administrator:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        },
+        {
+          "section_id": "H10_Office_Administrator:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        },
+        {
+          "section_id": "H10_Office_Administrator:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thời hạn hợp đồng",
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        },
+        {
+          "section_id": "H10_Office_Administrator:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Tiền lương",
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        },
+        {
+          "section_id": "H10_Office_Administrator:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Thời giờ làm việc",
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        },
+        {
+          "section_id": "H10_Office_Administrator:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Tài sản",
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        },
+        {
+          "section_id": "H10_Office_Administrator:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Điều khoản áp dụng",
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        },
+        {
+          "section_id": "H10_Office_Administrator:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Bảo hiểm và nghỉ phép",
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        },
+        {
+          "section_id": "H10_Office_Administrator:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Chấm dứt hợp đồng",
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        }
+      ]
+    },
+    {
+      "query_id": "H10_Office_Administrator:salary",
+      "document_id": "H10_Office_Administrator",
+      "file": "H10_Office_Administrator.docx",
+      "category": "salary",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H10_Office_Administrator:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H10_Office_Administrator:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H10_Office_Administrator:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thời hạn hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H10_Office_Administrator:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Tiền lương",
+          "relevance": 3,
+          "reason": "Section chính quy định mức lương theo công việc và ngày/phương thức trả lương."
+        },
+        {
+          "section_id": "H10_Office_Administrator:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Thời giờ làm việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H10_Office_Administrator:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Tài sản",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H10_Office_Administrator:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Điều khoản áp dụng",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H10_Office_Administrator:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Bảo hiểm và nghỉ phép",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H10_Office_Administrator:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Chấm dứt hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H10_Office_Administrator:working_time",
+      "document_id": "H10_Office_Administrator",
+      "file": "H10_Office_Administrator.docx",
+      "category": "working_time",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H10_Office_Administrator:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H10_Office_Administrator:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H10_Office_Administrator:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thời hạn hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H10_Office_Administrator:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Tiền lương",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H10_Office_Administrator:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Thời giờ làm việc",
+          "relevance": 3,
+          "reason": "Section chính quy định 08 giờ/ngày, 05 ngày/tuần và khung giờ 08:00–17:00."
+        },
+        {
+          "section_id": "H10_Office_Administrator:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Tài sản",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H10_Office_Administrator:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Điều khoản áp dụng",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H10_Office_Administrator:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Bảo hiểm và nghỉ phép",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H10_Office_Administrator:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Chấm dứt hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H10_Office_Administrator:termination",
+      "document_id": "H10_Office_Administrator",
+      "file": "H10_Office_Administrator.docx",
+      "category": "termination",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H10_Office_Administrator:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H10_Office_Administrator:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H10_Office_Administrator:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thời hạn hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H10_Office_Administrator:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Tiền lương",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H10_Office_Administrator:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Thời giờ làm việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H10_Office_Administrator:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Tài sản",
+          "relevance": 1,
+          "reason": "Section chỉ nêu hoàn trả tài sản/hồ sơ khi hợp đồng chấm dứt; đây là related mention."
+        },
+        {
+          "section_id": "H10_Office_Administrator:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Điều khoản áp dụng",
+          "relevance": 1,
+          "reason": "Section chỉ cross-reference các vấn đề chấm dứt hợp đồng sang Điều 8."
+        },
+        {
+          "section_id": "H10_Office_Administrator:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Bảo hiểm và nghỉ phép",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H10_Office_Administrator:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Chấm dứt hợp đồng",
+          "relevance": 3,
+          "reason": "Section chính quy định các trường hợp chấm dứt và thời hạn báo trước."
+        }
+      ]
+    },
+    {
+      "query_id": "H11_QA_Engineer:probation",
+      "document_id": "H11_QA_Engineer",
+      "file": "H11_QA_Engineer.docx",
+      "category": "probation",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H11_QA_Engineer:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H11_QA_Engineer:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H11_QA_Engineer:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Giai đoạn đánh giá ban đầu",
+          "relevance": 3,
+          "reason": "Section mô tả hai tháng đầu, review chất lượng công việc và quyết định tiếp tục bố trí; nội dung trực tiếp tương đương probation."
+        },
+        {
+          "section_id": "H11_QA_Engineer:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Tiền lương",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H11_QA_Engineer:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Lịch làm việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H11_QA_Engineer:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Làm thêm và nghỉ bù",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H11_QA_Engineer:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Thiết bị",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H11_QA_Engineer:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Chấm dứt hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H11_QA_Engineer:salary",
+      "document_id": "H11_QA_Engineer",
+      "file": "H11_QA_Engineer.docx",
+      "category": "salary",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H11_QA_Engineer:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H11_QA_Engineer:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H11_QA_Engineer:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Giai đoạn đánh giá ban đầu",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H11_QA_Engineer:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Tiền lương",
+          "relevance": 3,
+          "reason": "Section chính chứa bảng thu nhập cố định, phụ cấp và ngày thanh toán tiền lương."
+        },
+        {
+          "section_id": "H11_QA_Engineer:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Lịch làm việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H11_QA_Engineer:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Làm thêm và nghỉ bù",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H11_QA_Engineer:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Thiết bị",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H11_QA_Engineer:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Chấm dứt hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H11_QA_Engineer:working_time",
+      "document_id": "H11_QA_Engineer",
+      "file": "H11_QA_Engineer.docx",
+      "category": "working_time",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H11_QA_Engineer:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H11_QA_Engineer:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H11_QA_Engineer:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Giai đoạn đánh giá ban đầu",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H11_QA_Engineer:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Tiền lương",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H11_QA_Engineer:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Lịch làm việc",
+          "relevance": 3,
+          "reason": "Section chính quy định khung giờ làm việc và các ngày làm việc trong tuần."
+        },
+        {
+          "section_id": "H11_QA_Engineer:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Làm thêm và nghỉ bù",
+          "relevance": 2,
+          "reason": "Section bổ sung quy định làm thêm và nghỉ bù."
+        },
+        {
+          "section_id": "H11_QA_Engineer:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Thiết bị",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H11_QA_Engineer:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Chấm dứt hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H11_QA_Engineer:termination",
+      "document_id": "H11_QA_Engineer",
+      "file": "H11_QA_Engineer.docx",
+      "category": "termination",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H11_QA_Engineer:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H11_QA_Engineer:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H11_QA_Engineer:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Giai đoạn đánh giá ban đầu",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H11_QA_Engineer:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Tiền lương",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H11_QA_Engineer:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Lịch làm việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H11_QA_Engineer:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Làm thêm và nghỉ bù",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H11_QA_Engineer:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Thiết bị",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H11_QA_Engineer:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Chấm dứt hợp đồng",
+          "relevance": 3,
+          "reason": "Section chính quy định chấm dứt hợp đồng theo căn cứ và thời hạn báo trước."
+        }
+      ]
+    },
+    {
+      "query_id": "H12_Finance_Assistant:probation",
+      "document_id": "H12_Finance_Assistant",
+      "file": "H12_Finance_Assistant.docx",
+      "category": "probation",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H12_Finance_Assistant:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H12_Finance_Assistant:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H12_Finance_Assistant:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thử việc",
+          "relevance": 3,
+          "reason": "Section trực tiếp quy định thử việc 45 ngày và đánh giá kết quả thử việc."
+        },
+        {
+          "section_id": "H12_Finance_Assistant:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Chế độ",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H12_Finance_Assistant:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Thời giờ làm việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H12_Finance_Assistant:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Đánh giá hiệu quả",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H12_Finance_Assistant:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Bảo hiểm",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H12_Finance_Assistant:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Bảo mật",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H12_Finance_Assistant:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Điều khoản chung",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H12_Finance_Assistant:salary",
+      "document_id": "H12_Finance_Assistant",
+      "file": "H12_Finance_Assistant.docx",
+      "category": "salary",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H12_Finance_Assistant:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H12_Finance_Assistant:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H12_Finance_Assistant:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thử việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H12_Finance_Assistant:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Chế độ",
+          "relevance": 3,
+          "reason": "Section chính quy định mức lương, phụ cấp và ngày thanh toán."
+        },
+        {
+          "section_id": "H12_Finance_Assistant:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Thời giờ làm việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H12_Finance_Assistant:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Đánh giá hiệu quả",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H12_Finance_Assistant:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Bảo hiểm",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H12_Finance_Assistant:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Bảo mật",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H12_Finance_Assistant:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Điều khoản chung",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H12_Finance_Assistant:working_time",
+      "document_id": "H12_Finance_Assistant",
+      "file": "H12_Finance_Assistant.docx",
+      "category": "working_time",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H12_Finance_Assistant:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H12_Finance_Assistant:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H12_Finance_Assistant:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thử việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H12_Finance_Assistant:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Chế độ",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H12_Finance_Assistant:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Thời giờ làm việc",
+          "relevance": 3,
+          "reason": "Section chính quy định 08 giờ/ngày, 05 ngày/tuần và lịch 08:30–17:30."
+        },
+        {
+          "section_id": "H12_Finance_Assistant:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Đánh giá hiệu quả",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H12_Finance_Assistant:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Bảo hiểm",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H12_Finance_Assistant:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Bảo mật",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H12_Finance_Assistant:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Điều khoản chung",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H12_Finance_Assistant:termination",
+      "document_id": "H12_Finance_Assistant",
+      "file": "H12_Finance_Assistant.docx",
+      "category": "termination",
+      "has_relevant": false,
+      "has_primary": false,
+      "judgments": [
+        {
+          "section_id": "H12_Finance_Assistant:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        },
+        {
+          "section_id": "H12_Finance_Assistant:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        },
+        {
+          "section_id": "H12_Finance_Assistant:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thử việc",
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        },
+        {
+          "section_id": "H12_Finance_Assistant:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Chế độ",
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        },
+        {
+          "section_id": "H12_Finance_Assistant:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Thời giờ làm việc",
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        },
+        {
+          "section_id": "H12_Finance_Assistant:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Đánh giá hiệu quả",
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        },
+        {
+          "section_id": "H12_Finance_Assistant:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Bảo hiểm",
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        },
+        {
+          "section_id": "H12_Finance_Assistant:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Bảo mật",
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        },
+        {
+          "section_id": "H12_Finance_Assistant:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Điều khoản chung",
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        }
+      ]
+    },
+    {
+      "query_id": "H13_Call_Center_Agent:probation",
+      "document_id": "H13_Call_Center_Agent",
+      "file": "H13_Call_Center_Agent.docx",
+      "category": "probation",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H13_Call_Center_Agent:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H13_Call_Center_Agent:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H13_Call_Center_Agent:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Giai đoạn đầu",
+          "relevance": 3,
+          "reason": "Section mô tả 30 ngày đầu, đào tạo/giám sát và dùng kết quả để quyết định tiếp tục bố trí; nội dung trực tiếp tương đương probation."
+        },
+        {
+          "section_id": "H13_Call_Center_Agent:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Thu nhập",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H13_Call_Center_Agent:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Phân ca",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H13_Call_Center_Agent:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Nghỉ giữa ca và nghỉ hằng tuần",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H13_Call_Center_Agent:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Tài sản",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H13_Call_Center_Agent:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Điều khoản liên quan",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H13_Call_Center_Agent:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Kết thúc quan hệ lao động",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H13_Call_Center_Agent:salary",
+      "document_id": "H13_Call_Center_Agent",
+      "file": "H13_Call_Center_Agent.docx",
+      "category": "salary",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H13_Call_Center_Agent:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H13_Call_Center_Agent:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H13_Call_Center_Agent:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Giai đoạn đầu",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H13_Call_Center_Agent:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Thu nhập",
+          "relevance": 3,
+          "reason": "Section chính quy định khoản thu nhập cố định hàng tháng và ngày chuyển tiền."
+        },
+        {
+          "section_id": "H13_Call_Center_Agent:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Phân ca",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H13_Call_Center_Agent:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Nghỉ giữa ca và nghỉ hằng tuần",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H13_Call_Center_Agent:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Tài sản",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H13_Call_Center_Agent:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Điều khoản liên quan",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H13_Call_Center_Agent:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Kết thúc quan hệ lao động",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H13_Call_Center_Agent:working_time",
+      "document_id": "H13_Call_Center_Agent",
+      "file": "H13_Call_Center_Agent.docx",
+      "category": "working_time",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H13_Call_Center_Agent:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H13_Call_Center_Agent:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H13_Call_Center_Agent:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Giai đoạn đầu",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H13_Call_Center_Agent:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Thu nhập",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H13_Call_Center_Agent:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Phân ca",
+          "relevance": 3,
+          "reason": "Section chính chứa bảng phân ca với khung giờ từng ca và lịch phân ca theo tuần."
+        },
+        {
+          "section_id": "H13_Call_Center_Agent:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Nghỉ giữa ca và nghỉ hằng tuần",
+          "relevance": 2,
+          "reason": "Section bổ sung nghỉ giữa ca và nghỉ hằng tuần."
+        },
+        {
+          "section_id": "H13_Call_Center_Agent:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Tài sản",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H13_Call_Center_Agent:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Điều khoản liên quan",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H13_Call_Center_Agent:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Kết thúc quan hệ lao động",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H13_Call_Center_Agent:termination",
+      "document_id": "H13_Call_Center_Agent",
+      "file": "H13_Call_Center_Agent.docx",
+      "category": "termination",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H13_Call_Center_Agent:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H13_Call_Center_Agent:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H13_Call_Center_Agent:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Giai đoạn đầu",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H13_Call_Center_Agent:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Thu nhập",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H13_Call_Center_Agent:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Phân ca",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H13_Call_Center_Agent:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Nghỉ giữa ca và nghỉ hằng tuần",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H13_Call_Center_Agent:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Tài sản",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H13_Call_Center_Agent:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Điều khoản liên quan",
+          "relevance": 1,
+          "reason": "Section chỉ cross-reference quyền kết thúc hợp đồng sang Điều 8."
+        },
+        {
+          "section_id": "H13_Call_Center_Agent:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Kết thúc quan hệ lao động",
+          "relevance": 3,
+          "reason": "Section chính quy định quyền kết thúc quan hệ lao động và thời gian thông báo."
+        }
+      ]
+    },
+    {
+      "query_id": "H14_Procurement_Specialist:probation",
+      "document_id": "H14_Procurement_Specialist",
+      "file": "H14_Procurement_Specialist.docx",
+      "category": "probation",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H14_Procurement_Specialist:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H14_Procurement_Specialist:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H14_Procurement_Specialist:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thử việc",
+          "relevance": 3,
+          "reason": "Section trực tiếp quy định thử việc 60 ngày và đánh giá kết quả."
+        },
+        {
+          "section_id": "H14_Procurement_Specialist:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Quyền lợi người lao động",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H14_Procurement_Specialist:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Tổ chức làm việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H14_Procurement_Specialist:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Quy trình mua hàng",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H14_Procurement_Specialist:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Bảo mật",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H14_Procurement_Specialist:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Chấm dứt hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H14_Procurement_Specialist:salary",
+      "document_id": "H14_Procurement_Specialist",
+      "file": "H14_Procurement_Specialist.docx",
+      "category": "salary",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H14_Procurement_Specialist:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H14_Procurement_Specialist:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H14_Procurement_Specialist:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thử việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H14_Procurement_Specialist:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Quyền lợi người lao động",
+          "relevance": 3,
+          "reason": "Section chính quy định mức lương, phụ cấp và ngày trả tiền lương."
+        },
+        {
+          "section_id": "H14_Procurement_Specialist:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Tổ chức làm việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H14_Procurement_Specialist:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Quy trình mua hàng",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H14_Procurement_Specialist:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Bảo mật",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H14_Procurement_Specialist:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Chấm dứt hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H14_Procurement_Specialist:working_time",
+      "document_id": "H14_Procurement_Specialist",
+      "file": "H14_Procurement_Specialist.docx",
+      "category": "working_time",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H14_Procurement_Specialist:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H14_Procurement_Specialist:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H14_Procurement_Specialist:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thử việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H14_Procurement_Specialist:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Quyền lợi người lao động",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H14_Procurement_Specialist:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Tổ chức làm việc",
+          "relevance": 3,
+          "reason": "Section chính quy định 08 giờ/ngày, 05 ngày/tuần và khung giờ 08:30–17:30."
+        },
+        {
+          "section_id": "H14_Procurement_Specialist:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Quy trình mua hàng",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H14_Procurement_Specialist:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Bảo mật",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H14_Procurement_Specialist:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Chấm dứt hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H14_Procurement_Specialist:termination",
+      "document_id": "H14_Procurement_Specialist",
+      "file": "H14_Procurement_Specialist.docx",
+      "category": "termination",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H14_Procurement_Specialist:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H14_Procurement_Specialist:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H14_Procurement_Specialist:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thử việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H14_Procurement_Specialist:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Quyền lợi người lao động",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H14_Procurement_Specialist:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Tổ chức làm việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H14_Procurement_Specialist:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Quy trình mua hàng",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H14_Procurement_Specialist:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Bảo mật",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H14_Procurement_Specialist:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Chấm dứt hợp đồng",
+          "relevance": 3,
+          "reason": "Section chính quy định chấm dứt hợp đồng theo căn cứ và thời hạn báo trước."
+        }
+      ]
+    },
+    {
+      "query_id": "H15_Data_Engineer:probation",
+      "document_id": "H15_Data_Engineer",
+      "file": "H15_Data_Engineer.docx",
+      "category": "probation",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H15_Data_Engineer:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H15_Data_Engineer:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H15_Data_Engineer:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Giai đoạn đánh giá ban đầu",
+          "relevance": 3,
+          "reason": "Section mô tả 60 ngày đầu, đánh giá kết quả kỹ thuật/phối hợp và điều kiện tiếp tục vị trí; nội dung trực tiếp tương đương probation."
+        },
+        {
+          "section_id": "H15_Data_Engineer:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Thời hạn hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H15_Data_Engineer:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Lịch công tác",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H15_Data_Engineer:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Trực hệ thống và nghỉ bù",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H15_Data_Engineer:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Thiết bị và dữ liệu",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H15_Data_Engineer:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Điều khoản áp dụng",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H15_Data_Engineer:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Kết thúc quan hệ lao động",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H15_Data_Engineer:salary",
+      "document_id": "H15_Data_Engineer",
+      "file": "H15_Data_Engineer.docx",
+      "category": "salary",
+      "has_relevant": false,
+      "has_primary": false,
+      "judgments": [
+        {
+          "section_id": "H15_Data_Engineer:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        },
+        {
+          "section_id": "H15_Data_Engineer:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        },
+        {
+          "section_id": "H15_Data_Engineer:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Giai đoạn đánh giá ban đầu",
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        },
+        {
+          "section_id": "H15_Data_Engineer:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Thời hạn hợp đồng",
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        },
+        {
+          "section_id": "H15_Data_Engineer:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Lịch công tác",
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        },
+        {
+          "section_id": "H15_Data_Engineer:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Trực hệ thống và nghỉ bù",
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        },
+        {
+          "section_id": "H15_Data_Engineer:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Thiết bị và dữ liệu",
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        },
+        {
+          "section_id": "H15_Data_Engineer:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Điều khoản áp dụng",
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        },
+        {
+          "section_id": "H15_Data_Engineer:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Kết thúc quan hệ lao động",
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        }
+      ]
+    },
+    {
+      "query_id": "H15_Data_Engineer:working_time",
+      "document_id": "H15_Data_Engineer",
+      "file": "H15_Data_Engineer.docx",
+      "category": "working_time",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H15_Data_Engineer:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H15_Data_Engineer:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H15_Data_Engineer:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Giai đoạn đánh giá ban đầu",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H15_Data_Engineer:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Thời hạn hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H15_Data_Engineer:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Lịch công tác",
+          "relevance": 3,
+          "reason": "Section chính quy định lịch công tác 09:00–18:00 từ thứ Hai đến thứ Sáu."
+        },
+        {
+          "section_id": "H15_Data_Engineer:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Trực hệ thống và nghỉ bù",
+          "relevance": 2,
+          "reason": "Section bổ sung lịch trực hệ thống luân phiên và nghỉ bù sau trực ngoài giờ."
+        },
+        {
+          "section_id": "H15_Data_Engineer:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Thiết bị và dữ liệu",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H15_Data_Engineer:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Điều khoản áp dụng",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H15_Data_Engineer:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Kết thúc quan hệ lao động",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H15_Data_Engineer:termination",
+      "document_id": "H15_Data_Engineer",
+      "file": "H15_Data_Engineer.docx",
+      "category": "termination",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H15_Data_Engineer:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H15_Data_Engineer:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H15_Data_Engineer:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Giai đoạn đánh giá ban đầu",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H15_Data_Engineer:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Thời hạn hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H15_Data_Engineer:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Lịch công tác",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H15_Data_Engineer:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Trực hệ thống và nghỉ bù",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H15_Data_Engineer:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Thiết bị và dữ liệu",
+          "relevance": 1,
+          "reason": "Section chỉ nêu hoàn trả thiết bị khi quan hệ lao động kết thúc; đây là related mention."
+        },
+        {
+          "section_id": "H15_Data_Engineer:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Điều khoản áp dụng",
+          "relevance": 1,
+          "reason": "Section chỉ cross-reference việc kết thúc quan hệ lao động sang Điều 8."
+        },
+        {
+          "section_id": "H15_Data_Engineer:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Kết thúc quan hệ lao động",
+          "relevance": 3,
+          "reason": "Section chính quy định quyền kết thúc quan hệ lao động và thời gian thông báo."
+        }
+      ]
+    },
+    {
+      "query_id": "H16_Operations_Coordinator:probation",
+      "document_id": "H16_Operations_Coordinator",
+      "file": "H16_Operations_Coordinator.docx",
+      "category": "probation",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H16_Operations_Coordinator:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H16_Operations_Coordinator:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H16_Operations_Coordinator:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thử việc",
+          "relevance": 3,
+          "reason": "Section trực tiếp quy định thử việc 45 ngày và đánh giá kết quả thử việc."
+        },
+        {
+          "section_id": "H16_Operations_Coordinator:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Quyền lợi",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H16_Operations_Coordinator:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Thời hạn hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H16_Operations_Coordinator:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Bảo hiểm và nghỉ phép năm",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H16_Operations_Coordinator:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Tài sản",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H16_Operations_Coordinator:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Chấm dứt hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H16_Operations_Coordinator:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Điều khoản chung",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H16_Operations_Coordinator:salary",
+      "document_id": "H16_Operations_Coordinator",
+      "file": "H16_Operations_Coordinator.docx",
+      "category": "salary",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H16_Operations_Coordinator:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H16_Operations_Coordinator:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H16_Operations_Coordinator:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thử việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H16_Operations_Coordinator:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Quyền lợi",
+          "relevance": 3,
+          "reason": "Section chính chứa bảng lương theo công việc, phụ cấp/hỗ trợ và ngày thanh toán."
+        },
+        {
+          "section_id": "H16_Operations_Coordinator:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Thời hạn hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H16_Operations_Coordinator:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Bảo hiểm và nghỉ phép năm",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H16_Operations_Coordinator:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Tài sản",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H16_Operations_Coordinator:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Chấm dứt hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H16_Operations_Coordinator:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Điều khoản chung",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "query_id": "H16_Operations_Coordinator:working_time",
+      "document_id": "H16_Operations_Coordinator",
+      "file": "H16_Operations_Coordinator.docx",
+      "category": "working_time",
+      "has_relevant": false,
+      "has_primary": false,
+      "judgments": [
+        {
+          "section_id": "H16_Operations_Coordinator:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        },
+        {
+          "section_id": "H16_Operations_Coordinator:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        },
+        {
+          "section_id": "H16_Operations_Coordinator:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thử việc",
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        },
+        {
+          "section_id": "H16_Operations_Coordinator:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Quyền lợi",
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        },
+        {
+          "section_id": "H16_Operations_Coordinator:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Thời hạn hợp đồng",
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        },
+        {
+          "section_id": "H16_Operations_Coordinator:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Bảo hiểm và nghỉ phép năm",
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        },
+        {
+          "section_id": "H16_Operations_Coordinator:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Tài sản",
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        },
+        {
+          "section_id": "H16_Operations_Coordinator:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Chấm dứt hợp đồng",
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        },
+        {
+          "section_id": "H16_Operations_Coordinator:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Điều khoản chung",
+          "relevance": 0,
+          "reason": "Không có nội dung trực tiếp về category này trong section; đây là missing-category query được thiết kế và source-audit xác nhận."
+        }
+      ]
+    },
+    {
+      "query_id": "H16_Operations_Coordinator:termination",
+      "document_id": "H16_Operations_Coordinator",
+      "file": "H16_Operations_Coordinator.docx",
+      "category": "termination",
+      "has_relevant": true,
+      "has_primary": true,
+      "judgments": [
+        {
+          "section_id": "H16_Operations_Coordinator:section:0",
+          "section_index": 0,
+          "heading": null,
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H16_Operations_Coordinator:section:1",
+          "section_index": 1,
+          "heading": "Điều 1. Công việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H16_Operations_Coordinator:section:2",
+          "section_index": 2,
+          "heading": "Điều 2. Thử việc",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H16_Operations_Coordinator:section:3",
+          "section_index": 3,
+          "heading": "Điều 3. Quyền lợi",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H16_Operations_Coordinator:section:4",
+          "section_index": 4,
+          "heading": "Điều 4. Thời hạn hợp đồng",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H16_Operations_Coordinator:section:5",
+          "section_index": 5,
+          "heading": "Điều 5. Bảo hiểm và nghỉ phép năm",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H16_Operations_Coordinator:section:6",
+          "section_index": 6,
+          "heading": "Điều 6. Tài sản",
+          "relevance": 0,
+          "reason": ""
+        },
+        {
+          "section_id": "H16_Operations_Coordinator:section:7",
+          "section_index": 7,
+          "heading": "Điều 7. Chấm dứt hợp đồng",
+          "relevance": 3,
+          "reason": "Section chính quy định chấm dứt hợp đồng và thời hạn báo trước."
+        },
+        {
+          "section_id": "H16_Operations_Coordinator:section:8",
+          "section_index": 8,
+          "heading": "Điều 8. Điều khoản chung",
+          "relevance": 0,
+          "reason": ""
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,485 @@
+{
+  "schema_version": "contract-clause-annotation-decisions-v1",
+  "status": "assistant_draft_reviewed_16_of_16",
+  "audited_document_count": 16,
+  "annotation_semantics": "Only positive judgments are stored; omitted section-category judgments are relevance 0.",
+  "annotation_basis": {
+    "guideline": "ANNOTATION_GUIDELINE.md",
+    "policy": "Direct topical relevance only; labels assigned without consulting retrieval outputs.",
+    "note": "Assistant-produced annotation draft; final human sign-off recommended before thesis gold."
+  },
+  "frozen_inputs": {
+    "guideline_sha256": "e86979e2d9756cef82d0383a011d72872e583a7ff1039037eb1919b6cc29b2c4",
+    "sections_sha256": "7d2d75c2f86046c7ab717de2d0dc70fcc36ff3ce1a55bb7d8f2ff13b79a7eb58"
+  },
+  "documents": {
+    "H01_Backend_Developer": {
+      "probation": {
+        "2": {
+          "relevance": 3,
+          "reason": "Section trực tiếp quy định thử việc 60 ngày, công việc trong thời gian thử việc và đánh giá kết quả cuối kỳ."
+        }
+      },
+      "salary": {
+        "4": {
+          "relevance": 3,
+          "reason": "Section chính quy định mức lương theo công việc, phụ cấp, ngày trả lương và phương thức chuyển khoản."
+        }
+      },
+      "working_time": {
+        "5": {
+          "relevance": 3,
+          "reason": "Section chính quy định 08 giờ/ngày, 05 ngày/tuần, khung giờ làm việc, nghỉ trưa và nghỉ hằng tuần."
+        }
+      },
+      "termination": {
+        "8": {
+          "relevance": 3,
+          "reason": "Section chính quy định chấm dứt hợp đồng, thời hạn báo trước và nghĩa vụ bàn giao."
+        }
+      }
+    },
+    "H02_UI_UX_Designer": {
+      "probation": {
+        "2": {
+          "relevance": 3,
+          "reason": "Dù không dùng từ “thử việc”, section mô tả 60 ngày đầu, đánh giá cuối giai đoạn và quyết định tiếp tục thực hiện hợp đồng; đây là nội dung probation trực tiếp theo guideline."
+        }
+      },
+      "salary": {
+        "4": {
+          "relevance": 3,
+          "reason": "Section chính quy định khoản thanh toán cố định hàng tháng, hỗ trợ thiết bị và ngày/phương thức chuyển khoản."
+        }
+      },
+      "working_time": {
+        "5": {
+          "relevance": 3,
+          "reason": "Section chính quy định giờ làm 09:00–18:00 từ thứ Hai đến thứ Sáu và thời gian nghỉ trưa."
+        }
+      },
+      "termination": {
+        "7": {
+          "relevance": 3,
+          "reason": "Section chính quy định kết thúc quan hệ lao động trước thời hạn, thời gian thông báo và nghĩa vụ bàn giao."
+        }
+      }
+    },
+    "H03_Network_Engineer": {
+      "probation": {
+        "2": {
+          "relevance": 3,
+          "reason": "Section trực tiếp quy định thời gian thử việc 60 ngày và đánh giá kết quả."
+        }
+      },
+      "salary": {
+        "3": {
+          "relevance": 3,
+          "reason": "Section chính quy định mức lương, phụ cấp trực và ngày thanh toán."
+        }
+      },
+      "working_time": {
+        "4": {
+          "relevance": 3,
+          "reason": "Section chính quy định thời giờ làm việc bình thường 08 giờ/ngày, 05 ngày/tuần và khung giờ hành chính."
+        },
+        "5": {
+          "relevance": 2,
+          "reason": "Section bổ sung lịch trực theo ca, khung giờ từng ca và khoảng nghỉ tối thiểu trước ca tiếp theo."
+        }
+      },
+      "termination": {
+        "8": {
+          "relevance": 3,
+          "reason": "Section chính quy định chấm dứt hợp đồng, thời hạn báo trước và bàn giao thiết bị/tài liệu."
+        }
+      }
+    },
+    "H04_Customer_Support": {
+      "probation": {
+        "2": {
+          "relevance": 3,
+          "reason": "Section mô tả 30 ngày đầu, đánh giá khả năng xử lý yêu cầu và dùng kết quả để quyết định tiếp tục bố trí; nội dung trực tiếp tương đương probation theo guideline."
+        }
+      },
+      "salary": {
+        "3": {
+          "relevance": 3,
+          "reason": "Section chính quy định khoản thu nhập cố định, hỗ trợ điện thoại và ngày chuyển tiền."
+        }
+      },
+      "working_time": {
+        "4": {
+          "relevance": 3,
+          "reason": "Section chính quy định hai ca làm việc, khung giờ, luân phiên ca và nghỉ giữa ca."
+        }
+      },
+      "termination": {
+        "5": {
+          "relevance": 1,
+          "reason": "Section chỉ nhắc hoàn trả thiết bị khi hợp đồng chấm dứt, không chứa căn cứ hay thời hạn thông báo; đây là related mention."
+        },
+        "7": {
+          "relevance": 3,
+          "reason": "Section chính quy định căn cứ kết thúc hợp đồng, thời gian thông báo và bàn giao hồ sơ."
+        }
+      }
+    },
+    "H05_Warehouse_Supervisor": {
+      "probation": {
+        "2": {
+          "relevance": 3,
+          "reason": "Section trực tiếp quy định thử việc 45 ngày và đánh giá năng lực."
+        }
+      },
+      "salary": {
+        "3": {
+          "relevance": 3,
+          "reason": "Section chính chứa bảng lương theo công việc, phụ cấp trách nhiệm, phụ cấp ca và ngày/phương thức thanh toán."
+        }
+      },
+      "working_time": {
+        "4": {
+          "relevance": 3,
+          "reason": "Section chính quy định ca 12 giờ, lịch ca theo tuần và số ngày làm việc trong tuần."
+        },
+        "5": {
+          "relevance": 2,
+          "reason": "Section bổ sung nghỉ giữa ca, thời gian nghỉ tối thiểu giữa hai ca và nghỉ hằng tuần."
+        }
+      },
+      "termination": {
+        "8": {
+          "relevance": 3,
+          "reason": "Section chính quy định chấm dứt, thời hạn báo trước và bàn giao kho."
+        }
+      }
+    },
+    "H06_Security_Analyst": {
+      "probation": {
+        "2": {
+          "relevance": 3,
+          "reason": "Section mô tả 60 ngày đầu, đánh giá kỹ năng cuối giai đoạn và điều kiện tiếp tục vị trí; nội dung probation trực tiếp dù heading không dùng từ “thử việc”."
+        }
+      },
+      "salary": {
+        "3": {
+          "relevance": 3,
+          "reason": "Section chính quy định khoản thu nhập cố định hàng tháng và ngày/phương thức thanh toán."
+        }
+      },
+      "working_time": {
+        "4": {
+          "relevance": 3,
+          "reason": "Section chính quy định 08 giờ/ngày, các ngày làm việc và khung giờ 09:00–18:00."
+        }
+      },
+      "termination": {
+        "5": {
+          "relevance": 1,
+          "reason": "Section chỉ quy định thu hồi tài khoản và thiết bị khi quan hệ lao động kết thúc; đây là nghĩa vụ liên quan nhưng không phải bằng chứng chính."
+        },
+        "6": {
+          "relevance": 1,
+          "reason": "Section chỉ cross-reference việc kết thúc hợp đồng sang Điều 8, không có nội dung substantive."
+        },
+        "8": {
+          "relevance": 3,
+          "reason": "Section chính quy định quyền kết thúc quan hệ lao động, thời gian thông báo và nghĩa vụ bàn giao."
+        }
+      }
+    },
+    "H07_HR_Specialist": {
+      "probation": {
+        "2": {
+          "relevance": 3,
+          "reason": "Section chính quy định thời gian thử việc, công việc thử việc và mức lương thử việc."
+        },
+        "3": {
+          "relevance": 2,
+          "reason": "Section bổ sung tiêu chí đánh giá, thời điểm thông báo kết quả và việc chuyển sang chế độ chính thức sau thử việc."
+        }
+      },
+      "salary": {
+        "2": {
+          "relevance": 1,
+          "reason": "Section chỉ nêu mức lương thử việc bằng 90% mức lương vị trí; theo guideline probation salary thuộc chủ yếu về probation và thường chỉ relevance 1 cho salary."
+        },
+        "4": {
+          "relevance": 3,
+          "reason": "Section chính quy định mức lương theo công việc và ngày thanh toán."
+        }
+      },
+      "working_time": {
+        "5": {
+          "relevance": 3,
+          "reason": "Section chính quy định 08 giờ/ngày, 05 ngày/tuần và khung giờ 08:30–17:30."
+        }
+      },
+      "termination": {
+        "7": {
+          "relevance": 1,
+          "reason": "Section chỉ nêu nghĩa vụ bàn giao khi chấm dứt và cross-reference sang Điều 8."
+        },
+        "8": {
+          "relevance": 3,
+          "reason": "Section chính quy định các trường hợp chấm dứt và thời hạn báo trước."
+        }
+      }
+    },
+    "H08_Sales_Executive": {
+      "probation": {
+        "2": {
+          "relevance": 3,
+          "reason": "Section trực tiếp quy định giai đoạn thử việc 45 ngày và đánh giá kết quả."
+        }
+      },
+      "salary": {
+        "3": {
+          "relevance": 3,
+          "reason": "Section chính chứa bảng khoản cố định, phụ cấp, hoa hồng và ngày thanh toán."
+        },
+        "5": {
+          "relevance": 2,
+          "reason": "Section bổ sung quy định chỉ tiêu không làm thay đổi mức lương cố định nếu không có thỏa thuận khác; đây là thông tin thực chất về điều chỉnh lương nhưng không phải section chính."
+        }
+      },
+      "working_time": {
+        "4": {
+          "relevance": 3,
+          "reason": "Section chính quy định 08 giờ/ngày, 05 ngày/tuần và cách bố trí lịch gặp khách hàng."
+        }
+      },
+      "termination": {
+        "7": {
+          "relevance": 3,
+          "reason": "Section chính quy định căn cứ/trình tự kết thúc hợp đồng và thời hạn thông báo."
+        }
+      }
+    },
+    "H09_DevOps_Engineer": {
+      "probation": {
+        "2": {
+          "relevance": 3,
+          "reason": "Section mô tả hai tháng đầu, đánh giá của quản lý và dùng kết quả để quyết định tiếp tục bố trí; nội dung trực tiếp tương đương probation."
+        }
+      },
+      "salary": {
+        "3": {
+          "relevance": 3,
+          "reason": "Section chính quy định khoản trả cố định hàng tháng và ngày/phương thức chuyển khoản."
+        }
+      },
+      "working_time": {
+        "4": {
+          "relevance": 3,
+          "reason": "Section chính quy định lịch làm việc 09:00–18:00, 05 ngày/tuần."
+        },
+        "5": {
+          "relevance": 2,
+          "reason": "Section bổ sung lịch on-call luân phiên và khoảng nghỉ sau ca trực đêm."
+        }
+      },
+      "termination": {
+        "7": {
+          "relevance": 3,
+          "reason": "Section chính quy định kết thúc quan hệ lao động trước thời hạn, thời gian thông báo và nghĩa vụ bàn giao."
+        }
+      }
+    },
+    "H10_Office_Administrator": {
+      "probation": {},
+      "salary": {
+        "3": {
+          "relevance": 3,
+          "reason": "Section chính quy định mức lương theo công việc và ngày/phương thức trả lương."
+        }
+      },
+      "working_time": {
+        "4": {
+          "relevance": 3,
+          "reason": "Section chính quy định 08 giờ/ngày, 05 ngày/tuần và khung giờ 08:00–17:00."
+        }
+      },
+      "termination": {
+        "5": {
+          "relevance": 1,
+          "reason": "Section chỉ nêu hoàn trả tài sản/hồ sơ khi hợp đồng chấm dứt; đây là related mention."
+        },
+        "6": {
+          "relevance": 1,
+          "reason": "Section chỉ cross-reference các vấn đề chấm dứt hợp đồng sang Điều 8."
+        },
+        "8": {
+          "relevance": 3,
+          "reason": "Section chính quy định các trường hợp chấm dứt và thời hạn báo trước."
+        }
+      }
+    },
+    "H11_QA_Engineer": {
+      "probation": {
+        "2": {
+          "relevance": 3,
+          "reason": "Section mô tả hai tháng đầu, review chất lượng công việc và quyết định tiếp tục bố trí; nội dung trực tiếp tương đương probation."
+        }
+      },
+      "salary": {
+        "3": {
+          "relevance": 3,
+          "reason": "Section chính chứa bảng thu nhập cố định, phụ cấp và ngày thanh toán tiền lương."
+        }
+      },
+      "working_time": {
+        "4": {
+          "relevance": 3,
+          "reason": "Section chính quy định khung giờ làm việc và các ngày làm việc trong tuần."
+        },
+        "5": {
+          "relevance": 2,
+          "reason": "Section bổ sung quy định làm thêm và nghỉ bù."
+        }
+      },
+      "termination": {
+        "7": {
+          "relevance": 3,
+          "reason": "Section chính quy định chấm dứt hợp đồng theo căn cứ và thời hạn báo trước."
+        }
+      }
+    },
+    "H12_Finance_Assistant": {
+      "probation": {
+        "2": {
+          "relevance": 3,
+          "reason": "Section trực tiếp quy định thử việc 45 ngày và đánh giá kết quả thử việc."
+        }
+      },
+      "salary": {
+        "3": {
+          "relevance": 3,
+          "reason": "Section chính quy định mức lương, phụ cấp và ngày thanh toán."
+        }
+      },
+      "working_time": {
+        "4": {
+          "relevance": 3,
+          "reason": "Section chính quy định 08 giờ/ngày, 05 ngày/tuần và lịch 08:30–17:30."
+        }
+      },
+      "termination": {}
+    },
+    "H13_Call_Center_Agent": {
+      "probation": {
+        "2": {
+          "relevance": 3,
+          "reason": "Section mô tả 30 ngày đầu, đào tạo/giám sát và dùng kết quả để quyết định tiếp tục bố trí; nội dung trực tiếp tương đương probation."
+        }
+      },
+      "salary": {
+        "3": {
+          "relevance": 3,
+          "reason": "Section chính quy định khoản thu nhập cố định hàng tháng và ngày chuyển tiền."
+        }
+      },
+      "working_time": {
+        "4": {
+          "relevance": 3,
+          "reason": "Section chính chứa bảng phân ca với khung giờ từng ca và lịch phân ca theo tuần."
+        },
+        "5": {
+          "relevance": 2,
+          "reason": "Section bổ sung nghỉ giữa ca và nghỉ hằng tuần."
+        }
+      },
+      "termination": {
+        "7": {
+          "relevance": 1,
+          "reason": "Section chỉ cross-reference quyền kết thúc hợp đồng sang Điều 8."
+        },
+        "8": {
+          "relevance": 3,
+          "reason": "Section chính quy định quyền kết thúc quan hệ lao động và thời gian thông báo."
+        }
+      }
+    },
+    "H14_Procurement_Specialist": {
+      "probation": {
+        "2": {
+          "relevance": 3,
+          "reason": "Section trực tiếp quy định thử việc 60 ngày và đánh giá kết quả."
+        }
+      },
+      "salary": {
+        "3": {
+          "relevance": 3,
+          "reason": "Section chính quy định mức lương, phụ cấp và ngày trả tiền lương."
+        }
+      },
+      "working_time": {
+        "4": {
+          "relevance": 3,
+          "reason": "Section chính quy định 08 giờ/ngày, 05 ngày/tuần và khung giờ 08:30–17:30."
+        }
+      },
+      "termination": {
+        "7": {
+          "relevance": 3,
+          "reason": "Section chính quy định chấm dứt hợp đồng theo căn cứ và thời hạn báo trước."
+        }
+      }
+    },
+    "H15_Data_Engineer": {
+      "probation": {
+        "2": {
+          "relevance": 3,
+          "reason": "Section mô tả 60 ngày đầu, đánh giá kết quả kỹ thuật/phối hợp và điều kiện tiếp tục vị trí; nội dung trực tiếp tương đương probation."
+        }
+      },
+      "salary": {},
+      "working_time": {
+        "4": {
+          "relevance": 3,
+          "reason": "Section chính quy định lịch công tác 09:00–18:00 từ thứ Hai đến thứ Sáu."
+        },
+        "5": {
+          "relevance": 2,
+          "reason": "Section bổ sung lịch trực hệ thống luân phiên và nghỉ bù sau trực ngoài giờ."
+        }
+      },
+      "termination": {
+        "6": {
+          "relevance": 1,
+          "reason": "Section chỉ nêu hoàn trả thiết bị khi quan hệ lao động kết thúc; đây là related mention."
+        },
+        "7": {
+          "relevance": 1,
+          "reason": "Section chỉ cross-reference việc kết thúc quan hệ lao động sang Điều 8."
+        },
+        "8": {
+          "relevance": 3,
+          "reason": "Section chính quy định quyền kết thúc quan hệ lao động và thời gian thông báo."
+        }
+      }
+    },
+    "H16_Operations_Coordinator": {
+      "probation": {
+        "2": {
+          "relevance": 3,
+          "reason": "Section trực tiếp quy định thử việc 45 ngày và đánh giá kết quả thử việc."
+        }
+      },
+      "salary": {
+        "3": {
+          "relevance": 3,
+          "reason": "Section chính chứa bảng lương theo công việc, phụ cấp/hỗ trợ và ngày thanh toán."
+        }
+      },
+      "working_time": {},
+      "termination": {
+        "7": {
+          "relevance": 3,
+          "reason": "Section chính quy định chấm dứt hợp đồng và thời hạn báo trước."
+        }
+      }
+    }
+  }
+}

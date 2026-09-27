@@ -1,0 +1,3186 @@
+{
+  "schema_version": "contract-clause-annotation-source-v1",
+  "status": "unreviewed",
+  "documents": [
+    {
+      "document_id": "H01_Backend_Developer",
+      "file": "H01_Backend_Developer.docx",
+      "sha256": "207d4fb85723be3e1edd4cdaa688d515d946e1f0318a249a9a6f622e39ef495a",
+      "block_count": 31,
+      "section_count": 9,
+      "source_blocks": [
+        {
+          "block_index": 0,
+          "kind": "paragraph",
+          "text": "HỢP ĐỒNG LAO ĐỘNG"
+        },
+        {
+          "block_index": 1,
+          "kind": "paragraph",
+          "text": "H01 - Backend Developer"
+        },
+        {
+          "block_index": 2,
+          "kind": "paragraph",
+          "text": "BÊN A: CÔNG TY TNHH DEMO HELDOUT VIỆT NAM"
+        },
+        {
+          "block_index": 3,
+          "kind": "paragraph",
+          "text": "BÊN B: NGƯỜI LAO ĐỘNG"
+        },
+        {
+          "block_index": 4,
+          "kind": "paragraph",
+          "text": "Hai bên thống nhất ký hợp đồng lao động cho vị trí Backend Developer với các nội dung sau đây."
+        },
+        {
+          "block_index": 5,
+          "kind": "paragraph",
+          "text": "Điều 1. Công việc và địa điểm làm việc"
+        },
+        {
+          "block_index": 6,
+          "kind": "paragraph",
+          "text": "Người lao động phát triển API, bảo trì các dịch vụ backend và phối hợp với nhóm frontend trong quá trình tích hợp."
+        },
+        {
+          "block_index": 7,
+          "kind": "paragraph",
+          "text": "Địa điểm làm việc chính tại văn phòng công ty tại Thành phố Hồ Chí Minh."
+        },
+        {
+          "block_index": 8,
+          "kind": "paragraph",
+          "text": "Điều 2. Thử việc"
+        },
+        {
+          "block_index": 9,
+          "kind": "paragraph",
+          "text": "Người lao động thực hiện thử việc trong thời gian 60 ngày."
+        },
+        {
+          "block_index": 10,
+          "kind": "paragraph",
+          "text": "Trong thời gian thử việc, người lao động thực hiện các nhiệm vụ của vị trí Backend Developer."
+        },
+        {
+          "block_index": 11,
+          "kind": "paragraph",
+          "text": "Kết quả thử việc được đánh giá vào cuối thời gian thử việc."
+        },
+        {
+          "block_index": 12,
+          "kind": "paragraph",
+          "text": "Điều 3. Thời hạn hợp đồng"
+        },
+        {
+          "block_index": 13,
+          "kind": "paragraph",
+          "text": "Hợp đồng xác định thời hạn 24 tháng kể từ ngày 01/11/2026 đến hết ngày 31/10/2028."
+        },
+        {
+          "block_index": 14,
+          "kind": "paragraph",
+          "text": "Điều 4. Tiền lương"
+        },
+        {
+          "block_index": 15,
+          "kind": "paragraph",
+          "text": "Mức lương theo công việc là 22.000.000 đồng/tháng."
+        },
+        {
+          "block_index": 16,
+          "kind": "paragraph",
+          "text": "Phụ cấp ăn trưa là 700.000 đồng/tháng."
+        },
+        {
+          "block_index": 17,
+          "kind": "paragraph",
+          "text": "Tiền lương được trả vào ngày 05 hằng tháng bằng chuyển khoản ngân hàng."
+        },
+        {
+          "block_index": 18,
+          "kind": "paragraph",
+          "text": "Điều 5. Thời giờ làm việc và nghỉ ngơi"
+        },
+        {
+          "block_index": 19,
+          "kind": "paragraph",
+          "text": "Thời giờ làm việc là 08 giờ/ngày, 05 ngày/tuần, từ thứ Hai đến thứ Sáu."
+        },
+        {
+          "block_index": 20,
+          "kind": "paragraph",
+          "text": "Thời gian làm việc từ 08:30 đến 17:30, nghỉ trưa một giờ."
+        },
+        {
+          "block_index": 21,
+          "kind": "paragraph",
+          "text": "Người lao động được nghỉ hằng tuần vào thứ Bảy và Chủ nhật."
+        },
+        {
+          "block_index": 22,
+          "kind": "paragraph",
+          "text": "Điều 6. Bảo hiểm và nghỉ phép"
+        },
+        {
+          "block_index": 23,
+          "kind": "paragraph",
+          "text": "Người lao động tham gia BHXH, BHYT và BHTN theo quy định."
+        },
+        {
+          "block_index": 24,
+          "kind": "paragraph",
+          "text": "Nghỉ phép năm thực hiện theo chính sách của công ty và pháp luật."
+        },
+        {
+          "block_index": 25,
+          "kind": "paragraph",
+          "text": "Điều 7. Bảo mật"
+        },
+        {
+          "block_index": 26,
+          "kind": "paragraph",
+          "text": "Người lao động có trách nhiệm bảo mật mã nguồn, dữ liệu và thông tin kỹ thuật của công ty."
+        },
+        {
+          "block_index": 27,
+          "kind": "paragraph",
+          "text": "Điều 8. Chấm dứt hợp đồng"
+        },
+        {
+          "block_index": 28,
+          "kind": "paragraph",
+          "text": "Việc chấm dứt hợp đồng được thực hiện theo căn cứ và trình tự đã thỏa thuận và quy định pháp luật."
+        },
+        {
+          "block_index": 29,
+          "kind": "paragraph",
+          "text": "Bên thực hiện quyền đơn phương có trách nhiệm tuân thủ thời hạn báo trước."
+        },
+        {
+          "block_index": 30,
+          "kind": "paragraph",
+          "text": "Người lao động phải bàn giao mã nguồn, tài khoản và tài liệu trước ngày làm việc cuối cùng."
+        }
+      ],
+      "sections": [
+        {
+          "section_index": 0,
+          "section_id": "H01_Backend_Developer:section:0",
+          "heading": null,
+          "text": "HỢP ĐỒNG LAO ĐỘNG\nH01 - Backend Developer\nBÊN A: CÔNG TY TNHH DEMO HELDOUT VIỆT NAM\nBÊN B: NGƯỜI LAO ĐỘNG\nHai bên thống nhất ký hợp đồng lao động cho vị trí Backend Developer với các nội dung sau đây."
+        },
+        {
+          "section_index": 1,
+          "section_id": "H01_Backend_Developer:section:1",
+          "heading": "Điều 1. Công việc và địa điểm làm việc",
+          "text": "Điều 1. Công việc và địa điểm làm việc\nNgười lao động phát triển API, bảo trì các dịch vụ backend và phối hợp với nhóm frontend trong quá trình tích hợp.\nĐịa điểm làm việc chính tại văn phòng công ty tại Thành phố Hồ Chí Minh."
+        },
+        {
+          "section_index": 2,
+          "section_id": "H01_Backend_Developer:section:2",
+          "heading": "Điều 2. Thử việc",
+          "text": "Điều 2. Thử việc\nNgười lao động thực hiện thử việc trong thời gian 60 ngày.\nTrong thời gian thử việc, người lao động thực hiện các nhiệm vụ của vị trí Backend Developer.\nKết quả thử việc được đánh giá vào cuối thời gian thử việc."
+        },
+        {
+          "section_index": 3,
+          "section_id": "H01_Backend_Developer:section:3",
+          "heading": "Điều 3. Thời hạn hợp đồng",
+          "text": "Điều 3. Thời hạn hợp đồng\nHợp đồng xác định thời hạn 24 tháng kể từ ngày 01/11/2026 đến hết ngày 31/10/2028."
+        },
+        {
+          "section_index": 4,
+          "section_id": "H01_Backend_Developer:section:4",
+          "heading": "Điều 4. Tiền lương",
+          "text": "Điều 4. Tiền lương\nMức lương theo công việc là 22.000.000 đồng/tháng.\nPhụ cấp ăn trưa là 700.000 đồng/tháng.\nTiền lương được trả vào ngày 05 hằng tháng bằng chuyển khoản ngân hàng."
+        },
+        {
+          "section_index": 5,
+          "section_id": "H01_Backend_Developer:section:5",
+          "heading": "Điều 5. Thời giờ làm việc và nghỉ ngơi",
+          "text": "Điều 5. Thời giờ làm việc và nghỉ ngơi\nThời giờ làm việc là 08 giờ/ngày, 05 ngày/tuần, từ thứ Hai đến thứ Sáu.\nThời gian làm việc từ 08:30 đến 17:30, nghỉ trưa một giờ.\nNgười lao động được nghỉ hằng tuần vào thứ Bảy và Chủ nhật."
+        },
+        {
+          "section_index": 6,
+          "section_id": "H01_Backend_Developer:section:6",
+          "heading": "Điều 6. Bảo hiểm và nghỉ phép",
+          "text": "Điều 6. Bảo hiểm và nghỉ phép\nNgười lao động tham gia BHXH, BHYT và BHTN theo quy định.\nNghỉ phép năm thực hiện theo chính sách của công ty và pháp luật."
+        },
+        {
+          "section_index": 7,
+          "section_id": "H01_Backend_Developer:section:7",
+          "heading": "Điều 7. Bảo mật",
+          "text": "Điều 7. Bảo mật\nNgười lao động có trách nhiệm bảo mật mã nguồn, dữ liệu và thông tin kỹ thuật của công ty."
+        },
+        {
+          "section_index": 8,
+          "section_id": "H01_Backend_Developer:section:8",
+          "heading": "Điều 8. Chấm dứt hợp đồng",
+          "text": "Điều 8. Chấm dứt hợp đồng\nViệc chấm dứt hợp đồng được thực hiện theo căn cứ và trình tự đã thỏa thuận và quy định pháp luật.\nBên thực hiện quyền đơn phương có trách nhiệm tuân thủ thời hạn báo trước.\nNgười lao động phải bàn giao mã nguồn, tài khoản và tài liệu trước ngày làm việc cuối cùng."
+        }
+      ]
+    },
+    {
+      "document_id": "H02_UI_UX_Designer",
+      "file": "H02_UI_UX_Designer.docx",
+      "sha256": "76e33a7847e148d33aeeeb35d267d1e331e8d1de99f241799c4f481220acdbc2",
+      "block_count": 26,
+      "section_count": 8,
+      "source_blocks": [
+        {
+          "block_index": 0,
+          "kind": "paragraph",
+          "text": "HỢP ĐỒNG LAO ĐỘNG"
+        },
+        {
+          "block_index": 1,
+          "kind": "paragraph",
+          "text": "H02 - UI UX Designer"
+        },
+        {
+          "block_index": 2,
+          "kind": "paragraph",
+          "text": "BÊN A: CÔNG TY TNHH DEMO HELDOUT VIỆT NAM"
+        },
+        {
+          "block_index": 3,
+          "kind": "paragraph",
+          "text": "BÊN B: NGƯỜI LAO ĐỘNG"
+        },
+        {
+          "block_index": 4,
+          "kind": "paragraph",
+          "text": "Hai bên thống nhất ký hợp đồng lao động cho vị trí UI/UX Designer với các nội dung sau đây."
+        },
+        {
+          "block_index": 5,
+          "kind": "paragraph",
+          "text": "Điều 1. Phạm vi công việc"
+        },
+        {
+          "block_index": 6,
+          "kind": "paragraph",
+          "text": "Người lao động thiết kế giao diện, prototype và duy trì design system cho các sản phẩm số của công ty."
+        },
+        {
+          "block_index": 7,
+          "kind": "paragraph",
+          "text": "Điều 2. Giai đoạn ban đầu"
+        },
+        {
+          "block_index": 8,
+          "kind": "paragraph",
+          "text": "Trong 60 ngày đầu kể từ ngày nhận việc, người lao động thực hiện đầy đủ nhiệm vụ của vị trí UI/UX Designer."
+        },
+        {
+          "block_index": 9,
+          "kind": "paragraph",
+          "text": "Cuối giai đoạn này, công ty đánh giá khả năng đáp ứng yêu cầu về chất lượng thiết kế, phối hợp và tiến độ."
+        },
+        {
+          "block_index": 10,
+          "kind": "paragraph",
+          "text": "Nếu đạt yêu cầu, người lao động tiếp tục thực hiện hợp đồng theo các điều khoản đã thống nhất."
+        },
+        {
+          "block_index": 11,
+          "kind": "paragraph",
+          "text": "Điều 3. Thời hạn"
+        },
+        {
+          "block_index": 12,
+          "kind": "paragraph",
+          "text": "Thỏa thuận lao động có thời hạn 18 tháng kể từ ngày bắt đầu công việc."
+        },
+        {
+          "block_index": 13,
+          "kind": "paragraph",
+          "text": "Điều 4. Quyền lợi"
+        },
+        {
+          "block_index": 14,
+          "kind": "paragraph",
+          "text": "Khoản thanh toán cố định cho công việc là 19.500.000 đồng mỗi tháng."
+        },
+        {
+          "block_index": 15,
+          "kind": "paragraph",
+          "text": "Người lao động được hỗ trợ thiết bị 500.000 đồng mỗi tháng."
+        },
+        {
+          "block_index": 16,
+          "kind": "paragraph",
+          "text": "Các khoản trên được chuyển vào tài khoản cá nhân vào ngày 05 hằng tháng."
+        },
+        {
+          "block_index": 17,
+          "kind": "paragraph",
+          "text": "Điều 5. Tổ chức công việc"
+        },
+        {
+          "block_index": 18,
+          "kind": "paragraph",
+          "text": "Người lao động thực hiện nhiệm vụ từ 09:00 đến 18:00 từ thứ Hai đến thứ Sáu."
+        },
+        {
+          "block_index": 19,
+          "kind": "paragraph",
+          "text": "Khoảng thời gian 12:00 đến 13:00 được dành cho nghỉ trưa."
+        },
+        {
+          "block_index": 20,
+          "kind": "paragraph",
+          "text": "Điều 6. Sở hữu trí tuệ"
+        },
+        {
+          "block_index": 21,
+          "kind": "paragraph",
+          "text": "Các bản thiết kế và tài sản sáng tạo hình thành trong quá trình thực hiện nhiệm vụ thuộc phạm vi quản lý của công ty."
+        },
+        {
+          "block_index": 22,
+          "kind": "paragraph",
+          "text": "Điều 7. Khi quan hệ lao động kết thúc"
+        },
+        {
+          "block_index": 23,
+          "kind": "paragraph",
+          "text": "Một bên có thể kết thúc quan hệ lao động trước thời hạn khi có căn cứ phù hợp với thỏa thuận và quy định áp dụng."
+        },
+        {
+          "block_index": 24,
+          "kind": "paragraph",
+          "text": "Bên thực hiện việc kết thúc phải gửi thông báo trong thời gian phù hợp trước ngày dự kiến kết thúc."
+        },
+        {
+          "block_index": 25,
+          "kind": "paragraph",
+          "text": "Người lao động hoàn tất bàn giao file thiết kế, tài liệu và quyền truy cập trước ngày cuối cùng."
+        }
+      ],
+      "sections": [
+        {
+          "section_index": 0,
+          "section_id": "H02_UI_UX_Designer:section:0",
+          "heading": null,
+          "text": "HỢP ĐỒNG LAO ĐỘNG\nH02 - UI UX Designer\nBÊN A: CÔNG TY TNHH DEMO HELDOUT VIỆT NAM\nBÊN B: NGƯỜI LAO ĐỘNG\nHai bên thống nhất ký hợp đồng lao động cho vị trí UI/UX Designer với các nội dung sau đây."
+        },
+        {
+          "section_index": 1,
+          "section_id": "H02_UI_UX_Designer:section:1",
+          "heading": "Điều 1. Phạm vi công việc",
+          "text": "Điều 1. Phạm vi công việc\nNgười lao động thiết kế giao diện, prototype và duy trì design system cho các sản phẩm số của công ty."
+        },
+        {
+          "section_index": 2,
+          "section_id": "H02_UI_UX_Designer:section:2",
+          "heading": "Điều 2. Giai đoạn ban đầu",
+          "text": "Điều 2. Giai đoạn ban đầu\nTrong 60 ngày đầu kể từ ngày nhận việc, người lao động thực hiện đầy đủ nhiệm vụ của vị trí UI/UX Designer.\nCuối giai đoạn này, công ty đánh giá khả năng đáp ứng yêu cầu về chất lượng thiết kế, phối hợp và tiến độ.\nNếu đạt yêu cầu, người lao động tiếp tục thực hiện hợp đồng theo các điều khoản đã thống nhất."
+        },
+        {
+          "section_index": 3,
+          "section_id": "H02_UI_UX_Designer:section:3",
+          "heading": "Điều 3. Thời hạn",
+          "text": "Điều 3. Thời hạn\nThỏa thuận lao động có thời hạn 18 tháng kể từ ngày bắt đầu công việc."
+        },
+        {
+          "section_index": 4,
+          "section_id": "H02_UI_UX_Designer:section:4",
+          "heading": "Điều 4. Quyền lợi",
+          "text": "Điều 4. Quyền lợi\nKhoản thanh toán cố định cho công việc là 19.500.000 đồng mỗi tháng.\nNgười lao động được hỗ trợ thiết bị 500.000 đồng mỗi tháng.\nCác khoản trên được chuyển vào tài khoản cá nhân vào ngày 05 hằng tháng."
+        },
+        {
+          "section_index": 5,
+          "section_id": "H02_UI_UX_Designer:section:5",
+          "heading": "Điều 5. Tổ chức công việc",
+          "text": "Điều 5. Tổ chức công việc\nNgười lao động thực hiện nhiệm vụ từ 09:00 đến 18:00 từ thứ Hai đến thứ Sáu.\nKhoảng thời gian 12:00 đến 13:00 được dành cho nghỉ trưa."
+        },
+        {
+          "section_index": 6,
+          "section_id": "H02_UI_UX_Designer:section:6",
+          "heading": "Điều 6. Sở hữu trí tuệ",
+          "text": "Điều 6. Sở hữu trí tuệ\nCác bản thiết kế và tài sản sáng tạo hình thành trong quá trình thực hiện nhiệm vụ thuộc phạm vi quản lý của công ty."
+        },
+        {
+          "section_index": 7,
+          "section_id": "H02_UI_UX_Designer:section:7",
+          "heading": "Điều 7. Khi quan hệ lao động kết thúc",
+          "text": "Điều 7. Khi quan hệ lao động kết thúc\nMột bên có thể kết thúc quan hệ lao động trước thời hạn khi có căn cứ phù hợp với thỏa thuận và quy định áp dụng.\nBên thực hiện việc kết thúc phải gửi thông báo trong thời gian phù hợp trước ngày dự kiến kết thúc.\nNgười lao động hoàn tất bàn giao file thiết kế, tài liệu và quyền truy cập trước ngày cuối cùng."
+        }
+      ]
+    },
+    {
+      "document_id": "H03_Network_Engineer",
+      "file": "H03_Network_Engineer.docx",
+      "sha256": "f003c0e852d97a615fce31366c299dab7bdb08105a93a378bbc25b8d8fa61e07",
+      "block_count": 32,
+      "section_count": 9,
+      "source_blocks": [
+        {
+          "block_index": 0,
+          "kind": "paragraph",
+          "text": "HỢP ĐỒNG LAO ĐỘNG"
+        },
+        {
+          "block_index": 1,
+          "kind": "paragraph",
+          "text": "H03 - Network Engineer"
+        },
+        {
+          "block_index": 2,
+          "kind": "paragraph",
+          "text": "BÊN A: CÔNG TY TNHH DEMO HELDOUT VIỆT NAM"
+        },
+        {
+          "block_index": 3,
+          "kind": "paragraph",
+          "text": "BÊN B: NGƯỜI LAO ĐỘNG"
+        },
+        {
+          "block_index": 4,
+          "kind": "paragraph",
+          "text": "Hai bên thống nhất ký hợp đồng lao động cho vị trí Network Engineer với các nội dung sau đây."
+        },
+        {
+          "block_index": 5,
+          "kind": "paragraph",
+          "text": "Điều 1. Công việc"
+        },
+        {
+          "block_index": 6,
+          "kind": "paragraph",
+          "text": "Người lao động giám sát mạng, cấu hình thiết bị và xử lý sự cố hạ tầng."
+        },
+        {
+          "block_index": 7,
+          "kind": "paragraph",
+          "text": "Điều 2. Thử việc"
+        },
+        {
+          "block_index": 8,
+          "kind": "paragraph",
+          "text": "Thời gian thử việc là 60 ngày."
+        },
+        {
+          "block_index": 9,
+          "kind": "paragraph",
+          "text": "Kết quả được đánh giá căn cứ khả năng xử lý sự cố và vận hành hệ thống mạng."
+        },
+        {
+          "block_index": 10,
+          "kind": "paragraph",
+          "text": "Điều 3. Tiền lương"
+        },
+        {
+          "block_index": 11,
+          "kind": "paragraph",
+          "text": "Mức lương theo công việc là 21.000.000 đồng/tháng."
+        },
+        {
+          "block_index": 12,
+          "kind": "paragraph",
+          "text": "Phụ cấp trực hệ thống là 1.200.000 đồng/tháng."
+        },
+        {
+          "block_index": 13,
+          "kind": "paragraph",
+          "text": "Tiền lương được thanh toán vào ngày 05 hằng tháng."
+        },
+        {
+          "block_index": 14,
+          "kind": "paragraph",
+          "text": "Điều 4. Thời giờ làm việc"
+        },
+        {
+          "block_index": 15,
+          "kind": "paragraph",
+          "text": "Thời giờ làm việc bình thường là 08 giờ/ngày và 05 ngày/tuần."
+        },
+        {
+          "block_index": 16,
+          "kind": "paragraph",
+          "text": "Khung giờ hành chính là 08:30 đến 17:30."
+        },
+        {
+          "block_index": 17,
+          "kind": "paragraph",
+          "text": "Điều 5. Lịch trực hệ thống"
+        },
+        {
+          "block_index": 18,
+          "kind": "table_row",
+          "text": "Ca | Khung giờ | Ghi chú"
+        },
+        {
+          "block_index": 19,
+          "kind": "table_row",
+          "text": "A | 06:00-14:00 | Trực sự cố"
+        },
+        {
+          "block_index": 20,
+          "kind": "table_row",
+          "text": "B | 14:00-22:00 | Trực sự cố"
+        },
+        {
+          "block_index": 21,
+          "kind": "table_row",
+          "text": "C | 22:00-06:00 | Trực đêm"
+        },
+        {
+          "block_index": 22,
+          "kind": "paragraph",
+          "text": "Lịch trực được phân công theo tuần."
+        },
+        {
+          "block_index": 23,
+          "kind": "paragraph",
+          "text": "Người lao động phải có tối thiểu 08 giờ nghỉ trước khi được bố trí sang ca tiếp theo."
+        },
+        {
+          "block_index": 24,
+          "kind": "paragraph",
+          "text": "Điều 6. Nghỉ phép và bảo hiểm"
+        },
+        {
+          "block_index": 25,
+          "kind": "paragraph",
+          "text": "Các chế độ nghỉ phép năm và bảo hiểm thực hiện theo quy định."
+        },
+        {
+          "block_index": 26,
+          "kind": "paragraph",
+          "text": "Điều 7. Thiết bị"
+        },
+        {
+          "block_index": 27,
+          "kind": "paragraph",
+          "text": "Thiết bị mạng được giao phải được sử dụng đúng mục đích và bảo quản theo quy trình nội bộ."
+        },
+        {
+          "block_index": 28,
+          "kind": "paragraph",
+          "text": "Điều 8. Chấm dứt hợp đồng"
+        },
+        {
+          "block_index": 29,
+          "kind": "paragraph",
+          "text": "Việc chấm dứt hợp đồng được thực hiện theo căn cứ pháp luật và thỏa thuận của hai bên."
+        },
+        {
+          "block_index": 30,
+          "kind": "paragraph",
+          "text": "Thời hạn báo trước áp dụng theo từng trường hợp."
+        },
+        {
+          "block_index": 31,
+          "kind": "paragraph",
+          "text": "Người lao động phải bàn giao thiết bị và tài liệu kỹ thuật."
+        }
+      ],
+      "sections": [
+        {
+          "section_index": 0,
+          "section_id": "H03_Network_Engineer:section:0",
+          "heading": null,
+          "text": "HỢP ĐỒNG LAO ĐỘNG\nH03 - Network Engineer\nBÊN A: CÔNG TY TNHH DEMO HELDOUT VIỆT NAM\nBÊN B: NGƯỜI LAO ĐỘNG\nHai bên thống nhất ký hợp đồng lao động cho vị trí Network Engineer với các nội dung sau đây."
+        },
+        {
+          "section_index": 1,
+          "section_id": "H03_Network_Engineer:section:1",
+          "heading": "Điều 1. Công việc",
+          "text": "Điều 1. Công việc\nNgười lao động giám sát mạng, cấu hình thiết bị và xử lý sự cố hạ tầng."
+        },
+        {
+          "section_index": 2,
+          "section_id": "H03_Network_Engineer:section:2",
+          "heading": "Điều 2. Thử việc",
+          "text": "Điều 2. Thử việc\nThời gian thử việc là 60 ngày.\nKết quả được đánh giá căn cứ khả năng xử lý sự cố và vận hành hệ thống mạng."
+        },
+        {
+          "section_index": 3,
+          "section_id": "H03_Network_Engineer:section:3",
+          "heading": "Điều 3. Tiền lương",
+          "text": "Điều 3. Tiền lương\nMức lương theo công việc là 21.000.000 đồng/tháng.\nPhụ cấp trực hệ thống là 1.200.000 đồng/tháng.\nTiền lương được thanh toán vào ngày 05 hằng tháng."
+        },
+        {
+          "section_index": 4,
+          "section_id": "H03_Network_Engineer:section:4",
+          "heading": "Điều 4. Thời giờ làm việc",
+          "text": "Điều 4. Thời giờ làm việc\nThời giờ làm việc bình thường là 08 giờ/ngày và 05 ngày/tuần.\nKhung giờ hành chính là 08:30 đến 17:30."
+        },
+        {
+          "section_index": 5,
+          "section_id": "H03_Network_Engineer:section:5",
+          "heading": "Điều 5. Lịch trực hệ thống",
+          "text": "Điều 5. Lịch trực hệ thống\nCa | Khung giờ | Ghi chú\nA | 06:00-14:00 | Trực sự cố\nB | 14:00-22:00 | Trực sự cố\nC | 22:00-06:00 | Trực đêm\nLịch trực được phân công theo tuần.\nNgười lao động phải có tối thiểu 08 giờ nghỉ trước khi được bố trí sang ca tiếp theo."
+        },
+        {
+          "section_index": 6,
+          "section_id": "H03_Network_Engineer:section:6",
+          "heading": "Điều 6. Nghỉ phép và bảo hiểm",
+          "text": "Điều 6. Nghỉ phép và bảo hiểm\nCác chế độ nghỉ phép năm và bảo hiểm thực hiện theo quy định."
+        },
+        {
+          "section_index": 7,
+          "section_id": "H03_Network_Engineer:section:7",
+          "heading": "Điều 7. Thiết bị",
+          "text": "Điều 7. Thiết bị\nThiết bị mạng được giao phải được sử dụng đúng mục đích và bảo quản theo quy trình nội bộ."
+        },
+        {
+          "section_index": 8,
+          "section_id": "H03_Network_Engineer:section:8",
+          "heading": "Điều 8. Chấm dứt hợp đồng",
+          "text": "Điều 8. Chấm dứt hợp đồng\nViệc chấm dứt hợp đồng được thực hiện theo căn cứ pháp luật và thỏa thuận của hai bên.\nThời hạn báo trước áp dụng theo từng trường hợp.\nNgười lao động phải bàn giao thiết bị và tài liệu kỹ thuật."
+        }
+      ]
+    },
+    {
+      "document_id": "H04_Customer_Support",
+      "file": "H04_Customer_Support.docx",
+      "sha256": "7e5c229181b7aa019d7ad31f4310029e17711831f74e79fc97577713bd513d15",
+      "block_count": 27,
+      "section_count": 8,
+      "source_blocks": [
+        {
+          "block_index": 0,
+          "kind": "paragraph",
+          "text": "HỢP ĐỒNG LAO ĐỘNG"
+        },
+        {
+          "block_index": 1,
+          "kind": "paragraph",
+          "text": "H04 - Customer Support"
+        },
+        {
+          "block_index": 2,
+          "kind": "paragraph",
+          "text": "BÊN A: CÔNG TY TNHH DEMO HELDOUT VIỆT NAM"
+        },
+        {
+          "block_index": 3,
+          "kind": "paragraph",
+          "text": "BÊN B: NGƯỜI LAO ĐỘNG"
+        },
+        {
+          "block_index": 4,
+          "kind": "paragraph",
+          "text": "Hai bên thống nhất ký hợp đồng lao động cho vị trí Customer Support với các nội dung sau đây."
+        },
+        {
+          "block_index": 5,
+          "kind": "paragraph",
+          "text": "Điều 1. Công việc"
+        },
+        {
+          "block_index": 6,
+          "kind": "paragraph",
+          "text": "Người lao động hỗ trợ khách hàng qua điện thoại, email và kênh chat."
+        },
+        {
+          "block_index": 7,
+          "kind": "paragraph",
+          "text": "Điều 2. Giai đoạn làm quen công việc"
+        },
+        {
+          "block_index": 8,
+          "kind": "paragraph",
+          "text": "Trong 30 ngày đầu kể từ ngày nhận việc, người lao động được hướng dẫn quy trình và thực hiện các yêu cầu hỗ trợ thực tế."
+        },
+        {
+          "block_index": 9,
+          "kind": "paragraph",
+          "text": "Khả năng xử lý yêu cầu và chất lượng giao tiếp được đánh giá cuối giai đoạn."
+        },
+        {
+          "block_index": 10,
+          "kind": "paragraph",
+          "text": "Kết quả đánh giá được sử dụng để quyết định việc tiếp tục bố trí người lao động vào vị trí."
+        },
+        {
+          "block_index": 11,
+          "kind": "paragraph",
+          "text": "Điều 3. Thu nhập"
+        },
+        {
+          "block_index": 12,
+          "kind": "paragraph",
+          "text": "Khoản thu nhập cố định là 13.500.000 đồng/tháng."
+        },
+        {
+          "block_index": 13,
+          "kind": "paragraph",
+          "text": "Hỗ trợ điện thoại là 400.000 đồng/tháng."
+        },
+        {
+          "block_index": 14,
+          "kind": "paragraph",
+          "text": "Khoản thu nhập được chuyển vào tài khoản vào ngày 07 hằng tháng."
+        },
+        {
+          "block_index": 15,
+          "kind": "paragraph",
+          "text": "Điều 4. Lịch phục vụ khách hàng"
+        },
+        {
+          "block_index": 16,
+          "kind": "paragraph",
+          "text": "Ca sáng từ 07:00 đến 15:00 và ca chiều từ 15:00 đến 23:00."
+        },
+        {
+          "block_index": 17,
+          "kind": "paragraph",
+          "text": "Nhân sự được bố trí luân phiên giữa các ca theo lịch hằng tuần."
+        },
+        {
+          "block_index": 18,
+          "kind": "paragraph",
+          "text": "Mỗi ca có thời gian nghỉ giữa ca theo lịch vận hành."
+        },
+        {
+          "block_index": 19,
+          "kind": "paragraph",
+          "text": "Điều 5. Thiết bị"
+        },
+        {
+          "block_index": 20,
+          "kind": "paragraph",
+          "text": "Tai nghe và máy tính xách tay do công ty cấp phải được hoàn trả khi hợp đồng chấm dứt."
+        },
+        {
+          "block_index": 21,
+          "kind": "paragraph",
+          "text": "Điều 6. Bảo mật"
+        },
+        {
+          "block_index": 22,
+          "kind": "paragraph",
+          "text": "Thông tin khách hàng và dữ liệu nội bộ phải được bảo mật."
+        },
+        {
+          "block_index": 23,
+          "kind": "paragraph",
+          "text": "Điều 7. Kết thúc hợp đồng"
+        },
+        {
+          "block_index": 24,
+          "kind": "paragraph",
+          "text": "Hợp đồng có thể kết thúc theo các căn cứ được pháp luật và thỏa thuận giữa hai bên cho phép."
+        },
+        {
+          "block_index": 25,
+          "kind": "paragraph",
+          "text": "Bên thực hiện quyền kết thúc phải tuân thủ thời gian thông báo tương ứng."
+        },
+        {
+          "block_index": 26,
+          "kind": "paragraph",
+          "text": "Người lao động phải hoàn tất việc bàn giao hồ sơ khách hàng."
+        }
+      ],
+      "sections": [
+        {
+          "section_index": 0,
+          "section_id": "H04_Customer_Support:section:0",
+          "heading": null,
+          "text": "HỢP ĐỒNG LAO ĐỘNG\nH04 - Customer Support\nBÊN A: CÔNG TY TNHH DEMO HELDOUT VIỆT NAM\nBÊN B: NGƯỜI LAO ĐỘNG\nHai bên thống nhất ký hợp đồng lao động cho vị trí Customer Support với các nội dung sau đây."
+        },
+        {
+          "section_index": 1,
+          "section_id": "H04_Customer_Support:section:1",
+          "heading": "Điều 1. Công việc",
+          "text": "Điều 1. Công việc\nNgười lao động hỗ trợ khách hàng qua điện thoại, email và kênh chat."
+        },
+        {
+          "section_index": 2,
+          "section_id": "H04_Customer_Support:section:2",
+          "heading": "Điều 2. Giai đoạn làm quen công việc",
+          "text": "Điều 2. Giai đoạn làm quen công việc\nTrong 30 ngày đầu kể từ ngày nhận việc, người lao động được hướng dẫn quy trình và thực hiện các yêu cầu hỗ trợ thực tế.\nKhả năng xử lý yêu cầu và chất lượng giao tiếp được đánh giá cuối giai đoạn.\nKết quả đánh giá được sử dụng để quyết định việc tiếp tục bố trí người lao động vào vị trí."
+        },
+        {
+          "section_index": 3,
+          "section_id": "H04_Customer_Support:section:3",
+          "heading": "Điều 3. Thu nhập",
+          "text": "Điều 3. Thu nhập\nKhoản thu nhập cố định là 13.500.000 đồng/tháng.\nHỗ trợ điện thoại là 400.000 đồng/tháng.\nKhoản thu nhập được chuyển vào tài khoản vào ngày 07 hằng tháng."
+        },
+        {
+          "section_index": 4,
+          "section_id": "H04_Customer_Support:section:4",
+          "heading": "Điều 4. Lịch phục vụ khách hàng",
+          "text": "Điều 4. Lịch phục vụ khách hàng\nCa sáng từ 07:00 đến 15:00 và ca chiều từ 15:00 đến 23:00.\nNhân sự được bố trí luân phiên giữa các ca theo lịch hằng tuần.\nMỗi ca có thời gian nghỉ giữa ca theo lịch vận hành."
+        },
+        {
+          "section_index": 5,
+          "section_id": "H04_Customer_Support:section:5",
+          "heading": "Điều 5. Thiết bị",
+          "text": "Điều 5. Thiết bị\nTai nghe và máy tính xách tay do công ty cấp phải được hoàn trả khi hợp đồng chấm dứt."
+        },
+        {
+          "section_index": 6,
+          "section_id": "H04_Customer_Support:section:6",
+          "heading": "Điều 6. Bảo mật",
+          "text": "Điều 6. Bảo mật\nThông tin khách hàng và dữ liệu nội bộ phải được bảo mật."
+        },
+        {
+          "section_index": 7,
+          "section_id": "H04_Customer_Support:section:7",
+          "heading": "Điều 7. Kết thúc hợp đồng",
+          "text": "Điều 7. Kết thúc hợp đồng\nHợp đồng có thể kết thúc theo các căn cứ được pháp luật và thỏa thuận giữa hai bên cho phép.\nBên thực hiện quyền kết thúc phải tuân thủ thời gian thông báo tương ứng.\nNgười lao động phải hoàn tất việc bàn giao hồ sơ khách hàng."
+        }
+      ]
+    },
+    {
+      "document_id": "H05_Warehouse_Supervisor",
+      "file": "H05_Warehouse_Supervisor.docx",
+      "sha256": "339734af4a53e1891074b60129eed1a5e6cd538775d2c95fe493b8772e6e0080",
+      "block_count": 30,
+      "section_count": 9,
+      "source_blocks": [
+        {
+          "block_index": 0,
+          "kind": "paragraph",
+          "text": "HỢP ĐỒNG LAO ĐỘNG"
+        },
+        {
+          "block_index": 1,
+          "kind": "paragraph",
+          "text": "H05 - Warehouse Supervisor"
+        },
+        {
+          "block_index": 2,
+          "kind": "paragraph",
+          "text": "BÊN A: CÔNG TY TNHH DEMO HELDOUT VIỆT NAM"
+        },
+        {
+          "block_index": 3,
+          "kind": "paragraph",
+          "text": "BÊN B: NGƯỜI LAO ĐỘNG"
+        },
+        {
+          "block_index": 4,
+          "kind": "paragraph",
+          "text": "Hai bên thống nhất ký hợp đồng lao động cho vị trí Warehouse Supervisor với các nội dung sau đây."
+        },
+        {
+          "block_index": 5,
+          "kind": "paragraph",
+          "text": "Điều 1. Trách nhiệm"
+        },
+        {
+          "block_index": 6,
+          "kind": "paragraph",
+          "text": "Người lao động quản lý hoạt động kho, nhân sự và việc bàn giao hàng hóa."
+        },
+        {
+          "block_index": 7,
+          "kind": "paragraph",
+          "text": "Điều 2. Thử việc"
+        },
+        {
+          "block_index": 8,
+          "kind": "paragraph",
+          "text": "Người lao động thử việc 45 ngày và được đánh giá về năng lực điều phối kho."
+        },
+        {
+          "block_index": 9,
+          "kind": "paragraph",
+          "text": "Điều 3. Chế độ"
+        },
+        {
+          "block_index": 10,
+          "kind": "table_row",
+          "text": "Khoản | Mức"
+        },
+        {
+          "block_index": 11,
+          "kind": "table_row",
+          "text": "Lương theo công việc | 17.000.000 đồng/tháng"
+        },
+        {
+          "block_index": 12,
+          "kind": "table_row",
+          "text": "Phụ cấp trách nhiệm | 1.500.000 đồng/tháng"
+        },
+        {
+          "block_index": 13,
+          "kind": "table_row",
+          "text": "Phụ cấp ca | 800.000 đồng/tháng"
+        },
+        {
+          "block_index": 14,
+          "kind": "paragraph",
+          "text": "Các khoản được thanh toán vào ngày 07 hằng tháng bằng chuyển khoản."
+        },
+        {
+          "block_index": 15,
+          "kind": "paragraph",
+          "text": "Điều 4. Tổ chức vận hành kho"
+        },
+        {
+          "block_index": 16,
+          "kind": "paragraph",
+          "text": "Người lao động làm việc theo ca 12 giờ."
+        },
+        {
+          "block_index": 17,
+          "kind": "paragraph",
+          "text": "Lịch ca được công bố theo tuần và người lao động làm việc 04 ngày trong một tuần tiêu chuẩn."
+        },
+        {
+          "block_index": 18,
+          "kind": "paragraph",
+          "text": "Điều 5. Nghỉ và chuyển ca"
+        },
+        {
+          "block_index": 19,
+          "kind": "paragraph",
+          "text": "Người lao động được bố trí nghỉ giữa ca."
+        },
+        {
+          "block_index": 20,
+          "kind": "paragraph",
+          "text": "Khoảng nghỉ tối thiểu giữa hai ca liên tiếp là 12 giờ."
+        },
+        {
+          "block_index": 21,
+          "kind": "paragraph",
+          "text": "Ngày nghỉ hằng tuần được sắp xếp trong lịch phân ca."
+        },
+        {
+          "block_index": 22,
+          "kind": "paragraph",
+          "text": "Điều 6. An toàn lao động"
+        },
+        {
+          "block_index": 23,
+          "kind": "paragraph",
+          "text": "Người lao động phải tuân thủ quy trình an toàn và sử dụng trang thiết bị bảo hộ."
+        },
+        {
+          "block_index": 24,
+          "kind": "paragraph",
+          "text": "Điều 7. Nghĩa vụ quản lý"
+        },
+        {
+          "block_index": 25,
+          "kind": "paragraph",
+          "text": "Người lao động chịu trách nhiệm kiểm kê và báo cáo chênh lệch hàng hóa."
+        },
+        {
+          "block_index": 26,
+          "kind": "paragraph",
+          "text": "Điều 8. Chấm dứt"
+        },
+        {
+          "block_index": 27,
+          "kind": "paragraph",
+          "text": "Việc chấm dứt hợp đồng thực hiện theo căn cứ pháp luật và thỏa thuận."
+        },
+        {
+          "block_index": 28,
+          "kind": "paragraph",
+          "text": "Thời hạn báo trước được áp dụng theo từng trường hợp."
+        },
+        {
+          "block_index": 29,
+          "kind": "paragraph",
+          "text": "Người lao động hoàn tất bàn giao kho trước ngày cuối cùng."
+        }
+      ],
+      "sections": [
+        {
+          "section_index": 0,
+          "section_id": "H05_Warehouse_Supervisor:section:0",
+          "heading": null,
+          "text": "HỢP ĐỒNG LAO ĐỘNG\nH05 - Warehouse Supervisor\nBÊN A: CÔNG TY TNHH DEMO HELDOUT VIỆT NAM\nBÊN B: NGƯỜI LAO ĐỘNG\nHai bên thống nhất ký hợp đồng lao động cho vị trí Warehouse Supervisor với các nội dung sau đây."
+        },
+        {
+          "section_index": 1,
+          "section_id": "H05_Warehouse_Supervisor:section:1",
+          "heading": "Điều 1. Trách nhiệm",
+          "text": "Điều 1. Trách nhiệm\nNgười lao động quản lý hoạt động kho, nhân sự và việc bàn giao hàng hóa."
+        },
+        {
+          "section_index": 2,
+          "section_id": "H05_Warehouse_Supervisor:section:2",
+          "heading": "Điều 2. Thử việc",
+          "text": "Điều 2. Thử việc\nNgười lao động thử việc 45 ngày và được đánh giá về năng lực điều phối kho."
+        },
+        {
+          "section_index": 3,
+          "section_id": "H05_Warehouse_Supervisor:section:3",
+          "heading": "Điều 3. Chế độ",
+          "text": "Điều 3. Chế độ\nKhoản | Mức\nLương theo công việc | 17.000.000 đồng/tháng\nPhụ cấp trách nhiệm | 1.500.000 đồng/tháng\nPhụ cấp ca | 800.000 đồng/tháng\nCác khoản được thanh toán vào ngày 07 hằng tháng bằng chuyển khoản."
+        },
+        {
+          "section_index": 4,
+          "section_id": "H05_Warehouse_Supervisor:section:4",
+          "heading": "Điều 4. Tổ chức vận hành kho",
+          "text": "Điều 4. Tổ chức vận hành kho\nNgười lao động làm việc theo ca 12 giờ.\nLịch ca được công bố theo tuần và người lao động làm việc 04 ngày trong một tuần tiêu chuẩn."
+        },
+        {
+          "section_index": 5,
+          "section_id": "H05_Warehouse_Supervisor:section:5",
+          "heading": "Điều 5. Nghỉ và chuyển ca",
+          "text": "Điều 5. Nghỉ và chuyển ca\nNgười lao động được bố trí nghỉ giữa ca.\nKhoảng nghỉ tối thiểu giữa hai ca liên tiếp là 12 giờ.\nNgày nghỉ hằng tuần được sắp xếp trong lịch phân ca."
+        },
+        {
+          "section_index": 6,
+          "section_id": "H05_Warehouse_Supervisor:section:6",
+          "heading": "Điều 6. An toàn lao động",
+          "text": "Điều 6. An toàn lao động\nNgười lao động phải tuân thủ quy trình an toàn và sử dụng trang thiết bị bảo hộ."
+        },
+        {
+          "section_index": 7,
+          "section_id": "H05_Warehouse_Supervisor:section:7",
+          "heading": "Điều 7. Nghĩa vụ quản lý",
+          "text": "Điều 7. Nghĩa vụ quản lý\nNgười lao động chịu trách nhiệm kiểm kê và báo cáo chênh lệch hàng hóa."
+        },
+        {
+          "section_index": 8,
+          "section_id": "H05_Warehouse_Supervisor:section:8",
+          "heading": "Điều 8. Chấm dứt",
+          "text": "Điều 8. Chấm dứt\nViệc chấm dứt hợp đồng thực hiện theo căn cứ pháp luật và thỏa thuận.\nThời hạn báo trước được áp dụng theo từng trường hợp.\nNgười lao động hoàn tất bàn giao kho trước ngày cuối cùng."
+        }
+      ]
+    },
+    {
+      "document_id": "H06_Security_Analyst",
+      "file": "H06_Security_Analyst.docx",
+      "sha256": "3f0665976a1d80a9a429bdb2d9c765d81b851c23b0f15624fb276b143745822c",
+      "block_count": 27,
+      "section_count": 9,
+      "source_blocks": [
+        {
+          "block_index": 0,
+          "kind": "paragraph",
+          "text": "HỢP ĐỒNG LAO ĐỘNG"
+        },
+        {
+          "block_index": 1,
+          "kind": "paragraph",
+          "text": "H06 - Security Analyst"
+        },
+        {
+          "block_index": 2,
+          "kind": "paragraph",
+          "text": "BÊN A: CÔNG TY TNHH DEMO HELDOUT VIỆT NAM"
+        },
+        {
+          "block_index": 3,
+          "kind": "paragraph",
+          "text": "BÊN B: NGƯỜI LAO ĐỘNG"
+        },
+        {
+          "block_index": 4,
+          "kind": "paragraph",
+          "text": "Hai bên thống nhất ký hợp đồng lao động cho vị trí Security Analyst với các nội dung sau đây."
+        },
+        {
+          "block_index": 5,
+          "kind": "paragraph",
+          "text": "Điều 1. Nhiệm vụ"
+        },
+        {
+          "block_index": 6,
+          "kind": "paragraph",
+          "text": "Người lao động giám sát SOC, xử lý cảnh báo và phối hợp ứng phó sự cố an toàn thông tin."
+        },
+        {
+          "block_index": 7,
+          "kind": "paragraph",
+          "text": "Điều 2. Thời gian đánh giá ban đầu"
+        },
+        {
+          "block_index": 8,
+          "kind": "paragraph",
+          "text": "Trong 60 ngày đầu, người lao động thực hiện đầy đủ nhiệm vụ của vị trí Security Analyst."
+        },
+        {
+          "block_index": 9,
+          "kind": "paragraph",
+          "text": "Kỹ năng phân tích sự cố và xử lý cảnh báo được đánh giá cuối giai đoạn."
+        },
+        {
+          "block_index": 10,
+          "kind": "paragraph",
+          "text": "Nếu đáp ứng yêu cầu, người lao động tiếp tục đảm nhiệm vị trí."
+        },
+        {
+          "block_index": 11,
+          "kind": "paragraph",
+          "text": "Điều 3. Thu nhập"
+        },
+        {
+          "block_index": 12,
+          "kind": "paragraph",
+          "text": "Khoản thu nhập cố định là 24.000.000 đồng/tháng."
+        },
+        {
+          "block_index": 13,
+          "kind": "paragraph",
+          "text": "Khoản này được thanh toán qua tài khoản vào ngày 05 hằng tháng."
+        },
+        {
+          "block_index": 14,
+          "kind": "paragraph",
+          "text": "Điều 4. Lịch công tác"
+        },
+        {
+          "block_index": 15,
+          "kind": "paragraph",
+          "text": "Người lao động làm việc 08 giờ/ngày, từ thứ Hai đến thứ Sáu."
+        },
+        {
+          "block_index": 16,
+          "kind": "paragraph",
+          "text": "Thời gian làm việc thông thường từ 09:00 đến 18:00."
+        },
+        {
+          "block_index": 17,
+          "kind": "paragraph",
+          "text": "Điều 5. Quản lý tài khoản và thiết bị"
+        },
+        {
+          "block_index": 18,
+          "kind": "paragraph",
+          "text": "Tài khoản đặc quyền và thiết bị được thu hồi khi quan hệ lao động kết thúc."
+        },
+        {
+          "block_index": 19,
+          "kind": "paragraph",
+          "text": "Điều 6. Điều khoản áp dụng"
+        },
+        {
+          "block_index": 20,
+          "kind": "paragraph",
+          "text": "Việc kết thúc hợp đồng được thực hiện theo Điều 8 của hợp đồng này."
+        },
+        {
+          "block_index": 21,
+          "kind": "paragraph",
+          "text": "Điều 7. Bảo mật"
+        },
+        {
+          "block_index": 22,
+          "kind": "paragraph",
+          "text": "Người lao động không được tiết lộ dữ liệu bảo mật hoặc thông tin cấu hình hệ thống."
+        },
+        {
+          "block_index": 23,
+          "kind": "paragraph",
+          "text": "Điều 8. Quyền kết thúc quan hệ lao động"
+        },
+        {
+          "block_index": 24,
+          "kind": "paragraph",
+          "text": "Mỗi bên có thể thực hiện quyền kết thúc quan hệ lao động khi có căn cứ phù hợp."
+        },
+        {
+          "block_index": 25,
+          "kind": "paragraph",
+          "text": "Thời gian thông báo phải tuân thủ quy định áp dụng cho từng trường hợp."
+        },
+        {
+          "block_index": 26,
+          "kind": "paragraph",
+          "text": "Người lao động phải hoàn tất bàn giao quyền truy cập và hồ sơ sự cố."
+        }
+      ],
+      "sections": [
+        {
+          "section_index": 0,
+          "section_id": "H06_Security_Analyst:section:0",
+          "heading": null,
+          "text": "HỢP ĐỒNG LAO ĐỘNG\nH06 - Security Analyst\nBÊN A: CÔNG TY TNHH DEMO HELDOUT VIỆT NAM\nBÊN B: NGƯỜI LAO ĐỘNG\nHai bên thống nhất ký hợp đồng lao động cho vị trí Security Analyst với các nội dung sau đây."
+        },
+        {
+          "section_index": 1,
+          "section_id": "H06_Security_Analyst:section:1",
+          "heading": "Điều 1. Nhiệm vụ",
+          "text": "Điều 1. Nhiệm vụ\nNgười lao động giám sát SOC, xử lý cảnh báo và phối hợp ứng phó sự cố an toàn thông tin."
+        },
+        {
+          "section_index": 2,
+          "section_id": "H06_Security_Analyst:section:2",
+          "heading": "Điều 2. Thời gian đánh giá ban đầu",
+          "text": "Điều 2. Thời gian đánh giá ban đầu\nTrong 60 ngày đầu, người lao động thực hiện đầy đủ nhiệm vụ của vị trí Security Analyst.\nKỹ năng phân tích sự cố và xử lý cảnh báo được đánh giá cuối giai đoạn.\nNếu đáp ứng yêu cầu, người lao động tiếp tục đảm nhiệm vị trí."
+        },
+        {
+          "section_index": 3,
+          "section_id": "H06_Security_Analyst:section:3",
+          "heading": "Điều 3. Thu nhập",
+          "text": "Điều 3. Thu nhập\nKhoản thu nhập cố định là 24.000.000 đồng/tháng.\nKhoản này được thanh toán qua tài khoản vào ngày 05 hằng tháng."
+        },
+        {
+          "section_index": 4,
+          "section_id": "H06_Security_Analyst:section:4",
+          "heading": "Điều 4. Lịch công tác",
+          "text": "Điều 4. Lịch công tác\nNgười lao động làm việc 08 giờ/ngày, từ thứ Hai đến thứ Sáu.\nThời gian làm việc thông thường từ 09:00 đến 18:00."
+        },
+        {
+          "section_index": 5,
+          "section_id": "H06_Security_Analyst:section:5",
+          "heading": "Điều 5. Quản lý tài khoản và thiết bị",
+          "text": "Điều 5. Quản lý tài khoản và thiết bị\nTài khoản đặc quyền và thiết bị được thu hồi khi quan hệ lao động kết thúc."
+        },
+        {
+          "section_index": 6,
+          "section_id": "H06_Security_Analyst:section:6",
+          "heading": "Điều 6. Điều khoản áp dụng",
+          "text": "Điều 6. Điều khoản áp dụng\nViệc kết thúc hợp đồng được thực hiện theo Điều 8 của hợp đồng này."
+        },
+        {
+          "section_index": 7,
+          "section_id": "H06_Security_Analyst:section:7",
+          "heading": "Điều 7. Bảo mật",
+          "text": "Điều 7. Bảo mật\nNgười lao động không được tiết lộ dữ liệu bảo mật hoặc thông tin cấu hình hệ thống."
+        },
+        {
+          "section_index": 8,
+          "section_id": "H06_Security_Analyst:section:8",
+          "heading": "Điều 8. Quyền kết thúc quan hệ lao động",
+          "text": "Điều 8. Quyền kết thúc quan hệ lao động\nMỗi bên có thể thực hiện quyền kết thúc quan hệ lao động khi có căn cứ phù hợp.\nThời gian thông báo phải tuân thủ quy định áp dụng cho từng trường hợp.\nNgười lao động phải hoàn tất bàn giao quyền truy cập và hồ sơ sự cố."
+        }
+      ]
+    },
+    {
+      "document_id": "H07_HR_Specialist",
+      "file": "H07_HR_Specialist.docx",
+      "sha256": "a3e84b4828e90c08159f05880685d8d85d021a0f67eeb5105362a551a07293bf",
+      "block_count": 28,
+      "section_count": 9,
+      "source_blocks": [
+        {
+          "block_index": 0,
+          "kind": "paragraph",
+          "text": "HỢP ĐỒNG LAO ĐỘNG"
+        },
+        {
+          "block_index": 1,
+          "kind": "paragraph",
+          "text": "H07 - HR Specialist"
+        },
+        {
+          "block_index": 2,
+          "kind": "paragraph",
+          "text": "BÊN A: CÔNG TY TNHH DEMO HELDOUT VIỆT NAM"
+        },
+        {
+          "block_index": 3,
+          "kind": "paragraph",
+          "text": "BÊN B: NGƯỜI LAO ĐỘNG"
+        },
+        {
+          "block_index": 4,
+          "kind": "paragraph",
+          "text": "Hai bên thống nhất ký hợp đồng lao động cho vị trí HR Specialist với các nội dung sau đây."
+        },
+        {
+          "block_index": 5,
+          "kind": "paragraph",
+          "text": "Điều 1. Công việc"
+        },
+        {
+          "block_index": 6,
+          "kind": "paragraph",
+          "text": "Người lao động thực hiện tuyển dụng, hồ sơ nhân sự và hỗ trợ hoạt động quan hệ lao động."
+        },
+        {
+          "block_index": 7,
+          "kind": "paragraph",
+          "text": "Điều 2. Thử việc"
+        },
+        {
+          "block_index": 8,
+          "kind": "paragraph",
+          "text": "Thời gian thử việc là 60 ngày."
+        },
+        {
+          "block_index": 9,
+          "kind": "paragraph",
+          "text": "Công việc trong thời gian thử việc tương ứng vị trí HR Specialist."
+        },
+        {
+          "block_index": 10,
+          "kind": "paragraph",
+          "text": "Mức lương thử việc bằng 90% mức lương của vị trí."
+        },
+        {
+          "block_index": 11,
+          "kind": "paragraph",
+          "text": "Điều 3. Đánh giá sau thử việc"
+        },
+        {
+          "block_index": 12,
+          "kind": "paragraph",
+          "text": "Kết quả được đánh giá theo tiến độ tuyển dụng, độ chính xác hồ sơ và khả năng phối hợp."
+        },
+        {
+          "block_index": 13,
+          "kind": "paragraph",
+          "text": "Công ty thông báo kết quả vào cuối giai đoạn."
+        },
+        {
+          "block_index": 14,
+          "kind": "paragraph",
+          "text": "Nếu đạt yêu cầu, người lao động chuyển sang chế độ làm việc chính thức."
+        },
+        {
+          "block_index": 15,
+          "kind": "paragraph",
+          "text": "Điều 4. Tiền lương"
+        },
+        {
+          "block_index": 16,
+          "kind": "paragraph",
+          "text": "Mức lương theo công việc là 18.000.000 đồng/tháng."
+        },
+        {
+          "block_index": 17,
+          "kind": "paragraph",
+          "text": "Tiền lương được thanh toán ngày 05 hằng tháng."
+        },
+        {
+          "block_index": 18,
+          "kind": "paragraph",
+          "text": "Điều 5. Thời giờ làm việc"
+        },
+        {
+          "block_index": 19,
+          "kind": "paragraph",
+          "text": "Thời giờ làm việc là 08 giờ/ngày, 05 ngày/tuần."
+        },
+        {
+          "block_index": 20,
+          "kind": "paragraph",
+          "text": "Người lao động làm việc từ 08:30 đến 17:30."
+        },
+        {
+          "block_index": 21,
+          "kind": "paragraph",
+          "text": "Điều 6. Nghỉ phép"
+        },
+        {
+          "block_index": 22,
+          "kind": "paragraph",
+          "text": "Nghỉ phép năm được giải quyết theo chính sách và quy định pháp luật."
+        },
+        {
+          "block_index": 23,
+          "kind": "paragraph",
+          "text": "Điều 7. Nghĩa vụ khi kết thúc"
+        },
+        {
+          "block_index": 24,
+          "kind": "paragraph",
+          "text": "Khi chấm dứt, người lao động thực hiện việc bàn giao theo Điều 8 của hợp đồng này."
+        },
+        {
+          "block_index": 25,
+          "kind": "paragraph",
+          "text": "Điều 8. Chấm dứt hợp đồng"
+        },
+        {
+          "block_index": 26,
+          "kind": "paragraph",
+          "text": "Các trường hợp chấm dứt hợp đồng thực hiện theo quy định áp dụng."
+        },
+        {
+          "block_index": 27,
+          "kind": "paragraph",
+          "text": "Thời hạn báo trước được xác định theo căn cứ và chủ thể thực hiện."
+        }
+      ],
+      "sections": [
+        {
+          "section_index": 0,
+          "section_id": "H07_HR_Specialist:section:0",
+          "heading": null,
+          "text": "HỢP ĐỒNG LAO ĐỘNG\nH07 - HR Specialist\nBÊN A: CÔNG TY TNHH DEMO HELDOUT VIỆT NAM\nBÊN B: NGƯỜI LAO ĐỘNG\nHai bên thống nhất ký hợp đồng lao động cho vị trí HR Specialist với các nội dung sau đây."
+        },
+        {
+          "section_index": 1,
+          "section_id": "H07_HR_Specialist:section:1",
+          "heading": "Điều 1. Công việc",
+          "text": "Điều 1. Công việc\nNgười lao động thực hiện tuyển dụng, hồ sơ nhân sự và hỗ trợ hoạt động quan hệ lao động."
+        },
+        {
+          "section_index": 2,
+          "section_id": "H07_HR_Specialist:section:2",
+          "heading": "Điều 2. Thử việc",
+          "text": "Điều 2. Thử việc\nThời gian thử việc là 60 ngày.\nCông việc trong thời gian thử việc tương ứng vị trí HR Specialist.\nMức lương thử việc bằng 90% mức lương của vị trí."
+        },
+        {
+          "section_index": 3,
+          "section_id": "H07_HR_Specialist:section:3",
+          "heading": "Điều 3. Đánh giá sau thử việc",
+          "text": "Điều 3. Đánh giá sau thử việc\nKết quả được đánh giá theo tiến độ tuyển dụng, độ chính xác hồ sơ và khả năng phối hợp.\nCông ty thông báo kết quả vào cuối giai đoạn.\nNếu đạt yêu cầu, người lao động chuyển sang chế độ làm việc chính thức."
+        },
+        {
+          "section_index": 4,
+          "section_id": "H07_HR_Specialist:section:4",
+          "heading": "Điều 4. Tiền lương",
+          "text": "Điều 4. Tiền lương\nMức lương theo công việc là 18.000.000 đồng/tháng.\nTiền lương được thanh toán ngày 05 hằng tháng."
+        },
+        {
+          "section_index": 5,
+          "section_id": "H07_HR_Specialist:section:5",
+          "heading": "Điều 5. Thời giờ làm việc",
+          "text": "Điều 5. Thời giờ làm việc\nThời giờ làm việc là 08 giờ/ngày, 05 ngày/tuần.\nNgười lao động làm việc từ 08:30 đến 17:30."
+        },
+        {
+          "section_index": 6,
+          "section_id": "H07_HR_Specialist:section:6",
+          "heading": "Điều 6. Nghỉ phép",
+          "text": "Điều 6. Nghỉ phép\nNghỉ phép năm được giải quyết theo chính sách và quy định pháp luật."
+        },
+        {
+          "section_index": 7,
+          "section_id": "H07_HR_Specialist:section:7",
+          "heading": "Điều 7. Nghĩa vụ khi kết thúc",
+          "text": "Điều 7. Nghĩa vụ khi kết thúc\nKhi chấm dứt, người lao động thực hiện việc bàn giao theo Điều 8 của hợp đồng này."
+        },
+        {
+          "section_index": 8,
+          "section_id": "H07_HR_Specialist:section:8",
+          "heading": "Điều 8. Chấm dứt hợp đồng",
+          "text": "Điều 8. Chấm dứt hợp đồng\nCác trường hợp chấm dứt hợp đồng thực hiện theo quy định áp dụng.\nThời hạn báo trước được xác định theo căn cứ và chủ thể thực hiện."
+        }
+      ]
+    },
+    {
+      "document_id": "H08_Sales_Executive",
+      "file": "H08_Sales_Executive.docx",
+      "sha256": "b348caf0cdacf036ae97591b098093f5b40e70e1c99a044bcb169292468f0e56",
+      "block_count": 26,
+      "section_count": 8,
+      "source_blocks": [
+        {
+          "block_index": 0,
+          "kind": "paragraph",
+          "text": "HỢP ĐỒNG LAO ĐỘNG"
+        },
+        {
+          "block_index": 1,
+          "kind": "paragraph",
+          "text": "H08 - Sales Executive"
+        },
+        {
+          "block_index": 2,
+          "kind": "paragraph",
+          "text": "BÊN A: CÔNG TY TNHH DEMO HELDOUT VIỆT NAM"
+        },
+        {
+          "block_index": 3,
+          "kind": "paragraph",
+          "text": "BÊN B: NGƯỜI LAO ĐỘNG"
+        },
+        {
+          "block_index": 4,
+          "kind": "paragraph",
+          "text": "Hai bên thống nhất ký hợp đồng lao động cho vị trí Sales Executive với các nội dung sau đây."
+        },
+        {
+          "block_index": 5,
+          "kind": "paragraph",
+          "text": "Điều 1. Công việc"
+        },
+        {
+          "block_index": 6,
+          "kind": "paragraph",
+          "text": "Người lao động tìm kiếm khách hàng, tư vấn và thực hiện các hoạt động bán hàng."
+        },
+        {
+          "block_index": 7,
+          "kind": "paragraph",
+          "text": "Điều 2. Giai đoạn thử việc"
+        },
+        {
+          "block_index": 8,
+          "kind": "paragraph",
+          "text": "Thời gian thử việc là 45 ngày."
+        },
+        {
+          "block_index": 9,
+          "kind": "paragraph",
+          "text": "Kết quả được đánh giá dựa trên khả năng tiếp cận và tư vấn khách hàng."
+        },
+        {
+          "block_index": 10,
+          "kind": "paragraph",
+          "text": "Điều 3. Quyền lợi"
+        },
+        {
+          "block_index": 11,
+          "kind": "table_row",
+          "text": "Nội dung | Mức"
+        },
+        {
+          "block_index": 12,
+          "kind": "table_row",
+          "text": "Khoản cố định | 16.000.000 đồng/tháng"
+        },
+        {
+          "block_index": 13,
+          "kind": "table_row",
+          "text": "Phụ cấp điện thoại | 500.000 đồng/tháng"
+        },
+        {
+          "block_index": 14,
+          "kind": "table_row",
+          "text": "Hoa hồng | Theo chính sách kinh doanh"
+        },
+        {
+          "block_index": 15,
+          "kind": "paragraph",
+          "text": "Các khoản cố định được thanh toán vào ngày 05 hằng tháng."
+        },
+        {
+          "block_index": 16,
+          "kind": "paragraph",
+          "text": "Điều 4. Tổ chức công việc"
+        },
+        {
+          "block_index": 17,
+          "kind": "paragraph",
+          "text": "Người lao động làm việc 08 giờ/ngày và 05 ngày/tuần."
+        },
+        {
+          "block_index": 18,
+          "kind": "paragraph",
+          "text": "Lịch gặp khách hàng có thể được chủ động bố trí trong phạm vi công việc."
+        },
+        {
+          "block_index": 19,
+          "kind": "paragraph",
+          "text": "Điều 5. Chỉ tiêu kinh doanh"
+        },
+        {
+          "block_index": 20,
+          "kind": "paragraph",
+          "text": "Kết quả chỉ tiêu không làm thay đổi mức lương cố định nếu không có thỏa thuận khác bằng văn bản."
+        },
+        {
+          "block_index": 21,
+          "kind": "paragraph",
+          "text": "Điều 6. Tài sản"
+        },
+        {
+          "block_index": 22,
+          "kind": "paragraph",
+          "text": "Các thiết bị được giao phải được sử dụng đúng mục đích."
+        },
+        {
+          "block_index": 23,
+          "kind": "paragraph",
+          "text": "Điều 7. Kết thúc hợp đồng"
+        },
+        {
+          "block_index": 24,
+          "kind": "paragraph",
+          "text": "Hợp đồng có thể kết thúc theo các căn cứ và trình tự phù hợp."
+        },
+        {
+          "block_index": 25,
+          "kind": "paragraph",
+          "text": "Bên thực hiện quyền kết thúc phải tuân thủ thời hạn thông báo."
+        }
+      ],
+      "sections": [
+        {
+          "section_index": 0,
+          "section_id": "H08_Sales_Executive:section:0",
+          "heading": null,
+          "text": "HỢP ĐỒNG LAO ĐỘNG\nH08 - Sales Executive\nBÊN A: CÔNG TY TNHH DEMO HELDOUT VIỆT NAM\nBÊN B: NGƯỜI LAO ĐỘNG\nHai bên thống nhất ký hợp đồng lao động cho vị trí Sales Executive với các nội dung sau đây."
+        },
+        {
+          "section_index": 1,
+          "section_id": "H08_Sales_Executive:section:1",
+          "heading": "Điều 1. Công việc",
+          "text": "Điều 1. Công việc\nNgười lao động tìm kiếm khách hàng, tư vấn và thực hiện các hoạt động bán hàng."
+        },
+        {
+          "section_index": 2,
+          "section_id": "H08_Sales_Executive:section:2",
+          "heading": "Điều 2. Giai đoạn thử việc",
+          "text": "Điều 2. Giai đoạn thử việc\nThời gian thử việc là 45 ngày.\nKết quả được đánh giá dựa trên khả năng tiếp cận và tư vấn khách hàng."
+        },
+        {
+          "section_index": 3,
+          "section_id": "H08_Sales_Executive:section:3",
+          "heading": "Điều 3. Quyền lợi",
+          "text": "Điều 3. Quyền lợi\nNội dung | Mức\nKhoản cố định | 16.000.000 đồng/tháng\nPhụ cấp điện thoại | 500.000 đồng/tháng\nHoa hồng | Theo chính sách kinh doanh\nCác khoản cố định được thanh toán vào ngày 05 hằng tháng."
+        },
+        {
+          "section_index": 4,
+          "section_id": "H08_Sales_Executive:section:4",
+          "heading": "Điều 4. Tổ chức công việc",
+          "text": "Điều 4. Tổ chức công việc\nNgười lao động làm việc 08 giờ/ngày và 05 ngày/tuần.\nLịch gặp khách hàng có thể được chủ động bố trí trong phạm vi công việc."
+        },
+        {
+          "section_index": 5,
+          "section_id": "H08_Sales_Executive:section:5",
+          "heading": "Điều 5. Chỉ tiêu kinh doanh",
+          "text": "Điều 5. Chỉ tiêu kinh doanh\nKết quả chỉ tiêu không làm thay đổi mức lương cố định nếu không có thỏa thuận khác bằng văn bản."
+        },
+        {
+          "section_index": 6,
+          "section_id": "H08_Sales_Executive:section:6",
+          "heading": "Điều 6. Tài sản",
+          "text": "Điều 6. Tài sản\nCác thiết bị được giao phải được sử dụng đúng mục đích."
+        },
+        {
+          "section_index": 7,
+          "section_id": "H08_Sales_Executive:section:7",
+          "heading": "Điều 7. Kết thúc hợp đồng",
+          "text": "Điều 7. Kết thúc hợp đồng\nHợp đồng có thể kết thúc theo các căn cứ và trình tự phù hợp.\nBên thực hiện quyền kết thúc phải tuân thủ thời hạn thông báo."
+        }
+      ]
+    },
+    {
+      "document_id": "H09_DevOps_Engineer",
+      "file": "H09_DevOps_Engineer.docx",
+      "sha256": "eda4b1ddd9f1b79c217efd6bf5adb702ec1ebb0cf710199626d741c104ea7790",
+      "block_count": 25,
+      "section_count": 9,
+      "source_blocks": [
+        {
+          "block_index": 0,
+          "kind": "paragraph",
+          "text": "HỢP ĐỒNG LAO ĐỘNG"
+        },
+        {
+          "block_index": 1,
+          "kind": "paragraph",
+          "text": "H09 - DevOps Engineer"
+        },
+        {
+          "block_index": 2,
+          "kind": "paragraph",
+          "text": "BÊN A: CÔNG TY TNHH DEMO HELDOUT VIỆT NAM"
+        },
+        {
+          "block_index": 3,
+          "kind": "paragraph",
+          "text": "BÊN B: NGƯỜI LAO ĐỘNG"
+        },
+        {
+          "block_index": 4,
+          "kind": "paragraph",
+          "text": "Hai bên thống nhất ký hợp đồng lao động cho vị trí DevOps Engineer với các nội dung sau đây."
+        },
+        {
+          "block_index": 5,
+          "kind": "paragraph",
+          "text": "Điều 1. Công việc"
+        },
+        {
+          "block_index": 6,
+          "kind": "paragraph",
+          "text": "Người lao động vận hành CI/CD, hạ tầng cloud và hệ thống giám sát."
+        },
+        {
+          "block_index": 7,
+          "kind": "paragraph",
+          "text": "Điều 2. Giai đoạn đầu"
+        },
+        {
+          "block_index": 8,
+          "kind": "paragraph",
+          "text": "Trong hai tháng đầu kể từ ngày nhận việc, người lao động thực hiện nhiệm vụ triển khai và vận hành dưới sự đánh giá của quản lý kỹ thuật."
+        },
+        {
+          "block_index": 9,
+          "kind": "paragraph",
+          "text": "Kết quả giai đoạn này được dùng để xác định việc tiếp tục bố trí người lao động vào vị trí."
+        },
+        {
+          "block_index": 10,
+          "kind": "paragraph",
+          "text": "Điều 3. Chế độ"
+        },
+        {
+          "block_index": 11,
+          "kind": "paragraph",
+          "text": "Khoản trả cố định cho công việc là 27.000.000 đồng mỗi tháng."
+        },
+        {
+          "block_index": 12,
+          "kind": "paragraph",
+          "text": "Công ty chuyển khoản khoản này vào ngày 05 hằng tháng."
+        },
+        {
+          "block_index": 13,
+          "kind": "paragraph",
+          "text": "Điều 4. Lịch làm việc"
+        },
+        {
+          "block_index": 14,
+          "kind": "paragraph",
+          "text": "Lịch làm việc thông thường từ 09:00 đến 18:00, 05 ngày/tuần."
+        },
+        {
+          "block_index": 15,
+          "kind": "paragraph",
+          "text": "Điều 5. Trực ngoài giờ"
+        },
+        {
+          "block_index": 16,
+          "kind": "paragraph",
+          "text": "Người lao động tham gia lịch on-call luân phiên theo tuần."
+        },
+        {
+          "block_index": 17,
+          "kind": "paragraph",
+          "text": "Sau ca trực đêm, người lao động được bố trí khoảng nghỉ phù hợp trước khi trở lại lịch làm việc tiếp theo."
+        },
+        {
+          "block_index": 18,
+          "kind": "paragraph",
+          "text": "Điều 6. Bảo mật và quyền truy cập"
+        },
+        {
+          "block_index": 19,
+          "kind": "paragraph",
+          "text": "Thông tin tài khoản, khóa truy cập và bí mật hạ tầng phải được bảo mật."
+        },
+        {
+          "block_index": 20,
+          "kind": "paragraph",
+          "text": "Điều 7. Điều khoản khác"
+        },
+        {
+          "block_index": 21,
+          "kind": "paragraph",
+          "text": "Một bên có thể kết thúc quan hệ lao động trước thời hạn khi có căn cứ phù hợp."
+        },
+        {
+          "block_index": 22,
+          "kind": "paragraph",
+          "text": "Thời gian thông báo và nghĩa vụ bàn giao được thực hiện theo quy định áp dụng."
+        },
+        {
+          "block_index": 23,
+          "kind": "paragraph",
+          "text": "Điều 8. Bảo hiểm"
+        },
+        {
+          "block_index": 24,
+          "kind": "paragraph",
+          "text": "Các chế độ bảo hiểm được thực hiện theo quy định."
+        }
+      ],
+      "sections": [
+        {
+          "section_index": 0,
+          "section_id": "H09_DevOps_Engineer:section:0",
+          "heading": null,
+          "text": "HỢP ĐỒNG LAO ĐỘNG\nH09 - DevOps Engineer\nBÊN A: CÔNG TY TNHH DEMO HELDOUT VIỆT NAM\nBÊN B: NGƯỜI LAO ĐỘNG\nHai bên thống nhất ký hợp đồng lao động cho vị trí DevOps Engineer với các nội dung sau đây."
+        },
+        {
+          "section_index": 1,
+          "section_id": "H09_DevOps_Engineer:section:1",
+          "heading": "Điều 1. Công việc",
+          "text": "Điều 1. Công việc\nNgười lao động vận hành CI/CD, hạ tầng cloud và hệ thống giám sát."
+        },
+        {
+          "section_index": 2,
+          "section_id": "H09_DevOps_Engineer:section:2",
+          "heading": "Điều 2. Giai đoạn đầu",
+          "text": "Điều 2. Giai đoạn đầu\nTrong hai tháng đầu kể từ ngày nhận việc, người lao động thực hiện nhiệm vụ triển khai và vận hành dưới sự đánh giá của quản lý kỹ thuật.\nKết quả giai đoạn này được dùng để xác định việc tiếp tục bố trí người lao động vào vị trí."
+        },
+        {
+          "section_index": 3,
+          "section_id": "H09_DevOps_Engineer:section:3",
+          "heading": "Điều 3. Chế độ",
+          "text": "Điều 3. Chế độ\nKhoản trả cố định cho công việc là 27.000.000 đồng mỗi tháng.\nCông ty chuyển khoản khoản này vào ngày 05 hằng tháng."
+        },
+        {
+          "section_index": 4,
+          "section_id": "H09_DevOps_Engineer:section:4",
+          "heading": "Điều 4. Lịch làm việc",
+          "text": "Điều 4. Lịch làm việc\nLịch làm việc thông thường từ 09:00 đến 18:00, 05 ngày/tuần."
+        },
+        {
+          "section_index": 5,
+          "section_id": "H09_DevOps_Engineer:section:5",
+          "heading": "Điều 5. Trực ngoài giờ",
+          "text": "Điều 5. Trực ngoài giờ\nNgười lao động tham gia lịch on-call luân phiên theo tuần.\nSau ca trực đêm, người lao động được bố trí khoảng nghỉ phù hợp trước khi trở lại lịch làm việc tiếp theo."
+        },
+        {
+          "section_index": 6,
+          "section_id": "H09_DevOps_Engineer:section:6",
+          "heading": "Điều 6. Bảo mật và quyền truy cập",
+          "text": "Điều 6. Bảo mật và quyền truy cập\nThông tin tài khoản, khóa truy cập và bí mật hạ tầng phải được bảo mật."
+        },
+        {
+          "section_index": 7,
+          "section_id": "H09_DevOps_Engineer:section:7",
+          "heading": "Điều 7. Điều khoản khác",
+          "text": "Điều 7. Điều khoản khác\nMột bên có thể kết thúc quan hệ lao động trước thời hạn khi có căn cứ phù hợp.\nThời gian thông báo và nghĩa vụ bàn giao được thực hiện theo quy định áp dụng."
+        },
+        {
+          "section_index": 8,
+          "section_id": "H09_DevOps_Engineer:section:8",
+          "heading": "Điều 8. Bảo hiểm",
+          "text": "Điều 8. Bảo hiểm\nCác chế độ bảo hiểm được thực hiện theo quy định."
+        }
+      ]
+    },
+    {
+      "document_id": "H10_Office_Administrator",
+      "file": "H10_Office_Administrator.docx",
+      "sha256": "cca4afa9fc6ab727f08cee4ac98d7ecd1ffce1f88cde315dcf6462cf55aba115",
+      "block_count": 24,
+      "section_count": 9,
+      "source_blocks": [
+        {
+          "block_index": 0,
+          "kind": "paragraph",
+          "text": "HỢP ĐỒNG LAO ĐỘNG"
+        },
+        {
+          "block_index": 1,
+          "kind": "paragraph",
+          "text": "H10 - Office Administrator"
+        },
+        {
+          "block_index": 2,
+          "kind": "paragraph",
+          "text": "BÊN A: CÔNG TY TNHH DEMO HELDOUT VIỆT NAM"
+        },
+        {
+          "block_index": 3,
+          "kind": "paragraph",
+          "text": "BÊN B: NGƯỜI LAO ĐỘNG"
+        },
+        {
+          "block_index": 4,
+          "kind": "paragraph",
+          "text": "Hai bên thống nhất ký hợp đồng lao động cho vị trí Office Administrator với các nội dung sau đây."
+        },
+        {
+          "block_index": 5,
+          "kind": "paragraph",
+          "text": "Điều 1. Công việc"
+        },
+        {
+          "block_index": 6,
+          "kind": "paragraph",
+          "text": "Người lao động quản lý văn thư, lịch họp, hồ sơ hành chính và hỗ trợ vận hành văn phòng."
+        },
+        {
+          "block_index": 7,
+          "kind": "paragraph",
+          "text": "Điều 2. Thời hạn hợp đồng"
+        },
+        {
+          "block_index": 8,
+          "kind": "paragraph",
+          "text": "Hợp đồng xác định thời hạn 24 tháng kể từ ngày 01/11/2026."
+        },
+        {
+          "block_index": 9,
+          "kind": "paragraph",
+          "text": "Điều 3. Tiền lương"
+        },
+        {
+          "block_index": 10,
+          "kind": "paragraph",
+          "text": "Mức lương theo công việc là 14.500.000 đồng/tháng."
+        },
+        {
+          "block_index": 11,
+          "kind": "paragraph",
+          "text": "Tiền lương được trả qua tài khoản vào ngày 05 hằng tháng."
+        },
+        {
+          "block_index": 12,
+          "kind": "paragraph",
+          "text": "Điều 4. Thời giờ làm việc"
+        },
+        {
+          "block_index": 13,
+          "kind": "paragraph",
+          "text": "Người lao động làm việc 08 giờ/ngày, 05 ngày/tuần."
+        },
+        {
+          "block_index": 14,
+          "kind": "paragraph",
+          "text": "Thời gian làm việc từ 08:00 đến 17:00."
+        },
+        {
+          "block_index": 15,
+          "kind": "paragraph",
+          "text": "Điều 5. Tài sản"
+        },
+        {
+          "block_index": 16,
+          "kind": "paragraph",
+          "text": "Tài sản và hồ sơ được giao phải hoàn trả khi hợp đồng chấm dứt."
+        },
+        {
+          "block_index": 17,
+          "kind": "paragraph",
+          "text": "Điều 6. Điều khoản áp dụng"
+        },
+        {
+          "block_index": 18,
+          "kind": "paragraph",
+          "text": "Các vấn đề về chấm dứt hợp đồng thực hiện theo Điều 8."
+        },
+        {
+          "block_index": 19,
+          "kind": "paragraph",
+          "text": "Điều 7. Bảo hiểm và nghỉ phép"
+        },
+        {
+          "block_index": 20,
+          "kind": "paragraph",
+          "text": "Người lao động tham gia các chế độ bảo hiểm và nghỉ phép năm theo quy định."
+        },
+        {
+          "block_index": 21,
+          "kind": "paragraph",
+          "text": "Điều 8. Chấm dứt hợp đồng"
+        },
+        {
+          "block_index": 22,
+          "kind": "paragraph",
+          "text": "Các trường hợp chấm dứt hợp đồng thực hiện theo quy định pháp luật."
+        },
+        {
+          "block_index": 23,
+          "kind": "paragraph",
+          "text": "Thời hạn báo trước được áp dụng theo từng trường hợp."
+        }
+      ],
+      "sections": [
+        {
+          "section_index": 0,
+          "section_id": "H10_Office_Administrator:section:0",
+          "heading": null,
+          "text": "HỢP ĐỒNG LAO ĐỘNG\nH10 - Office Administrator\nBÊN A: CÔNG TY TNHH DEMO HELDOUT VIỆT NAM\nBÊN B: NGƯỜI LAO ĐỘNG\nHai bên thống nhất ký hợp đồng lao động cho vị trí Office Administrator với các nội dung sau đây."
+        },
+        {
+          "section_index": 1,
+          "section_id": "H10_Office_Administrator:section:1",
+          "heading": "Điều 1. Công việc",
+          "text": "Điều 1. Công việc\nNgười lao động quản lý văn thư, lịch họp, hồ sơ hành chính và hỗ trợ vận hành văn phòng."
+        },
+        {
+          "section_index": 2,
+          "section_id": "H10_Office_Administrator:section:2",
+          "heading": "Điều 2. Thời hạn hợp đồng",
+          "text": "Điều 2. Thời hạn hợp đồng\nHợp đồng xác định thời hạn 24 tháng kể từ ngày 01/11/2026."
+        },
+        {
+          "section_index": 3,
+          "section_id": "H10_Office_Administrator:section:3",
+          "heading": "Điều 3. Tiền lương",
+          "text": "Điều 3. Tiền lương\nMức lương theo công việc là 14.500.000 đồng/tháng.\nTiền lương được trả qua tài khoản vào ngày 05 hằng tháng."
+        },
+        {
+          "section_index": 4,
+          "section_id": "H10_Office_Administrator:section:4",
+          "heading": "Điều 4. Thời giờ làm việc",
+          "text": "Điều 4. Thời giờ làm việc\nNgười lao động làm việc 08 giờ/ngày, 05 ngày/tuần.\nThời gian làm việc từ 08:00 đến 17:00."
+        },
+        {
+          "section_index": 5,
+          "section_id": "H10_Office_Administrator:section:5",
+          "heading": "Điều 5. Tài sản",
+          "text": "Điều 5. Tài sản\nTài sản và hồ sơ được giao phải hoàn trả khi hợp đồng chấm dứt."
+        },
+        {
+          "section_index": 6,
+          "section_id": "H10_Office_Administrator:section:6",
+          "heading": "Điều 6. Điều khoản áp dụng",
+          "text": "Điều 6. Điều khoản áp dụng\nCác vấn đề về chấm dứt hợp đồng thực hiện theo Điều 8."
+        },
+        {
+          "section_index": 7,
+          "section_id": "H10_Office_Administrator:section:7",
+          "heading": "Điều 7. Bảo hiểm và nghỉ phép",
+          "text": "Điều 7. Bảo hiểm và nghỉ phép\nNgười lao động tham gia các chế độ bảo hiểm và nghỉ phép năm theo quy định."
+        },
+        {
+          "section_index": 8,
+          "section_id": "H10_Office_Administrator:section:8",
+          "heading": "Điều 8. Chấm dứt hợp đồng",
+          "text": "Điều 8. Chấm dứt hợp đồng\nCác trường hợp chấm dứt hợp đồng thực hiện theo quy định pháp luật.\nThời hạn báo trước được áp dụng theo từng trường hợp."
+        }
+      ]
+    },
+    {
+      "document_id": "H11_QA_Engineer",
+      "file": "H11_QA_Engineer.docx",
+      "sha256": "6c01020fdf9315786d09242852bd557facf2d99458d6e8511c5fbf71c033ab33",
+      "block_count": 24,
+      "section_count": 8,
+      "source_blocks": [
+        {
+          "block_index": 0,
+          "kind": "paragraph",
+          "text": "HỢP ĐỒNG LAO ĐỘNG"
+        },
+        {
+          "block_index": 1,
+          "kind": "paragraph",
+          "text": "H11 - QA Engineer"
+        },
+        {
+          "block_index": 2,
+          "kind": "paragraph",
+          "text": "BÊN A: CÔNG TY TNHH DEMO HELDOUT VIỆT NAM"
+        },
+        {
+          "block_index": 3,
+          "kind": "paragraph",
+          "text": "BÊN B: NGƯỜI LAO ĐỘNG"
+        },
+        {
+          "block_index": 4,
+          "kind": "paragraph",
+          "text": "Hai bên thống nhất ký hợp đồng lao động cho vị trí QA Engineer với các nội dung sau đây."
+        },
+        {
+          "block_index": 5,
+          "kind": "paragraph",
+          "text": "Điều 1. Công việc"
+        },
+        {
+          "block_index": 6,
+          "kind": "paragraph",
+          "text": "Người lao động thiết kế test case, kiểm thử sản phẩm và theo dõi lỗi phần mềm."
+        },
+        {
+          "block_index": 7,
+          "kind": "paragraph",
+          "text": "Điều 2. Giai đoạn đánh giá ban đầu"
+        },
+        {
+          "block_index": 8,
+          "kind": "paragraph",
+          "text": "Trong hai tháng đầu, người lao động thực hiện công việc QA trên dự án thực tế."
+        },
+        {
+          "block_index": 9,
+          "kind": "paragraph",
+          "text": "Chất lượng test case, khả năng phát hiện lỗi và phối hợp được review cuối giai đoạn."
+        },
+        {
+          "block_index": 10,
+          "kind": "paragraph",
+          "text": "Kết quả được dùng để quyết định việc tiếp tục bố trí vào vị trí."
+        },
+        {
+          "block_index": 11,
+          "kind": "paragraph",
+          "text": "Điều 3. Tiền lương"
+        },
+        {
+          "block_index": 12,
+          "kind": "table_row",
+          "text": "Khoản | Giá trị"
+        },
+        {
+          "block_index": 13,
+          "kind": "table_row",
+          "text": "Thu nhập cố định | 18.500.000 đồng/tháng"
+        },
+        {
+          "block_index": 14,
+          "kind": "table_row",
+          "text": "Phụ cấp | 600.000 đồng/tháng"
+        },
+        {
+          "block_index": 15,
+          "kind": "paragraph",
+          "text": "Tiền lương được thanh toán vào ngày 05 hằng tháng."
+        },
+        {
+          "block_index": 16,
+          "kind": "paragraph",
+          "text": "Điều 4. Lịch làm việc"
+        },
+        {
+          "block_index": 17,
+          "kind": "paragraph",
+          "text": "Người lao động làm việc từ 08:30 đến 17:30, từ thứ Hai đến thứ Sáu."
+        },
+        {
+          "block_index": 18,
+          "kind": "paragraph",
+          "text": "Điều 5. Làm thêm và nghỉ bù"
+        },
+        {
+          "block_index": 19,
+          "kind": "paragraph",
+          "text": "Khi phát sinh làm thêm theo kế hoạch phát hành, việc bố trí thời gian nghỉ bù được thực hiện theo kế hoạch của bộ phận."
+        },
+        {
+          "block_index": 20,
+          "kind": "paragraph",
+          "text": "Điều 6. Thiết bị"
+        },
+        {
+          "block_index": 21,
+          "kind": "paragraph",
+          "text": "Thiết bị kiểm thử phải được bảo quản và sử dụng đúng mục đích."
+        },
+        {
+          "block_index": 22,
+          "kind": "paragraph",
+          "text": "Điều 7. Chấm dứt hợp đồng"
+        },
+        {
+          "block_index": 23,
+          "kind": "paragraph",
+          "text": "Việc chấm dứt hợp đồng được thực hiện theo căn cứ và thời hạn báo trước tương ứng."
+        }
+      ],
+      "sections": [
+        {
+          "section_index": 0,
+          "section_id": "H11_QA_Engineer:section:0",
+          "heading": null,
+          "text": "HỢP ĐỒNG LAO ĐỘNG\nH11 - QA Engineer\nBÊN A: CÔNG TY TNHH DEMO HELDOUT VIỆT NAM\nBÊN B: NGƯỜI LAO ĐỘNG\nHai bên thống nhất ký hợp đồng lao động cho vị trí QA Engineer với các nội dung sau đây."
+        },
+        {
+          "section_index": 1,
+          "section_id": "H11_QA_Engineer:section:1",
+          "heading": "Điều 1. Công việc",
+          "text": "Điều 1. Công việc\nNgười lao động thiết kế test case, kiểm thử sản phẩm và theo dõi lỗi phần mềm."
+        },
+        {
+          "section_index": 2,
+          "section_id": "H11_QA_Engineer:section:2",
+          "heading": "Điều 2. Giai đoạn đánh giá ban đầu",
+          "text": "Điều 2. Giai đoạn đánh giá ban đầu\nTrong hai tháng đầu, người lao động thực hiện công việc QA trên dự án thực tế.\nChất lượng test case, khả năng phát hiện lỗi và phối hợp được review cuối giai đoạn.\nKết quả được dùng để quyết định việc tiếp tục bố trí vào vị trí."
+        },
+        {
+          "section_index": 3,
+          "section_id": "H11_QA_Engineer:section:3",
+          "heading": "Điều 3. Tiền lương",
+          "text": "Điều 3. Tiền lương\nKhoản | Giá trị\nThu nhập cố định | 18.500.000 đồng/tháng\nPhụ cấp | 600.000 đồng/tháng\nTiền lương được thanh toán vào ngày 05 hằng tháng."
+        },
+        {
+          "section_index": 4,
+          "section_id": "H11_QA_Engineer:section:4",
+          "heading": "Điều 4. Lịch làm việc",
+          "text": "Điều 4. Lịch làm việc\nNgười lao động làm việc từ 08:30 đến 17:30, từ thứ Hai đến thứ Sáu."
+        },
+        {
+          "section_index": 5,
+          "section_id": "H11_QA_Engineer:section:5",
+          "heading": "Điều 5. Làm thêm và nghỉ bù",
+          "text": "Điều 5. Làm thêm và nghỉ bù\nKhi phát sinh làm thêm theo kế hoạch phát hành, việc bố trí thời gian nghỉ bù được thực hiện theo kế hoạch của bộ phận."
+        },
+        {
+          "section_index": 6,
+          "section_id": "H11_QA_Engineer:section:6",
+          "heading": "Điều 6. Thiết bị",
+          "text": "Điều 6. Thiết bị\nThiết bị kiểm thử phải được bảo quản và sử dụng đúng mục đích."
+        },
+        {
+          "section_index": 7,
+          "section_id": "H11_QA_Engineer:section:7",
+          "heading": "Điều 7. Chấm dứt hợp đồng",
+          "text": "Điều 7. Chấm dứt hợp đồng\nViệc chấm dứt hợp đồng được thực hiện theo căn cứ và thời hạn báo trước tương ứng."
+        }
+      ]
+    },
+    {
+      "document_id": "H12_Finance_Assistant",
+      "file": "H12_Finance_Assistant.docx",
+      "sha256": "4355405e162d1fc38b9622cf8c86d50a06fd36abf20cf6ec3090448535337cfb",
+      "block_count": 27,
+      "section_count": 9,
+      "source_blocks": [
+        {
+          "block_index": 0,
+          "kind": "paragraph",
+          "text": "HỢP ĐỒNG LAO ĐỘNG"
+        },
+        {
+          "block_index": 1,
+          "kind": "paragraph",
+          "text": "H12 - Finance Assistant"
+        },
+        {
+          "block_index": 2,
+          "kind": "paragraph",
+          "text": "BÊN A: CÔNG TY TNHH DEMO HELDOUT VIỆT NAM"
+        },
+        {
+          "block_index": 3,
+          "kind": "paragraph",
+          "text": "BÊN B: NGƯỜI LAO ĐỘNG"
+        },
+        {
+          "block_index": 4,
+          "kind": "paragraph",
+          "text": "Hai bên thống nhất ký hợp đồng lao động cho vị trí Finance Assistant với các nội dung sau đây."
+        },
+        {
+          "block_index": 5,
+          "kind": "paragraph",
+          "text": "Điều 1. Công việc"
+        },
+        {
+          "block_index": 6,
+          "kind": "paragraph",
+          "text": "Người lao động hỗ trợ nhập liệu kế toán, đối chiếu chứng từ và lập báo cáo nội bộ."
+        },
+        {
+          "block_index": 7,
+          "kind": "paragraph",
+          "text": "Điều 2. Thử việc"
+        },
+        {
+          "block_index": 8,
+          "kind": "paragraph",
+          "text": "Thời gian thử việc là 45 ngày."
+        },
+        {
+          "block_index": 9,
+          "kind": "paragraph",
+          "text": "Kết quả thử việc được đánh giá theo độ chính xác và khả năng xử lý chứng từ."
+        },
+        {
+          "block_index": 10,
+          "kind": "paragraph",
+          "text": "Điều 3. Chế độ"
+        },
+        {
+          "block_index": 11,
+          "kind": "paragraph",
+          "text": "Mức lương theo công việc là 15.000.000 đồng/tháng."
+        },
+        {
+          "block_index": 12,
+          "kind": "paragraph",
+          "text": "Phụ cấp ăn trưa là 500.000 đồng/tháng."
+        },
+        {
+          "block_index": 13,
+          "kind": "paragraph",
+          "text": "Tiền lương được thanh toán vào ngày 05 hằng tháng."
+        },
+        {
+          "block_index": 14,
+          "kind": "paragraph",
+          "text": "Điều 4. Thời giờ làm việc"
+        },
+        {
+          "block_index": 15,
+          "kind": "paragraph",
+          "text": "Thời giờ làm việc là 08 giờ/ngày và 05 ngày/tuần."
+        },
+        {
+          "block_index": 16,
+          "kind": "paragraph",
+          "text": "Lịch làm việc từ 08:30 đến 17:30."
+        },
+        {
+          "block_index": 17,
+          "kind": "paragraph",
+          "text": "Điều 5. Đánh giá hiệu quả"
+        },
+        {
+          "block_index": 18,
+          "kind": "paragraph",
+          "text": "KPI được đánh giá định kỳ hằng quý sau khi người lao động đã làm việc chính thức."
+        },
+        {
+          "block_index": 19,
+          "kind": "paragraph",
+          "text": "Nội dung đánh giá gồm độ chính xác, thời gian xử lý và mức độ tuân thủ quy trình."
+        },
+        {
+          "block_index": 20,
+          "kind": "paragraph",
+          "text": "Điều 6. Bảo hiểm"
+        },
+        {
+          "block_index": 21,
+          "kind": "paragraph",
+          "text": "Các chế độ bảo hiểm được thực hiện theo quy định."
+        },
+        {
+          "block_index": 22,
+          "kind": "paragraph",
+          "text": "Điều 7. Bảo mật"
+        },
+        {
+          "block_index": 23,
+          "kind": "paragraph",
+          "text": "Người lao động phải bảo mật dữ liệu tài chính và thông tin đối tác."
+        },
+        {
+          "block_index": 24,
+          "kind": "paragraph",
+          "text": "Điều 8. Điều khoản chung"
+        },
+        {
+          "block_index": 25,
+          "kind": "paragraph",
+          "text": "Hai bên có trách nhiệm thực hiện đúng các nội dung đã thống nhất."
+        },
+        {
+          "block_index": 26,
+          "kind": "paragraph",
+          "text": "Mọi sửa đổi phải được lập thành văn bản."
+        }
+      ],
+      "sections": [
+        {
+          "section_index": 0,
+          "section_id": "H12_Finance_Assistant:section:0",
+          "heading": null,
+          "text": "HỢP ĐỒNG LAO ĐỘNG\nH12 - Finance Assistant\nBÊN A: CÔNG TY TNHH DEMO HELDOUT VIỆT NAM\nBÊN B: NGƯỜI LAO ĐỘNG\nHai bên thống nhất ký hợp đồng lao động cho vị trí Finance Assistant với các nội dung sau đây."
+        },
+        {
+          "section_index": 1,
+          "section_id": "H12_Finance_Assistant:section:1",
+          "heading": "Điều 1. Công việc",
+          "text": "Điều 1. Công việc\nNgười lao động hỗ trợ nhập liệu kế toán, đối chiếu chứng từ và lập báo cáo nội bộ."
+        },
+        {
+          "section_index": 2,
+          "section_id": "H12_Finance_Assistant:section:2",
+          "heading": "Điều 2. Thử việc",
+          "text": "Điều 2. Thử việc\nThời gian thử việc là 45 ngày.\nKết quả thử việc được đánh giá theo độ chính xác và khả năng xử lý chứng từ."
+        },
+        {
+          "section_index": 3,
+          "section_id": "H12_Finance_Assistant:section:3",
+          "heading": "Điều 3. Chế độ",
+          "text": "Điều 3. Chế độ\nMức lương theo công việc là 15.000.000 đồng/tháng.\nPhụ cấp ăn trưa là 500.000 đồng/tháng.\nTiền lương được thanh toán vào ngày 05 hằng tháng."
+        },
+        {
+          "section_index": 4,
+          "section_id": "H12_Finance_Assistant:section:4",
+          "heading": "Điều 4. Thời giờ làm việc",
+          "text": "Điều 4. Thời giờ làm việc\nThời giờ làm việc là 08 giờ/ngày và 05 ngày/tuần.\nLịch làm việc từ 08:30 đến 17:30."
+        },
+        {
+          "section_index": 5,
+          "section_id": "H12_Finance_Assistant:section:5",
+          "heading": "Điều 5. Đánh giá hiệu quả",
+          "text": "Điều 5. Đánh giá hiệu quả\nKPI được đánh giá định kỳ hằng quý sau khi người lao động đã làm việc chính thức.\nNội dung đánh giá gồm độ chính xác, thời gian xử lý và mức độ tuân thủ quy trình."
+        },
+        {
+          "section_index": 6,
+          "section_id": "H12_Finance_Assistant:section:6",
+          "heading": "Điều 6. Bảo hiểm",
+          "text": "Điều 6. Bảo hiểm\nCác chế độ bảo hiểm được thực hiện theo quy định."
+        },
+        {
+          "section_index": 7,
+          "section_id": "H12_Finance_Assistant:section:7",
+          "heading": "Điều 7. Bảo mật",
+          "text": "Điều 7. Bảo mật\nNgười lao động phải bảo mật dữ liệu tài chính và thông tin đối tác."
+        },
+        {
+          "section_index": 8,
+          "section_id": "H12_Finance_Assistant:section:8",
+          "heading": "Điều 8. Điều khoản chung",
+          "text": "Điều 8. Điều khoản chung\nHai bên có trách nhiệm thực hiện đúng các nội dung đã thống nhất.\nMọi sửa đổi phải được lập thành văn bản."
+        }
+      ]
+    },
+    {
+      "document_id": "H13_Call_Center_Agent",
+      "file": "H13_Call_Center_Agent.docx",
+      "sha256": "0beb648e298cc9667d81fd31399c7de715eb53f63da151276ed0c02debb8ad2e",
+      "block_count": 29,
+      "section_count": 9,
+      "source_blocks": [
+        {
+          "block_index": 0,
+          "kind": "paragraph",
+          "text": "HỢP ĐỒNG LAO ĐỘNG"
+        },
+        {
+          "block_index": 1,
+          "kind": "paragraph",
+          "text": "H13 - Call Center Agent"
+        },
+        {
+          "block_index": 2,
+          "kind": "paragraph",
+          "text": "BÊN A: CÔNG TY TNHH DEMO HELDOUT VIỆT NAM"
+        },
+        {
+          "block_index": 3,
+          "kind": "paragraph",
+          "text": "BÊN B: NGƯỜI LAO ĐỘNG"
+        },
+        {
+          "block_index": 4,
+          "kind": "paragraph",
+          "text": "Hai bên thống nhất ký hợp đồng lao động cho vị trí Call Center Agent với các nội dung sau đây."
+        },
+        {
+          "block_index": 5,
+          "kind": "paragraph",
+          "text": "Điều 1. Công việc"
+        },
+        {
+          "block_index": 6,
+          "kind": "paragraph",
+          "text": "Người lao động tiếp nhận và xử lý cuộc gọi của khách hàng."
+        },
+        {
+          "block_index": 7,
+          "kind": "paragraph",
+          "text": "Điều 2. Giai đoạn đầu"
+        },
+        {
+          "block_index": 8,
+          "kind": "paragraph",
+          "text": "Trong 30 ngày đầu, người lao động được đào tạo hệ thống và thực hiện cuộc gọi dưới sự giám sát."
+        },
+        {
+          "block_index": 9,
+          "kind": "paragraph",
+          "text": "Kết quả về chất lượng cuộc gọi được dùng để xác định việc tiếp tục bố trí vào vị trí."
+        },
+        {
+          "block_index": 10,
+          "kind": "paragraph",
+          "text": "Điều 3. Thu nhập"
+        },
+        {
+          "block_index": 11,
+          "kind": "paragraph",
+          "text": "Khoản thu nhập cố định là 12.500.000 đồng/tháng."
+        },
+        {
+          "block_index": 12,
+          "kind": "paragraph",
+          "text": "Khoản này được chuyển vào ngày 05 hằng tháng."
+        },
+        {
+          "block_index": 13,
+          "kind": "paragraph",
+          "text": "Điều 4. Phân ca"
+        },
+        {
+          "block_index": 14,
+          "kind": "table_row",
+          "text": "Ca | Giờ"
+        },
+        {
+          "block_index": 15,
+          "kind": "table_row",
+          "text": "A | 06:00-14:00"
+        },
+        {
+          "block_index": 16,
+          "kind": "table_row",
+          "text": "B | 14:00-22:00"
+        },
+        {
+          "block_index": 17,
+          "kind": "table_row",
+          "text": "C | 22:00-06:00"
+        },
+        {
+          "block_index": 18,
+          "kind": "paragraph",
+          "text": "Lịch phân ca được công bố theo tuần."
+        },
+        {
+          "block_index": 19,
+          "kind": "paragraph",
+          "text": "Điều 5. Nghỉ giữa ca và nghỉ hằng tuần"
+        },
+        {
+          "block_index": 20,
+          "kind": "paragraph",
+          "text": "Người lao động được nghỉ giữa ca theo lịch vận hành."
+        },
+        {
+          "block_index": 21,
+          "kind": "paragraph",
+          "text": "Ngày nghỉ hằng tuần được bố trí trong lịch phân ca."
+        },
+        {
+          "block_index": 22,
+          "kind": "paragraph",
+          "text": "Điều 6. Tài sản"
+        },
+        {
+          "block_index": 23,
+          "kind": "paragraph",
+          "text": "Tai nghe và thiết bị làm việc được quản lý theo quy định nội bộ."
+        },
+        {
+          "block_index": 24,
+          "kind": "paragraph",
+          "text": "Điều 7. Điều khoản liên quan"
+        },
+        {
+          "block_index": 25,
+          "kind": "paragraph",
+          "text": "Quyền kết thúc hợp đồng được thực hiện theo Điều 8."
+        },
+        {
+          "block_index": 26,
+          "kind": "paragraph",
+          "text": "Điều 8. Kết thúc quan hệ lao động"
+        },
+        {
+          "block_index": 27,
+          "kind": "paragraph",
+          "text": "Một bên có thể kết thúc quan hệ lao động khi có căn cứ phù hợp."
+        },
+        {
+          "block_index": 28,
+          "kind": "paragraph",
+          "text": "Thời gian thông báo phải được tuân thủ theo từng trường hợp."
+        }
+      ],
+      "sections": [
+        {
+          "section_index": 0,
+          "section_id": "H13_Call_Center_Agent:section:0",
+          "heading": null,
+          "text": "HỢP ĐỒNG LAO ĐỘNG\nH13 - Call Center Agent\nBÊN A: CÔNG TY TNHH DEMO HELDOUT VIỆT NAM\nBÊN B: NGƯỜI LAO ĐỘNG\nHai bên thống nhất ký hợp đồng lao động cho vị trí Call Center Agent với các nội dung sau đây."
+        },
+        {
+          "section_index": 1,
+          "section_id": "H13_Call_Center_Agent:section:1",
+          "heading": "Điều 1. Công việc",
+          "text": "Điều 1. Công việc\nNgười lao động tiếp nhận và xử lý cuộc gọi của khách hàng."
+        },
+        {
+          "section_index": 2,
+          "section_id": "H13_Call_Center_Agent:section:2",
+          "heading": "Điều 2. Giai đoạn đầu",
+          "text": "Điều 2. Giai đoạn đầu\nTrong 30 ngày đầu, người lao động được đào tạo hệ thống và thực hiện cuộc gọi dưới sự giám sát.\nKết quả về chất lượng cuộc gọi được dùng để xác định việc tiếp tục bố trí vào vị trí."
+        },
+        {
+          "section_index": 3,
+          "section_id": "H13_Call_Center_Agent:section:3",
+          "heading": "Điều 3. Thu nhập",
+          "text": "Điều 3. Thu nhập\nKhoản thu nhập cố định là 12.500.000 đồng/tháng.\nKhoản này được chuyển vào ngày 05 hằng tháng."
+        },
+        {
+          "section_index": 4,
+          "section_id": "H13_Call_Center_Agent:section:4",
+          "heading": "Điều 4. Phân ca",
+          "text": "Điều 4. Phân ca\nCa | Giờ\nA | 06:00-14:00\nB | 14:00-22:00\nC | 22:00-06:00\nLịch phân ca được công bố theo tuần."
+        },
+        {
+          "section_index": 5,
+          "section_id": "H13_Call_Center_Agent:section:5",
+          "heading": "Điều 5. Nghỉ giữa ca và nghỉ hằng tuần",
+          "text": "Điều 5. Nghỉ giữa ca và nghỉ hằng tuần\nNgười lao động được nghỉ giữa ca theo lịch vận hành.\nNgày nghỉ hằng tuần được bố trí trong lịch phân ca."
+        },
+        {
+          "section_index": 6,
+          "section_id": "H13_Call_Center_Agent:section:6",
+          "heading": "Điều 6. Tài sản",
+          "text": "Điều 6. Tài sản\nTai nghe và thiết bị làm việc được quản lý theo quy định nội bộ."
+        },
+        {
+          "section_index": 7,
+          "section_id": "H13_Call_Center_Agent:section:7",
+          "heading": "Điều 7. Điều khoản liên quan",
+          "text": "Điều 7. Điều khoản liên quan\nQuyền kết thúc hợp đồng được thực hiện theo Điều 8."
+        },
+        {
+          "section_index": 8,
+          "section_id": "H13_Call_Center_Agent:section:8",
+          "heading": "Điều 8. Kết thúc quan hệ lao động",
+          "text": "Điều 8. Kết thúc quan hệ lao động\nMột bên có thể kết thúc quan hệ lao động khi có căn cứ phù hợp.\nThời gian thông báo phải được tuân thủ theo từng trường hợp."
+        }
+      ]
+    },
+    {
+      "document_id": "H14_Procurement_Specialist",
+      "file": "H14_Procurement_Specialist.docx",
+      "sha256": "21c559e107510ad9a883140d737cb02cab67ebbc584b4032e1d77b4cfde88a6b",
+      "block_count": 24,
+      "section_count": 8,
+      "source_blocks": [
+        {
+          "block_index": 0,
+          "kind": "paragraph",
+          "text": "HỢP ĐỒNG LAO ĐỘNG"
+        },
+        {
+          "block_index": 1,
+          "kind": "paragraph",
+          "text": "H14 - Procurement Specialist"
+        },
+        {
+          "block_index": 2,
+          "kind": "paragraph",
+          "text": "BÊN A: CÔNG TY TNHH DEMO HELDOUT VIỆT NAM"
+        },
+        {
+          "block_index": 3,
+          "kind": "paragraph",
+          "text": "BÊN B: NGƯỜI LAO ĐỘNG"
+        },
+        {
+          "block_index": 4,
+          "kind": "paragraph",
+          "text": "Hai bên thống nhất ký hợp đồng lao động cho vị trí Procurement Specialist với các nội dung sau đây."
+        },
+        {
+          "block_index": 5,
+          "kind": "paragraph",
+          "text": "Điều 1. Công việc"
+        },
+        {
+          "block_index": 6,
+          "kind": "paragraph",
+          "text": "Người lao động tìm kiếm nhà cung cấp, lấy báo giá và quản lý đơn mua hàng."
+        },
+        {
+          "block_index": 7,
+          "kind": "paragraph",
+          "text": "Điều 2. Thử việc"
+        },
+        {
+          "block_index": 8,
+          "kind": "paragraph",
+          "text": "Thời gian thử việc là 60 ngày."
+        },
+        {
+          "block_index": 9,
+          "kind": "paragraph",
+          "text": "Kết quả thử việc căn cứ vào chất lượng hồ sơ mua hàng và khả năng phối hợp nhà cung cấp."
+        },
+        {
+          "block_index": 10,
+          "kind": "paragraph",
+          "text": "Điều 3. Quyền lợi người lao động"
+        },
+        {
+          "block_index": 11,
+          "kind": "paragraph",
+          "text": "Mức lương theo công việc là 19.000.000 đồng/tháng."
+        },
+        {
+          "block_index": 12,
+          "kind": "paragraph",
+          "text": "Phụ cấp điện thoại là 400.000 đồng/tháng."
+        },
+        {
+          "block_index": 13,
+          "kind": "paragraph",
+          "text": "Tiền lương được trả vào ngày 05 hằng tháng."
+        },
+        {
+          "block_index": 14,
+          "kind": "paragraph",
+          "text": "Điều 4. Tổ chức làm việc"
+        },
+        {
+          "block_index": 15,
+          "kind": "paragraph",
+          "text": "Người lao động làm việc 08 giờ/ngày và 05 ngày/tuần."
+        },
+        {
+          "block_index": 16,
+          "kind": "paragraph",
+          "text": "Thời gian làm việc từ 08:30 đến 17:30."
+        },
+        {
+          "block_index": 17,
+          "kind": "paragraph",
+          "text": "Điều 5. Quy trình mua hàng"
+        },
+        {
+          "block_index": 18,
+          "kind": "paragraph",
+          "text": "Việc thanh toán cho nhà cung cấp được thực hiện theo điều kiện trên đơn mua hàng."
+        },
+        {
+          "block_index": 19,
+          "kind": "paragraph",
+          "text": "Bộ phận mua hàng có trách nhiệm theo dõi chứng từ thanh toán và tiến độ thanh toán cho nhà cung cấp."
+        },
+        {
+          "block_index": 20,
+          "kind": "paragraph",
+          "text": "Điều 6. Bảo mật"
+        },
+        {
+          "block_index": 21,
+          "kind": "paragraph",
+          "text": "Báo giá và thông tin thương mại của nhà cung cấp phải được bảo mật."
+        },
+        {
+          "block_index": 22,
+          "kind": "paragraph",
+          "text": "Điều 7. Chấm dứt hợp đồng"
+        },
+        {
+          "block_index": 23,
+          "kind": "paragraph",
+          "text": "Việc chấm dứt hợp đồng được thực hiện theo căn cứ và thời hạn báo trước áp dụng."
+        }
+      ],
+      "sections": [
+        {
+          "section_index": 0,
+          "section_id": "H14_Procurement_Specialist:section:0",
+          "heading": null,
+          "text": "HỢP ĐỒNG LAO ĐỘNG\nH14 - Procurement Specialist\nBÊN A: CÔNG TY TNHH DEMO HELDOUT VIỆT NAM\nBÊN B: NGƯỜI LAO ĐỘNG\nHai bên thống nhất ký hợp đồng lao động cho vị trí Procurement Specialist với các nội dung sau đây."
+        },
+        {
+          "section_index": 1,
+          "section_id": "H14_Procurement_Specialist:section:1",
+          "heading": "Điều 1. Công việc",
+          "text": "Điều 1. Công việc\nNgười lao động tìm kiếm nhà cung cấp, lấy báo giá và quản lý đơn mua hàng."
+        },
+        {
+          "section_index": 2,
+          "section_id": "H14_Procurement_Specialist:section:2",
+          "heading": "Điều 2. Thử việc",
+          "text": "Điều 2. Thử việc\nThời gian thử việc là 60 ngày.\nKết quả thử việc căn cứ vào chất lượng hồ sơ mua hàng và khả năng phối hợp nhà cung cấp."
+        },
+        {
+          "section_index": 3,
+          "section_id": "H14_Procurement_Specialist:section:3",
+          "heading": "Điều 3. Quyền lợi người lao động",
+          "text": "Điều 3. Quyền lợi người lao động\nMức lương theo công việc là 19.000.000 đồng/tháng.\nPhụ cấp điện thoại là 400.000 đồng/tháng.\nTiền lương được trả vào ngày 05 hằng tháng."
+        },
+        {
+          "section_index": 4,
+          "section_id": "H14_Procurement_Specialist:section:4",
+          "heading": "Điều 4. Tổ chức làm việc",
+          "text": "Điều 4. Tổ chức làm việc\nNgười lao động làm việc 08 giờ/ngày và 05 ngày/tuần.\nThời gian làm việc từ 08:30 đến 17:30."
+        },
+        {
+          "section_index": 5,
+          "section_id": "H14_Procurement_Specialist:section:5",
+          "heading": "Điều 5. Quy trình mua hàng",
+          "text": "Điều 5. Quy trình mua hàng\nViệc thanh toán cho nhà cung cấp được thực hiện theo điều kiện trên đơn mua hàng.\nBộ phận mua hàng có trách nhiệm theo dõi chứng từ thanh toán và tiến độ thanh toán cho nhà cung cấp."
+        },
+        {
+          "section_index": 6,
+          "section_id": "H14_Procurement_Specialist:section:6",
+          "heading": "Điều 6. Bảo mật",
+          "text": "Điều 6. Bảo mật\nBáo giá và thông tin thương mại của nhà cung cấp phải được bảo mật."
+        },
+        {
+          "section_index": 7,
+          "section_id": "H14_Procurement_Specialist:section:7",
+          "heading": "Điều 7. Chấm dứt hợp đồng",
+          "text": "Điều 7. Chấm dứt hợp đồng\nViệc chấm dứt hợp đồng được thực hiện theo căn cứ và thời hạn báo trước áp dụng."
+        }
+      ]
+    },
+    {
+      "document_id": "H15_Data_Engineer",
+      "file": "H15_Data_Engineer.docx",
+      "sha256": "61f2ab7432f2bb8738a6916c2e9abd4a6e7f191ebe72dc6e378c1c872ec9d9ba",
+      "block_count": 26,
+      "section_count": 9,
+      "source_blocks": [
+        {
+          "block_index": 0,
+          "kind": "paragraph",
+          "text": "HỢP ĐỒNG LAO ĐỘNG"
+        },
+        {
+          "block_index": 1,
+          "kind": "paragraph",
+          "text": "H15 - Data Engineer"
+        },
+        {
+          "block_index": 2,
+          "kind": "paragraph",
+          "text": "BÊN A: CÔNG TY TNHH DEMO HELDOUT VIỆT NAM"
+        },
+        {
+          "block_index": 3,
+          "kind": "paragraph",
+          "text": "BÊN B: NGƯỜI LAO ĐỘNG"
+        },
+        {
+          "block_index": 4,
+          "kind": "paragraph",
+          "text": "Hai bên thống nhất ký hợp đồng lao động cho vị trí Data Engineer với các nội dung sau đây."
+        },
+        {
+          "block_index": 5,
+          "kind": "paragraph",
+          "text": "Điều 1. Công việc"
+        },
+        {
+          "block_index": 6,
+          "kind": "paragraph",
+          "text": "Người lao động xây dựng pipeline dữ liệu, quản lý kho dữ liệu và hỗ trợ các hệ thống phân tích."
+        },
+        {
+          "block_index": 7,
+          "kind": "paragraph",
+          "text": "Điều 2. Giai đoạn đánh giá ban đầu"
+        },
+        {
+          "block_index": 8,
+          "kind": "paragraph",
+          "text": "Trong 60 ngày đầu, người lao động thực hiện nhiệm vụ Data Engineer trên hệ thống thực tế."
+        },
+        {
+          "block_index": 9,
+          "kind": "paragraph",
+          "text": "Kết quả kỹ thuật và khả năng phối hợp được đánh giá cuối giai đoạn."
+        },
+        {
+          "block_index": 10,
+          "kind": "paragraph",
+          "text": "Nếu đáp ứng yêu cầu, người lao động tiếp tục đảm nhiệm vị trí."
+        },
+        {
+          "block_index": 11,
+          "kind": "paragraph",
+          "text": "Điều 3. Thời hạn hợp đồng"
+        },
+        {
+          "block_index": 12,
+          "kind": "paragraph",
+          "text": "Hợp đồng có thời hạn 24 tháng kể từ ngày bắt đầu."
+        },
+        {
+          "block_index": 13,
+          "kind": "paragraph",
+          "text": "Điều 4. Lịch công tác"
+        },
+        {
+          "block_index": 14,
+          "kind": "paragraph",
+          "text": "Người lao động làm việc từ 09:00 đến 18:00, từ thứ Hai đến thứ Sáu."
+        },
+        {
+          "block_index": 15,
+          "kind": "paragraph",
+          "text": "Điều 5. Trực hệ thống và nghỉ bù"
+        },
+        {
+          "block_index": 16,
+          "kind": "paragraph",
+          "text": "Người lao động tham gia lịch trực hệ thống luân phiên."
+        },
+        {
+          "block_index": 17,
+          "kind": "paragraph",
+          "text": "Sau thời gian trực ngoài giờ, bộ phận bố trí thời gian nghỉ bù phù hợp."
+        },
+        {
+          "block_index": 18,
+          "kind": "paragraph",
+          "text": "Điều 6. Thiết bị và dữ liệu"
+        },
+        {
+          "block_index": 19,
+          "kind": "paragraph",
+          "text": "Thiết bị phải hoàn trả khi quan hệ lao động kết thúc."
+        },
+        {
+          "block_index": 20,
+          "kind": "paragraph",
+          "text": "Dữ liệu và khóa truy cập phải được bàn giao theo quy trình."
+        },
+        {
+          "block_index": 21,
+          "kind": "paragraph",
+          "text": "Điều 7. Điều khoản áp dụng"
+        },
+        {
+          "block_index": 22,
+          "kind": "paragraph",
+          "text": "Việc kết thúc quan hệ lao động được thực hiện theo Điều 8."
+        },
+        {
+          "block_index": 23,
+          "kind": "paragraph",
+          "text": "Điều 8. Kết thúc quan hệ lao động"
+        },
+        {
+          "block_index": 24,
+          "kind": "paragraph",
+          "text": "Một bên có thể kết thúc quan hệ lao động khi có căn cứ phù hợp."
+        },
+        {
+          "block_index": 25,
+          "kind": "paragraph",
+          "text": "Thời gian thông báo được áp dụng theo từng trường hợp."
+        }
+      ],
+      "sections": [
+        {
+          "section_index": 0,
+          "section_id": "H15_Data_Engineer:section:0",
+          "heading": null,
+          "text": "HỢP ĐỒNG LAO ĐỘNG\nH15 - Data Engineer\nBÊN A: CÔNG TY TNHH DEMO HELDOUT VIỆT NAM\nBÊN B: NGƯỜI LAO ĐỘNG\nHai bên thống nhất ký hợp đồng lao động cho vị trí Data Engineer với các nội dung sau đây."
+        },
+        {
+          "section_index": 1,
+          "section_id": "H15_Data_Engineer:section:1",
+          "heading": "Điều 1. Công việc",
+          "text": "Điều 1. Công việc\nNgười lao động xây dựng pipeline dữ liệu, quản lý kho dữ liệu và hỗ trợ các hệ thống phân tích."
+        },
+        {
+          "section_index": 2,
+          "section_id": "H15_Data_Engineer:section:2",
+          "heading": "Điều 2. Giai đoạn đánh giá ban đầu",
+          "text": "Điều 2. Giai đoạn đánh giá ban đầu\nTrong 60 ngày đầu, người lao động thực hiện nhiệm vụ Data Engineer trên hệ thống thực tế.\nKết quả kỹ thuật và khả năng phối hợp được đánh giá cuối giai đoạn.\nNếu đáp ứng yêu cầu, người lao động tiếp tục đảm nhiệm vị trí."
+        },
+        {
+          "section_index": 3,
+          "section_id": "H15_Data_Engineer:section:3",
+          "heading": "Điều 3. Thời hạn hợp đồng",
+          "text": "Điều 3. Thời hạn hợp đồng\nHợp đồng có thời hạn 24 tháng kể từ ngày bắt đầu."
+        },
+        {
+          "section_index": 4,
+          "section_id": "H15_Data_Engineer:section:4",
+          "heading": "Điều 4. Lịch công tác",
+          "text": "Điều 4. Lịch công tác\nNgười lao động làm việc từ 09:00 đến 18:00, từ thứ Hai đến thứ Sáu."
+        },
+        {
+          "section_index": 5,
+          "section_id": "H15_Data_Engineer:section:5",
+          "heading": "Điều 5. Trực hệ thống và nghỉ bù",
+          "text": "Điều 5. Trực hệ thống và nghỉ bù\nNgười lao động tham gia lịch trực hệ thống luân phiên.\nSau thời gian trực ngoài giờ, bộ phận bố trí thời gian nghỉ bù phù hợp."
+        },
+        {
+          "section_index": 6,
+          "section_id": "H15_Data_Engineer:section:6",
+          "heading": "Điều 6. Thiết bị và dữ liệu",
+          "text": "Điều 6. Thiết bị và dữ liệu\nThiết bị phải hoàn trả khi quan hệ lao động kết thúc.\nDữ liệu và khóa truy cập phải được bàn giao theo quy trình."
+        },
+        {
+          "section_index": 7,
+          "section_id": "H15_Data_Engineer:section:7",
+          "heading": "Điều 7. Điều khoản áp dụng",
+          "text": "Điều 7. Điều khoản áp dụng\nViệc kết thúc quan hệ lao động được thực hiện theo Điều 8."
+        },
+        {
+          "section_index": 8,
+          "section_id": "H15_Data_Engineer:section:8",
+          "heading": "Điều 8. Kết thúc quan hệ lao động",
+          "text": "Điều 8. Kết thúc quan hệ lao động\nMột bên có thể kết thúc quan hệ lao động khi có căn cứ phù hợp.\nThời gian thông báo được áp dụng theo từng trường hợp."
+        }
+      ]
+    },
+    {
+      "document_id": "H16_Operations_Coordinator",
+      "file": "H16_Operations_Coordinator.docx",
+      "sha256": "19918c448714820630839f1eb50671d12c088cdba10654219286aa2d15317a9e",
+      "block_count": 28,
+      "section_count": 9,
+      "source_blocks": [
+        {
+          "block_index": 0,
+          "kind": "paragraph",
+          "text": "HỢP ĐỒNG LAO ĐỘNG"
+        },
+        {
+          "block_index": 1,
+          "kind": "paragraph",
+          "text": "H16 - Operations Coordinator"
+        },
+        {
+          "block_index": 2,
+          "kind": "paragraph",
+          "text": "BÊN A: CÔNG TY TNHH DEMO HELDOUT VIỆT NAM"
+        },
+        {
+          "block_index": 3,
+          "kind": "paragraph",
+          "text": "BÊN B: NGƯỜI LAO ĐỘNG"
+        },
+        {
+          "block_index": 4,
+          "kind": "paragraph",
+          "text": "Hai bên thống nhất ký hợp đồng lao động cho vị trí Operations Coordinator với các nội dung sau đây."
+        },
+        {
+          "block_index": 5,
+          "kind": "paragraph",
+          "text": "Điều 1. Công việc"
+        },
+        {
+          "block_index": 6,
+          "kind": "paragraph",
+          "text": "Người lao động điều phối hoạt động vận hành, xử lý yêu cầu nội bộ và theo dõi tiến độ công việc."
+        },
+        {
+          "block_index": 7,
+          "kind": "paragraph",
+          "text": "Điều 2. Thử việc"
+        },
+        {
+          "block_index": 8,
+          "kind": "paragraph",
+          "text": "Người lao động thử việc trong 45 ngày."
+        },
+        {
+          "block_index": 9,
+          "kind": "paragraph",
+          "text": "Kết quả thử việc được đánh giá theo khả năng điều phối và độ chính xác báo cáo."
+        },
+        {
+          "block_index": 10,
+          "kind": "paragraph",
+          "text": "Điều 3. Quyền lợi"
+        },
+        {
+          "block_index": 11,
+          "kind": "table_row",
+          "text": "Khoản | Mức"
+        },
+        {
+          "block_index": 12,
+          "kind": "table_row",
+          "text": "Lương theo công việc | 16.500.000 đồng/tháng"
+        },
+        {
+          "block_index": 13,
+          "kind": "table_row",
+          "text": "Phụ cấp trách nhiệm | 1.000.000 đồng/tháng"
+        },
+        {
+          "block_index": 14,
+          "kind": "table_row",
+          "text": "Hỗ trợ điện thoại | 400.000 đồng/tháng"
+        },
+        {
+          "block_index": 15,
+          "kind": "paragraph",
+          "text": "Các khoản được thanh toán vào ngày 05 hằng tháng."
+        },
+        {
+          "block_index": 16,
+          "kind": "paragraph",
+          "text": "Điều 4. Thời hạn hợp đồng"
+        },
+        {
+          "block_index": 17,
+          "kind": "paragraph",
+          "text": "Hợp đồng xác định thời hạn 24 tháng kể từ ngày bắt đầu."
+        },
+        {
+          "block_index": 18,
+          "kind": "paragraph",
+          "text": "Điều 5. Bảo hiểm và nghỉ phép năm"
+        },
+        {
+          "block_index": 19,
+          "kind": "paragraph",
+          "text": "Người lao động tham gia các chế độ bảo hiểm theo quy định."
+        },
+        {
+          "block_index": 20,
+          "kind": "paragraph",
+          "text": "Nghỉ phép năm được giải quyết theo chính sách của công ty."
+        },
+        {
+          "block_index": 21,
+          "kind": "paragraph",
+          "text": "Điều 6. Tài sản"
+        },
+        {
+          "block_index": 22,
+          "kind": "paragraph",
+          "text": "Tài sản được giao phải được bảo quản theo quy định nội bộ."
+        },
+        {
+          "block_index": 23,
+          "kind": "paragraph",
+          "text": "Điều 7. Chấm dứt hợp đồng"
+        },
+        {
+          "block_index": 24,
+          "kind": "paragraph",
+          "text": "Việc chấm dứt hợp đồng thực hiện theo căn cứ pháp luật và thỏa thuận của hai bên."
+        },
+        {
+          "block_index": 25,
+          "kind": "paragraph",
+          "text": "Thời hạn báo trước được áp dụng theo từng trường hợp."
+        },
+        {
+          "block_index": 26,
+          "kind": "paragraph",
+          "text": "Điều 8. Điều khoản chung"
+        },
+        {
+          "block_index": 27,
+          "kind": "paragraph",
+          "text": "Các sửa đổi hoặc bổ sung hợp đồng phải được lập thành văn bản."
+        }
+      ],
+      "sections": [
+        {
+          "section_index": 0,
+          "section_id": "H16_Operations_Coordinator:section:0",
+          "heading": null,
+          "text": "HỢP ĐỒNG LAO ĐỘNG\nH16 - Operations Coordinator\nBÊN A: CÔNG TY TNHH DEMO HELDOUT VIỆT NAM\nBÊN B: NGƯỜI LAO ĐỘNG\nHai bên thống nhất ký hợp đồng lao động cho vị trí Operations Coordinator với các nội dung sau đây."
+        },
+        {
+          "section_index": 1,
+          "section_id": "H16_Operations_Coordinator:section:1",
+          "heading": "Điều 1. Công việc",
+          "text": "Điều 1. Công việc\nNgười lao động điều phối hoạt động vận hành, xử lý yêu cầu nội bộ và theo dõi tiến độ công việc."
+        },
+        {
+          "section_index": 2,
+          "section_id": "H16_Operations_Coordinator:section:2",
+          "heading": "Điều 2. Thử việc",
+          "text": "Điều 2. Thử việc\nNgười lao động thử việc trong 45 ngày.\nKết quả thử việc được đánh giá theo khả năng điều phối và độ chính xác báo cáo."
+        },
+        {
+          "section_index": 3,
+          "section_id": "H16_Operations_Coordinator:section:3",
+          "heading": "Điều 3. Quyền lợi",
+          "text": "Điều 3. Quyền lợi\nKhoản | Mức\nLương theo công việc | 16.500.000 đồng/tháng\nPhụ cấp trách nhiệm | 1.000.000 đồng/tháng\nHỗ trợ điện thoại | 400.000 đồng/tháng\nCác khoản được thanh toán vào ngày 05 hằng tháng."
+        },
+        {
+          "section_index": 4,
+          "section_id": "H16_Operations_Coordinator:section:4",
+          "heading": "Điều 4. Thời hạn hợp đồng",
+          "text": "Điều 4. Thời hạn hợp đồng\nHợp đồng xác định thời hạn 24 tháng kể từ ngày bắt đầu."
+        },
+        {
+          "section_index": 5,
+          "section_id": "H16_Operations_Coordinator:section:5",
+          "heading": "Điều 5. Bảo hiểm và nghỉ phép năm",
+          "text": "Điều 5. Bảo hiểm và nghỉ phép năm\nNgười lao động tham gia các chế độ bảo hiểm theo quy định.\nNghỉ phép năm được giải quyết theo chính sách của công ty."
+        },
+        {
+          "section_index": 6,
+          "section_id": "H16_Operations_Coordinator:section:6",
+          "heading": "Điều 6. Tài sản",
+          "text": "Điều 6. Tài sản\nTài sản được giao phải được bảo quản theo quy định nội bộ."
+        },
+        {
+          "section_index": 7,
+          "section_id": "H16_Operations_Coordinator:section:7",
+          "heading": "Điều 7. Chấm dứt hợp đồng",
+          "text": "Điều 7. Chấm dứt hợp đồng\nViệc chấm dứt hợp đồng thực hiện theo căn cứ pháp luật và thỏa thuận của hai bên.\nThời hạn báo trước được áp dụng theo từng trường hợp."
+        },
+        {
+          "section_index": 8,
+          "section_id": "H16_Operations_Coordinator:section:8",
+          "heading": "Điều 8. Điều khoản chung",
+          "text": "Điều 8. Điều khoản chung\nCác sửa đổi hoặc bổ sung hợp đồng phải được lập thành văn bản."
+        }
+      ]
+    }
+  ]
+}
