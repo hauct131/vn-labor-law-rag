@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import math
+from functools import lru_cache
 from typing import Iterable
 
 from fastembed import TextEmbedding
@@ -86,6 +87,26 @@ def _cosine(
     return dot / (left_norm * right_norm)
 
 
+@lru_cache(maxsize=4)
+def _embedding_model(
+    model_name: str,
+    cache_dir: str,
+) -> TextEmbedding:
+    """Cache the heavyweight FastEmbed model instance.
+
+    Document and query vectors remain scoped to each
+    E5ClauseRetriever instance.
+    """
+    kwargs: dict[str, object] = {
+        "model_name": model_name,
+    }
+
+    if cache_dir:
+        kwargs["cache_dir"] = cache_dir
+
+    return TextEmbedding(**kwargs)
+
+
 class E5ClauseRetriever:
     """
     Dense clause retrieval using the project's production E5 model.
@@ -103,20 +124,16 @@ class E5ClauseRetriever:
             or settings.dense_embedding_model
         )
 
-        kwargs: dict[str, object] = {
-            "model_name": self.model_name,
-        }
-
         cache_dir = (
             settings.fastembed_cache_dir.strip()
             if settings.fastembed_cache_dir
             else ""
         )
 
-        if cache_dir:
-            kwargs["cache_dir"] = cache_dir
-
-        self._model = TextEmbedding(**kwargs)
+        self._model = _embedding_model(
+            self.model_name,
+            cache_dir,
+        )
 
         self._document_vectors: dict[
             str,

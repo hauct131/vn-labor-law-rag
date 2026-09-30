@@ -3,7 +3,13 @@
 from __future__ import annotations
 
 from .contract_review_reranker import get_contract_review_reranker
-
+from .contract_review.bm25_retriever import BM25ClauseRetriever
+from .contract_review.e5_retriever import E5ClauseRetriever
+from .contract_review.hybrid_retriever import HybridClauseRetriever
+from .contract_review.segmenter import segment_contract
+from .contract_review.clause_acceptance import (
+    ClauseAcceptanceGate,
+)
 import hashlib
 import json
 import math
@@ -775,22 +781,87 @@ def _finalize_reranked_sources(items: list[Any]) -> list[LegalSource]:
         sources.append(source.model_copy(update=update))
     return sources
 
-def review_contract(text: str, method: RetrievalMethod) -> ReviewDraft:
+def review_contract(
+    text: str,
+    method: RetrievalMethod,
+) -> ReviewDraft:
     paragraphs = _paragraphs(text)
+    # --------------------------------------------------
+    # Contract-side clause retrieval
+    # --------------------------------------------------
+    sections = segment_contract(paragraphs)
+    e5_clause_retriever = E5ClauseRetriever()
+    # Embed contract sections once for this review request.
+    # The underlying FastEmbed model is shared by e5_retriever.py,
+    # while these document vectors remain request-scoped.
+    e5_clause_retriever.prepare(sections)
+    # Category queries are fixed and can be prepared before retrieval.
+    e5_clause_retriever.prepare_queries(
+        rule.key
+        for rule in CATEGORIES
+    )
+    bm25_clause_retriever = BM25ClauseRetriever()
+    clause_retriever = HybridClauseRetriever(
+        bm25=bm25_clause_retriever,
+        e5=e5_clause_retriever,
+        rrf_k=60,
+        bm25_weight=1.0,
+        e5_weight=1.0,
+    )
+    acceptance_gate = ClauseAcceptanceGate(
+        bm25=bm25_clause_retriever,
+        e5=e5_clause_retriever,
+    )
+    # --------------------------------------------------
+    # Legal evidence retrieval
+    # --------------------------------------------------
     retriever = evidence_retriever()
     findings: list[FindingDraft] = []
     for rule in CATEGORIES:
-        excerpt = _excerpt_for(rule, paragraphs)
-        query = rule.query + (f" Nội dung hợp đồng: {excerpt[:500]}" if excerpt else "")
-        # CONTRACT_REVIEW_CROSS_ENCODER_V2: preserve V1 by default; when enabled,
-        # retrieve a wider non-deduplicated lexical candidate pool, rerank every
-        # evidence chunk, then deduplicate by article so the best chunk wins.
+        # Preserve the existing deterministic selector only as a positive
+        # acceptance signal. Hybrid still controls candidate ranking.
+        direct_excerpt = _excerpt_for(
+            rule,
+            paragraphs,
+        )
+        # Retrieve several candidates, then let the acceptance gate
+        # decide whether any of them contains enough topical evidence.
+        clause_matches = clause_retriever.retrieve(
+            sections=sections,
+            category=rule.key,
+            top_k=3,
+        )
+        accepted_match = None
+        for candidate in clause_matches:
+            acceptance = acceptance_gate.evaluate(
+                sections=sections,
+                category=rule.key,
+                candidate=candidate,
+                direct_excerpt=direct_excerpt,
+            )
+            if acceptance.accepted:
+                accepted_match = candidate
+                break
+        excerpt = (
+            accepted_match.section.text
+            if accepted_match is not None
+            else ""
+        )
+        query = rule.query + (
+            f" Nội dung hợp đồng: {excerpt[:500]}"
+            if excerpt
+            else ""
+        )
+        # CONTRACT_REVIEW_CROSS_ENCODER_V2:
+        # Preserve the legal-retrieval/reranking pipeline.
         reranker = get_contract_review_reranker()
         if reranker.enabled:
             candidates = retriever.retrieve(
                 query,
                 top_k=reranker.config.candidate_k,
-                preferred_article_codes=rule.preferred_article_codes,
+                preferred_article_codes=(
+                    rule.preferred_article_codes
+                ),
                 dedupe_articles=False,
             )
             sources = _finalize_reranked_sources(
@@ -804,29 +875,48 @@ def review_contract(text: str, method: RetrievalMethod) -> ReviewDraft:
             sources = retriever.retrieve(
                 query,
                 top_k=4,
-                preferred_article_codes=rule.preferred_article_codes,
+                preferred_article_codes=(
+                    rule.preferred_article_codes
+                ),
             )
+        # Existing deterministic validator remains unchanged.
         severity, analysis, evidence_status = _analysis(
-            rule, excerpt, sources, text
+            rule,
+            excerpt,
+            sources,
+            text,
         )
         recommendation = rule.recommendation
         if (
             rule.key == "probation"
             and excerpt
-            and _is_negated_probation_mention(_ascii(excerpt))
+            and _is_negated_probation_mention(
+                _ascii(excerpt)
+            )
         ):
             recommendation = (
-                "Không cần bổ sung thời hạn hoặc mức lương thử việc nếu hai bên xác nhận "
-                "không áp dụng thử việc."
+                "Không cần bổ sung thời hạn hoặc mức lương thử việc "
+                "nếu hai bên xác nhận không áp dụng thử việc."
             )
-        findings.append(FindingDraft(
-            category=rule.key,
-            title=rule.title,
-            severity=severity,
-            contract_excerpt=excerpt or "Chưa tìm thấy điều khoản liên quan trong nội dung được trích xuất.",
-            analysis=analysis,
-            recommendation=recommendation,
-            evidence_status=evidence_status,
-            sources=sources,
-        ))
-    return ReviewDraft(summary=build_review_summary(findings), findings=findings)
+        findings.append(
+            FindingDraft(
+                category=rule.key,
+                title=rule.title,
+                severity=severity,
+                contract_excerpt=(
+                    excerpt
+                    or (
+                        "Chưa tìm thấy điều khoản liên quan "
+                        "trong nội dung được trích xuất."
+                    )
+                ),
+                analysis=analysis,
+                recommendation=recommendation,
+                evidence_status=evidence_status,
+                sources=sources,
+            )
+        )
+    return ReviewDraft(
+        summary=build_review_summary(findings),
+        findings=findings,
+    )
