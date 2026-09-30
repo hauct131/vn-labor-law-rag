@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import re
+
 from app.schemas.ask import LegalSource
 from ..models import CategoryRule
 from ..text_utils import _ascii, _unit_numbers
@@ -63,16 +65,24 @@ def analyze_working_time(
             "nghi hang tuan",
         )
     )
-    incomplete_schedule = daily is None and weekly is None and any(
-        marker in plain_excerpt
-        for marker in (
-            "lich lam viec cu the se duoc bo tri",
-            "thoi gio lam viec se duoc bo sung",
-            "lich lam viec se duoc bo sung",
-            "thong nhat lich lam viec sau",
-            "chua xac dinh lich lam viec",
-        )
-    )
+    has_concrete_schedule = daily is not None or weekly is not None
+    incomplete_schedule = False
+    if not has_concrete_schedule:
+        for clause in re.split(r"[.;\n]+", plain_excerpt):
+            c_plain = clause.strip()
+            if not c_plain:
+                continue
+            c_has_ref = any(
+                kw in c_plain
+                for kw in ("lich lam viec", "thoi gio lam viec", "thoi gian lam viec", "lich lam")
+            )
+            c_has_deferral = any(
+                kw in c_plain
+                for kw in ("se duoc", "sau", "bo sung", "thong nhat", "bo tri", "xac dinh")
+            )
+            if c_has_ref and c_has_deferral:
+                incomplete_schedule = True
+                break
     if incomplete_schedule:
         return (
             "attention",

@@ -66,6 +66,52 @@ def _has_pay_date(value: str) -> bool:
     )
 
 
+def _has_main_salary_evidence(value: str) -> bool:
+    """Return True if text contains main/official salary evidence separate from probation compensation."""
+    plain = _ascii(value)
+    if "thu viec" not in plain:
+        return True
+
+    clauses = re.split(r"(?<!\d)[.;\n]+(?!\d)", value)
+    for clause in clauses:
+        c_plain = _ascii(clause)
+        if not c_plain.strip():
+            continue
+        if "thu viec" in c_plain:
+            match = re.search(
+                r"(?:luong|muc\s+luong)\s+chinh\s+thuc[^\d]{0,30}(\d[\d. ,]{3,}\s*(?:dong|vnd|trieu)\b|\b\d+\s*trieu\b)",
+                c_plain,
+            )
+            if match:
+                return True
+            continue
+
+        has_amount = bool(
+            re.search(r"\d[\d. ,]{3,}\s*(?:dong|vnd|trieu)\b|\b\d+\s*trieu\b", c_plain)
+        )
+        has_date = _has_pay_date(clause)
+        has_salary_keyword = any(
+            kw in c_plain for kw in ("luong", "tien luong", "muc luong", "thu lao")
+        )
+
+        if (has_amount or has_date) and has_salary_keyword:
+            return True
+        if "luong chinh thuc" in c_plain or "muc luong chinh thuc" in c_plain:
+            return True
+
+    return False
+
+
+def _is_probation_only_salary(value: str) -> bool:
+    """Return True if text describes probation compensation without main salary evidence."""
+    plain = _ascii(value)
+    if "thu viec" not in plain:
+        return False
+    return not _has_main_salary_evidence(value)
+
+
+
+
 def _unit_numbers(patterns: tuple[str, ...], value: str) -> list[int]:
     plain = _plain_text(value)
     numbers: list[int] = []

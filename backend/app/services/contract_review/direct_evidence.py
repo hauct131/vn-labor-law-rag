@@ -7,6 +7,7 @@ from .text_utils import (
     _ascii,
     _has_pay_date,
     _is_contract_section_heading,
+    _is_probation_only_salary,
     _tokens,
 )
 
@@ -19,7 +20,7 @@ def _excerpt_for(rule: CategoryRule, paragraphs: list[str]) -> str:
         term_hits = sum(1 for term in rule.terms if _ascii(term) in plain)
         if term_hits == 0:
             continue
-        if rule.key == "salary" and "thu viec" in plain:
+        if rule.key == "salary" and _is_probation_only_salary(paragraph):
             continue
         score = term_hits * 4
         score += sum(

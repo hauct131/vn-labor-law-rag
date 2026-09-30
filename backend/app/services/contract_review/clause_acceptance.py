@@ -6,6 +6,7 @@ from .bm25_retriever import BM25ClauseRetriever
 from .e5_retriever import CATEGORY_QUERIES, E5ClauseRetriever
 from .models import ContractSection
 from .retriever import ClauseMatch
+from .text_utils import _is_probation_only_salary
 
 
 # Runtime V2 acceptance calibration.
@@ -86,6 +87,13 @@ class ClauseAcceptanceGate:
             )
 
         candidate_index = candidate.section.index
+
+        if category == "salary" and _is_probation_only_salary(candidate.section.text):
+            return ClauseAcceptanceResult(
+                accepted=False,
+                reason="probation_only_salary",
+                bm25_supported=False,
+            )
 
         # --------------------------------------------------
         # 1. Existing deterministic direct-topic evidence
