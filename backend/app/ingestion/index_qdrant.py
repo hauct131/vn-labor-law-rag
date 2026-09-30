@@ -26,8 +26,8 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from backend.app.core.config import settings
-from backend.app.core.paths import resolve_project_path
+from ..core.config import settings
+from ..core.paths import resolve_project_path
 
 LOGGER = logging.getLogger("qdrant_production_indexer")
 
