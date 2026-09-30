@@ -1,0 +1,56 @@
+from .models import CategoryRule
+
+CATEGORIES = (
+    CategoryRule(
+        "probation",
+        "Thử việc",
+        "quy định thời gian thử việc tiền lương thử việc kết thúc thử việc",
+        ("thử việc", "thời gian thử", "lương thử việc"),
+        ("20.2.LQ.25", "20.2.LQ.26", "20.2.LQ.27"),
+        "Đối chiếu thời gian, mức lương và cách kết thúc thử việc với nhóm công việc thực tế.",
+    ),
+    CategoryRule(
+        "salary",
+        "Tiền lương và phương thức trả lương",
+        "quy định tiền lương kỳ hạn trả lương hình thức trả lương chậm trả lương",
+        (
+            "tiền lương",
+            "mức lương",
+            "lương cơ bản",
+            "trả lương",
+            "ngày trả lương",
+            "lương",
+        ),
+        ("20.2.LQ.90", "20.2.LQ.94", "20.2.LQ.95", "20.2.LQ.96", "20.2.LQ.97"),
+        "Làm rõ mức lương, phụ cấp, kỳ hạn, hình thức trả và các khoản khấu trừ trong hợp đồng.",
+    ),
+    CategoryRule(
+        "working_time",
+        "Thời giờ làm việc và nghỉ ngơi",
+        "quy định thời giờ làm việc bình thường nghỉ giữa giờ nghỉ hằng tuần làm thêm giờ",
+        (
+            "thời giờ làm việc",
+            "giờ làm việc",
+            "nghỉ giữa giờ",
+            "nghỉ hằng tuần",
+            "làm thêm",
+            "làm việc theo tuần",
+            "giờ mỗi ngày",
+            "giờ mỗi tuần",
+            "làm việc theo ca",
+            "ca làm việc",
+            "nghỉ chuyển ca",
+            "chuyển sang ca",
+        ),
+        ("20.2.LQ.105", "20.2.LQ.107", "20.2.LQ.109", "20.2.LQ.111"),
+        "Kiểm tra lịch làm việc, thời gian nghỉ và cơ chế làm thêm với thực tế bố trí lao động.",
+    ),
+    CategoryRule(
+        "termination",
+        "Chấm dứt hợp đồng và báo trước",
+        "quy định đơn phương chấm dứt hợp đồng lao động thời hạn báo trước",
+        ("chấm dứt", "báo trước", "đơn phương", "thôi việc"),
+        ("20.2.LQ.34", "20.2.LQ.35", "20.2.LQ.36", "20.2.NĐ.3.7"),
+        "Tách rõ từng căn cứ chấm dứt, chủ thể thực hiện và thời hạn báo trước tương ứng.",
+    ),
+)
